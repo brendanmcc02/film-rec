@@ -1,0 +1,155 @@
+id and title should not be included in vector representation of film (?): they have no indicator as to preference of a movie. they are simply labels.
+myRating is distinct (i.e. it determines my preference of a film, obviously this will not be in a general movie dataset).
+don't include watchedInCinema, franchise, top10pos.
+
+content based filtering: "uses item features to recommend other items similar to what the user likes, based on their previous actions or explicit feedback"
+
+Similarity measures:
+
+1. Cosine similarity - cosine of the angle between 2 vectors
+2. dot product
+3. euclidean distance 
+
+
+
+
+
+
+
+
+
+
+
+
+CHAT GPT:
+
+Great choice! Content-based filtering can work well when you have user preferences and detailed information about items. Here's a simplified step-by-step guide on how you could implement a content-based movie recommendation system using your two datasets:
+
+### 1. Data Preparation:
+
+#### Movies You Like Dataset:
+- This dataset should contain information about movies you've liked or interacted with.
+- Include details like movie ID, title, genres, actors, directors, release year, etc.
+- Create a user profile based on the features of the movies you liked.
+
+#### IMDb Movies Dataset:
+- This dataset should contain comprehensive information about all movies on IMDb.
+- Extract relevant features like movie ID, title, genres, actors, directors, release year, etc.
+- Create a vector representation for each movie based on these features.
+
+### 2. Feature Extraction:
+
+- Represent each movie in both datasets as a vector. You can use one-hot encoding for categorical features like genres and actors.
+- Normalize numerical features such as release year.
+
+### 3. User Profile Creation:
+
+- Create a user profile vector based on the features of the movies you like.
+- Combine the feature vectors of the movies you like, possibly with weighted averages based on your preferences.
+
+### 4. Similarity Calculation:
+
+- Use a similarity metric (e.g., cosine similarity) to measure the similarity between the user profile vector and the vectors of all movies in the IMDb dataset.
+- Calculate the similarity scores for each movie.
+
+### 5. Recommendation Generation:
+
+- Rank the movies based on their similarity scores.
+- Recommend the top N movies with the highest similarity scores that the user hasn't interacted with.
+
+### 6. Integration with Web App:
+
+- Implement the recommendation logic in your backend using your chosen programming language and framework.
+- Expose an API endpoint that takes a user's liked movies as input and returns recommended movies.
+
+### 7. Testing and Evaluation:
+
+- Evaluate the system using metrics like precision, recall, or Mean Squared Error (MSE).
+- Fine-tune your algorithm based on user feedback and evaluation results.
+
+### Additional Considerations:
+
+- **Weighting Features:** You might want to experiment with different weights for features based on their importance in user preferences.
+
+- **Dynamic User Profiles:** Allow users to update their preferences over time to improve the accuracy of recommendations.
+
+- **Scale and Efficiency:** Depending on the size of your IMDb dataset, consider optimizing your recommendation algorithm for efficiency.
+
+Remember that this is a simplified guide, and you might need to adapt these steps based on the specific details and requirements of your project. Also, as you develop your system, it's essential to gather user feedback and continuously refine your recommendation algorithm for better accuracy.
+
+
+
+
+
+
+
+
+
+
+
+
+Q: What do you mean by user profile?
+
+In the context of a content-based recommendation system, a "user profile" refers to a representation of the user's preferences based on their interactions or explicit feedback with items (movies, in this case). The user profile is a vector that captures the features or characteristics of items that the user has liked or interacted with. This vector is used to find other items that are similar to the user's preferences.
+
+Here's a more concrete explanation:
+
+1. **Feature Vector:** Each movie in your dataset is represented as a vector of features. These features could include various attributes like genres, actors, directors, release year, etc. Each feature has a corresponding value in the vector.
+
+2. **User Profile Vector:** The user profile is a vector that aggregates the features of the movies the user has liked. It's essentially a summary of the user's preferences based on their historical interactions with items.
+
+For example, let's say you have the following features for movies:
+
+- Genres: Action, Drama, Comedy, Sci-Fi
+- Actors: Actor1, Actor2, Actor3
+- Directors: Director1, Director2
+- Release Year: 2000, 2005, 2010, 2015
+
+If a user has liked or interacted with three movies:
+
+1. Movie A: Genres (Action, Drama), Actors (Actor1), Directors (Director1), Release Year (2005)
+2. Movie B: Genres (Comedy, Sci-Fi), Actors (Actor2), Directors (Director2), Release Year (2010)
+3. Movie C: Genres (Action, Drama), Actors (Actor3), Directors (Director1), Release Year (2015)
+
+The user profile vector could be a weighted average or sum of these feature vectors:
+
+User Profile: Genres (Action, Drama, Comedy, Sci-Fi), Actors (Actor1, Actor2, Actor3), Directors (Director1, Director2), Release Year (2005, 2010, 2015)
+
+This user profile vector now represents the user's preferences, and you can use it to find other movies with similar features for recommendations. The similarity between this user profile vector and the vectors representing other movies determines the recommendation scores.
+
+
+
+
+
+
+
+
+
+
+
+
+Q: What do you mean by normalise numerical features (e.g. release year?):
+
+Certainly! Normalizing numerical features involves transforming them in a way that scales the values to a standard range, typically between 0 and 1. This process is essential when dealing with numerical features that may have different units or magnitudes because it ensures that each feature contributes proportionally to the similarity calculation.
+
+In the context of a recommendation system where you're using numerical features like the release year of movies, normalization helps prevent features with larger magnitudes from dominating the similarity calculation. Here's a brief explanation of the normalization process:
+
+1. **Range Scaling:**
+   - The most common normalization technique is range scaling, where you map the values of a feature to a specific range, often between 0 and 1.
+   - The formula for range scaling is: 
+     \[X_{\text{normalized}} = \frac{X - X_{\text{min}}}{X_{\text{max}} - X_{\text{min}}}\]
+     where \(X\) is the original value, \(X_{\text{min}}\) is the minimum value of the feature, and \(X_{\text{max}}\) is the maximum value of the feature.
+
+2. **Example - Release Year:**
+   - Let's say the release years of movies range from 1980 to 2020.
+   - If you have a movie with a release year of 1995, after normalization, it would be scaled to a value between 0 and 1 based on the entire range of release years.
+
+   \[X_{\text{normalized}} = \frac{1995 - 1980}{2020 - 1980} = \frac{15}{40} = 0.375\]
+
+   - This normalized value (0.375) would be used in the feature vector for that particular movie.
+
+3. **Why Normalize:**
+   - Normalization ensures that each feature contributes equally to the similarity calculation, regardless of its original scale.
+   - It makes the recommendation algorithm more robust and less sensitive to the scale of individual features.
+
+When implementing your recommendation system, consider normalizing numerical features like release year to improve the accuracy and effectiveness of your content-based filtering algorithm.
