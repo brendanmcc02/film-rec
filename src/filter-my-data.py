@@ -7,6 +7,7 @@ import json
 def main():
     filmData = open('../data/film-data.json')
     filmDictionary = json.load(filmData)
+    print(type(filmDictionary))
 
     for film in filmDictionary:
         del film['title']

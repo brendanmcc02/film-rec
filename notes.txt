@@ -12,9 +12,15 @@ Similarity measures:
 
 
 
+all-film-data:
 
+year, genres, imdbrating, numOfVotes
 
+numOfVotes won't be used in the embedding, but I can use it to filter the database (e.g. get rid of films with <10000 votes
 
+?: metascore, directors, actors(?), countries(?), languages(?)
+
+actors, countries and languages are 'nice to have', but i feel they would add a lot of variables to the embedding.
 
 
 
