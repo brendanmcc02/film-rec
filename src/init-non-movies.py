@@ -4,18 +4,16 @@ import json
 
 def main():
     # import title-basics.tsv
-    basics_df = pd.read_csv('../data/imdb-data/title.basics-sample.tsv', sep='\t', dtype=str)
+    basics_df = pd.read_csv('../data/imdb-data/title.basics.tsv', sep='\t', dtype=str)
     basics = basics_df.to_dict('records')
 
     i = 0
     length = len(basics)
     while i < length:
         try:
-            # if the film:
-            # 1. is not a movie
-            # 2. has no genres
+            # if the film is not a movie:
             film = basics[i]
-            if film['titleType'] != 'movie' or film['genres'] == '\\\\N':
+            if film['titleType'] != 'movie':
                 # delete the film
                 del basics[i]
                 i = i - 1
@@ -26,6 +24,7 @@ def main():
                 # rename attributes
                 film['year'] = int(film['startYear'])  # convert from str to int
                 film['id'] = film['tconst']
+                film['runtime'] = int(film['runtimeMinutes'])
 
                 # delete unnecessary attributes:
                 del film['tconst']
@@ -37,13 +36,13 @@ def main():
                 del film['endYear']
                 # when I ran this script on 24/02/24 I deleted the runtime attribute, which I regret in hindsight.
                 # So I could run the script again. The runtime was ~8 hours.
-                # del film['runtimeMinutes']
+                del film['runtimeMinutes']
 
                 # convert genres from string to array of strings
                 # e.g. genres: "Action, Family" => genres: {"Action", "Family"}
                 film['genres'] = film['genres'].split(',')
         except ValueError:
-            # for some reason, some entries in 'startYear' are not int types, so this catches the exception and
+            # some entries in 'startYear' are empty ('\N') and thus not int types, so this catches the exception and
             # just deletes the film
             del basics[i]
             i = i - 1
