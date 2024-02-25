@@ -1,20 +1,25 @@
 import json
 
 
-# 1. import film-data.json (copied over from film-data-vis)
-# 2. delete attributes that are not necessary for this project (film title, watchedInCinema, myTop10Position, franchise)
-# 3. write the result to my-film-data.json
 def main():
+    # import film-data.json (copied over from film-data-vis)
     filmData = open('../data/film-data.json')
     filmDictionary = json.load(filmData)
-    print(type(filmDictionary))
 
+    # for each film:
     for film in filmDictionary:
+        # delete unnecessary attributes
         del film['title']
+        # del film['metascore']
+        # del film['directors']
+        # del film['actors']
+        # del film['countries']
+        # del film['languages']
         del film['watchedInCinema']
         del film['myTop10Position']
         del film['franchise']
 
+    # write to file
     with open('../data/my-film-data.json', 'w') as convert_file:
         convert_file.write(json.dumps(filmDictionary, indent=4, separators=(',', ': ')))
 

@@ -1,4 +1,4 @@
-id and title should not be included in vector representation of film (?): they have no indicator as to preference of a movie. they are simply labels.
+id should not be included in vector representation of film (?): they have no indicator as to preference of a movie. they are simply labels.
 myRating is distinct (i.e. it determines my preference of a film, obviously this will not be in a general movie dataset).
 don't include watchedInCinema, franchise, top10pos.
 
@@ -10,19 +10,25 @@ Similarity measures:
 2. dot product
 3. euclidean distance 
 
+length basics.tsv  : 10,565,899
+length ratings.tsv :  1,403,737
 
+574973/575023
 
-all-film-data:
+filter step by step:
+1. get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes
+2. get rid of < 1930 films (basics.tsv)
+3. merge/match up the two datasets
+4. get rid of films with < 10,000 votes
+5. (?) get rid of films with <60 min runtime?
 
-year, genres, imdbrating, numOfVotes
+year, genres, imdbRating, numOfVotes
 
 numOfVotes won't be used in the embedding, but I can use it to filter the database (e.g. get rid of films with <10000 votes
 
 ?: metascore, directors, actors(?), countries(?), languages(?)
-
-actors, countries and languages are 'nice to have', but i feel they would add a lot of variables to the embedding.
-
-
+- > maybe i can add these variables to the database after it is initialised? the quantity of films will be
+substantially reduced after filtering the initial imdb database
 
 
 
