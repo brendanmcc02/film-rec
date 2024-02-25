@@ -16,8 +16,8 @@ length ratings.tsv :  1,403,737
 574973/575023
 
 filter step by step:
-1. get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes
-2. get rid of < 1930 films (basics.tsv)
+1. get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)
+2. get rid of < 1930 films (basics.tsv), delete films with genres = '\\N'
 3. merge/match up the two datasets
 4. get rid of films with < 10,000 votes
 5. (?) get rid of films with <60 min runtime?

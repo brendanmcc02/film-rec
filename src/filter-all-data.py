@@ -10,10 +10,7 @@ def main():
     for film in filmDictionary:
         # *** DO NOT DELETE numberOfVotes; VERY IMPORTANT IF I WANT TO FILTER
         # DATABASE IN FUTURE
-        # convert genres from string to array
-        # e.g: genres: "Action,Family" => genres: {"Action", "Family}
-        genres = film['genres'].split(',')
-        film['genres'] = genres
+        pass
 
     # write to file
     with open('../data/all-film-data.json', 'w') as convert_file:
