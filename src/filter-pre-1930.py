@@ -1,5 +1,5 @@
 # non-movies were deleted from title.basics and written to a file: only-movies-basics.json
-# this script will take that data, and remove films released before 1940.
+# this script will take that data, and remove films released before 1930, and films with no genres
 import json
 
 
@@ -13,8 +13,10 @@ def main():
     length = len(onlyMoviesDataDict)
     while i < length:
         try:
-            # if film was released before 1940
-            if onlyMoviesDataDict[i]['year'] < 1940:
+            # if:
+            # 1. film was released before 1930
+            # 2. film has no genres
+            if onlyMoviesDataDict[i]['year'] < 1930 or onlyMoviesDataDict[i]['genres'][0] == r"\N":
                 # delete the film
                 del onlyMoviesDataDict[i]
                 i = i - 1
@@ -32,7 +34,7 @@ def main():
         i = i + 1
 
     # write to file
-    with open('../data/pre-1940-basics.json', 'w') as convert_file:
+    with open('../data/pre-1930-basics.json', 'w') as convert_file:
         convert_file.write(json.dumps(onlyMoviesDataDict, indent=4, separators=(',', ': ')))
 
 
