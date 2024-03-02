@@ -1,10 +1,10 @@
-# given merged.json, get rid of films with under 10,000 votes
+# given 4-merge-with-ratings.json, get rid of films with under 10,000 votes
 import json
 
 
 def main():
-    # import merged.json
-    mergedData = open('../data/merged.json')
+    # import 4-merge-with-ratings.json
+    mergedData = open('../data/4-merge-with-ratings.json')
     mergedDataDict = json.load(mergedData)
 
     # for each film:
@@ -24,7 +24,7 @@ def main():
         i = i + 1
 
     # write to file
-    with open('../data/merged-over-10k.json', 'w') as convert_file:
+    with open('../data/5-over-10k-votes.json', 'w') as convert_file:
         convert_file.write(json.dumps(mergedDataDict, indent=4, separators=(',', ': ')))
 
 

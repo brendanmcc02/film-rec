@@ -1,3 +1,9 @@
+# given title.basics.tsv, filter out:
+# 1. non-movies
+# 2. films without a startYear attribute
+# 3. films without a runtime
+# rename and delete attributes
+# convert genres to array
 import pandas as pd
 import json
 
@@ -24,7 +30,7 @@ def main():
                 # rename attributes
                 film['year'] = int(film['startYear'])  # convert from str to int
                 film['id'] = film['tconst']
-                film['runtime'] = int(film['runtimeMinutes'])
+                film['runtime'] = int(film['runtimeMinutes'])  # convert from str to int
 
                 # delete unnecessary attributes:
                 del film['tconst']
@@ -34,8 +40,6 @@ def main():
                 del film['isAdult']
                 del film['startYear']
                 del film['endYear']
-                # when I ran this script on 24/02/24 I deleted the runtime attribute, which I regret in hindsight.
-                # So I could run the script again. The runtime was ~8 hours.
                 del film['runtimeMinutes']
 
                 # convert genres from string to array of strings
@@ -51,10 +55,9 @@ def main():
         i = i + 1
 
     # write to file
-    with open('../data/only-movies-basics.json', 'w') as convert_file:
+    with open('../data/1-only-movies.json', 'w') as convert_file:
         convert_file.write(json.dumps(basics, indent=4, separators=(',', ': ')))
 
 
 if __name__ == "__main__":
     main()
-

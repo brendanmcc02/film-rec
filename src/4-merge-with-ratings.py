@@ -1,4 +1,4 @@
-# given over-60-min-basics.json, merge this dataset with title.ratings.tsv
+# given 3-over-60-min.json, merge this dataset with title.ratings.tsv
 
 import pandas as pd
 import json
@@ -8,14 +8,14 @@ def main():
     # import title-ratings.tsv
     ratings_df = pd.read_csv('../data/imdb-data/title.ratings.tsv', sep='\t', dtype=str)
     ratings = ratings_df.to_dict('records')
-    # import over-60-min-basics.json
-    over60Data = open('../data/over-60-min-basics.json')
+    # import 3-over-60-min.json
+    over60Data = open('../data/3-over-60-min.json')
     over60DataDict = json.load(over60Data)
 
     length_ratings = len(ratings)
     length_over60 = len(over60DataDict)
 
-    # iterate through each film in over-60-min-basics.json:
+    # iterate through each film in 3-over-60-min.json:
     i = 0
     start = 0
     while i < length_over60:
@@ -49,7 +49,7 @@ def main():
         i = i + 1
 
     # write to file
-    with open('../data/merged.json', 'w') as convert_file:
+    with open('../data/4-merge-with-ratings.json', 'w') as convert_file:
         convert_file.write(json.dumps(over60DataDict, indent=4, separators=(',', ': ')))
 
 

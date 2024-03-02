@@ -3,8 +3,8 @@ import json
 
 
 def main():
-    # import pre-1930-basics.json
-    pre1930Data = open('../data/pre-1930-basics.json')
+    # import 2-post-1930.json
+    pre1930Data = open('../data/2-post-1930.json')
     pre1930DataDict = json.load(pre1930Data)
 
     # for each film:
@@ -24,7 +24,7 @@ def main():
         i = i + 1
 
     # write to file
-    with open('../data/over-60-min-basics.json', 'w') as convert_file:
+    with open('../data/3-over-60-min.json', 'w') as convert_file:
         convert_file.write(json.dumps(pre1930DataDict, indent=4, separators=(',', ': ')))
 
 

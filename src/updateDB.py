@@ -3,8 +3,8 @@ import json
 
 
 def main():
-    # import all-film-data.json & my-film-data.json to variables
-    allFilmData = open('../data/all-film-data.json')
+    # import 5-over-10k-votes.json & my-film-data.json to variables
+    allFilmData = open('../data/5-over-10k-votes.json')
     allFilmDataDict = json.load(allFilmData)
     myFilmData = open('../data/my-film-data.json')
     myFilmDataDict = json.load(myFilmData)
@@ -28,7 +28,7 @@ def main():
         i = i + 1
 
     # write to file
-    with open('../data/all-film-data.json', 'w') as convert_file:
+    with open('../data/5-over-10k-votes.json', 'w') as convert_file:
         convert_file.write(json.dumps(allFilmDataDict, indent=4, separators=(',', ': ')))
 
 

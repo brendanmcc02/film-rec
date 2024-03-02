@@ -1,10 +1,10 @@
-# given merged.json, get rid of films with under 10,000 votes
+# given 4-merge-with-ratings.json, get rid of films with under 10,000 votes
 import json
 
 
 def main():
-    # import merged.json
-    mergedData = open('../data/merged-over-10k.json')
+    # import 4-merge-with-ratings.json
+    mergedData = open('../data/5-over-10k-votes.json')
     mergedDataDict = json.load(mergedData)
 
     print(len(mergedDataDict))
