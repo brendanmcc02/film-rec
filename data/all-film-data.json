@@ -31471,18 +31471,6 @@
         "runtime": 120
     },
     {
-        "id": "tt0116209",
-        "year": 1996,
-        "imdbRating": 7.4,
-        "genres": [
-            "Drama",
-            "Romance",
-            "War"
-        ],
-        "numberOfVotes": 198953,
-        "runtime": 162
-    },
-    {
         "id": "tt0116213",
         "year": 1996,
         "imdbRating": 6.2,
@@ -34871,16 +34859,6 @@
         ],
         "numberOfVotes": 20208,
         "runtime": 98
-    },
-    {
-        "id": "tt0120265",
-        "year": 1997,
-        "imdbRating": 7.7,
-        "genres": [
-            "Drama"
-        ],
-        "numberOfVotes": 36102,
-        "runtime": 95
     },
     {
         "id": "tt0120321",
@@ -92897,18 +92875,6 @@
         ],
         "numberOfVotes": 71237,
         "runtime": 89
-    },
-    {
-        "id": "tt21064584",
-        "year": 2023,
-        "imdbRating": 7.8,
-        "genres": [
-            "Biography",
-            "Drama",
-            "Sport"
-        ],
-        "numberOfVotes": 33070,
-        "runtime": 132
     },
     {
         "id": "tt2106476",
