@@ -10,6 +10,7 @@ printf "\n\n\n[2/9] Downloading title.basics.tsv & title.ratings.tsv from https:
 cd /home/brendanmcc02/Desktop/projects/film-rec/scripts/ || exit
 # TODO download
 
+# slow
 printf "\n\n\n[3/9] Filtering out non-movies\n\n\n"
 #cd /home/brendanmcc02/Desktop/projects/film-rec/src/ || exit
 #python3 1-filter-only-movies.py
@@ -35,14 +36,15 @@ git add .
 git commit -m "added 3-over-60-min.json"
 git push
 
+# slow
 printf "\n\n\n[6/9] Merging with title.ratings.tsv\n\n\n"
-cd /home/brendanmcc02/Desktop/projects/film-rec/src/ || exit
-python3 4-merge-with-ratings.py
-cd /home/brendanmcc02/Desktop/projects/film-rec/ || exit
-git add .
-git commit -m "added 4-merge-with-ratings.json"
-git push
-echo "DATE: $(date)"date
+#cd /home/brendanmcc02/Desktop/projects/film-rec/src/ || exit
+#python3 4-merge-with-ratings.py
+#cd /home/brendanmcc02/Desktop/projects/film-rec/ || exit
+#git add .
+#git commit -m "added 4-merge-with-ratings.json"
+#git push
+#echo "DATE: $(date)"date
 
 printf "\n\n\n[7/9] Filtering out films with <10,000 votes\n\n\n"
 cd /home/brendanmcc02/Desktop/projects/film-rec/src/ || exit
