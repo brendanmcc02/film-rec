@@ -1,5 +1,5 @@
 git pull
-date
+echo "DATE: " date
 printf "\n[1/9] Updating my-film-data.json\n"
 cd /home/brendanmcc02/Desktop/projects/film-rec/scripts/ || exit
 ./copy-my-film-data.sh
