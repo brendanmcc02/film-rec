@@ -1,4 +1,5 @@
-# given title.basics.tsv, filter out:
+# title.basics.tsv => 1-only-movies.json
+# filter out:
 # 1. non-movies
 # 2. films without a startYear attribute
 # 3. films without a runtime
@@ -9,10 +10,11 @@ import json
 
 
 def main():
-    # import title-basics.tsv
+    # import title-basics.tsv as dataframe
     basics_df = pd.read_csv('../data/imdb-data/title.basics.tsv', sep='\t', dtype=str)
     basics = basics_df.to_dict('records')
 
+    # iterate through each film:
     i = 0
     length = len(basics)
     while i < length:
@@ -26,7 +28,8 @@ def main():
                 length = length - 1
             # else: keep the film
             else:
-                print(str(i) + "/" + str(length))
+                if i % 1000 == 0:
+                    print(str(i) + "/" + str(length))
                 # rename attributes
                 film['year'] = int(film['startYear'])  # convert from str to int
                 film['id'] = film['tconst']
@@ -46,8 +49,8 @@ def main():
                 # e.g. genres: "Action, Family" => genres: {"Action", "Family"}
                 film['genres'] = film['genres'].split(',')
         except ValueError:
-            # some entries in 'startYear' are empty ('\N') and thus not int types, so this catches the exception and
-            # just deletes the film
+            # some entries in 'startYear' or 'runtimeMinutes' are empty ('\N') and thus not int types,
+            # so this catches the exception and just deletes the film
             del basics[i]
             i = i - 1
             length = length - 1

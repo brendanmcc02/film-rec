@@ -1,4 +1,6 @@
-# given pre-1930-basics, get rid of films under 60 minutes in length
+# 2-post-1930.json => 3-over-60-min.json
+# filter out films:
+# < 60 min runtime
 import json
 
 
@@ -11,15 +13,14 @@ def main():
     i = 0
     length = len(pre1930DataDict)
     while i < length:
+        if i % 1000 == 0:
+            print(str(i) + "/" + str(length))
         # if film is < 60 minutes in length
         if pre1930DataDict[i]['runtime'] < 60:
             # delete the film
             del pre1930DataDict[i]
             i = i - 1
             length = length - 1
-        # else: keep the film
-        else:
-            print(str(i) + "/" + str(length))
 
         i = i + 1
 

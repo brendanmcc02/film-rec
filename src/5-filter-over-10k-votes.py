@@ -1,9 +1,11 @@
-# given 4-merge-with-ratings.json, get rid of films with under 10,000 votes
+# 4-merge-with-ratings.json => 5-over-10k-votes.json
+# filter out films:
+# < 10,000 votes
 import json
 
 
 def main():
-    # import 4-merge-with-ratings.json
+    # import 4-merge-with-ratings.json as dictionary
     mergedData = open('../data/4-merge-with-ratings.json')
     mergedDataDict = json.load(mergedData)
 

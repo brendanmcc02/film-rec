@@ -1,3 +1,5 @@
+# copies film-data.json from film-data-vis to this repo.
+# then run a filtering script on this data
 cd /home/brendanmcc02/Desktop/projects/film-rec || exit
 git pull
 # copies film-data.json from film-data-vis to current repo
