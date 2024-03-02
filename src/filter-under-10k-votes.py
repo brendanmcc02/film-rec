@@ -11,9 +11,11 @@ def main():
     i = 0
     length = len(mergedDataDict)
     while i < length:
+        if i & 1000 == 0:
+            print(str(i) + "/" + str(length))
         # if film has < 10,000 votes
-        int_num_of_votes = mergedDataDict[i]['numberOfVotes']
-        if int_num_of_votes < 10000:
+        numberOfVotes = mergedDataDict[i]['numberOfVotes']
+        if numberOfVotes < 10000:
             # delete the film
             del mergedDataDict[i]
             i = i - 1
