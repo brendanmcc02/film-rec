@@ -1,12 +1,10 @@
 ## TODO
 
 ### General
-- [x] init all-film-data
+- [ ] init all-film-data.py (combine all into one)
 - [x] filter my-film-data to match all-film-data
 - [ ] init-all-film-data.sh
-- [ ] download-imdb-data.sh
-- [ ] init-all-film-data.bat
-- [ ] download-imdb-data.bat
+- [ ] for .sh files change paths to be relative to device
 
 
 ### Initialising the Database
