@@ -3,23 +3,17 @@ echo "DATE: $(date)"
 printf "\n\n\n[1/9] Updating my-film-data.json\n\n\n"
 cd /home/brendanmcc02/Desktop/projects/film-rec/scripts/ || exit
 ./copy-my-film-data.sh
-cd /home/brendanmcc02/Desktop/projects/film-rec/ || exit
-git add .
-git commit -m "updated my-film-data.json"
-git push
-echo "DATE: $(date)"date
 printf "\n\n\n[2/9] Downloading title.basics.tsv & title.ratings.tsv from https://datasets.imdbws.com/\n\n\n"
 cd /home/brendanmcc02/Desktop/projects/film-rec/scripts/ || exit
 ./download-imdb-data.sh
-echo "DATE: $(date)"date
 printf "\n\n\n[3/9] Filtering out non-movies\n\n\n"
-cd /home/brendanmcc02/Desktop/projects/film-rec/src/ || exit
-python3 1-filter-only-movies.py
-cd /home/brendanmcc02/Desktop/projects/film-rec/ || exit
-git add .
-git commit -m "added 1-only-movies.json"
-git push
-echo "DATE: $(date)"date
+#cd /home/brendanmcc02/Desktop/projects/film-rec/src/ || exit
+#python3 1-filter-only-movies.py
+#cd /home/brendanmcc02/Desktop/projects/film-rec/ || exit
+#git add .
+#git commit -m "added 1-only-movies.json"
+#git push
+#echo "DATE: $(date)"date
 printf "\n\n\n[4/9] Filtering out pre-1930 films\n\n\n"
 cd /home/brendanmcc02/Desktop/projects/film-rec/src/ || exit
 python3 2-filter-post-1930.py
