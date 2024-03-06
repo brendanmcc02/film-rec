@@ -8,9 +8,9 @@ import csv
 
 
 def main():
-    print("\n[Stage 1/3] Filtering out:\n1. non-movies\n2. released < 1930\n3. with no genres\n4. < 60 min runtime")
+    print("\nFiltering out:\n1. non-movies\n2. released < 1930\n3. with no genres\n4. < 60 min runtime")
 
-    print("\nImporting title.basics.tsv")
+    print("\nImporting title.basics.tsv...")
     # import title-basics.tsv as list of dicts
     title_basics_raw = []
     with open("../data/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
@@ -18,7 +18,7 @@ def main():
         for row in reader:
             title_basics_raw.append(dict(row))
 
-    print("Imported title.basics.tsv")
+    print("Imported title.basics.tsv.")
     stage_1_allFilmData = []
 
     # iterate through each film:
@@ -40,7 +40,7 @@ def main():
         except ValueError:
             pass
 
-    print("\n[Stage 2/3] Merging with title.ratings.tsv and filtering out films with < 10,000 votes:")
+    print("\nMerging with title.ratings.tsv and filtering out films with < 10,000 votes...")
 
     stage_2_allFilmData = []
 
@@ -67,7 +67,7 @@ def main():
         except ValueError:
             pass
 
-    print("\n[Stage 3/3] Filtering out films that I've rated and changing the order of json attributes:")
+    print("\nFiltering out films that I've rated and changing the order of json attributes...")
 
     allFilmData = []
 

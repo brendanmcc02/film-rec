@@ -15,7 +15,6 @@ python3 init-all-film-data.py
 cd ../data || exit
 rm title.basics.tsv
 rm title.ratings.tsv
-cd ..
-git add .
+git add all-film-data.json
 git commit -m "updated all-film-data.json"
 git push
