@@ -1,3 +1,7 @@
+gpt import tsv: 26.94 seconds
+pandas import tsv: 70.33 seconds
+
+
 id should not be included in vector representation of film (?): they have no indicator as to preference of a movie. they are simply labels.
 myRating is distinct (i.e. it determines my preference of a film, obviously this will not be in a general movie dataset).
 don't include watchedInCinema, franchise, top10pos.
