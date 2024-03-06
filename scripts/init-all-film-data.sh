@@ -1,7 +1,7 @@
 # completely re-initialises all-film-data.json from scratch
 
 git pull
-printf "\n[1/3] Copying my-film-data.json from film-data-vis repo..."
+printf "\n[1/3] Copying my-film-data.json from film-data-vis repo...\n"
 ./copy-my-film-data.sh
 
 printf "\n[2/3] Downloading title.basics.tsv & title.ratings.tsv from https://datasets.imdbws.com/..."
