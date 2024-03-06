@@ -1,4 +1,6 @@
-# given title.basics.tsv & title.ratings.tsv, filter through the data and produce all-film-data.json
+# 1. download latest film data from https://datasets.imdbws.com/ (title.basics.tsv & title.ratings.tsv)
+# 2. filter through this data
+# 3. produces all-film-data.json
 
 # imports
 import json
@@ -6,10 +8,6 @@ import csv
 
 
 def main():
-    print("\n[Stage 0/3] Downloading title.basics.tsv & title.ratings.tsv")
-
-    # todo
-
     print("\n[Stage 1/3] Filtering out:\n1. non-movies\n2. released < 1930\n3. with no genres\n4. < 60 min runtime")
 
     print("\nImporting title.basics.tsv")
@@ -60,6 +58,7 @@ def main():
     for film in stage_1_allFilmData:
         filmId = film['id']
         try:
+            # could numVotes threshold to another number (e.g. 25k), i'll leave it at 10k for now.
             if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= 10000:
                 film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
                 film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])

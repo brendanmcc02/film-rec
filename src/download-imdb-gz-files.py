@@ -1,5 +1,6 @@
 import urllib.request
 
+
 def main():
     # download title.basics.tsv.gz
     urllib.request.urlretrieve("https://datasets.imdbws.com/title.basics.tsv.gz", "../data/title.basics.tsv.gz")
