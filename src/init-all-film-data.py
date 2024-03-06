@@ -13,7 +13,7 @@ def main():
     print("\nImporting title.basics.tsv")
     # import title-basics.tsv as list of dicts
     title_basics_raw = []
-    with open("../data/imdb-data/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
+    with open("../data/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
         reader = csv.DictReader(title_basics_file, delimiter='\t')
         for row in reader:
             title_basics_raw.append(dict(row))
@@ -47,7 +47,7 @@ def main():
     # import title-ratings.tsv as a dict.
     # the key is the film id, and the value is a dictionary of the attributes (averageRating & numVotes) of the film
     title_ratings = {}
-    with open("../data/imdb-data/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
+    with open("../data/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
         reader = csv.DictReader(title_ratings_file, delimiter='\t')
         for row in reader:
             rowDict = dict(row)
