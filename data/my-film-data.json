@@ -1,5 +1,16 @@
 [
     {
+        "id": "tt0134119",
+        "year": 1999,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    {
         "id": "tt21064584",
         "year": 2023,
         "myRating": 7,
@@ -188,7 +199,7 @@
         "id": "tt26047818",
         "year": 2023,
         "myRating": 3,
-        "imdbRating": 6.3,
+        "imdbRating": 6.2,
         "genres": [
             "Comedy",
             "Romance"
