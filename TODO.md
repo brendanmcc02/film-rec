@@ -3,6 +3,9 @@
 ### Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
 
+### Creating user profile
+- [x] calculate user profile using weighted averages
+
 ### Vectorizing the data
 - [x] normalise years
 - [x] normalise imdbRating
@@ -11,7 +14,7 @@
 - [x] verify vectorizing was done correctly
 - [x] vectorize my-film-data
 - [x] how to weight myRating - currently doing scalar multiplication
-- [x] how much do I round values by? - currently doing 6?
+- [x] how much do I round values by? - not rounding values, no reason to do it
 
 ### Initialising the Database
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)

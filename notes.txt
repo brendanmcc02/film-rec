@@ -1,4 +1,5 @@
-myRating should hold some sort of weight or special significance in my-film-data.json in the creation of a user profile
+VECTORIZED DATA FORM:
+year_norm, imdbRating_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western
 
 content based filtering: "uses item features to recommend other items similar to what the user likes, based on their previous actions or explicit feedback"
 

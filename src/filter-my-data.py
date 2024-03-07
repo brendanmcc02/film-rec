@@ -10,11 +10,9 @@ def main():
     # for each film:
     for film in filmDictionary:
         # delete unnecessary attributes
-        del film['title']
         del film['watchedInCinema']
         del film['myTop10Position']
         del film['franchise']
-
         # for now, delete these (maybe don't delete later)
         del film['metascore']
         del film['directors']

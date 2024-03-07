@@ -1,5 +1,5 @@
 # vectorizes both all-film-data.json & my-film-data.json into
-# vectorized-all-film-data.json & vectorized-my-film-data.json respectively.
+# all-film-data-vectorized.json & my-film-data-vectorized.json respectively.
 
 # libraries
 import json
@@ -24,7 +24,7 @@ def main():
     vectorized_all_film_data = {}  # init the dictionary
     vectorized_my_film_data = {}  # init the dictionary
 
-    # get min & max imdbRating & min_year of all-film-data, and list of all film genres
+    # get min & max imdbRating & min_year of all-film-data, and get a (unique) list of all genres
     MIN_IMDB_RATING = allFilmData[0]['imdbRating']
     MAX_IMDB_RATING = allFilmData[0]['imdbRating']
     MIN_YEAR = allFilmData[0]['year']
@@ -61,24 +61,24 @@ def main():
     allGenres = sorted(allGenres)  # sort alphabetically
 
     # perform some pre-computation to avoid repetitive computation
-    year_diff = MAX_YEAR - MIN_YEAR
-    imdbRating_diff = MAX_IMDB_RATING - MIN_IMDB_RATING
-    myRating_diff = MAX_MY_RATING - MIN_MY_RATING
+    DIFF_YEAR = MAX_YEAR - MIN_YEAR
+    DIFF_IMDB_RATING = MAX_IMDB_RATING - MIN_IMDB_RATING
+    DIFF_MY_RATING = MAX_MY_RATING - MIN_MY_RATING
 
-    # pre compute year_norm for each year
+    # pre-compute normalised years for each year
     year_norms = {}
     for y in range(MIN_YEAR, MAX_YEAR + 1):
-        year_norms[y] = round((y - MIN_YEAR) / year_diff, 6)
+        year_norms[y] = (y - MIN_YEAR) / DIFF_YEAR
 
     # for each film in all-film-data:
     for film in allFilmData:
         # vectorize the film
-        vectorList = vectorize(film, year_norms, imdbRating_diff, allGenres)
+        vector = vectorize(film, year_norms, DIFF_IMDB_RATING, allGenres)
         # add to dictionary
-        vectorized_all_film_data[film['id']] = vectorList
+        vectorized_all_film_data[film['id']] = vector
 
-    # write to vectorized-all-film-data.json
-    with open('../data/vectorized-all-film-data.json', 'w') as convert_file:
+    # write to all-film-data-vectorized.json
+    with open('../data/all-film-data-vectorized.json', 'w') as convert_file:
         convert_file.write(json.dumps(vectorized_all_film_data, indent=4, separators=(',', ': '))
                            .replace(",\n        ", ", ").replace("[\n        ", "[ ")
                            .replace("\n    ],", " ],"))
@@ -86,18 +86,18 @@ def main():
     # vectorize my-film-data
     for film in myFilmData:
         # vectorize the film
-        vectorList = vectorize(film, year_norms, imdbRating_diff, allGenres)
+        vector = vectorize(film, year_norms, DIFF_IMDB_RATING, allGenres)
         # normalize myRating
-        myRating_norm = (film['myRating'] - MIN_MY_RATING) / myRating_diff
+        myRating_norm = (film['myRating'] - MIN_MY_RATING) / DIFF_MY_RATING
         # scalar multiply by myRating
-        len_vectorList = len(vectorList)
-        for i in range(0, len_vectorList):
-            vectorList[i] = round(vectorList[i] * myRating_norm, 6)
+        len_vector = len(vector)
+        for i in range(0, len_vector):
+            vector[i] = vector[i] * myRating_norm
         # add to dictionary
-        vectorized_my_film_data[film['id']] = vectorList
+        vectorized_my_film_data[film['id']] = vector
 
-    # write to vectorized-my-film-data.json
-    with open('../data/vectorized-my-film-data.json', 'w') as convert_file:
+    # write to my-film-data-vectorized.json
+    with open('../data/my-film-data-vectorized.json', 'w') as convert_file:
         convert_file.write(json.dumps(vectorized_my_film_data, indent=4, separators=(',', ': '))
                            .replace(",\n        ", ", ").replace("[\n        ", "[ ")
                            .replace("\n    ],", " ],"))
@@ -105,25 +105,25 @@ def main():
 
 # given a film, return it's vectorized form (return type: list)
 def vectorize(film, year_norms, imdbRating_diff, allGenres):
-    vectorList = []
+    vector = []
     # 1. normalise the year
-    vectorList.append(year_norms[film['year']])
+    vector.append(year_norms[film['year']])
     # 2. normalise imdbRating
-    imdbRating_norm = round((film['imdbRating'] - MIN_IMDB_RATING) / imdbRating_diff, 6)
-    vectorList.append(imdbRating_norm)
+    imdbRating_norm = (film['imdbRating'] - MIN_IMDB_RATING) / imdbRating_diff
+    vector.append(imdbRating_norm)
     # 3. one-hot encoding on genres
-    oneHotEncode(vectorList, film['genres'], allGenres)
+    oneHotEncode(vector, film['genres'], allGenres)
 
-    return vectorList
+    return vector
 
 
 # given a vector, append the one-hot encoding of genres to the vector
-def oneHotEncode(vectorList, filmGenres, allGenres):
+def oneHotEncode(vector, filmGenres, allGenres):
     for g in allGenres:
         if g in filmGenres:
-            vectorList.append(1)
+            vector.append(1)
         else:
-            vectorList.append(0)
+            vector.append(0)
 
 
 if __name__ == "__main__":

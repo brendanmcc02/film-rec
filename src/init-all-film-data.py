@@ -36,6 +36,7 @@ def main():
                 newFilm = {}
                 # rename attributes
                 newFilm['id'] = film['tconst']
+                newFilm['title'] = film['originalTitle']
                 newFilm['year'] = int(film['startYear'])  # convert from str to int
 
                 # convert genres from string to array of strings
@@ -92,6 +93,7 @@ def main():
             # changing the order of json attributes
             allFilmData.append({
                 'id': film['id'],
+                'title': film['title'],
                 'year': film['year'],
                 'imdbRating': film['imdbRating'],
                 'genres': film['genres']
