@@ -32,11 +32,9 @@ def main():
     # rated have been taken out of all-film-data, and I've seen TDK, Shawshank, godfather, etc.)
     minMax_myFilmData = getMinMaxImdbRatingMyFilmData()
     MAX_IMDB_RATING = max(MAX_IMDB_RATING, minMax_myFilmData[1])
-    print("max imdb rating: " + str(MAX_IMDB_RATING))
     # the min of my-film-data is almost certainly higher than the min of all-film-data, but still good
     # practice to do anyway
     MIN_IMDB_RATING = min(MIN_IMDB_RATING, minMax_myFilmData[0])
-    print("min imdb rating: " + str(MIN_IMDB_RATING))
     allGenres = sorted(allGenres)  # sort alphabetically
 
     # perform some pre-computation to avoid repetitive computation
@@ -55,13 +53,14 @@ def main():
         # 1. normalise the year
         vectorList.append(year_norms[film['year']])
         # 2. normalise imdbRating
-        imdbRating_norm = (film['imdbRating'] - MIN_IMDB_RATING) / imdbRating_diff
-        vectorList.append(round(imdbRating_norm, 4))
+        imdbRating_norm = round((film['imdbRating'] - MIN_IMDB_RATING) / imdbRating_diff, 4)
+        vectorList.append(imdbRating_norm)
         # 3. one-hot encoding on genres
         oneHotEncode(vectorList, film['genres'], allGenres)
         # add to dictionary
         vectorized_all_film_data[film['id']] = vectorList
 
+    # write to file
     with open('../data/vectorized-all-film-data.json', 'w') as convert_file:
         convert_file.write(json.dumps(vectorized_all_film_data, indent=4, separators=(',', ': '))
                            .replace(",\n        ", ", ").replace("[\n        ", "[ ")

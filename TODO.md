@@ -2,8 +2,12 @@
 
 ### Vectorizing the data
 - [x] normalise years
-- [ ] normalise imdbRating
-- [ ] one-hot encoding for genres
+- [x] normalise imdbRating
+- [x] one-hot encoding for genres
+- [x] vectorize all-film-data
+- [ ] verify vectorizing was done correctly
+- [ ] vectorize my-film-data
+- [ ] how to weight myRating?
 
 ### Initialising the Database
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)

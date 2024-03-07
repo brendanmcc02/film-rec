@@ -9,7 +9,7 @@ import settings
 
 
 def main():
-    print("\nFiltering out:\n1. non-movies\n2. released < " + str(settings.MIN_YEAR) + "\n3. with no genres\n4. < "
+    print("\nFiltering out:\n1. non-movies\n2. released <" + str(settings.MIN_YEAR) + "\n3. with no genres\n4. <"
           + str(settings.MIN_RUNTIME) + " min runtime")
 
     print("\nImporting title.basics.tsv...")
@@ -62,7 +62,6 @@ def main():
         try:
             if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= settings.MIN_VOTES:
                 film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
-                film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
                 stage_2_allFilmData.append(film)
         # some films may not have 'numVotes' or 'averageRating' attributes
         except ValueError:
@@ -91,9 +90,10 @@ def main():
                 'id': film['id'],
                 'year': film['year'],
                 'imdbRating': film['imdbRating'],
-                'genres': film['genres'],
-                'numberOfVotes': film['numberOfVotes']
+                'genres': film['genres']
             })
+
+    print("Final Dataset size: " + str(len(allFilmData)) + " films.")
 
     # write to file
     with open('../data/all-film-data.json', 'w') as convert_file:
