@@ -1,5 +1,130 @@
 [
     {
+        "id": "tt0004972",
+        "year": 1915,
+        "imdbRating": 6.1,
+        "genres": [
+            "Drama",
+            "History",
+            "War"
+        ]
+    },
+    {
+        "id": "tt0010323",
+        "year": 1920,
+        "imdbRating": 8.0,
+        "genres": [
+            "Horror",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    {
+        "id": "tt0012349",
+        "year": 1921,
+        "imdbRating": 8.2,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Family"
+        ]
+    },
+    {
+        "id": "tt0013442",
+        "year": 1922,
+        "imdbRating": 7.9,
+        "genres": [
+            "Fantasy",
+            "Horror"
+        ]
+    },
+    {
+        "id": "tt0015324",
+        "year": 1924,
+        "imdbRating": 8.2,
+        "genres": [
+            "Action",
+            "Comedy",
+            "Romance"
+        ]
+    },
+    {
+        "id": "tt0015648",
+        "year": 1925,
+        "imdbRating": 7.9,
+        "genres": [
+            "Drama",
+            "History",
+            "Thriller"
+        ]
+    },
+    {
+        "id": "tt0015864",
+        "year": 1925,
+        "imdbRating": 8.1,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Drama"
+        ]
+    },
+    {
+        "id": "tt0017136",
+        "year": 1927,
+        "imdbRating": 8.3,
+        "genres": [
+            "Drama",
+            "Sci-Fi"
+        ]
+    },
+    {
+        "id": "tt0017925",
+        "year": 1926,
+        "imdbRating": 8.1,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy"
+        ]
+    },
+    {
+        "id": "tt0018455",
+        "year": 1927,
+        "imdbRating": 8.1,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    {
+        "id": "tt0018773",
+        "year": 1928,
+        "imdbRating": 8.1,
+        "genres": [
+            "Comedy",
+            "Family",
+            "Romance"
+        ]
+    },
+    {
+        "id": "tt0019254",
+        "year": 1928,
+        "imdbRating": 8.1,
+        "genres": [
+            "Biography",
+            "Drama",
+            "History"
+        ]
+    },
+    {
+        "id": "tt0019760",
+        "year": 1929,
+        "imdbRating": 8.3,
+        "genres": [
+            "Documentary"
+        ]
+    },
+    {
         "id": "tt0020629",
         "year": 1930,
         "imdbRating": 8.1,
