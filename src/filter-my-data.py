@@ -1,3 +1,4 @@
+# this script is not intended to be run alone, but it is run by init.sh
 import json
 
 

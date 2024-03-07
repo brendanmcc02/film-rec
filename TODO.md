@@ -10,7 +10,8 @@
 - [x] vectorize all-film-data
 - [x] verify vectorizing was done correctly
 - [x] vectorize my-film-data
-- [ ] how to weight myRating?
+- [x] how to weight myRating - currently doing scalar multiplication
+- [x] how much do I round values by? - currently doing 6?
 
 ### Initialising the Database
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)

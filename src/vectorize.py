@@ -24,10 +24,13 @@ def main():
     vectorized_all_film_data = {}  # init the dictionary
     vectorized_my_film_data = {}  # init the dictionary
 
-    # get max & min imdbRating & min_year of all-film-data, and list of all film genres
-    MAX_IMDB_RATING = allFilmData[0]['imdbRating']
+    # get min & max imdbRating & min_year of all-film-data, and list of all film genres
     MIN_IMDB_RATING = allFilmData[0]['imdbRating']
+    MAX_IMDB_RATING = allFilmData[0]['imdbRating']
     MIN_YEAR = allFilmData[0]['year']
+    MIN_MY_RATING = myFilmData[0]['myRating']
+    MAX_MY_RATING = myFilmData[0]['myRating']
+
     allGenres = []
     for film in allFilmData:
         # if a genre is not in allGenres yet, append it
@@ -52,12 +55,15 @@ def main():
         MIN_IMDB_RATING = min(MIN_IMDB_RATING, film['imdbRating'])
         MAX_IMDB_RATING = max(MAX_IMDB_RATING, film['imdbRating'])
         MIN_YEAR = min(MIN_YEAR, film['year'])
+        MIN_MY_RATING = min(MIN_MY_RATING, film['myRating'])
+        MAX_MY_RATING = max(MAX_MY_RATING, film['myRating'])
 
     allGenres = sorted(allGenres)  # sort alphabetically
 
     # perform some pre-computation to avoid repetitive computation
     year_diff = MAX_YEAR - MIN_YEAR
     imdbRating_diff = MAX_IMDB_RATING - MIN_IMDB_RATING
+    myRating_diff = MAX_MY_RATING - MIN_MY_RATING
 
     # pre compute year_norm for each year
     year_norms = {}
@@ -81,8 +87,12 @@ def main():
     for film in myFilmData:
         # vectorize the film
         vectorList = vectorize(film, year_norms, imdbRating_diff, allGenres)
-        # todo weigh the film somehow with myRating?
-
+        # normalize myRating
+        myRating_norm = (film['myRating'] - MIN_MY_RATING) / myRating_diff
+        # scalar multiply by myRating
+        len_vectorList = len(vectorList)
+        for i in range(0, len_vectorList):
+            vectorList[i] = round(vectorList[i] * myRating_norm, 6)
         # add to dictionary
         vectorized_my_film_data[film['id']] = vectorList
 
