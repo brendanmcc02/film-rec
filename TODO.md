@@ -1,5 +1,8 @@
 ## TODO
 
+### Scripts
+- [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
+
 ### Vectorizing the data
 - [x] normalise years
 - [x] normalise imdbRating

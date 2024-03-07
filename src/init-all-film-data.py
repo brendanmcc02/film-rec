@@ -13,7 +13,7 @@ MIN_VOTES = 25000
 
 
 def main():
-    print("\nFiltering out films:\n1. that are non-movies\n2. with no genres\n3. <"
+    print("\nFiltering out films:\n1. that are not movies\n2. with no genres\n3. <"
           + str(MIN_RUNTIME) + " min runtime")
 
     print("\nImporting title.basics.tsv...")
