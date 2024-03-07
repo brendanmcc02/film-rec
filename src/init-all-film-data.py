@@ -9,7 +9,7 @@ import settings
 
 
 def main():
-    print("\nFiltering out:\n1. non-movies\n2. released <" + str(settings.MIN_YEAR) + "\n3. with no genres\n4. <"
+    print("\nFiltering out films:\n1. that are non-movies\n2. with no genres\n3. <"
           + str(settings.MIN_RUNTIME) + " min runtime")
 
     print("\nImporting title.basics.tsv...")
@@ -26,9 +26,9 @@ def main():
     # iterate through each film:
     for film in title_basics_raw:
         try:
-            # if the film is a movie, released >= 1930, has genres, and has >= 60 min runtime:
-            if (film["titleType"] == 'movie' and int(film['startYear']) >= settings.MIN_YEAR
-                    and film['genres'] != r"\N" and int(film['runtimeMinutes']) >= settings.MIN_RUNTIME):
+            # if the film is a movie, has genres, and has >= 40 min runtime:
+            if (film["titleType"] == 'movie' and film['genres'] != r"\N"
+                    and int(film['runtimeMinutes']) >= settings.MIN_RUNTIME):
                 newFilm = {}
                 # rename attributes
                 newFilm['id'] = film['tconst']

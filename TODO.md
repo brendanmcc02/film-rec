@@ -5,8 +5,8 @@
 - [x] normalise imdbRating
 - [x] one-hot encoding for genres
 - [x] vectorize all-film-data
-- [ ] verify vectorizing was done correctly
-- [ ] vectorize my-film-data
+- [x] verify vectorizing was done correctly
+- [x] vectorize my-film-data
 - [ ] how to weight myRating?
 
 ### Initialising the Database

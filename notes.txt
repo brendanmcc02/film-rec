@@ -1,6 +1,3 @@
-ensure that max & min year and imdbRating is consistent across both all-film-data and my-film-data
-(i.e. they are normalised the exact same)
-
 myRating should hold some sort of weight or special significance in my-film-data.json in the creation of a user profile
 
 content based filtering: "uses item features to recommend other items similar to what the user likes, based on their previous actions or explicit feedback"
