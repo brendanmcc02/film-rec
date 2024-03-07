@@ -5,10 +5,12 @@
 # imports
 import json
 import csv
+import settings
 
 
 def main():
-    print("\nFiltering out:\n1. non-movies\n2. released < 1930\n3. with no genres\n4. < 60 min runtime")
+    print("\nFiltering out:\n1. non-movies\n2. released < " + str(settings.MIN_YEAR) + "\n3. with no genres\n4. < "
+          + str(settings.MIN_RUNTIME) + " min runtime")
 
     print("\nImporting title.basics.tsv...")
     # import title-basics.tsv as list of dicts
@@ -25,8 +27,8 @@ def main():
     for film in title_basics_raw:
         try:
             # if the film is a movie, released >= 1930, has genres, and has >= 60 min runtime:
-            if (film["titleType"] == 'movie' and int(film['startYear']) >= 1930
-                    and film['genres'] != r"\N" and int(film['runtimeMinutes']) >= 60):
+            if (film["titleType"] == 'movie' and int(film['startYear']) >= settings.MIN_YEAR
+                    and film['genres'] != r"\N" and int(film['runtimeMinutes']) >= settings.MIN_RUNTIME):
                 newFilm = {}
                 # rename attributes
                 newFilm['id'] = film['tconst']
@@ -40,7 +42,7 @@ def main():
         except ValueError:
             pass
 
-    print("\nMerging with title.ratings.tsv and filtering out films with < 10,000 votes...")
+    print("\nMerging with title.ratings.tsv and filtering out films with < " + str(settings.MIN_VOTES) + " votes...")
 
     stage_2_allFilmData = []
 
@@ -59,7 +61,7 @@ def main():
         filmId = film['id']
         try:
             # could numVotes threshold to another number (e.g. 25k), i'll leave it at 10k for now.
-            if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= 10000:
+            if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= settings.MIN_VOTES:
                 film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
                 film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
                 stage_2_allFilmData.append(film)

@@ -1,10 +1,7 @@
-gpt import tsv: 26.94 seconds
-pandas import tsv: 70.33 seconds
 
 
-id should not be included in vector representation of film (?): they have no indicator as to preference of a movie. they are simply labels.
-myRating is distinct (i.e. it determines my preference of a film, obviously this will not be in a general movie dataset).
-don't include watchedInCinema, franchise, top10pos.
+id should not be included in vector representation of film: they have no indicator as to preference of a movie. they are simply labels.
+myRating should hold some sort of weight or special significance in my-film-data.json in the creation of a user profile
 
 content based filtering: "uses item features to recommend other items similar to what the user likes, based on their previous actions or explicit feedback"
 
@@ -13,13 +10,6 @@ Similarity measures:
 1. Cosine similarity - cosine of the angle between 2 vectors
 2. dot product
 3. euclidean distance 
-
-UPDATING THE DATABASE:
-
-Safe, consistent, but inefficient: Just do a full re-init of the database.
-
-Challenges with a smart update script: films that will be popular, may be added to the imdb database with <10,000 votes
-or no rating data, and then they are removed and never seen again
 
 CHAT GPT:
 
