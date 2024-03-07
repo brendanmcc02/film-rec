@@ -2,7 +2,7 @@
 
 ### Vectorizing the data
 - [x] normalise years
-- [x] normalise imdbRating
+- [ ] normalise imdbRating
 - [ ] one-hot encoding for genres
 
 ### Initialising the Database

@@ -42,7 +42,7 @@ def main():
         except ValueError:
             pass
 
-    print("\nMerging with title.ratings.tsv and filtering out films with < " + str(settings.MIN_VOTES) + " votes...")
+    print("\nMerging with title.ratings.tsv and filtering out films with <" + str(settings.MIN_VOTES) + " votes...")
 
     stage_2_allFilmData = []
 
@@ -60,7 +60,6 @@ def main():
     for film in stage_1_allFilmData:
         filmId = film['id']
         try:
-            # could numVotes threshold to another number (e.g. 25k), i'll leave it at 10k for now.
             if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= settings.MIN_VOTES:
                 film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
                 film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])

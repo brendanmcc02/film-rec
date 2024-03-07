@@ -1,4 +1,16 @@
+VECTOR REPRESENTATION:
+(each datapoint is a value between 0.0 and 1.0 inclusive)
+id: year_norm, imdbRating_norm, action, adventure, animation, ..., thriller, war, western.
 
+genrelist:
+['Action', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'Film-Noir', 'History', 'Horror', 'Music', 'Musical', 'Mystery', 'News', 'Romance', 'Sci-Fi', 'Sport', 'Thriller', 'War', 'Western']
+
+my-film-data has max imdbRating
+all-film-data almost certainly has min imdbRating
+min and max year are constants taken both from settings.py and getting the current year
+
+ensure that max & min year and imdbRating is consistent across both all-film-data and my-film-data
+(i.e. they are normalised the exact same)
 
 id should not be included in vector representation of film: they have no indicator as to preference of a movie. they are simply labels.
 myRating should hold some sort of weight or special significance in my-film-data.json in the creation of a user profile
@@ -9,7 +21,7 @@ Similarity measures:
 
 1. Cosine similarity - cosine of the angle between 2 vectors
 2. dot product
-3. euclidean distance 
+3. Euclidean distance
 
 CHAT GPT:
 
