@@ -5,12 +5,16 @@
 # imports
 import json
 import csv
-import settings
+
+
+# global constants
+MIN_RUNTIME = 40
+MIN_VOTES = 25000
 
 
 def main():
     print("\nFiltering out films:\n1. that are non-movies\n2. with no genres\n3. <"
-          + str(settings.MIN_RUNTIME) + " min runtime")
+          + str(MIN_RUNTIME) + " min runtime")
 
     print("\nImporting title.basics.tsv...")
     # import title-basics.tsv as list of dicts
@@ -28,7 +32,7 @@ def main():
         try:
             # if the film is a movie, has genres, and has >= 40 min runtime:
             if (film["titleType"] == 'movie' and film['genres'] != r"\N"
-                    and int(film['runtimeMinutes']) >= settings.MIN_RUNTIME):
+                    and int(film['runtimeMinutes']) >= MIN_RUNTIME):
                 newFilm = {}
                 # rename attributes
                 newFilm['id'] = film['tconst']
@@ -42,7 +46,7 @@ def main():
         except ValueError:
             pass
 
-    print("\nMerging with title.ratings.tsv and filtering out films with <" + str(settings.MIN_VOTES) + " votes...")
+    print("\nMerging with title.ratings.tsv and filtering out films with <" + str(MIN_VOTES) + " votes...")
 
     stage_2_allFilmData = []
 
@@ -60,7 +64,7 @@ def main():
     for film in stage_1_allFilmData:
         filmId = film['id']
         try:
-            if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= settings.MIN_VOTES:
+            if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= MIN_VOTES:
                 film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
                 stage_2_allFilmData.append(film)
         # some films may not have 'numVotes' or 'averageRating' attributes

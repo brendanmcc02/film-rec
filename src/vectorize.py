@@ -7,7 +7,7 @@ import datetime
 
 # global variables
 MIN_IMDB_RATING = 0.0
-MIN_YEAR = 1915
+MIN_YEAR = 0
 
 
 def main():
