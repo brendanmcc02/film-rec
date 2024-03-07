@@ -36798,6 +36798,15 @@
         ]
     },
     {
+        "id": "tt12749596",
+        "year": 2020,
+        "imdbRating": 6.5,
+        "genres": [
+            "Horror",
+            "Mystery"
+        ]
+    },
+    {
         "id": "tt12758060",
         "year": 2023,
         "imdbRating": 7.4,
@@ -46998,6 +47007,16 @@
         ]
     },
     {
+        "id": "tt2591814",
+        "year": 2013,
+        "imdbRating": 7.4,
+        "genres": [
+            "Animation",
+            "Drama",
+            "Romance"
+        ]
+    },
+    {
         "id": "tt2592614",
         "year": 2016,
         "imdbRating": 5.5,
@@ -50518,6 +50537,14 @@
         ]
     },
     {
+        "id": "tt4330758",
+        "year": 1997,
+        "imdbRating": 7.9,
+        "genres": [
+            "Documentary"
+        ]
+    },
+    {
         "id": "tt4332232",
         "year": 2019,
         "imdbRating": 6.5,
@@ -50920,6 +50947,15 @@
             "Crime",
             "Drama",
             "Thriller"
+        ]
+    },
+    {
+        "id": "tt4573394",
+        "year": 2014,
+        "imdbRating": 8.2,
+        "genres": [
+            "Documentary",
+            "History"
         ]
     },
     {
