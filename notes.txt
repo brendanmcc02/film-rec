@@ -1,3 +1,7 @@
+THE CHALLENGE: FINDING THE BEST 'SIMILARITY' MEASURE OF VECTORS:
+
+
+
 VECTORIZED DATA FORM:
 year_norm, imdbRating_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western
 

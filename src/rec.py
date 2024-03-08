@@ -2,15 +2,18 @@ import json
 import numpy as np
 
 
+VECTOR_LENGTH = 25
+
+
 def main():
+    global VECTOR_LENGTH
     # read in all-film-data-vectorized.json & my-film-data-vectorized.json as dictionaries
     allFilmDataVecFile = open('../data/all-film-data-vectorized.json')
     allFilmDataVec = json.load(allFilmDataVecFile)
     myFilmDataVecFile = open('../data/my-film-data-vectorized.json')
     myFilmDataVec = json.load(myFilmDataVecFile)
 
-    # get list of keys of my-film-data-vectorized
-    myFilmDataKeys = list(myFilmDataVec.keys())
+    myFilmDataKeys = list(myFilmDataVec.keys())  # get list of keys of my-film-data-vectorized
 
     VECTOR_LENGTH = len(myFilmDataVec[myFilmDataKeys[0]])  # length of each vector
 
@@ -51,20 +54,11 @@ def main():
     # divide the userProfile vector by the weighted average
     userProfile = np.divide(userProfile, weightedAverageSum)
 
-    # normalise the genres in the user profile
-    MIN_GENRE_VALUE = userProfile[2]
-    MAX_GENRE_VALUE = userProfile[2]
+    normaliseGenres(userProfile)
 
-    for i in range(2, VECTOR_LENGTH):
-        MIN_GENRE_VALUE = min(MIN_GENRE_VALUE, userProfile[i])
-        MAX_GENRE_VALUE = max(MAX_GENRE_VALUE, userProfile[i])
-
-    DIFF_GENRE = MAX_GENRE_VALUE - MIN_GENRE_VALUE
-
-    for i in range(2, VECTOR_LENGTH):
-        userProfile[i] = (userProfile[i] - MIN_GENRE_VALUE) / DIFF_GENRE  # normalise the genres
-        # apply weight in order to prevent domination of genres on film preference
-        userProfile[i] = userProfile[i] * 0.8
+    # fix imdbRating to 1.0, intuitively we want to recommend films that have higher imdbRatings, even if the
+    # weighting says otherwise
+    userProfile[1] = 1.0
 
     print("User Profile: \n" + str(userProfile))
 
@@ -85,25 +79,45 @@ def main():
     for i in range(0, 20):
         film = allFilmData[similarities[i][0]]
         similarity = similarities[i][1]
-        print(stringifyFilm(film, similarity))
+        vector = allFilmDataVec[film['id']]
+        print(stringifyFilm(film, similarity, vector))
 
     print("\nWe think you won't enjoy these 10 films:")
     len_allFilmData = len(allFilmData)
     for i in range(len_allFilmData - 1, len_allFilmData - 11, -1):
         film = allFilmData[similarities[i][0]]
         similarity = similarities[i][1]
-        print(stringifyFilm(film, similarity))
+        vector = allFilmDataVec[film['id']]
+        print(stringifyFilm(film, similarity, vector))
     print("\n")
 
 
-def stringifyFilm(film, similarity):
+def stringifyFilm(film, similarity, vector):
     return (film['title'] + " (" + str(film['year']) + "). " + str(film['imdbRating']) + " Genres: " +
-            str(film['genres']) + " (" + str(round(similarity * 100.0, 2)) + "%)")
+            str(film['genres']) + " (" + str(round(similarity * 100.0, 2)) + "%)\n" + str(vector) + "\n")
 
 
 # gets the cosine similarity between two vectors
 def cosineSimilarity(A, B):
     return np.dot(A, B) / (np.linalg.norm(A) * np.linalg.norm(B))
+
+
+def normaliseGenres(userProfile):
+    # normalise the genres in the user profile
+    MIN_GENRE_VALUE = userProfile[2]
+    MAX_GENRE_VALUE = userProfile[2]
+
+    for i in range(2, VECTOR_LENGTH):
+        MIN_GENRE_VALUE = min(MIN_GENRE_VALUE, userProfile[i])
+        MAX_GENRE_VALUE = max(MAX_GENRE_VALUE, userProfile[i])
+
+    DIFF_GENRE = MAX_GENRE_VALUE - MIN_GENRE_VALUE
+
+    for i in range(2, VECTOR_LENGTH):
+        userProfile[i] = (userProfile[i] - MIN_GENRE_VALUE) / DIFF_GENRE  # normalise the genres
+        # from experimenting (year_norm weight was fixed at 0.3), 0.68 was a good sweet spot in the sense that
+        # it picked both single- and multi-genre films; the diversity was very good.
+        userProfile[i] = userProfile[i] * 0.68
 
 
 if __name__ == "__main__":

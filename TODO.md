@@ -5,7 +5,7 @@
 
 ### Creating user profile
 - [x] calculate user profile using weighted averages
-- [ ] mess around with weights: year, imdbRating, genres
+- [x] mess around with weights of year and genres
 
 ### Vectorizing the data
 - [x] normalise years

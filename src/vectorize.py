@@ -108,11 +108,12 @@ def main():
 # given a film, return it's vectorized form (return type: list)
 def vectorize(film, year_norms, imdbRating_diff, allGenres):
     vector = []
-    # 1. normalise the year
-    year_norm = year_norms[film['year']] * 0.5
+    # 1. normalise the year.
+    # from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
+    year_norm = year_norms[film['year']] * 0.3
     vector.append(year_norm)
     # 2. normalise imdbRating
-    imdbRating_norm = ((film['imdbRating'] - MIN_IMDB_RATING) / imdbRating_diff) * 1.0
+    imdbRating_norm = (film['imdbRating'] - MIN_IMDB_RATING) / imdbRating_diff
     vector.append(imdbRating_norm)
     # 3. one-hot encoding on genres
     oneHotEncode(vector, film['genres'], allGenres)
