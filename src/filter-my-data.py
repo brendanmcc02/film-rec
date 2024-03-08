@@ -1,28 +1,28 @@
-# this script is not intended to be run alone, but it is run by init.sh
+# this script is not intended to be run alone, but it is run by run.sh
 import json
 
 
 def main():
     # import film-data.json (copied over from film-data-vis)
     filmData = open('../data/film-data.json')
-    filmDictionary = json.load(filmData)
+    filmDataList = json.load(filmData)
+
+    filmDataDict = {}  # create dict
 
     # for each film:
-    for film in filmDictionary:
-        # delete unnecessary attributes
-        del film['watchedInCinema']
-        del film['myTop10Position']
-        del film['franchise']
-        # for now, delete these (maybe don't delete later)
-        del film['metascore']
-        del film['directors']
-        del film['actors']
-        del film['countries']
-        del film['languages']
+    for film in filmDataList:
+        # map the film id to a dict of it's attributes
+        filmDataDict[film['id']] = {
+            "title": film['title'],
+            "year": film['year'],
+            "myRating": film['myRating'],
+            "imdbRating": film['imdbRating'],
+            "genres": film['genres']
+        }
 
     # write to file
     with open('../data/my-film-data.json', 'w') as convert_file:
-        convert_file.write(json.dumps(filmDictionary, indent=4, separators=(',', ': ')))
+        convert_file.write(json.dumps(filmDataDict, indent='\t', separators=(',', ': ')))
 
 
 if __name__ == "__main__":

@@ -21,31 +21,52 @@ def main():
         # sum the (already weighted) vectors together
         userProfile = userProfile + myFilmDataVec[key]
 
-    # read in my-film-data.json as a dictionary
+    # read in my-film-data.json
     myFilmDataFile = open('../data/my-film-data.json')
     myFilmData = json.load(myFilmDataFile)
+    myFilmDataKeys = list(myFilmData.keys())
+    # read in all-film-data.json
+    allFilmDataFile = open('../data/all-film-data.json')
+    allFilmData = json.load(allFilmDataFile)
 
     # calculate the weighted averages of the userProfile:
 
     # find the min & max myRating in my-film-data
-    MIN_MY_RATING = myFilmData[0]['myRating']
-    MAX_MY_RATING = myFilmData[0]['myRating']
-    for film in myFilmData:
-        MIN_MY_RATING = min(MIN_MY_RATING, film['myRating'])
-        MAX_MY_RATING = max(MAX_MY_RATING, film['myRating'])
+    MIN_MY_RATING = myFilmData[myFilmDataKeys[0]]['myRating']
+    MAX_MY_RATING = myFilmData[myFilmDataKeys[0]]['myRating']
+    for key in myFilmDataKeys:
+        MIN_MY_RATING = min(MIN_MY_RATING, myFilmData[key]['myRating'])
+        MAX_MY_RATING = max(MAX_MY_RATING, myFilmData[key]['myRating'])
 
     # pre-compute the myRating differences for higher efficiency
     DIFF_MY_RATING = MAX_MY_RATING - MIN_MY_RATING
 
     # find the sum of the weighted averages
     weightedAverageSum = 0.0
-    for film in myFilmData:
-        myRating_norm = (film['myRating'] - MIN_MY_RATING) / DIFF_MY_RATING
+    for key in myFilmDataKeys:
+        myRating_norm = (myFilmData[key]['myRating'] - MIN_MY_RATING) / DIFF_MY_RATING
         # increment the weighted average
         weightedAverageSum = weightedAverageSum + myRating_norm
 
     # divide the userProfile vector by the weighted average
     userProfile = np.divide(userProfile, weightedAverageSum)
+
+    # normalise the genres in the user profile
+    MIN_GENRE_VALUE = userProfile[2]
+    MAX_GENRE_VALUE = userProfile[2]
+
+    for i in range(2, VECTOR_LENGTH):
+        MIN_GENRE_VALUE = min(MIN_GENRE_VALUE, userProfile[i])
+        MAX_GENRE_VALUE = max(MAX_GENRE_VALUE, userProfile[i])
+
+    DIFF_GENRE = MAX_GENRE_VALUE - MIN_GENRE_VALUE
+
+    for i in range(2, VECTOR_LENGTH):
+        userProfile[i] = (userProfile[i] - MIN_GENRE_VALUE) / DIFF_GENRE  # normalise the genres
+        # apply weight in order to prevent domination of genres on film preference
+        userProfile[i] = userProfile[i] * 0.8
+
+    print("User Profile: \n" + str(userProfile))
 
     # dict: key = filmId, value = similarity to userProfile
     similarities = {}
@@ -60,9 +81,24 @@ def main():
     # sort similarities in descending order
     similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
 
-    print("We recommend these 25 films:")
-    for i in range(0, 25):
-        print(similarities[i][0])
+    print("\nWe think you'll enjoy these 20 films:")
+    for i in range(0, 20):
+        film = allFilmData[similarities[i][0]]
+        similarity = similarities[i][1]
+        print(stringifyFilm(film, similarity))
+
+    print("\nWe think you won't enjoy these 10 films:")
+    len_allFilmData = len(allFilmData)
+    for i in range(len_allFilmData - 1, len_allFilmData - 11, -1):
+        film = allFilmData[similarities[i][0]]
+        similarity = similarities[i][1]
+        print(stringifyFilm(film, similarity))
+    print("\n")
+
+
+def stringifyFilm(film, similarity):
+    return (film['title'] + " (" + str(film['year']) + "). " + str(film['imdbRating']) + " Genres: " +
+            str(film['genres']) + " (" + str(round(similarity * 100.0, 2)) + "%)")
 
 
 # gets the cosine similarity between two vectors

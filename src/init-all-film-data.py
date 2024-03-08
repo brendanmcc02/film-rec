@@ -1,6 +1,4 @@
-# 1. download latest film data from https://datasets.imdbws.com/ (title.basics.tsv & title.ratings.tsv)
-# 2. filter through this data
-# 3. produces all-film-data.json
+# given title.basics.tsv & title.ratings.tsv, filter through these datasets and produce all-film-data.json
 
 # imports
 import json
@@ -13,8 +11,7 @@ MIN_VOTES = 25000
 
 
 def main():
-    print("\nFiltering out films:\n1. that are not movies\n2. with no genres\n3. <"
-          + str(MIN_RUNTIME) + " min runtime")
+    print("\nFiltering out films:\n1. that are not movies\n2. with no genres\n3. <" + str(MIN_RUNTIME) + " min runtime")
 
     print("\nImporting title.basics.tsv...")
     # import title-basics.tsv as list of dicts
@@ -36,7 +33,7 @@ def main():
                 newFilm = {}
                 # rename attributes
                 newFilm['id'] = film['tconst']
-                newFilm['title'] = film['originalTitle']
+                newFilm['title'] = film['primaryTitle']
                 newFilm['year'] = int(film['startYear'])  # convert from str to int
 
                 # convert genres from string to array of strings
@@ -74,30 +71,25 @@ def main():
 
     print("\nFiltering out films that I've rated and changing the order of json attributes...")
 
-    allFilmData = []
+    allFilmData = {}
 
     # import my-film-data.json as a dictionary
     myFilmDataFile = open('../data/my-film-data.json')
     myFilmData = json.load(myFilmDataFile)
-
-    # create a dictionary of films that I have rated
-    # key = film id, value = unused boolean
-    myFilmDataDict = {}
-    for myFilm in myFilmData:
-        myFilmDataDict[myFilm['id']] = True
+    myFilmDataKeys = list(myFilmData.keys())
 
     # for each film in stage 2:
     for film in stage_2_allFilmData:
         # if the film is a film that I have not rated
-        if film['id'] not in myFilmDataDict:
+        if film['id'] not in myFilmDataKeys:
             # changing the order of json attributes
-            allFilmData.append({
+            allFilmData[film['id']] = {
                 'id': film['id'],
                 'title': film['title'],
                 'year': film['year'],
                 'imdbRating': film['imdbRating'],
                 'genres': film['genres']
-            })
+            }
 
     print("Final Dataset size: " + str(len(allFilmData)) + " films.")
 

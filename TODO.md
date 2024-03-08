@@ -5,6 +5,7 @@
 
 ### Creating user profile
 - [x] calculate user profile using weighted averages
+- [ ] mess around with weights: year, imdbRating, genres
 
 ### Vectorizing the data
 - [x] normalise years
@@ -32,3 +33,5 @@
 - [x] verify data is correct
 - [x] init all-film-data.py
 - [x] for .sh files change paths to be relative to device
+- [x] add title attribute to dataset
+- [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
