@@ -3,16 +3,11 @@
 
 cd ..
 git pull
-printf "\n[1/5] Copying my-film-data.json from film-data-vis repo...\n"
-cd ../film-data-vis/data/ || exit
-git pull
-cp film-data.json ../../film-rec/data/
-# remove all the attributes that are not needed in the dataset
-cd ../../film-rec/src/ || exit
-python3 filter-my-data.py
-# remove film-data.json
-cd ../data/ || exit
-rm film-data.json
+printf "\n[1/5] Downloading ratings.csv from my IMDb account...\n"
+cd data/ || exit
+rm ratings.csv
+cd ../src/ || exit
+python3 download-ratings.py
 
 printf "\n[2/5] Downloading title.basics.tsv & title.ratings.tsv from https://datasets.imdbws.com/..."
 cd ../src/ || exit

@@ -35,6 +35,7 @@ def main():
                 newFilm['id'] = film['tconst']
                 newFilm['title'] = film['primaryTitle']
                 newFilm['year'] = int(film['startYear'])  # convert from str to int
+                newFilm['runtime'] = int(film['runtimeMinutes'])
 
                 # convert genres from string to array of strings
                 # e.g. genres: "Action, Family" => genres: {"Action", "Family"}
@@ -64,6 +65,7 @@ def main():
         try:
             if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= MIN_VOTES:
                 film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
+                film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
                 stage_2_allFilmData.append(film)
         # some films may not have 'numVotes' or 'averageRating' attributes
         except ValueError:
@@ -88,6 +90,8 @@ def main():
                 'title': film['title'],
                 'year': film['year'],
                 'imdbRating': film['imdbRating'],
+                'numberOfVotes': film['numberOfVotes'],
+                'runtime': film['runtime'],
                 'genres': film['genres']
             }
 

@@ -1,8 +1,9 @@
 ## TODO
 
 ### Next Steps
-- [ ] switch from my-film-data.json to ratings.csv, download from https://www.imdb.com/user/ur95934592/ratings/export (take from user input, or encrypt from password saved from non-git different directory)
-- [ ] add numVotes to vectorized data, put low weight on it (e.g. 0.2 or something)
+- [x] switch from my-film-data.json to ratings.csv
+- [x] add numVotes & runtime to human data
+- [ ] vectorize numberOfVotes & runtime
 - [ ] make it possible for other users to be recommended films (should work the exact same if it's working off ratings.csv)
 - [ ] add more dimensions/features to the vectors? (metascore & countries). if a film doesn't have a metascore, set imdbRating to it
 - [ ] user interface (web app)
