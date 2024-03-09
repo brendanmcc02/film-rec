@@ -116,7 +116,8 @@ def normaliseGenres(userProfile):
     for i in range(2, VECTOR_LENGTH):
         userProfile[i] = (userProfile[i] - MIN_GENRE_VALUE) / DIFF_GENRE  # normalise the genres
         # from experimenting (year_norm weight was fixed at 0.3), 0.68 was a good sweet spot in the sense that
-        # it picked both single- and multi-genre films; the diversity was very good.
+        # it picked both single- and multi-genre films. The algorithm still heavily favoured the 4 genres that had the
+        # highest weighing, but this is expected and good behaviour.
         userProfile[i] = userProfile[i] * 0.68
 
 

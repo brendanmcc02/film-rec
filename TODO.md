@@ -1,5 +1,17 @@
 ## TODO
 
+### Next Steps
+- [ ] switch from my-film-data.json to ratings.csv, download from https://www.imdb.com/user/ur95934592/ratings/export (take from user input, or encrypt from password saved from non-git different directory)
+- [ ] add numVotes to vectorized data, put low weight on it (e.g. 0.2 or something)
+- [ ] make it possible for other users to be recommended films (should work the exact same if it's working off ratings.csv)
+- [ ] add more dimensions/features to the vectors? (metascore & countries). if a film doesn't have a metascore, set imdbRating to it
+- [ ] user interface (web app)
+
+### Downloading from ratings.csv
+- [ ] log into account safely (encrypt from (hashed) password saved from non-git different directory?)
+- [ ] filter through unnecessary films (e.g. only movie types) and attributes (e.g. date rated)
+- [ ] change all .py and .sh files to reflect the fact we're working off the .csv as opposed to my-film-data.json
+
 ### Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
 
