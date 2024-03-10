@@ -2,7 +2,7 @@ import json
 import numpy as np
 
 
-VECTOR_LENGTH = 25
+VECTOR_LENGTH = 27
 
 
 def main():
@@ -72,7 +72,7 @@ def main():
         # calculate similarity to userProfile
         similarities[filmId] = cosineSimilarity(allFilmDataVec[filmId], userProfile)
 
-    # sort similarities in descending order
+    # sort similarities in descending order. with cosine similarity the lower, the better.
     similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
 
     print("\nWe think you'll enjoy these 20 films:")
@@ -104,16 +104,16 @@ def cosineSimilarity(A, B):
 
 def normaliseGenres(userProfile):
     # normalise the genres in the user profile
-    MIN_GENRE_VALUE = userProfile[2]
-    MAX_GENRE_VALUE = userProfile[2]
+    MIN_GENRE_VALUE = userProfile[4]
+    MAX_GENRE_VALUE = userProfile[4]
 
-    for i in range(2, VECTOR_LENGTH):
+    for i in range(4, VECTOR_LENGTH):
         MIN_GENRE_VALUE = min(MIN_GENRE_VALUE, userProfile[i])
         MAX_GENRE_VALUE = max(MAX_GENRE_VALUE, userProfile[i])
 
     DIFF_GENRE = MAX_GENRE_VALUE - MIN_GENRE_VALUE
 
-    for i in range(2, VECTOR_LENGTH):
+    for i in range(4, VECTOR_LENGTH):
         userProfile[i] = (userProfile[i] - MIN_GENRE_VALUE) / DIFF_GENRE  # normalise the genres
         # from experimenting (year_norm weight was fixed at 0.3), 0.68 was a good sweet spot in the sense that
         # it picked both single- and multi-genre films. The algorithm still heavily favoured the 4 genres that had the

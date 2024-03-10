@@ -8,11 +8,25 @@ import datetime
 # global variables
 MIN_IMDB_RATING = 0.0
 MIN_YEAR = 0
+MIN_NUMBER_OF_VOTES = 0
+MIN_RUNTIME = 0
+DIFF_IMDB_RATING = 0.0
+DIFF_YEAR = 0
+DIFF_NUMBER_OF_VOTES = 0
+DIFF_RUNTIME = 0
+year_norms = {}
 
 
 def main():
     global MIN_IMDB_RATING
     global MIN_YEAR
+    global MIN_NUMBER_OF_VOTES
+    global MIN_RUNTIME
+    global DIFF_IMDB_RATING
+    global DIFF_YEAR
+    global DIFF_NUMBER_OF_VOTES
+    global DIFF_RUNTIME
+    global year_norms
     # read in all-film-data.json & my-film-data.json
     allFilmDataFile = open('../data/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
@@ -21,18 +35,22 @@ def main():
     myFilmData = json.load(myFilmDataFile)
     myFilmDataKeys = list(myFilmData.keys())
 
-    MAX_YEAR = int(datetime.datetime.now().year)  # get the current year
-
     vectorized_all_film_data = {}  # init the dictionary
-    vectorized_my_film_data = {}  # init the dictionary
+    vectorized_my_film_data = {}   # init the dictionary
 
-    # get min & max imdbRating & min_year of all-film-data, and get a (unique) list of all genres
+    # initialise the min & max values of various attributes
     MIN_IMDB_RATING = allFilmData[allFilmDataKeys[0]]['imdbRating']
     MAX_IMDB_RATING = allFilmData[allFilmDataKeys[0]]['imdbRating']
     MIN_YEAR = allFilmData[allFilmDataKeys[0]]['year']
+    MAX_YEAR = allFilmData[allFilmDataKeys[0]]['year']
     MIN_MY_RATING = myFilmData[myFilmDataKeys[0]]['myRating']
     MAX_MY_RATING = myFilmData[myFilmDataKeys[0]]['myRating']
+    MIN_NUMBER_OF_VOTES = myFilmData[myFilmDataKeys[0]]['numberOfVotes']
+    MAX_NUMBER_OF_VOTES = myFilmData[myFilmDataKeys[0]]['numberOfVotes']
+    MIN_RUNTIME = myFilmData[myFilmDataKeys[0]]['runtime']
+    MAX_RUNTIME = myFilmData[myFilmDataKeys[0]]['runtime']
 
+    # get a list of unique genres
     allGenres = []
     for key in allFilmDataKeys:
         # if a genre is not in allGenres yet, append it
@@ -40,42 +58,46 @@ def main():
             if genre not in allGenres:
                 allGenres.append(genre)
 
-        # modify max & min imdbRatings
-        MAX_IMDB_RATING = max(MAX_IMDB_RATING, allFilmData[key]['imdbRating'])
+        # modify min & max of the various attributes
         MIN_IMDB_RATING = min(MIN_IMDB_RATING, allFilmData[key]['imdbRating'])
-        # modify min year
+        MAX_IMDB_RATING = max(MAX_IMDB_RATING, allFilmData[key]['imdbRating'])
         MIN_YEAR = min(MIN_YEAR, allFilmData[key]['year'])
+        MAX_YEAR = max(MAX_YEAR, allFilmData[key]['year'])
+        MIN_NUMBER_OF_VOTES = min(MIN_NUMBER_OF_VOTES, allFilmData[key]['numberOfVotes'])
+        MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, allFilmData[key]['numberOfVotes'])
+        MIN_RUNTIME = min(MIN_RUNTIME, allFilmData[key]['runtime'])
+        MAX_RUNTIME = max(MAX_RUNTIME, allFilmData[key]['runtime'])
 
-    # the max imdbRating of all-film-data is almost certainly lower than the max of my-film-data (recall
-    # that I remove films from all-film-data that I have seen before, so Shawshank, TDK, etc. wouldn't be in
-    # all-film-data).
-    # the min imdbRating of all-film-data is almost certainly lower than the min of my-film-data,
-    # still good practice to check anyway.
-    # the min year of all-film-data is almost certainly lower than the min year of my-film-data,
-    # still good practice to check anyway.
+    allGenres = sorted(allGenres)  # sort alphabetically
+
+    # iterate through my-film-data and alter the min & max values to ensure they are the same across both datasets
     for key in myFilmDataKeys:
         MIN_IMDB_RATING = min(MIN_IMDB_RATING, myFilmData[key]['imdbRating'])
         MAX_IMDB_RATING = max(MAX_IMDB_RATING, myFilmData[key]['imdbRating'])
         MIN_YEAR = min(MIN_YEAR, myFilmData[key]['year'])
+        MAX_YEAR = max(MAX_YEAR, myFilmData[key]['year'])
         MIN_MY_RATING = min(MIN_MY_RATING, myFilmData[key]['myRating'])
         MAX_MY_RATING = max(MAX_MY_RATING, myFilmData[key]['myRating'])
-
-    allGenres = sorted(allGenres)  # sort alphabetically
+        MIN_NUMBER_OF_VOTES = min(MIN_NUMBER_OF_VOTES, myFilmData[key]['numberOfVotes'])
+        MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, myFilmData[key]['numberOfVotes'])
+        MIN_RUNTIME = min(MIN_RUNTIME, myFilmData[key]['runtime'])
+        MAX_RUNTIME = max(MAX_RUNTIME, myFilmData[key]['runtime'])
 
     # perform some pre-computation to avoid repetitive computation
-    DIFF_YEAR = MAX_YEAR - MIN_YEAR
     DIFF_IMDB_RATING = MAX_IMDB_RATING - MIN_IMDB_RATING
+    DIFF_YEAR = MAX_YEAR - MIN_YEAR
     DIFF_MY_RATING = MAX_MY_RATING - MIN_MY_RATING
+    DIFF_NUMBER_OF_VOTES = MAX_NUMBER_OF_VOTES - MIN_NUMBER_OF_VOTES
+    DIFF_RUNTIME = MAX_RUNTIME - MIN_RUNTIME
 
     # pre-compute normalised years for each year
-    year_norms = {}
     for y in range(MIN_YEAR, MAX_YEAR + 1):
         year_norms[y] = (y - MIN_YEAR) / DIFF_YEAR
 
     # for each film in all-film-data:
     for key in allFilmDataKeys:
         # vectorize the film
-        vector = vectorize(allFilmData[key], year_norms, DIFF_IMDB_RATING, allGenres)
+        vector = vectorize(allFilmData[key], allGenres)
         # add to dictionary
         vectorized_all_film_data[key] = vector
 
@@ -88,7 +110,7 @@ def main():
     # vectorize my-film-data
     for key in myFilmDataKeys:
         # vectorize the film
-        vector = vectorize(myFilmData[key], year_norms, DIFF_IMDB_RATING, allGenres)
+        vector = vectorize(myFilmData[key], allGenres)
         # normalize myRating
         myRating_norm = (myFilmData[key]['myRating'] - MIN_MY_RATING) / DIFF_MY_RATING
         # scalar multiply by myRating
@@ -106,16 +128,22 @@ def main():
 
 
 # given a film, return it's vectorized form (return type: list)
-def vectorize(film, year_norms, imdbRating_diff, allGenres):
+def vectorize(film, allGenres):
     vector = []
-    # 1. normalise the year.
+    # 1. normalise the year; apply weight
     # from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
     year_norm = year_norms[film['year']] * 0.3
     vector.append(year_norm)
     # 2. normalise imdbRating
-    imdbRating_norm = (film['imdbRating'] - MIN_IMDB_RATING) / imdbRating_diff
+    imdbRating_norm = (film['imdbRating'] - MIN_IMDB_RATING) / DIFF_IMDB_RATING
     vector.append(imdbRating_norm)
-    # 3. one-hot encoding on genres
+    # 3. normalise numberOfVotes; apply weight
+    numberOfVotes_norm = ((film['numberOfVotes'] - MIN_NUMBER_OF_VOTES) / DIFF_NUMBER_OF_VOTES) * 0.3
+    vector.append(numberOfVotes_norm)
+    # 4. normalise runtime; apply weight
+    runtime_norm = ((film['runtime'] - MIN_RUNTIME) / DIFF_RUNTIME) * 0.3
+    vector.append(runtime_norm)
+    # 5. one-hot encoding on genres
     oneHotEncode(vector, film['genres'], allGenres)
 
     return vector

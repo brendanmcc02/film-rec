@@ -4,14 +4,11 @@
 - [x] switch from my-film-data.json to ratings.csv
 - [x] add numVotes & runtime to human data
 - [ ] vectorize numberOfVotes & runtime
+- [ ] integrate download-imdb-gz-files into init-all-film-data
+- [ ] change run.sh to reflect various changes
 - [ ] make it possible for other users to be recommended films (should work the exact same if it's working off ratings.csv)
 - [ ] add more dimensions/features to the vectors? (metascore & countries). if a film doesn't have a metascore, set imdbRating to it
 - [ ] user interface (web app)
-
-### Downloading from ratings.csv
-- [ ] log into account safely (encrypt from (hashed) password saved from non-git different directory?)
-- [ ] filter through unnecessary films (e.g. only movie types) and attributes (e.g. date rated)
-- [ ] change all .py and .sh files to reflect the fact we're working off the .csv as opposed to my-film-data.json
 
 ### Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
