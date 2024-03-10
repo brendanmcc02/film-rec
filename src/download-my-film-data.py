@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
+MY_IMDB_ID = "ur95934592"
 
 def main():
     email = "brendan.mccann02@gmail.com"
@@ -26,7 +27,7 @@ def main():
         driver.find_element(By.CLASS_NAME, "list-group-item").click()
 
         # wait until next url is fully loaded
-        WebDriverWait(driver=driver, timeout=10).until(
+        WebDriverWait(driver=driver, timeout=20).until(
             lambda x: x.execute_script("return document.readyState === 'complete'")
         )
 
@@ -36,19 +37,19 @@ def main():
         driver.find_element(By.ID, "signInSubmit").click()
 
         # wait until next url is fully loaded
-        WebDriverWait(driver=driver, timeout=10).until(
+        WebDriverWait(driver=driver, timeout=20).until(
             lambda x: x.execute_script("return document.readyState === 'complete'")
         )
 
         # download ratings.csv
-        driver.get("https://www.imdb.com/user/ur95934592/ratings/export")
+        driver.get("https://www.imdb.com/user/" + MY_IMDB_ID + "/ratings/export")
 
         # wait until download is done
-        WebDriverWait(driver=driver, timeout=10).until(
+        WebDriverWait(driver=driver, timeout=20).until(
             lambda x: x.execute_script("return document.readyState === 'complete'")
         )
 
-        time.sleep(3)  # sometimes the above wait doesn't work, so wait extra time as caution
+        time.sleep(5)  # sometimes the above wait doesn't work, so wait extra time as caution
 
         driver.close()  # close the driver
     except selenium.common.exceptions.NoSuchElementException:
