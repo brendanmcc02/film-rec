@@ -72,7 +72,7 @@ def main():
         # calculate similarity to userProfile
         similarities[filmId] = cosineSimilarity(allFilmDataVec[filmId], userProfile)
 
-    # sort similarities in descending order. with cosine similarity the lower, the better.
+    # sort similarities in descending order.
     similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
 
     print("\nWe think you'll enjoy these 20 films:")
@@ -94,7 +94,7 @@ def main():
 
 def stringifyFilm(film, similarity, vector):
     return (film['title'] + " (" + str(film['year']) + "). " + str(film['imdbRating']) + " Genres: " +
-            str(film['genres']) + " (" + str(round(similarity * 100.0, 2)) + "%)\n" + str(vector) + "\n")
+            str(film['genres']) + " (" + str(round(similarity * 100.0, 2)) + "% match)\n" + str(vector) + "\n")
 
 
 # gets the cosine similarity between two vectors

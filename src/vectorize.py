@@ -1,9 +1,8 @@
 # vectorizes both all-film-data.json & my-film-data.json into
 # all-film-data-vectorized.json & my-film-data-vectorized.json respectively.
 
-# libraries
+# imports
 import json
-import datetime
 
 # global variables
 MIN_IMDB_RATING = 0.0
@@ -137,8 +136,8 @@ def vectorize(film, allGenres):
     # 2. normalise imdbRating
     imdbRating_norm = (film['imdbRating'] - MIN_IMDB_RATING) / DIFF_IMDB_RATING
     vector.append(imdbRating_norm)
-    # 3. normalise numberOfVotes; apply weight
-    numberOfVotes_norm = ((film['numberOfVotes'] - MIN_NUMBER_OF_VOTES) / DIFF_NUMBER_OF_VOTES) * 0.3
+    # 3. normalise numberOfVotes
+    numberOfVotes_norm = (film['numberOfVotes'] - MIN_NUMBER_OF_VOTES) / DIFF_NUMBER_OF_VOTES
     vector.append(numberOfVotes_norm)
     # 4. normalise runtime; apply weight
     runtime_norm = ((film['runtime'] - MIN_RUNTIME) / DIFF_RUNTIME) * 0.3

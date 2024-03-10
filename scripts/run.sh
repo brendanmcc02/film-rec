@@ -31,7 +31,6 @@ python3 vectorize.py
 
 printf "\n[6/6] Calculating recommended and non-recommended films:\n"
 python3 rec.py
-cd ../data || exit
-git add .
+git add /data
 git commit -m "downloaded, filtered, and vectorized all-film-data & my-film-data"
 git push
