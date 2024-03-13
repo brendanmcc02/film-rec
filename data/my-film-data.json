@@ -4,7 +4,7 @@
 		"year": 1990,
 		"myRating": 7,
 		"imdbRating": 6.8,
-		"numberOfVotes": 104245,
+		"numberOfVotes": 104281,
 		"runtime": 93,
 		"genres": [
 			"Action",
@@ -19,7 +19,7 @@
 		"year": 2008,
 		"myRating": 7,
 		"imdbRating": 8.0,
-		"numberOfVotes": 874700,
+		"numberOfVotes": 874854,
 		"runtime": 120,
 		"genres": [
 			"Crime",
@@ -32,7 +32,7 @@
 		"year": 1991,
 		"myRating": 8,
 		"imdbRating": 8.0,
-		"numberOfVotes": 477686,
+		"numberOfVotes": 477774,
 		"runtime": 84,
 		"genres": [
 			"Animation",
@@ -47,7 +47,7 @@
 		"year": 2022,
 		"myRating": 9,
 		"imdbRating": 7.8,
-		"numberOfVotes": 241266,
+		"numberOfVotes": 241562,
 		"runtime": 148,
 		"genres": [
 			"Action",
@@ -60,7 +60,7 @@
 		"year": 2009,
 		"myRating": 9,
 		"imdbRating": 7.7,
-		"numberOfVotes": 553746,
+		"numberOfVotes": 553963,
 		"runtime": 95,
 		"genres": [
 			"Comedy",
@@ -73,7 +73,7 @@
 		"year": 2012,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 636985,
+		"numberOfVotes": 637087,
 		"runtime": 120,
 		"genres": [
 			"Biography",
@@ -86,7 +86,7 @@
 		"year": 1991,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 36847,
+		"numberOfVotes": 36854,
 		"runtime": 119,
 		"genres": [
 			"Animation",
@@ -99,7 +99,7 @@
 		"year": 2020,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 192337,
+		"numberOfVotes": 192552,
 		"runtime": 117,
 		"genres": [
 			"Drama"
@@ -110,7 +110,7 @@
 		"year": 1991,
 		"myRating": 9,
 		"imdbRating": 8.6,
-		"numberOfVotes": 1537423,
+		"numberOfVotes": 1538186,
 		"runtime": 118,
 		"genres": [
 			"Crime",
@@ -123,10 +123,11 @@
 		"year": 1991,
 		"myRating": 8,
 		"imdbRating": 8.6,
-		"numberOfVotes": 1166943,
+		"numberOfVotes": 1167362,
 		"runtime": 137,
 		"genres": [
 			"Action",
+			"Adventure",
 			"Sci-Fi"
 		]
 	},
@@ -135,7 +136,7 @@
 		"year": 1992,
 		"myRating": 7,
 		"imdbRating": 8.0,
-		"numberOfVotes": 462795,
+		"numberOfVotes": 462930,
 		"runtime": 90,
 		"genres": [
 			"Animation",
@@ -152,7 +153,7 @@
 		"year": 2023,
 		"myRating": 6,
 		"imdbRating": 7.7,
-		"numberOfVotes": 327106,
+		"numberOfVotes": 327497,
 		"runtime": 169,
 		"genres": [
 			"Action",
@@ -165,7 +166,7 @@
 		"year": 1992,
 		"myRating": 4,
 		"imdbRating": 7.1,
-		"numberOfVotes": 325662,
+		"numberOfVotes": 325747,
 		"runtime": 126,
 		"genres": [
 			"Action",
@@ -178,7 +179,7 @@
 		"year": 1992,
 		"myRating": 6,
 		"imdbRating": 6.9,
-		"numberOfVotes": 400544,
+		"numberOfVotes": 400646,
 		"runtime": 120,
 		"genres": [
 			"Adventure",
@@ -192,7 +193,7 @@
 		"year": 1992,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 101013,
+		"numberOfVotes": 101066,
 		"runtime": 94,
 		"genres": [
 			"Animation",
@@ -206,7 +207,7 @@
 		"year": 2009,
 		"myRating": 8,
 		"imdbRating": 8.3,
-		"numberOfVotes": 1116946,
+		"numberOfVotes": 1117438,
 		"runtime": 96,
 		"genres": [
 			"Animation",
@@ -221,7 +222,7 @@
 		"year": 2020,
 		"myRating": 7,
 		"imdbRating": 7.1,
-		"numberOfVotes": 252928,
+		"numberOfVotes": 253064,
 		"runtime": 124,
 		"genres": [
 			"Drama",
@@ -236,7 +237,7 @@
 		"year": 1992,
 		"myRating": 9,
 		"imdbRating": 8.3,
-		"numberOfVotes": 1081732,
+		"numberOfVotes": 1082122,
 		"runtime": 99,
 		"genres": [
 			"Crime",
@@ -248,7 +249,7 @@
 		"year": 2020,
 		"myRating": 5,
 		"imdbRating": 6.8,
-		"numberOfVotes": 82263,
+		"numberOfVotes": 82298,
 		"runtime": 131,
 		"genres": [
 			"Biography",
@@ -261,7 +262,7 @@
 		"year": 2020,
 		"myRating": 9,
 		"imdbRating": 7.4,
-		"numberOfVotes": 95647,
+		"numberOfVotes": 95768,
 		"runtime": 115,
 		"genres": [
 			"Drama"
@@ -272,7 +273,7 @@
 		"year": 1993,
 		"myRating": 5,
 		"imdbRating": 7.8,
-		"numberOfVotes": 56445,
+		"numberOfVotes": 56462,
 		"runtime": 76,
 		"genres": [
 			"Animation",
@@ -289,7 +290,7 @@
 		"year": 2022,
 		"myRating": 6,
 		"imdbRating": 7.1,
-		"numberOfVotes": 164082,
+		"numberOfVotes": 164343,
 		"runtime": 189,
 		"genres": [
 			"Comedy",
@@ -302,7 +303,7 @@
 		"year": 2022,
 		"myRating": 5,
 		"imdbRating": 6.2,
-		"numberOfVotes": 396317,
+		"numberOfVotes": 396532,
 		"runtime": 118,
 		"genres": [
 			"Action",
@@ -318,7 +319,7 @@
 		"year": 2014,
 		"myRating": 9,
 		"imdbRating": 7.9,
-		"numberOfVotes": 366169,
+		"numberOfVotes": 366214,
 		"runtime": 165,
 		"genres": [
 			"Drama"
@@ -329,7 +330,7 @@
 		"year": 1993,
 		"myRating": 6,
 		"imdbRating": 7.8,
-		"numberOfVotes": 316445,
+		"numberOfVotes": 316527,
 		"runtime": 130,
 		"genres": [
 			"Action",
@@ -344,7 +345,7 @@
 		"year": 1993,
 		"myRating": 7,
 		"imdbRating": 8.2,
-		"numberOfVotes": 1059756,
+		"numberOfVotes": 1060109,
 		"runtime": 127,
 		"genres": [
 			"Action",
@@ -358,7 +359,7 @@
 		"year": 2012,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 728254,
+		"numberOfVotes": 728488,
 		"runtime": 143,
 		"genres": [
 			"Action",
@@ -371,7 +372,7 @@
 		"year": 1993,
 		"myRating": 9,
 		"imdbRating": 9.0,
-		"numberOfVotes": 1440686,
+		"numberOfVotes": 1441286,
 		"runtime": 195,
 		"genres": [
 			"Biography",
@@ -384,7 +385,7 @@
 		"year": 1993,
 		"myRating": 6,
 		"imdbRating": 7.8,
-		"numberOfVotes": 109864,
+		"numberOfVotes": 109890,
 		"runtime": 94,
 		"genres": [
 			"Drama",
@@ -398,7 +399,7 @@
 		"year": 2021,
 		"myRating": 9,
 		"imdbRating": 8.2,
-		"numberOfVotes": 868335,
+		"numberOfVotes": 868992,
 		"runtime": 148,
 		"genres": [
 			"Action",
@@ -412,7 +413,7 @@
 		"year": 1994,
 		"myRating": 8,
 		"imdbRating": 8.8,
-		"numberOfVotes": 2239259,
+		"numberOfVotes": 2240314,
 		"runtime": 142,
 		"genres": [
 			"Drama",
@@ -424,7 +425,7 @@
 		"year": 1994,
 		"myRating": 6,
 		"imdbRating": 7.1,
-		"numberOfVotes": 165049,
+		"numberOfVotes": 165095,
 		"runtime": 117,
 		"genres": [
 			"Comedy",
@@ -437,7 +438,7 @@
 		"year": 2014,
 		"myRating": 6,
 		"imdbRating": 7.0,
-		"numberOfVotes": 148682,
+		"numberOfVotes": 148730,
 		"runtime": 134,
 		"genres": [
 			"Biography",
@@ -451,7 +452,7 @@
 		"year": 1994,
 		"myRating": 8,
 		"imdbRating": 8.5,
-		"numberOfVotes": 1134276,
+		"numberOfVotes": 1134790,
 		"runtime": 88,
 		"genres": [
 			"Animation",
@@ -466,7 +467,7 @@
 		"year": 1994,
 		"myRating": 8,
 		"imdbRating": 8.9,
-		"numberOfVotes": 2202692,
+		"numberOfVotes": 2203728,
 		"runtime": 154,
 		"genres": [
 			"Crime",
@@ -478,7 +479,7 @@
 		"year": 2014,
 		"myRating": 8,
 		"imdbRating": 7.3,
-		"numberOfVotes": 132477,
+		"numberOfVotes": 132539,
 		"runtime": 95,
 		"genres": [
 			"Adventure",
@@ -492,7 +493,7 @@
 		"year": 1994,
 		"myRating": 9,
 		"imdbRating": 9.3,
-		"numberOfVotes": 2867985,
+		"numberOfVotes": 2869235,
 		"runtime": 142,
 		"genres": [
 			"Drama"
@@ -503,7 +504,7 @@
 		"year": 2021,
 		"myRating": 8,
 		"imdbRating": 7.5,
-		"numberOfVotes": 41100,
+		"numberOfVotes": 41128,
 		"runtime": 92,
 		"genres": [
 			"Drama",
@@ -515,7 +516,7 @@
 		"year": 1994,
 		"myRating": 7,
 		"imdbRating": 8.1,
-		"numberOfVotes": 109441,
+		"numberOfVotes": 109471,
 		"runtime": 99,
 		"genres": [
 			"Drama",
@@ -528,7 +529,7 @@
 		"year": 1994,
 		"myRating": 5,
 		"imdbRating": 7.6,
-		"numberOfVotes": 79113,
+		"numberOfVotes": 79146,
 		"runtime": 92,
 		"genres": [
 			"Comedy",
@@ -541,7 +542,7 @@
 		"year": 2009,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 840116,
+		"numberOfVotes": 840405,
 		"runtime": 100,
 		"genres": [
 			"Comedy"
@@ -552,7 +553,7 @@
 		"year": 2010,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 210370,
+		"numberOfVotes": 210442,
 		"runtime": 112,
 		"genres": [
 			"Drama",
@@ -564,7 +565,7 @@
 		"year": 1995,
 		"myRating": 10,
 		"imdbRating": 8.1,
-		"numberOfVotes": 336886,
+		"numberOfVotes": 337017,
 		"runtime": 101,
 		"genres": [
 			"Drama",
@@ -576,7 +577,7 @@
 		"year": 2021,
 		"myRating": 8,
 		"imdbRating": 7.2,
-		"numberOfVotes": 595117,
+		"numberOfVotes": 595643,
 		"runtime": 138,
 		"genres": [
 			"Comedy",
@@ -589,7 +590,7 @@
 		"year": 2010,
 		"myRating": 6,
 		"imdbRating": 8.2,
-		"numberOfVotes": 1442820,
+		"numberOfVotes": 1443723,
 		"runtime": 138,
 		"genres": [
 			"Mystery",
@@ -601,7 +602,7 @@
 		"year": 1995,
 		"myRating": 6,
 		"imdbRating": 8.3,
-		"numberOfVotes": 714180,
+		"numberOfVotes": 714539,
 		"runtime": 170,
 		"genres": [
 			"Action",
@@ -614,7 +615,7 @@
 		"year": 2009,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 713988,
+		"numberOfVotes": 714153,
 		"runtime": 112,
 		"genres": [
 			"Action",
@@ -627,7 +628,7 @@
 		"year": 1995,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 71779,
+		"numberOfVotes": 71833,
 		"runtime": 111,
 		"genres": [
 			"Animation",
@@ -641,7 +642,7 @@
 		"year": 1995,
 		"myRating": 7,
 		"imdbRating": 6.7,
-		"numberOfVotes": 201776,
+		"numberOfVotes": 201855,
 		"runtime": 81,
 		"genres": [
 			"Animation",
@@ -657,7 +658,7 @@
 		"year": 1995,
 		"myRating": 9,
 		"imdbRating": 8.6,
-		"numberOfVotes": 1784574,
+		"numberOfVotes": 1785498,
 		"runtime": 127,
 		"genres": [
 			"Crime",
@@ -671,7 +672,7 @@
 		"year": 1995,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 124821,
+		"numberOfVotes": 124876,
 		"runtime": 136,
 		"genres": [
 			"Drama",
@@ -683,7 +684,7 @@
 		"year": 2020,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 89013,
+		"numberOfVotes": 89037,
 		"runtime": 94,
 		"genres": [
 			"Documentary",
@@ -695,7 +696,7 @@
 		"year": 1995,
 		"myRating": 9,
 		"imdbRating": 8.3,
-		"numberOfVotes": 1061883,
+		"numberOfVotes": 1062350,
 		"runtime": 81,
 		"genres": [
 			"Animation",
@@ -710,7 +711,7 @@
 		"year": 2022,
 		"myRating": 6,
 		"imdbRating": 7.1,
-		"numberOfVotes": 435283,
+		"numberOfVotes": 435982,
 		"runtime": 139,
 		"genres": [
 			"Comedy",
@@ -725,7 +726,7 @@
 		"year": 2021,
 		"myRating": 9,
 		"imdbRating": 8.0,
-		"numberOfVotes": 797644,
+		"numberOfVotes": 804447,
 		"runtime": 155,
 		"genres": [
 			"Action",
@@ -739,7 +740,7 @@
 		"year": 1996,
 		"myRating": 5,
 		"imdbRating": 7.4,
-		"numberOfVotes": 199217,
+		"numberOfVotes": 199259,
 		"runtime": 162,
 		"genres": [
 			"Drama",
@@ -752,7 +753,7 @@
 		"year": 1996,
 		"myRating": 7,
 		"imdbRating": 8.1,
-		"numberOfVotes": 722075,
+		"numberOfVotes": 722368,
 		"runtime": 98,
 		"genres": [
 			"Crime",
@@ -764,7 +765,7 @@
 		"year": 2013,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 701133,
+		"numberOfVotes": 701347,
 		"runtime": 161,
 		"genres": [
 			"Adventure",
@@ -777,7 +778,7 @@
 		"year": 1996,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 722209,
+		"numberOfVotes": 722401,
 		"runtime": 93,
 		"genres": [
 			"Drama"
@@ -788,7 +789,7 @@
 		"year": 2022,
 		"myRating": 9,
 		"imdbRating": 7.7,
-		"numberOfVotes": 248803,
+		"numberOfVotes": 249092,
 		"runtime": 114,
 		"genres": [
 			"Comedy",
@@ -800,7 +801,7 @@
 		"year": 1997,
 		"myRating": 9,
 		"imdbRating": 8.3,
-		"numberOfVotes": 1057630,
+		"numberOfVotes": 1058443,
 		"runtime": 126,
 		"genres": [
 			"Drama",
@@ -812,7 +813,7 @@
 		"year": 1997,
 		"myRating": 7,
 		"imdbRating": 8.3,
-		"numberOfVotes": 429950,
+		"numberOfVotes": 430163,
 		"runtime": 134,
 		"genres": [
 			"Animation",
@@ -826,7 +827,7 @@
 		"year": 2011,
 		"myRating": 9,
 		"imdbRating": 8.1,
-		"numberOfVotes": 941895,
+		"numberOfVotes": 942226,
 		"runtime": 130,
 		"genres": [
 			"Adventure",
@@ -840,7 +841,7 @@
 		"year": 1997,
 		"myRating": 5,
 		"imdbRating": 7.7,
-		"numberOfVotes": 36265,
+		"numberOfVotes": 36285,
 		"runtime": 95,
 		"genres": [
 			"Drama"
@@ -851,7 +852,7 @@
 		"year": 1997,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 1272422,
+		"numberOfVotes": 1272884,
 		"runtime": 194,
 		"genres": [
 			"Drama",
@@ -863,7 +864,7 @@
 		"year": 1999,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 616269,
+		"numberOfVotes": 616544,
 		"runtime": 92,
 		"genres": [
 			"Animation",
@@ -878,7 +879,7 @@
 		"year": 1998,
 		"myRating": 6,
 		"imdbRating": 7.2,
-		"numberOfVotes": 312782,
+		"numberOfVotes": 312889,
 		"runtime": 95,
 		"genres": [
 			"Animation",
@@ -892,7 +893,7 @@
 		"year": 2000,
 		"myRating": 8,
 		"imdbRating": 7.1,
-		"numberOfVotes": 211273,
+		"numberOfVotes": 211351,
 		"runtime": 84,
 		"genres": [
 			"Animation",
@@ -907,7 +908,7 @@
 		"year": 1999,
 		"myRating": 7,
 		"imdbRating": 8.6,
-		"numberOfVotes": 1397045,
+		"numberOfVotes": 1397685,
 		"runtime": 189,
 		"genres": [
 			"Crime",
@@ -921,7 +922,7 @@
 		"year": 2001,
 		"myRating": 9,
 		"imdbRating": 8.9,
-		"numberOfVotes": 1992808,
+		"numberOfVotes": 1993808,
 		"runtime": 178,
 		"genres": [
 			"Action",
@@ -935,7 +936,7 @@
 		"year": 1998,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 314106,
+		"numberOfVotes": 314221,
 		"runtime": 87,
 		"genres": [
 			"Animation",
@@ -952,7 +953,7 @@
 		"year": 1998,
 		"myRating": 6,
 		"imdbRating": 7.0,
-		"numberOfVotes": 292633,
+		"numberOfVotes": 292759,
 		"runtime": 98,
 		"genres": [
 			"Action",
@@ -966,7 +967,7 @@
 		"year": 1998,
 		"myRating": 9,
 		"imdbRating": 8.6,
-		"numberOfVotes": 1486794,
+		"numberOfVotes": 1487464,
 		"runtime": 169,
 		"genres": [
 			"Drama",
@@ -978,7 +979,7 @@
 		"year": 1999,
 		"myRating": 6,
 		"imdbRating": 7.3,
-		"numberOfVotes": 245450,
+		"numberOfVotes": 245579,
 		"runtime": 88,
 		"genres": [
 			"Animation",
@@ -994,7 +995,7 @@
 		"year": 1998,
 		"myRating": 8,
 		"imdbRating": 7.6,
-		"numberOfVotes": 198633,
+		"numberOfVotes": 198676,
 		"runtime": 170,
 		"genres": [
 			"Drama",
@@ -1007,7 +1008,7 @@
 		"year": 1999,
 		"myRating": 4,
 		"imdbRating": 6.5,
-		"numberOfVotes": 851529,
+		"numberOfVotes": 851827,
 		"runtime": 136,
 		"genres": [
 			"Action",
@@ -1021,7 +1022,7 @@
 		"year": 2011,
 		"myRating": 9,
 		"imdbRating": 7.6,
-		"numberOfVotes": 461401,
+		"numberOfVotes": 461589,
 		"runtime": 133,
 		"genres": [
 			"Biography",
@@ -1034,7 +1035,7 @@
 		"year": 2016,
 		"myRating": 6,
 		"imdbRating": 7.5,
-		"numberOfVotes": 799464,
+		"numberOfVotes": 799793,
 		"runtime": 115,
 		"genres": [
 			"Action",
@@ -1048,7 +1049,7 @@
 		"year": 2018,
 		"myRating": 8,
 		"imdbRating": 7.3,
-		"numberOfVotes": 201163,
+		"numberOfVotes": 201214,
 		"runtime": 141,
 		"genres": [
 			"Biography",
@@ -1061,7 +1062,7 @@
 		"year": 2013,
 		"myRating": 7,
 		"imdbRating": 6.9,
-		"numberOfVotes": 297138,
+		"numberOfVotes": 297199,
 		"runtime": 109,
 		"genres": [
 			"Action",
@@ -1074,7 +1075,7 @@
 		"year": 2012,
 		"myRating": 6,
 		"imdbRating": 7.1,
-		"numberOfVotes": 439495,
+		"numberOfVotes": 439672,
 		"runtime": 93,
 		"genres": [
 			"Animation",
@@ -1091,7 +1092,7 @@
 		"year": 2002,
 		"myRating": 4,
 		"imdbRating": 6.6,
-		"numberOfVotes": 754549,
+		"numberOfVotes": 754762,
 		"runtime": 142,
 		"genres": [
 			"Action",
@@ -1105,7 +1106,7 @@
 		"year": 2005,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 840353,
+		"numberOfVotes": 840584,
 		"runtime": 140,
 		"genres": [
 			"Action",
@@ -1119,7 +1120,7 @@
 		"year": 2010,
 		"myRating": 5,
 		"imdbRating": 6.9,
-		"numberOfVotes": 863758,
+		"numberOfVotes": 864027,
 		"runtime": 124,
 		"genres": [
 			"Action",
@@ -1131,7 +1132,7 @@
 		"year": 2012,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 595131,
+		"numberOfVotes": 595295,
 		"runtime": 109,
 		"genres": [
 			"Action",
@@ -1144,7 +1145,7 @@
 		"year": 1999,
 		"myRating": 6,
 		"imdbRating": 7.2,
-		"numberOfVotes": 339840,
+		"numberOfVotes": 339998,
 		"runtime": 124,
 		"genres": [
 			"Comedy",
@@ -1157,7 +1158,7 @@
 		"year": 2010,
 		"myRating": 8,
 		"imdbRating": 8.3,
-		"numberOfVotes": 196942,
+		"numberOfVotes": 197169,
 		"runtime": 131,
 		"genres": [
 			"Drama",
@@ -1170,7 +1171,7 @@
 		"year": 2022,
 		"myRating": 8,
 		"imdbRating": 7.3,
-		"numberOfVotes": 416412,
+		"numberOfVotes": 417241,
 		"runtime": 127,
 		"genres": [
 			"Action",
@@ -1183,7 +1184,7 @@
 		"year": 2001,
 		"myRating": 7,
 		"imdbRating": 7.9,
-		"numberOfVotes": 728913,
+		"numberOfVotes": 729261,
 		"runtime": 90,
 		"genres": [
 			"Animation",
@@ -1199,7 +1200,7 @@
 		"year": 2018,
 		"myRating": 4,
 		"imdbRating": 6.6,
-		"numberOfVotes": 533705,
+		"numberOfVotes": 534035,
 		"runtime": 112,
 		"genres": [
 			"Action",
@@ -1212,7 +1213,7 @@
 		"year": 2012,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 600683,
+		"numberOfVotes": 600802,
 		"runtime": 119,
 		"genres": [
 			"Action",
@@ -1226,7 +1227,7 @@
 		"year": 2021,
 		"myRating": 8,
 		"imdbRating": 7.2,
-		"numberOfVotes": 90952,
+		"numberOfVotes": 91060,
 		"runtime": 98,
 		"genres": [
 			"Biography",
@@ -1239,7 +1240,7 @@
 		"year": 2021,
 		"myRating": 7,
 		"imdbRating": 7.4,
-		"numberOfVotes": 191153,
+		"numberOfVotes": 191296,
 		"runtime": 95,
 		"genres": [
 			"Animation",
@@ -1255,7 +1256,7 @@
 		"year": 1998,
 		"myRating": 6,
 		"imdbRating": 7.6,
-		"numberOfVotes": 197189,
+		"numberOfVotes": 197231,
 		"runtime": 93,
 		"genres": [
 			"Comedy",
@@ -1268,7 +1269,7 @@
 		"year": 2010,
 		"myRating": 9,
 		"imdbRating": 7.8,
-		"numberOfVotes": 753957,
+		"numberOfVotes": 754241,
 		"runtime": 120,
 		"genres": [
 			"Biography",
@@ -1280,7 +1281,7 @@
 		"year": 1999,
 		"myRating": 7,
 		"imdbRating": 8.1,
-		"numberOfVotes": 224962,
+		"numberOfVotes": 225165,
 		"runtime": 86,
 		"genres": [
 			"Animation",
@@ -1297,7 +1298,7 @@
 		"year": 2013,
 		"myRating": 6,
 		"imdbRating": 7.1,
-		"numberOfVotes": 894904,
+		"numberOfVotes": 895114,
 		"runtime": 130,
 		"genres": [
 			"Action",
@@ -1310,7 +1311,7 @@
 		"year": 2019,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 427829,
+		"numberOfVotes": 428045,
 		"runtime": 209,
 		"genres": [
 			"Biography",
@@ -1323,7 +1324,7 @@
 		"year": 2011,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 314951,
+		"numberOfVotes": 315357,
 		"runtime": 90,
 		"genres": [
 			"Animation",
@@ -1340,7 +1341,7 @@
 		"year": 2023,
 		"myRating": 10,
 		"imdbRating": 7.9,
-		"numberOfVotes": 98733,
+		"numberOfVotes": 101225,
 		"runtime": 105,
 		"genres": [
 			"Drama",
@@ -1352,7 +1353,7 @@
 		"year": 2023,
 		"myRating": 5,
 		"imdbRating": 6.4,
-		"numberOfVotes": 121038,
+		"numberOfVotes": 123073,
 		"runtime": 158,
 		"genres": [
 			"Action",
@@ -1368,7 +1369,7 @@
 		"year": 1999,
 		"myRating": 7,
 		"imdbRating": 8.7,
-		"numberOfVotes": 2037914,
+		"numberOfVotes": 2038870,
 		"runtime": 136,
 		"genres": [
 			"Action",
@@ -1392,7 +1393,7 @@
 		"year": 1999,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 235889,
+		"numberOfVotes": 236076,
 		"runtime": 139,
 		"genres": [
 			"Crime",
@@ -1405,7 +1406,7 @@
 		"year": 2012,
 		"myRating": 9,
 		"imdbRating": 8.4,
-		"numberOfVotes": 1815092,
+		"numberOfVotes": 1816004,
 		"runtime": 164,
 		"genres": [
 			"Action",
@@ -1418,7 +1419,7 @@
 		"year": 1999,
 		"myRating": 7,
 		"imdbRating": 8.8,
-		"numberOfVotes": 2303414,
+		"numberOfVotes": 2304679,
 		"runtime": 139,
 		"genres": [
 			"Drama"
@@ -1429,7 +1430,7 @@
 		"year": 2010,
 		"myRating": 9,
 		"imdbRating": 8.8,
-		"numberOfVotes": 2530924,
+		"numberOfVotes": 2532309,
 		"runtime": 148,
 		"genres": [
 			"Action",
@@ -1443,7 +1444,7 @@
 		"year": 2022,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 206279,
+		"numberOfVotes": 206624,
 		"runtime": 117,
 		"genres": [
 			"Drama"
@@ -1454,7 +1455,7 @@
 		"year": 2012,
 		"myRating": 6,
 		"imdbRating": 7.2,
-		"numberOfVotes": 998010,
+		"numberOfVotes": 998285,
 		"runtime": 142,
 		"genres": [
 			"Action",
@@ -1468,7 +1469,7 @@
 		"year": 2015,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 1077232,
+		"numberOfVotes": 1077719,
 		"runtime": 120,
 		"genres": [
 			"Action",
@@ -1482,7 +1483,7 @@
 		"year": 2013,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 800980,
+		"numberOfVotes": 801468,
 		"runtime": 153,
 		"genres": [
 			"Crime",
@@ -1496,7 +1497,7 @@
 		"year": 2010,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 356121,
+		"numberOfVotes": 356203,
 		"runtime": 110,
 		"genres": [
 			"Drama",
@@ -1508,7 +1509,7 @@
 		"year": 2022,
 		"myRating": 8,
 		"imdbRating": 7.5,
-		"numberOfVotes": 114852,
+		"numberOfVotes": 115027,
 		"runtime": 151,
 		"genres": [
 			"Drama"
@@ -1519,7 +1520,7 @@
 		"year": 2023,
 		"myRating": 5,
 		"imdbRating": 6.5,
-		"numberOfVotes": 107820,
+		"numberOfVotes": 108239,
 		"runtime": 105,
 		"genres": [
 			"Comedy",
@@ -1533,7 +1534,7 @@
 		"year": 2021,
 		"myRating": 7,
 		"imdbRating": 7.5,
-		"numberOfVotes": 761,
+		"numberOfVotes": 762,
 		"runtime": 87,
 		"genres": [
 			"Documentary",
@@ -1545,7 +1546,7 @@
 		"year": 2010,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 96199,
+		"numberOfVotes": 96213,
 		"runtime": 97,
 		"genres": [
 			"Comedy",
@@ -1558,7 +1559,7 @@
 		"year": 2022,
 		"myRating": 5,
 		"imdbRating": 7.4,
-		"numberOfVotes": 92134,
+		"numberOfVotes": 92257,
 		"runtime": 158,
 		"genres": [
 			"Drama",
@@ -1570,7 +1571,7 @@
 		"year": 2013,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 859929,
+		"numberOfVotes": 860170,
 		"runtime": 91,
 		"genres": [
 			"Drama",
@@ -1583,7 +1584,7 @@
 		"year": 2002,
 		"myRating": 7,
 		"imdbRating": 7.4,
-		"numberOfVotes": 873482,
+		"numberOfVotes": 873832,
 		"runtime": 121,
 		"genres": [
 			"Action",
@@ -1596,7 +1597,7 @@
 		"year": 2018,
 		"myRating": 4,
 		"imdbRating": 6.8,
-		"numberOfVotes": 517489,
+		"numberOfVotes": 517682,
 		"runtime": 143,
 		"genres": [
 			"Action",
@@ -1610,7 +1611,7 @@
 		"year": 2023,
 		"myRating": 10,
 		"imdbRating": 8.0,
-		"numberOfVotes": 114146,
+		"numberOfVotes": 117740,
 		"runtime": 133,
 		"genres": [
 			"Comedy",
@@ -1622,7 +1623,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 7.1,
-		"numberOfVotes": 130157,
+		"numberOfVotes": 130207,
 		"runtime": 102,
 		"genres": [
 			"Comedy"
@@ -1633,7 +1634,7 @@
 		"year": 2014,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 386176,
+		"numberOfVotes": 386380,
 		"runtime": 100,
 		"genres": [
 			"Animation",
@@ -1650,7 +1651,7 @@
 		"year": 2010,
 		"myRating": 9,
 		"imdbRating": 8.0,
-		"numberOfVotes": 705684,
+		"numberOfVotes": 705824,
 		"runtime": 118,
 		"genres": [
 			"Biography",
@@ -1663,7 +1664,7 @@
 		"year": 2023,
 		"myRating": 7,
 		"imdbRating": 6.9,
-		"numberOfVotes": 508098,
+		"numberOfVotes": 510980,
 		"runtime": 114,
 		"genres": [
 			"Adventure",
@@ -1676,7 +1677,7 @@
 		"year": 2018,
 		"myRating": 8,
 		"imdbRating": 7.6,
-		"numberOfVotes": 416489,
+		"numberOfVotes": 416674,
 		"runtime": 136,
 		"genres": [
 			"Drama",
@@ -1689,7 +1690,7 @@
 		"year": 2024,
 		"myRating": 9,
 		"imdbRating": 8.9,
-		"numberOfVotes": 169642,
+		"numberOfVotes": 197808,
 		"runtime": 166,
 		"genres": [
 			"Action",
@@ -1703,7 +1704,7 @@
 		"year": 2023,
 		"myRating": 9,
 		"imdbRating": 8.4,
-		"numberOfVotes": 666893,
+		"numberOfVotes": 673255,
 		"runtime": 180,
 		"genres": [
 			"Biography",
@@ -1716,7 +1717,7 @@
 		"year": 2010,
 		"myRating": 8,
 		"imdbRating": 7.5,
-		"numberOfVotes": 399252,
+		"numberOfVotes": 399373,
 		"runtime": 94,
 		"genres": [
 			"Biography",
@@ -1728,7 +1729,7 @@
 		"year": 1998,
 		"myRating": 7,
 		"imdbRating": 7.5,
-		"numberOfVotes": 100955,
+		"numberOfVotes": 101014,
 		"runtime": 69,
 		"genres": [
 			"Crime",
@@ -1741,7 +1742,7 @@
 		"year": 2012,
 		"myRating": 5,
 		"imdbRating": 7.1,
-		"numberOfVotes": 185381,
+		"numberOfVotes": 185435,
 		"runtime": 138,
 		"genres": [
 			"Drama",
@@ -1753,7 +1754,7 @@
 		"year": 2011,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 492337,
+		"numberOfVotes": 492493,
 		"runtime": 158,
 		"genres": [
 			"Crime",
@@ -1767,7 +1768,7 @@
 		"year": 2011,
 		"myRating": 9,
 		"imdbRating": 7.4,
-		"numberOfVotes": 560370,
+		"numberOfVotes": 560619,
 		"runtime": 118,
 		"genres": [
 			"Comedy",
@@ -1780,7 +1781,7 @@
 		"year": 2010,
 		"myRating": 5,
 		"imdbRating": 6.8,
-		"numberOfVotes": 337149,
+		"numberOfVotes": 337246,
 		"runtime": 103,
 		"genres": [
 			"Horror",
@@ -1793,7 +1794,7 @@
 		"year": 2015,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 480164,
+		"numberOfVotes": 480390,
 		"runtime": 130,
 		"genres": [
 			"Biography",
@@ -1807,7 +1808,7 @@
 		"year": 2016,
 		"myRating": 5,
 		"imdbRating": 6.7,
-		"numberOfVotes": 83214,
+		"numberOfVotes": 83231,
 		"runtime": 100,
 		"genres": [
 			"Biography",
@@ -1819,7 +1820,7 @@
 		"year": 2022,
 		"myRating": 8,
 		"imdbRating": 7.6,
-		"numberOfVotes": 487191,
+		"numberOfVotes": 487670,
 		"runtime": 192,
 		"genres": [
 			"Action",
@@ -1833,7 +1834,7 @@
 		"year": 2015,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 330373,
+		"numberOfVotes": 330527,
 		"runtime": 116,
 		"genres": [
 			"Action",
@@ -1846,7 +1847,7 @@
 		"year": 2012,
 		"myRating": 7,
 		"imdbRating": 7.9,
-		"numberOfVotes": 544983,
+		"numberOfVotes": 545136,
 		"runtime": 103,
 		"genres": [
 			"Drama"
@@ -1857,7 +1858,7 @@
 		"year": 2015,
 		"myRating": 8,
 		"imdbRating": 8.0,
-		"numberOfVotes": 868138,
+		"numberOfVotes": 868507,
 		"runtime": 156,
 		"genres": [
 			"Action",
@@ -1871,7 +1872,7 @@
 		"year": 2013,
 		"myRating": 4,
 		"imdbRating": 6.9,
-		"numberOfVotes": 528143,
+		"numberOfVotes": 528292,
 		"runtime": 131,
 		"genres": [
 			"Action",
@@ -1884,7 +1885,7 @@
 		"year": 2003,
 		"myRating": 9,
 		"imdbRating": 9.0,
-		"numberOfVotes": 1964755,
+		"numberOfVotes": 1965725,
 		"runtime": 201,
 		"genres": [
 			"Action",
@@ -1898,7 +1899,7 @@
 		"year": 2002,
 		"myRating": 9,
 		"imdbRating": 8.8,
-		"numberOfVotes": 1771442,
+		"numberOfVotes": 1772172,
 		"runtime": 179,
 		"genres": [
 			"Action",
@@ -1912,7 +1913,7 @@
 		"year": 2011,
 		"myRating": 9,
 		"imdbRating": 8.5,
-		"numberOfVotes": 921947,
+		"numberOfVotes": 922388,
 		"runtime": 112,
 		"genres": [
 			"Comedy",
@@ -1924,7 +1925,7 @@
 		"year": 2013,
 		"myRating": 7,
 		"imdbRating": 7.1,
-		"numberOfVotes": 386959,
+		"numberOfVotes": 387063,
 		"runtime": 126,
 		"genres": [
 			"Action",
@@ -1938,7 +1939,7 @@
 		"year": 2012,
 		"myRating": 6,
 		"imdbRating": 7.5,
-		"numberOfVotes": 344725,
+		"numberOfVotes": 344810,
 		"runtime": 158,
 		"genres": [
 			"Drama",
@@ -1951,7 +1952,7 @@
 		"year": 2013,
 		"myRating": 7,
 		"imdbRating": 7.0,
-		"numberOfVotes": 160864,
+		"numberOfVotes": 160895,
 		"runtime": 95,
 		"genres": [
 			"Drama",
@@ -1963,7 +1964,7 @@
 		"year": 2011,
 		"myRating": 8,
 		"imdbRating": 7.2,
-		"numberOfVotes": 205504,
+		"numberOfVotes": 205548,
 		"runtime": 101,
 		"genres": [
 			"Drama"
@@ -1974,7 +1975,7 @@
 		"year": 2000,
 		"myRating": 9,
 		"imdbRating": 8.5,
-		"numberOfVotes": 1607758,
+		"numberOfVotes": 1608472,
 		"runtime": 155,
 		"genres": [
 			"Action",
@@ -1987,7 +1988,7 @@
 		"year": 2010,
 		"myRating": 7,
 		"imdbRating": 6.9,
-		"numberOfVotes": 79106,
+		"numberOfVotes": 79125,
 		"runtime": 103,
 		"genres": [
 			"Drama",
@@ -2002,7 +2003,7 @@
 		"year": 2022,
 		"myRating": 9,
 		"imdbRating": 8.2,
-		"numberOfVotes": 681637,
+		"numberOfVotes": 682534,
 		"runtime": 130,
 		"genres": [
 			"Action",
@@ -2014,7 +2015,7 @@
 		"year": 2012,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 365766,
+		"numberOfVotes": 365816,
 		"runtime": 94,
 		"genres": [
 			"Adventure",
@@ -2030,7 +2031,7 @@
 		"year": 2023,
 		"myRating": 4,
 		"imdbRating": 6.5,
-		"numberOfVotes": 117210,
+		"numberOfVotes": 117376,
 		"runtime": 122,
 		"genres": [
 			"Horror",
@@ -2043,7 +2044,7 @@
 		"year": 2012,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 317535,
+		"numberOfVotes": 317625,
 		"runtime": 157,
 		"genres": [
 			"Drama",
@@ -2056,7 +2057,7 @@
 		"year": 2011,
 		"myRating": 5,
 		"imdbRating": 7.4,
-		"numberOfVotes": 51324,
+		"numberOfVotes": 51362,
 		"runtime": 91,
 		"genres": [
 			"Animation",
@@ -2071,7 +2072,7 @@
 		"year": 2013,
 		"myRating": 7,
 		"imdbRating": 8.0,
-		"numberOfVotes": 665279,
+		"numberOfVotes": 665553,
 		"runtime": 126,
 		"genres": [
 			"Drama",
@@ -2084,7 +2085,7 @@
 		"year": 2014,
 		"myRating": 5,
 		"imdbRating": 7.2,
-		"numberOfVotes": 181616,
+		"numberOfVotes": 181679,
 		"runtime": 137,
 		"genres": [
 			"Action",
@@ -2099,7 +2100,7 @@
 		"year": 2012,
 		"myRating": 8,
 		"imdbRating": 7.3,
-		"numberOfVotes": 288677,
+		"numberOfVotes": 288793,
 		"runtime": 140,
 		"genres": [
 			"Crime",
@@ -2112,7 +2113,7 @@
 		"year": 2000,
 		"myRating": 5,
 		"imdbRating": 7.6,
-		"numberOfVotes": 218958,
+		"numberOfVotes": 219007,
 		"runtime": 147,
 		"genres": [
 			"Crime",
@@ -2125,7 +2126,7 @@
 		"year": 2018,
 		"myRating": 8,
 		"imdbRating": 7.3,
-		"numberOfVotes": 832502,
+		"numberOfVotes": 832775,
 		"runtime": 134,
 		"genres": [
 			"Action",
@@ -2138,7 +2139,7 @@
 		"year": 2014,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 894595,
+		"numberOfVotes": 894822,
 		"runtime": 136,
 		"genres": [
 			"Action",
@@ -2152,7 +2153,7 @@
 		"year": 2012,
 		"myRating": 8,
 		"imdbRating": 8.5,
-		"numberOfVotes": 1681000,
+		"numberOfVotes": 1681797,
 		"runtime": 165,
 		"genres": [
 			"Drama",
@@ -2164,7 +2165,7 @@
 		"year": 2017,
 		"myRating": 8,
 		"imdbRating": 8.0,
-		"numberOfVotes": 654041,
+		"numberOfVotes": 654986,
 		"runtime": 164,
 		"genres": [
 			"Action",
@@ -2179,7 +2180,7 @@
 		"year": 2014,
 		"myRating": 6,
 		"imdbRating": 8.0,
-		"numberOfVotes": 62742,
+		"numberOfVotes": 62760,
 		"runtime": 93,
 		"genres": [
 			"Animation",
@@ -2194,7 +2195,7 @@
 		"year": 2014,
 		"myRating": 4,
 		"imdbRating": 6.6,
-		"numberOfVotes": 534243,
+		"numberOfVotes": 534431,
 		"runtime": 142,
 		"genres": [
 			"Action",
@@ -2207,7 +2208,7 @@
 		"year": 2022,
 		"myRating": 9,
 		"imdbRating": 7.8,
-		"numberOfVotes": 775647,
+		"numberOfVotes": 776572,
 		"runtime": 176,
 		"genres": [
 			"Action",
@@ -2222,7 +2223,7 @@
 		"year": 2016,
 		"myRating": 8,
 		"imdbRating": 7.3,
-		"numberOfVotes": 139415,
+		"numberOfVotes": 139455,
 		"runtime": 104,
 		"genres": [
 			"Comedy",
@@ -2234,7 +2235,7 @@
 		"year": 2015,
 		"myRating": 9,
 		"imdbRating": 8.1,
-		"numberOfVotes": 499481,
+		"numberOfVotes": 499662,
 		"runtime": 129,
 		"genres": [
 			"Biography",
@@ -2247,7 +2248,7 @@
 		"year": 2022,
 		"myRating": 5,
 		"imdbRating": 5.8,
-		"numberOfVotes": 5192,
+		"numberOfVotes": 5193,
 		"runtime": 88,
 		"genres": [
 			"Documentary"
@@ -2258,7 +2259,7 @@
 		"year": 2013,
 		"myRating": 8,
 		"imdbRating": 8.0,
-		"numberOfVotes": 26993,
+		"numberOfVotes": 27046,
 		"runtime": 90,
 		"genres": [
 			"Documentary"
@@ -2269,7 +2270,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 459972,
+		"numberOfVotes": 460366,
 		"runtime": 152,
 		"genres": [
 			"Action",
@@ -2283,7 +2284,7 @@
 		"year": 2013,
 		"myRating": 7,
 		"imdbRating": 7.5,
-		"numberOfVotes": 717271,
+		"numberOfVotes": 717510,
 		"runtime": 146,
 		"genres": [
 			"Action",
@@ -2297,7 +2298,7 @@
 		"year": 2014,
 		"myRating": 6,
 		"imdbRating": 6.6,
-		"numberOfVotes": 499305,
+		"numberOfVotes": 499497,
 		"runtime": 123,
 		"genres": [
 			"Action",
@@ -2311,7 +2312,7 @@
 		"year": 2015,
 		"myRating": 6,
 		"imdbRating": 6.5,
-		"numberOfVotes": 369835,
+		"numberOfVotes": 370049,
 		"runtime": 137,
 		"genres": [
 			"Action",
@@ -2325,7 +2326,7 @@
 		"year": 2000,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 219263,
+		"numberOfVotes": 219421,
 		"runtime": 131,
 		"genres": [
 			"Biography",
@@ -2337,7 +2338,7 @@
 		"year": 2017,
 		"myRating": 4,
 		"imdbRating": 6.7,
-		"numberOfVotes": 231074,
+		"numberOfVotes": 231163,
 		"runtime": 126,
 		"genres": [
 			"Action",
@@ -2351,7 +2352,7 @@
 		"year": 2022,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 89994,
+		"numberOfVotes": 90264,
 		"runtime": 102,
 		"genres": [
 			"Drama"
@@ -2362,7 +2363,7 @@
 		"year": 2013,
 		"myRating": 5,
 		"imdbRating": 8.1,
-		"numberOfVotes": 510106,
+		"numberOfVotes": 510296,
 		"runtime": 123,
 		"genres": [
 			"Action",
@@ -2376,7 +2377,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 277871,
+		"numberOfVotes": 278051,
 		"runtime": 100,
 		"genres": [
 			"Animation",
@@ -2391,7 +2392,7 @@
 		"year": 2015,
 		"myRating": 7,
 		"imdbRating": 6.7,
-		"numberOfVotes": 126599,
+		"numberOfVotes": 126641,
 		"runtime": 93,
 		"genres": [
 			"Animation",
@@ -2407,7 +2408,7 @@
 		"year": 2013,
 		"myRating": 4,
 		"imdbRating": 6.8,
-		"numberOfVotes": 721464,
+		"numberOfVotes": 721681,
 		"runtime": 112,
 		"genres": [
 			"Action",
@@ -2420,7 +2421,7 @@
 		"year": 2001,
 		"myRating": 7,
 		"imdbRating": 8.1,
-		"numberOfVotes": 972551,
+		"numberOfVotes": 972975,
 		"runtime": 92,
 		"genres": [
 			"Animation",
@@ -2435,7 +2436,7 @@
 		"year": 2016,
 		"myRating": 6,
 		"imdbRating": 7.1,
-		"numberOfVotes": 251317,
+		"numberOfVotes": 251494,
 		"runtime": 114,
 		"genres": [
 			"Biography",
@@ -2450,7 +2451,7 @@
 		"year": 2013,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 97542,
+		"numberOfVotes": 97632,
 		"runtime": 126,
 		"genres": [
 			"Animation",
@@ -2465,7 +2466,7 @@
 		"year": 2014,
 		"myRating": 7,
 		"imdbRating": 8.0,
-		"numberOfVotes": 1266645,
+		"numberOfVotes": 1266956,
 		"runtime": 121,
 		"genres": [
 			"Action",
@@ -2479,7 +2480,7 @@
 		"year": 2013,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 738019,
+		"numberOfVotes": 738218,
 		"runtime": 134,
 		"genres": [
 			"Biography",
@@ -2492,7 +2493,7 @@
 		"year": 2006,
 		"myRating": 7,
 		"imdbRating": 7.9,
-		"numberOfVotes": 527091,
+		"numberOfVotes": 527223,
 		"runtime": 109,
 		"genres": [
 			"Action",
@@ -2506,7 +2507,7 @@
 		"year": 2015,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 177874,
+		"numberOfVotes": 177906,
 		"runtime": 122,
 		"genres": [
 			"Biography",
@@ -2518,7 +2519,7 @@
 		"year": 2014,
 		"myRating": 7,
 		"imdbRating": 8.0,
-		"numberOfVotes": 820224,
+		"numberOfVotes": 820435,
 		"runtime": 114,
 		"genres": [
 			"Biography",
@@ -2532,7 +2533,7 @@
 		"year": 2000,
 		"myRating": 9,
 		"imdbRating": 8.4,
-		"numberOfVotes": 1314778,
+		"numberOfVotes": 1315324,
 		"runtime": 113,
 		"genres": [
 			"Mystery",
@@ -2544,7 +2545,7 @@
 		"year": 2015,
 		"myRating": 9,
 		"imdbRating": 8.1,
-		"numberOfVotes": 778616,
+		"numberOfVotes": 779043,
 		"runtime": 95,
 		"genres": [
 			"Animation",
@@ -2560,7 +2561,7 @@
 		"year": 2015,
 		"myRating": 7,
 		"imdbRating": 7.4,
-		"numberOfVotes": 42009,
+		"numberOfVotes": 42018,
 		"runtime": 129,
 		"genres": [
 			"Biography",
@@ -2572,8 +2573,8 @@
 		"title": "The Iron Claw",
 		"year": 2023,
 		"myRating": 7,
-		"imdbRating": 7.8,
-		"numberOfVotes": 41550,
+		"imdbRating": 7.7,
+		"numberOfVotes": 42577,
 		"runtime": 132,
 		"genres": [
 			"Biography",
@@ -2586,7 +2587,7 @@
 		"year": 2001,
 		"myRating": 6,
 		"imdbRating": 8.3,
-		"numberOfVotes": 791165,
+		"numberOfVotes": 791327,
 		"runtime": 122,
 		"genres": [
 			"Comedy",
@@ -2598,7 +2599,7 @@
 		"year": 2016,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 588198,
+		"numberOfVotes": 588552,
 		"runtime": 139,
 		"genres": [
 			"Biography",
@@ -2612,7 +2613,7 @@
 		"year": 2013,
 		"myRating": 5,
 		"imdbRating": 7.5,
-		"numberOfVotes": 169585,
+		"numberOfVotes": 169620,
 		"runtime": 125,
 		"genres": [
 			"Biography",
@@ -2625,7 +2626,7 @@
 		"year": 2013,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 383072,
+		"numberOfVotes": 383270,
 		"runtime": 123,
 		"genres": [
 			"Comedy",
@@ -2640,7 +2641,7 @@
 		"year": 2013,
 		"myRating": 9,
 		"imdbRating": 7.9,
-		"numberOfVotes": 171265,
+		"numberOfVotes": 171302,
 		"runtime": 109,
 		"genres": [
 			"Drama",
@@ -2652,7 +2653,7 @@
 		"year": 2017,
 		"myRating": 7,
 		"imdbRating": 7.4,
-		"numberOfVotes": 714174,
+		"numberOfVotes": 714544,
 		"runtime": 133,
 		"genres": [
 			"Action",
@@ -2665,7 +2666,7 @@
 		"year": 2016,
 		"myRating": 6,
 		"imdbRating": 7.1,
-		"numberOfVotes": 183521,
+		"numberOfVotes": 183922,
 		"runtime": 95,
 		"genres": [
 			"Animation",
@@ -2681,7 +2682,7 @@
 		"year": 2014,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 1059896,
+		"numberOfVotes": 1060308,
 		"runtime": 149,
 		"genres": [
 			"Drama",
@@ -2694,7 +2695,7 @@
 		"year": 2016,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 301137,
+		"numberOfVotes": 301302,
 		"runtime": 97,
 		"genres": [
 			"Animation",
@@ -2708,7 +2709,7 @@
 		"year": 2014,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 880626,
+		"numberOfVotes": 880982,
 		"runtime": 99,
 		"genres": [
 			"Adventure",
@@ -2721,7 +2722,7 @@
 		"year": 2017,
 		"myRating": 6,
 		"imdbRating": 6.9,
-		"numberOfVotes": 431401,
+		"numberOfVotes": 431541,
 		"runtime": 119,
 		"genres": [
 			"Action",
@@ -2735,7 +2736,7 @@
 		"year": 2013,
 		"myRating": 6,
 		"imdbRating": 7.4,
-		"numberOfVotes": 660537,
+		"numberOfVotes": 660707,
 		"runtime": 102,
 		"genres": [
 			"Animation",
@@ -2751,7 +2752,7 @@
 		"year": 2014,
 		"myRating": 6,
 		"imdbRating": 7.4,
-		"numberOfVotes": 568122,
+		"numberOfVotes": 568313,
 		"runtime": 144,
 		"genres": [
 			"Adventure",
@@ -2763,7 +2764,7 @@
 		"year": 2013,
 		"myRating": 7,
 		"imdbRating": 7.5,
-		"numberOfVotes": 85624,
+		"numberOfVotes": 85643,
 		"runtime": 85,
 		"genres": [
 			"Biography",
@@ -2777,7 +2778,7 @@
 		"year": 2015,
 		"myRating": 6,
 		"imdbRating": 6.8,
-		"numberOfVotes": 464170,
+		"numberOfVotes": 464296,
 		"runtime": 148,
 		"genres": [
 			"Action",
@@ -2790,7 +2791,7 @@
 		"year": 2017,
 		"myRating": 9,
 		"imdbRating": 8.4,
-		"numberOfVotes": 583561,
+		"numberOfVotes": 583981,
 		"runtime": 105,
 		"genres": [
 			"Animation",
@@ -2807,7 +2808,7 @@
 		"year": 2015,
 		"myRating": 9,
 		"imdbRating": 7.5,
-		"numberOfVotes": 149713,
+		"numberOfVotes": 149776,
 		"runtime": 117,
 		"genres": [
 			"Drama",
@@ -2819,7 +2820,7 @@
 		"year": 2021,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 441634,
+		"numberOfVotes": 441814,
 		"runtime": 163,
 		"genres": [
 			"Action",
@@ -2832,7 +2833,7 @@
 		"year": 2015,
 		"myRating": 6,
 		"imdbRating": 7.3,
-		"numberOfVotes": 916610,
+		"numberOfVotes": 916882,
 		"runtime": 141,
 		"genres": [
 			"Action",
@@ -2845,7 +2846,7 @@
 		"year": 2012,
 		"myRating": 7,
 		"imdbRating": 8.2,
-		"numberOfVotes": 15810,
+		"numberOfVotes": 15817,
 		"runtime": 62,
 		"genres": [
 			"Animation",
@@ -2863,7 +2864,7 @@
 		"year": 2001,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 614747,
+		"numberOfVotes": 615070,
 		"runtime": 116,
 		"genres": [
 			"Crime",
@@ -2875,7 +2876,7 @@
 		"year": 2001,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 850817,
+		"numberOfVotes": 851167,
 		"runtime": 152,
 		"genres": [
 			"Adventure",
@@ -2888,7 +2889,7 @@
 		"year": 2001,
 		"myRating": 8,
 		"imdbRating": 8.6,
-		"numberOfVotes": 840879,
+		"numberOfVotes": 841384,
 		"runtime": 125,
 		"genres": [
 			"Animation",
@@ -2903,7 +2904,7 @@
 		"year": 2001,
 		"myRating": 7,
 		"imdbRating": 8.0,
-		"numberOfVotes": 845600,
+		"numberOfVotes": 845821,
 		"runtime": 113,
 		"genres": [
 			"Drama",
@@ -2917,7 +2918,7 @@
 		"year": 2015,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 969975,
+		"numberOfVotes": 970237,
 		"runtime": 138,
 		"genres": [
 			"Action",
@@ -2930,7 +2931,7 @@
 		"year": 2017,
 		"myRating": 9,
 		"imdbRating": 6.9,
-		"numberOfVotes": 668471,
+		"numberOfVotes": 668670,
 		"runtime": 152,
 		"genres": [
 			"Action",
@@ -2944,7 +2945,7 @@
 		"year": 2019,
 		"myRating": 5,
 		"imdbRating": 6.4,
-		"numberOfVotes": 489723,
+		"numberOfVotes": 489961,
 		"runtime": 141,
 		"genres": [
 			"Action",
@@ -2958,7 +2959,7 @@
 		"year": 2002,
 		"myRating": 6,
 		"imdbRating": 8.5,
-		"numberOfVotes": 904911,
+		"numberOfVotes": 905291,
 		"runtime": 150,
 		"genres": [
 			"Biography",
@@ -2972,7 +2973,7 @@
 		"year": 2016,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 760644,
+		"numberOfVotes": 761376,
 		"runtime": 116,
 		"genres": [
 			"Drama",
@@ -2985,7 +2986,7 @@
 		"year": 2013,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 71977,
+		"numberOfVotes": 71999,
 		"runtime": 83,
 		"genres": [
 			"Documentary"
@@ -2996,7 +2997,7 @@
 		"year": 2014,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 663611,
+		"numberOfVotes": 663795,
 		"runtime": 119,
 		"genres": [
 			"Comedy",
@@ -3008,7 +3009,7 @@
 		"year": 2013,
 		"myRating": 6,
 		"imdbRating": 8.0,
-		"numberOfVotes": 53404,
+		"numberOfVotes": 53444,
 		"runtime": 137,
 		"genres": [
 			"Animation",
@@ -3023,7 +3024,7 @@
 		"year": 2015,
 		"myRating": 6,
 		"imdbRating": 7.7,
-		"numberOfVotes": 137734,
+		"numberOfVotes": 137764,
 		"runtime": 105,
 		"genres": [
 			"Comedy",
@@ -3036,7 +3037,7 @@
 		"year": 2016,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 250868,
+		"numberOfVotes": 250981,
 		"runtime": 102,
 		"genres": [
 			"Crime",
@@ -3050,7 +3051,7 @@
 		"year": 2014,
 		"myRating": 10,
 		"imdbRating": 8.5,
-		"numberOfVotes": 976877,
+		"numberOfVotes": 977664,
 		"runtime": 106,
 		"genres": [
 			"Drama",
@@ -3062,7 +3063,7 @@
 		"year": 2019,
 		"myRating": 9,
 		"imdbRating": 7.9,
-		"numberOfVotes": 437144,
+		"numberOfVotes": 437389,
 		"runtime": 108,
 		"genres": [
 			"Comedy",
@@ -3075,7 +3076,7 @@
 		"year": 2023,
 		"myRating": 3,
 		"imdbRating": 6.2,
-		"numberOfVotes": 47134,
+		"numberOfVotes": 48725,
 		"runtime": 103,
 		"genres": [
 			"Comedy",
@@ -3087,7 +3088,7 @@
 		"year": 2002,
 		"myRating": 7,
 		"imdbRating": 8.1,
-		"numberOfVotes": 1085396,
+		"numberOfVotes": 1086075,
 		"runtime": 141,
 		"genres": [
 			"Biography",
@@ -3100,7 +3101,7 @@
 		"year": 2001,
 		"myRating": 5,
 		"imdbRating": 7.7,
-		"numberOfVotes": 421397,
+		"numberOfVotes": 421547,
 		"runtime": 144,
 		"genres": [
 			"Action",
@@ -3114,7 +3115,7 @@
 		"year": 2001,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 311942,
+		"numberOfVotes": 312017,
 		"runtime": 110,
 		"genres": [
 			"Comedy",
@@ -3126,7 +3127,7 @@
 		"year": 2003,
 		"myRating": 8,
 		"imdbRating": 8.2,
-		"numberOfVotes": 1106592,
+		"numberOfVotes": 1106985,
 		"runtime": 100,
 		"genres": [
 			"Animation",
@@ -3140,7 +3141,7 @@
 		"year": 2003,
 		"myRating": 6,
 		"imdbRating": 8.2,
-		"numberOfVotes": 1184345,
+		"numberOfVotes": 1184851,
 		"runtime": 111,
 		"genres": [
 			"Action",
@@ -3153,7 +3154,7 @@
 		"year": 2002,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 210015,
+		"numberOfVotes": 210104,
 		"runtime": 85,
 		"genres": [
 			"Animation",
@@ -3170,7 +3171,7 @@
 		"year": 2023,
 		"myRating": 9,
 		"imdbRating": 7.5,
-		"numberOfVotes": 8757,
+		"numberOfVotes": 8764,
 		"runtime": 92,
 		"genres": [
 			"Documentary",
@@ -3183,7 +3184,7 @@
 		"year": 2002,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 316775,
+		"numberOfVotes": 317061,
 		"runtime": 118,
 		"genres": [
 			"Drama",
@@ -3196,7 +3197,7 @@
 		"year": 2014,
 		"myRating": 3,
 		"imdbRating": 6.5,
-		"numberOfVotes": 352762,
+		"numberOfVotes": 352868,
 		"runtime": 112,
 		"genres": [
 			"Action",
@@ -3209,7 +3210,7 @@
 		"year": 2018,
 		"myRating": 8,
 		"imdbRating": 6.8,
-		"numberOfVotes": 357719,
+		"numberOfVotes": 357938,
 		"runtime": 115,
 		"genres": [
 			"Adventure",
@@ -3225,7 +3226,7 @@
 		"year": 2014,
 		"myRating": 9,
 		"imdbRating": 7.8,
-		"numberOfVotes": 600114,
+		"numberOfVotes": 600360,
 		"runtime": 117,
 		"genres": [
 			"Crime",
@@ -3238,7 +3239,7 @@
 		"year": 2015,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 43222,
+		"numberOfVotes": 43237,
 		"runtime": 85,
 		"genres": [
 			"Animation",
@@ -3253,7 +3254,7 @@
 		"year": 2014,
 		"myRating": 6,
 		"imdbRating": 7.4,
-		"numberOfVotes": 734258,
+		"numberOfVotes": 734552,
 		"runtime": 101,
 		"genres": [
 			"Action",
@@ -3266,7 +3267,7 @@
 		"year": 2017,
 		"myRating": 2,
 		"imdbRating": 5.6,
-		"numberOfVotes": 60624,
+		"numberOfVotes": 60639,
 		"runtime": 89,
 		"genres": [
 			"Horror",
@@ -3279,7 +3280,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 6.5,
-		"numberOfVotes": 259007,
+		"numberOfVotes": 259114,
 		"runtime": 123,
 		"genres": [
 			"Adventure",
@@ -3294,7 +3295,7 @@
 		"year": 2016,
 		"myRating": 8,
 		"imdbRating": 8.0,
-		"numberOfVotes": 541902,
+		"numberOfVotes": 542113,
 		"runtime": 108,
 		"genres": [
 			"Animation",
@@ -3310,7 +3311,7 @@
 		"year": 2020,
 		"myRating": 8,
 		"imdbRating": 8.0,
-		"numberOfVotes": 375422,
+		"numberOfVotes": 375678,
 		"runtime": 100,
 		"genres": [
 			"Animation",
@@ -3327,7 +3328,7 @@
 		"year": 2002,
 		"myRating": 6,
 		"imdbRating": 7.4,
-		"numberOfVotes": 687942,
+		"numberOfVotes": 688235,
 		"runtime": 161,
 		"genres": [
 			"Adventure",
@@ -3341,7 +3342,7 @@
 		"year": 2021,
 		"myRating": 8,
 		"imdbRating": 7.2,
-		"numberOfVotes": 258767,
+		"numberOfVotes": 258923,
 		"runtime": 102,
 		"genres": [
 			"Animation",
@@ -3356,7 +3357,7 @@
 		"year": 1937,
 		"myRating": 6,
 		"imdbRating": 7.6,
-		"numberOfVotes": 214204,
+		"numberOfVotes": 214282,
 		"runtime": 83,
 		"genres": [
 			"Animation",
@@ -3372,7 +3373,7 @@
 		"year": 2016,
 		"myRating": 6,
 		"imdbRating": 6.5,
-		"numberOfVotes": 749756,
+		"numberOfVotes": 749922,
 		"runtime": 151,
 		"genres": [
 			"Action",
@@ -3385,7 +3386,7 @@
 		"year": 2014,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 479602,
+		"numberOfVotes": 479730,
 		"runtime": 123,
 		"genres": [
 			"Biography",
@@ -3398,7 +3399,7 @@
 		"year": 2004,
 		"myRating": 6,
 		"imdbRating": 7.3,
-		"numberOfVotes": 501248,
+		"numberOfVotes": 501432,
 		"runtime": 93,
 		"genres": [
 			"Animation",
@@ -3414,7 +3415,7 @@
 		"year": 2002,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 318578,
+		"numberOfVotes": 318688,
 		"runtime": 110,
 		"genres": [
 			"Drama",
@@ -3426,7 +3427,7 @@
 		"year": 2004,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 686879,
+		"numberOfVotes": 687151,
 		"runtime": 142,
 		"genres": [
 			"Adventure",
@@ -3440,7 +3441,7 @@
 		"year": 2015,
 		"myRating": 8,
 		"imdbRating": 7.6,
-		"numberOfVotes": 309229,
+		"numberOfVotes": 309321,
 		"runtime": 133,
 		"genres": [
 			"Action",
@@ -3453,7 +3454,7 @@
 		"year": 1939,
 		"myRating": 6,
 		"imdbRating": 8.2,
-		"numberOfVotes": 332473,
+		"numberOfVotes": 332613,
 		"runtime": 238,
 		"genres": [
 			"Drama",
@@ -3466,7 +3467,7 @@
 		"year": 2004,
 		"myRating": 9,
 		"imdbRating": 7.5,
-		"numberOfVotes": 703101,
+		"numberOfVotes": 703423,
 		"runtime": 127,
 		"genres": [
 			"Action",
@@ -3479,7 +3480,7 @@
 		"year": 2015,
 		"myRating": 6,
 		"imdbRating": 8.1,
-		"numberOfVotes": 447713,
+		"numberOfVotes": 447882,
 		"runtime": 118,
 		"genres": [
 			"Drama",
@@ -3491,7 +3492,7 @@
 		"year": 2006,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 464978,
+		"numberOfVotes": 465235,
 		"runtime": 117,
 		"genres": [
 			"Animation",
@@ -3506,7 +3507,7 @@
 		"year": 2004,
 		"myRating": 8,
 		"imdbRating": 8.0,
-		"numberOfVotes": 802497,
+		"numberOfVotes": 802801,
 		"runtime": 115,
 		"genres": [
 			"Animation",
@@ -3520,7 +3521,7 @@
 		"year": 2016,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 505315,
+		"numberOfVotes": 505495,
 		"runtime": 132,
 		"genres": [
 			"Adventure",
@@ -3533,7 +3534,7 @@
 		"year": 1939,
 		"myRating": 6,
 		"imdbRating": 8.1,
-		"numberOfVotes": 426213,
+		"numberOfVotes": 426360,
 		"runtime": 102,
 		"genres": [
 			"Adventure",
@@ -3547,7 +3548,7 @@
 		"year": 2021,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 263148,
+		"numberOfVotes": 263312,
 		"runtime": 134,
 		"genres": [
 			"Adventure",
@@ -3561,7 +3562,7 @@
 		"year": 1940,
 		"myRating": 5,
 		"imdbRating": 7.7,
-		"numberOfVotes": 103437,
+		"numberOfVotes": 103464,
 		"runtime": 124,
 		"genres": [
 			"Animation",
@@ -3576,7 +3577,7 @@
 		"year": 2019,
 		"myRating": 9,
 		"imdbRating": 7.8,
-		"numberOfVotes": 241864,
+		"numberOfVotes": 242108,
 		"runtime": 135,
 		"genres": [
 			"Drama",
@@ -3588,7 +3589,7 @@
 		"year": 1940,
 		"myRating": 6,
 		"imdbRating": 7.5,
-		"numberOfVotes": 158848,
+		"numberOfVotes": 158907,
 		"runtime": 88,
 		"genres": [
 			"Animation",
@@ -3604,7 +3605,7 @@
 		"year": 2005,
 		"myRating": 9,
 		"imdbRating": 7.7,
-		"numberOfVotes": 677238,
+		"numberOfVotes": 677457,
 		"runtime": 157,
 		"genres": [
 			"Adventure",
@@ -3618,7 +3619,7 @@
 		"year": 2003,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 328592,
+		"numberOfVotes": 328709,
 		"runtime": 109,
 		"genres": [
 			"Comedy",
@@ -3630,7 +3631,7 @@
 		"year": 1941,
 		"myRating": 8,
 		"imdbRating": 8.3,
-		"numberOfVotes": 463776,
+		"numberOfVotes": 463904,
 		"runtime": 119,
 		"genres": [
 			"Drama",
@@ -3642,7 +3643,7 @@
 		"year": 2003,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 485424,
+		"numberOfVotes": 485687,
 		"runtime": 102,
 		"genres": [
 			"Comedy",
@@ -3654,7 +3655,7 @@
 		"year": 1941,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 141320,
+		"numberOfVotes": 141356,
 		"runtime": 64,
 		"genres": [
 			"Animation",
@@ -3670,7 +3671,7 @@
 		"year": 2019,
 		"myRating": 4,
 		"imdbRating": 6.8,
-		"numberOfVotes": 46186,
+		"numberOfVotes": 46210,
 		"runtime": 112,
 		"genres": [
 			"Biography",
@@ -3684,7 +3685,7 @@
 		"year": 2004,
 		"myRating": 6,
 		"imdbRating": 8.3,
-		"numberOfVotes": 1070675,
+		"numberOfVotes": 1071196,
 		"runtime": 108,
 		"genres": [
 			"Drama",
@@ -3697,7 +3698,7 @@
 		"year": 1941,
 		"myRating": 5,
 		"imdbRating": 8.0,
-		"numberOfVotes": 165945,
+		"numberOfVotes": 165985,
 		"runtime": 100,
 		"genres": [
 			"Crime",
@@ -3711,7 +3712,7 @@
 		"year": 2004,
 		"myRating": 7,
 		"imdbRating": 7.5,
-		"numberOfVotes": 382542,
+		"numberOfVotes": 382642,
 		"runtime": 170,
 		"genres": [
 			"Biography",
@@ -3723,7 +3724,7 @@
 		"year": 2015,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 470735,
+		"numberOfVotes": 471285,
 		"runtime": 121,
 		"genres": [
 			"Action",
@@ -3738,7 +3739,7 @@
 		"year": 2014,
 		"myRating": 8,
 		"imdbRating": 7.6,
-		"numberOfVotes": 199070,
+		"numberOfVotes": 199129,
 		"runtime": 86,
 		"genres": [
 			"Comedy",
@@ -3750,7 +3751,7 @@
 		"year": 1942,
 		"myRating": 8,
 		"imdbRating": 7.3,
-		"numberOfVotes": 153240,
+		"numberOfVotes": 153273,
 		"runtime": 69,
 		"genres": [
 			"Animation",
@@ -3764,7 +3765,7 @@
 		"year": 1942,
 		"myRating": 8,
 		"imdbRating": 8.5,
-		"numberOfVotes": 602959,
+		"numberOfVotes": 603132,
 		"runtime": 102,
 		"genres": [
 			"Drama",
@@ -3777,7 +3778,7 @@
 		"year": 2004,
 		"myRating": 7,
 		"imdbRating": 8.2,
-		"numberOfVotes": 443857,
+		"numberOfVotes": 444145,
 		"runtime": 119,
 		"genres": [
 			"Animation",
@@ -3791,7 +3792,7 @@
 		"year": 2021,
 		"myRating": 5,
 		"imdbRating": 6.7,
-		"numberOfVotes": 422234,
+		"numberOfVotes": 422450,
 		"runtime": 134,
 		"genres": [
 			"Action",
@@ -3804,7 +3805,7 @@
 		"year": 2016,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 844796,
+		"numberOfVotes": 845054,
 		"runtime": 147,
 		"genres": [
 			"Action",
@@ -3816,7 +3817,7 @@
 		"year": 2004,
 		"myRating": 6,
 		"imdbRating": 6.5,
-		"numberOfVotes": 412149,
+		"numberOfVotes": 412268,
 		"runtime": 125,
 		"genres": [
 			"Crime",
@@ -3828,7 +3829,7 @@
 		"year": 2017,
 		"myRating": 7,
 		"imdbRating": 7.9,
-		"numberOfVotes": 810959,
+		"numberOfVotes": 811309,
 		"runtime": 130,
 		"genres": [
 			"Action",
@@ -3843,7 +3844,7 @@
 		"year": 2017,
 		"myRating": 8,
 		"imdbRating": 7.3,
-		"numberOfVotes": 163477,
+		"numberOfVotes": 163540,
 		"runtime": 104,
 		"genres": [
 			"Biography",
@@ -3856,7 +3857,7 @@
 		"year": 2016,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 374320,
+		"numberOfVotes": 374553,
 		"runtime": 107,
 		"genres": [
 			"Animation",
@@ -3872,7 +3873,7 @@
 		"year": 2003,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 213538,
+		"numberOfVotes": 213688,
 		"runtime": 131,
 		"genres": [
 			"Crime",
@@ -3886,7 +3887,7 @@
 		"year": 2016,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 100481,
+		"numberOfVotes": 100507,
 		"runtime": 106,
 		"genres": [
 			"Comedy",
@@ -3900,7 +3901,7 @@
 		"year": 2016,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 233690,
+		"numberOfVotes": 233760,
 		"runtime": 118,
 		"genres": [
 			"Comedy",
@@ -3912,7 +3913,7 @@
 		"year": 2013,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 339150,
+		"numberOfVotes": 339260,
 		"runtime": 114,
 		"genres": [
 			"Adventure",
@@ -3927,7 +3928,7 @@
 		"year": 2018,
 		"myRating": 8,
 		"imdbRating": 7.5,
-		"numberOfVotes": 328489,
+		"numberOfVotes": 328617,
 		"runtime": 118,
 		"genres": [
 			"Animation",
@@ -3943,7 +3944,7 @@
 		"year": 2009,
 		"myRating": 8,
 		"imdbRating": 8.4,
-		"numberOfVotes": 1570968,
+		"numberOfVotes": 1571842,
 		"runtime": 153,
 		"genres": [
 			"Adventure",
@@ -3956,7 +3957,7 @@
 		"year": 2005,
 		"myRating": 6,
 		"imdbRating": 6.9,
-		"numberOfVotes": 425809,
+		"numberOfVotes": 425918,
 		"runtime": 143,
 		"genres": [
 			"Adventure",
@@ -3969,7 +3970,7 @@
 		"year": 2004,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 590718,
+		"numberOfVotes": 590885,
 		"runtime": 99,
 		"genres": [
 			"Comedy",
@@ -3981,7 +3982,7 @@
 		"year": 2015,
 		"myRating": 6,
 		"imdbRating": 8.0,
-		"numberOfVotes": 916427,
+		"numberOfVotes": 916866,
 		"runtime": 144,
 		"genres": [
 			"Adventure",
@@ -3994,7 +3995,7 @@
 		"year": 2008,
 		"myRating": 7,
 		"imdbRating": 7.9,
-		"numberOfVotes": 1118385,
+		"numberOfVotes": 1118769,
 		"runtime": 126,
 		"genres": [
 			"Action",
@@ -4007,7 +4008,7 @@
 		"year": 2005,
 		"myRating": 9,
 		"imdbRating": 8.2,
-		"numberOfVotes": 1568098,
+		"numberOfVotes": 1568878,
 		"runtime": 140,
 		"genres": [
 			"Action",
@@ -4020,7 +4021,7 @@
 		"year": 2007,
 		"myRating": 6,
 		"imdbRating": 7.5,
-		"numberOfVotes": 629010,
+		"numberOfVotes": 629282,
 		"runtime": 138,
 		"genres": [
 			"Action",
@@ -4035,7 +4036,7 @@
 		"year": 2016,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 682488,
+		"numberOfVotes": 682750,
 		"runtime": 133,
 		"genres": [
 			"Action",
@@ -4048,7 +4049,7 @@
 		"year": 2004,
 		"myRating": 6,
 		"imdbRating": 7.0,
-		"numberOfVotes": 236390,
+		"numberOfVotes": 236491,
 		"runtime": 96,
 		"genres": [
 			"Comedy"
@@ -4059,7 +4060,7 @@
 		"year": 1945,
 		"myRating": 9,
 		"imdbRating": 8.0,
-		"numberOfVotes": 43898,
+		"numberOfVotes": 43920,
 		"runtime": 86,
 		"genres": [
 			"Drama",
@@ -4071,7 +4072,7 @@
 		"year": 2018,
 		"myRating": 5,
 		"imdbRating": 6.9,
-		"numberOfVotes": 376854,
+		"numberOfVotes": 376963,
 		"runtime": 135,
 		"genres": [
 			"Action",
@@ -4084,7 +4085,7 @@
 		"year": 2004,
 		"myRating": 5,
 		"imdbRating": 8.0,
-		"numberOfVotes": 799776,
+		"numberOfVotes": 800063,
 		"runtime": 137,
 		"genres": [
 			"Action",
@@ -4097,7 +4098,7 @@
 		"year": 2016,
 		"myRating": 10,
 		"imdbRating": 8.0,
-		"numberOfVotes": 661523,
+		"numberOfVotes": 662168,
 		"runtime": 128,
 		"genres": [
 			"Comedy",
@@ -4112,7 +4113,7 @@
 		"year": 2005,
 		"myRating": 6,
 		"imdbRating": 7.3,
-		"numberOfVotes": 140168,
+		"numberOfVotes": 140206,
 		"runtime": 114,
 		"genres": [
 			"Biography",
@@ -4126,7 +4127,7 @@
 		"year": 2016,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 369170,
+		"numberOfVotes": 369336,
 		"runtime": 116,
 		"genres": [
 			"Action",
@@ -4140,7 +4141,7 @@
 		"year": 2006,
 		"myRating": 8,
 		"imdbRating": 8.0,
-		"numberOfVotes": 691453,
+		"numberOfVotes": 691617,
 		"runtime": 144,
 		"genres": [
 			"Action",
@@ -4153,7 +4154,7 @@
 		"year": 2004,
 		"myRating": 9,
 		"imdbRating": 8.1,
-		"numberOfVotes": 286078,
+		"numberOfVotes": 286179,
 		"runtime": 80,
 		"genres": [
 			"Drama",
@@ -4165,7 +4166,7 @@
 		"year": 2007,
 		"myRating": 9,
 		"imdbRating": 8.1,
-		"numberOfVotes": 816343,
+		"numberOfVotes": 816890,
 		"runtime": 111,
 		"genres": [
 			"Animation",
@@ -4180,7 +4181,7 @@
 		"year": 1946,
 		"myRating": 8,
 		"imdbRating": 8.6,
-		"numberOfVotes": 496721,
+		"numberOfVotes": 496885,
 		"runtime": 130,
 		"genres": [
 			"Drama",
@@ -4194,7 +4195,7 @@
 		"year": 2017,
 		"myRating": 8,
 		"imdbRating": 7.5,
-		"numberOfVotes": 603411,
+		"numberOfVotes": 603637,
 		"runtime": 113,
 		"genres": [
 			"Action",
@@ -4208,7 +4209,7 @@
 		"year": 2018,
 		"myRating": 6,
 		"imdbRating": 7.1,
-		"numberOfVotes": 64891,
+		"numberOfVotes": 64921,
 		"runtime": 109,
 		"genres": [
 			"Adventure",
@@ -4220,7 +4221,7 @@
 		"year": 2017,
 		"myRating": 8,
 		"imdbRating": 7.6,
-		"numberOfVotes": 754502,
+		"numberOfVotes": 754713,
 		"runtime": 136,
 		"genres": [
 			"Action",
@@ -4234,7 +4235,7 @@
 		"year": 2022,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 171224,
+		"numberOfVotes": 171463,
 		"runtime": 102,
 		"genres": [
 			"Animation",
@@ -4248,7 +4249,7 @@
 		"year": 2005,
 		"myRating": 6,
 		"imdbRating": 7.1,
-		"numberOfVotes": 109834,
+		"numberOfVotes": 109846,
 		"runtime": 110,
 		"genres": [
 			"Crime",
@@ -4262,7 +4263,7 @@
 		"year": 2010,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 490481,
+		"numberOfVotes": 490772,
 		"runtime": 100,
 		"genres": [
 			"Animation",
@@ -4279,7 +4280,7 @@
 		"year": 2016,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 310580,
+		"numberOfVotes": 310806,
 		"runtime": 137,
 		"genres": [
 			"Drama"
@@ -4290,7 +4291,7 @@
 		"year": 1948,
 		"myRating": 8,
 		"imdbRating": 7.6,
-		"numberOfVotes": 18245,
+		"numberOfVotes": 18253,
 		"runtime": 154,
 		"genres": [
 			"Drama"
@@ -4301,7 +4302,7 @@
 		"year": 2006,
 		"myRating": 9,
 		"imdbRating": 8.5,
-		"numberOfVotes": 1413272,
+		"numberOfVotes": 1413748,
 		"runtime": 151,
 		"genres": [
 			"Crime",
@@ -4314,7 +4315,7 @@
 		"year": 2017,
 		"myRating": 6,
 		"imdbRating": 7.3,
-		"numberOfVotes": 171133,
+		"numberOfVotes": 171229,
 		"runtime": 104,
 		"genres": [
 			"Animation",
@@ -4331,7 +4332,7 @@
 		"year": 2018,
 		"myRating": 4,
 		"imdbRating": 6.5,
-		"numberOfVotes": 306897,
+		"numberOfVotes": 307024,
 		"runtime": 134,
 		"genres": [
 			"Adventure",
@@ -4344,7 +4345,7 @@
 		"year": 2022,
 		"myRating": 4,
 		"imdbRating": 6.2,
-		"numberOfVotes": 168332,
+		"numberOfVotes": 168460,
 		"runtime": 142,
 		"genres": [
 			"Adventure",
@@ -4357,7 +4358,7 @@
 		"year": 2007,
 		"myRating": 7,
 		"imdbRating": 6.3,
-		"numberOfVotes": 633210,
+		"numberOfVotes": 633452,
 		"runtime": 139,
 		"genres": [
 			"Action",
@@ -4370,7 +4371,7 @@
 		"year": 2019,
 		"myRating": 4,
 		"imdbRating": 6.8,
-		"numberOfVotes": 606877,
+		"numberOfVotes": 607138,
 		"runtime": 123,
 		"genres": [
 			"Action",
@@ -4383,7 +4384,7 @@
 		"year": 2018,
 		"myRating": 7,
 		"imdbRating": 8.4,
-		"numberOfVotes": 1191766,
+		"numberOfVotes": 1192470,
 		"runtime": 149,
 		"genres": [
 			"Action",
@@ -4396,7 +4397,7 @@
 		"year": 2019,
 		"myRating": 9,
 		"imdbRating": 8.4,
-		"numberOfVotes": 1254050,
+		"numberOfVotes": 1254788,
 		"runtime": 181,
 		"genres": [
 			"Action",
@@ -4410,7 +4411,7 @@
 		"year": 2009,
 		"myRating": 8,
 		"imdbRating": 7.6,
-		"numberOfVotes": 591646,
+		"numberOfVotes": 591855,
 		"runtime": 153,
 		"genres": [
 			"Action",
@@ -4425,7 +4426,7 @@
 		"year": 2004,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 15981,
+		"numberOfVotes": 15984,
 		"runtime": 104,
 		"genres": [
 			"Comedy",
@@ -4437,7 +4438,7 @@
 		"year": 1949,
 		"myRating": 5,
 		"imdbRating": 8.1,
-		"numberOfVotes": 180876,
+		"numberOfVotes": 180932,
 		"runtime": 104,
 		"genres": [
 			"Film-Noir",
@@ -4450,7 +4451,7 @@
 		"year": 1950,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 172984,
+		"numberOfVotes": 173035,
 		"runtime": 74,
 		"genres": [
 			"Animation",
@@ -4465,7 +4466,7 @@
 		"year": 2007,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 532923,
+		"numberOfVotes": 533028,
 		"runtime": 121,
 		"genres": [
 			"Action",
@@ -4479,7 +4480,7 @@
 		"year": 2016,
 		"myRating": 5,
 		"imdbRating": 7.7,
-		"numberOfVotes": 137864,
+		"numberOfVotes": 137898,
 		"runtime": 101,
 		"genres": [
 			"Animation",
@@ -4494,7 +4495,7 @@
 		"year": 2009,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 267749,
+		"numberOfVotes": 267916,
 		"runtime": 87,
 		"genres": [
 			"Animation",
@@ -4510,7 +4511,7 @@
 		"year": 2010,
 		"myRating": 9,
 		"imdbRating": 8.3,
-		"numberOfVotes": 887693,
+		"numberOfVotes": 887958,
 		"runtime": 103,
 		"genres": [
 			"Animation",
@@ -4525,7 +4526,7 @@
 		"year": 2019,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 101837,
+		"numberOfVotes": 101919,
 		"runtime": 97,
 		"genres": [
 			"Adventure",
@@ -4538,7 +4539,7 @@
 		"year": 2007,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 593456,
+		"numberOfVotes": 593701,
 		"runtime": 157,
 		"genres": [
 			"Crime",
@@ -4552,7 +4553,7 @@
 		"year": 2017,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 92974,
+		"numberOfVotes": 93029,
 		"runtime": 103,
 		"genres": [
 			"Adventure",
@@ -4566,7 +4567,7 @@
 		"year": 2008,
 		"myRating": 5,
 		"imdbRating": 6.4,
-		"numberOfVotes": 509402,
+		"numberOfVotes": 509499,
 		"runtime": 92,
 		"genres": [
 			"Action",
@@ -4580,7 +4581,7 @@
 		"year": 2006,
 		"myRating": 3,
 		"imdbRating": 5.1,
-		"numberOfVotes": 130128,
+		"numberOfVotes": 130151,
 		"runtime": 104,
 		"genres": [
 			"Action",
@@ -4594,7 +4595,7 @@
 		"year": 2006,
 		"myRating": 9,
 		"imdbRating": 7.8,
-		"numberOfVotes": 515220,
+		"numberOfVotes": 515406,
 		"runtime": 101,
 		"genres": [
 			"Comedy",
@@ -4606,7 +4607,7 @@
 		"year": 2017,
 		"myRating": 6,
 		"imdbRating": 7.3,
-		"numberOfVotes": 696489,
+		"numberOfVotes": 696722,
 		"runtime": 141,
 		"genres": [
 			"Action",
@@ -4621,7 +4622,7 @@
 		"year": 1952,
 		"myRating": 6,
 		"imdbRating": 8.3,
-		"numberOfVotes": 259043,
+		"numberOfVotes": 259122,
 		"runtime": 103,
 		"genres": [
 			"Comedy",
@@ -4634,7 +4635,7 @@
 		"year": 2019,
 		"myRating": 5,
 		"imdbRating": 6.8,
-		"numberOfVotes": 192863,
+		"numberOfVotes": 192936,
 		"runtime": 103,
 		"genres": [
 			"Animation",
@@ -4651,7 +4652,7 @@
 		"year": 2006,
 		"myRating": 6,
 		"imdbRating": 8.2,
-		"numberOfVotes": 700082,
+		"numberOfVotes": 700260,
 		"runtime": 118,
 		"genres": [
 			"Drama",
@@ -4664,7 +4665,7 @@
 		"year": 2011,
 		"myRating": 6,
 		"imdbRating": 6.9,
-		"numberOfVotes": 892324,
+		"numberOfVotes": 892604,
 		"runtime": 124,
 		"genres": [
 			"Action",
@@ -4677,7 +4678,7 @@
 		"year": 2023,
 		"myRating": 2,
 		"imdbRating": 5.5,
-		"numberOfVotes": 88855,
+		"numberOfVotes": 89269,
 		"runtime": 109,
 		"genres": [
 			"Horror",
@@ -4690,7 +4691,7 @@
 		"year": 2006,
 		"myRating": 5,
 		"imdbRating": 7.5,
-		"numberOfVotes": 54172,
+		"numberOfVotes": 54202,
 		"runtime": 127,
 		"genres": [
 			"Drama",
@@ -4702,7 +4703,7 @@
 		"year": 2017,
 		"myRating": 6,
 		"imdbRating": 6.7,
-		"numberOfVotes": 59575,
+		"numberOfVotes": 59597,
 		"runtime": 121,
 		"genres": [
 			"Biography",
@@ -4717,7 +4718,7 @@
 		"year": 2018,
 		"myRating": 10,
 		"imdbRating": 8.4,
-		"numberOfVotes": 662775,
+		"numberOfVotes": 663338,
 		"runtime": 117,
 		"genres": [
 			"Animation",
@@ -4734,7 +4735,7 @@
 		"year": 2008,
 		"myRating": 10,
 		"imdbRating": 9.0,
-		"numberOfVotes": 2849734,
+		"numberOfVotes": 2851138,
 		"runtime": 152,
 		"genres": [
 			"Action",
@@ -4748,7 +4749,7 @@
 		"year": 2017,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 112576,
+		"numberOfVotes": 112635,
 		"runtime": 107,
 		"genres": [
 			"Comedy",
@@ -4761,7 +4762,7 @@
 		"year": 2007,
 		"myRating": 6,
 		"imdbRating": 8.2,
-		"numberOfVotes": 637172,
+		"numberOfVotes": 637462,
 		"runtime": 158,
 		"genres": [
 			"Drama"
@@ -4772,7 +4773,7 @@
 		"year": 2016,
 		"myRating": 6,
 		"imdbRating": 7.8,
-		"numberOfVotes": 140918,
+		"numberOfVotes": 140989,
 		"runtime": 101,
 		"genres": [
 			"Adventure",
@@ -4785,7 +4786,7 @@
 		"year": 2018,
 		"myRating": 6,
 		"imdbRating": 6.7,
-		"numberOfVotes": 186960,
+		"numberOfVotes": 187046,
 		"runtime": 114,
 		"genres": [
 			"Action",
@@ -4798,7 +4799,7 @@
 		"year": 2014,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 582870,
+		"numberOfVotes": 583124,
 		"runtime": 108,
 		"genres": [
 			"Drama",
@@ -4811,7 +4812,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 8.2,
-		"numberOfVotes": 187670,
+		"numberOfVotes": 187782,
 		"runtime": 96,
 		"genres": [
 			"Animation",
@@ -4826,7 +4827,7 @@
 		"year": 1954,
 		"myRating": 7,
 		"imdbRating": 8.6,
-		"numberOfVotes": 364869,
+		"numberOfVotes": 364991,
 		"runtime": 207,
 		"genres": [
 			"Action",
@@ -4838,7 +4839,7 @@
 		"year": 2007,
 		"myRating": 9,
 		"imdbRating": 8.2,
-		"numberOfVotes": 1051288,
+		"numberOfVotes": 1051880,
 		"runtime": 122,
 		"genres": [
 			"Crime",
@@ -4851,7 +4852,7 @@
 		"year": 2011,
 		"myRating": 8,
 		"imdbRating": 6.8,
-		"numberOfVotes": 183490,
+		"numberOfVotes": 183515,
 		"runtime": 139,
 		"genres": [
 			"Drama",
@@ -4863,7 +4864,7 @@
 		"year": 2015,
 		"myRating": 6,
 		"imdbRating": 7.2,
-		"numberOfVotes": 718032,
+		"numberOfVotes": 718288,
 		"runtime": 117,
 		"genres": [
 			"Action",
@@ -4876,7 +4877,7 @@
 		"year": 2006,
 		"myRating": 8,
 		"imdbRating": 8.5,
-		"numberOfVotes": 1430735,
+		"numberOfVotes": 1431504,
 		"runtime": 130,
 		"genres": [
 			"Drama",
@@ -4890,7 +4891,7 @@
 		"year": 1955,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 147456,
+		"numberOfVotes": 147508,
 		"runtime": 76,
 		"genres": [
 			"Animation",
@@ -4906,7 +4907,7 @@
 		"year": 2017,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 139141,
+		"numberOfVotes": 139217,
 		"runtime": 102,
 		"genres": [
 			"Crime",
@@ -4919,7 +4920,7 @@
 		"year": 1955,
 		"myRating": 5,
 		"imdbRating": 7.6,
-		"numberOfVotes": 97472,
+		"numberOfVotes": 97500,
 		"runtime": 111,
 		"genres": [
 			"Drama"
@@ -4930,7 +4931,7 @@
 		"year": 2016,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 122155,
+		"numberOfVotes": 122209,
 		"runtime": 161,
 		"genres": [
 			"Drama",
@@ -4942,7 +4943,7 @@
 		"year": 2018,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 375816,
+		"numberOfVotes": 375952,
 		"runtime": 147,
 		"genres": [
 			"Action",
@@ -4955,7 +4956,7 @@
 		"year": 2017,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 324910,
+		"numberOfVotes": 325155,
 		"runtime": 94,
 		"genres": [
 			"Comedy",
@@ -4967,7 +4968,7 @@
 		"year": 2007,
 		"myRating": 6,
 		"imdbRating": 6.9,
-		"numberOfVotes": 365759,
+		"numberOfVotes": 365873,
 		"runtime": 122,
 		"genres": [
 			"Crime",
@@ -4979,7 +4980,7 @@
 		"year": 2016,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 329646,
+		"numberOfVotes": 329821,
 		"runtime": 111,
 		"genres": [
 			"Drama"
@@ -4990,7 +4991,7 @@
 		"year": 2008,
 		"myRating": 6,
 		"imdbRating": 6.5,
-		"numberOfVotes": 224345,
+		"numberOfVotes": 224382,
 		"runtime": 150,
 		"genres": [
 			"Action",
@@ -5004,7 +5005,7 @@
 		"year": 2009,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 1379578,
+		"numberOfVotes": 1380193,
 		"runtime": 162,
 		"genres": [
 			"Action",
@@ -5018,7 +5019,7 @@
 		"year": 1957,
 		"myRating": 9,
 		"imdbRating": 9.0,
-		"numberOfVotes": 857488,
+		"numberOfVotes": 857918,
 		"runtime": 96,
 		"genres": [
 			"Crime",
@@ -5030,7 +5031,7 @@
 		"year": 2017,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 733196,
+		"numberOfVotes": 733872,
 		"runtime": 106,
 		"genres": [
 			"Action",
@@ -5045,7 +5046,7 @@
 		"year": 1957,
 		"myRating": 6,
 		"imdbRating": 8.1,
-		"numberOfVotes": 232289,
+		"numberOfVotes": 232358,
 		"runtime": 161,
 		"genres": [
 			"Adventure",
@@ -5058,7 +5059,7 @@
 		"year": 2017,
 		"myRating": 9,
 		"imdbRating": 8.1,
-		"numberOfVotes": 551225,
+		"numberOfVotes": 551474,
 		"runtime": 115,
 		"genres": [
 			"Comedy",
@@ -5071,7 +5072,7 @@
 		"year": 2018,
 		"myRating": 6,
 		"imdbRating": 6.7,
-		"numberOfVotes": 94722,
+		"numberOfVotes": 94752,
 		"runtime": 130,
 		"genres": [
 			"Adventure",
@@ -5086,7 +5087,7 @@
 		"year": 2017,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 688772,
+		"numberOfVotes": 689151,
 		"runtime": 104,
 		"genres": [
 			"Horror",
@@ -5099,7 +5100,7 @@
 		"year": 2018,
 		"myRating": 8,
 		"imdbRating": 7.5,
-		"numberOfVotes": 228202,
+		"numberOfVotes": 228620,
 		"runtime": 119,
 		"genres": [
 			"Biography",
@@ -5113,7 +5114,7 @@
 		"year": 2018,
 		"myRating": 6,
 		"imdbRating": 7.0,
-		"numberOfVotes": 446464,
+		"numberOfVotes": 446613,
 		"runtime": 118,
 		"genres": [
 			"Action",
@@ -5127,7 +5128,7 @@
 		"year": 2018,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 189492,
+		"numberOfVotes": 189581,
 		"runtime": 101,
 		"genres": [
 			"Animation",
@@ -5142,7 +5143,7 @@
 		"year": 2021,
 		"myRating": 6,
 		"imdbRating": 7.3,
-		"numberOfVotes": 170150,
+		"numberOfVotes": 170285,
 		"runtime": 107,
 		"genres": [
 			"Animation",
@@ -5159,7 +5160,7 @@
 		"year": 2016,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 64467,
+		"numberOfVotes": 64490,
 		"runtime": 100,
 		"genres": [
 			"Drama"
@@ -5170,7 +5171,7 @@
 		"year": 1958,
 		"myRating": 6,
 		"imdbRating": 8.3,
-		"numberOfVotes": 424679,
+		"numberOfVotes": 424801,
 		"runtime": 128,
 		"genres": [
 			"Mystery",
@@ -5183,7 +5184,7 @@
 		"year": 1959,
 		"myRating": 6,
 		"imdbRating": 8.1,
-		"numberOfVotes": 251979,
+		"numberOfVotes": 252133,
 		"runtime": 212,
 		"genres": [
 			"Adventure",
@@ -5195,7 +5196,7 @@
 		"year": 2016,
 		"myRating": 7,
 		"imdbRating": 8.4,
-		"numberOfVotes": 315319,
+		"numberOfVotes": 315578,
 		"runtime": 106,
 		"genres": [
 			"Animation",
@@ -5209,7 +5210,7 @@
 		"year": 1959,
 		"myRating": 7,
 		"imdbRating": 7.2,
-		"numberOfVotes": 159950,
+		"numberOfVotes": 160009,
 		"runtime": 75,
 		"genres": [
 			"Animation",
@@ -5225,7 +5226,7 @@
 		"year": 2017,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 278754,
+		"numberOfVotes": 278883,
 		"runtime": 107,
 		"genres": [
 			"Crime",
@@ -5240,7 +5241,7 @@
 		"year": 2017,
 		"myRating": 5,
 		"imdbRating": 7.0,
-		"numberOfVotes": 161410,
+		"numberOfVotes": 161456,
 		"runtime": 118,
 		"genres": [
 			"Action",
@@ -5254,7 +5255,7 @@
 		"year": 1961,
 		"myRating": 6,
 		"imdbRating": 7.3,
-		"numberOfVotes": 181031,
+		"numberOfVotes": 181149,
 		"runtime": 79,
 		"genres": [
 			"Animation",
@@ -5267,8 +5268,8 @@
 		"title": "Killers of the Flower Moon",
 		"year": 2023,
 		"myRating": 5,
-		"imdbRating": 7.7,
-		"numberOfVotes": 217444,
+		"imdbRating": 7.6,
+		"numberOfVotes": 220484,
 		"runtime": 206,
 		"genres": [
 			"Crime",
@@ -5284,7 +5285,7 @@
 		"year": 1961,
 		"myRating": 6,
 		"imdbRating": 7.6,
-		"numberOfVotes": 120602,
+		"numberOfVotes": 120646,
 		"runtime": 153,
 		"genres": [
 			"Crime",
@@ -5298,7 +5299,7 @@
 		"year": 2017,
 		"myRating": 9,
 		"imdbRating": 7.5,
-		"numberOfVotes": 240913,
+		"numberOfVotes": 241068,
 		"runtime": 119,
 		"genres": [
 			"Biography",
@@ -5312,7 +5313,7 @@
 		"year": 2017,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 445341,
+		"numberOfVotes": 445486,
 		"runtime": 123,
 		"genres": [
 			"Drama",
@@ -5325,7 +5326,7 @@
 		"year": 1962,
 		"myRating": 6,
 		"imdbRating": 7.2,
-		"numberOfVotes": 178592,
+		"numberOfVotes": 178629,
 		"runtime": 110,
 		"genres": [
 			"Action",
@@ -5338,7 +5339,7 @@
 		"year": 1962,
 		"myRating": 10,
 		"imdbRating": 8.3,
-		"numberOfVotes": 312246,
+		"numberOfVotes": 312418,
 		"runtime": 218,
 		"genres": [
 			"Adventure",
@@ -5352,7 +5353,7 @@
 		"year": 2017,
 		"myRating": 6,
 		"imdbRating": 7.6,
-		"numberOfVotes": 127297,
+		"numberOfVotes": 127362,
 		"runtime": 111,
 		"genres": [
 			"Drama"
@@ -5363,7 +5364,7 @@
 		"year": 1964,
 		"myRating": 7,
 		"imdbRating": 8.4,
-		"numberOfVotes": 515487,
+		"numberOfVotes": 515601,
 		"runtime": 95,
 		"genres": [
 			"Comedy",
@@ -5375,7 +5376,7 @@
 		"year": 2017,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 311031,
+		"numberOfVotes": 311360,
 		"runtime": 132,
 		"genres": [
 			"Drama",
@@ -5387,7 +5388,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 315420,
+		"numberOfVotes": 315622,
 		"runtime": 135,
 		"genres": [
 			"Crime",
@@ -5400,7 +5401,7 @@
 		"year": 2017,
 		"myRating": 6,
 		"imdbRating": 6.7,
-		"numberOfVotes": 127034,
+		"numberOfVotes": 127078,
 		"runtime": 89,
 		"genres": [
 			"Crime",
@@ -5413,7 +5414,7 @@
 		"year": 2017,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 144477,
+		"numberOfVotes": 144538,
 		"runtime": 130,
 		"genres": [
 			"Drama",
@@ -5425,7 +5426,7 @@
 		"year": 1964,
 		"myRating": 6,
 		"imdbRating": 7.7,
-		"numberOfVotes": 201633,
+		"numberOfVotes": 201676,
 		"runtime": 110,
 		"genres": [
 			"Action",
@@ -5438,7 +5439,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 27854,
+		"numberOfVotes": 27867,
 		"runtime": 174,
 		"genres": [
 			"Biography",
@@ -5452,7 +5453,7 @@
 		"year": 1964,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 185056,
+		"numberOfVotes": 185106,
 		"runtime": 139,
 		"genres": [
 			"Comedy",
@@ -5466,7 +5467,7 @@
 		"year": 2018,
 		"myRating": 3,
 		"imdbRating": 5.8,
-		"numberOfVotes": 22029,
+		"numberOfVotes": 22047,
 		"runtime": 103,
 		"genres": [
 			"Drama",
@@ -5480,7 +5481,7 @@
 		"year": 1965,
 		"myRating": 7,
 		"imdbRating": 7.9,
-		"numberOfVotes": 81685,
+		"numberOfVotes": 81715,
 		"runtime": 197,
 		"genres": [
 			"Drama",
@@ -5493,7 +5494,7 @@
 		"year": 1965,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 258890,
+		"numberOfVotes": 259020,
 		"runtime": 172,
 		"genres": [
 			"Biography",
@@ -5508,7 +5509,7 @@
 		"year": 1966,
 		"myRating": 7,
 		"imdbRating": 8.8,
-		"numberOfVotes": 806304,
+		"numberOfVotes": 806586,
 		"runtime": 161,
 		"genres": [
 			"Adventure",
@@ -5520,7 +5521,7 @@
 		"year": 2017,
 		"myRating": 8,
 		"imdbRating": 7.1,
-		"numberOfVotes": 62191,
+		"numberOfVotes": 62204,
 		"runtime": 113,
 		"genres": [
 			"Drama",
@@ -5533,7 +5534,7 @@
 		"year": 2018,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 169030,
+		"numberOfVotes": 169087,
 		"runtime": 135,
 		"genres": [
 			"Drama"
@@ -5544,7 +5545,7 @@
 		"year": 1967,
 		"myRating": 7,
 		"imdbRating": 8.0,
-		"numberOfVotes": 287364,
+		"numberOfVotes": 287417,
 		"runtime": 106,
 		"genres": [
 			"Comedy",
@@ -5557,7 +5558,7 @@
 		"year": 1967,
 		"myRating": 6,
 		"imdbRating": 7.6,
-		"numberOfVotes": 197466,
+		"numberOfVotes": 197555,
 		"runtime": 78,
 		"genres": [
 			"Animation",
@@ -5572,7 +5573,7 @@
 		"year": 1968,
 		"myRating": 6,
 		"imdbRating": 8.3,
-		"numberOfVotes": 714899,
+		"numberOfVotes": 715178,
 		"runtime": 149,
 		"genres": [
 			"Adventure",
@@ -5584,7 +5585,7 @@
 		"year": 2018,
 		"myRating": 6,
 		"imdbRating": 7.2,
-		"numberOfVotes": 161419,
+		"numberOfVotes": 161480,
 		"runtime": 132,
 		"genres": [
 			"Biography",
@@ -5598,7 +5599,7 @@
 		"year": 2020,
 		"myRating": 5,
 		"imdbRating": 7.3,
-		"numberOfVotes": 35007,
+		"numberOfVotes": 35050,
 		"runtime": 120,
 		"genres": [
 			"Biography",
@@ -5610,7 +5611,7 @@
 		"year": 2019,
 		"myRating": 6,
 		"imdbRating": 7.4,
-		"numberOfVotes": 550892,
+		"numberOfVotes": 551150,
 		"runtime": 129,
 		"genres": [
 			"Action",
@@ -5625,7 +5626,7 @@
 		"year": 2021,
 		"myRating": 8,
 		"imdbRating": 7.2,
-		"numberOfVotes": 404847,
+		"numberOfVotes": 405082,
 		"runtime": 132,
 		"genres": [
 			"Action",
@@ -5639,7 +5640,7 @@
 		"year": 2018,
 		"myRating": 7,
 		"imdbRating": 7.1,
-		"numberOfVotes": 154405,
+		"numberOfVotes": 154486,
 		"runtime": 130,
 		"genres": [
 			"Action",
@@ -5652,7 +5653,7 @@
 		"year": 1969,
 		"myRating": 6,
 		"imdbRating": 8.0,
-		"numberOfVotes": 225958,
+		"numberOfVotes": 226005,
 		"runtime": 110,
 		"genres": [
 			"Biography",
@@ -5666,7 +5667,7 @@
 		"year": 1968,
 		"myRating": 7,
 		"imdbRating": 8.5,
-		"numberOfVotes": 347559,
+		"numberOfVotes": 347646,
 		"runtime": 166,
 		"genres": [
 			"Western"
@@ -5677,7 +5678,7 @@
 		"year": 2018,
 		"myRating": 6,
 		"imdbRating": 7.2,
-		"numberOfVotes": 166779,
+		"numberOfVotes": 166884,
 		"runtime": 133,
 		"genres": [
 			"Comedy",
@@ -5693,7 +5694,7 @@
 		"year": 2022,
 		"myRating": 5,
 		"imdbRating": 6.2,
-		"numberOfVotes": 270861,
+		"numberOfVotes": 271000,
 		"runtime": 125,
 		"genres": [
 			"Action",
@@ -5707,7 +5708,7 @@
 		"year": 1969,
 		"myRating": 6,
 		"imdbRating": 7.9,
-		"numberOfVotes": 22774,
+		"numberOfVotes": 22783,
 		"runtime": 111,
 		"genres": [
 			"Drama",
@@ -5719,7 +5720,7 @@
 		"year": 2023,
 		"myRating": 5,
 		"imdbRating": 7.6,
-		"numberOfVotes": 45866,
+		"numberOfVotes": 46310,
 		"runtime": 124,
 		"genres": [
 			"Animation",
@@ -5734,7 +5735,7 @@
 		"year": 1970,
 		"myRating": 7,
 		"imdbRating": 7.4,
-		"numberOfVotes": 10620,
+		"numberOfVotes": 10623,
 		"runtime": 200,
 		"genres": [
 			"Drama",
@@ -5746,7 +5747,7 @@
 		"year": 2022,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 522204,
+		"numberOfVotes": 523219,
 		"runtime": 139,
 		"genres": [
 			"Action",
@@ -5761,7 +5762,7 @@
 		"year": 1971,
 		"myRating": 6,
 		"imdbRating": 7.7,
-		"numberOfVotes": 134679,
+		"numberOfVotes": 134742,
 		"runtime": 104,
 		"genres": [
 			"Action",
@@ -5775,7 +5776,7 @@
 		"year": 2023,
 		"myRating": 6,
 		"imdbRating": 7.0,
-		"numberOfVotes": 231522,
+		"numberOfVotes": 232035,
 		"runtime": 92,
 		"genres": [
 			"Animation",
@@ -5790,7 +5791,7 @@
 		"year": 2020,
 		"myRating": 8,
 		"imdbRating": 7.3,
-		"numberOfVotes": 584835,
+		"numberOfVotes": 585550,
 		"runtime": 150,
 		"genres": [
 			"Action",
@@ -5803,7 +5804,7 @@
 		"year": 2019,
 		"myRating": 9,
 		"imdbRating": 8.5,
-		"numberOfVotes": 943731,
+		"numberOfVotes": 944897,
 		"runtime": 132,
 		"genres": [
 			"Drama",
@@ -5815,7 +5816,7 @@
 		"year": 2023,
 		"myRating": 6,
 		"imdbRating": 7.9,
-		"numberOfVotes": 373421,
+		"numberOfVotes": 373913,
 		"runtime": 150,
 		"genres": [
 			"Action",
@@ -5829,7 +5830,7 @@
 		"year": 2019,
 		"myRating": 4,
 		"imdbRating": 6.5,
-		"numberOfVotes": 234274,
+		"numberOfVotes": 234345,
 		"runtime": 137,
 		"genres": [
 			"Action",
@@ -5842,7 +5843,7 @@
 		"year": 2018,
 		"myRating": 7,
 		"imdbRating": 6.8,
-		"numberOfVotes": 58039,
+		"numberOfVotes": 58062,
 		"runtime": 98,
 		"genres": [
 			"Adventure",
@@ -5854,7 +5855,7 @@
 		"year": 2019,
 		"myRating": 7,
 		"imdbRating": 6.8,
-		"numberOfVotes": 338068,
+		"numberOfVotes": 338267,
 		"runtime": 116,
 		"genres": [
 			"Horror",
@@ -5867,7 +5868,7 @@
 		"year": 1972,
 		"myRating": 10,
 		"imdbRating": 9.2,
-		"numberOfVotes": 1997797,
+		"numberOfVotes": 1998572,
 		"runtime": 175,
 		"genres": [
 			"Crime",
@@ -5879,7 +5880,7 @@
 		"year": 2019,
 		"myRating": 5,
 		"imdbRating": 6.4,
-		"numberOfVotes": 14344,
+		"numberOfVotes": 14359,
 		"runtime": 120,
 		"genres": [
 			"Drama",
@@ -5891,7 +5892,7 @@
 		"year": 2018,
 		"myRating": 6,
 		"imdbRating": 6.9,
-		"numberOfVotes": 39637,
+		"numberOfVotes": 39656,
 		"runtime": 111,
 		"genres": [
 			"Biography",
@@ -5904,7 +5905,7 @@
 		"year": 2018,
 		"myRating": 7,
 		"imdbRating": 8.2,
-		"numberOfVotes": 561803,
+		"numberOfVotes": 562330,
 		"runtime": 130,
 		"genres": [
 			"Biography",
@@ -5918,7 +5919,7 @@
 		"year": 1973,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 97573,
+		"numberOfVotes": 97598,
 		"runtime": 110,
 		"genres": [
 			"Comedy",
@@ -5930,7 +5931,7 @@
 		"year": 1973,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 77985,
+		"numberOfVotes": 77999,
 		"runtime": 94,
 		"genres": [
 			"Action",
@@ -5943,7 +5944,7 @@
 		"year": 2018,
 		"myRating": 7,
 		"imdbRating": 7.4,
-		"numberOfVotes": 82008,
+		"numberOfVotes": 82033,
 		"runtime": 93,
 		"genres": [
 			"Comedy",
@@ -5956,7 +5957,7 @@
 		"year": 1973,
 		"myRating": 6,
 		"imdbRating": 8.3,
-		"numberOfVotes": 278308,
+		"numberOfVotes": 278410,
 		"runtime": 129,
 		"genres": [
 			"Comedy",
@@ -5969,7 +5970,7 @@
 		"year": 2018,
 		"myRating": 7,
 		"imdbRating": 7.1,
-		"numberOfVotes": 52259,
+		"numberOfVotes": 52273,
 		"runtime": 119,
 		"genres": [
 			"Drama",
@@ -5981,7 +5982,7 @@
 		"year": 1974,
 		"myRating": 10,
 		"imdbRating": 8.1,
-		"numberOfVotes": 347607,
+		"numberOfVotes": 347736,
 		"runtime": 130,
 		"genres": [
 			"Drama",
@@ -5994,7 +5995,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 7.6,
-		"numberOfVotes": 837456,
+		"numberOfVotes": 838192,
 		"runtime": 161,
 		"genres": [
 			"Comedy",
@@ -6006,7 +6007,7 @@
 		"year": 1974,
 		"myRating": 6,
 		"imdbRating": 7.7,
-		"numberOfVotes": 120784,
+		"numberOfVotes": 120847,
 		"runtime": 113,
 		"genres": [
 			"Drama",
@@ -6019,15 +6020,15 @@
 		"year": 2020,
 		"myRating": 7,
 		"imdbRating": 7.4,
-		"numberOfVotes": 168419,
+		"numberOfVotes": 168492,
 		"runtime": 102,
 		"genres": [
 			"Animation",
 			"Adventure",
 			"Comedy",
+			"Drama",
 			"Family",
-			"Fantasy",
-			"Sci-Fi"
+			"Fantasy"
 		]
 	},
 	"tt0071562": {
@@ -6035,7 +6036,7 @@
 		"year": 1974,
 		"myRating": 7,
 		"imdbRating": 9.0,
-		"numberOfVotes": 1355417,
+		"numberOfVotes": 1355915,
 		"runtime": 202,
 		"genres": [
 			"Crime",
@@ -6047,7 +6048,7 @@
 		"year": 2019,
 		"myRating": 9,
 		"imdbRating": 8.4,
-		"numberOfVotes": 1467452,
+		"numberOfVotes": 1468393,
 		"runtime": 122,
 		"genres": [
 			"Crime",
@@ -6060,7 +6061,7 @@
 		"year": 2017,
 		"myRating": 9,
 		"imdbRating": 8.1,
-		"numberOfVotes": 21145,
+		"numberOfVotes": 21152,
 		"runtime": 100,
 		"genres": [
 			"Documentary",
@@ -6073,7 +6074,7 @@
 		"year": 1975,
 		"myRating": 9,
 		"imdbRating": 8.1,
-		"numberOfVotes": 655304,
+		"numberOfVotes": 655537,
 		"runtime": 124,
 		"genres": [
 			"Adventure",
@@ -6086,7 +6087,7 @@
 		"year": 1975,
 		"myRating": 5,
 		"imdbRating": 8.7,
-		"numberOfVotes": 1066569,
+		"numberOfVotes": 1066943,
 		"runtime": 133,
 		"genres": [
 			"Drama"
@@ -6097,7 +6098,7 @@
 		"year": 1976,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 125342,
+		"numberOfVotes": 125381,
 		"runtime": 138,
 		"genres": [
 			"Drama",
@@ -6110,7 +6111,7 @@
 		"year": 1976,
 		"myRating": 6,
 		"imdbRating": 8.1,
-		"numberOfVotes": 624528,
+		"numberOfVotes": 624770,
 		"runtime": 120,
 		"genres": [
 			"Drama",
@@ -6122,7 +6123,7 @@
 		"year": 1976,
 		"myRating": 8,
 		"imdbRating": 8.2,
-		"numberOfVotes": 913567,
+		"numberOfVotes": 913998,
 		"runtime": 114,
 		"genres": [
 			"Crime",
@@ -6134,7 +6135,7 @@
 		"year": 1977,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 215612,
+		"numberOfVotes": 215683,
 		"runtime": 138,
 		"genres": [
 			"Drama",
@@ -6146,7 +6147,7 @@
 		"year": 2007,
 		"myRating": 6,
 		"imdbRating": 8.1,
-		"numberOfVotes": 655125,
+		"numberOfVotes": 655323,
 		"runtime": 148,
 		"genres": [
 			"Adventure",
@@ -6159,7 +6160,7 @@
 		"year": 2019,
 		"myRating": 9,
 		"imdbRating": 7.9,
-		"numberOfVotes": 343744,
+		"numberOfVotes": 343891,
 		"runtime": 137,
 		"genres": [
 			"Drama",
@@ -6171,7 +6172,7 @@
 		"year": 1977,
 		"myRating": 8,
 		"imdbRating": 8.6,
-		"numberOfVotes": 1441603,
+		"numberOfVotes": 1442064,
 		"runtime": 121,
 		"genres": [
 			"Action",
@@ -6185,7 +6186,7 @@
 		"year": 2013,
 		"myRating": 6,
 		"imdbRating": 7.1,
-		"numberOfVotes": 808742,
+		"numberOfVotes": 808921,
 		"runtime": 143,
 		"genres": [
 			"Action",
@@ -6198,7 +6199,7 @@
 		"year": 2020,
 		"myRating": 6,
 		"imdbRating": 6.1,
-		"numberOfVotes": 263127,
+		"numberOfVotes": 263207,
 		"runtime": 109,
 		"genres": [
 			"Action",
@@ -6211,7 +6212,7 @@
 		"year": 2018,
 		"myRating": 6,
 		"imdbRating": 7.0,
-		"numberOfVotes": 19406,
+		"numberOfVotes": 19409,
 		"runtime": 92,
 		"genres": [
 			"Comedy",
@@ -6223,7 +6224,7 @@
 		"year": 1978,
 		"myRating": 6,
 		"imdbRating": 7.7,
-		"numberOfVotes": 62362,
+		"numberOfVotes": 62386,
 		"runtime": 94,
 		"genres": [
 			"Drama",
@@ -6235,7 +6236,7 @@
 		"year": 2021,
 		"myRating": 4,
 		"imdbRating": 5.9,
-		"numberOfVotes": 44074,
+		"numberOfVotes": 44101,
 		"runtime": 99,
 		"genres": [
 			"Drama",
@@ -6248,7 +6249,7 @@
 		"year": 2018,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 76668,
+		"numberOfVotes": 76711,
 		"runtime": 100,
 		"genres": [
 			"Documentary",
@@ -6261,7 +6262,7 @@
 		"year": 2011,
 		"myRating": 9,
 		"imdbRating": 7.8,
-		"numberOfVotes": 699953,
+		"numberOfVotes": 700261,
 		"runtime": 100,
 		"genres": [
 			"Action",
@@ -6273,7 +6274,7 @@
 		"year": 2009,
 		"myRating": 7,
 		"imdbRating": 7.1,
-		"numberOfVotes": 165148,
+		"numberOfVotes": 165222,
 		"runtime": 97,
 		"genres": [
 			"Animation",
@@ -6290,7 +6291,7 @@
 		"year": 2008,
 		"myRating": 6,
 		"imdbRating": 7.9,
-		"numberOfVotes": 459400,
+		"numberOfVotes": 459518,
 		"runtime": 107,
 		"genres": [
 			"Comedy",
@@ -6304,7 +6305,7 @@
 		"year": 2007,
 		"myRating": 6,
 		"imdbRating": 7.8,
-		"numberOfVotes": 298239,
+		"numberOfVotes": 298335,
 		"runtime": 123,
 		"genres": [
 			"Drama",
@@ -6318,7 +6319,7 @@
 		"year": 1979,
 		"myRating": 8,
 		"imdbRating": 8.4,
-		"numberOfVotes": 705778,
+		"numberOfVotes": 706017,
 		"runtime": 147,
 		"genres": [
 			"Drama",
@@ -6331,7 +6332,7 @@
 		"year": 2018,
 		"myRating": 7,
 		"imdbRating": 8.2,
-		"numberOfVotes": 38262,
+		"numberOfVotes": 38273,
 		"runtime": 99,
 		"genres": [
 			"Documentary",
@@ -6344,7 +6345,7 @@
 		"year": 2013,
 		"myRating": 7,
 		"imdbRating": 7.9,
-		"numberOfVotes": 516539,
+		"numberOfVotes": 516685,
 		"runtime": 117,
 		"genres": [
 			"Biography",
@@ -6356,7 +6357,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 7.4,
-		"numberOfVotes": 251994,
+		"numberOfVotes": 252150,
 		"runtime": 109,
 		"genres": [
 			"Drama",
@@ -6371,7 +6372,7 @@
 		"year": 2008,
 		"myRating": 6,
 		"imdbRating": 6.6,
-		"numberOfVotes": 520988,
+		"numberOfVotes": 521096,
 		"runtime": 112,
 		"genres": [
 			"Action",
@@ -6384,7 +6385,7 @@
 		"year": 2011,
 		"myRating": 4,
 		"imdbRating": 7.0,
-		"numberOfVotes": 895870,
+		"numberOfVotes": 896090,
 		"runtime": 115,
 		"genres": [
 			"Action",
@@ -6396,7 +6397,7 @@
 		"year": 1980,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 259105,
+		"numberOfVotes": 259235,
 		"runtime": 88,
 		"genres": [
 			"Comedy"
@@ -6407,7 +6408,7 @@
 		"year": 1980,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 213214,
+		"numberOfVotes": 213281,
 		"runtime": 133,
 		"genres": [
 			"Action",
@@ -6423,7 +6424,7 @@
 		"year": 1980,
 		"myRating": 9,
 		"imdbRating": 8.7,
-		"numberOfVotes": 1371253,
+		"numberOfVotes": 1371762,
 		"runtime": 124,
 		"genres": [
 			"Action",
@@ -6437,7 +6438,7 @@
 		"year": 2018,
 		"myRating": 7,
 		"imdbRating": 7.9,
-		"numberOfVotes": 85633,
+		"numberOfVotes": 85685,
 		"runtime": 121,
 		"genres": [
 			"Crime",
@@ -6450,7 +6451,7 @@
 		"year": 2019,
 		"myRating": 7,
 		"imdbRating": 6.8,
-		"numberOfVotes": 165995,
+		"numberOfVotes": 166187,
 		"runtime": 116,
 		"genres": [
 			"Comedy",
@@ -6464,7 +6465,7 @@
 		"year": 2022,
 		"myRating": 7,
 		"imdbRating": 7.0,
-		"numberOfVotes": 150411,
+		"numberOfVotes": 150527,
 		"runtime": 100,
 		"genres": [
 			"Animation",
@@ -6480,7 +6481,7 @@
 		"year": 2022,
 		"myRating": 7,
 		"imdbRating": 6.8,
-		"numberOfVotes": 57419,
+		"numberOfVotes": 57492,
 		"runtime": 100,
 		"genres": [
 			"Animation",
@@ -6495,7 +6496,7 @@
 		"year": 1980,
 		"myRating": 6,
 		"imdbRating": 8.1,
-		"numberOfVotes": 377939,
+		"numberOfVotes": 378091,
 		"runtime": 129,
 		"genres": [
 			"Biography",
@@ -6508,7 +6509,7 @@
 		"year": 1980,
 		"myRating": 7,
 		"imdbRating": 8.4,
-		"numberOfVotes": 1099062,
+		"numberOfVotes": 1099513,
 		"runtime": 146,
 		"genres": [
 			"Drama",
@@ -6520,7 +6521,7 @@
 		"year": 2014,
 		"myRating": 8,
 		"imdbRating": 8.7,
-		"numberOfVotes": 2072318,
+		"numberOfVotes": 2074212,
 		"runtime": 169,
 		"genres": [
 			"Adventure",
@@ -6533,7 +6534,7 @@
 		"year": 2019,
 		"myRating": 5,
 		"imdbRating": 7.0,
-		"numberOfVotes": 268482,
+		"numberOfVotes": 268684,
 		"runtime": 94,
 		"genres": [
 			"Horror",
@@ -6546,7 +6547,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 7.5,
-		"numberOfVotes": 62779,
+		"numberOfVotes": 62797,
 		"runtime": 113,
 		"genres": [
 			"Drama"
@@ -6557,7 +6558,7 @@
 		"year": 2007,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 628032,
+		"numberOfVotes": 628243,
 		"runtime": 113,
 		"genres": [
 			"Comedy"
@@ -6568,7 +6569,7 @@
 		"year": 1981,
 		"myRating": 8,
 		"imdbRating": 8.4,
-		"numberOfVotes": 1032088,
+		"numberOfVotes": 1032409,
 		"runtime": 115,
 		"genres": [
 			"Action",
@@ -6580,7 +6581,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 7.6,
-		"numberOfVotes": 25598,
+		"numberOfVotes": 25612,
 		"runtime": 101,
 		"genres": [
 			"Drama"
@@ -6591,7 +6592,7 @@
 		"year": 1982,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 818072,
+		"numberOfVotes": 818493,
 		"runtime": 117,
 		"genres": [
 			"Action",
@@ -6605,7 +6606,7 @@
 		"year": 2019,
 		"myRating": 5,
 		"imdbRating": 7.8,
-		"numberOfVotes": 386876,
+		"numberOfVotes": 387537,
 		"runtime": 113,
 		"genres": [
 			"Action",
@@ -6617,7 +6618,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 7.6,
-		"numberOfVotes": 132337,
+		"numberOfVotes": 132377,
 		"runtime": 125,
 		"genres": [
 			"Biography",
@@ -6630,7 +6631,7 @@
 		"year": 2012,
 		"myRating": 7,
 		"imdbRating": 8.0,
-		"numberOfVotes": 1453276,
+		"numberOfVotes": 1453653,
 		"runtime": 143,
 		"genres": [
 			"Action",
@@ -6642,7 +6643,7 @@
 		"year": 2019,
 		"myRating": 9,
 		"imdbRating": 8.2,
-		"numberOfVotes": 667760,
+		"numberOfVotes": 668287,
 		"runtime": 119,
 		"genres": [
 			"Action",
@@ -6655,7 +6656,7 @@
 		"year": 2019,
 		"myRating": 6,
 		"imdbRating": 8.1,
-		"numberOfVotes": 107997,
+		"numberOfVotes": 108104,
 		"runtime": 122,
 		"genres": [
 			"Drama",
@@ -6667,7 +6668,7 @@
 		"year": 1983,
 		"myRating": 7,
 		"imdbRating": 8.3,
-		"numberOfVotes": 1114885,
+		"numberOfVotes": 1115309,
 		"runtime": 131,
 		"genres": [
 			"Action",
@@ -6681,7 +6682,7 @@
 		"year": 2019,
 		"myRating": 7,
 		"imdbRating": 7.5,
-		"numberOfVotes": 70634,
+		"numberOfVotes": 70658,
 		"runtime": 100,
 		"genres": [
 			"Comedy",
@@ -6693,7 +6694,7 @@
 		"year": 1984,
 		"myRating": 6,
 		"imdbRating": 8.4,
-		"numberOfVotes": 425291,
+		"numberOfVotes": 425428,
 		"runtime": 160,
 		"genres": [
 			"Biography",
@@ -6706,7 +6707,7 @@
 		"year": 2021,
 		"myRating": 7,
 		"imdbRating": 7.5,
-		"numberOfVotes": 118789,
+		"numberOfVotes": 118859,
 		"runtime": 115,
 		"genres": [
 			"Biography",
@@ -6720,7 +6721,7 @@
 		"year": 1984,
 		"myRating": 7,
 		"imdbRating": 7.5,
-		"numberOfVotes": 532901,
+		"numberOfVotes": 533056,
 		"runtime": 118,
 		"genres": [
 			"Action",
@@ -6732,7 +6733,7 @@
 		"year": 1984,
 		"myRating": 7,
 		"imdbRating": 7.3,
-		"numberOfVotes": 242966,
+		"numberOfVotes": 243062,
 		"runtime": 126,
 		"genres": [
 			"Action",
@@ -6746,7 +6747,7 @@
 		"year": 1984,
 		"myRating": 8,
 		"imdbRating": 8.0,
-		"numberOfVotes": 181274,
+		"numberOfVotes": 181344,
 		"runtime": 117,
 		"genres": [
 			"Animation",
@@ -6759,7 +6760,7 @@
 		"year": 2008,
 		"myRating": 6,
 		"imdbRating": 7.6,
-		"numberOfVotes": 161612,
+		"numberOfVotes": 161729,
 		"runtime": 101,
 		"genres": [
 			"Animation",
@@ -6774,7 +6775,7 @@
 		"year": 2009,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 358592,
+		"numberOfVotes": 358728,
 		"runtime": 129,
 		"genres": [
 			"Biography",
@@ -6787,7 +6788,7 @@
 		"year": 1984,
 		"myRating": 5,
 		"imdbRating": 7.0,
-		"numberOfVotes": 125498,
+		"numberOfVotes": 125539,
 		"runtime": 93,
 		"genres": [
 			"Comedy",
@@ -6799,10 +6800,11 @@
 		"year": 1984,
 		"myRating": 6,
 		"imdbRating": 8.1,
-		"numberOfVotes": 918602,
+		"numberOfVotes": 918884,
 		"runtime": 107,
 		"genres": [
 			"Action",
+			"Adventure",
 			"Sci-Fi"
 		]
 	},
@@ -6811,7 +6813,7 @@
 		"year": 1985,
 		"myRating": 8,
 		"imdbRating": 8.5,
-		"numberOfVotes": 1297562,
+		"numberOfVotes": 1298069,
 		"runtime": 116,
 		"genres": [
 			"Adventure",
@@ -6824,7 +6826,7 @@
 		"year": 2008,
 		"myRating": 7,
 		"imdbRating": 7.5,
-		"numberOfVotes": 471928,
+		"numberOfVotes": 472043,
 		"runtime": 131,
 		"genres": [
 			"Drama",
@@ -6837,7 +6839,7 @@
 		"year": 1985,
 		"myRating": 8,
 		"imdbRating": 7.8,
-		"numberOfVotes": 433692,
+		"numberOfVotes": 433852,
 		"runtime": 97,
 		"genres": [
 			"Comedy",
@@ -6849,7 +6851,7 @@
 		"year": 2020,
 		"myRating": 5,
 		"imdbRating": 6.6,
-		"numberOfVotes": 3833,
+		"numberOfVotes": 3835,
 		"runtime": 91,
 		"genres": [
 			"Drama"
@@ -6860,7 +6862,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 7.9,
-		"numberOfVotes": 767285,
+		"numberOfVotes": 767709,
 		"runtime": 130,
 		"genres": [
 			"Comedy",
@@ -6875,7 +6877,7 @@
 		"year": 2021,
 		"myRating": 4,
 		"imdbRating": 6.3,
-		"numberOfVotes": 382765,
+		"numberOfVotes": 382930,
 		"runtime": 156,
 		"genres": [
 			"Action",
@@ -6889,7 +6891,7 @@
 		"year": 2012,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 868531,
+		"numberOfVotes": 868867,
 		"runtime": 169,
 		"genres": [
 			"Adventure",
@@ -6901,7 +6903,7 @@
 		"year": 2007,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 120958,
+		"numberOfVotes": 120966,
 		"runtime": 86,
 		"genres": [
 			"Drama",
@@ -6914,7 +6916,7 @@
 		"year": 1986,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 384281,
+		"numberOfVotes": 384401,
 		"runtime": 103,
 		"genres": [
 			"Comedy"
@@ -6925,7 +6927,7 @@
 		"year": 2008,
 		"myRating": 8,
 		"imdbRating": 8.4,
-		"numberOfVotes": 1192490,
+		"numberOfVotes": 1192983,
 		"runtime": 98,
 		"genres": [
 			"Animation",
@@ -6939,7 +6941,7 @@
 		"year": 2022,
 		"myRating": 6,
 		"imdbRating": 6.7,
-		"numberOfVotes": 301492,
+		"numberOfVotes": 301739,
 		"runtime": 161,
 		"genres": [
 			"Action",
@@ -6953,7 +6955,7 @@
 		"year": 1985,
 		"myRating": 7,
 		"imdbRating": 8.4,
-		"numberOfVotes": 95436,
+		"numberOfVotes": 95544,
 		"runtime": 142,
 		"genres": [
 			"Drama",
@@ -6966,7 +6968,7 @@
 		"year": 1986,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 437059,
+		"numberOfVotes": 437199,
 		"runtime": 120,
 		"genres": [
 			"Drama",
@@ -6978,7 +6980,7 @@
 		"year": 2023,
 		"myRating": 6,
 		"imdbRating": 7.4,
-		"numberOfVotes": 25460,
+		"numberOfVotes": 25592,
 		"runtime": 106,
 		"genres": [
 			"Comedy",
@@ -6991,7 +6993,7 @@
 		"year": 1986,
 		"myRating": 7,
 		"imdbRating": 8.1,
-		"numberOfVotes": 438556,
+		"numberOfVotes": 438711,
 		"runtime": 89,
 		"genres": [
 			"Adventure",
@@ -7004,7 +7006,7 @@
 		"year": 1986,
 		"myRating": 5,
 		"imdbRating": 8.0,
-		"numberOfVotes": 180614,
+		"numberOfVotes": 180714,
 		"runtime": 125,
 		"genres": [
 			"Animation",
@@ -7018,7 +7020,7 @@
 		"year": 2010,
 		"myRating": 9,
 		"imdbRating": 7.7,
-		"numberOfVotes": 595159,
+		"numberOfVotes": 595393,
 		"runtime": 146,
 		"genres": [
 			"Adventure",
@@ -7032,7 +7034,7 @@
 		"year": 1987,
 		"myRating": 5,
 		"imdbRating": 7.2,
-		"numberOfVotes": 8832,
+		"numberOfVotes": 8835,
 		"runtime": 83,
 		"genres": [
 			"Drama"
@@ -7043,7 +7045,7 @@
 		"year": 1987,
 		"myRating": 9,
 		"imdbRating": 8.3,
-		"numberOfVotes": 786156,
+		"numberOfVotes": 786364,
 		"runtime": 116,
 		"genres": [
 			"Drama",
@@ -7055,7 +7057,7 @@
 		"year": 2023,
 		"myRating": 10,
 		"imdbRating": 8.6,
-		"numberOfVotes": 354074,
+		"numberOfVotes": 355245,
 		"runtime": 140,
 		"genres": [
 			"Animation",
@@ -7070,7 +7072,7 @@
 		"year": 1987,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 159382,
+		"numberOfVotes": 159435,
 		"runtime": 93,
 		"genres": [
 			"Comedy",
@@ -7082,7 +7084,7 @@
 		"year": 2021,
 		"myRating": 6,
 		"imdbRating": 7.4,
-		"numberOfVotes": 431540,
+		"numberOfVotes": 431835,
 		"runtime": 132,
 		"genres": [
 			"Action",
@@ -7096,7 +7098,7 @@
 		"year": 2019,
 		"myRating": 8,
 		"imdbRating": 7.2,
-		"numberOfVotes": 51771,
+		"numberOfVotes": 51785,
 		"runtime": 97,
 		"genres": [
 			"Documentary",
@@ -7109,7 +7111,7 @@
 		"year": 2022,
 		"myRating": 5,
 		"imdbRating": 6.9,
-		"numberOfVotes": 472831,
+		"numberOfVotes": 473103,
 		"runtime": 126,
 		"genres": [
 			"Action",
@@ -7124,7 +7126,7 @@
 		"year": 1988,
 		"myRating": 5,
 		"imdbRating": 8.0,
-		"numberOfVotes": 203591,
+		"numberOfVotes": 203697,
 		"runtime": 124,
 		"genres": [
 			"Animation",
@@ -7140,7 +7142,7 @@
 		"year": 2010,
 		"myRating": 8,
 		"imdbRating": 8.0,
-		"numberOfVotes": 819770,
+		"numberOfVotes": 820050,
 		"runtime": 108,
 		"genres": [
 			"Drama",
@@ -7152,7 +7154,7 @@
 		"year": 2012,
 		"myRating": 7,
 		"imdbRating": 6.9,
-		"numberOfVotes": 698062,
+		"numberOfVotes": 698348,
 		"runtime": 136,
 		"genres": [
 			"Action",
@@ -7165,7 +7167,7 @@
 		"year": 1988,
 		"myRating": 9,
 		"imdbRating": 8.5,
-		"numberOfVotes": 307150,
+		"numberOfVotes": 307327,
 		"runtime": 89,
 		"genres": [
 			"Animation",
@@ -7178,7 +7180,7 @@
 		"year": 2023,
 		"myRating": 6,
 		"imdbRating": 7.7,
-		"numberOfVotes": 237483,
+		"numberOfVotes": 238474,
 		"runtime": 163,
 		"genres": [
 			"Action",
@@ -7191,7 +7193,7 @@
 		"year": 2021,
 		"myRating": 6,
 		"imdbRating": 7.5,
-		"numberOfVotes": 134298,
+		"numberOfVotes": 134433,
 		"runtime": 144,
 		"genres": [
 			"Biography",
@@ -7204,7 +7206,7 @@
 		"year": 1988,
 		"myRating": 8,
 		"imdbRating": 8.1,
-		"numberOfVotes": 376302,
+		"numberOfVotes": 376583,
 		"runtime": 86,
 		"genres": [
 			"Animation",
@@ -7218,7 +7220,7 @@
 		"year": 1989,
 		"myRating": 6,
 		"imdbRating": 7.5,
-		"numberOfVotes": 402015,
+		"numberOfVotes": 402132,
 		"runtime": 126,
 		"genres": [
 			"Action",
@@ -7230,7 +7232,7 @@
 		"year": 1989,
 		"myRating": 7,
 		"imdbRating": 8.1,
-		"numberOfVotes": 540477,
+		"numberOfVotes": 540766,
 		"runtime": 128,
 		"genres": [
 			"Comedy",
@@ -7242,7 +7244,7 @@
 		"year": 2017,
 		"myRating": 4,
 		"imdbRating": 6.1,
-		"numberOfVotes": 476800,
+		"numberOfVotes": 476893,
 		"runtime": 120,
 		"genres": [
 			"Action",
@@ -7256,7 +7258,7 @@
 		"year": 1989,
 		"myRating": 7,
 		"imdbRating": 8.2,
-		"numberOfVotes": 807101,
+		"numberOfVotes": 807332,
 		"runtime": 127,
 		"genres": [
 			"Action",
@@ -7268,7 +7270,7 @@
 		"year": 1989,
 		"myRating": 7,
 		"imdbRating": 7.6,
-		"numberOfVotes": 289301,
+		"numberOfVotes": 289394,
 		"runtime": 83,
 		"genres": [
 			"Animation",
@@ -7284,7 +7286,7 @@
 		"year": 1989,
 		"myRating": 7,
 		"imdbRating": 7.8,
-		"numberOfVotes": 163582,
+		"numberOfVotes": 163702,
 		"runtime": 103,
 		"genres": [
 			"Animation",
@@ -7297,7 +7299,7 @@
 		"year": 1989,
 		"myRating": 5,
 		"imdbRating": 7.8,
-		"numberOfVotes": 79311,
+		"numberOfVotes": 79332,
 		"runtime": 103,
 		"genres": [
 			"Biography",
@@ -7309,7 +7311,7 @@
 		"year": 2010,
 		"myRating": 4,
 		"imdbRating": 6.3,
-		"numberOfVotes": 165578,
+		"numberOfVotes": 165613,
 		"runtime": 113,
 		"genres": [
 			"Adventure",
@@ -7322,7 +7324,7 @@
 		"year": 2011,
 		"myRating": 6,
 		"imdbRating": 7.3,
-		"numberOfVotes": 242320,
+		"numberOfVotes": 242367,
 		"runtime": 107,
 		"genres": [
 			"Animation",
@@ -7337,7 +7339,7 @@
 		"year": 2008,
 		"myRating": 7,
 		"imdbRating": 7.5,
-		"numberOfVotes": 73319,
+		"numberOfVotes": 73329,
 		"runtime": 96,
 		"genres": [
 			"Biography",
@@ -7351,7 +7353,7 @@
 		"year": 1989,
 		"myRating": 8,
 		"imdbRating": 7.7,
-		"numberOfVotes": 240789,
+		"numberOfVotes": 240886,
 		"runtime": 95,
 		"genres": [
 			"Comedy",
@@ -7364,7 +7366,7 @@
 		"year": 2013,
 		"myRating": 8,
 		"imdbRating": 8.2,
-		"numberOfVotes": 1567280,
+		"numberOfVotes": 1568320,
 		"runtime": 180,
 		"genres": [
 			"Biography",
@@ -7378,7 +7380,7 @@
 		"year": 1990,
 		"myRating": 6,
 		"imdbRating": 7.6,
-		"numberOfVotes": 421930,
+		"numberOfVotes": 422041,
 		"runtime": 162,
 		"genres": [
 			"Crime",
@@ -7390,7 +7392,7 @@
 		"year": 1990,
 		"myRating": 7,
 		"imdbRating": 8.7,
-		"numberOfVotes": 1248234,
+		"numberOfVotes": 1248832,
 		"runtime": 145,
 		"genres": [
 			"Biography",
@@ -7403,7 +7405,7 @@
 		"year": 1990,
 		"myRating": 7,
 		"imdbRating": 7.7,
-		"numberOfVotes": 649763,
+		"numberOfVotes": 650003,
 		"runtime": 103,
 		"genres": [
 			"Comedy",

@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 MY_IMDB_ID = "ur95934592"
 
+
 def main():
     email = "brendan.mccann02@gmail.com"
     password = input("password: ")
