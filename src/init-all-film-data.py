@@ -86,7 +86,6 @@ def main():
         if film['id'] not in myFilmDataKeys:
             # changing the order of json attributes
             allFilmData[film['id']] = {
-                'id': film['id'],
                 'title': film['title'],
                 'year': film['year'],
                 'imdbRating': film['imdbRating'],

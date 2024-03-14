@@ -77,18 +77,20 @@ def main():
 
     print("\nWe think you'll enjoy these 20 films:")
     for i in range(0, 20):
-        film = allFilmData[similarities[i][0]]
+        filmId = similarities[i][0]
+        film = allFilmData[filmId]
         similarity = similarities[i][1]
-        vector = allFilmDataVec[film['id']]
+        vector = allFilmDataVec[filmId]
         print(stringifyFilm(film, similarity, vector))
 
-    print("\nWe think you won't enjoy these 10 films:")
-    len_allFilmData = len(allFilmData)
-    for i in range(len_allFilmData - 1, len_allFilmData - 11, -1):
-        film = allFilmData[similarities[i][0]]
-        similarity = similarities[i][1]
-        vector = allFilmDataVec[film['id']]
-        print(stringifyFilm(film, similarity, vector))
+    # print("\nWe think you won't enjoy these 10 films:")
+    # len_allFilmData = len(allFilmData)
+    # for i in range(len_allFilmData - 1, len_allFilmData - 11, -1):
+    #     film = allFilmData[similarities[i][0]]
+    #     similarity = similarities[i][1]
+    #     vector = allFilmDataVec[film['id']]
+    #     print(stringifyFilm(film, similarity, vector))
+
     print("\n")
 
 
