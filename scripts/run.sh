@@ -5,18 +5,25 @@
 
 cd ..
 git pull
-# this section has become deprecated, read comments in download-my-film-data.py to see why
+# *** DEPRECATED, read comments in download-my-film-data.py to see why
 #printf "\n[1/5] Downloading ratings.csv from my IMDb account...\n"
 #cd src/ || exit
 #python3 download-my-film-data.py
 
 printf "\n[1/5] Downloading title.basics.tsv & title.ratings.tsv..."
 cd data/ || exit
+# if there are left over files, delete them before re-downloading
 if test -f title.basics.tsv.gz; then
   rm title.basics.tsv.gz
 fi
 if test -f title.ratings.tsv.gz; then
   rm title.ratings.tsv.gz
+fi
+if test -f title.basics.tsv; then
+  rm title.basics.tsv
+fi
+if test -f title.ratings.tsv; then
+  rm title.ratings.tsv
 fi
 
 cd ../src/ || exit
@@ -28,7 +35,8 @@ gzip -d title.ratings.tsv.gz
 
 printf "\n[2/5] Initialising my-film-data.json..."
 if ! test -f ratings.csv; then
-  printf "\n ratings.csv not found. Please export it to data/."
+  printf "\n ratings.csv not found. Please export it to data/.\n"
+  exit
 fi
 
 cd ../src/ || exit

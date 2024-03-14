@@ -5,7 +5,6 @@
 - [x] add numVotes & runtime to human data
 - [x] vectorize numberOfVotes & runtime
 - [x] change run.sh to reflect various changes
-- [x] make it possible for other users to be recommended films (should work the exact same if it's working off ratings.csv)
 - [ ] user interface (web app)
 
 ### Web App
