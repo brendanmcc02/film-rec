@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+    font-family: lato-black;
+    src: url("../fonts/Lato/Lato-Black.ttf");
+}
+
+@font-face {
+    font-family: lato-bold;
+    src: url("../fonts/Lato/Lato-Bold.ttf");
+}
+
+@font-face {
+    font-family: lato-italic;
+    src: url("../fonts/Lato/Lato-Italic.ttf");
+}
+
+@font-face {
+    font-family: lato-bold-italic;
+    src: url("../fonts/Lato/Lato-BoldItalic.ttf");
+}
+
+h1 {
+    font-family: lato-black, serif;
+    font-size: 50px;
+    color: azure;
+}
+
+h3 {
+    font-size: 23px;
+    color: floralwhite;
+    font-family: lato-italic, serif;
+}
+
+.uploadButton {
+    background-color: blue;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+
+.title {
+  position: absolute;
+  width: 33%;
+  left: 15%;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.fileUpload {
+  position: absolute;
+  width: 33%;
+  right: 15%;
+  top: 50%;
+  transform: translate(0, -50%);
+  opacity: 0.6;
+  background-color: floralwhite;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  padding: 13px;
+  border-radius: 20px;
+}

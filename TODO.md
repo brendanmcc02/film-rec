@@ -6,12 +6,16 @@
 - [x] vectorize numberOfVotes & runtime
 - [x] change run.sh to reflect various changes
 - [ ] user interface (web app)
+- [ ] backend
 
 ### Web App
-- [ ] start looking into react
+- [x] do text div 
+- [ ] do file upload (visuals only) div
+- [ ] href/hover/explain what is rating.csv/how to export it
 
 ### Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
+- [ ] change the order of run.sh, so that you leave init'ing my-film-data to the end (if you think about it, we want to compute that once the website starts running, before the user imports their dataset.)
 
 ### Creating user profile
 - [x] calculate user profile using weighted averages
