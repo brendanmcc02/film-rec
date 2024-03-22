@@ -49,4 +49,3 @@
 - [x] for .sh files change paths to be relative to device
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
-- [ ] include TV shows? (excl episodes)
