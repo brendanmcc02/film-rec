@@ -1,3 +1,15 @@
+Once the website starts running:
+1. download imdb data
+2. init all film data
+3. vectorize all film data
+
+when user uploads ratings.csv
+1. error handle and check if it's the right file
+2. init my film data (rm films from all-film-data)
+3. vectorize my film data
+4. rec.py
+
+
 VECTORIZED DATA FORM:
 year_norm, imdbRating_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western
 

@@ -9,6 +9,12 @@
 - [ ] backend
 
 ### Backend
+- [x] all-film-data doesn't filter out films that have been rated
+- [x] vectorize all-film-data in init-all-film-data.py
+- [x] init-my-film-data filters out films that have been rated from all-film-data (also rm vector entries)
+- [x] keep title.basics.tsv & title.ratings.tsv
+- [x] add last-download.txt. if downloaded <24 hours, skip the step
+- [ ] finish init-my-file-data.py to reflect above changes
 - [ ] research how/where to store files, run .py scripts etc.
 
 ### Web App
@@ -19,7 +25,7 @@
 
 ### Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
-- [ ] change the order of run.sh, so that you leave init'ing my-film-data to the end (if you think about it, we want to compute that once the website starts running, before the user imports their dataset.)
+- [x] reduce run.sh to startup.sh
 
 ### Creating user profile
 - [x] calculate user profile using weighted averages
