@@ -7,7 +7,7 @@ cd ..
 git pull
 # *** DEPRECATED, read comments in download-my-film-data.py to see why
 #printf "\n[1/5] Downloading ratings.csv from my IMDb account...\n"
-#cd src/ || exit
+#cd backend/ || exit
 #python3 download-my-film-data.py
 
 printf "\n[1/5] Downloading title.basics.tsv & title.ratings.tsv..."

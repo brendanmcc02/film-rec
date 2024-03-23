@@ -1,6 +1,10 @@
 import './App.css';
 import React, { Component } from "react";
 import background from "./social-network.jpg"
+import '@fortawesome/fontawesome-free/css/all.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileImport } from '@fortawesome/free-solid-svg-icons';
+import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 
 class App extends Component {
     state = {
@@ -45,14 +49,24 @@ class App extends Component {
                   <h1>FILM REC</h1>
                   <h3>A film recommendation algorithm.</h3>
                   <h3>Upload your exported ratings.csv from your IMDB account.</h3>
-                  <br/>
-                  <a>How do I export my IMDb ratings?</a>
+                  <h3><a href="https://www.wikihow.com/Export-Your-IMDb-Custom-Lists-to-a-CSV-File"><u>
+                      How do I export my IMDb ratings?
+                  </u></a></h3>
+
               </div>
 
-              <div className="fileUpload">
-                  <input id="uploadButton" type="file" onChange={this.onFileChange} />
+              <div className="file-div">
+                  <label htmlFor="select-file" className="file-button">
+                      <FontAwesomeIcon icon={faFileImport} className="select-file-icon"/> Select ratings.csv
+                      <input id="select-file" type="file" onChange={this.onFileChange}/>
+                  </label>
 
-                  {/*<button onClick={this.onFileUpload}>Upload</button>*/}
+
+                  <br/><br/><br/>
+
+                  <button className="file-button" onClick={this.onFileUpload}>
+                      <FontAwesomeIcon icon={faFileUpload} className="select-file-icon"/> Upload
+                  </button>
               </div>
           </>
         );

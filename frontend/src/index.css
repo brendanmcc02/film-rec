@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  overflow: hidden; /* hide scroll bars & disable scrolling */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -24,6 +25,10 @@ body {
     src: url("../fonts/Lato/Lato-BoldItalic.ttf");
 }
 
+.select-file-icon {
+    font-size: 20px;
+}
+
 h1 {
     font-family: lato-black, serif;
     font-size: 50px;
@@ -36,30 +41,51 @@ h3 {
     font-family: lato-italic, serif;
 }
 
-.uploadButton {
-    background-color: blue;
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
-.custom-file-upload {
-    border: 1px solid #ccc;
-    display: inline-block;
+.file-button {
+    border: 2px solid rgba(173, 216, 230, 0.9);
     padding: 6px 12px;
     cursor: pointer;
+    background-color: rgba(173, 216, 230, 0.5);
+    text-align: center;
+    font-family: lato-bold, serif;
+    font-size: 18px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    display: inline-block;
+    border-radius: 10px;
+    width: 50%;
+    -webkit-transition: background-color 0.3s;
 }
 
+.file-button:hover {
+    border: 2px solid rgba(173, 216, 230, 1);
+    background-color: rgba(173, 216, 230, 0.6);
+    transition: 0.1s ease-in;
+    -webkit-transition: background-color 0.3s;
+}
+
+input[type="file"] {
+    display: none;
+}
 
 .title {
   position: absolute;
   width: 33%;
-  left: 15%;
+  left: 20%;
   top: 50%;
   transform: translate(0, -50%);
 }
 
-.fileUpload {
+.file-div {
   position: absolute;
-  width: 33%;
-  right: 15%;
+  width: 20%;
+  right: 20%;
   top: 50%;
   transform: translate(0, -50%);
   opacity: 0.6;
@@ -67,4 +93,11 @@ h3 {
   border: 2px solid rgba(0, 0, 0, 0.3);
   padding: 13px;
   border-radius: 20px;
+  -webkit-transition: opacity 0.5s;
+}
+
+.file-div:hover {
+    opacity: 0.8;
+    transition: 0.1s ease-in;
+    -webkit-transition: opacity 0.3s;
 }

@@ -8,10 +8,14 @@
 - [ ] user interface (web app)
 - [ ] backend
 
+### Backend
+- [ ] research how/where to store files, run .py scripts etc.
+
 ### Web App
 - [x] do text div 
-- [ ] do file upload (visuals only) div
-- [ ] href/hover/explain what is rating.csv/how to export it
+- [x] do file upload (visuals only) div
+- [x] href what is rating.csv/how to export it
+- [x] finish home page (visuals only, file upload func later)
 
 ### Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
