@@ -19,7 +19,7 @@ def main():
         # download title.ratings.tsv.gz
         urllib.request.urlretrieve("https://datasets.imdbws.com/title.ratings.tsv.gz", "../data/title.ratings.tsv.gz")
     else:
-        print("\nnot downloading title.basics/ratings.tsv.gz since it was downloaded in the last 24 hours.")
+        print("\nnot downloading title.basics/ratings.tsv.gz since it was downloaded in the last 3 days.")
 
     # write current timestamp to last-download.txt
     with open('../data/last-download.txt', 'w') as file:

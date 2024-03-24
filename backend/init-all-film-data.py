@@ -19,9 +19,6 @@ year_norms = {}
 
 
 def main():
-    print("\nFiltering out films:\n1. that are not movies\n2. with no genres\n3. <"
-          + str(RUNTIME_THRESHOLD) + " min runtime")
-
     print("\nImporting title.basics.tsv...")
     # import title-basics.tsv as list of dicts
     title_basics_raw = []
@@ -31,6 +28,9 @@ def main():
             title_basics_raw.append(dict(row))
 
     print("Imported title.basics.tsv.")
+    print("\nFiltering out films:\n1. that are not movies\n2. with no genres\n3. <"
+          + str(RUNTIME_THRESHOLD) + " min runtime")
+
     stage_1_allFilmData = []
 
     # iterate through each film:

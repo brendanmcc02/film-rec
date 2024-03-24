@@ -14,7 +14,7 @@
 - [x] init-my-film-data filters out films that have been rated from all-film-data (also rm vector entries)
 - [x] keep title.basics.tsv & title.ratings.tsv
 - [x] add last-download.txt. if downloaded <24 hours, skip the step
-- [ ] finish init-my-file-data.py to reflect above changes
+- [x] finish init-my-file-data.py to reflect above changes
 - [ ] research how/where to store files, run .py scripts etc.
 
 ### Web App

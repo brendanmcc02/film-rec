@@ -1,4 +1,5 @@
-# given ratings.csv, filter it, and then write to my-film-data.json
+# given ratings.csv, filter it, and then write to my-film-data.json.
+# filter out films that the user has rated from all-film-data.json
 import json
 import csv
 
@@ -15,6 +16,11 @@ def main():
         for row in reader:
             myFilmData_list.append(dict(row))
 
+    # read in all-film-data.json
+    allFilmDataFile = open('../data/all-film-data.json')
+    allFilmData = json.load(allFilmDataFile)
+    allFilmDataKeys = list(allFilmData.keys())
+
     myFilmDataDict = {}  # create dict
 
     # for each film:
@@ -25,8 +31,13 @@ def main():
             genres = film['Genres'].replace("\"", "").split(", ")
             # map the film id to a dict of it's attributes
             try:
+                filmId = film['Const']
+                if filmId in allFilmDataKeys:
+                    englishTitle = allFilmData[filmId]['title']  # english title is stored in all-film-data.json
+                else:
+                    englishTitle = film['Title']
                 myFilmDataDict[film['Const']] = {
-                    "title": film['Title'],
+                    "title": englishTitle,
                     "year": int(film['Year']),
                     "myRating": int(film['Your Rating']),
                     "imdbRating": float(film['IMDb Rating']),
@@ -37,32 +48,24 @@ def main():
             except ValueError:
                 print("value error with film: " + film['Const'])
 
-    # vectorize todo
-
-
-    # filter out films that the user has rated from all-film-data-vectorized.json
-
-    # read in all-film-data-vectorized.json
-    allFilmDataVecFile = open('../data/all-film-data-vectorized.json')
-    allFilmDataVec = json.load(allFilmDataVecFile)
-    allFilmDataKeys = list(allFilmDataVec.keys())
-
-    allFilmDataVec_new = {}
+    allFilmData_new = {}
 
     myFilmDataKeys = list(myFilmDataDict.keys())  # list of keys of my-film-data
 
-    # for each film in all-film-data
+    # filter out films that the user has rated from all-film-data.json
     for key in allFilmDataKeys:
         # if the film has not been seen by the user
         if key not in myFilmDataKeys:
             # keep it in the dataset
-            allFilmDataVec_new[key] = allFilmDataVec[key]
+            allFilmData_new[key] = allFilmData[key]
 
-    # write to my-film-data-vectorized.json
-    with open('../data/all-film-data-vectorized.json', 'w') as convert_file:
-        convert_file.write(json.dumps(allFilmDataVec_new, indent=4, separators=(',', ': '))
-                           .replace(",\n        ", ", ").replace("[\n        ", "[ ")
-                           .replace("\n    ],", " ],"))
+    # write to all-film-data.json
+    with open('../data/all-film-data.json', 'w') as convert_file:
+        convert_file.write(json.dumps(allFilmData_new, indent=4, separators=(',', ': ')))
+
+    # write to my-film-data.json
+    with open('../data/my-film-data.json', 'w') as convert_file:
+        convert_file.write(json.dumps(myFilmDataDict, indent=4, separators=(',', ': ')))
 
 
 if __name__ == "__main__":

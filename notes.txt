@@ -1,7 +1,6 @@
 Once the website starts running:
 1. download imdb data
-2. init all film data
-3. vectorize all film data
+2. init all-film-data.json
 
 when user uploads ratings.csv
 1. error handle and check if it's the right file
