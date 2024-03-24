@@ -1,4 +1,4 @@
-# given title.basics.tsv & title.ratings.tsv, filter and vectorize to produce all-film-data-vectorized.json
+# given title.basics.tsv & title.ratings.tsv, filter and produce all-film-data.json
 
 # imports
 import json
@@ -98,107 +98,9 @@ def main():
 
     print("Final Dataset size: " + str(len(allFilmData)) + " films.")
 
-    # vectorize all-film-data.json
-
-    global MIN_IMDB_RATING
-    global MIN_YEAR
-    global MIN_NUMBER_OF_VOTES
-    global MIN_RUNTIME
-    global DIFF_IMDB_RATING
-    global DIFF_YEAR
-    global DIFF_NUMBER_OF_VOTES
-    global DIFF_RUNTIME
-    global year_norms
-
-    allFilmDataKeys = list(allFilmData.keys())
-
-    vectorized_all_film_data = {}  # init the dictionary
-
-    # initialise the min & max values of various attributes
-    MIN_IMDB_RATING = allFilmData[allFilmDataKeys[0]]['imdbRating']
-    MAX_IMDB_RATING = allFilmData[allFilmDataKeys[0]]['imdbRating']
-    MIN_YEAR = allFilmData[allFilmDataKeys[0]]['year']
-    MAX_YEAR = allFilmData[allFilmDataKeys[0]]['year']
-    MIN_NUMBER_OF_VOTES = allFilmData[allFilmDataKeys[0]]['numberOfVotes']
-    MAX_NUMBER_OF_VOTES = allFilmData[allFilmDataKeys[0]]['numberOfVotes']
-    MIN_RUNTIME = allFilmData[allFilmDataKeys[0]]['runtime']
-    MAX_RUNTIME = allFilmData[allFilmDataKeys[0]]['runtime']
-
-    # get a list of unique genres
-    allGenres = []
-    for key in allFilmDataKeys:
-        # if a genre is not in allGenres yet, append it
-        for genre in allFilmData[key]['genres']:
-            if genre not in allGenres:
-                allGenres.append(genre)
-
-        # modify min & max of the various attributes
-        MIN_IMDB_RATING = min(MIN_IMDB_RATING, allFilmData[key]['imdbRating'])
-        MAX_IMDB_RATING = max(MAX_IMDB_RATING, allFilmData[key]['imdbRating'])
-        MIN_YEAR = min(MIN_YEAR, allFilmData[key]['year'])
-        MAX_YEAR = max(MAX_YEAR, allFilmData[key]['year'])
-        MIN_NUMBER_OF_VOTES = min(MIN_NUMBER_OF_VOTES, allFilmData[key]['numberOfVotes'])
-        MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, allFilmData[key]['numberOfVotes'])
-        MIN_RUNTIME = min(MIN_RUNTIME, allFilmData[key]['runtime'])
-        MAX_RUNTIME = max(MAX_RUNTIME, allFilmData[key]['runtime'])
-
-    allGenres = sorted(allGenres)  # sort alphabetically
-
-    # perform some pre-computation to avoid repetitive computation
-    DIFF_IMDB_RATING = MAX_IMDB_RATING - MIN_IMDB_RATING
-    DIFF_YEAR = MAX_YEAR - MIN_YEAR
-    DIFF_NUMBER_OF_VOTES = MAX_NUMBER_OF_VOTES - MIN_NUMBER_OF_VOTES
-    DIFF_RUNTIME = MAX_RUNTIME - MIN_RUNTIME
-
-    # pre-compute normalised years for each year
-    for y in range(MIN_YEAR, MAX_YEAR + 1):
-        year_norms[y] = (y - MIN_YEAR) / DIFF_YEAR
-
-    # for each film in all-film-data:
-    for key in allFilmDataKeys:
-        # vectorize the film
-        vector = vectorize(allFilmData[key], allGenres)
-        # add to dictionary
-        vectorized_all_film_data[key] = vector
-
-    # write to all-film-data-vectorized.json
-    with open('../data/all-film-data-vectorized.json', 'w') as convert_file:
-        convert_file.write(json.dumps(vectorized_all_film_data, indent=4, separators=(',', ': '))
-                           .replace(",\n        ", ", ").replace("[\n        ", "[ ")
-                           .replace("\n    ],", " ],"))
-
-
-# given a film, return it's vectorized form (return type: list)
-def vectorize(film, allGenres):
-    vector = []
-    # 1. normalise the year; apply weight
-    # from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
-    year_norm = year_norms[film['year']] * 0.3
-    vector.append(year_norm)
-    # 2. normalise imdbRating
-    imdbRating_norm = (film['imdbRating'] - MIN_IMDB_RATING) / DIFF_IMDB_RATING
-    vector.append(imdbRating_norm)
-    # 3. normalise numberOfVotes
-    numberOfVotes_norm = (film['numberOfVotes'] - MIN_NUMBER_OF_VOTES) / DIFF_NUMBER_OF_VOTES
-    vector.append(numberOfVotes_norm)
-    # 4. normalise runtime; apply weight
-    runtime_norm = ((film['runtime'] - MIN_RUNTIME) / DIFF_RUNTIME) * 0.3
-    vector.append(runtime_norm)
-    # 5. one-hot encoding on genres
-    oneHotEncode(vector, film['genres'], allGenres)
-
-    return vector
-
-
-# given a vector, append the one-hot encoding of genres to the vector
-def oneHotEncode(vector, filmGenres, allGenres):
-    for g in allGenres:
-        if g in filmGenres:
-            vector.append(1)
-        else:
-            vector.append(0)
-
-    return vector
+    # write to all-film-data.json
+    with open('../data/all-film-data.json', 'w') as convert_file:
+        convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
 
 
 if __name__ == "__main__":

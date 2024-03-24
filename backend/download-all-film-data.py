@@ -11,8 +11,8 @@ def main():
 
     diff = currDownload - lastDownload
 
-    # if the file was downloaded >= 24 hours ago:
-    if diff >= timedelta(hours=24):
+    # if the file was downloaded >= 3 days ago: (I really don't want to get blacklisted)
+    if diff >= timedelta(days=3):
         # download title.basics.tsv.gz
         urllib.request.urlretrieve("https://datasets.imdbws.com/title.basics.tsv.gz", "../data/title.basics.tsv.gz")
 

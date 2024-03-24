@@ -26,10 +26,10 @@ if test -f title.ratings.tsv.gz; then
   gzip -d title.ratings.tsv.gz
 fi
 
-printf "\n[2/2] Initialising all-film-data-vectorized.json..."
+printf "\n[2/2] Initialising all-film-data.json..."
 cd ../backend/ || exit
 python3 init-all-film-data.py
 
 git add ../data/
-git commit -m "downloaded, filtered, and vectorized all-film-data.json"
+git commit -m "downloaded and filtered all-film-data.json"
 git push
