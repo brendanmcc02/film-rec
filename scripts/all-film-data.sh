@@ -1,5 +1,4 @@
-# downloads, filters and vectorizes all-film-data.
-# this is intended to run when the website starts up, hence startup.sh
+# downloads and filters all-film-data.json
 
 cd ..
 git pull
