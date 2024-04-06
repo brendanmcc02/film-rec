@@ -39,5 +39,6 @@ if test -f title.basics.tsv; then
   fi
 else
   printf "\n[2/2] all-film-data.json was initialised >3 days ago, so the script was not run.\n"
+
 fi
 

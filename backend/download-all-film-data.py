@@ -19,9 +19,9 @@ def main():
         # download title.ratings.tsv.gz
         urllib.request.urlretrieve("https://datasets.imdbws.com/title.ratings.tsv.gz", "../data/title.ratings.tsv.gz")
 
-    # write current timestamp to last-download.txt
-    with open('../data/last-download.txt', 'w') as file:
-        file.write(str(datetime.now()))
+        # write current timestamp to last-download.txt
+        with open('../data/last-download.txt', 'w') as file:
+            file.write(str(datetime.now()))
 
 
 if __name__ == "__main__":

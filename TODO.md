@@ -8,9 +8,7 @@ may be unnecessary to write my-film-data(-vectorized).json to file, just store i
 - [x] vectorize numberOfVotes & runtime
 - [x] change run.sh to reflect various changes
 - [x] error handling for imported ratings.csv
-- [ ] delete title.x.tsv files after getting all-film-data.json?
-- [ ] user interface (web app)
-- [ ] backend
+- [x] delete title.x.tsv files after getting all-film-data.json
 
 ### Backend
 - [x] all-film-data doesn't filter out films that have been rated
@@ -20,12 +18,15 @@ may be unnecessary to write my-film-data(-vectorized).json to file, just store i
 - [x] add last-download.txt. if downloaded <24 hours, skip the step
 - [x] finish init-my-file-data.py to reflect above changes
 - [x] research how/where to store files, run .py scripts etc.
+- [ ] upload button calls /verifyFile API
+- [ ] if no errors with /verifyFile, go to results page and show recommended films
 
 ### Web App
 - [x] do text div 
 - [x] do file upload (visuals only) div
 - [x] href what is rating.csv/how to export it
 - [x] finish home page (visuals only, file upload func later)
+- [ ] results page
 
 ### Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it

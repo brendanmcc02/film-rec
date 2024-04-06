@@ -52,7 +52,7 @@ class App extends Component {
               <div className="title">
                   <h1>FILM REC</h1>
                   <h3>A film recommendation algorithm.</h3>
-                  <h3>Upload your exported ratings.csv from your IMDB account.</h3>
+                  <h3>Upload your exported ratings.csv (keep filename the same) from your IMDB account.</h3>
                   <h3><a href="https://www.wikihow.com/Export-Your-IMDb-Custom-Lists-to-a-CSV-File"><u>
                       How do I export my IMDb ratings?
                   </u></a></h3>

@@ -1,7 +1,7 @@
 # given ratings.csv, vectorize both myFilmData & allFilmData, and then recommend 20 films
 
 # imports
-from flask import Flask
+# from flask import Flask
 import json
 import csv
 import numpy as np
@@ -22,11 +22,42 @@ VECTOR_LENGTH = 27
 # app = Flask(__name__)
 
 
-# @app.route('/rec')
-def rec():
-    # import ratings.csv
-    myFilmData_list = importFile()
+# @app.route('/verifyFile')
+# import user-uploaded ratings.csv.
+def verifyFile():
 
+    # list of expected attributes of each film object; error handling.
+    filmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "URL", "Title Type", "IMDb Rating",
+                      "Runtime (mins)", "Year", "Genres", "Num Votes", "Release Date", "Directors"]
+
+    try:
+        myFilmData_list = []
+        with open("../data/ratings.csv", newline='') as myFilmData_file:
+            reader = csv.DictReader(myFilmData_file, delimiter=',', restkey='unexpectedData')
+
+            for row in reader:
+                # if there are more data than row headers:
+                if 'unexpectedData' in row:
+                    return "Error. Ratings.csv does not conform to expected format.\n"
+
+                # if any of the expected row headers are not to be found:
+                keys = list(row.keys())
+                for k in keys:
+                    if k not in filmAttributes:
+                        return "Error. Row headers in ratings.csv does not conform to expected format.\n"
+
+                # otherwise, assume all is ok and append to final result
+                myFilmData_list.append(row)
+
+            # ratings.csv has no issues. call the main function and execute the recommendation algorithm
+            return main(myFilmData_list)
+    except FileNotFoundError:
+        return "Error. Ratings.csv not found, check file name & file type."
+    except Exception as e:
+        return "Error occurred with reading ratings.csv.\n" + str(e)
+
+
+def main(myFilmData_list):
     # read in all-film-data.json
     allFilmDataFile = open('../data/all-film-data.json')
     allFilmData_temp = json.load(allFilmDataFile)
@@ -212,14 +243,17 @@ def rec():
     # sort similarities in descending order.
     similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
 
+    result = ""
+
     # todo temp print the results
     for i in range(0, 20):
         filmId = similarities[i][0]
         film = allFilmData[filmId]
         similarity = similarities[i][1]
         vector = allFilmDataVec[filmId]
-        print(stringifyFilm(film, similarity, vector))
+        result += "\n\n" + stringifyFilm(film, similarity, vector)
 
+    return result
     # todo return list of films with similarity score; json.
 
 
@@ -290,52 +324,6 @@ def stringifyFilm(film, similarity, vector):
             str(film['genres']) + " (" + str(round(similarity * 100.0, 2)) + "% match)\n" + str(vector) + "\n")
 
 
-# import user-uploaded ratings.csv.
-def importFile():
-
-    # list of expected attributes of each film object; error handling.
-    filmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "URL", "Title Type", "IMDb Rating",
-                      "Runtime (mins)", "Year", "Genres", "Num Votes", "Release Date", "Directors"]
-
-    try:
-        myFilmData_list = []
-        with open("../data/ratings.csv", newline='') as myFilmData_file:
-            reader = csv.DictReader(myFilmData_file, delimiter=',', restkey='unexpectedData')
-            for row in reader:
-                # if there are more data than row headers:
-                if 'unexpectedData' in row:
-                    raise UnexpectedFormatError
-
-                # if any of the expected row headers are not to be found:
-                keys = list(row.keys())
-                for k in keys:
-                    if k not in filmAttributes:
-                        raise UnrecognisedRowHeaderError
-
-                # otherwise, assume all is ok and append to final result
-                myFilmData_list.append(row)
-
-        return myFilmData_list
-    except FileNotFoundError:
-        # todo cancel the process
-        print("Error. Ratings.csv not found, check file name & file type.\n")
-    except UnexpectedFormatError:
-        print("Error. Ratings.csv does not conform to expected format.\n")
-    except UnrecognisedRowHeaderError:
-        print("Error. Row headers in ratings.csv does not conform to expected format.\n")
-    except Exception as e:
-        print("Error occurred with reading ratings.csv.\n" + str(e))
-
-
-# I wanted to create my own exceptions, so to do this I needed to create my own class for each:
-class UnexpectedFormatError(Exception):
-    pass
-
-
-class UnrecognisedRowHeaderError(Exception):
-    pass
-
-
 # todo temp for testing
 if __name__ == "__main__":
-    rec()
+    print(verifyFile())
