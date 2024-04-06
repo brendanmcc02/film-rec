@@ -1,10 +1,14 @@
 ## TODO
 
+may be unnecessary to write my-film-data(-vectorized).json to file, just store it in a variable and use that.
+
 ### General
 - [x] switch from my-film-data.json to ratings.csv
 - [x] add numVotes & runtime to human data
 - [x] vectorize numberOfVotes & runtime
 - [x] change run.sh to reflect various changes
+- [x] error handling for imported ratings.csv
+- [ ] delete title.x.tsv files after getting all-film-data.json?
 - [ ] user interface (web app)
 - [ ] backend
 
@@ -15,7 +19,7 @@
 - [x] keep title.basics.tsv & title.ratings.tsv
 - [x] add last-download.txt. if downloaded <24 hours, skip the step
 - [x] finish init-my-file-data.py to reflect above changes
-- [ ] research how/where to store files, run .py scripts etc.
+- [x] research how/where to store files, run .py scripts etc.
 
 ### Web App
 - [x] do text div 

@@ -1,5 +1,2 @@
 .idea/
-data/title.ratings.tsv
-data/title.basics.tsv
-data/title.ratings.tsv.gz
-data/title.basics.tsv.gz
+data/ratings.csv

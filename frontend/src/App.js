@@ -42,6 +42,10 @@ class App extends Component {
             backgroundSize: 'cover'
         }
 
+        // fetch("/startup").then((res) => console.log(res.text()))
+
+
+
         return (
           <>
               <div style={backgroundStyle}></div>

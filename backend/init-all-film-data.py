@@ -96,7 +96,7 @@ def main():
             'genres': film['genres']
         }
 
-    print("Final Dataset size: " + str(len(allFilmData)) + " films.")
+    print("\nFinal Dataset size: " + str(len(allFilmData)) + " films.\n")
 
     # write to all-film-data.json
     with open('../data/all-film-data.json', 'w') as convert_file:
