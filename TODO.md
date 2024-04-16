@@ -1,6 +1,6 @@
 ## TODO
 
-may be unnecessary to write my-film-data(-vectorized).json to file, just store it in a variable and use that.
+Maybe don't normalise my rating: think about users that only rated films 6/7/8 for example.
 
 ### General
 - [x] switch from my-film-data.json to ratings.csv
