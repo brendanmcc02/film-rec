@@ -1,3 +1,24 @@
+
+
+USER FEEDBACK:
+Thumbs up/down: "I think I will/won't like this".
+for user feedback, you need to write all-film-data-vectorized and my-film-data.vectorized to file.
+
+
+IDEA 1: (no auto regen, have full regen button)
+When user likes/dislikes rec, alter user profile.
+Have full regen option that regens 20 recs.
+
+IDEA 2: (partial auto regen)
+No regen button.
+only regen film when user dislikes rec. liked recs stay there.
+
+IDEA 3: (auto regen)
+No regen button.
+regen when user likes/dislikes rec.
+
+How do you inc/Dec the user profile vector when user likes/dislikes rec?
+
 Once the website starts running:
 1. download imdb data
 2. init all-film-data.json
