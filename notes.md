@@ -1,10 +1,9 @@
 ## For the potential future
 Collaborative filtering can be introduced by asking other people to upload their imdb data. (reddit post, social media post, asking friends).
 
-
 ## User Feedback
 Thumbs up/down: "I think I will/won't like this".
-for user feedback, you need to write all-film-data-vectorized and my-film-data.vectorized to file.
+for user feedback, you need to write all-film-data-vectorized and my-film-data-vectorized to file.
 
 ### IDEA 1: (no auto regen, have full regen button)
 When user likes/dislikes rec, alter user profile.
@@ -32,13 +31,12 @@ year_norm, imdbRating_norm, numOfVotes_norm, runtime_norm, action, adventure, an
 
 content based filtering: "uses item features to recommend other items similar to what the user likes, based on their previous actions or explicit feedback"
 
-Similarity measures:
-
+### Similarity measures
 1. Cosine similarity - cosine of the angle between 2 vectors
 2. dot product
 3. Euclidean distance
 
-CHAT GPT:
+## CHAT GPT
 
 Great choice! Content-based filtering can work well when you have user preferences and detailed information about items. Here's a simplified step-by-step guide on how you could implement a content-based movie recommendation system using your two datasets:
 

@@ -14,12 +14,12 @@
 - [x] error handling for imported ratings.csv
 - [x] delete title.x.tsv files after getting all-film-data.json
 - [x] don't normalise myRating
-- [x] don't fix imdbRating to 1.0?
+- [x] don't fix imdbRating to 1.0
 
 ### Windows
-
 - [ ] config frontend: npm, etc.
-- [ ] run flask app
+- [x] run flask app
+- [ ] finish converting init-all-film-data.sh to .bat
 
 ### Backend
 - [x] all-film-data doesn't filter out films that have been rated
@@ -42,7 +42,7 @@
 ### Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
 - [x] reduce run.sh to startup.sh
-- [ ] finish converting init-all-film-data.sh to .bat
+
 
 ### Creating user profile
 - [x] calculate user profile using weighted averages

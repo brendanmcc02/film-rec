@@ -21,6 +21,7 @@ VECTOR_LENGTH = 27
 
 app = Flask(__name__)
 
+
 @app.route('/verifyFile')
 # import user-uploaded ratings.csv.
 def verifyFile():
@@ -305,6 +306,7 @@ def stringifyFilm(film, similarity, vector):
             str(film['genres']) + " (" + str(round(similarity * 100.0, 2)) + "% match)\n" + str(vector) + "\n")
 
 
-# todo temp for testing
+
 if __name__ == "__main__":
-    print(verifyFile())
+    # print(verifyFile())  # todo temp for testing
+    app.run(debug=True, host='localhost', port=60000)
