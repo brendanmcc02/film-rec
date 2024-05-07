@@ -186,7 +186,7 @@ def main(myFilmData_list):
         # scalar multiply by myRating
         len_vector = len(vector)
         for i in range(0, len_vector):
-            vector[i] *= myFilmData[key]['myRating']
+            vector[i] *= (myFilmData[key]['myRating'] / 10.0)
         # add to dict
         myFilmDataVec[key] = vector
 
@@ -205,16 +205,12 @@ def main(myFilmData_list):
         # sum the (already weighted) vectors together
         userProfile += myFilmDataVec[key]
         # increment the weighted average
-        weightedAverageSum += myFilmData[key]['myRating']
+        weightedAverageSum += (myFilmData[key]['myRating'] / 10.0)
 
     # divide the userProfile vector by the weighted average
     userProfile = np.divide(userProfile, weightedAverageSum)
 
     normaliseGenres(userProfile)
-
-    # fix imdbRating to 1.0, intuitively we want to recommend films that have higher imdbRatings, even if the
-    # weighting says otherwise
-    # userProfile[1] = 1.0
 
     # Similarity dict:
     # key = filmId, value = similarity to userProfile (float; 0-100)

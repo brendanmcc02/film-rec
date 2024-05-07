@@ -3,7 +3,6 @@
 ### Ideas
 
 1. Thumbs up/down for suggested films; these actions will reinforce user profile (somehow?), add button for 'regenerate'
-2. I don't like how the vectors are currently implemented. No data for a genre is the same as a genre that one dislikes. E.g, if the mean rating for horror films is a 6.0, this is still technically higher than a genre with no data. Introduce negative marking/weights?
 3. one hot encoding for directors? or some sort of way to recommend films from directors that you like but haven't seen. (can't really do this because all-film-data doesn't have directors)
 4. add a feature for a user to search films and input that as their 'user profile': to accommodate for people who don't have an IMDB account
 
@@ -15,7 +14,7 @@
 - [x] error handling for imported ratings.csv
 - [x] delete title.x.tsv files after getting all-film-data.json
 - [x] don't normalise myRating
-- [x] fix imdbRating to 1.0?
+- [x] don't fix imdbRating to 1.0?
 
 ### Windows
 
