@@ -16,11 +16,6 @@
 - [x] don't normalise myRating
 - [x] don't fix imdbRating to 1.0
 
-### Windows
-- [ ] config frontend: npm, etc.
-- [x] run flask app
-- [ ] finish converting init-all-film-data.sh to .bat
-
 ### Backend
 - [x] all-film-data doesn't filter out films that have been rated
 - [x] vectorize all-film-data in init-all-film-data.py
@@ -32,21 +27,22 @@
 - [ ] upload button calls /verifyFile API
 - [ ] if no errors with /verifyFile, go to results page and show recommended films
 
-### Web App
+### Frontend
 - [x] do text div 
 - [x] do file upload (visuals only) div
 - [x] href what is rating.csv/how to export it
 - [x] finish home page (visuals only, file upload func later)
+- [ ] re-do text element showing selected files, errors, etc. (lost changes rip)
 - [ ] results page
+
+### Windows
+- [x] config frontend: npm, etc.
+- [x] run flask app
+- [ ] finish converting init-all-film-data.sh to .bat
 
 ### Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
 - [x] reduce run.sh to startup.sh
-
-
-### Creating user profile
-- [x] calculate user profile using weighted averages
-- [x] mess around with weights of year and genres
 
 ### Vectorizing the data
 - [x] normalise years
@@ -57,6 +53,8 @@
 - [x] vectorize my-film-data
 - [x] how to weight myRating - currently doing scalar multiplication
 - [x] how much do I round values by? - not rounding values, no reason to do it
+- [x] calculate user profile using weighted averages
+- [x] mess around with weights of year and genres
 
 ### Initialising the Database
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)

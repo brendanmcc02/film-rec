@@ -1,7 +1,7 @@
 import './App.css';
 import React, { Component } from "react";
 import background from "./social-network.jpg"
-import '@fortawesome/fontawesome-free/css/all.css';
+// import '@fortawesome/fontawesome-free/css/all.css'; // works on windows if this is commented out
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileImport } from '@fortawesome/free-solid-svg-icons';
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
@@ -44,14 +44,12 @@ class App extends Component {
 
         // fetch("/startup").then((res) => console.log(res.text()))
 
-
-
         return (
           <>
               <div style={backgroundStyle}></div>
               <div className="title">
                   <h1>FILM REC</h1>
-                  <h3>A film recommendation algorithm.</h3>
+                  <h3>A film recommendation app.</h3>
                   <h3>Upload your exported ratings.csv (keep filename the same) from your IMDB account.</h3>
                   <h3><a href="https://www.wikihow.com/Export-Your-IMDb-Custom-Lists-to-a-CSV-File"><u>
                       How do I export my IMDb ratings?
