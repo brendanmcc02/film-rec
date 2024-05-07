@@ -1,7 +1,7 @@
 # given ratings.csv, vectorize both myFilmData & allFilmData, and then recommend 20 films
 
 # imports
-# from flask import Flask
+from flask import Flask
 import json
 import csv
 import numpy as np
@@ -19,10 +19,9 @@ DIFF_RUNTIME = 0
 year_norms = {}
 VECTOR_LENGTH = 27
 
-# app = Flask(__name__)
+app = Flask(__name__)
 
-
-# @app.route('/verifyFile')
+@app.route('/verifyFile')
 # import user-uploaded ratings.csv.
 def verifyFile():
 
@@ -152,18 +151,12 @@ def main(myFilmData_list):
     allFilmDataVec = {}
     myFilmDataVec = {}
 
-    # init these to some temp value
-    MIN_MY_RATING = myFilmData[myFilmDataKeys[0]]['myRating']
-    MAX_MY_RATING = myFilmData[myFilmDataKeys[0]]['myRating']
-
     # iterate through my-film-data and alter the min & max values to ensure they are the same across both datasets
     for key in myFilmDataKeys:
         MIN_IMDB_RATING = min(MIN_IMDB_RATING, myFilmData[key]['imdbRating'])
         MAX_IMDB_RATING = max(MAX_IMDB_RATING, myFilmData[key]['imdbRating'])
         MIN_YEAR = min(MIN_YEAR, myFilmData[key]['year'])
         MAX_YEAR = max(MAX_YEAR, myFilmData[key]['year'])
-        MIN_MY_RATING = min(MIN_MY_RATING, myFilmData[key]['myRating'])
-        MAX_MY_RATING = max(MAX_MY_RATING, myFilmData[key]['myRating'])
         MIN_NUMBER_OF_VOTES = min(MIN_NUMBER_OF_VOTES, myFilmData[key]['numberOfVotes'])
         MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, myFilmData[key]['numberOfVotes'])
         MIN_RUNTIME = min(MIN_RUNTIME, myFilmData[key]['runtime'])
@@ -172,7 +165,6 @@ def main(myFilmData_list):
     # perform some pre-computation to avoid repetitive computation
     DIFF_IMDB_RATING = MAX_IMDB_RATING - MIN_IMDB_RATING
     DIFF_YEAR = MAX_YEAR - MIN_YEAR
-    DIFF_MY_RATING = MAX_MY_RATING - MIN_MY_RATING
     DIFF_NUMBER_OF_VOTES = MAX_NUMBER_OF_VOTES - MIN_NUMBER_OF_VOTES
     DIFF_RUNTIME = MAX_RUNTIME - MIN_RUNTIME
 
@@ -191,21 +183,16 @@ def main(myFilmData_list):
     for key in myFilmDataKeys:
         # vectorize the film
         vector = vectorize(myFilmData[key], allGenres)
-        # normalize myRating
-        myRating_norm = (myFilmData[key]['myRating'] - MIN_MY_RATING) / DIFF_MY_RATING
         # scalar multiply by myRating
         len_vector = len(vector)
         for i in range(0, len_vector):
-            vector[i] *= myRating_norm
+            vector[i] *= myFilmData[key]['myRating']
         # add to dict
         myFilmDataVec[key] = vector
 
     global VECTOR_LENGTH
 
     VECTOR_LENGTH = len(myFilmDataVec[myFilmDataKeys[0]])  # length of each vector
-
-    # pre-compute the myRating differences for increased efficiency
-    DIFF_MY_RATING = MAX_MY_RATING - MIN_MY_RATING
 
     weightedAverageSum = 0.0  # init to some temp value
 
@@ -217,10 +204,8 @@ def main(myFilmData_list):
     for key in myFilmDataKeys:
         # sum the (already weighted) vectors together
         userProfile += myFilmDataVec[key]
-        # find the sum of the weighted averages
-        myRating_norm = (myFilmData[key]['myRating'] - MIN_MY_RATING) / DIFF_MY_RATING
         # increment the weighted average
-        weightedAverageSum += myRating_norm
+        weightedAverageSum += myFilmData[key]['myRating']
 
     # divide the userProfile vector by the weighted average
     userProfile = np.divide(userProfile, weightedAverageSum)
@@ -229,7 +214,7 @@ def main(myFilmData_list):
 
     # fix imdbRating to 1.0, intuitively we want to recommend films that have higher imdbRatings, even if the
     # weighting says otherwise
-    userProfile[1] = 1.0
+    # userProfile[1] = 1.0
 
     # Similarity dict:
     # key = filmId, value = similarity to userProfile (float; 0-100)
