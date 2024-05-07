@@ -1,4 +1,5 @@
-
+FOR THE POTENTIAL FUTURE:
+Collaborative filtering can be added by asking other people to upload their imdb data. (reddit post, social media post, asking friends).
 
 USER FEEDBACK:
 Thumbs up/down: "I think I will/won't like this".
