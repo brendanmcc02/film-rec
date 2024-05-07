@@ -1,38 +1,34 @@
-FOR THE POTENTIAL FUTURE:
+## For the potential future
 Collaborative filtering can be introduced by asking other people to upload their imdb data. (reddit post, social media post, asking friends).
 
-USER FEEDBACK:
+
+## User Feedback
 Thumbs up/down: "I think I will/won't like this".
 for user feedback, you need to write all-film-data-vectorized and my-film-data.vectorized to file.
 
-
-IDEA 1: (no auto regen, have full regen button)
+### IDEA 1: (no auto regen, have full regen button)
 When user likes/dislikes rec, alter user profile.
 Have full regen option that regens 20 recs.
 
-IDEA 2: (partial auto regen)
+### IDEA 2: (partial auto regen)
 No regen button.
 only regen film when user dislikes rec. liked recs stay there.
 
-IDEA 3: (auto regen)
+### IDEA 3: (auto regen)
 No regen button.
 regen when user likes/dislikes rec.
 
 How do you inc/Dec the user profile vector when user likes/dislikes rec?
 
-Once the website starts running:
-1. download imdb data
-2. init all-film-data.json
-
-when user uploads ratings.csv
+### when user uploads ratings.csv
 1. error handle and check if it's the right file
 2. init my film data (rm films from all-film-data)
 3. vectorize my film data
 4. rec.py
 
 
-VECTORIZED DATA FORM:
-year_norm, imdbRating_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western
+### Vectorized Data Form
+year_norm, imdbRating_norm, numOfVotes_norm, runtime_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western
 
 content based filtering: "uses item features to recommend other items similar to what the user likes, based on their previous actions or explicit feedback"
 
