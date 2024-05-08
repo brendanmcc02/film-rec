@@ -5,6 +5,7 @@
 1. Thumbs up/down for suggested films; these actions will reinforce user profile (somehow?), add button for 'regenerate'
 2. one hot encoding for directors? or some sort of way to recommend films from directors that you like but haven't seen. (can't really do this because all-film-data doesn't have directors)
 3. add a feature for a user to search films and input that as their 'user profile': to accommodate for people who don't have an IMDB account
+4. add letterboxd integration?
 
 ### General
 - [x] switch from my-film-data.json to ratings.csv
