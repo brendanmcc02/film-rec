@@ -32,6 +32,7 @@
 - [x] change return type of recs function
 - [x] init_rec writes all-film-data.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, my-film-data-vec.json to file
 - [x] call init_rec endpoint once when new page is loaded
+- [ ] thumbs up/down
 - [ ] regen function
 
 ### Frontend
@@ -42,7 +43,7 @@
 - [x] re-do text element showing selected files, errors, etc. (lost changes rip)
 - [x] manage multiple pages (check sweng project)
 - [x] go to results page if verifyFile ok
-- [ ] results page
+- [ ] make results page look presentable/nice
 
 ### Windows
 - [x] config frontend: npm, etc.

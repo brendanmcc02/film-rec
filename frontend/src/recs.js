@@ -40,7 +40,7 @@ const App = () => {
             <div className="file-div">
                     {data.map((film) => (
                         <p key={film.id}>
-                            {film.similarity_score}%: - {film.title} ({film.year}) {film.genres}
+                            {film.similarity_score}% - {film.title} ({film.year}) {film.genres}
                         </p>
                     ))}
             </div>

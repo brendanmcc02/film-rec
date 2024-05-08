@@ -19,15 +19,27 @@ regen when user likes/dislikes rec.
 
 How do you inc/Dec the user profile vector when user likes/dislikes rec?
 
-### when user uploads ratings.csv
-1. error handle and check if it's the right file
-2. init my film data (rm films from all-film-data)
-3. vectorize my film data
-4. rec.py
+### RL functionality
+
+I'm going to run with Idea 1.
+
+Thumbs up/down buttons should be 'sticky': they are either unpressed or pressed, so you can't like/dislike the same
+films multiple times.
+
+'Up' is shorthand for 'thumbs up', 'down' is shorthand for 'thumbs down'
+
+#### 'Up' Button Logic
+When pressed, check if 'down' state is on. If yes, turn 'down' state off, 'up' state on, and Revert the changes 'down' 
+made to the vector.
+
+Bring vector 'closer' (how exactly? TODO) to the 'up' film.
+
+#### 'Down' button logic
+Exact same as 'up', but vice versa.
 
 
 ### Vectorized Data Form
-year_norm, imdbRating_norm, numOfVotes_norm, runtime_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western
+year_norm, imdbRating_norm, numOfVotes_norm, runt    ime_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western
 
 content based filtering: "uses item features to recommend other items similar to what the user likes, based on their previous actions or explicit feedback"
 
