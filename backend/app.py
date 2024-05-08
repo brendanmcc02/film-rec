@@ -1,7 +1,7 @@
 # given ratings.csv, vectorize both myFilmData & allFilmData, and then recommend 20 films
 
 # imports
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import json
 import csv
 import numpy as np
@@ -267,10 +267,12 @@ def init_rec():
         filmId = similarities[i][0]
         film = allFilmData[filmId]
         similarity_score = similarities[i][1]
-        film['similarity_score'] = round(similarity_score, 4)  # maybe round to 3?
+        film['similarity_score'] = round(similarity_score * 100.0, 2)
         result.append(film)
 
-    return result
+    # json_data = json.dumps(result)
+
+    return jsonify(result)
 
 
 # given a film, return it's vectorized form (return type: list)
@@ -346,5 +348,5 @@ def regen():
 
 
 if __name__ == "__main__":
-    # app.run(host='localhost', port=60000)
-    print(init_rec())
+    app.run(host='localhost', port=60000)
+    # print(init_rec())

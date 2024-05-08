@@ -31,6 +31,7 @@
 - [x] upload error handling
 - [x] change return type of recs function
 - [x] init_rec writes all-film-data.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, my-film-data-vec.json to file
+- [x] call init_rec endpoint once when new page is loaded
 - [ ] regen function
 
 ### Frontend
