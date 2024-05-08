@@ -108,3 +108,11 @@ input[type="file"] {
     transition: 0.1s ease-in;
     -webkit-transition: opacity 0.3s;
 }
+
+.up-button {
+    background-color: rgba(0, 255, 0, 0.5);
+}
+
+.down-button {
+    background-color: rgba(255, 0, 0, 0.5);
+}

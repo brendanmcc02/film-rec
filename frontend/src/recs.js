@@ -4,13 +4,17 @@ import React, { useState, useEffect } from 'react';
 
 const App = () => {
 
-    const [data, setData] = useState([]);
+    let initButtonStates = Array.from({ length: 20 }, () => false);
+
+    const [films, setFilms] = useState([]);
+    const [upButtonStates, setUpButtonStates] = useState(initButtonStates);
+    const [downButtonStates, setDownButtonStates] = useState(initButtonStates);
 
     useEffect(() => {
         fetch('/init_rec')
             .then((response) => response.json())
             .then((jsonData) => {
-                setData(jsonData); // Update state with fetched data
+                setFilms(jsonData); // Update state with fetched data
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
@@ -25,9 +29,93 @@ const App = () => {
         backgroundSize: 'cover'
     }
 
-    const noBulletPoints = {
-        listStyleType: 'none'
+    // called when up button is pressed
+    function handleUpButton(index) {
+        const newUpButtonStates = upButtonStates.map((state, i) => {
+          if (i === index) {
+              if (state) {
+                  console.log("up off");
+                  return false;
+              } else {
+                  if (downButtonStates[index]) {
+                      // revert vector changes todo
+                  }
+
+                  setDownButton(index, false); // down = false
+
+                  // increase vector todo
+
+                  console.log("up on");
+                  return true; // up = true
+              }
+          } else {
+            return state;
+          }
+        });
+
+        setUpButtonStates(newUpButtonStates);
     }
+
+    // called when down button is pressed
+    function handleDownButton(index) {
+        const newDownButtonStates = downButtonStates.map((state, i) => {
+          if (i === index) {
+              if (state) {
+                  console.log("down off");
+                  return false;
+              } else {
+                  if (upButtonStates[index]) {
+                      // revert vector changes todo
+                  }
+
+                  setUpButton(index, false); // up = false
+
+                  // decrease vector todo
+
+                  console.log("down on");
+                  return true; // down = true
+              }
+          } else {
+            return state;
+          }
+        });
+
+        setDownButtonStates(newDownButtonStates);
+    }
+
+    // set the state of the up button specified by an index
+    function setUpButton(index, stateValue) {
+        const newUpButtonStates = upButtonStates.map((state, i) => {
+          if (i === index) {
+              return stateValue;
+          } else {
+            return state;
+          }
+        });
+
+        setUpButtonStates(newUpButtonStates);
+    }
+
+    // set the state of the down button specified by an index
+    function setDownButton(index, stateValue) {
+        const newDownButtonStates = downButtonStates.map((state, i) => {
+          if (i === index) {
+              return stateValue;
+          } else {
+            return state;
+          }
+        });
+
+        setDownButtonStates(newDownButtonStates);
+    }
+
+    let filmRecs = films.map((film, i) =>
+        <div key={i}>
+            <p>{film.similarity_score}% - {film.title} ({film.year}) {film.genres}</p>
+            <button className="up-button" onClick={() => {handleUpButton(i);}}>Up</button>
+            <button className="down-button" onClick={() => {handleDownButton(i);}}>Down</button>
+        </div>
+    );
 
     return (
         <>
@@ -38,11 +126,7 @@ const App = () => {
             </div>
 
             <div className="file-div">
-                    {data.map((film) => (
-                        <p key={film.id}>
-                            {film.similarity_score}% - {film.title} ({film.year}) {film.genres}
-                        </p>
-                    ))}
+                {filmRecs}
             </div>
         </>
     );

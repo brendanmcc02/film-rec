@@ -267,6 +267,7 @@ def init_rec():
         filmId = similarities[i][0]
         film = allFilmData[filmId]
         similarity_score = similarities[i][1]
+        film['id'] = filmId
         film['similarity_score'] = round(similarity_score * 100.0, 2)
         result.append(film)
 
