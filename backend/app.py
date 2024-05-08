@@ -1,7 +1,7 @@
 # given ratings.csv, vectorize both myFilmData & allFilmData, and then recommend 20 films
 
 # imports
-from flask import Flask
+from flask import Flask, request
 import json
 import csv
 import numpy as np
@@ -22,42 +22,57 @@ VECTOR_LENGTH = 27
 app = Flask(__name__)
 
 
-@app.route('/verifyFile')
-# import user-uploaded ratings.csv.
+@app.route('/verifyFile', methods=['POST'])
+# verifies user-uploaded ratings.csv
 def verifyFile():
+    # check if there's a file in the post request
+    if 'file' not in request.files:
+        return 'No file part', 400
+    file = request.files['file']
+
+    file.save("../data/" + file.filename)  # write to file
 
     # list of expected attributes of each film object; error handling.
     filmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "URL", "Title Type", "IMDb Rating",
                       "Runtime (mins)", "Year", "Genres", "Num Votes", "Release Date", "Directors"]
 
     try:
-        myFilmData_list = []
         with open("../data/ratings.csv", newline='') as myFilmData_file:
             reader = csv.DictReader(myFilmData_file, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
                 # if there are more data than row headers:
                 if 'unexpectedData' in row:
-                    return "Error. Ratings.csv does not conform to expected format.\n"
+                    return "Error: ratings.csv does not conform to expected format.\n", 400
 
                 # if any of the expected row headers are not to be found:
                 keys = list(row.keys())
                 for k in keys:
                     if k not in filmAttributes:
-                        return "Error. Row headers in ratings.csv does not conform to expected format.\n"
+                        return "Error: Row headers in ratings.csv does not conform to expected format.\n", 400
 
-                # otherwise, assume all is ok and append to final result
-                myFilmData_list.append(row)
-
-            # ratings.csv has no issues. call the main function and execute the recommendation algorithm
-            return main(myFilmData_list)
+        # ratings.csv has no issues
+        return "Upload Success.", 200
     except FileNotFoundError:
-        return "Error. Ratings.csv not found, check file name & file type."
+        return "Error: ratings.csv not found, check file name & file type.", 404
+    except Exception as e:
+        return "Error occurred with reading ratings.csv.\n" + str(e), 400
+
+
+@app.route('/rec')
+# recommend films to user
+def rec():
+    # read in the file and append to list data structure
+    try:
+        myFilmData_list = []
+        with open("../data/ratings.csv", newline='') as myFilmData_file:
+            reader = csv.DictReader(myFilmData_file, delimiter=',', restkey='unexpectedData')
+
+            for row in reader:
+                myFilmData_list.append(row)
     except Exception as e:
         return "Error occurred with reading ratings.csv.\n" + str(e)
 
-
-def main(myFilmData_list):
     # read in all-film-data.json
     allFilmDataFile = open('../data/all-film-data.json')
     allFilmData_temp = json.load(allFilmDataFile)
@@ -80,6 +95,7 @@ def main(myFilmData_list):
                 else:
                     # otherwise, use the title stored in ratings.csv (potentially non-english)
                     englishTitle = film['Title']
+
                 myFilmData[film['Const']] = {
                     "title": englishTitle,
                     "year": int(film['Year']),
@@ -306,7 +322,5 @@ def stringifyFilm(film, similarity, vector):
             str(film['genres']) + " (" + str(round(similarity * 100.0, 2)) + "% match)\n" + str(vector) + "\n")
 
 
-
 if __name__ == "__main__":
-    # print(verifyFile())  # todo temp for testing
-    app.run(debug=True, host='localhost', port=60000)
+    app.run(host='localhost', port=60000)

@@ -41,6 +41,13 @@ h3 {
     font-family: lato-italic, serif;
 }
 
+.file-text {
+    color: black;
+    font-family: lato-italic, serif;
+    font-size: 18px;
+    text-align: center;
+}
+
 a {
     text-decoration: none;
     color: inherit;

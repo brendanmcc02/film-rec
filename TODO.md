@@ -24,15 +24,17 @@
 - [x] add last-download.txt. if downloaded <24 hours, skip the step
 - [x] finish init-my-file-data.py to reflect above changes
 - [x] research how/where to store files, run .py scripts etc.
-- [ ] upload button calls /verifyFile API
-- [ ] if no errors with /verifyFile, go to results page and show recommended films
+- [x] upload button calls /verifyFile API
+- [x] upload error handling
 
 ### Frontend
 - [x] do text div 
 - [x] do file upload (visuals only) div
 - [x] href what is rating.csv/how to export it
 - [x] finish home page (visuals only, file upload func later)
-- [ ] re-do text element showing selected files, errors, etc. (lost changes rip)
+- [x] re-do text element showing selected files, errors, etc. (lost changes rip)
+- [x] manage multiple pages (check sweng project)
+- [x] go to results page if verifyFile ok
 - [ ] results page
 
 ### Windows
