@@ -1,2 +1,6 @@
 .idea/
+ratings.csv
 data/ratings.csv
+data/all-film-data-vec.json
+data/my-film-data.json
+data/my-film-data-vec.json
