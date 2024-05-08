@@ -241,18 +241,16 @@ def rec():
     # sort similarities in descending order.
     similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
 
-    result = ""
+    result = []
 
-    # todo temp print the results
     for i in range(0, 20):
         filmId = similarities[i][0]
         film = allFilmData[filmId]
-        similarity = similarities[i][1]
-        vector = allFilmDataVec[filmId]
-        result += "\n\n" + stringifyFilm(film, similarity, vector)
+        similarity_score = similarities[i][1]
+        film['similarity_score'] = similarity_score
+        result.append(film)
 
     return result
-    # todo return list of films with similarity score; json.
 
 
 # given a film, return it's vectorized form (return type: list)
