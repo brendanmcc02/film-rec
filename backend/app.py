@@ -249,8 +249,16 @@ def init_rec():
 
     normaliseGenres(userProfile)
 
+    userProfileList = np.ndarray.tolist(userProfile)
+
+    # write user-profile.json to file
+    with open('../data/user-profile.json', 'w') as convert_file:
+        convert_file.write(json.dumps(userProfileList, indent=4, separators=(',', ': '))
+                           .replace(",\n        ", ", ").replace("[\n        ", "[ ")
+                           .replace("\n    ],", " ],"))
+
     # Similarity dict:
-    # key = filmId, value = similarity to userProfile (float; 0-100)
+    # key = filmId, value = similarity to userProfile (float: 0 - 100)
     similarities = {}
 
     # for each film in all-film-data-vectorized
@@ -335,12 +343,6 @@ def normaliseGenres(userProfile):
         # it picked both single- and multi-genre films. The algorithm still heavily favoured the 4 genres that had the
         # highest weighing, but this is expected and good behaviour.
         userProfile[i] = userProfile[i] * 0.75
-
-
-# todo temp
-def stringifyFilm(film, similarity, vector):
-    return (film['title'] + " (" + str(film['year']) + "). " + str(film['imdbRating']) + " Genres: " +
-            str(film['genres']) + " (" + str(round(similarity * 100.0, 2)) + "% match)\n" + str(vector) + "\n")
 
 
 @app.route('/regen')
