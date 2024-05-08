@@ -1,0 +1,7534 @@
+{
+    "tt0100405": {
+        "title": "Pretty Woman",
+        "year": 1990,
+        "myRating": 5,
+        "imdbRating": 7.1,
+        "numberOfVotes": 363304,
+        "runtime": 119,
+        "genres": [
+            "Comedy",
+            "Romance"
+        ]
+    },
+    "tt0100758": {
+        "title": "Teenage Mutant Ninja Turtles",
+        "year": 1990,
+        "myRating": 7,
+        "imdbRating": 6.8,
+        "numberOfVotes": 104918,
+        "runtime": 93,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Sci-Fi"
+        ]
+    },
+    "tt1010048": {
+        "title": "Slumdog Millionaire",
+        "year": 2008,
+        "myRating": 7,
+        "imdbRating": 8.0,
+        "numberOfVotes": 878347,
+        "runtime": 120,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0101414": {
+        "title": "Beauty and the Beast",
+        "year": 1991,
+        "myRating": 8,
+        "imdbRating": 8.0,
+        "numberOfVotes": 479977,
+        "runtime": 84,
+        "genres": [
+            "Animation",
+            "Family",
+            "Fantasy",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt1016150": {
+        "title": "All Quiet on the Western Front",
+        "year": 2022,
+        "myRating": 9,
+        "imdbRating": 7.8,
+        "numberOfVotes": 246298,
+        "runtime": 148,
+        "genres": [
+            "Action",
+            "Drama",
+            "War"
+        ]
+    },
+    "tt1022603": {
+        "title": "500 Days of Summer",
+        "year": 2009,
+        "myRating": 10,
+        "imdbRating": 7.7,
+        "numberOfVotes": 558737,
+        "runtime": 95,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt1024648": {
+        "title": "Argo",
+        "year": 2012,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 639447,
+        "runtime": 120,
+        "genres": [
+            "Biography",
+            "Drama",
+            "History",
+            "Thriller"
+        ]
+    },
+    "tt0102587": {
+        "title": "Only Yesterday",
+        "year": 1991,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 37294,
+        "runtime": 119,
+        "genres": [
+            "Animation",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt10288566": {
+        "title": "Another Round",
+        "year": 2020,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 195394,
+        "runtime": 117,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0102926": {
+        "title": "The Silence of the Lambs",
+        "year": 1991,
+        "myRating": 9,
+        "imdbRating": 8.6,
+        "numberOfVotes": 1549981,
+        "runtime": 118,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt0103064": {
+        "title": "Terminator 2: Judgment Day",
+        "year": 1991,
+        "myRating": 8,
+        "imdbRating": 8.6,
+        "numberOfVotes": 1175253,
+        "runtime": 137,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt0103639": {
+        "title": "Aladdin",
+        "year": 1992,
+        "myRating": 7,
+        "imdbRating": 8.0,
+        "numberOfVotes": 467474,
+        "runtime": 90,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt10366206": {
+        "title": "John Wick: Chapter 4",
+        "year": 2023,
+        "myRating": 6,
+        "imdbRating": 7.7,
+        "numberOfVotes": 334664,
+        "runtime": 169,
+        "genres": [
+            "Action",
+            "Crime",
+            "Thriller"
+        ]
+    },
+    "tt10370710": {
+        "title": "The Worst Person in the World",
+        "year": 2021,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 98043,
+        "runtime": 128,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0103776": {
+        "title": "Batman Returns",
+        "year": 1992,
+        "myRating": 4,
+        "imdbRating": 7.1,
+        "numberOfVotes": 327797,
+        "runtime": 126,
+        "genres": [
+            "Action",
+            "Crime",
+            "Fantasy"
+        ]
+    },
+    "tt0104431": {
+        "title": "Home Alone 2: Lost in New York",
+        "year": 1992,
+        "myRating": 6,
+        "imdbRating": 6.9,
+        "numberOfVotes": 402833,
+        "runtime": 120,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Crime",
+            "Family"
+        ]
+    },
+    "tt0104652": {
+        "title": "Porco Rosso",
+        "year": 1992,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 102288,
+        "runtime": 94,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Fantasy"
+        ]
+    },
+    "tt1049413": {
+        "title": "Up",
+        "year": 2009,
+        "myRating": 8,
+        "imdbRating": 8.3,
+        "numberOfVotes": 1126147,
+        "runtime": 96,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family"
+        ]
+    },
+    "tt1051906": {
+        "title": "The Invisible Man",
+        "year": 2020,
+        "myRating": 7,
+        "imdbRating": 7.1,
+        "numberOfVotes": 255893,
+        "runtime": 124,
+        "genres": [
+            "Drama",
+            "Horror",
+            "Mystery",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt0105236": {
+        "title": "Reservoir Dogs",
+        "year": 1992,
+        "myRating": 9,
+        "imdbRating": 8.3,
+        "numberOfVotes": 1089192,
+        "runtime": 99,
+        "genres": [
+            "Crime",
+            "Thriller"
+        ]
+    },
+    "tt10618286": {
+        "title": "Mank",
+        "year": 2020,
+        "myRating": 5,
+        "imdbRating": 6.8,
+        "numberOfVotes": 82806,
+        "runtime": 131,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt10633456": {
+        "title": "Minari",
+        "year": 2020,
+        "myRating": 9,
+        "imdbRating": 7.4,
+        "numberOfVotes": 97251,
+        "runtime": 115,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0106364": {
+        "title": "Batman: Mask of the Phantasm",
+        "year": 1993,
+        "myRating": 5,
+        "imdbRating": 7.8,
+        "numberOfVotes": 56927,
+        "runtime": 76,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Crime",
+            "Family",
+            "Mystery",
+            "Sci-Fi"
+        ]
+    },
+    "tt10640346": {
+        "title": "Babylon",
+        "year": 2022,
+        "myRating": 6,
+        "imdbRating": 7.1,
+        "numberOfVotes": 168158,
+        "runtime": 189,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt10648342": {
+        "title": "Thor: Love and Thunder",
+        "year": 2022,
+        "myRating": 5,
+        "imdbRating": 6.2,
+        "numberOfVotes": 401900,
+        "runtime": 118,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Fantasy",
+            "Romance",
+            "Sci-Fi"
+        ]
+    },
+    "tt1065073": {
+        "title": "Boyhood",
+        "year": 2014,
+        "myRating": 9,
+        "imdbRating": 7.9,
+        "numberOfVotes": 367311,
+        "runtime": 165,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0106977": {
+        "title": "The Fugitive",
+        "year": 1993,
+        "myRating": 6,
+        "imdbRating": 7.8,
+        "numberOfVotes": 319018,
+        "runtime": 130,
+        "genres": [
+            "Action",
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt0107290": {
+        "title": "Jurassic Park",
+        "year": 1993,
+        "myRating": 7,
+        "imdbRating": 8.2,
+        "numberOfVotes": 1068332,
+        "runtime": 127,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt1074638": {
+        "title": "Skyfall",
+        "year": 2012,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 731538,
+        "runtime": 143,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Thriller"
+        ]
+    },
+    "tt0108052": {
+        "title": "Schindler's List",
+        "year": 1993,
+        "myRating": 9,
+        "imdbRating": 9.0,
+        "numberOfVotes": 1452456,
+        "runtime": 195,
+        "genres": [
+            "Biography",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt0108394": {
+        "title": "Three Colors: Blue",
+        "year": 1993,
+        "myRating": 6,
+        "imdbRating": 7.8,
+        "numberOfVotes": 110606,
+        "runtime": 94,
+        "genres": [
+            "Drama",
+            "Music",
+            "Mystery",
+            "Romance"
+        ]
+    },
+    "tt10872600": {
+        "title": "Spider-Man: No Way Home",
+        "year": 2021,
+        "myRating": 9,
+        "imdbRating": 8.2,
+        "numberOfVotes": 880700,
+        "runtime": 148,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0109830": {
+        "title": "Forrest Gump",
+        "year": 1994,
+        "myRating": 8,
+        "imdbRating": 8.8,
+        "numberOfVotes": 2259986,
+        "runtime": 142,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0109831": {
+        "title": "Four Weddings and a Funeral",
+        "year": 1994,
+        "myRating": 6,
+        "imdbRating": 7.1,
+        "numberOfVotes": 166318,
+        "runtime": 117,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt10986222": {
+        "title": "C'mon C'mon",
+        "year": 2021,
+        "myRating": 6,
+        "imdbRating": 7.4,
+        "numberOfVotes": 38969,
+        "runtime": 109,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt1100089": {
+        "title": "Foxcatcher",
+        "year": 2014,
+        "myRating": 6,
+        "imdbRating": 7.0,
+        "numberOfVotes": 149356,
+        "runtime": 134,
+        "genres": [
+            "Biography",
+            "Drama",
+            "History",
+            "Sport"
+        ]
+    },
+    "tt0110357": {
+        "title": "The Lion King",
+        "year": 1994,
+        "myRating": 8,
+        "imdbRating": 8.5,
+        "numberOfVotes": 1143607,
+        "runtime": 88,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Drama",
+            "Family",
+            "Musical"
+        ]
+    },
+    "tt0110912": {
+        "title": "Pulp Fiction",
+        "year": 1994,
+        "myRating": 8,
+        "imdbRating": 8.9,
+        "numberOfVotes": 2222873,
+        "runtime": 154,
+        "genres": [
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt1109624": {
+        "title": "Paddington",
+        "year": 2014,
+        "myRating": 8,
+        "imdbRating": 7.3,
+        "numberOfVotes": 133805,
+        "runtime": 95,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0111161": {
+        "title": "The Shawshank Redemption",
+        "year": 1994,
+        "myRating": 9,
+        "imdbRating": 9.3,
+        "numberOfVotes": 2892098,
+        "runtime": 142,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt11127680": {
+        "title": "Boiling Point",
+        "year": 2021,
+        "myRating": 8,
+        "imdbRating": 7.5,
+        "numberOfVotes": 42364,
+        "runtime": 92,
+        "genres": [
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt0111495": {
+        "title": "Three Colors: Red",
+        "year": 1994,
+        "myRating": 7,
+        "imdbRating": 8.1,
+        "numberOfVotes": 110099,
+        "runtime": 99,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Romance"
+        ]
+    },
+    "tt0111507": {
+        "title": "Three Colors: White",
+        "year": 1994,
+        "myRating": 5,
+        "imdbRating": 7.6,
+        "numberOfVotes": 79697,
+        "runtime": 92,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt1119646": {
+        "title": "The Hangover",
+        "year": 2009,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 847367,
+        "runtime": 100,
+        "genres": [
+            "Comedy"
+        ]
+    },
+    "tt1120985": {
+        "title": "Blue Valentine",
+        "year": 2010,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 211505,
+        "runtime": 112,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0112471": {
+        "title": "Before Sunrise",
+        "year": 1995,
+        "myRating": 10,
+        "imdbRating": 8.1,
+        "numberOfVotes": 339935,
+        "runtime": 101,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt11286314": {
+        "title": "Don't Look Up",
+        "year": 2021,
+        "myRating": 8,
+        "imdbRating": 7.2,
+        "numberOfVotes": 602624,
+        "runtime": 138,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Sci-Fi"
+        ]
+    },
+    "tt1130884": {
+        "title": "Shutter Island",
+        "year": 2010,
+        "myRating": 6,
+        "imdbRating": 8.2,
+        "numberOfVotes": 1458705,
+        "runtime": 138,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt0113277": {
+        "title": "Heat",
+        "year": 1995,
+        "myRating": 6,
+        "imdbRating": 8.3,
+        "numberOfVotes": 720168,
+        "runtime": 170,
+        "genres": [
+            "Action",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt1136608": {
+        "title": "District 9",
+        "year": 2009,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 717338,
+        "runtime": 112,
+        "genres": [
+            "Action",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt0113824": {
+        "title": "Whisper of the Heart",
+        "year": 1995,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 72753,
+        "runtime": 111,
+        "genres": [
+            "Animation",
+            "Drama",
+            "Family",
+            "Romance"
+        ]
+    },
+    "tt0114148": {
+        "title": "Pocahontas",
+        "year": 1995,
+        "myRating": 7,
+        "imdbRating": 6.7,
+        "numberOfVotes": 203208,
+        "runtime": 81,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Drama",
+            "Family",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt0114369": {
+        "title": "Se7en",
+        "year": 1995,
+        "myRating": 9,
+        "imdbRating": 8.6,
+        "numberOfVotes": 1801188,
+        "runtime": 127,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt0114388": {
+        "title": "Sense and Sensibility",
+        "year": 1995,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 125860,
+        "runtime": 136,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt11464826": {
+        "title": "The Social Dilemma",
+        "year": 2020,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 89523,
+        "runtime": 94,
+        "genres": [
+            "Documentary",
+            "Drama"
+        ]
+    },
+    "tt0114709": {
+        "title": "Toy Story",
+        "year": 1995,
+        "myRating": 9,
+        "imdbRating": 8.3,
+        "numberOfVotes": 1069672,
+        "runtime": 81,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt11564570": {
+        "title": "Glass Onion",
+        "year": 2022,
+        "myRating": 6,
+        "imdbRating": 7.1,
+        "numberOfVotes": 442282,
+        "runtime": 139,
+        "genres": [
+            "Comedy",
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt1160419": {
+        "title": "Dune",
+        "year": 2021,
+        "myRating": 9,
+        "imdbRating": 8.0,
+        "numberOfVotes": 860214,
+        "runtime": 155,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Drama",
+            "Sci-Fi"
+        ]
+    },
+    "tt0116209": {
+        "title": "The English Patient",
+        "year": 1996,
+        "myRating": 5,
+        "imdbRating": 7.4,
+        "numberOfVotes": 201264,
+        "runtime": 162,
+        "genres": [
+            "Drama",
+            "Romance",
+            "War"
+        ]
+    },
+    "tt0116282": {
+        "title": "Fargo",
+        "year": 1996,
+        "myRating": 7,
+        "imdbRating": 8.1,
+        "numberOfVotes": 727359,
+        "runtime": 98,
+        "genres": [
+            "Crime",
+            "Thriller"
+        ]
+    },
+    "tt1170358": {
+        "title": "The Hobbit: The Desolation of Smaug",
+        "year": 2013,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 705877,
+        "runtime": 161,
+        "genres": [
+            "Adventure",
+            "Drama",
+            "Fantasy"
+        ]
+    },
+    "tt0117951": {
+        "title": "Trainspotting",
+        "year": 1996,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 726239,
+        "runtime": 93,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt11813216": {
+        "title": "The Banshees of Inisherin",
+        "year": 2022,
+        "myRating": 9,
+        "imdbRating": 7.7,
+        "numberOfVotes": 253681,
+        "runtime": 114,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0118715": {
+        "title": "The Big Lebowski",
+        "year": 1998,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 861119,
+        "runtime": 117,
+        "genres": [
+            "Comedy",
+            "Crime"
+        ]
+    },
+    "tt0119217": {
+        "title": "Good Will Hunting",
+        "year": 1997,
+        "myRating": 9,
+        "imdbRating": 8.3,
+        "numberOfVotes": 1069786,
+        "runtime": 126,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0119698": {
+        "title": "Princess Mononoke",
+        "year": 1997,
+        "myRating": 7,
+        "imdbRating": 8.3,
+        "numberOfVotes": 434271,
+        "runtime": 134,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Fantasy"
+        ]
+    },
+    "tt1201607": {
+        "title": "Harry Potter and the Deathly Hallows: Part 2",
+        "year": 2011,
+        "myRating": 9,
+        "imdbRating": 8.1,
+        "numberOfVotes": 949467,
+        "runtime": 130,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Mystery"
+        ]
+    },
+    "tt0120265": {
+        "title": "Taste of Cherry",
+        "year": 1997,
+        "myRating": 5,
+        "imdbRating": 7.7,
+        "numberOfVotes": 36847,
+        "runtime": 95,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0120338": {
+        "title": "Titanic",
+        "year": 1997,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 1281946,
+        "runtime": 194,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0120363": {
+        "title": "Toy Story 2",
+        "year": 1999,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 620305,
+        "runtime": 92,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0120623": {
+        "title": "A Bug's Life",
+        "year": 1998,
+        "myRating": 6,
+        "imdbRating": 7.2,
+        "numberOfVotes": 314831,
+        "runtime": 95,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family"
+        ]
+    },
+    "tt0120630": {
+        "title": "Chicken Run",
+        "year": 2000,
+        "myRating": 8,
+        "imdbRating": 7.1,
+        "numberOfVotes": 212434,
+        "runtime": 84,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family"
+        ]
+    },
+    "tt0120689": {
+        "title": "The Green Mile",
+        "year": 1999,
+        "myRating": 7,
+        "imdbRating": 8.6,
+        "numberOfVotes": 1409200,
+        "runtime": 189,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Fantasy",
+            "Mystery"
+        ]
+    },
+    "tt0120737": {
+        "title": "The Lord of the Rings: The Fellowship of the Ring",
+        "year": 2001,
+        "myRating": 9,
+        "imdbRating": 8.9,
+        "numberOfVotes": 2009125,
+        "runtime": 178,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Drama",
+            "Fantasy"
+        ]
+    },
+    "tt0120762": {
+        "title": "Mulan",
+        "year": 1998,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 316877,
+        "runtime": 87,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Musical",
+            "War"
+        ]
+    },
+    "tt0120812": {
+        "title": "Rush Hour",
+        "year": 1998,
+        "myRating": 6,
+        "imdbRating": 7.0,
+        "numberOfVotes": 295024,
+        "runtime": 98,
+        "genres": [
+            "Action",
+            "Comedy",
+            "Crime",
+            "Thriller"
+        ]
+    },
+    "tt0120815": {
+        "title": "Saving Private Ryan",
+        "year": 1998,
+        "myRating": 9,
+        "imdbRating": 8.6,
+        "numberOfVotes": 1497879,
+        "runtime": 169,
+        "genres": [
+            "Drama",
+            "War"
+        ]
+    },
+    "tt0120855": {
+        "title": "Tarzan",
+        "year": 1999,
+        "myRating": 6,
+        "imdbRating": 7.3,
+        "numberOfVotes": 247529,
+        "runtime": 88,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Music"
+        ]
+    },
+    "tt0120863": {
+        "title": "The Thin Red Line",
+        "year": 1998,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 199738,
+        "runtime": 170,
+        "genres": [
+            "Drama",
+            "History",
+            "War"
+        ]
+    },
+    "tt0120915": {
+        "title": "Star Wars: Episode I - The Phantom Menace",
+        "year": 1999,
+        "myRating": 4,
+        "imdbRating": 6.5,
+        "numberOfVotes": 858209,
+        "runtime": 136,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt1210166": {
+        "title": "Moneyball",
+        "year": 2011,
+        "myRating": 9,
+        "imdbRating": 7.6,
+        "numberOfVotes": 465363,
+        "runtime": 133,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt1211837": {
+        "title": "Doctor Strange",
+        "year": 2016,
+        "myRating": 6,
+        "imdbRating": 7.5,
+        "numberOfVotes": 805802,
+        "runtime": 115,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt1213641": {
+        "title": "First Man",
+        "year": 2018,
+        "myRating": 8,
+        "imdbRating": 7.3,
+        "numberOfVotes": 202416,
+        "runtime": 141,
+        "genres": [
+            "Biography",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt1213663": {
+        "title": "The World's End",
+        "year": 2013,
+        "myRating": 7,
+        "imdbRating": 6.9,
+        "numberOfVotes": 298364,
+        "runtime": 109,
+        "genres": [
+            "Action",
+            "Comedy",
+            "Sci-Fi"
+        ]
+    },
+    "tt1217209": {
+        "title": "Brave",
+        "year": 2012,
+        "myRating": 6,
+        "imdbRating": 7.1,
+        "numberOfVotes": 442716,
+        "runtime": 93,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy",
+            "Mystery"
+        ]
+    },
+    "tt0121765": {
+        "title": "Star Wars: Episode II - Attack of the Clones",
+        "year": 2002,
+        "myRating": 4,
+        "imdbRating": 6.6,
+        "numberOfVotes": 759897,
+        "runtime": 142,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0121766": {
+        "title": "Star Wars: Episode III - Revenge of the Sith",
+        "year": 2005,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 846434,
+        "runtime": 140,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt1228705": {
+        "title": "Iron Man 2",
+        "year": 2010,
+        "myRating": 5,
+        "imdbRating": 6.9,
+        "numberOfVotes": 869316,
+        "runtime": 124,
+        "genres": [
+            "Action",
+            "Sci-Fi"
+        ]
+    },
+    "tt1232829": {
+        "title": "21 Jump Street",
+        "year": 2012,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 599091,
+        "runtime": 109,
+        "genres": [
+            "Action",
+            "Comedy",
+            "Crime"
+        ]
+    },
+    "tt0125439": {
+        "title": "Notting Hill",
+        "year": 1999,
+        "myRating": 6,
+        "imdbRating": 7.2,
+        "numberOfVotes": 342664,
+        "runtime": 124,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt1255953": {
+        "title": "Incendies",
+        "year": 2010,
+        "myRating": 8,
+        "imdbRating": 8.3,
+        "numberOfVotes": 200736,
+        "runtime": 131,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "War"
+        ]
+    },
+    "tt12593682": {
+        "title": "Bullet Train",
+        "year": 2022,
+        "myRating": 8,
+        "imdbRating": 7.3,
+        "numberOfVotes": 430468,
+        "runtime": 127,
+        "genres": [
+            "Action",
+            "Comedy",
+            "Thriller"
+        ]
+    },
+    "tt0126029": {
+        "title": "Shrek",
+        "year": 2001,
+        "myRating": 7,
+        "imdbRating": 7.9,
+        "numberOfVotes": 735011,
+        "runtime": 90,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Romance"
+        ]
+    },
+    "tt1270797": {
+        "title": "Venom",
+        "year": 2018,
+        "myRating": 4,
+        "imdbRating": 6.6,
+        "numberOfVotes": 538909,
+        "runtime": 112,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt1276104": {
+        "title": "Looper",
+        "year": 2012,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 603351,
+        "runtime": 119,
+        "genres": [
+            "Action",
+            "Drama",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt12789558": {
+        "title": "Belfast",
+        "year": 2021,
+        "myRating": 8,
+        "imdbRating": 7.2,
+        "numberOfVotes": 92585,
+        "runtime": 98,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt12801262": {
+        "title": "Luca",
+        "year": 2021,
+        "myRating": 7,
+        "imdbRating": 7.4,
+        "numberOfVotes": 194754,
+        "runtime": 95,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0128445": {
+        "title": "Rushmore",
+        "year": 1998,
+        "myRating": 6,
+        "imdbRating": 7.6,
+        "numberOfVotes": 198106,
+        "runtime": 93,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt1285016": {
+        "title": "The Social Network",
+        "year": 2010,
+        "myRating": 9,
+        "imdbRating": 7.8,
+        "numberOfVotes": 759460,
+        "runtime": 120,
+        "genres": [
+            "Biography",
+            "Drama"
+        ]
+    },
+    "tt0129167": {
+        "title": "The Iron Giant",
+        "year": 1999,
+        "myRating": 7,
+        "imdbRating": 8.1,
+        "numberOfVotes": 227787,
+        "runtime": 86,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Sci-Fi"
+        ]
+    },
+    "tt1300854": {
+        "title": "Iron Man 3",
+        "year": 2013,
+        "myRating": 6,
+        "imdbRating": 7.1,
+        "numberOfVotes": 899932,
+        "runtime": 130,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt1302006": {
+        "title": "The Irishman",
+        "year": 2019,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 431583,
+        "runtime": 209,
+        "genres": [
+            "Biography",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt1302011": {
+        "title": "Kung Fu Panda 2",
+        "year": 2011,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 321446,
+        "runtime": 90,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt13238346": {
+        "title": "Past Lives",
+        "year": 2023,
+        "myRating": 10,
+        "imdbRating": 7.9,
+        "numberOfVotes": 116189,
+        "runtime": 105,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt13287846": {
+        "title": "Napoleon",
+        "year": 2023,
+        "myRating": 5,
+        "imdbRating": 6.4,
+        "numberOfVotes": 140670,
+        "runtime": 158,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Biography",
+            "Drama",
+            "War"
+        ]
+    },
+    "tt0133093": {
+        "title": "The Matrix",
+        "year": 1999,
+        "myRating": 7,
+        "imdbRating": 8.7,
+        "numberOfVotes": 2055688,
+        "runtime": 136,
+        "genres": [
+            "Action",
+            "Sci-Fi"
+        ]
+    },
+    "tt1337193": {
+        "title": "Guy and Madeline on a Park Bench",
+        "year": 2009,
+        "myRating": 5,
+        "imdbRating": 6.0,
+        "numberOfVotes": 1915,
+        "runtime": 82,
+        "genres": [
+            "Drama",
+            "Musical"
+        ]
+    },
+    "tt0134119": {
+        "title": "The Talented Mr. Ripley",
+        "year": 1999,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 244176,
+        "runtime": 139,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt1345836": {
+        "title": "The Dark Knight Rises",
+        "year": 2012,
+        "myRating": 9,
+        "imdbRating": 8.4,
+        "numberOfVotes": 1829503,
+        "runtime": 164,
+        "genres": [
+            "Action",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt0137523": {
+        "title": "Fight Club",
+        "year": 1999,
+        "myRating": 7,
+        "imdbRating": 8.8,
+        "numberOfVotes": 2326975,
+        "runtime": 139,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt1375666": {
+        "title": "Inception",
+        "year": 2010,
+        "myRating": 9,
+        "imdbRating": 8.8,
+        "numberOfVotes": 2553824,
+        "runtime": 148,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt13833688": {
+        "title": "The Whale",
+        "year": 2022,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 211805,
+        "runtime": 117,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt1392170": {
+        "title": "The Hunger Games",
+        "year": 2012,
+        "myRating": 6,
+        "imdbRating": 7.2,
+        "numberOfVotes": 1004568,
+        "runtime": 142,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt1392190": {
+        "title": "Mad Max: Fury Road",
+        "year": 2015,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 1087939,
+        "runtime": 120,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt1392214": {
+        "title": "Prisoners",
+        "year": 2013,
+        "myRating": 8,
+        "imdbRating": 8.2,
+        "numberOfVotes": 810737,
+        "runtime": 153,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt1403865": {
+        "title": "True Grit",
+        "year": 2010,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 357777,
+        "runtime": 110,
+        "genres": [
+            "Drama",
+            "Western"
+        ]
+    },
+    "tt14208870": {
+        "title": "The Fabelmans",
+        "year": 2022,
+        "myRating": 8,
+        "imdbRating": 7.5,
+        "numberOfVotes": 117143,
+        "runtime": 151,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt14230388": {
+        "title": "Asteroid City",
+        "year": 2023,
+        "myRating": 5,
+        "imdbRating": 6.5,
+        "numberOfVotes": 114031,
+        "runtime": 105,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance",
+            "Sci-Fi"
+        ]
+    },
+    "tt14247964": {
+        "title": "Kipchoge: The Last Milestone",
+        "year": 2021,
+        "myRating": 7,
+        "imdbRating": 7.5,
+        "numberOfVotes": 773,
+        "runtime": 87,
+        "genres": [
+            "Documentary",
+            "Sport"
+        ]
+    },
+    "tt1440292": {
+        "title": "Submarine",
+        "year": 2010,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 96579,
+        "runtime": 97,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt14444726": {
+        "title": "T\u00e1r",
+        "year": 2022,
+        "myRating": 5,
+        "imdbRating": 7.4,
+        "numberOfVotes": 94018,
+        "runtime": 158,
+        "genres": [
+            "Drama",
+            "Music"
+        ]
+    },
+    "tt14512538": {
+        "title": "Roadrunner: A Film About Anthony Bourdain",
+        "year": 2021,
+        "myRating": 9,
+        "imdbRating": 7.7,
+        "numberOfVotes": 10130,
+        "runtime": 119,
+        "genres": [
+            "Documentary"
+        ]
+    },
+    "tt1454468": {
+        "title": "Gravity",
+        "year": 2013,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 863699,
+        "runtime": 91,
+        "genres": [
+            "Drama",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt0145487": {
+        "title": "Spider-Man",
+        "year": 2002,
+        "myRating": 7,
+        "imdbRating": 7.4,
+        "numberOfVotes": 880810,
+        "runtime": 121,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt1477834": {
+        "title": "Aquaman",
+        "year": 2018,
+        "myRating": 4,
+        "imdbRating": 6.8,
+        "numberOfVotes": 521219,
+        "runtime": 143,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt14849194": {
+        "title": "The Holdovers",
+        "year": 2023,
+        "myRating": 10,
+        "imdbRating": 7.9,
+        "numberOfVotes": 141005,
+        "runtime": 133,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt1489887": {
+        "title": "Booksmart",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 7.1,
+        "numberOfVotes": 131271,
+        "runtime": 102,
+        "genres": [
+            "Comedy"
+        ]
+    },
+    "tt1490017": {
+        "title": "The Lego Movie",
+        "year": 2014,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 388648,
+        "runtime": 100,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt1504320": {
+        "title": "The King's Speech",
+        "year": 2010,
+        "myRating": 9,
+        "imdbRating": 8.0,
+        "numberOfVotes": 708303,
+        "runtime": 118,
+        "genres": [
+            "Biography",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt1517268": {
+        "title": "Barbie",
+        "year": 2023,
+        "myRating": 7,
+        "imdbRating": 6.8,
+        "numberOfVotes": 538475,
+        "runtime": 114,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Fantasy"
+        ]
+    },
+    "tt1517451": {
+        "title": "A Star Is Born",
+        "year": 2018,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 420091,
+        "runtime": 136,
+        "genres": [
+            "Drama",
+            "Music",
+            "Romance"
+        ]
+    },
+    "tt15239678": {
+        "title": "Dune: Part Two",
+        "year": 2024,
+        "myRating": 10,
+        "imdbRating": 8.7,
+        "numberOfVotes": 390939,
+        "runtime": 166,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Drama",
+            "Sci-Fi"
+        ]
+    },
+    "tt15398776": {
+        "title": "Oppenheimer",
+        "year": 2023,
+        "myRating": 9,
+        "imdbRating": 8.3,
+        "numberOfVotes": 734008,
+        "runtime": 180,
+        "genres": [
+            "Biography",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt1542344": {
+        "title": "127 Hours",
+        "year": 2010,
+        "myRating": 8,
+        "imdbRating": 7.5,
+        "numberOfVotes": 401707,
+        "runtime": 94,
+        "genres": [
+            "Biography",
+            "Drama"
+        ]
+    },
+    "tt0154506": {
+        "title": "Following",
+        "year": 1998,
+        "myRating": 7,
+        "imdbRating": 7.4,
+        "numberOfVotes": 101861,
+        "runtime": 69,
+        "genres": [
+            "Crime",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt1560747": {
+        "title": "The Master",
+        "year": 2012,
+        "myRating": 5,
+        "imdbRating": 7.1,
+        "numberOfVotes": 186331,
+        "runtime": 138,
+        "genres": [
+            "Drama",
+            "History"
+        ]
+    },
+    "tt1568346": {
+        "title": "The Girl with the Dragon Tattoo",
+        "year": 2011,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 495195,
+        "runtime": 158,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt1570728": {
+        "title": "Crazy, Stupid, Love.",
+        "year": 2011,
+        "myRating": 9,
+        "imdbRating": 7.4,
+        "numberOfVotes": 565127,
+        "runtime": 118,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt1591095": {
+        "title": "Insidious",
+        "year": 2010,
+        "myRating": 5,
+        "imdbRating": 6.8,
+        "numberOfVotes": 339321,
+        "runtime": 103,
+        "genres": [
+            "Horror",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt1596363": {
+        "title": "The Big Short",
+        "year": 2015,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 485343,
+        "runtime": 130,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt1605783": {
+        "title": "Midnight in Paris",
+        "year": 2011,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 450146,
+        "runtime": 94,
+        "genres": [
+            "Comedy",
+            "Fantasy",
+            "Romance"
+        ]
+    },
+    "tt1619029": {
+        "title": "Jackie",
+        "year": 2016,
+        "myRating": 5,
+        "imdbRating": 6.7,
+        "numberOfVotes": 83474,
+        "runtime": 100,
+        "genres": [
+            "Biography",
+            "Drama"
+        ]
+    },
+    "tt1630029": {
+        "title": "Avatar: The Way of Water",
+        "year": 2022,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 495350,
+        "runtime": 192,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt1638355": {
+        "title": "The Man from U.N.C.L.E.",
+        "year": 2015,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 332945,
+        "runtime": 116,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy"
+        ]
+    },
+    "tt1659337": {
+        "title": "The Perks of Being a Wallflower",
+        "year": 2012,
+        "myRating": 7,
+        "imdbRating": 7.9,
+        "numberOfVotes": 548526,
+        "runtime": 103,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt1663202": {
+        "title": "The Revenant",
+        "year": 2015,
+        "myRating": 8,
+        "imdbRating": 8.0,
+        "numberOfVotes": 875183,
+        "runtime": 156,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Drama",
+            "Western"
+        ]
+    },
+    "tt1663662": {
+        "title": "Pacific Rim",
+        "year": 2013,
+        "myRating": 4,
+        "imdbRating": 6.9,
+        "numberOfVotes": 531279,
+        "runtime": 131,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt0167260": {
+        "title": "The Lord of the Rings: The Return of the King",
+        "year": 2003,
+        "myRating": 9,
+        "imdbRating": 9.0,
+        "numberOfVotes": 1981261,
+        "runtime": 201,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Drama",
+            "Fantasy"
+        ]
+    },
+    "tt0167261": {
+        "title": "The Lord of the Rings: The Two Towers",
+        "year": 2002,
+        "myRating": 9,
+        "imdbRating": 8.8,
+        "numberOfVotes": 1785730,
+        "runtime": 179,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Drama",
+            "Fantasy"
+        ]
+    },
+    "tt1675434": {
+        "title": "The Intouchables",
+        "year": 2011,
+        "myRating": 9,
+        "imdbRating": 8.5,
+        "numberOfVotes": 930578,
+        "runtime": 112,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt1706620": {
+        "title": "Snowpiercer",
+        "year": 2013,
+        "myRating": 7,
+        "imdbRating": 7.1,
+        "numberOfVotes": 389323,
+        "runtime": 126,
+        "genres": [
+            "Action",
+            "Drama",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt1707386": {
+        "title": "Les Mis\u00e9rables",
+        "year": 2012,
+        "myRating": 6,
+        "imdbRating": 7.5,
+        "numberOfVotes": 346220,
+        "runtime": 158,
+        "genres": [
+            "Drama",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt1714206": {
+        "title": "The Spectacular Now",
+        "year": 2013,
+        "myRating": 7,
+        "imdbRating": 7.0,
+        "numberOfVotes": 161462,
+        "runtime": 95,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt1723811": {
+        "title": "Shame",
+        "year": 2011,
+        "myRating": 8,
+        "imdbRating": 7.2,
+        "numberOfVotes": 206358,
+        "runtime": 101,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0172495": {
+        "title": "Gladiator",
+        "year": 2000,
+        "myRating": 9,
+        "imdbRating": 8.5,
+        "numberOfVotes": 1622190,
+        "runtime": 155,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Drama"
+        ]
+    },
+    "tt17279496": {
+        "title": "Civil War",
+        "year": 2024,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 59129,
+        "runtime": 109,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Thriller"
+        ]
+    },
+    "tt1740707": {
+        "title": "Troll Hunter",
+        "year": 2010,
+        "myRating": 7,
+        "imdbRating": 6.9,
+        "numberOfVotes": 79610,
+        "runtime": 103,
+        "genres": [
+            "Drama",
+            "Fantasy",
+            "Thriller"
+        ]
+    },
+    "tt1745960": {
+        "title": "Top Gun: Maverick",
+        "year": 2022,
+        "myRating": 9,
+        "imdbRating": 8.2,
+        "numberOfVotes": 699161,
+        "runtime": 130,
+        "genres": [
+            "Action",
+            "Drama"
+        ]
+    },
+    "tt1748122": {
+        "title": "Moonrise Kingdom",
+        "year": 2012,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 366893,
+        "runtime": 94,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy",
+            "Romance"
+        ]
+    },
+    "tt17663992": {
+        "title": "Scream VI",
+        "year": 2023,
+        "myRating": 4,
+        "imdbRating": 6.5,
+        "numberOfVotes": 119802,
+        "runtime": 122,
+        "genres": [
+            "Horror",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt1790885": {
+        "title": "Zero Dark Thirty",
+        "year": 2012,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 319155,
+        "runtime": 157,
+        "genres": [
+            "Drama",
+            "History",
+            "Thriller"
+        ]
+    },
+    "tt1798188": {
+        "title": "From Up on Poppy Hill",
+        "year": 2011,
+        "myRating": 5,
+        "imdbRating": 7.4,
+        "numberOfVotes": 52107,
+        "runtime": 91,
+        "genres": [
+            "Animation",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Romance"
+        ]
+    },
+    "tt1798709": {
+        "title": "Her",
+        "year": 2013,
+        "myRating": 7,
+        "imdbRating": 8.0,
+        "numberOfVotes": 670219,
+        "runtime": 126,
+        "genres": [
+            "Drama",
+            "Romance",
+            "Sci-Fi"
+        ]
+    },
+    "tt1809398": {
+        "title": "Unbroken",
+        "year": 2014,
+        "myRating": 5,
+        "imdbRating": 7.2,
+        "numberOfVotes": 182864,
+        "runtime": 137,
+        "genres": [
+            "Action",
+            "Biography",
+            "Drama",
+            "Sport",
+            "War"
+        ]
+    },
+    "tt1817273": {
+        "title": "The Place Beyond the Pines",
+        "year": 2012,
+        "myRating": 8,
+        "imdbRating": 7.3,
+        "numberOfVotes": 290630,
+        "runtime": 140,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt0181865": {
+        "title": "Traffic",
+        "year": 2000,
+        "myRating": 5,
+        "imdbRating": 7.6,
+        "numberOfVotes": 219885,
+        "runtime": 147,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt1825683": {
+        "title": "Black Panther",
+        "year": 2018,
+        "myRating": 8,
+        "imdbRating": 7.3,
+        "numberOfVotes": 838338,
+        "runtime": 134,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt1832382": {
+        "title": "A Separation",
+        "year": 2011,
+        "myRating": 6,
+        "imdbRating": 8.3,
+        "numberOfVotes": 258726,
+        "runtime": 123,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt1843866": {
+        "title": "Captain America: The Winter Soldier",
+        "year": 2014,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 899857,
+        "runtime": 136,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt1853728": {
+        "title": "Django Unchained",
+        "year": 2012,
+        "myRating": 8,
+        "imdbRating": 8.5,
+        "numberOfVotes": 1697400,
+        "runtime": 165,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Western"
+        ]
+    },
+    "tt1856101": {
+        "title": "Blade Runner 2049",
+        "year": 2017,
+        "myRating": 8,
+        "imdbRating": 8.0,
+        "numberOfVotes": 666492,
+        "runtime": 164,
+        "genres": [
+            "Action",
+            "Drama",
+            "Mystery",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt1865505": {
+        "title": "Song of the Sea",
+        "year": 2014,
+        "myRating": 6,
+        "imdbRating": 8.0,
+        "numberOfVotes": 63179,
+        "runtime": 93,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Drama",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt1872181": {
+        "title": "The Amazing Spider-Man 2",
+        "year": 2014,
+        "myRating": 4,
+        "imdbRating": 6.6,
+        "numberOfVotes": 538577,
+        "runtime": 142,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt1877830": {
+        "title": "The Batman",
+        "year": 2022,
+        "myRating": 9,
+        "imdbRating": 7.8,
+        "numberOfVotes": 788382,
+        "runtime": 176,
+        "genres": [
+            "Action",
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt1878870": {
+        "title": "The Edge of Seventeen",
+        "year": 2016,
+        "myRating": 8,
+        "imdbRating": 7.3,
+        "numberOfVotes": 140330,
+        "runtime": 104,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt1895587": {
+        "title": "Spotlight",
+        "year": 2015,
+        "myRating": 9,
+        "imdbRating": 8.1,
+        "numberOfVotes": 502529,
+        "runtime": 129,
+        "genres": [
+            "Biography",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt19034522": {
+        "title": "White Hot: The Rise & Fall of Abercrombie & Fitch",
+        "year": 2022,
+        "myRating": 5,
+        "imdbRating": 5.8,
+        "numberOfVotes": 5233,
+        "runtime": 88,
+        "genres": [
+            "Documentary"
+        ]
+    },
+    "tt1935156": {
+        "title": "Jodorowsky's Dune",
+        "year": 2013,
+        "myRating": 8,
+        "imdbRating": 8.0,
+        "numberOfVotes": 27616,
+        "runtime": 90,
+        "genres": [
+            "Documentary"
+        ]
+    },
+    "tt1950186": {
+        "title": "Ford v Ferrari",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 475923,
+        "runtime": 152,
+        "genres": [
+            "Action",
+            "Biography",
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt1951264": {
+        "title": "The Hunger Games: Catching Fire",
+        "year": 2013,
+        "myRating": 7,
+        "imdbRating": 7.5,
+        "numberOfVotes": 721940,
+        "runtime": 146,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt1951265": {
+        "title": "The Hunger Games: Mockingjay - Part 1",
+        "year": 2014,
+        "myRating": 6,
+        "imdbRating": 6.6,
+        "numberOfVotes": 503463,
+        "runtime": 123,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt1951266": {
+        "title": "The Hunger Games: Mockingjay - Part 2",
+        "year": 2015,
+        "myRating": 6,
+        "imdbRating": 6.5,
+        "numberOfVotes": 373804,
+        "runtime": 137,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt0195685": {
+        "title": "Erin Brockovich",
+        "year": 2000,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 221663,
+        "runtime": 131,
+        "genres": [
+            "Biography",
+            "Drama"
+        ]
+    },
+    "tt1972591": {
+        "title": "King Arthur: Legend of the Sword",
+        "year": 2017,
+        "myRating": 4,
+        "imdbRating": 6.7,
+        "numberOfVotes": 232759,
+        "runtime": 126,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Drama",
+            "Fantasy"
+        ]
+    },
+    "tt19770238": {
+        "title": "Aftersun",
+        "year": 2022,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 94127,
+        "runtime": 102,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt1979320": {
+        "title": "Rush",
+        "year": 2013,
+        "myRating": 5,
+        "imdbRating": 8.1,
+        "numberOfVotes": 514216,
+        "runtime": 123,
+        "genres": [
+            "Action",
+            "Biography",
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt1979376": {
+        "title": "Toy Story 4",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 280710,
+        "runtime": 100,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt1979388": {
+        "title": "The Good Dinosaur",
+        "year": 2015,
+        "myRating": 7,
+        "imdbRating": 6.7,
+        "numberOfVotes": 127593,
+        "runtime": 93,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt1981115": {
+        "title": "Thor: The Dark World",
+        "year": 2013,
+        "myRating": 4,
+        "imdbRating": 6.8,
+        "numberOfVotes": 725636,
+        "runtime": 112,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy"
+        ]
+    },
+    "tt0198781": {
+        "title": "Monsters, Inc.",
+        "year": 2001,
+        "myRating": 7,
+        "imdbRating": 8.1,
+        "numberOfVotes": 979882,
+        "runtime": 92,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt2005151": {
+        "title": "War Dogs",
+        "year": 2016,
+        "myRating": 6,
+        "imdbRating": 7.1,
+        "numberOfVotes": 254491,
+        "runtime": 114,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Crime",
+            "Drama",
+            "War"
+        ]
+    },
+    "tt2013293": {
+        "title": "The Wind Rises",
+        "year": 2013,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 98950,
+        "runtime": 126,
+        "genres": [
+            "Animation",
+            "Biography",
+            "Drama",
+            "Romance",
+            "War"
+        ]
+    },
+    "tt2015381": {
+        "title": "Guardians of the Galaxy",
+        "year": 2014,
+        "myRating": 7,
+        "imdbRating": 8.0,
+        "numberOfVotes": 1274449,
+        "runtime": 121,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Sci-Fi"
+        ]
+    },
+    "tt2024544": {
+        "title": "12 Years a Slave",
+        "year": 2013,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 741784,
+        "runtime": 134,
+        "genres": [
+            "Biography",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt0206634": {
+        "title": "Children of Men",
+        "year": 2006,
+        "myRating": 7,
+        "imdbRating": 7.9,
+        "numberOfVotes": 529782,
+        "runtime": 109,
+        "genres": [
+            "Action",
+            "Drama",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt2080374": {
+        "title": "Steve Jobs",
+        "year": 2015,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 178692,
+        "runtime": 122,
+        "genres": [
+            "Biography",
+            "Drama"
+        ]
+    },
+    "tt2084970": {
+        "title": "The Imitation Game",
+        "year": 2014,
+        "myRating": 7,
+        "imdbRating": 8.0,
+        "numberOfVotes": 825688,
+        "runtime": 114,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Thriller",
+            "War"
+        ]
+    },
+    "tt0209144": {
+        "title": "Memento",
+        "year": 2000,
+        "myRating": 9,
+        "imdbRating": 8.4,
+        "numberOfVotes": 1324137,
+        "runtime": 113,
+        "genres": [
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt2096673": {
+        "title": "Inside Out",
+        "year": 2015,
+        "myRating": 9,
+        "imdbRating": 8.1,
+        "numberOfVotes": 786394,
+        "runtime": 95,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt2097298": {
+        "title": "McFarland, USA",
+        "year": 2015,
+        "myRating": 7,
+        "imdbRating": 7.4,
+        "numberOfVotes": 42287,
+        "runtime": 129,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt21064584": {
+        "title": "The Iron Claw",
+        "year": 2023,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 57823,
+        "runtime": 132,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt0211915": {
+        "title": "Am\u00e9lie",
+        "year": 2001,
+        "myRating": 6,
+        "imdbRating": 8.3,
+        "numberOfVotes": 794785,
+        "runtime": 122,
+        "genres": [
+            "Comedy",
+            "Romance"
+        ]
+    },
+    "tt2119532": {
+        "title": "Hacksaw Ridge",
+        "year": 2016,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 595129,
+        "runtime": 139,
+        "genres": [
+            "Biography",
+            "Drama",
+            "History",
+            "War"
+        ]
+    },
+    "tt2140373": {
+        "title": "Saving Mr. Banks",
+        "year": 2013,
+        "myRating": 5,
+        "imdbRating": 7.5,
+        "numberOfVotes": 170110,
+        "runtime": 125,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt2194499": {
+        "title": "About Time",
+        "year": 2013,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 386331,
+        "runtime": 123,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Fantasy",
+            "Romance",
+            "Sci-Fi"
+        ]
+    },
+    "tt22041854": {
+        "title": "Priscilla",
+        "year": 2023,
+        "myRating": 7,
+        "imdbRating": 6.5,
+        "numberOfVotes": 35419,
+        "runtime": 113,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Music",
+            "Romance"
+        ]
+    },
+    "tt2209418": {
+        "title": "Before Midnight",
+        "year": 2013,
+        "myRating": 9,
+        "imdbRating": 7.9,
+        "numberOfVotes": 172305,
+        "runtime": 109,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt2250912": {
+        "title": "Spider-Man: Homecoming",
+        "year": 2017,
+        "myRating": 7,
+        "imdbRating": 7.4,
+        "numberOfVotes": 720299,
+        "runtime": 133,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt2267968": {
+        "title": "Kung Fu Panda 3",
+        "year": 2016,
+        "myRating": 6,
+        "imdbRating": 7.1,
+        "numberOfVotes": 189740,
+        "runtime": 95,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt2267998": {
+        "title": "Gone Girl",
+        "year": 2014,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 1068613,
+        "runtime": 149,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt2277860": {
+        "title": "Finding Dory",
+        "year": 2016,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 303837,
+        "runtime": 97,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family"
+        ]
+    },
+    "tt2278388": {
+        "title": "The Grand Budapest Hotel",
+        "year": 2014,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 887676,
+        "runtime": 99,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Crime"
+        ]
+    },
+    "tt2283362": {
+        "title": "Jumanji: Welcome to the Jungle",
+        "year": 2017,
+        "myRating": 6,
+        "imdbRating": 7.0,
+        "numberOfVotes": 450234,
+        "runtime": 119,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Fantasy"
+        ]
+    },
+    "tt2294629": {
+        "title": "Frozen",
+        "year": 2013,
+        "myRating": 6,
+        "imdbRating": 7.4,
+        "numberOfVotes": 664541,
+        "runtime": 102,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Musical"
+        ]
+    },
+    "tt2310332": {
+        "title": "The Hobbit: The Battle of the Five Armies",
+        "year": 2014,
+        "myRating": 6,
+        "imdbRating": 7.4,
+        "numberOfVotes": 572401,
+        "runtime": 144,
+        "genres": [
+            "Adventure",
+            "Fantasy"
+        ]
+    },
+    "tt2334649": {
+        "title": "Fruitvale Station",
+        "year": 2013,
+        "myRating": 7,
+        "imdbRating": 7.5,
+        "numberOfVotes": 85930,
+        "runtime": 85,
+        "genres": [
+            "Biography",
+            "Crime",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt2379713": {
+        "title": "Spectre",
+        "year": 2015,
+        "myRating": 6,
+        "imdbRating": 6.8,
+        "numberOfVotes": 466535,
+        "runtime": 148,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Thriller"
+        ]
+    },
+    "tt2380307": {
+        "title": "Coco",
+        "year": 2017,
+        "myRating": 9,
+        "imdbRating": 8.4,
+        "numberOfVotes": 591683,
+        "runtime": 105,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Drama",
+            "Family",
+            "Fantasy",
+            "Music",
+            "Mystery"
+        ]
+    },
+    "tt2381111": {
+        "title": "Brooklyn",
+        "year": 2015,
+        "myRating": 9,
+        "imdbRating": 7.5,
+        "numberOfVotes": 150604,
+        "runtime": 117,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt2382320": {
+        "title": "No Time to Die",
+        "year": 2021,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 445223,
+        "runtime": 163,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Thriller"
+        ]
+    },
+    "tt2395427": {
+        "title": "Avengers: Age of Ultron",
+        "year": 2015,
+        "myRating": 6,
+        "imdbRating": 7.3,
+        "numberOfVotes": 922697,
+        "runtime": 141,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt0240772": {
+        "title": "Ocean's Eleven",
+        "year": 2001,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 619874,
+        "runtime": 116,
+        "genres": [
+            "Crime",
+            "Thriller"
+        ]
+    },
+    "tt0241527": {
+        "title": "Harry Potter and the Sorcerer's Stone",
+        "year": 2001,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 856891,
+        "runtime": 152,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0245429": {
+        "title": "Spirited Away",
+        "year": 2001,
+        "myRating": 8,
+        "imdbRating": 8.6,
+        "numberOfVotes": 850681,
+        "runtime": 125,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Mystery"
+        ]
+    },
+    "tt0246578": {
+        "title": "Donnie Darko",
+        "year": 2001,
+        "myRating": 7,
+        "imdbRating": 8.0,
+        "numberOfVotes": 850728,
+        "runtime": 113,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt2488496": {
+        "title": "Star Wars: Episode VII - The Force Awakens",
+        "year": 2015,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 974438,
+        "runtime": 138,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt2527336": {
+        "title": "Star Wars: Episode VIII - The Last Jedi",
+        "year": 2017,
+        "myRating": 9,
+        "imdbRating": 6.9,
+        "numberOfVotes": 672610,
+        "runtime": 152,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt2527338": {
+        "title": "Star Wars: Episode IX - The Rise of Skywalker",
+        "year": 2019,
+        "myRating": 5,
+        "imdbRating": 6.4,
+        "numberOfVotes": 494003,
+        "runtime": 141,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0253474": {
+        "title": "The Pianist",
+        "year": 2002,
+        "myRating": 6,
+        "imdbRating": 8.5,
+        "numberOfVotes": 913605,
+        "runtime": 150,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Music",
+            "War"
+        ]
+    },
+    "tt2543164": {
+        "title": "Arrival",
+        "year": 2016,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 772520,
+        "runtime": 116,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Sci-Fi"
+        ]
+    },
+    "tt2545118": {
+        "title": "Blackfish",
+        "year": 2013,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 72505,
+        "runtime": 83,
+        "genres": [
+            "Documentary"
+        ]
+    },
+    "tt2562232": {
+        "title": "Birdman or (The Unexpected Virtue of Ignorance)",
+        "year": 2014,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 666917,
+        "runtime": 119,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt2576852": {
+        "title": "The Tale of The Princess Kaguya",
+        "year": 2013,
+        "myRating": 6,
+        "imdbRating": 8.0,
+        "numberOfVotes": 54101,
+        "runtime": 137,
+        "genres": [
+            "Animation",
+            "Drama",
+            "Family",
+            "Fantasy",
+            "Romance"
+        ]
+    },
+    "tt2582496": {
+        "title": "Me and Earl and the Dying Girl",
+        "year": 2015,
+        "myRating": 6,
+        "imdbRating": 7.7,
+        "numberOfVotes": 138403,
+        "runtime": 105,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt2582782": {
+        "title": "Hell or High Water",
+        "year": 2016,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 252777,
+        "runtime": 102,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller",
+            "Western"
+        ]
+    },
+    "tt2582802": {
+        "title": "Whiplash",
+        "year": 2014,
+        "myRating": 10,
+        "imdbRating": 8.5,
+        "numberOfVotes": 991281,
+        "runtime": 106,
+        "genres": [
+            "Drama",
+            "Music"
+        ]
+    },
+    "tt2584384": {
+        "title": "Jojo Rabbit",
+        "year": 2019,
+        "myRating": 9,
+        "imdbRating": 7.9,
+        "numberOfVotes": 441977,
+        "runtime": 108,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "War"
+        ]
+    },
+    "tt26047818": {
+        "title": "Anyone But You",
+        "year": 2023,
+        "myRating": 3,
+        "imdbRating": 6.2,
+        "numberOfVotes": 77818,
+        "runtime": 103,
+        "genres": [
+            "Comedy",
+            "Romance"
+        ]
+    },
+    "tt0264464": {
+        "title": "Catch Me If You Can",
+        "year": 2002,
+        "myRating": 7,
+        "imdbRating": 8.1,
+        "numberOfVotes": 1097153,
+        "runtime": 141,
+        "genres": [
+            "Biography",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt0265086": {
+        "title": "Black Hawk Down",
+        "year": 2001,
+        "myRating": 5,
+        "imdbRating": 7.7,
+        "numberOfVotes": 423978,
+        "runtime": 144,
+        "genres": [
+            "Action",
+            "Drama",
+            "History",
+            "War"
+        ]
+    },
+    "tt0265666": {
+        "title": "The Royal Tenenbaums",
+        "year": 2001,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 313402,
+        "runtime": 110,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0266543": {
+        "title": "Finding Nemo",
+        "year": 2003,
+        "myRating": 8,
+        "imdbRating": 8.2,
+        "numberOfVotes": 1114324,
+        "runtime": 100,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family"
+        ]
+    },
+    "tt0266697": {
+        "title": "Kill Bill: Vol. 1",
+        "year": 2003,
+        "myRating": 6,
+        "imdbRating": 8.2,
+        "numberOfVotes": 1195392,
+        "runtime": 111,
+        "genres": [
+            "Action",
+            "Crime",
+            "Thriller"
+        ]
+    },
+    "tt0268978": {
+        "title": "A Beautiful Mind",
+        "year": 2001,
+        "myRating": 5,
+        "imdbRating": 8.2,
+        "numberOfVotes": 987925,
+        "runtime": 135,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Mystery"
+        ]
+    },
+    "tt27503384": {
+        "title": "Perfect Days",
+        "year": 2023,
+        "myRating": 5,
+        "imdbRating": 7.9,
+        "numberOfVotes": 38864,
+        "runtime": 124,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0275847": {
+        "title": "Lilo & Stitch",
+        "year": 2002,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 211947,
+        "runtime": 85,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt27726927": {
+        "title": "Wham!",
+        "year": 2023,
+        "myRating": 9,
+        "imdbRating": 7.5,
+        "numberOfVotes": 8962,
+        "runtime": 92,
+        "genres": [
+            "Documentary",
+            "Biography",
+            "Music"
+        ]
+    },
+    "tt0278504": {
+        "title": "Insomnia",
+        "year": 2002,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 319406,
+        "runtime": 118,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt2788710": {
+        "title": "The Interview",
+        "year": 2014,
+        "myRating": 3,
+        "imdbRating": 6.5,
+        "numberOfVotes": 355008,
+        "runtime": 112,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy"
+        ]
+    },
+    "tt2798920": {
+        "title": "Annihilation",
+        "year": 2018,
+        "myRating": 8,
+        "imdbRating": 6.8,
+        "numberOfVotes": 362113,
+        "runtime": 115,
+        "genres": [
+            "Adventure",
+            "Drama",
+            "Horror",
+            "Mystery",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt2872718": {
+        "title": "Nightcrawler",
+        "year": 2014,
+        "myRating": 9,
+        "imdbRating": 7.8,
+        "numberOfVotes": 605176,
+        "runtime": 117,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt2872750": {
+        "title": "Shaun the Sheep Movie",
+        "year": 2015,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 43469,
+        "runtime": 85,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt2911666": {
+        "title": "John Wick",
+        "year": 2014,
+        "myRating": 6,
+        "imdbRating": 7.4,
+        "numberOfVotes": 739964,
+        "runtime": 101,
+        "genres": [
+            "Action",
+            "Crime",
+            "Thriller"
+        ]
+    },
+    "tt2932536": {
+        "title": "47 Meters Down",
+        "year": 2017,
+        "myRating": 2,
+        "imdbRating": 5.6,
+        "numberOfVotes": 60963,
+        "runtime": 89,
+        "genres": [
+            "Horror",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt2935510": {
+        "title": "Ad Astra",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 6.5,
+        "numberOfVotes": 260682,
+        "runtime": 123,
+        "genres": [
+            "Adventure",
+            "Drama",
+            "Mystery",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt2948356": {
+        "title": "Zootopia",
+        "year": 2016,
+        "myRating": 8,
+        "imdbRating": 8.0,
+        "numberOfVotes": 547032,
+        "runtime": 108,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Crime",
+            "Family",
+            "Mystery"
+        ]
+    },
+    "tt2948372": {
+        "title": "Soul",
+        "year": 2020,
+        "myRating": 8,
+        "imdbRating": 8.0,
+        "numberOfVotes": 380446,
+        "runtime": 100,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy",
+            "Music"
+        ]
+    },
+    "tt0295297": {
+        "title": "Harry Potter and the Chamber of Secrets",
+        "year": 2002,
+        "myRating": 6,
+        "imdbRating": 7.4,
+        "numberOfVotes": 693083,
+        "runtime": 161,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Mystery"
+        ]
+    },
+    "tt2953050": {
+        "title": "Encanto",
+        "year": 2021,
+        "myRating": 8,
+        "imdbRating": 7.2,
+        "numberOfVotes": 262741,
+        "runtime": 102,
+        "genres": [
+            "Animation",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Musical"
+        ]
+    },
+    "tt0029583": {
+        "title": "Snow White and the Seven Dwarfs",
+        "year": 1937,
+        "myRating": 6,
+        "imdbRating": 7.6,
+        "numberOfVotes": 215660,
+        "runtime": 83,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt2975590": {
+        "title": "Batman v Superman: Dawn of Justice",
+        "year": 2016,
+        "myRating": 6,
+        "imdbRating": 6.5,
+        "numberOfVotes": 752836,
+        "runtime": 151,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt2980516": {
+        "title": "The Theory of Everything",
+        "year": 2014,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 482488,
+        "runtime": 123,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0298148": {
+        "title": "Shrek 2",
+        "year": 2004,
+        "myRating": 6,
+        "imdbRating": 7.3,
+        "numberOfVotes": 505598,
+        "runtime": 93,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Romance"
+        ]
+    },
+    "tt0298203": {
+        "title": "8 Mile",
+        "year": 2002,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 321277,
+        "runtime": 110,
+        "genres": [
+            "Drama",
+            "Music"
+        ]
+    },
+    "tt0304141": {
+        "title": "Harry Potter and the Prisoner of Azkaban",
+        "year": 2004,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 692293,
+        "runtime": 142,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Mystery"
+        ]
+    },
+    "tt3076658": {
+        "title": "Creed",
+        "year": 2015,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 311083,
+        "runtime": 133,
+        "genres": [
+            "Action",
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt0031381": {
+        "title": "Gone with the Wind",
+        "year": 1939,
+        "myRating": 6,
+        "imdbRating": 8.2,
+        "numberOfVotes": 334571,
+        "runtime": 238,
+        "genres": [
+            "Drama",
+            "Romance",
+            "War"
+        ]
+    },
+    "tt0316654": {
+        "title": "Spider-Man 2",
+        "year": 2004,
+        "myRating": 9,
+        "imdbRating": 7.5,
+        "numberOfVotes": 709632,
+        "runtime": 127,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt3170832": {
+        "title": "Room",
+        "year": 2015,
+        "myRating": 5,
+        "imdbRating": 8.1,
+        "numberOfVotes": 450912,
+        "runtime": 118,
+        "genres": [
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt0317219": {
+        "title": "Cars",
+        "year": 2006,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 470744,
+        "runtime": 116,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Sport"
+        ]
+    },
+    "tt0317705": {
+        "title": "The Incredibles",
+        "year": 2004,
+        "myRating": 8,
+        "imdbRating": 8.0,
+        "numberOfVotes": 809722,
+        "runtime": 115,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Family"
+        ]
+    },
+    "tt3183660": {
+        "title": "Fantastic Beasts and Where to Find Them",
+        "year": 2016,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 508130,
+        "runtime": 132,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0032138": {
+        "title": "The Wizard of Oz",
+        "year": 1939,
+        "myRating": 6,
+        "imdbRating": 8.1,
+        "numberOfVotes": 428997,
+        "runtime": 102,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Musical"
+        ]
+    },
+    "tt3228774": {
+        "title": "Cruella",
+        "year": 2021,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 266109,
+        "runtime": 134,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt0032455": {
+        "title": "Fantasia",
+        "year": 1940,
+        "myRating": 5,
+        "imdbRating": 7.7,
+        "numberOfVotes": 104069,
+        "runtime": 124,
+        "genres": [
+            "Animation",
+            "Family",
+            "Fantasy",
+            "Music",
+            "Musical"
+        ]
+    },
+    "tt3281548": {
+        "title": "Little Women",
+        "year": 2019,
+        "myRating": 9,
+        "imdbRating": 7.8,
+        "numberOfVotes": 246516,
+        "runtime": 135,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0032910": {
+        "title": "Pinocchio",
+        "year": 1940,
+        "myRating": 6,
+        "imdbRating": 7.5,
+        "numberOfVotes": 160013,
+        "runtime": 88,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Musical"
+        ]
+    },
+    "tt0330373": {
+        "title": "Harry Potter and the Goblet of Fire",
+        "year": 2005,
+        "myRating": 9,
+        "imdbRating": 7.7,
+        "numberOfVotes": 682220,
+        "runtime": 157,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Mystery"
+        ]
+    },
+    "tt0332379": {
+        "title": "School of Rock",
+        "year": 2003,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 331137,
+        "runtime": 109,
+        "genres": [
+            "Comedy",
+            "Music"
+        ]
+    },
+    "tt0033467": {
+        "title": "Citizen Kane",
+        "year": 1941,
+        "myRating": 8,
+        "imdbRating": 8.3,
+        "numberOfVotes": 466291,
+        "runtime": 119,
+        "genres": [
+            "Drama",
+            "Mystery"
+        ]
+    },
+    "tt0335266": {
+        "title": "Lost in Translation",
+        "year": 2003,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 489788,
+        "runtime": 102,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0033563": {
+        "title": "Dumbo",
+        "year": 1941,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 142203,
+        "runtime": 64,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Drama",
+            "Family",
+            "Fantasy",
+            "Musical"
+        ]
+    },
+    "tt3361792": {
+        "title": "Tolkien",
+        "year": 2019,
+        "myRating": 4,
+        "imdbRating": 6.8,
+        "numberOfVotes": 46670,
+        "runtime": 112,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Romance",
+            "War"
+        ]
+    },
+    "tt0338013": {
+        "title": "Eternal Sunshine of the Spotless Mind",
+        "year": 2004,
+        "myRating": 6,
+        "imdbRating": 8.3,
+        "numberOfVotes": 1079116,
+        "runtime": 108,
+        "genres": [
+            "Drama",
+            "Romance",
+            "Sci-Fi"
+        ]
+    },
+    "tt0033870": {
+        "title": "The Maltese Falcon",
+        "year": 1941,
+        "myRating": 5,
+        "imdbRating": 8.0,
+        "numberOfVotes": 166688,
+        "runtime": 100,
+        "genres": [
+            "Crime",
+            "Film-Noir",
+            "Mystery",
+            "Romance"
+        ]
+    },
+    "tt0338751": {
+        "title": "The Aviator",
+        "year": 2004,
+        "myRating": 7,
+        "imdbRating": 7.5,
+        "numberOfVotes": 384328,
+        "runtime": 170,
+        "genres": [
+            "Biography",
+            "Drama"
+        ]
+    },
+    "tt3397884": {
+        "title": "Sicario",
+        "year": 2015,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 477393,
+        "runtime": 121,
+        "genres": [
+            "Action",
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt3416742": {
+        "title": "What We Do in the Shadows",
+        "year": 2014,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 200463,
+        "runtime": 86,
+        "genres": [
+            "Comedy",
+            "Horror"
+        ]
+    },
+    "tt0034492": {
+        "title": "Bambi",
+        "year": 1942,
+        "myRating": 8,
+        "imdbRating": 7.3,
+        "numberOfVotes": 154218,
+        "runtime": 69,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Drama",
+            "Family"
+        ]
+    },
+    "tt0034583": {
+        "title": "Casablanca",
+        "year": 1942,
+        "myRating": 8,
+        "imdbRating": 8.5,
+        "numberOfVotes": 606523,
+        "runtime": 102,
+        "genres": [
+            "Drama",
+            "Romance",
+            "War"
+        ]
+    },
+    "tt0347149": {
+        "title": "Howl's Moving Castle",
+        "year": 2004,
+        "myRating": 7,
+        "imdbRating": 8.2,
+        "numberOfVotes": 450173,
+        "runtime": 119,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt3480822": {
+        "title": "Black Widow",
+        "year": 2021,
+        "myRating": 5,
+        "imdbRating": 6.7,
+        "numberOfVotes": 426788,
+        "runtime": 134,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt3498820": {
+        "title": "Captain America: Civil War",
+        "year": 2016,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 850982,
+        "runtime": 147,
+        "genres": [
+            "Action",
+            "Sci-Fi"
+        ]
+    },
+    "tt0349903": {
+        "title": "Ocean's Twelve",
+        "year": 2004,
+        "myRating": 6,
+        "imdbRating": 6.5,
+        "numberOfVotes": 414405,
+        "runtime": 125,
+        "genres": [
+            "Crime",
+            "Thriller"
+        ]
+    },
+    "tt3501632": {
+        "title": "Thor: Ragnarok",
+        "year": 2017,
+        "myRating": 7,
+        "imdbRating": 7.9,
+        "numberOfVotes": 816858,
+        "runtime": 130,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt3521126": {
+        "title": "The Disaster Artist",
+        "year": 2017,
+        "myRating": 8,
+        "imdbRating": 7.3,
+        "numberOfVotes": 164375,
+        "runtime": 104,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt3521164": {
+        "title": "Moana",
+        "year": 2016,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 378855,
+        "runtime": 107,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Musical"
+        ]
+    },
+    "tt0353969": {
+        "title": "Memories of Murder",
+        "year": 2003,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 216871,
+        "runtime": 131,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt3544112": {
+        "title": "Sing Street",
+        "year": 2016,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 101028,
+        "runtime": 106,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Music",
+            "Romance"
+        ]
+    },
+    "tt3553976": {
+        "title": "Captain Fantastic",
+        "year": 2016,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 235301,
+        "runtime": 118,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0359950": {
+        "title": "The Secret Life of Walter Mitty",
+        "year": 2013,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 341242,
+        "runtime": 114,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Fantasy",
+            "Romance"
+        ]
+    },
+    "tt3606756": {
+        "title": "Incredibles 2",
+        "year": 2018,
+        "myRating": 8,
+        "imdbRating": 7.5,
+        "numberOfVotes": 331757,
+        "runtime": 118,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Sci-Fi"
+        ]
+    },
+    "tt0361748": {
+        "title": "Inglourious Basterds",
+        "year": 2009,
+        "myRating": 8,
+        "imdbRating": 8.4,
+        "numberOfVotes": 1586207,
+        "runtime": 153,
+        "genres": [
+            "Adventure",
+            "Drama",
+            "War"
+        ]
+    },
+    "tt0363771": {
+        "title": "The Chronicles of Narnia: The Lion, the Witch and the Wardrobe",
+        "year": 2005,
+        "myRating": 6,
+        "imdbRating": 6.9,
+        "numberOfVotes": 428387,
+        "runtime": 143,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0365748": {
+        "title": "Shaun of the Dead",
+        "year": 2004,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 594530,
+        "runtime": 99,
+        "genres": [
+            "Comedy",
+            "Horror"
+        ]
+    },
+    "tt3659388": {
+        "title": "The Martian",
+        "year": 2015,
+        "myRating": 6,
+        "imdbRating": 8.0,
+        "numberOfVotes": 926618,
+        "runtime": 144,
+        "genres": [
+            "Adventure",
+            "Drama",
+            "Sci-Fi"
+        ]
+    },
+    "tt0371746": {
+        "title": "Iron Man",
+        "year": 2008,
+        "myRating": 7,
+        "imdbRating": 7.9,
+        "numberOfVotes": 1125974,
+        "runtime": 126,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt0372784": {
+        "title": "Batman Begins",
+        "year": 2005,
+        "myRating": 9,
+        "imdbRating": 8.2,
+        "numberOfVotes": 1580006,
+        "runtime": 140,
+        "genres": [
+            "Action",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt0373889": {
+        "title": "Harry Potter and the Order of the Phoenix",
+        "year": 2007,
+        "myRating": 6,
+        "imdbRating": 7.5,
+        "numberOfVotes": 633947,
+        "runtime": 138,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Mystery"
+        ]
+    },
+    "tt3748528": {
+        "title": "Rogue One: A Star Wars Story",
+        "year": 2016,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 687308,
+        "runtime": 133,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt0374900": {
+        "title": "Napoleon Dynamite",
+        "year": 2004,
+        "myRating": 6,
+        "imdbRating": 7.0,
+        "numberOfVotes": 238014,
+        "runtime": 96,
+        "genres": [
+            "Comedy"
+        ]
+    },
+    "tt0037558": {
+        "title": "Brief Encounter",
+        "year": 1945,
+        "myRating": 9,
+        "imdbRating": 8.0,
+        "numberOfVotes": 44275,
+        "runtime": 86,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt3778644": {
+        "title": "Solo: A Star Wars Story",
+        "year": 2018,
+        "myRating": 5,
+        "imdbRating": 6.9,
+        "numberOfVotes": 379655,
+        "runtime": 135,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt0378194": {
+        "title": "Kill Bill: Vol. 2",
+        "year": 2004,
+        "myRating": 5,
+        "imdbRating": 8.0,
+        "numberOfVotes": 806543,
+        "runtime": 137,
+        "genres": [
+            "Action",
+            "Crime",
+            "Thriller"
+        ]
+    },
+    "tt3783958": {
+        "title": "La La Land",
+        "year": 2016,
+        "myRating": 10,
+        "imdbRating": 8.0,
+        "numberOfVotes": 672805,
+        "runtime": 128,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Music",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt0379725": {
+        "title": "Capote",
+        "year": 2005,
+        "myRating": 6,
+        "imdbRating": 7.3,
+        "numberOfVotes": 140864,
+        "runtime": 114,
+        "genres": [
+            "Biography",
+            "Crime",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt3799694": {
+        "title": "The Nice Guys",
+        "year": 2016,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 374152,
+        "runtime": 116,
+        "genres": [
+            "Action",
+            "Comedy",
+            "Crime",
+            "Thriller"
+        ]
+    },
+    "tt0381061": {
+        "title": "Casino Royale",
+        "year": 2006,
+        "myRating": 8,
+        "imdbRating": 8.0,
+        "numberOfVotes": 695031,
+        "runtime": 144,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Thriller"
+        ]
+    },
+    "tt0381681": {
+        "title": "Before Sunset",
+        "year": 2004,
+        "myRating": 9,
+        "imdbRating": 8.1,
+        "numberOfVotes": 288321,
+        "runtime": 80,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0382932": {
+        "title": "Ratatouille",
+        "year": 2007,
+        "myRating": 9,
+        "imdbRating": 8.1,
+        "numberOfVotes": 826281,
+        "runtime": 111,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0038650": {
+        "title": "It's a Wonderful Life",
+        "year": 1946,
+        "myRating": 8,
+        "imdbRating": 8.6,
+        "numberOfVotes": 499558,
+        "runtime": 130,
+        "genres": [
+            "Drama",
+            "Family",
+            "Fantasy",
+            "Romance"
+        ]
+    },
+    "tt3890160": {
+        "title": "Baby Driver",
+        "year": 2017,
+        "myRating": 8,
+        "imdbRating": 7.5,
+        "numberOfVotes": 612086,
+        "runtime": 113,
+        "genres": [
+            "Action",
+            "Crime",
+            "Drama",
+            "Music"
+        ]
+    },
+    "tt3892172": {
+        "title": "Leave No Trace",
+        "year": 2018,
+        "myRating": 6,
+        "imdbRating": 7.1,
+        "numberOfVotes": 65342,
+        "runtime": 109,
+        "genres": [
+            "Adventure",
+            "Drama"
+        ]
+    },
+    "tt3896198": {
+        "title": "Guardians of the Galaxy Vol. 2",
+        "year": 2017,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 760377,
+        "runtime": 136,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Sci-Fi"
+        ]
+    },
+    "tt3915174": {
+        "title": "Puss in Boots: The Last Wish",
+        "year": 2022,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 175851,
+        "runtime": 102,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0393109": {
+        "title": "Brick",
+        "year": 2005,
+        "myRating": 6,
+        "imdbRating": 7.1,
+        "numberOfVotes": 110086,
+        "runtime": 110,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt0398286": {
+        "title": "Tangled",
+        "year": 2010,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 494917,
+        "runtime": 100,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt4034228": {
+        "title": "Manchester by the Sea",
+        "year": 2016,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 314193,
+        "runtime": 137,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0040416": {
+        "title": "Hamlet",
+        "year": 1948,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 18411,
+        "runtime": 154,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0407887": {
+        "title": "The Departed",
+        "year": 2006,
+        "myRating": 9,
+        "imdbRating": 8.5,
+        "numberOfVotes": 1423623,
+        "runtime": 151,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt4116284": {
+        "title": "The Lego Batman Movie",
+        "year": 2017,
+        "myRating": 6,
+        "imdbRating": 7.3,
+        "numberOfVotes": 172761,
+        "runtime": 104,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt4123430": {
+        "title": "Fantastic Beasts: The Crimes of Grindelwald",
+        "year": 2018,
+        "myRating": 4,
+        "imdbRating": 6.5,
+        "numberOfVotes": 309086,
+        "runtime": 134,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt4123432": {
+        "title": "Fantastic Beasts: The Secrets of Dumbledore",
+        "year": 2022,
+        "myRating": 4,
+        "imdbRating": 6.2,
+        "numberOfVotes": 170764,
+        "runtime": 142,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0413300": {
+        "title": "Spider-Man 3",
+        "year": 2007,
+        "myRating": 7,
+        "imdbRating": 6.3,
+        "numberOfVotes": 638370,
+        "runtime": 139,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt4154664": {
+        "title": "Captain Marvel",
+        "year": 2019,
+        "myRating": 4,
+        "imdbRating": 6.8,
+        "numberOfVotes": 611352,
+        "runtime": 123,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt4154756": {
+        "title": "Avengers: Infinity War",
+        "year": 2018,
+        "myRating": 7,
+        "imdbRating": 8.4,
+        "numberOfVotes": 1205064,
+        "runtime": 149,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt4154796": {
+        "title": "Avengers: Endgame",
+        "year": 2019,
+        "myRating": 9,
+        "imdbRating": 8.4,
+        "numberOfVotes": 1267622,
+        "runtime": 181,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Drama",
+            "Sci-Fi"
+        ]
+    },
+    "tt0417741": {
+        "title": "Harry Potter and the Half-Blood Prince",
+        "year": 2009,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 596216,
+        "runtime": 153,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Mystery"
+        ]
+    },
+    "tt0417791": {
+        "title": "Inside I'm Dancing",
+        "year": 2004,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 16033,
+        "runtime": 104,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0041959": {
+        "title": "The Third Man",
+        "year": 1949,
+        "myRating": 5,
+        "imdbRating": 8.1,
+        "numberOfVotes": 181956,
+        "runtime": 104,
+        "genres": [
+            "Film-Noir",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt0042332": {
+        "title": "Cinderella",
+        "year": 1950,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 174118,
+        "runtime": 74,
+        "genres": [
+            "Animation",
+            "Family",
+            "Fantasy",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt0425112": {
+        "title": "Hot Fuzz",
+        "year": 2007,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 535697,
+        "runtime": 121,
+        "genres": [
+            "Action",
+            "Comedy",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt4302938": {
+        "title": "Kubo and the Two Strings",
+        "year": 2016,
+        "myRating": 5,
+        "imdbRating": 7.7,
+        "numberOfVotes": 138497,
+        "runtime": 101,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0432283": {
+        "title": "Fantastic Mr. Fox",
+        "year": 2009,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 270741,
+        "runtime": 87,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Crime",
+            "Drama",
+            "Family"
+        ]
+    },
+    "tt0435761": {
+        "title": "Toy Story 3",
+        "year": 2010,
+        "myRating": 9,
+        "imdbRating": 8.3,
+        "numberOfVotes": 893218,
+        "runtime": 103,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt4364194": {
+        "title": "The Peanut Butter Falcon",
+        "year": 2019,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 103584,
+        "runtime": 97,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0443706": {
+        "title": "Zodiac",
+        "year": 2007,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 599012,
+        "runtime": 157,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt4468740": {
+        "title": "Paddington 2",
+        "year": 2017,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 94154,
+        "runtime": 103,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Family"
+        ]
+    },
+    "tt0448157": {
+        "title": "Hancock",
+        "year": 2008,
+        "myRating": 5,
+        "imdbRating": 6.4,
+        "numberOfVotes": 512091,
+        "runtime": 92,
+        "genres": [
+            "Action",
+            "Comedy",
+            "Drama",
+            "Fantasy"
+        ]
+    },
+    "tt0449010": {
+        "title": "Eragon",
+        "year": 2006,
+        "myRating": 3,
+        "imdbRating": 5.1,
+        "numberOfVotes": 130542,
+        "runtime": 104,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0449059": {
+        "title": "Little Miss Sunshine",
+        "year": 2006,
+        "myRating": 9,
+        "imdbRating": 7.8,
+        "numberOfVotes": 518554,
+        "runtime": 101,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0451279": {
+        "title": "Wonder Woman",
+        "year": 2017,
+        "myRating": 6,
+        "imdbRating": 7.3,
+        "numberOfVotes": 700110,
+        "runtime": 141,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi",
+            "War"
+        ]
+    },
+    "tt0045152": {
+        "title": "Singin' in the Rain",
+        "year": 1952,
+        "myRating": 6,
+        "imdbRating": 8.3,
+        "numberOfVotes": 260921,
+        "runtime": 103,
+        "genres": [
+            "Comedy",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt4520988": {
+        "title": "Frozen II",
+        "year": 2019,
+        "myRating": 5,
+        "imdbRating": 6.8,
+        "numberOfVotes": 194887,
+        "runtime": 103,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy",
+            "Musical"
+        ]
+    },
+    "tt0457430": {
+        "title": "Pan's Labyrinth",
+        "year": 2006,
+        "myRating": 6,
+        "imdbRating": 8.2,
+        "numberOfVotes": 703472,
+        "runtime": 118,
+        "genres": [
+            "Drama",
+            "Fantasy",
+            "War"
+        ]
+    },
+    "tt0458339": {
+        "title": "Captain America: The First Avenger",
+        "year": 2011,
+        "myRating": 6,
+        "imdbRating": 6.9,
+        "numberOfVotes": 897631,
+        "runtime": 124,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt4589218": {
+        "title": "Five Nights at Freddy's",
+        "year": 2023,
+        "myRating": 2,
+        "imdbRating": 5.5,
+        "numberOfVotes": 93790,
+        "runtime": 109,
+        "genres": [
+            "Horror",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt0460989": {
+        "title": "The Wind that Shakes the Barley",
+        "year": 2006,
+        "myRating": 5,
+        "imdbRating": 7.5,
+        "numberOfVotes": 54675,
+        "runtime": 127,
+        "genres": [
+            "Drama",
+            "War"
+        ]
+    },
+    "tt4622512": {
+        "title": "Battle of the Sexes",
+        "year": 2017,
+        "myRating": 6,
+        "imdbRating": 6.7,
+        "numberOfVotes": 59993,
+        "runtime": 121,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Drama",
+            "History",
+            "Sport"
+        ]
+    },
+    "tt4633694": {
+        "title": "Spider-Man: Into the Spider-Verse",
+        "year": 2018,
+        "myRating": 10,
+        "imdbRating": 8.4,
+        "numberOfVotes": 672807,
+        "runtime": 117,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0468569": {
+        "title": "The Dark Knight",
+        "year": 2008,
+        "myRating": 10,
+        "imdbRating": 9.0,
+        "numberOfVotes": 2873906,
+        "runtime": 152,
+        "genres": [
+            "Action",
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt4686844": {
+        "title": "The Death of Stalin",
+        "year": 2017,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 113579,
+        "runtime": 107,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt0469494": {
+        "title": "There Will Be Blood",
+        "year": 2007,
+        "myRating": 6,
+        "imdbRating": 8.2,
+        "numberOfVotes": 641748,
+        "runtime": 158,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt4698684": {
+        "title": "Hunt for the Wilderpeople",
+        "year": 2016,
+        "myRating": 6,
+        "imdbRating": 7.8,
+        "numberOfVotes": 142049,
+        "runtime": 101,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt4701182": {
+        "title": "Bumblebee",
+        "year": 2018,
+        "myRating": 6,
+        "imdbRating": 6.7,
+        "numberOfVotes": 188810,
+        "runtime": 114,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt0470752": {
+        "title": "Ex Machina",
+        "year": 2014,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 590747,
+        "runtime": 108,
+        "genres": [
+            "Drama",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt4729430": {
+        "title": "Klaus",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 8.2,
+        "numberOfVotes": 189964,
+        "runtime": 96,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0047478": {
+        "title": "Seven Samurai",
+        "year": 1954,
+        "myRating": 7,
+        "imdbRating": 8.6,
+        "numberOfVotes": 367117,
+        "runtime": 207,
+        "genres": [
+            "Action",
+            "Drama"
+        ]
+    },
+    "tt0477348": {
+        "title": "No Country for Old Men",
+        "year": 2007,
+        "myRating": 9,
+        "imdbRating": 8.2,
+        "numberOfVotes": 1061570,
+        "runtime": 122,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt0478304": {
+        "title": "The Tree of Life",
+        "year": 2011,
+        "myRating": 8,
+        "imdbRating": 6.8,
+        "numberOfVotes": 184214,
+        "runtime": 139,
+        "genres": [
+            "Drama",
+            "Fantasy"
+        ]
+    },
+    "tt0478970": {
+        "title": "Ant-Man",
+        "year": 2015,
+        "myRating": 6,
+        "imdbRating": 7.2,
+        "numberOfVotes": 722667,
+        "runtime": 117,
+        "genres": [
+            "Action",
+            "Comedy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0482571": {
+        "title": "The Prestige",
+        "year": 2006,
+        "myRating": 8,
+        "imdbRating": 8.5,
+        "numberOfVotes": 1442732,
+        "runtime": 130,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt0048280": {
+        "title": "Lady and the Tramp",
+        "year": 1955,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 148655,
+        "runtime": 76,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt4846232": {
+        "title": "Good Time",
+        "year": 2017,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 140446,
+        "runtime": 102,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt0048545": {
+        "title": "Rebel Without a Cause",
+        "year": 1955,
+        "myRating": 5,
+        "imdbRating": 7.6,
+        "numberOfVotes": 98029,
+        "runtime": 111,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0490215": {
+        "title": "Silence",
+        "year": 2016,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 123079,
+        "runtime": 161,
+        "genres": [
+            "Drama",
+            "History"
+        ]
+    },
+    "tt4912910": {
+        "title": "Mission: Impossible - Fallout",
+        "year": 2018,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 378498,
+        "runtime": 147,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Thriller"
+        ]
+    },
+    "tt4925292": {
+        "title": "Lady Bird",
+        "year": 2017,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 329725,
+        "runtime": 94,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0496806": {
+        "title": "Ocean's Thirteen",
+        "year": 2007,
+        "myRating": 6,
+        "imdbRating": 6.9,
+        "numberOfVotes": 367668,
+        "runtime": 122,
+        "genres": [
+            "Crime",
+            "Thriller"
+        ]
+    },
+    "tt4975722": {
+        "title": "Moonlight",
+        "year": 2016,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 332124,
+        "runtime": 111,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0499448": {
+        "title": "The Chronicles of Narnia: Prince Caspian",
+        "year": 2008,
+        "myRating": 6,
+        "imdbRating": 6.5,
+        "numberOfVotes": 225651,
+        "runtime": 150,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0499549": {
+        "title": "Avatar",
+        "year": 2009,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 1387600,
+        "runtime": 162,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0050083": {
+        "title": "12 Angry Men",
+        "year": 1957,
+        "myRating": 9,
+        "imdbRating": 9.0,
+        "numberOfVotes": 866302,
+        "runtime": 96,
+        "genres": [
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt5013056": {
+        "title": "Dunkirk",
+        "year": 2017,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 740952,
+        "runtime": 106,
+        "genres": [
+            "Action",
+            "Drama",
+            "History",
+            "Thriller",
+            "War"
+        ]
+    },
+    "tt0050212": {
+        "title": "The Bridge on the River Kwai",
+        "year": 1957,
+        "myRating": 6,
+        "imdbRating": 8.1,
+        "numberOfVotes": 233482,
+        "runtime": 161,
+        "genres": [
+            "Adventure",
+            "Drama",
+            "War"
+        ]
+    },
+    "tt5027774": {
+        "title": "Three Billboards Outside Ebbing, Missouri",
+        "year": 2017,
+        "myRating": 9,
+        "imdbRating": 8.1,
+        "numberOfVotes": 555589,
+        "runtime": 115,
+        "genres": [
+            "Comedy",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt5028340": {
+        "title": "Mary Poppins Returns",
+        "year": 2018,
+        "myRating": 6,
+        "imdbRating": 6.7,
+        "numberOfVotes": 95267,
+        "runtime": 130,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Musical"
+        ]
+    },
+    "tt5052448": {
+        "title": "Get Out",
+        "year": 2017,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 698364,
+        "runtime": 104,
+        "genres": [
+            "Horror",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt5083738": {
+        "title": "The Favourite",
+        "year": 2018,
+        "myRating": 8,
+        "imdbRating": 7.5,
+        "numberOfVotes": 233950,
+        "runtime": 119,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt5095030": {
+        "title": "Ant-Man and the Wasp",
+        "year": 2018,
+        "myRating": 6,
+        "imdbRating": 7.0,
+        "numberOfVotes": 450323,
+        "runtime": 118,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Sci-Fi"
+        ]
+    },
+    "tt5104604": {
+        "title": "Isle of Dogs",
+        "year": 2018,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 191047,
+        "runtime": 101,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Sci-Fi"
+        ]
+    },
+    "tt5109280": {
+        "title": "Raya and the Last Dragon",
+        "year": 2021,
+        "myRating": 6,
+        "imdbRating": 7.3,
+        "numberOfVotes": 172049,
+        "runtime": 107,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt5168192": {
+        "title": "I, Daniel Blake",
+        "year": 2016,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 64823,
+        "runtime": 100,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0052357": {
+        "title": "Vertigo",
+        "year": 1958,
+        "myRating": 6,
+        "imdbRating": 8.3,
+        "numberOfVotes": 427397,
+        "runtime": 128,
+        "genres": [
+            "Mystery",
+            "Romance",
+            "Thriller"
+        ]
+    },
+    "tt0052618": {
+        "title": "Ben-Hur",
+        "year": 1959,
+        "myRating": 6,
+        "imdbRating": 8.1,
+        "numberOfVotes": 253866,
+        "runtime": 212,
+        "genres": [
+            "Adventure",
+            "Drama"
+        ]
+    },
+    "tt5311514": {
+        "title": "Your Name.",
+        "year": 2016,
+        "myRating": 7,
+        "imdbRating": 8.4,
+        "numberOfVotes": 321111,
+        "runtime": 106,
+        "genres": [
+            "Animation",
+            "Drama",
+            "Fantasy",
+            "Romance"
+        ]
+    },
+    "tt0053285": {
+        "title": "Sleeping Beauty",
+        "year": 1959,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 161026,
+        "runtime": 75,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt5362988": {
+        "title": "Wind River",
+        "year": 2017,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 280839,
+        "runtime": 107,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller",
+            "Western"
+        ]
+    },
+    "tt5439796": {
+        "title": "Logan Lucky",
+        "year": 2017,
+        "myRating": 5,
+        "imdbRating": 7.0,
+        "numberOfVotes": 162283,
+        "runtime": 118,
+        "genres": [
+            "Action",
+            "Comedy",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt0055254": {
+        "title": "One Hundred and One Dalmatians",
+        "year": 1961,
+        "myRating": 6,
+        "imdbRating": 7.3,
+        "numberOfVotes": 182423,
+        "runtime": 79,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family"
+        ]
+    },
+    "tt5537002": {
+        "title": "Killers of the Flower Moon",
+        "year": 2023,
+        "myRating": 5,
+        "imdbRating": 7.6,
+        "numberOfVotes": 241049,
+        "runtime": 206,
+        "genres": [
+            "Crime",
+            "Drama",
+            "History",
+            "Mystery",
+            "Romance",
+            "Western"
+        ]
+    },
+    "tt0055614": {
+        "title": "West Side Story",
+        "year": 1961,
+        "myRating": 6,
+        "imdbRating": 7.6,
+        "numberOfVotes": 121286,
+        "runtime": 153,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt5580036": {
+        "title": "I, Tonya",
+        "year": 2017,
+        "myRating": 9,
+        "imdbRating": 7.5,
+        "numberOfVotes": 243008,
+        "runtime": 119,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt5580390": {
+        "title": "The Shape of Water",
+        "year": 2017,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 447964,
+        "runtime": 123,
+        "genres": [
+            "Drama",
+            "Fantasy",
+            "Romance"
+        ]
+    },
+    "tt0055928": {
+        "title": "Dr. No",
+        "year": 1962,
+        "myRating": 6,
+        "imdbRating": 7.2,
+        "numberOfVotes": 179532,
+        "runtime": 110,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Thriller"
+        ]
+    },
+    "tt0056172": {
+        "title": "Lawrence of Arabia",
+        "year": 1962,
+        "myRating": 10,
+        "imdbRating": 8.3,
+        "numberOfVotes": 314639,
+        "runtime": 218,
+        "genres": [
+            "Adventure",
+            "Biography",
+            "Drama",
+            "War"
+        ]
+    },
+    "tt5649144": {
+        "title": "The Florida Project",
+        "year": 2017,
+        "myRating": 6,
+        "imdbRating": 7.6,
+        "numberOfVotes": 128584,
+        "runtime": 111,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0057012": {
+        "title": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
+        "year": 1964,
+        "myRating": 7,
+        "imdbRating": 8.4,
+        "numberOfVotes": 518667,
+        "runtime": 95,
+        "genres": [
+            "Comedy",
+            "War"
+        ]
+    },
+    "tt5726616": {
+        "title": "Call Me by Your Name",
+        "year": 2017,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 316789,
+        "runtime": 132,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt5727208": {
+        "title": "Uncut Gems",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 318653,
+        "runtime": 135,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt5742374": {
+        "title": "You Were Never Really Here",
+        "year": 2017,
+        "myRating": 6,
+        "imdbRating": 6.7,
+        "numberOfVotes": 127784,
+        "runtime": 89,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt5776858": {
+        "title": "Phantom Thread",
+        "year": 2017,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 145672,
+        "runtime": 130,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0058150": {
+        "title": "Goldfinger",
+        "year": 1964,
+        "myRating": 6,
+        "imdbRating": 7.7,
+        "numberOfVotes": 202691,
+        "runtime": 110,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Thriller"
+        ]
+    },
+    "tt5827916": {
+        "title": "A Hidden Life",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 28216,
+        "runtime": 174,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Romance",
+            "War"
+        ]
+    },
+    "tt0058331": {
+        "title": "Mary Poppins",
+        "year": 1964,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 186193,
+        "runtime": 139,
+        "genres": [
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Musical"
+        ]
+    },
+    "tt5834760": {
+        "title": "Look Away",
+        "year": 2018,
+        "myRating": 3,
+        "imdbRating": 5.8,
+        "numberOfVotes": 22354,
+        "runtime": 103,
+        "genres": [
+            "Drama",
+            "Fantasy",
+            "Horror",
+            "Thriller"
+        ]
+    },
+    "tt0059113": {
+        "title": "Doctor Zhivago",
+        "year": 1965,
+        "myRating": 7,
+        "imdbRating": 7.9,
+        "numberOfVotes": 82145,
+        "runtime": 197,
+        "genres": [
+            "Drama",
+            "Romance",
+            "War"
+        ]
+    },
+    "tt0059742": {
+        "title": "The Sound of Music",
+        "year": 1965,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 261342,
+        "runtime": 172,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Family",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt0060196": {
+        "title": "The Good, the Bad and the Ugly",
+        "year": 1966,
+        "myRating": 7,
+        "imdbRating": 8.8,
+        "numberOfVotes": 812029,
+        "runtime": 161,
+        "genres": [
+            "Adventure",
+            "Drama",
+            "Western"
+        ]
+    },
+    "tt6053438": {
+        "title": "First Reformed",
+        "year": 2017,
+        "myRating": 8,
+        "imdbRating": 7.1,
+        "numberOfVotes": 62637,
+        "runtime": 113,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt6155172": {
+        "title": "Roma",
+        "year": 2018,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 169907,
+        "runtime": 135,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0061722": {
+        "title": "The Graduate",
+        "year": 1967,
+        "myRating": 7,
+        "imdbRating": 8.0,
+        "numberOfVotes": 288625,
+        "runtime": 106,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0061852": {
+        "title": "The Jungle Book",
+        "year": 1967,
+        "myRating": 6,
+        "imdbRating": 7.6,
+        "numberOfVotes": 198855,
+        "runtime": 78,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Musical"
+        ]
+    },
+    "tt0062622": {
+        "title": "2001: A Space Odyssey",
+        "year": 1968,
+        "myRating": 6,
+        "imdbRating": 8.3,
+        "numberOfVotes": 720265,
+        "runtime": 149,
+        "genres": [
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt6266538": {
+        "title": "Vice",
+        "year": 2018,
+        "myRating": 6,
+        "imdbRating": 7.2,
+        "numberOfVotes": 162534,
+        "runtime": 132,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt6285944": {
+        "title": "The Banker",
+        "year": 2020,
+        "myRating": 5,
+        "imdbRating": 7.3,
+        "numberOfVotes": 35797,
+        "runtime": 120,
+        "genres": [
+            "Biography",
+            "Drama"
+        ]
+    },
+    "tt6320628": {
+        "title": "Spider-Man: Far from Home",
+        "year": 2019,
+        "myRating": 6,
+        "imdbRating": 7.4,
+        "numberOfVotes": 557692,
+        "runtime": 129,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt6334354": {
+        "title": "The Suicide Squad",
+        "year": 2021,
+        "myRating": 8,
+        "imdbRating": 7.2,
+        "numberOfVotes": 410265,
+        "runtime": 132,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Sci-Fi"
+        ]
+    },
+    "tt6343314": {
+        "title": "Creed II",
+        "year": 2018,
+        "myRating": 7,
+        "imdbRating": 7.1,
+        "numberOfVotes": 155682,
+        "runtime": 130,
+        "genres": [
+            "Action",
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt0064115": {
+        "title": "Butch Cassidy and the Sundance Kid",
+        "year": 1969,
+        "myRating": 6,
+        "imdbRating": 8.0,
+        "numberOfVotes": 226837,
+        "runtime": 110,
+        "genres": [
+            "Biography",
+            "Crime",
+            "Drama",
+            "Western"
+        ]
+    },
+    "tt0064116": {
+        "title": "Once Upon a Time in the West",
+        "year": 1968,
+        "myRating": 7,
+        "imdbRating": 8.5,
+        "numberOfVotes": 349331,
+        "runtime": 166,
+        "genres": [
+            "Drama",
+            "Western"
+        ]
+    },
+    "tt6412452": {
+        "title": "The Ballad of Buster Scruggs",
+        "year": 2018,
+        "myRating": 6,
+        "imdbRating": 7.2,
+        "numberOfVotes": 168374,
+        "runtime": 133,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Musical",
+            "Mystery",
+            "Romance",
+            "Western"
+        ]
+    },
+    "tt6443346": {
+        "title": "Black Adam",
+        "year": 2022,
+        "myRating": 5,
+        "imdbRating": 6.2,
+        "numberOfVotes": 274356,
+        "runtime": 125,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0064541": {
+        "title": "Kes",
+        "year": 1969,
+        "myRating": 6,
+        "imdbRating": 7.9,
+        "numberOfVotes": 22961,
+        "runtime": 111,
+        "genres": [
+            "Drama",
+            "Family"
+        ]
+    },
+    "tt6587046": {
+        "title": "The Boy and the Heron",
+        "year": 2023,
+        "myRating": 5,
+        "imdbRating": 7.6,
+        "numberOfVotes": 51295,
+        "runtime": 124,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Drama",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0066319": {
+        "title": "Ryan's Daughter",
+        "year": 1970,
+        "myRating": 7,
+        "imdbRating": 7.4,
+        "numberOfVotes": 10693,
+        "runtime": 200,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt6710474": {
+        "title": "Everything Everywhere All at Once",
+        "year": 2022,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 534255,
+        "runtime": 139,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0067116": {
+        "title": "The French Connection",
+        "year": 1971,
+        "myRating": 6,
+        "imdbRating": 7.7,
+        "numberOfVotes": 135830,
+        "runtime": 104,
+        "genres": [
+            "Action",
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt6718170": {
+        "title": "The Super Mario Bros. Movie",
+        "year": 2023,
+        "myRating": 6,
+        "imdbRating": 7.0,
+        "numberOfVotes": 237480,
+        "runtime": 92,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt6723592": {
+        "title": "Tenet",
+        "year": 2020,
+        "myRating": 8,
+        "imdbRating": 7.3,
+        "numberOfVotes": 593549,
+        "runtime": 150,
+        "genres": [
+            "Action",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt6751668": {
+        "title": "Parasite",
+        "year": 2019,
+        "myRating": 9,
+        "imdbRating": 8.5,
+        "numberOfVotes": 961588,
+        "runtime": 132,
+        "genres": [
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt6791350": {
+        "title": "Guardians of the Galaxy Vol. 3",
+        "year": 2023,
+        "myRating": 6,
+        "imdbRating": 7.9,
+        "numberOfVotes": 381484,
+        "runtime": 150,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Sci-Fi"
+        ]
+    },
+    "tt6806448": {
+        "title": "Fast & Furious Presents: Hobbs & Shaw",
+        "year": 2019,
+        "myRating": 4,
+        "imdbRating": 6.5,
+        "numberOfVotes": 236187,
+        "runtime": 137,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Thriller"
+        ]
+    },
+    "tt6820256": {
+        "title": "Arctic",
+        "year": 2018,
+        "myRating": 7,
+        "imdbRating": 6.8,
+        "numberOfVotes": 58383,
+        "runtime": 98,
+        "genres": [
+            "Adventure",
+            "Drama"
+        ]
+    },
+    "tt6857112": {
+        "title": "Us",
+        "year": 2019,
+        "myRating": 7,
+        "imdbRating": 6.8,
+        "numberOfVotes": 341626,
+        "runtime": 116,
+        "genres": [
+            "Horror",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt0068646": {
+        "title": "The Godfather",
+        "year": 1972,
+        "myRating": 10,
+        "imdbRating": 9.2,
+        "numberOfVotes": 2015091,
+        "runtime": 175,
+        "genres": [
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt6920356": {
+        "title": "The Souvenir",
+        "year": 2019,
+        "myRating": 5,
+        "imdbRating": 6.4,
+        "numberOfVotes": 14503,
+        "runtime": 120,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt6938828": {
+        "title": "At Eternity's Gate",
+        "year": 2018,
+        "myRating": 6,
+        "imdbRating": 6.9,
+        "numberOfVotes": 40064,
+        "runtime": 111,
+        "genres": [
+            "Biography",
+            "Drama",
+            "History"
+        ]
+    },
+    "tt6966692": {
+        "title": "Green Book",
+        "year": 2018,
+        "myRating": 7,
+        "imdbRating": 8.2,
+        "numberOfVotes": 573453,
+        "runtime": 130,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Drama",
+            "Music"
+        ]
+    },
+    "tt0069704": {
+        "title": "American Graffiti",
+        "year": 1973,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 98255,
+        "runtime": 110,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0069762": {
+        "title": "Badlands",
+        "year": 1973,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 78469,
+        "runtime": 94,
+        "genres": [
+            "Action",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt7014006": {
+        "title": "Eighth Grade",
+        "year": 2018,
+        "myRating": 7,
+        "imdbRating": 7.4,
+        "numberOfVotes": 82543,
+        "runtime": 93,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0070735": {
+        "title": "The Sting",
+        "year": 1973,
+        "myRating": 6,
+        "imdbRating": 8.3,
+        "numberOfVotes": 280119,
+        "runtime": 129,
+        "genres": [
+            "Comedy",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt7125860": {
+        "title": "If Beale Street Could Talk",
+        "year": 2018,
+        "myRating": 7,
+        "imdbRating": 7.1,
+        "numberOfVotes": 52537,
+        "runtime": 119,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0071315": {
+        "title": "Chinatown",
+        "year": 1974,
+        "myRating": 10,
+        "imdbRating": 8.1,
+        "numberOfVotes": 350179,
+        "runtime": 130,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt7131622": {
+        "title": "Once Upon a Time... in Hollywood",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 849576,
+        "runtime": 161,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0071360": {
+        "title": "The Conversation",
+        "year": 1974,
+        "myRating": 6,
+        "imdbRating": 7.7,
+        "numberOfVotes": 121986,
+        "runtime": 113,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt7146812": {
+        "title": "Onward",
+        "year": 2020,
+        "myRating": 7,
+        "imdbRating": 7.4,
+        "numberOfVotes": 170249,
+        "runtime": 102,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0071562": {
+        "title": "The Godfather Part II",
+        "year": 1974,
+        "myRating": 7,
+        "imdbRating": 9.0,
+        "numberOfVotes": 1365636,
+        "runtime": 202,
+        "genres": [
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt7286456": {
+        "title": "Joker",
+        "year": 2019,
+        "myRating": 9,
+        "imdbRating": 8.4,
+        "numberOfVotes": 1491847,
+        "runtime": 122,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt7286916": {
+        "title": "The Dawn Wall",
+        "year": 2017,
+        "myRating": 9,
+        "imdbRating": 8.1,
+        "numberOfVotes": 21248,
+        "runtime": 100,
+        "genres": [
+            "Documentary",
+            "Biography",
+            "Sport"
+        ]
+    },
+    "tt0073195": {
+        "title": "Jaws",
+        "year": 1975,
+        "myRating": 9,
+        "imdbRating": 8.1,
+        "numberOfVotes": 660142,
+        "runtime": 124,
+        "genres": [
+            "Adventure",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt0073486": {
+        "title": "One Flew Over the Cuckoo's Nest",
+        "year": 1975,
+        "myRating": 5,
+        "imdbRating": 8.7,
+        "numberOfVotes": 1073296,
+        "runtime": 133,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0074119": {
+        "title": "All the President's Men",
+        "year": 1976,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 126168,
+        "runtime": 138,
+        "genres": [
+            "Drama",
+            "History",
+            "Thriller"
+        ]
+    },
+    "tt0075148": {
+        "title": "Rocky",
+        "year": 1976,
+        "myRating": 6,
+        "imdbRating": 8.1,
+        "numberOfVotes": 629035,
+        "runtime": 120,
+        "genres": [
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt0075314": {
+        "title": "Taxi Driver",
+        "year": 1976,
+        "myRating": 8,
+        "imdbRating": 8.2,
+        "numberOfVotes": 921793,
+        "runtime": 114,
+        "genres": [
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt0075860": {
+        "title": "Close Encounters of the Third Kind",
+        "year": 1977,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 217083,
+        "runtime": 138,
+        "genres": [
+            "Drama",
+            "Sci-Fi"
+        ]
+    },
+    "tt0758758": {
+        "title": "Into the Wild",
+        "year": 2007,
+        "myRating": 6,
+        "imdbRating": 8.1,
+        "numberOfVotes": 658633,
+        "runtime": 148,
+        "genres": [
+            "Adventure",
+            "Biography",
+            "Drama"
+        ]
+    },
+    "tt7653254": {
+        "title": "Marriage Story",
+        "year": 2019,
+        "myRating": 9,
+        "imdbRating": 7.9,
+        "numberOfVotes": 346735,
+        "runtime": 137,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0076759": {
+        "title": "Star Wars: Episode IV - A New Hope",
+        "year": 1977,
+        "myRating": 8,
+        "imdbRating": 8.6,
+        "numberOfVotes": 1451169,
+        "runtime": 121,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0770828": {
+        "title": "Man of Steel",
+        "year": 2013,
+        "myRating": 6,
+        "imdbRating": 7.1,
+        "numberOfVotes": 812340,
+        "runtime": 143,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt7713068": {
+        "title": "Birds of Prey",
+        "year": 2020,
+        "myRating": 6,
+        "imdbRating": 6.1,
+        "numberOfVotes": 264904,
+        "runtime": 109,
+        "genres": [
+            "Action",
+            "Comedy",
+            "Crime"
+        ]
+    },
+    "tt7738450": {
+        "title": "Thunder Road",
+        "year": 2018,
+        "myRating": 6,
+        "imdbRating": 7.0,
+        "numberOfVotes": 19510,
+        "runtime": 92,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0077405": {
+        "title": "Days of Heaven",
+        "year": 1978,
+        "myRating": 6,
+        "imdbRating": 7.7,
+        "numberOfVotes": 62824,
+        "runtime": 94,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt7740510": {
+        "title": "Antlers",
+        "year": 2021,
+        "myRating": 4,
+        "imdbRating": 5.9,
+        "numberOfVotes": 44585,
+        "runtime": 99,
+        "genres": [
+            "Drama",
+            "Horror",
+            "Mystery"
+        ]
+    },
+    "tt7775622": {
+        "title": "Free Solo",
+        "year": 2018,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 77542,
+        "runtime": 100,
+        "genres": [
+            "Documentary",
+            "Adventure",
+            "Sport"
+        ]
+    },
+    "tt0780504": {
+        "title": "Drive",
+        "year": 2011,
+        "myRating": 9,
+        "imdbRating": 7.8,
+        "numberOfVotes": 705200,
+        "runtime": 100,
+        "genres": [
+            "Action",
+            "Drama"
+        ]
+    },
+    "tt0780521": {
+        "title": "The Princess and the Frog",
+        "year": 2009,
+        "myRating": 7,
+        "imdbRating": 7.2,
+        "numberOfVotes": 167075,
+        "runtime": 97,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt0780536": {
+        "title": "In Bruges",
+        "year": 2008,
+        "myRating": 6,
+        "imdbRating": 7.9,
+        "numberOfVotes": 461863,
+        "runtime": 107,
+        "genres": [
+            "Comedy",
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt0783233": {
+        "title": "Atonement",
+        "year": 2007,
+        "myRating": 6,
+        "imdbRating": 7.8,
+        "numberOfVotes": 300103,
+        "runtime": 123,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Romance",
+            "War"
+        ]
+    },
+    "tt0078788": {
+        "title": "Apocalypse Now",
+        "year": 1979,
+        "myRating": 8,
+        "imdbRating": 8.4,
+        "numberOfVotes": 710981,
+        "runtime": 147,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "War"
+        ]
+    },
+    "tt7905466": {
+        "title": "They Shall Not Grow Old",
+        "year": 2018,
+        "myRating": 7,
+        "imdbRating": 8.2,
+        "numberOfVotes": 38485,
+        "runtime": 99,
+        "genres": [
+            "Documentary",
+            "History",
+            "War"
+        ]
+    },
+    "tt0790636": {
+        "title": "Dallas Buyers Club",
+        "year": 2013,
+        "myRating": 7,
+        "imdbRating": 7.9,
+        "numberOfVotes": 519704,
+        "runtime": 117,
+        "genres": [
+            "Biography",
+            "Drama"
+        ]
+    },
+    "tt7984734": {
+        "title": "The Lighthouse",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 7.4,
+        "numberOfVotes": 255562,
+        "runtime": 109,
+        "genres": [
+            "Drama",
+            "Fantasy",
+            "Horror",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt0800080": {
+        "title": "The Incredible Hulk",
+        "year": 2008,
+        "myRating": 6,
+        "imdbRating": 6.6,
+        "numberOfVotes": 523897,
+        "runtime": 112,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt0800369": {
+        "title": "Thor",
+        "year": 2011,
+        "myRating": 4,
+        "imdbRating": 7.0,
+        "numberOfVotes": 901023,
+        "runtime": 115,
+        "genres": [
+            "Action",
+            "Fantasy"
+        ]
+    },
+    "tt0080339": {
+        "title": "Airplane!",
+        "year": 1980,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 261440,
+        "runtime": 88,
+        "genres": [
+            "Comedy"
+        ]
+    },
+    "tt0080455": {
+        "title": "The Blues Brothers",
+        "year": 1980,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 214681,
+        "runtime": 133,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Crime",
+            "Music",
+            "Musical"
+        ]
+    },
+    "tt0080684": {
+        "title": "Star Wars: Episode V - The Empire Strikes Back",
+        "year": 1980,
+        "myRating": 9,
+        "imdbRating": 8.7,
+        "numberOfVotes": 1381293,
+        "runtime": 124,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt8075192": {
+        "title": "Shoplifters",
+        "year": 2018,
+        "myRating": 7,
+        "imdbRating": 7.9,
+        "numberOfVotes": 86566,
+        "runtime": 121,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt8079248": {
+        "title": "Yesterday",
+        "year": 2019,
+        "myRating": 7,
+        "imdbRating": 6.8,
+        "numberOfVotes": 167930,
+        "runtime": 116,
+        "genres": [
+            "Comedy",
+            "Fantasy",
+            "Music",
+            "Romance"
+        ]
+    },
+    "tt8097030": {
+        "title": "Turning Red",
+        "year": 2022,
+        "myRating": 7,
+        "imdbRating": 7.0,
+        "numberOfVotes": 153003,
+        "runtime": 100,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt8115900": {
+        "title": "The Bad Guys",
+        "year": 2022,
+        "myRating": 7,
+        "imdbRating": 6.8,
+        "numberOfVotes": 59224,
+        "runtime": 100,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Crime",
+            "Family"
+        ]
+    },
+    "tt0081398": {
+        "title": "Raging Bull",
+        "year": 1980,
+        "myRating": 6,
+        "imdbRating": 8.1,
+        "numberOfVotes": 380561,
+        "runtime": 129,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt0081505": {
+        "title": "The Shining",
+        "year": 1980,
+        "myRating": 7,
+        "imdbRating": 8.4,
+        "numberOfVotes": 1107938,
+        "runtime": 146,
+        "genres": [
+            "Drama",
+            "Horror"
+        ]
+    },
+    "tt0816692": {
+        "title": "Interstellar",
+        "year": 2014,
+        "myRating": 8,
+        "imdbRating": 8.7,
+        "numberOfVotes": 2104065,
+        "runtime": 169,
+        "genres": [
+            "Adventure",
+            "Drama",
+            "Sci-Fi"
+        ]
+    },
+    "tt8228288": {
+        "title": "The Platform",
+        "year": 2019,
+        "myRating": 5,
+        "imdbRating": 7.0,
+        "numberOfVotes": 273072,
+        "runtime": 94,
+        "genres": [
+            "Horror",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt8291806": {
+        "title": "Pain and Glory",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 7.5,
+        "numberOfVotes": 63181,
+        "runtime": 113,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0829482": {
+        "title": "Superbad",
+        "year": 2007,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 633463,
+        "runtime": 113,
+        "genres": [
+            "Comedy"
+        ]
+    },
+    "tt0082971": {
+        "title": "Raiders of the Lost Ark",
+        "year": 1981,
+        "myRating": 8,
+        "imdbRating": 8.4,
+        "numberOfVotes": 1037610,
+        "runtime": 115,
+        "genres": [
+            "Action",
+            "Adventure"
+        ]
+    },
+    "tt8359816": {
+        "title": "Sorry We Missed You",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 25878,
+        "runtime": 101,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0083658": {
+        "title": "Blade Runner",
+        "year": 1982,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 823764,
+        "runtime": 117,
+        "genres": [
+            "Action",
+            "Drama",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt8367814": {
+        "title": "The Gentlemen",
+        "year": 2019,
+        "myRating": 5,
+        "imdbRating": 7.8,
+        "numberOfVotes": 401961,
+        "runtime": 113,
+        "genres": [
+            "Action",
+            "Crime"
+        ]
+    },
+    "tt8404614": {
+        "title": "The Two Popes",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 7.6,
+        "numberOfVotes": 133085,
+        "runtime": 125,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0848228": {
+        "title": "The Avengers",
+        "year": 2012,
+        "myRating": 7,
+        "imdbRating": 8.0,
+        "numberOfVotes": 1460399,
+        "runtime": 143,
+        "genres": [
+            "Action",
+            "Sci-Fi"
+        ]
+    },
+    "tt8579674": {
+        "title": "1917",
+        "year": 2019,
+        "myRating": 9,
+        "imdbRating": 8.2,
+        "numberOfVotes": 676753,
+        "runtime": 119,
+        "genres": [
+            "Action",
+            "Drama",
+            "History",
+            "War"
+        ]
+    },
+    "tt8613070": {
+        "title": "Portrait of a Lady on Fire",
+        "year": 2019,
+        "myRating": 6,
+        "imdbRating": 8.1,
+        "numberOfVotes": 109803,
+        "runtime": 122,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0086190": {
+        "title": "Star Wars: Episode VI - Return of the Jedi",
+        "year": 1983,
+        "myRating": 7,
+        "imdbRating": 8.3,
+        "numberOfVotes": 1122588,
+        "runtime": 131,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt8637428": {
+        "title": "The Farewell",
+        "year": 2019,
+        "myRating": 7,
+        "imdbRating": 7.5,
+        "numberOfVotes": 71214,
+        "runtime": 100,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0086879": {
+        "title": "Amadeus",
+        "year": 1984,
+        "myRating": 5,
+        "imdbRating": 8.4,
+        "numberOfVotes": 428472,
+        "runtime": 160,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Music"
+        ]
+    },
+    "tt8721424": {
+        "title": "tick, tick... BOOM!",
+        "year": 2021,
+        "myRating": 7,
+        "imdbRating": 7.5,
+        "numberOfVotes": 119741,
+        "runtime": 115,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Drama",
+            "Musical"
+        ]
+    },
+    "tt0087469": {
+        "title": "Indiana Jones and the Temple of Doom",
+        "year": 1984,
+        "myRating": 7,
+        "imdbRating": 7.5,
+        "numberOfVotes": 535696,
+        "runtime": 118,
+        "genres": [
+            "Action",
+            "Adventure"
+        ]
+    },
+    "tt0087538": {
+        "title": "The Karate Kid",
+        "year": 1984,
+        "myRating": 7,
+        "imdbRating": 7.3,
+        "numberOfVotes": 244739,
+        "runtime": 126,
+        "genres": [
+            "Action",
+            "Drama",
+            "Family",
+            "Sport"
+        ]
+    },
+    "tt0087544": {
+        "title": "Nausica\u00e4 of the Valley of the Wind",
+        "year": 1984,
+        "myRating": 8,
+        "imdbRating": 8.0,
+        "numberOfVotes": 182734,
+        "runtime": 117,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt0876563": {
+        "title": "Ponyo",
+        "year": 2008,
+        "myRating": 6,
+        "imdbRating": 7.6,
+        "numberOfVotes": 163788,
+        "runtime": 101,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0878804": {
+        "title": "The Blind Side",
+        "year": 2009,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 360832,
+        "runtime": 129,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt0088128": {
+        "title": "Sixteen Candles",
+        "year": 1984,
+        "myRating": 5,
+        "imdbRating": 7.0,
+        "numberOfVotes": 126514,
+        "runtime": 93,
+        "genres": [
+            "Comedy",
+            "Romance"
+        ]
+    },
+    "tt0088247": {
+        "title": "The Terminator",
+        "year": 1984,
+        "myRating": 6,
+        "imdbRating": 8.1,
+        "numberOfVotes": 925098,
+        "runtime": 107,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt0088763": {
+        "title": "Back to the Future",
+        "year": 1985,
+        "myRating": 8,
+        "imdbRating": 8.5,
+        "numberOfVotes": 1308256,
+        "runtime": 116,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0887912": {
+        "title": "The Hurt Locker",
+        "year": 2008,
+        "myRating": 7,
+        "imdbRating": 7.5,
+        "numberOfVotes": 474103,
+        "runtime": 131,
+        "genres": [
+            "Drama",
+            "Thriller",
+            "War"
+        ]
+    },
+    "tt0088847": {
+        "title": "The Breakfast Club",
+        "year": 1985,
+        "myRating": 8,
+        "imdbRating": 7.8,
+        "numberOfVotes": 437042,
+        "runtime": 97,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt8902948": {
+        "title": "Tigertail",
+        "year": 2020,
+        "myRating": 5,
+        "imdbRating": 6.6,
+        "numberOfVotes": 3846,
+        "runtime": 91,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt8946378": {
+        "title": "Knives Out",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 7.9,
+        "numberOfVotes": 774691,
+        "runtime": 130,
+        "genres": [
+            "Comedy",
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
+    },
+    "tt9032400": {
+        "title": "Eternals",
+        "year": 2021,
+        "myRating": 4,
+        "imdbRating": 6.3,
+        "numberOfVotes": 386684,
+        "runtime": 156,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0903624": {
+        "title": "The Hobbit: An Unexpected Journey",
+        "year": 2012,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 873676,
+        "runtime": 169,
+        "genres": [
+            "Adventure",
+            "Fantasy"
+        ]
+    },
+    "tt0907657": {
+        "title": "Once",
+        "year": 2007,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 121328,
+        "runtime": 86,
+        "genres": [
+            "Drama",
+            "Music",
+            "Romance"
+        ]
+    },
+    "tt0091042": {
+        "title": "Ferris Bueller's Day Off",
+        "year": 1986,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 386890,
+        "runtime": 103,
+        "genres": [
+            "Comedy"
+        ]
+    },
+    "tt0910970": {
+        "title": "WALL\u00b7E",
+        "year": 2008,
+        "myRating": 8,
+        "imdbRating": 8.4,
+        "numberOfVotes": 1201578,
+        "runtime": 98,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Family",
+            "Sci-Fi"
+        ]
+    },
+    "tt9114286": {
+        "title": "Black Panther: Wakanda Forever",
+        "year": 2022,
+        "myRating": 6,
+        "imdbRating": 6.7,
+        "numberOfVotes": 306127,
+        "runtime": 161,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Drama",
+            "Sci-Fi"
+        ]
+    },
+    "tt0091251": {
+        "title": "Come and See",
+        "year": 1985,
+        "myRating": 7,
+        "imdbRating": 8.4,
+        "numberOfVotes": 97489,
+        "runtime": 142,
+        "genres": [
+            "Drama",
+            "Thriller",
+            "War"
+        ]
+    },
+    "tt0091763": {
+        "title": "Platoon",
+        "year": 1986,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 439890,
+        "runtime": 120,
+        "genres": [
+            "Drama",
+            "War"
+        ]
+    },
+    "tt9185206": {
+        "title": "Are You There God? It's Me, Margaret.",
+        "year": 2023,
+        "myRating": 6,
+        "imdbRating": 7.3,
+        "numberOfVotes": 27656,
+        "runtime": 106,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Family"
+        ]
+    },
+    "tt0092005": {
+        "title": "Stand by Me",
+        "year": 1986,
+        "myRating": 7,
+        "imdbRating": 8.1,
+        "numberOfVotes": 442096,
+        "runtime": 89,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0092067": {
+        "title": "Castle in the Sky",
+        "year": 1986,
+        "myRating": 5,
+        "imdbRating": 8.0,
+        "numberOfVotes": 182567,
+        "runtime": 125,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0926084": {
+        "title": "Harry Potter and the Deathly Hallows: Part 1",
+        "year": 2010,
+        "myRating": 9,
+        "imdbRating": 7.7,
+        "numberOfVotes": 599786,
+        "runtime": 146,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Mystery"
+        ]
+    },
+    "tt0092843": {
+        "title": "The Dead",
+        "year": 1987,
+        "myRating": 5,
+        "imdbRating": 7.2,
+        "numberOfVotes": 8911,
+        "runtime": 83,
+        "genres": [
+            "Drama"
+        ]
+    },
+    "tt0093058": {
+        "title": "Full Metal Jacket",
+        "year": 1987,
+        "myRating": 9,
+        "imdbRating": 8.3,
+        "numberOfVotes": 791107,
+        "runtime": 116,
+        "genres": [
+            "Drama",
+            "War"
+        ]
+    },
+    "tt9362722": {
+        "title": "Spider-Man: Across the Spider-Verse",
+        "year": 2023,
+        "myRating": 10,
+        "imdbRating": 8.6,
+        "numberOfVotes": 371291,
+        "runtime": 140,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0093748": {
+        "title": "Planes, Trains & Automobiles",
+        "year": 1987,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 160408,
+        "runtime": 93,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt9376612": {
+        "title": "Shang-Chi and the Legend of the Ten Rings",
+        "year": 2021,
+        "myRating": 6,
+        "imdbRating": 7.4,
+        "numberOfVotes": 436251,
+        "runtime": 132,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt9412098": {
+        "title": "Fyre",
+        "year": 2019,
+        "myRating": 8,
+        "imdbRating": 7.2,
+        "numberOfVotes": 52093,
+        "runtime": 97,
+        "genres": [
+            "Documentary",
+            "Crime",
+            "Music"
+        ]
+    },
+    "tt9419884": {
+        "title": "Doctor Strange in the Multiverse of Madness",
+        "year": 2022,
+        "myRating": 5,
+        "imdbRating": 6.9,
+        "numberOfVotes": 479126,
+        "runtime": 126,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0094625": {
+        "title": "Akira",
+        "year": 1988,
+        "myRating": 5,
+        "imdbRating": 8.0,
+        "numberOfVotes": 205494,
+        "runtime": 124,
+        "genres": [
+            "Animation",
+            "Action",
+            "Drama",
+            "Fantasy",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    },
+    "tt0947798": {
+        "title": "Black Swan",
+        "year": 2010,
+        "myRating": 8,
+        "imdbRating": 8.0,
+        "numberOfVotes": 825664,
+        "runtime": 108,
+        "genres": [
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt0948470": {
+        "title": "The Amazing Spider-Man",
+        "year": 2012,
+        "myRating": 7,
+        "imdbRating": 6.9,
+        "numberOfVotes": 703052,
+        "runtime": 136,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Sci-Fi"
+        ]
+    },
+    "tt0095327": {
+        "title": "Grave of the Fireflies",
+        "year": 1988,
+        "myRating": 9,
+        "imdbRating": 8.5,
+        "numberOfVotes": 310926,
+        "runtime": 89,
+        "genres": [
+            "Animation",
+            "Drama",
+            "War"
+        ]
+    },
+    "tt9603212": {
+        "title": "Mission: Impossible - Dead Reckoning Part One",
+        "year": 2023,
+        "myRating": 6,
+        "imdbRating": 7.7,
+        "numberOfVotes": 248006,
+        "runtime": 163,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Thriller"
+        ]
+    },
+    "tt9620288": {
+        "title": "King Richard",
+        "year": 2021,
+        "myRating": 6,
+        "imdbRating": 7.5,
+        "numberOfVotes": 136905,
+        "runtime": 144,
+        "genres": [
+            "Biography",
+            "Drama",
+            "Sport"
+        ]
+    },
+    "tt0096283": {
+        "title": "My Neighbor Totoro",
+        "year": 1988,
+        "myRating": 8,
+        "imdbRating": 8.1,
+        "numberOfVotes": 380877,
+        "runtime": 86,
+        "genres": [
+            "Animation",
+            "Comedy",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0096895": {
+        "title": "Batman",
+        "year": 1989,
+        "myRating": 6,
+        "imdbRating": 7.5,
+        "numberOfVotes": 404604,
+        "runtime": 126,
+        "genres": [
+            "Action",
+            "Adventure"
+        ]
+    },
+    "tt0097165": {
+        "title": "Dead Poets Society",
+        "year": 1989,
+        "myRating": 7,
+        "imdbRating": 8.1,
+        "numberOfVotes": 547040,
+        "runtime": 128,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
+    },
+    "tt0974015": {
+        "title": "Justice League",
+        "year": 2017,
+        "myRating": 4,
+        "imdbRating": 6.1,
+        "numberOfVotes": 478886,
+        "runtime": 120,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Sci-Fi"
+        ]
+    },
+    "tt0097576": {
+        "title": "Indiana Jones and the Last Crusade",
+        "year": 1989,
+        "myRating": 7,
+        "imdbRating": 8.2,
+        "numberOfVotes": 811811,
+        "runtime": 127,
+        "genres": [
+            "Action",
+            "Adventure"
+        ]
+    },
+    "tt0097757": {
+        "title": "The Little Mermaid",
+        "year": 1989,
+        "myRating": 7,
+        "imdbRating": 7.6,
+        "numberOfVotes": 291230,
+        "runtime": 83,
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Family",
+            "Fantasy",
+            "Musical",
+            "Romance"
+        ]
+    },
+    "tt0097814": {
+        "title": "Kiki's Delivery Service",
+        "year": 1989,
+        "myRating": 7,
+        "imdbRating": 7.8,
+        "numberOfVotes": 165818,
+        "runtime": 103,
+        "genres": [
+            "Animation",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0097937": {
+        "title": "My Left Foot",
+        "year": 1989,
+        "myRating": 5,
+        "imdbRating": 7.8,
+        "numberOfVotes": 79839,
+        "runtime": 103,
+        "genres": [
+            "Biography",
+            "Drama"
+        ]
+    },
+    "tt0980970": {
+        "title": "The Chronicles of Narnia: The Voyage of the Dawn Treader",
+        "year": 2010,
+        "myRating": 4,
+        "imdbRating": 6.3,
+        "numberOfVotes": 166549,
+        "runtime": 113,
+        "genres": [
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
+    },
+    "tt0983193": {
+        "title": "The Adventures of Tintin",
+        "year": 2011,
+        "myRating": 6,
+        "imdbRating": 7.3,
+        "numberOfVotes": 243376,
+        "runtime": 107,
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Family",
+            "Mystery"
+        ]
+    },
+    "tt0986233": {
+        "title": "Hunger",
+        "year": 2008,
+        "myRating": 7,
+        "imdbRating": 7.5,
+        "numberOfVotes": 73589,
+        "runtime": 96,
+        "genres": [
+            "Biography",
+            "Crime",
+            "Drama",
+            "Thriller"
+        ]
+    },
+    "tt0098635": {
+        "title": "When Harry Met Sally...",
+        "year": 1989,
+        "myRating": 8,
+        "imdbRating": 7.7,
+        "numberOfVotes": 243001,
+        "runtime": 95,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "tt0993846": {
+        "title": "The Wolf of Wall Street",
+        "year": 2013,
+        "myRating": 8,
+        "imdbRating": 8.2,
+        "numberOfVotes": 1585478,
+        "runtime": 180,
+        "genres": [
+            "Biography",
+            "Comedy",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt0099674": {
+        "title": "The Godfather Part III",
+        "year": 1990,
+        "myRating": 6,
+        "imdbRating": 7.6,
+        "numberOfVotes": 424465,
+        "runtime": 162,
+        "genres": [
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt0099685": {
+        "title": "Goodfellas",
+        "year": 1990,
+        "myRating": 7,
+        "imdbRating": 8.7,
+        "numberOfVotes": 1258755,
+        "runtime": 145,
+        "genres": [
+            "Biography",
+            "Crime",
+            "Drama"
+        ]
+    },
+    "tt0099785": {
+        "title": "Home Alone",
+        "year": 1990,
+        "myRating": 7,
+        "imdbRating": 7.7,
+        "numberOfVotes": 653283,
+        "runtime": 103,
+        "genres": [
+            "Comedy",
+            "Family"
+        ]
+    }
+}

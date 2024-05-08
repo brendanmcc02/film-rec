@@ -16,6 +16,8 @@
 - [x] delete title.x.tsv files after getting all-film-data.json
 - [x] don't normalise myRating
 - [x] don't fix imdbRating to 1.0
+- [ ] rename variables & func from lowerCamelCase to underscore
+- [ ] change variables that are not constant from UPPER_CASE to underscore case
 
 ### Backend
 - [x] all-film-data doesn't filter out films that have been rated
@@ -28,6 +30,8 @@
 - [x] upload button calls /verifyFile API
 - [x] upload error handling
 - [x] change return type of recs function
+- [x] init_rec writes all-film-data.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, my-film-data-vec.json to file
+- [ ] regen function
 
 ### Frontend
 - [x] do text div 

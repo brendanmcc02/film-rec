@@ -59,9 +59,9 @@ def verifyFile():
         return "Error occurred with reading ratings.csv.\n" + str(e), 400
 
 
-@app.route('/rec')
+@app.route('/init_rec')
 # recommend films to user
-def rec():
+def init_rec():
     # read in the file and append to list data structure
     try:
         myFilmData_list = []
@@ -107,6 +107,10 @@ def rec():
                 }
             except ValueError:
                 print("value error with film: " + film['Const'])
+
+    # write my-film-data.json to file
+    with open('../data/my-film-data.json', 'w') as convert_file:
+        convert_file.write(json.dumps(myFilmData, indent=4, separators=(',', ': ')))
 
     allFilmData = {}  # init new allFilmDataDict
 
@@ -159,6 +163,10 @@ def rec():
         MIN_RUNTIME = min(MIN_RUNTIME, allFilmData_temp[key]['runtime'])
         MAX_RUNTIME = max(MAX_RUNTIME, allFilmData_temp[key]['runtime'])
 
+    # write to all-film-data.json
+    with open('../data/all-film-data.json', 'w') as convert_file:
+        convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
+
     allGenres = sorted(allGenres)  # sort alphabetically
 
     # create a new list of allFilmData keys after filtering some films out of allFilmData_temp
@@ -196,6 +204,12 @@ def rec():
         # add to dict
         allFilmDataVec[key] = vector
 
+    # write all-film-data-vec.json to file
+    with open('../data/all-film-data-vec.json', 'w') as convert_file:
+        convert_file.write(json.dumps(allFilmDataVec, indent=4, separators=(',', ': '))
+                           .replace(",\n        ", ", ").replace("[\n        ", "[ ")
+                           .replace("\n    ],", " ],"))
+
     # vectorize my-film-data
     for key in myFilmDataKeys:
         # vectorize the film
@@ -206,6 +220,12 @@ def rec():
             vector[i] *= (myFilmData[key]['myRating'] / 10.0)
         # add to dict
         myFilmDataVec[key] = vector
+
+    # write my-film-data-vec.json to file
+    with open('../data/my-film-data-vec.json', 'w') as convert_file:
+        convert_file.write(json.dumps(myFilmDataVec, indent=4, separators=(',', ': '))
+                           .replace(",\n        ", ", ").replace("[\n        ", "[ ")
+                           .replace("\n    ],", " ],"))
 
     global VECTOR_LENGTH
 
@@ -247,7 +267,7 @@ def rec():
         filmId = similarities[i][0]
         film = allFilmData[filmId]
         similarity_score = similarities[i][1]
-        film['similarity_score'] = similarity_score
+        film['similarity_score'] = round(similarity_score, 4)  # maybe round to 3?
         result.append(film)
 
     return result
@@ -287,8 +307,8 @@ def oneHotEncode(vector, filmGenres, allGenres):
 
 
 # gets the cosine similarity between two vectors
-def cosineSimilarity(A, B):
-    return np.dot(A, B) / (np.linalg.norm(A) * np.linalg.norm(B))
+def cosineSimilarity(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
 
 # given a user profile vector, normalise the genres
@@ -320,5 +340,11 @@ def stringifyFilm(film, similarity, vector):
             str(film['genres']) + " (" + str(round(similarity * 100.0, 2)) + "% match)\n" + str(vector) + "\n")
 
 
+@app.route('/regen')
+def regen():
+    return "regen"
+
+
 if __name__ == "__main__":
-    app.run(host='localhost', port=60000)
+    # app.run(host='localhost', port=60000)
+    print(init_rec())
