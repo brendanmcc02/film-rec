@@ -26,6 +26,7 @@
 - [x] research how/where to store files, run .py scripts etc.
 - [x] upload button calls /verifyFile API
 - [x] upload error handling
+- [x] change return type of recs function
 
 ### Frontend
 - [x] do text div 
