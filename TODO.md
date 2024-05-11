@@ -17,7 +17,7 @@
 - [x] delete title.x.tsv files after getting all-film-data.json
 - [x] don't normalise myRating
 - [x] don't fix imdbRating to 1.0
-- [ ] instead of writing all-film-data-vec, my-film-data, etc. to file, create global variables in app.py, and then create endpoints for getters/setters
+- [x] instead of writing all-film-data-vec, my-film-data, etc. to file, create global variables in app.py, and then create endpoints for getters/setters
 - [ ] rename variables & func from lowerCamelCase to underscore
 - [ ] change variables that are not constant from UPPER_CASE to underscore case
 
@@ -37,6 +37,7 @@
 - [x] thumbs up/down state logic
 - [ ] vector change in thumbs up/down
 - [ ] regen function
+- [ ] wildcard recs
 
 ### Frontend
 - [x] do text div 

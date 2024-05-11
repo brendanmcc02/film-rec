@@ -19,6 +19,12 @@ DIFF_RUNTIME = 0
 year_norms = {}
 VECTOR_LENGTH = 27
 
+# global variables
+# up, allFilmData, allFilmDataVec
+userProfile = np.zeros(VECTOR_LENGTH)
+allFilmData = {}
+allFilmDataVec = {}
+
 app = Flask(__name__)
 
 
@@ -75,8 +81,8 @@ def init_rec():
 
     # read in all-film-data.json
     allFilmDataFile = open('../data/all-film-data.json')
-    allFilmData_temp = json.load(allFilmDataFile)
-    allFilmDataKeys = list(allFilmData_temp.keys())
+    allFilmData_full = json.load(allFilmDataFile)
+    allFilmDataKeys = list(allFilmData_full.keys())
 
     myFilmData = {}  # init as a dict
 
@@ -91,7 +97,7 @@ def init_rec():
                 filmId = film['Const']
                 # if the current film is also in all-film-data.json
                 if filmId in allFilmDataKeys:
-                    englishTitle = allFilmData_temp[filmId]['title']  # use the english title
+                    englishTitle = allFilmData_full[filmId]['title']  # use the english title
                 else:
                     # otherwise, use the title stored in ratings.csv (potentially non-english)
                     englishTitle = film['Title']
@@ -108,11 +114,7 @@ def init_rec():
             except ValueError:
                 print("value error with film: " + film['Const'])
 
-    # write my-film-data.json to file
-    with open('../data/my-film-data.json', 'w') as convert_file:
-        convert_file.write(json.dumps(myFilmData, indent=4, separators=(',', ': ')))
-
-    allFilmData = {}  # init new allFilmDataDict
+    global allFilmData
 
     myFilmDataKeys = list(myFilmData.keys())  # list of keys of my-film-data
 
@@ -129,14 +131,14 @@ def init_rec():
 
     # initialise the min & max values of various attributes;
     # this is needed for normalising vector values.
-    MIN_IMDB_RATING = allFilmData_temp[allFilmDataKeys[0]]['imdbRating']
-    MAX_IMDB_RATING = allFilmData_temp[allFilmDataKeys[0]]['imdbRating']
-    MIN_YEAR = allFilmData_temp[allFilmDataKeys[0]]['year']
-    MAX_YEAR = allFilmData_temp[allFilmDataKeys[0]]['year']
-    MIN_NUMBER_OF_VOTES = allFilmData_temp[allFilmDataKeys[0]]['numberOfVotes']
-    MAX_NUMBER_OF_VOTES = allFilmData_temp[allFilmDataKeys[0]]['numberOfVotes']
-    MIN_RUNTIME = allFilmData_temp[allFilmDataKeys[0]]['runtime']
-    MAX_RUNTIME = allFilmData_temp[allFilmDataKeys[0]]['runtime']
+    MIN_IMDB_RATING = allFilmData_full[allFilmDataKeys[0]]['imdbRating']
+    MAX_IMDB_RATING = allFilmData_full[allFilmDataKeys[0]]['imdbRating']
+    MIN_YEAR = allFilmData_full[allFilmDataKeys[0]]['year']
+    MAX_YEAR = allFilmData_full[allFilmDataKeys[0]]['year']
+    MIN_NUMBER_OF_VOTES = allFilmData_full[allFilmDataKeys[0]]['numberOfVotes']
+    MAX_NUMBER_OF_VOTES = allFilmData_full[allFilmDataKeys[0]]['numberOfVotes']
+    MIN_RUNTIME = allFilmData_full[allFilmDataKeys[0]]['runtime']
+    MAX_RUNTIME = allFilmData_full[allFilmDataKeys[0]]['runtime']
 
     allGenres = []  # get a list of unique genres
 
@@ -146,34 +148,30 @@ def init_rec():
         # has seen before.
         if key not in myFilmDataKeys:
             # add it to a new, filtered allFilmData dict
-            allFilmData[key] = allFilmData_temp[key]
+            allFilmData[key] = allFilmData_full[key]
 
         # if a genre is not in allGenres yet, append it
-        for genre in allFilmData_temp[key]['genres']:
+        for genre in allFilmData_full[key]['genres']:
             if genre not in allGenres:
                 allGenres.append(genre)
 
         # modify min & max of the various attributes
-        MIN_IMDB_RATING = min(MIN_IMDB_RATING, allFilmData_temp[key]['imdbRating'])
-        MAX_IMDB_RATING = max(MAX_IMDB_RATING, allFilmData_temp[key]['imdbRating'])
-        MIN_YEAR = min(MIN_YEAR, allFilmData_temp[key]['year'])
-        MAX_YEAR = max(MAX_YEAR, allFilmData_temp[key]['year'])
-        MIN_NUMBER_OF_VOTES = min(MIN_NUMBER_OF_VOTES, allFilmData_temp[key]['numberOfVotes'])
-        MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, allFilmData_temp[key]['numberOfVotes'])
-        MIN_RUNTIME = min(MIN_RUNTIME, allFilmData_temp[key]['runtime'])
-        MAX_RUNTIME = max(MAX_RUNTIME, allFilmData_temp[key]['runtime'])
-
-    # write to all-film-data.json
-    with open('../data/all-film-data.json', 'w') as convert_file:
-        convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
+        MIN_IMDB_RATING = min(MIN_IMDB_RATING, allFilmData_full[key]['imdbRating'])
+        MAX_IMDB_RATING = max(MAX_IMDB_RATING, allFilmData_full[key]['imdbRating'])
+        MIN_YEAR = min(MIN_YEAR, allFilmData_full[key]['year'])
+        MAX_YEAR = max(MAX_YEAR, allFilmData_full[key]['year'])
+        MIN_NUMBER_OF_VOTES = min(MIN_NUMBER_OF_VOTES, allFilmData_full[key]['numberOfVotes'])
+        MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, allFilmData_full[key]['numberOfVotes'])
+        MIN_RUNTIME = min(MIN_RUNTIME, allFilmData_full[key]['runtime'])
+        MAX_RUNTIME = max(MAX_RUNTIME, allFilmData_full[key]['runtime'])
 
     allGenres = sorted(allGenres)  # sort alphabetically
 
-    # create a new list of allFilmData keys after filtering some films out of allFilmData_temp
+    # create a new list of allFilmData keys after filtering some films out of allFilmData_full
     allFilmDataKeys = list(allFilmData.keys())
 
     # init dicts for vectorized allFilmData & myFilmData
-    allFilmDataVec = {}
+    global allFilmDataVec
     myFilmDataVec = {}
 
     # iterate through my-film-data and alter the min & max values to ensure they are the same across both datasets
@@ -204,12 +202,6 @@ def init_rec():
         # add to dict
         allFilmDataVec[key] = vector
 
-    # write all-film-data-vec.json to file
-    with open('../data/all-film-data-vec.json', 'w') as convert_file:
-        convert_file.write(json.dumps(allFilmDataVec, indent=4, separators=(',', ': '))
-                           .replace(",\n        ", ", ").replace("[\n        ", "[ ")
-                           .replace("\n    ],", " ],"))
-
     # vectorize my-film-data
     for key in myFilmDataKeys:
         # vectorize the film
@@ -221,12 +213,6 @@ def init_rec():
         # add to dict
         myFilmDataVec[key] = vector
 
-    # write my-film-data-vec.json to file
-    with open('../data/my-film-data-vec.json', 'w') as convert_file:
-        convert_file.write(json.dumps(myFilmDataVec, indent=4, separators=(',', ': '))
-                           .replace(",\n        ", ", ").replace("[\n        ", "[ ")
-                           .replace("\n    ],", " ],"))
-
     global VECTOR_LENGTH
 
     VECTOR_LENGTH = len(myFilmDataVec[myFilmDataKeys[0]])  # length of each vector
@@ -234,10 +220,8 @@ def init_rec():
     weightedAverageSum = 0.0  # init to some temp value
 
     # create user profile based on my-film-data-vectorized:
+    global userProfile
 
-    userProfileList = [0.0] * VECTOR_LENGTH  # initialise a list to have 0 in each entry
-    # convert from list to vector; this is a zero-vector of length VECTOR_LENGTH
-    userProfile = np.array(userProfileList)
     for key in myFilmDataKeys:
         # sum the (already weighted) vectors together
         userProfile += myFilmDataVec[key]
@@ -248,14 +232,6 @@ def init_rec():
     userProfile = np.divide(userProfile, weightedAverageSum)
 
     normaliseGenres(userProfile)
-
-    userProfileList = np.ndarray.tolist(userProfile)
-
-    # write user-profile.json to file
-    with open('../data/user-profile.json', 'w') as convert_file:
-        convert_file.write(json.dumps(userProfileList, indent=4, separators=(',', ': '))
-                           .replace(",\n        ", ", ").replace("[\n        ", "[ ")
-                           .replace("\n    ],", " ],"))
 
     # Similarity dict:
     # key = filmId, value = similarity to userProfile (float: 0 - 100)
