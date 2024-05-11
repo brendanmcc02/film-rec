@@ -17,8 +17,6 @@
 - [x] don't normalise myRating
 - [x] don't fix imdbRating to 1.0
 - [x] instead of writing all-film-data-vec, my-film-data, etc. to file, create global variables in app.py, and then create endpoints for getters/setters
-- [ ] rename variables & func from lowerCamelCase to underscore
-- [ ] change variables that are not constant from UPPER_CASE to underscore case
 
 ### Backend
 - [x] all-film-data doesn't filter out films that have been rated
@@ -37,7 +35,7 @@
 - [x] vector change in thumbs up/down
 - [x] revert vector change
 - [x] regen function
-- [ ] wildcard recs
+- [ ] wildcard recs (check if working properly, have not verified)
 
 ### Frontend
 - [x] do text div 
@@ -50,6 +48,12 @@
 - [x] verify api calls for vector change funcs are working
 - [x] /initial_recs api calls more than once?
 - [ ] make results page look presentable/nice
+
+### Tidying up code
+- [ ] go through all code removing redundancy, fine tuning
+- [ ] rename variables & func from lowerCamelCase to underscore
+- [ ] change variables that are not constant from UPPER_CASE to underscore case
+- [ ] minimise global variables (you only need to call global if you want to **modify** the variable)
 
 ### Windows
 - [x] config frontend: npm, etc.

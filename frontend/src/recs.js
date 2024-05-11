@@ -4,9 +4,8 @@ import background from "./social-network-2.jpeg"
 import React, { useState, useEffect } from 'react';
 
 // make an API call to get the global constant NUMBER_RECS from app.py
-const response = await fetch('/get_number_recs');
+const response = await fetch('/get_NUM_RECS');
 const NUMBER_RECS = parseInt(await response.text());
-console.log("num recs:" + NUMBER_RECS);
 
 // global constants
 const initButtonStates = Array.from({ length: NUMBER_RECS }, () => false);
@@ -41,18 +40,18 @@ const App = () => {
             if (i === index) {
                 if (state) {
                     // undo vector changes
-                    await undoUserProfileChanges(index, "false")
+                    await undoVectorChanges(index, "false")
                     return false;
                 } else {
-                    // if the down button was pressed, undo the changes made to the user profile
+                    // if the down button was pressed, undo vector changes
                     if (downButtonStates[index]) {
-                        await undoUserProfileChanges(index, "true");
+                        await undoVectorChanges(index, "true");
                     }
 
                     setDownButton(index, false); // down = false
 
                     // increase vector
-                    await changeUserProfile(index, "true");
+                    await changeVector(index, "true");
 
                     return true; // up = true
                 }
@@ -65,7 +64,7 @@ const App = () => {
     }
 
     // undo vector changes
-    async function undoUserProfileChanges(index, add) {
+    async function undoVectorChanges(index, add) {
         try {
             const fetchUrl = "/undo_change?index=" + index.toString() + "&add=" + add
             const response = await fetch(fetchUrl);
@@ -80,9 +79,9 @@ const App = () => {
         }
     }
 
-    async function changeUserProfile(index, add) {
+    async function changeVector(index, add) {
         try {
-            const fetchUrl = "/change_user_profile?index=" + index.toString() + "&add=" + add
+            const fetchUrl = "/change_vector?index=" + index.toString() + "&add=" + add
             const response = await fetch(fetchUrl);
 
             if (!response.ok) {
@@ -101,18 +100,18 @@ const App = () => {
           if (i === index) {
               if (state) {
                   // undo vector changes
-                  await undoUserProfileChanges(index, "true")
+                  await undoVectorChanges(index, "true")
                   return false;
               } else {
                   if (upButtonStates[index]) {
                   // undo vector changes
-                        await undoUserProfileChanges(index, "false");
+                        await undoVectorChanges(index, "false");
                   }
 
                   setUpButton(index, false); // up = false
 
                   // decrease vector
-                  await changeUserProfile(index, "false");
+                  await changeVector(index, "false");
                   return true; // down = true
               }
           } else {
@@ -172,10 +171,8 @@ const App = () => {
             try {
                 let response = await fetch('/regen');
                 setFilms(await response.json());
-                // todo reset up/down button states
-                const zeroArray =
-                setUpButtonStates(initButtonStates);
-
+                setUpButtonStates(initButtonStates); // reset up button states
+                setDownButtonStates(initButtonStates); // reset down button states
                 console.log("Called /regen");
             } catch (error) {
                 console.error('Error fetching /regen API:', error);
@@ -187,9 +184,13 @@ const App = () => {
 
     let filmRecs = films.map((film, i) =>
         <div key={i}>
-            <p>{film.similarity_score}% - {film.title} ({film.year}) {film.genres}</p>
-            <button className="up-button" onClick={() => {handleUpButton(i);}}>Up</button>
-            <button className="down-button" onClick={() => {handleDownButton(i);}}>Down</button>
+            <p>{film.similarity_score}% - {film.title} ({film.year}), {film.genres}. Wildcard: {film.wildcard}</p>
+            <button className="up-button" onClick={() => {handleUpButton(i);}}>
+                Up
+            </button>
+            <button className="down-button" onClick={() => {handleDownButton(i);}}>
+                Down
+            </button>
         </div>
     );
 
@@ -197,9 +198,8 @@ const App = () => {
         <>
             <div style={backgroundStyle}></div>
             <div className="title">
-                <button className="regen-button" onClick={() => {
-                    handleRegenButton();
-                }}>Regen
+                <button className="regen-button" onClick={() => {handleRegenButton();}}>
+                    Regen
                 </button>
             </div>
 

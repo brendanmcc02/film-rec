@@ -1,42 +1,19 @@
 ## For the potential future
 Collaborative filtering can be introduced by asking other people to upload their imdb data. (reddit post, social media post, asking friends).
 
-## User Feedback
-Thumbs up/down: "I think I will/won't like this".
-for user feedback, you need to write all-film-data-vectorized and my-film-data-vectorized to file.
+## Wildcards
 
-### IDEA 1: (no auto regen, have full regen button)
-When user likes/dislikes rec, alter user profile.
-Have full regen option that regens 20 recs.
+### IDEA 1
 
-### IDEA 2: (partial auto regen)
-No regen button.
-only regen film when user dislikes rec. liked recs stay there.
+Have a wildcard vector. Init to the inverse of User Profile: but keep imdbRating & numVotes fixed.
+When a wildcard film is responded to, only the wildcard vector changes.
+When a non-wildcard film is responded to, only the user profile vector changes.
 
-### IDEA 3: (auto regen)
-No regen button.
-regen when user likes/dislikes rec.
+### IDEA 2
 
-How do you inc/Dec the user profile vector when user likes/dislikes rec?
+Recommend films from ~3000 onwards
 
-### RL functionality
-
-I'm going to run with Idea 1.
-
-Thumbs up/down buttons should be 'sticky': they are either unpressed or pressed, so you can't like/dislike the same
-films multiple times.
-
-'Up' is shorthand for 'thumbs up', 'down' is shorthand for 'thumbs down'
-
-#### 'Up' Button Logic
-When pressed, check if 'down' state is on. If yes, turn 'down' state off, 'up' state on, and Revert the changes 'down' 
-made to the vector.
-
-Bring vector 'closer' (how exactly? TODO) to the 'up' film.
-
-#### 'Down' button logic
-Exact same as 'up', but vice versa.
-
+Variety of genre and year. keep imdbRating, runtime static?
 
 ### Vectorized Data Form
 year_norm, imdbRating_norm, numOfVotes_norm, runtime_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western

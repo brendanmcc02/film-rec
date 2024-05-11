@@ -18,15 +18,24 @@ DIFF_NUMBER_OF_VOTES = 0
 DIFF_RUNTIME = 0
 year_norms = {}
 VECTOR_LENGTH = 27
-NUMBER_RECS = 8
+NUM_RECS = 10
+NUM_WILDCARDS = 2
+FEEDBACK_FACTOR = 0.1  # the rate at which feedback changes the user profile
+GENRE_WEIGHT = 0.75
+# from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
+YEAR_WEIGHT = 0.3
+RUNTIME_WEIGHT = 0.3
+
 
 # global variables
 userProfile = np.zeros(VECTOR_LENGTH)
+userProfile_changes = []
+wildcardVec = np.zeros(VECTOR_LENGTH)
+wildcardVec_changes = []
 allFilmData = {}
 allFilmDataVec = {}
-userProfile_changes = []
 recs = []
-rec_states = [0] * NUMBER_RECS
+rec_states = [0] * NUM_RECS
 
 app = Flask(__name__)
 
@@ -73,7 +82,7 @@ def verifyFile():
 def init_rec():
     global VECTOR_LENGTH
     # init userProfile_changes as a list of zero vectors
-    for i in range(0, NUMBER_RECS):
+    for i in range(0, NUM_RECS):
         userProfile_changes.append(np.zeros(VECTOR_LENGTH))
 
     # read in the file and append to list data structure
@@ -239,47 +248,89 @@ def init_rec():
 
     normaliseGenres()
 
-    global recs
-    recs = getRecs()
+    initWildcardVec()
+
+    gen_recs()
 
     return jsonify(recs), 200
 
 
-def getRecs():
-    # Similarity dict:
-    # key = filmId, value = similarity to userProfile (float: 0 - 100)
-    similarities = {}
+# initialises the wildcard vector.
+# each value is the 'inverse' of the userProfile vector
+def initWildcardVec():
+    global wildcardVec
+    total = NUM_RECS + NUM_WILDCARDS
+    for i in range(0, total):
+        if i != 1 or i != 2:
+            weight = getWeight(i)
+            wildcardVec[i] = weight - (userProfile[i] - weight)
+
+
+def getWeight(i):
+    match i:
+        case 0:
+            return YEAR_WEIGHT
+        case 1:
+            return 1.0
+        case 2:
+            return 1.0
+        case 3:
+            return YEAR_WEIGHT
+        case _:
+            return GENRE_WEIGHT
+
+
+# generate
+def gen_recs():
+    global userProfile
+    global wildcardVec
 
     allFilmDataKeys = list(allFilmData.keys())
+
+    # generate recs
+    get_recs(False, allFilmDataKeys)  # generate non-wildcard recs
+    get_recs(True, allFilmDataKeys)  # generate wildcard recs
+
+
+# get a number of recommendations
+def get_recs(wildcard, allFilmDataKeys):
+    global recs
+
+    if not wildcard:
+        recs = []
+        max_rec = NUM_RECS
+        vector = userProfile
+    else:
+        max_rec = NUM_WILDCARDS
+        vector = wildcardVec
+
+    # Similarity dict:
+    # key = filmId, value = similarity to userProfile (float: 0 - 100.0)
+    similarities = {}
 
     # for each film in all-film-data-vectorized
     for filmId in allFilmDataKeys:
         # calculate similarity to userProfile
-        similarities[filmId] = cosineSimilarity(allFilmDataVec[filmId], userProfile)
+        similarities[filmId] = cosineSimilarity(allFilmDataVec[filmId], vector)
 
     # sort similarities in descending order.
     similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
 
-    global recs
-    recs = []
-
-    for i in range(0, NUMBER_RECS):
+    for i in range(0, max_rec):
         filmId = similarities[i][0]
         film = allFilmData[filmId]
         similarity_score = similarities[i][1]
         film['id'] = filmId
         film['similarity_score'] = round(similarity_score * 100.0, 2)
+        film['wildcard'] = wildcard
         recs.append(film)
-
-    return recs
 
 
 # given a film, return it's vectorized form (return type: list)
 def vectorize(film, allGenres):
     vector = []
     # 1. normalise the year; apply weight
-    # from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
-    year_norm = year_norms[film['year']] * 0.3
+    year_norm = year_norms[film['year']] * YEAR_WEIGHT
     vector.append(year_norm)
     # 2. normalise imdbRating
     imdbRating_norm = (film['imdbRating'] - MIN_IMDB_RATING) / DIFF_IMDB_RATING
@@ -288,7 +339,7 @@ def vectorize(film, allGenres):
     numberOfVotes_norm = (film['numberOfVotes'] - MIN_NUMBER_OF_VOTES) / DIFF_NUMBER_OF_VOTES
     vector.append(numberOfVotes_norm)
     # 4. normalise runtime; apply weight
-    runtime_norm = ((film['runtime'] - MIN_RUNTIME) / DIFF_RUNTIME) * 0.3
+    runtime_norm = ((film['runtime'] - MIN_RUNTIME) / DIFF_RUNTIME) * RUNTIME_WEIGHT
     vector.append(runtime_norm)
     # 5. one-hot encoding on genres
     oneHotEncode(vector, film['genres'], allGenres)
@@ -333,34 +384,59 @@ def normaliseGenres():
         # from experimenting (year_norm weight was fixed at 0.3), ~0.75 was a good sweet spot in the sense that
         # it picked both single- and multi-genre films. The algorithm still heavily favoured the 4 genres that had the
         # highest weighing, but this is expected and good behaviour.
-        userProfile[i] = userProfile[i] * 0.75
+        userProfile[i] = userProfile[i] * GENRE_WEIGHT
 
 
-# change the user profile vector parameters
-@app.route('/change_user_profile')
-def change_user_profile():
+# change the vector parameters (either user_profile or wildcardVec)
+@app.route('/change_vector')
+def change_vector():
     global userProfile
     global userProfile_changes
+    global wildcardVec
+    global wildcardVec_changes
 
     index = int(request.args.get('index'))
     add = request.args.get('add').lower() == 'true'
 
+    # todo wrap this in a function
+    # non-wildcard rec
+    if index < NUM_RECS:
+        vector = userProfile
+        vector_changes = userProfile_changes
+        vectorStr = "user profile"
+    # wildcard rec
+    else:
+        vector = wildcardVec
+        vector_changes = wildcardVec_changes
+        vectorStr = "wildcard vector"
+
     rec_vector = allFilmDataVec[recs[index]['id']]
-    vector_change = (rec_vector - userProfile) * 0.05
+
+    vector_change = (rec_vector - vector) * FEEDBACK_FACTOR
 
     # store the vector change
-    userProfile_changes[index] = vector_change
+    vector_changes[index] = vector_change
 
     # if the rec was liked
     if add:
-        userProfile = userProfile + vector_change
+        vector += vector_change
         rec_states[index] = 1
     # else, the rec was disliked
     else:
-        userProfile = userProfile - vector_change
+        vector -= vector_change
         rec_states[index] = -1
 
-    returnText = "changed user profile due to " + ("liking" if add else "disliking") + " of " + recs[index]['title']
+    returnText = "changed " + vectorStr + " due to " + ("liking" if add else "disliking") + " of " + recs[index]['title']
+
+    # update changes
+    # non-wildcard rec
+    if index < NUM_RECS:
+        userProfile = vector
+        userProfile_changes = vector_changes
+    # wildcard rec
+    else:
+        wildcardVec = vector
+        wildcardVec_changes = vector_changes
 
     return returnText, 200
 
@@ -373,35 +449,57 @@ def change_user_profile():
 def undo_change():
     global userProfile
     global userProfile_changes
+    global wildcardVec
+    global wildcardVec_changes
 
     index = int(request.args.get('index'))
     add = request.args.get('add').lower() == 'true'
 
-    vector_change = userProfile_changes[index]
+    # non-wildcard rec
+    if index < NUM_RECS:
+        vector = userProfile
+        vector_changes = userProfile_changes
+        vectorStr = "user profile"
+    # wildcard rec
+    else:
+        vector = wildcardVec
+        vector_changes = wildcardVec_changes
+        vectorStr = "wildcard vector"
+
+    vector_change = vector_changes[index]
 
     # if the film was previously disliked
     if add:
-        userProfile = userProfile + vector_change
+        vector += vector_change
         rec_states[index] = 0
     # else, the film was previously liked
     else:
-        userProfile = userProfile - vector_change
+        vector -= vector_change
         rec_states[index] = 0
 
     # make the user profile change a zero vector at the specified index
     userProfile_changes[index] = np.zeros(VECTOR_LENGTH)
 
-    returnText = "undid user profile change due to previous " + ("disliking" if add else "liking") + " of " + recs[index]['title']
+    returnText = "undid " + vectorStr + " change due to previous " + ("disliking" if add else "liking") + " of " + recs[index]['title']
+
+    # update changes
+    # non-wildcard rec
+    if index < NUM_RECS:
+        userProfile = vector
+        userProfile_changes = vector_changes
+    # wildcard rec
+    else:
+        wildcardVec = vector
+        wildcardVec_changes = vector_changes
 
     return returnText, 200
 
 
 @app.route('/regen')
 def regen():
-    global recs
     global rec_states
     # for each film that was liked or disliked:
-    for i in range(0, NUMBER_RECS):
+    for i in range(0, NUM_RECS):
         if rec_states[i] != 0:
             # remove from allFilmData & allFilmDataVec
             filmId = recs[i]['id']
@@ -410,17 +508,18 @@ def regen():
             print("removed: " + str(filmId))
 
     # reset rec_states
-    rec_states = [0] * NUMBER_RECS
+    rec_states = [0] * NUM_RECS
 
     # re-calculate new recs
-    recs = getRecs()
+    gen_recs()
 
     return jsonify(recs), 200
 
 
-@app.route('/get_number_recs')
-def get_number_recs():
-    return str(NUMBER_RECS), 200
+# getter for the number of recommendations
+@app.route('/get_NUM_RECS')
+def get_NUM_RECS():
+    return str(NUM_RECS), 200
 
 
 if __name__ == "__main__":
