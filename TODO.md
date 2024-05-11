@@ -36,6 +36,7 @@
 - [x] call init_rec endpoint once when new page is loaded
 - [x] thumbs up/down state logic
 - [ ] vector change in thumbs up/down
+- [ ] revert vector change
 - [ ] regen function
 - [ ] wildcard recs
 

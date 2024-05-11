@@ -31,26 +31,43 @@ const App = () => {
 
     // called when up button is pressed
     function handleUpButton(index) {
-        const newUpButtonStates = upButtonStates.map((state, i) => {
-          if (i === index) {
-              if (state) {
-                  console.log("up off");
-                  return false;
-              } else {
-                  if (downButtonStates[index]) {
-                      // revert vector changes todo
-                  }
+        const newUpButtonStates = upButtonStates.map(async (state, i) => {
+            if (i === index) {
+                if (state) {
+                    return false;
+                } else {
+                    // if the down button was pressed, undo the changes made to the user profile
+                    if (downButtonStates[index]) {
+                        // undo vector changes todo
+                        try {
+                            const response = await fetch(`/undo_change?index=$\{index}&add=$\{True}`);
 
-                  setDownButton(index, false); // down = false
+                            if (!response.ok) {
+                                console.log('Undo change API request not ok. Index: ' + index);
+                            }
+                        } catch (error) {
+                            console.log('Undo change API request failed. Index: ' + index);
+                        }
+                    }
 
-                  // increase vector todo
+                    setDownButton(index, false); // down = false
 
-                  console.log("up on");
-                  return true; // up = true
-              }
-          } else {
-            return state;
-          }
+                    // increase vector todo
+                    try {
+                        const response = await fetch(`/change_user_profile?index=$\{index}&add=$\{True}`);
+
+                        if (!response.ok) {
+                            console.log('Undo change API request not ok. Index: ' + index);
+                        }
+                    } catch (error) {
+                        console.log('Undo change API request failed. Index: ' + index);
+                    }
+
+                    return true; // up = true
+                }
+            } else {
+                return state;
+            }
         });
 
         setUpButtonStates(newUpButtonStates);
@@ -61,7 +78,6 @@ const App = () => {
         const newDownButtonStates = downButtonStates.map((state, i) => {
           if (i === index) {
               if (state) {
-                  console.log("down off");
                   return false;
               } else {
                   if (upButtonStates[index]) {
@@ -71,8 +87,6 @@ const App = () => {
                   setUpButton(index, false); // up = false
 
                   // decrease vector todo
-
-                  console.log("down on");
                   return true; // down = true
               }
           } else {

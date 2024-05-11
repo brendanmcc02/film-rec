@@ -1,4 +1,4 @@
-# given ratings.csv, vectorize both myFilmData & allFilmData, and then recommend 20 films
+# given ratings.csv, vectorize both myFilmData & allFilmData, and then recommend N films
 
 # imports
 from flask import Flask, request, jsonify
@@ -18,12 +18,14 @@ DIFF_NUMBER_OF_VOTES = 0
 DIFF_RUNTIME = 0
 year_norms = {}
 VECTOR_LENGTH = 27
+NUMBER_RECS = 20
 
 # global variables
-# up, allFilmData, allFilmDataVec
 userProfile = np.zeros(VECTOR_LENGTH)
 allFilmData = {}
 allFilmDataVec = {}
+userProfile_changes = []
+recs = []
 
 app = Flask(__name__)
 
@@ -65,9 +67,14 @@ def verifyFile():
         return "Error occurred with reading ratings.csv.\n" + str(e), 400
 
 
-@app.route('/init_rec')
 # recommend films to user
+@app.route('/init_rec')
 def init_rec():
+    global VECTOR_LENGTH
+    # init userProfile_changes as a list of zero vectors
+    for i in range(0, NUMBER_RECS):
+        userProfile_changes.append(np.zeros(VECTOR_LENGTH))
+
     # read in the file and append to list data structure
     try:
         myFilmData_list = []
@@ -213,8 +220,6 @@ def init_rec():
         # add to dict
         myFilmDataVec[key] = vector
 
-    global VECTOR_LENGTH
-
     VECTOR_LENGTH = len(myFilmDataVec[myFilmDataKeys[0]])  # length of each vector
 
     weightedAverageSum = 0.0  # init to some temp value
@@ -245,19 +250,17 @@ def init_rec():
     # sort similarities in descending order.
     similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
 
-    result = []
+    global recs
 
-    for i in range(0, 20):
+    for i in range(0, NUMBER_RECS):
         filmId = similarities[i][0]
         film = allFilmData[filmId]
         similarity_score = similarities[i][1]
         film['id'] = filmId
         film['similarity_score'] = round(similarity_score * 100.0, 2)
-        result.append(film)
+        recs.append(film)
 
-    # json_data = json.dumps(result)
-
-    return jsonify(result)
+    return jsonify(recs)
 
 
 # given a film, return it's vectorized form (return type: list)
@@ -321,11 +324,58 @@ def normaliseGenres(userProfile):
         userProfile[i] = userProfile[i] * 0.75
 
 
+# undoes the change made to the user profile vector.
+# this would happen when for example, a user presses 'thumbs down' on a film,
+# and then undoes the button press.
+# todo verify this works
+@app.route('/undo_change')
+def undo_change():
+    global userProfile
+    global userProfile_changes
+
+    index = int(request.args.get('index'))
+    add = request.args.get('add').lower() == 'true'
+
+    vector_change = userProfile_changes[index]
+
+    # if the film was previously disliked
+    if add:
+        userProfile = userProfile + vector_change
+    # else, the film was previously liked
+    else:
+        userProfile = userProfile - vector_change
+
+    # make the user profile change a zero vector at the specified index
+    userProfile_changes[index] = np.zeros(VECTOR_LENGTH)
+
+# todo verify this works
+@app.route('/change_user_profile')
+def change_user_profile():
+    global userProfile
+    global userProfile_changes
+
+    index = int(request.args.get('index'))
+    add = request.args.get('add').lower() == 'true'
+
+    rec_vector = allFilmDataVec[recs[index]['id']]
+    vector_change = (rec_vector - userProfile) * 0.05  # todo check if this is actual scalar multiplication
+
+    # store the vector change
+    userProfile_changes[index] = vector_change
+
+    # if the rec was liked
+    if add:
+        userProfile = userProfile + vector_change
+    # else, the rec was disliked
+    else:
+        userProfile = userProfile - vector_change
+
+
 @app.route('/regen')
 def regen():
+    # todo remove all films that were liked/disliked from allFilmData & allFilmDataVec
     return "regen"
 
 
 if __name__ == "__main__":
     app.run(host='localhost', port=60000)
-    # print(init_rec())
