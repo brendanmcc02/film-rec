@@ -1,11 +1,17 @@
+// imports
 import './App.css';
 import background from "./social-network-2.jpeg"
 import React, { useState, useEffect } from 'react';
 
+// make an API call to get the global constant NUMBER_RECS from app.py
+const response = await fetch('/get_number_recs');
+const NUMBER_RECS = parseInt(await response.text());
+console.log("num recs:" + NUMBER_RECS);
+
+// global constants
+const initButtonStates = Array.from({ length: NUMBER_RECS }, () => false);
+
 const App = () => {
-
-    let initButtonStates = Array.from({ length: 20 }, () => false);
-
     const [films, setFilms] = useState([]);
     const [upButtonStates, setUpButtonStates] = useState(initButtonStates);
     const [downButtonStates, setDownButtonStates] = useState(initButtonStates);
@@ -55,7 +61,7 @@ const App = () => {
             }
         }));
 
-        setUpButtonStates(newUpButtonStates); // todo check if states are still maintained
+        setUpButtonStates(newUpButtonStates);
     }
 
     // undo vector changes
@@ -143,6 +149,42 @@ const App = () => {
         setDownButtonStates(newDownButtonStates);
     }
 
+    async function handleRegenButton() {
+        let changeMade = false;
+
+        // check if the user has given a 'thumbs up' to any film
+        let len = upButtonStates.length;
+        for (let i = 0; i < len && !changeMade; i++) {
+            if (upButtonStates[i]) {
+                changeMade = true;
+            }
+        }
+
+        // check if the user has given a 'thumbs down' to any film
+        for (let i = 0; i < len && !changeMade; i++) {
+            if (downButtonStates[i]) {
+                changeMade = true;
+            }
+        }
+
+        // only call /regen if the user has responded to > 1 rec
+        if (changeMade) {
+            try {
+                let response = await fetch('/regen');
+                setFilms(await response.json());
+                // todo reset up/down button states
+                const zeroArray =
+                setUpButtonStates(initButtonStates);
+
+                console.log("Called /regen");
+            } catch (error) {
+                console.error('Error fetching /regen API:', error);
+            }
+        } else {
+            console.log("No changes made, so /regen not called.");
+        }
+    }
+
     let filmRecs = films.map((film, i) =>
         <div key={i}>
             <p>{film.similarity_score}% - {film.title} ({film.year}) {film.genres}</p>
@@ -155,8 +197,10 @@ const App = () => {
         <>
             <div style={backgroundStyle}></div>
             <div className="title">
-                <h1>RECS PAGE</h1>
-                <h3>A film recommendation app.</h3>
+                <button className="regen-button" onClick={() => {
+                    handleRegenButton();
+                }}>Regen
+                </button>
             </div>
 
             <div className="file-div">

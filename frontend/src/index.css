@@ -116,3 +116,8 @@ input[type="file"] {
 .down-button {
     background-color: rgba(255, 0, 0, 0.5);
 }
+
+.regen-button {
+    font-size: 20px;
+    background-color: rgba(0, 0, 255, 0.5);
+}

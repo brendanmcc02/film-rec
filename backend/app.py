@@ -18,8 +18,7 @@ DIFF_NUMBER_OF_VOTES = 0
 DIFF_RUNTIME = 0
 year_norms = {}
 VECTOR_LENGTH = 27
-# NUMBER_RECS = 20 # todo uncomment
-NUMBER_RECS = 1
+NUMBER_RECS = 8
 
 # global variables
 userProfile = np.zeros(VECTOR_LENGTH)
@@ -27,6 +26,7 @@ allFilmData = {}
 allFilmDataVec = {}
 userProfile_changes = []
 recs = []
+rec_states = [0] * NUMBER_RECS
 
 app = Flask(__name__)
 
@@ -237,11 +237,20 @@ def init_rec():
     # divide the userProfile vector by the weighted average
     userProfile = np.divide(userProfile, weightedAverageSum)
 
-    normaliseGenres(userProfile)
+    normaliseGenres()
 
+    global recs
+    recs = getRecs()
+
+    return jsonify(recs), 200
+
+
+def getRecs():
     # Similarity dict:
     # key = filmId, value = similarity to userProfile (float: 0 - 100)
     similarities = {}
+
+    allFilmDataKeys = list(allFilmData.keys())
 
     # for each film in all-film-data-vectorized
     for filmId in allFilmDataKeys:
@@ -252,6 +261,7 @@ def init_rec():
     similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
 
     global recs
+    recs = []
 
     for i in range(0, NUMBER_RECS):
         filmId = similarities[i][0]
@@ -261,7 +271,7 @@ def init_rec():
         film['similarity_score'] = round(similarity_score * 100.0, 2)
         recs.append(film)
 
-    return jsonify(recs)
+    return recs
 
 
 # given a film, return it's vectorized form (return type: list)
@@ -306,7 +316,8 @@ def cosineSimilarity(a, b):
 # for example, if drama is the highest rated genre with a score of 0.4, make the value 1.0 and then scale
 # the other genres accordingly.
 # after the genres are normalised, I apply a weight of 0.68 to all genres. See comments below.
-def normaliseGenres(userProfile):
+def normaliseGenres():
+    global userProfile
     # normalise the genres in the user profile
     MIN_GENRE_VALUE = userProfile[4]
     MAX_GENRE_VALUE = userProfile[4]
@@ -343,9 +354,11 @@ def change_user_profile():
     # if the rec was liked
     if add:
         userProfile = userProfile + vector_change
+        rec_states[index] = 1
     # else, the rec was disliked
     else:
         userProfile = userProfile - vector_change
+        rec_states[index] = -1
 
     returnText = "changed user profile due to " + ("liking" if add else "disliking") + " of " + recs[index]['title']
 
@@ -369,9 +382,11 @@ def undo_change():
     # if the film was previously disliked
     if add:
         userProfile = userProfile + vector_change
+        rec_states[index] = 0
     # else, the film was previously liked
     else:
         userProfile = userProfile - vector_change
+        rec_states[index] = 0
 
     # make the user profile change a zero vector at the specified index
     userProfile_changes[index] = np.zeros(VECTOR_LENGTH)
@@ -383,8 +398,29 @@ def undo_change():
 
 @app.route('/regen')
 def regen():
-    # todo remove all films that were liked/disliked from allFilmData & allFilmDataVec
-    return "regen"
+    global recs
+    global rec_states
+    # for each film that was liked or disliked:
+    for i in range(0, NUMBER_RECS):
+        if rec_states[i] != 0:
+            # remove from allFilmData & allFilmDataVec
+            filmId = recs[i]['id']
+            del allFilmData[filmId]
+            del allFilmDataVec[filmId]
+            print("removed: " + str(filmId))
+
+    # reset rec_states
+    rec_states = [0] * NUMBER_RECS
+
+    # re-calculate new recs
+    recs = getRecs()
+
+    return jsonify(recs), 200
+
+
+@app.route('/get_number_recs')
+def get_number_recs():
+    return str(NUMBER_RECS), 200
 
 
 if __name__ == "__main__":
