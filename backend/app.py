@@ -18,7 +18,8 @@ DIFF_NUMBER_OF_VOTES = 0
 DIFF_RUNTIME = 0
 year_norms = {}
 VECTOR_LENGTH = 27
-NUMBER_RECS = 20
+# NUMBER_RECS = 20 # todo uncomment
+NUMBER_RECS = 1
 
 # global variables
 userProfile = np.zeros(VECTOR_LENGTH)
@@ -324,10 +325,37 @@ def normaliseGenres(userProfile):
         userProfile[i] = userProfile[i] * 0.75
 
 
+# change the user profile vector parameters
+@app.route('/change_user_profile')
+def change_user_profile():
+    global userProfile
+    global userProfile_changes
+
+    index = int(request.args.get('index'))
+    add = request.args.get('add').lower() == 'true'
+
+    rec_vector = allFilmDataVec[recs[index]['id']]
+    vector_change = (rec_vector - userProfile) * 0.05
+
+    # store the vector change
+    userProfile_changes[index] = vector_change
+
+    # if the rec was liked
+    if add:
+        userProfile = userProfile + vector_change
+    # else, the rec was disliked
+    else:
+        userProfile = userProfile - vector_change
+
+    returnText = "changed user profile due to " + ("liking" if add else "disliking") + " of " + recs[index]['title']
+
+    return returnText, 200
+
+
 # undoes the change made to the user profile vector.
 # this would happen when for example, a user presses 'thumbs down' on a film,
-# and then undoes the button press.
-# todo verify this works
+# and then undoes the button press. the user profile vector will be brought back
+# to its original state before the changes were applied to it.
 @app.route('/undo_change')
 def undo_change():
     global userProfile
@@ -348,27 +376,9 @@ def undo_change():
     # make the user profile change a zero vector at the specified index
     userProfile_changes[index] = np.zeros(VECTOR_LENGTH)
 
-# todo verify this works
-@app.route('/change_user_profile')
-def change_user_profile():
-    global userProfile
-    global userProfile_changes
+    returnText = "undid user profile change due to previous " + ("disliking" if add else "liking") + " of " + recs[index]['title']
 
-    index = int(request.args.get('index'))
-    add = request.args.get('add').lower() == 'true'
-
-    rec_vector = allFilmDataVec[recs[index]['id']]
-    vector_change = (rec_vector - userProfile) * 0.05  # todo check if this is actual scalar multiplication
-
-    # store the vector change
-    userProfile_changes[index] = vector_change
-
-    # if the rec was liked
-    if add:
-        userProfile = userProfile + vector_change
-    # else, the rec was disliked
-    else:
-        userProfile = userProfile - vector_change
+    return returnText, 200
 
 
 @app.route('/regen')

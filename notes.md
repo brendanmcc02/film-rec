@@ -39,7 +39,7 @@ Exact same as 'up', but vice versa.
 
 
 ### Vectorized Data Form
-year_norm, imdbRating_norm, numOfVotes_norm, runt    ime_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western
+year_norm, imdbRating_norm, numOfVotes_norm, runtime_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western
 
 content based filtering: "uses item features to recommend other items similar to what the user likes, based on their previous actions or explicit feedback"
 

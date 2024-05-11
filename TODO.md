@@ -35,8 +35,8 @@
 - [x] init_rec writes all-film-data.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, my-film-data-vec.json to file
 - [x] call init_rec endpoint once when new page is loaded
 - [x] thumbs up/down state logic
-- [ ] vector change in thumbs up/down
-- [ ] revert vector change
+- [x] vector change in thumbs up/down
+- [x] revert vector change
 - [ ] regen function
 - [ ] wildcard recs
 
@@ -48,6 +48,8 @@
 - [x] re-do text element showing selected files, errors, etc. (lost changes rip)
 - [x] manage multiple pages (check sweng project)
 - [x] go to results page if verifyFile ok
+- [x] verify api calls for vector change funcs are working
+- [x] /initial_recs api calls more than once?
 - [ ] make results page look presentable/nice
 
 ### Windows

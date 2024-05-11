@@ -30,69 +30,89 @@ const App = () => {
     }
 
     // called when up button is pressed
-    function handleUpButton(index) {
-        const newUpButtonStates = upButtonStates.map(async (state, i) => {
+    async function handleUpButton(index) {
+        const newUpButtonStates = await Promise.all(upButtonStates.map(async (state, i) => {
             if (i === index) {
                 if (state) {
+                    // undo vector changes
+                    await undoUserProfileChanges(index, "false")
                     return false;
                 } else {
                     // if the down button was pressed, undo the changes made to the user profile
                     if (downButtonStates[index]) {
-                        // undo vector changes todo
-                        try {
-                            const response = await fetch(`/undo_change?index=$\{index}&add=$\{True}`);
-
-                            if (!response.ok) {
-                                console.log('Undo change API request not ok. Index: ' + index);
-                            }
-                        } catch (error) {
-                            console.log('Undo change API request failed. Index: ' + index);
-                        }
+                        await undoUserProfileChanges(index, "true");
                     }
 
                     setDownButton(index, false); // down = false
 
-                    // increase vector todo
-                    try {
-                        const response = await fetch(`/change_user_profile?index=$\{index}&add=$\{True}`);
-
-                        if (!response.ok) {
-                            console.log('Undo change API request not ok. Index: ' + index);
-                        }
-                    } catch (error) {
-                        console.log('Undo change API request failed. Index: ' + index);
-                    }
+                    // increase vector
+                    await changeUserProfile(index, "true");
 
                     return true; // up = true
                 }
             } else {
                 return state;
             }
-        });
+        }));
 
-        setUpButtonStates(newUpButtonStates);
+        setUpButtonStates(newUpButtonStates); // todo check if states are still maintained
+    }
+
+    // undo vector changes
+    async function undoUserProfileChanges(index, add) {
+        try {
+            const fetchUrl = "/undo_change?index=" + index.toString() + "&add=" + add
+            const response = await fetch(fetchUrl);
+
+            if (!response.ok) {
+                console.log('Undo change API request not ok. Index: ' + index);
+            } else {
+                console.log(await response.text());
+            }
+        } catch (error) {
+            console.log('Undo change API request failed. Index: ' + index);
+        }
+    }
+
+    async function changeUserProfile(index, add) {
+        try {
+            const fetchUrl = "/change_user_profile?index=" + index.toString() + "&add=" + add
+            const response = await fetch(fetchUrl);
+
+            if (!response.ok) {
+                console.log('Change user profile API request not ok. Index: ' + index);
+            } else {
+                console.log(await response.text());
+            }
+        } catch (error) {
+            console.log('Change user profile API request failed. Index: ' + index);
+        }
     }
 
     // called when down button is pressed
-    function handleDownButton(index) {
-        const newDownButtonStates = downButtonStates.map((state, i) => {
+    async function handleDownButton(index) {
+        const newDownButtonStates = await Promise.all(downButtonStates.map(async (state, i) => {
           if (i === index) {
               if (state) {
+                  // undo vector changes
+                  await undoUserProfileChanges(index, "true")
                   return false;
               } else {
                   if (upButtonStates[index]) {
-                      // revert vector changes todo
+                  // undo vector changes
+                        await undoUserProfileChanges(index, "false");
                   }
 
                   setUpButton(index, false); // up = false
 
-                  // decrease vector todo
+                  // decrease vector
+                  await changeUserProfile(index, "false");
                   return true; // down = true
               }
           } else {
             return state;
           }
-        });
+        }));
 
         setDownButtonStates(newDownButtonStates);
     }
