@@ -5,15 +5,9 @@ Collaborative filtering can be introduced by asking other people to upload their
 
 ### IDEA 1
 
-Have a wildcard vector. Init to the inverse of User Profile: but keep imdbRating & numVotes fixed.
+Have a wildcard vector. Init to the inverse of User Profile: but keep imdbRating, numVotes, runtime fixed.
 When a wildcard film is responded to, only the wildcard vector changes.
 When a non-wildcard film is responded to, only the user profile vector changes.
-
-### IDEA 2
-
-Recommend films from ~3000 onwards
-
-Variety of genre and year. keep imdbRating, runtime static?
 
 ### Vectorized Data Form
 year_norm, imdbRating_norm, numOfVotes_norm, runtime_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western

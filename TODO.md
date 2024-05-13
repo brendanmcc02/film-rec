@@ -36,6 +36,7 @@
 - [x] revert vector change
 - [x] regen function
 - [ ] wildcard recs (check if working properly, have not verified)
+- [ ] fix runtime vector wildcard
 
 ### Frontend
 - [x] do text div 
@@ -50,9 +51,9 @@
 - [ ] make results page look presentable/nice
 
 ### Tidying up code
-- [ ] go through all code removing redundancy, fine tuning
-- [ ] rename variables & func from lowerCamelCase to underscore
-- [ ] change variables that are not constant from UPPER_CASE to underscore case
+- [ ] go through all code removing redundancy, fine-tuning
+- [x] rename variables & func to lowerCamelCase
+- [x] change variables that are not constant from UPPER_CASE to underscore case
 - [ ] minimise global variables (you only need to call global if you want to **modify** the variable)
 
 ### Windows

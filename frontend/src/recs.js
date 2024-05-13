@@ -4,7 +4,7 @@ import background from "./social-network-2.jpeg"
 import React, { useState, useEffect } from 'react';
 
 // make an API call to get the global constant NUMBER_RECS from app.py
-const response = await fetch('/get_NUM_RECS');
+const response = await fetch('/getNumRecs');
 const NUMBER_RECS = parseInt(await response.text());
 
 // global constants
@@ -16,7 +16,7 @@ const App = () => {
     const [downButtonStates, setDownButtonStates] = useState(initButtonStates);
 
     useEffect(() => {
-        fetch('/init_rec')
+        fetch('/initRec')
             .then((response) => response.json())
             .then((jsonData) => {
                 setFilms(jsonData); // Update state with fetched data
@@ -66,7 +66,7 @@ const App = () => {
     // undo vector changes
     async function undoVectorChanges(index, add) {
         try {
-            const fetchUrl = "/undo_change?index=" + index.toString() + "&add=" + add
+            const fetchUrl = "/undoChange?index=" + index.toString() + "&add=" + add
             const response = await fetch(fetchUrl);
 
             if (!response.ok) {
@@ -81,7 +81,7 @@ const App = () => {
 
     async function changeVector(index, add) {
         try {
-            const fetchUrl = "/change_vector?index=" + index.toString() + "&add=" + add
+            const fetchUrl = "/changeVector?index=" + index.toString() + "&add=" + add
             const response = await fetch(fetchUrl);
 
             if (!response.ok) {
