@@ -9,7 +9,9 @@
 - [x] delete title.x.tsv files after getting all-film-data.json
 - [x] don't normalise myRating
 - [x] don't fix imdbRating to 1.0
-- [x] instead of writing all-film-data-vec, my-film-data, etc. to file, create global variables in app.py, and then create endpoints for getters/setters
+- [x] instead of writing all-film-data-vec, my-film-data, etc. to file, create global variables in app.py, and then 
+create endpoints for getters/setters
+- [ ] figure out how to diversify the recs
 
 ### Backend
 - [x] all-film-data doesn't filter out films that have been rated
@@ -22,7 +24,8 @@
 - [x] upload button calls /verifyFile API
 - [x] upload error handling
 - [x] change return type of recs function
-- [x] init_rec writes all-film-data.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, my-film-data-vec.json to file
+- [x] init_rec writes all-film-data.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, 
+my-film-data-vec.json to file
 - [x] call init_rec endpoint once when new page is loaded
 - [x] thumbs up/down state logic
 - [x] vector change in thumbs up/down

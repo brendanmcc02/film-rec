@@ -208,6 +208,9 @@ def initRec():
         MIN_RUNTIME = min(MIN_RUNTIME, myFilmData[key]['runtime'])
         MAX_RUNTIME = max(MAX_RUNTIME, myFilmData[key]['runtime'])
 
+    # todo temp
+    print("max runtime:" + str(MAX_RUNTIME))
+
     # perform some pre-computation to avoid repetitive computation
     DIFF_IMDB_RATING = MAX_IMDB_RATING - MIN_IMDB_RATING
     DIFF_YEAR = MAX_YEAR - MIN_YEAR
@@ -249,7 +252,7 @@ def initRec():
     # divide the userProfile vector by the weighted average
     userProfile = np.divide(userProfile, weightedAverageSum)
 
-    normaliseGenres()
+    # curveGenres()
 
     print("Initial userProfile:\n" + str(userProfile))
 
@@ -370,11 +373,11 @@ def cosineSimilarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
 
-# given a user profile vector, normalise the genres
+# given a user profile vector, curve the genres
 # for example, if drama is the highest rated genre with a score of 0.4, make the value = 1.0 and then scale
-# the other genres accordingly.
-# after the genres are normalised, I apply a weight of GENRE_WEIGHT to all genres. See comments below.
-def normaliseGenres():
+# the other genres relative to this max value (1.0 in this case).
+# after the genres are normalised, I apply a weight of GENRE_WEIGHT to all genres.
+def curveGenres():
     global userProfile
     # normalise the genres in the user profile
     MIN_GENRE_VALUE = userProfile[4]

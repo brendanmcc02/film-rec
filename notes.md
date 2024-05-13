@@ -1,9 +1,48 @@
 ## For the potential future
-1. **Collaborative filtering:** can be introduced by asking other people to upload their imdb data. (reddit post, social media post, asking friends).
+1. **Collaborative filtering:** can be introduced by asking other people to upload their imdb data. (reddit post, 
+social media post, asking friends).
 2. integrate letterboxd
 3. account creation, cookies
-4. accommodate users without imdb/letterboxd account, they can search a DB and rate films on the website, user profile generated from their ratings
+4. accommodate users without imdb/letterboxd account, they can search a DB and rate films on the website, user profile
+generated from their ratings
 5. **Diversify** dataset: add directors, actors, country, language
+
+## Diversifying Results
+
+A problem I'm having is that the same type of films are being recommended to the user, e.g. adventure comedy drama. RL
+does help this somewhat, but I want to have the best starting state possible, and not just rely on RL.
+
+### Ideas to diversify the recs
+
+1. don't curve genres
+2. balance quantity & mean rating of genres (see below)
+
+vectors are unfavourably weighted towards film genres that have a high quantity.
+For example, there is a large quantity of action films, and a low quantity of documentary films, but the mean rating of 
+action films is lower than documentaries. The vector feature leans towards action films due to the higher quantity.
+
+#### Ideas to solve the quantity > meanRating problem
+
+1. Completely disregard quantity
+e.g. if you rated 2 documentary films a 10, then the documentary feature in the vector is a 1.0. This does not factor 
+in quantity whatsoever
+2. Balance quantity & meanRating
+Practically how? I don't know.
+
+In my notes, for drama as an example:
+
+mean drama rating * (# genre films / # films)
+
+but this weights heavily towards films with quantity, doesn't solve the quantity > meanRating problem
+
+What if?: check black notebook for idea
+
+
+
+#### Ideal Recommendation Hierarchy
+
+1. High mean rating, high quantity
+2. High mean rating, low quantity
 
 ## Wildcards
 
@@ -14,9 +53,12 @@ When a wildcard film is responded to, only the wildcard vector changes.
 When a non-wildcard film is responded to, only the user profile vector changes.
 
 ### Vectorized Data Form
-year_norm, imdbRating_norm, numOfVotes_norm, runtime_norm, action, adventure, animation, biography, comedy, crime, documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, thriller, war, western
+year_norm, imdbRating_norm, numOfVotes_norm, runtime_norm, action, adventure, animation, biography, comedy, crime, 
+documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, 
+thriller, war, western
 
-content based filtering: "uses item features to recommend other items similar to what the user likes, based on their previous actions or explicit feedback"
+content based filtering: "uses item features to recommend other items similar to what the user likes, based on their 
+previous actions or explicit feedback"
 
 ### Similarity measures
 1. Cosine similarity - cosine of the angle between 2 vectors
@@ -25,7 +67,9 @@ content based filtering: "uses item features to recommend other items similar to
 
 ## CHAT GPT
 
-Great choice! Content-based filtering can work well when you have user preferences and detailed information about items. Here's a simplified step-by-step guide on how you could implement a content-based movie recommendation system using your two datasets:
+Great choice! Content-based filtering can work well when you have user preferences and detailed information about items.
+Here's a simplified step-by-step guide on how you could implement a content-based movie recommendation system using your
+two datasets:
 
 ### 1. Data Preparation:
 
@@ -41,7 +85,8 @@ Great choice! Content-based filtering can work well when you have user preferenc
 
 ### 2. Feature Extraction:
 
-- Represent each movie in both datasets as a vector. You can use one-hot encoding for categorical features like genres and actors.
+- Represent each movie in both datasets as a vector. You can use one-hot encoding for categorical features like genres 
+and actors.
 - Normalize numerical features such as release year.
 
 ### 3. User Profile Creation:
@@ -51,7 +96,8 @@ Great choice! Content-based filtering can work well when you have user preferenc
 
 ### 4. Similarity Calculation:
 
-- Use a similarity metric (e.g., cosine similarity) to measure the similarity between the user profile vector and the vectors of all movies in the IMDb dataset.
+- Use a similarity metric (e.g., cosine similarity) to measure the similarity between the user profile vector and the 
+- vectors of all movies in the IMDb dataset.
 - Calculate the similarity scores for each movie.
 
 ### 5. Recommendation Generation:
@@ -71,10 +117,13 @@ Great choice! Content-based filtering can work well when you have user preferenc
 
 ### Additional Considerations:
 
-- **Weighting Features:** You might want to experiment with different weights for features based on their importance in user preferences.
+- **Weighting Features:** You might want to experiment with different weights for features based on their importance in 
+user preferences.
 
 - **Dynamic User Profiles:** Allow users to update their preferences over time to improve the accuracy of recommendations.
 
-- **Scale and Efficiency:** Depending on the size of your IMDb dataset, consider optimizing your recommendation algorithm for efficiency.
+- **Scale and Efficiency:** Depending on the size of your IMDb dataset, consider optimizing your recommendation
+- algorithm for efficiency.
 
-Remember that this is a simplified guide, and you might need to adapt these steps based on the specific details and requirements of your project. Also, as you develop your system, it's essential to gather user feedback and continuously refine your recommendation algorithm for better accuracy.
+Remember that this is a simplified guide, and you might need to adapt these steps based on the specific details and 
+requirements of your project. Also, as you develop your system, it's essential to gather user feedback and continuously refine your recommendation algorithm for better accuracy.
