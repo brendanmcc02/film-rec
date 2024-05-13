@@ -7,6 +7,7 @@ import csv
 import numpy as np
 
 # global constants
+
 RUNTIME_THRESHOLD = 40
 MIN_IMDB_RATING = 0.0
 MIN_YEAR = 0
@@ -20,8 +21,12 @@ YEAR_NORMS = {}
 VECTOR_LENGTH = 27
 NUM_RECS = 10
 NUM_WILDCARDS = 2
-FEEDBACK_FACTOR = 0.1  # the rate at which feedback changes the user profile
+TOTAL_RECS = NUM_RECS + NUM_WILDCARDS
+FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
 WILDCARD_FEEDBACK_FACTOR = 0.2  # the rate at which wildcard recs affect the wildcard profile
+# from experimenting (yearNorm weight was fixed at 0.3), ~0.75 was a good sweet spot in the sense that
+# it picked both single- and multi-genre films. The algorithm still heavily favoured the 4 genres that had the
+# highest weighing, but this is expected and good behaviour.
 GENRE_WEIGHT = 0.75
 # from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
 YEAR_WEIGHT = 0.3
@@ -30,19 +35,18 @@ RUNTIME_WEIGHT = 0.3
 
 # global variables
 userProfile = np.zeros(VECTOR_LENGTH)
-userProfileChanges = []
+profileChanges = []
 wildcardProfile = np.zeros(VECTOR_LENGTH)
-wildcardProfileChanges = []
 allFilmData = {}
 allFilmDataVec = {}
 recs = []
-recStates = [0] * NUM_RECS
+recStates = [0] * TOTAL_RECS
 
 app = Flask(__name__)
 
 
+# verifies that user-uploaded ratings.csv is ok
 @app.route('/verifyFile', methods=['POST'])
-# verifies user-uploaded ratings.csv
 def verifyFile():
     # check if there's a file in the post request
     if 'file' not in request.files:
@@ -78,13 +82,15 @@ def verifyFile():
         return "Error occurred with reading ratings.csv.\n" + str(e), 400
 
 
-# recommend films to user
+# initial recommendation of films to user
 @app.route('/initRec')
 def initRec():
     global VECTOR_LENGTH
-    # init userProfileChanges as a list of zero vectors
-    for i in range(0, NUM_RECS):
-        userProfileChanges.append(np.zeros(VECTOR_LENGTH))
+    global profileChanges
+
+    # init profileChanges vector
+    for i in range(0, TOTAL_RECS):
+        profileChanges.append(np.zeros(VECTOR_LENGTH))
 
     # read in the file and append to list data structure
     try:
@@ -130,13 +136,12 @@ def initRec():
                     "genres": genres
                 }
             except ValueError:
-                print("value error with film: " + film['Const'])
+                return ("value error with film: " + film['Const']), 400
 
     global allFilmData
 
     myFilmDataKeys = list(myFilmData.keys())  # list of keys of my-film-data
 
-    # these variables are globals because they are used in vectorize()
     global MIN_IMDB_RATING
     global MIN_YEAR
     global MIN_NUMBER_OF_VOTES
@@ -246,7 +251,11 @@ def initRec():
 
     normaliseGenres()
 
-    initWildcardVec()
+    print("Initial userProfile:\n" + str(userProfile))
+
+    initWildcardProfile()
+
+    print("Initial wildcardProfile:\n" + str(wildcardProfile))
 
     genRecs()
 
@@ -254,35 +263,35 @@ def initRec():
 
 
 # initialises the wildcard profile.
-# each value is the 'inverse' of the userProfile vector
-def initWildcardVec():
+# imdbRating, runtime & numOfVotes are fixed, the rest (year & all genres) are inverted
+def initWildcardProfile():
     global wildcardProfile
-    total = NUM_RECS + NUM_WILDCARDS
-    for i in range(0, total):
-        if i != 1 or i != 2:
-            weight = getWeight(i)
-            wildcardProfile[i] = weight - (userProfile[i] - weight)
+    for i in range(0, VECTOR_LENGTH):
+        # don't invert imdbRating, runtime, or numOfVotes
+        if i != 1 and i != 2 and i != 3:
+            weightHalf = getWeight(i) / 2.0
+            wildcardProfile[i] = weightHalf - (userProfile[i] - weightHalf)  # invert the vector feature
+        else:
+            wildcardProfile[i] = userProfile[i]
 
 
+# given an index of a vector, return the associated weight
 def getWeight(i):
     match i:
-        case 0:
+        case 0:  # year
             return YEAR_WEIGHT
-        case 1:
+        case 1:  # imdbRating
             return 1.0
-        case 2:
+        case 2:  # numOfVotes
             return 1.0
-        case 3:
-            return YEAR_WEIGHT
-        case _:
+        case 3:  # runtime
+            return RUNTIME_WEIGHT
+        case _:  # genres
             return GENRE_WEIGHT
 
 
-# generate
+# generate both non-wildcard & wildcard recs
 def genRecs():
-    global userProfile
-    global wildcardProfile
-
     allFilmDataKeys = list(allFilmData.keys())
 
     # generate recs
@@ -290,7 +299,7 @@ def genRecs():
     getRecs(True, allFilmDataKeys)  # generate wildcard recs
 
 
-# get a number of recommendations
+# get film recommendations
 def getRecs(isWildcard, allFilmDataKeys):
     global recs
 
@@ -362,9 +371,9 @@ def cosineSimilarity(a, b):
 
 
 # given a user profile vector, normalise the genres
-# for example, if drama is the highest rated genre with a score of 0.4, make the value 1.0 and then scale
+# for example, if drama is the highest rated genre with a score of 0.4, make the value = 1.0 and then scale
 # the other genres accordingly.
-# after the genres are normalised, I apply a weight of 0.68 to all genres. See comments below.
+# after the genres are normalised, I apply a weight of GENRE_WEIGHT to all genres. See comments below.
 def normaliseGenres():
     global userProfile
     # normalise the genres in the user profile
@@ -379,136 +388,146 @@ def normaliseGenres():
 
     for i in range(4, VECTOR_LENGTH):
         userProfile[i] = (userProfile[i] - MIN_GENRE_VALUE) / DIFF_GENRE  # normalise the genres
-        # from experimenting (yearNorm weight was fixed at 0.3), ~0.75 was a good sweet spot in the sense that
-        # it picked both single- and multi-genre films. The algorithm still heavily favoured the 4 genres that had the
-        # highest weighing, but this is expected and good behaviour.
         userProfile[i] = userProfile[i] * GENRE_WEIGHT
 
 
-# change the vector parameters (either userProfile or wildcardProfile)
-@app.route('/changeVector')
-def changeVector():
-    global userProfile
-    global userProfileChanges
-    global wildcardProfile
-    global wildcardProfileChanges
-
+# called when user responds (thumbs up/down) to a film
+@app.route('/response')
+def response():
     index = int(request.args.get('index'))
     add = request.args.get('add').lower() == 'true'
 
-    # todo wrap this in a function
     # non-wildcard rec
     if index < NUM_RECS:
-        vector = userProfile
-        vectorChanges = userProfileChanges
-        vectorStr = "user profile"
+        returnText = changeVector(index, add, False)
     # wildcard rec
     else:
-        vector = wildcardProfile
-        vectorChanges = wildcardProfileChanges
-        vectorStr = "wildcard profile"
+        returnText = changeVector(index, add, True)
+
+    return returnText, 200
+
+
+# changes vector parameters of either user profile or wildcard profile
+def changeVector(index, add, isWildcard):
+    global userProfile
+    global wildcardProfile
+    global profileChanges
 
     recVector = allFilmDataVec[recs[index]['id']]
 
-    vectorChange = (recVector - vector) * FEEDBACK_FACTOR
+    if isWildcard:
+        vectorChange = (recVector - wildcardProfile) * WILDCARD_FEEDBACK_FACTOR
+    else:
+        vectorChange = (recVector - userProfile) * FEEDBACK_FACTOR
 
-    # store the vector change
-    vectorChanges[index] = vectorChange
+    profileChanges[index] = vectorChange  # store the vector change
 
     # if the rec was liked
     if add:
-        vector += vectorChange
+        if isWildcard:
+            wildcardProfile += vectorChange
+        else:
+            userProfile += vectorChange
         recStates[index] = 1
     # else, the rec was disliked
     else:
-        vector -= vectorChange
+        if isWildcard:
+            wildcardProfile -= vectorChange
+        else:
+            userProfile -= vectorChange
         recStates[index] = -1
 
-    returnText = ("changed " + vectorStr + " due to " + ("liking" if add else "disliking") + " of " +
-                  recs[index]['title'])
-
-    # update changes
-    # non-wildcard rec
-    if index < NUM_RECS:
-        userProfile = vector
-        userProfileChanges = vectorChanges
-    # wildcard rec
+    # after changing vector parameters, ensure that all vector features are >= 0.0 && <= 1.0
+    if isWildcard:
+        keepBoundary(wildcardProfile)
     else:
-        wildcardProfile = vector
-        wildcardProfileChanges = vectorChanges
+        keepBoundary(userProfile)
 
-    return returnText, 200
+    # todo temp
+    if isWildcard:
+        print("wildcard profile:\n" + str(wildcardProfile))
+    else:
+        print("user profile:\n" + str(userProfile))
+
+    return ("changed " + ("wildcard" if isWildcard else "user") + " profile due to " +
+            ("liking" if add else "disliking") + " of " + recs[index]['title'])
 
 
-# undoes the change made to the user profile vector.
-# this would happen when for example, a user presses 'thumbs down' on a film,
-# and then undoes the button press. the user profile vector will be brought back
-# to its original state before the changes were applied to it.
-@app.route('/undoChange')
-def undoChange():
-    global userProfile
-    global userProfileChanges
-    global wildcardProfile
-    global wildcardProfileChanges
+# ensures that all vector features are >= 0.0 && <= 1.0
+def keepBoundary(vector):
+    for i in range(0, VECTOR_LENGTH):
+        if vector[i] < 0.0:
+            vector[i] = 0.0
+        elif vector[i] > 1.0:
+            vector[i] = 1.0
 
+
+# called when a user undoes a response, e.g. they have 'thumbs down' pressed on a film, and then they press the
+# button again to undo the response.
+@app.route('/undoResponse')
+def undoResponse():
     index = int(request.args.get('index'))
     add = request.args.get('add').lower() == 'true'
 
     # non-wildcard rec
     if index < NUM_RECS:
-        vector = userProfile
-        vectorChanges = userProfileChanges
-        vectorStr = "user profile"
+        return undoChange(index, add, False), 200
     # wildcard rec
     else:
-        vector = wildcardProfile
-        vectorChanges = wildcardProfileChanges
-        vectorStr = "wildcard profile"
+        return undoChange(index, add, True), 200
 
-    vectorChange = vectorChanges[index]
+
+# undo the vector parameter changes
+def undoChange(index, add, isWildcard):
+    global userProfile
+    global wildcardProfile
+    global profileChanges
+
+    vectorChange = profileChanges[index]
 
     # if the film was previously disliked
     if add:
-        vector += vectorChange
+        if isWildcard:
+            wildcardProfile += vectorChange
+        else:
+            userProfile += vectorChange
+
         recStates[index] = 0
     # else, the film was previously liked
     else:
-        vector -= vectorChange
+        if isWildcard:
+            wildcardProfile -= vectorChange
+        else:
+            userProfile -= vectorChange
+
         recStates[index] = 0
 
-    # make the user profile change a zero vector at the specified index
-    userProfileChanges[index] = np.zeros(VECTOR_LENGTH)
-
-    returnText = ("undid " + vectorStr + " change due to previous " + ("disliking" if add else "liking") + " of " +
-                  recs[index]['title'])
-
-    # update changes
-    # non-wildcard rec
-    if index < NUM_RECS:
-        userProfile = vector
-        userProfileChanges = vectorChanges
-    # wildcard rec
+    # todo temp
+    if isWildcard:
+        print("wildcard profile:\n" + str(wildcardProfile))
     else:
-        wildcardProfile = vector
-        wildcardProfileChanges = vectorChanges
+        print("user profile:\n" + str(userProfile))
 
-    return returnText, 200
+    # make the profile change a zero vector at the specified index
+    profileChanges[index] = np.zeros(VECTOR_LENGTH)
+
+    return ("undid " + ("wildcard" if isWildcard else "user") + " profile change due to previous " +
+            ("disliking" if add else "liking") + " of " + recs[index]['title'])
 
 
 @app.route('/regen')
 def regen():
     global recStates
     # for each film that was liked or disliked:
-    for i in range(0, NUM_RECS):
+    for i in range(0, TOTAL_RECS):
         if recStates[i] != 0:
             # remove from allFilmData & allFilmDataVec
             filmId = recs[i]['id']
             del allFilmData[filmId]
             del allFilmDataVec[filmId]
-            print("removed: " + str(filmId))
 
     # reset recStates
-    recStates = [0] * NUM_RECS
+    recStates = [0] * TOTAL_RECS
 
     # re-calculate new recs
     genRecs()
@@ -517,9 +536,9 @@ def regen():
 
 
 # getter for the number of recommendations
-@app.route('/getNumRecs')
-def getNumRecs():
-    return str(NUM_RECS), 200
+@app.route('/getTotalRecs')
+def getTotalRecs():
+    return str(TOTAL_RECS), 200
 
 
 if __name__ == "__main__":

@@ -1,5 +1,9 @@
 ## For the potential future
-Collaborative filtering can be introduced by asking other people to upload their imdb data. (reddit post, social media post, asking friends).
+1. **Collaborative filtering:** can be introduced by asking other people to upload their imdb data. (reddit post, social media post, asking friends).
+2. integrate letterboxd
+3. account creation, cookies
+4. accommodate users without imdb/letterboxd account, they can search a DB and rate films on the website, user profile generated from their ratings
+5. **Diversify** dataset: add directors, actors, country, language
 
 ## Wildcards
 

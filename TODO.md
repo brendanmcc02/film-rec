@@ -1,12 +1,5 @@
 ## TODO
 
-### Ideas
-
-1. one hot encoding for directors? or some sort of way to recommend films from directors that you like but haven't seen. (can't really do this because all-film-data doesn't have directors)
-2. add a feature for a user to search films and input that as their 'user profile': to accommodate for people who don't have an IMDB account
-3. add letterboxd integration?
-4. wildcard, some way to introduce novel films instead of just the same type. Users don't always watch the same type, they also want variety 
-
 ### General
 - [x] switch from my-film-data.json to ratings.csv
 - [x] add numVotes & runtime to human data
@@ -35,8 +28,11 @@
 - [x] vector change in thumbs up/down
 - [x] revert vector change
 - [x] regen function
-- [ ] wildcard recs (check if working properly, have not verified)
-- [ ] fix runtime vector wildcard
+- [x] wildcard recs
+- [x] everytime you change a vector (wildcard/user profile), ensure all values >=0.0 && <= 1.0
+- [x] fix runtime vector wildcard
+- [x] implement wildcard feedback factor
+- [x] implement profileChanges instead of separate wildcardProfileChanges & userProfileChanges
 
 ### Frontend
 - [x] do text div 
@@ -51,7 +47,7 @@
 - [ ] make results page look presentable/nice
 
 ### Tidying up code
-- [ ] go through all code removing redundancy, fine-tuning
+- [x] go through all code removing redundancy, fine-tuning
 - [x] rename variables & func to lowerCamelCase
 - [x] change variables that are not constant from UPPER_CASE to underscore case
 - [ ] minimise global variables (you only need to call global if you want to **modify** the variable)

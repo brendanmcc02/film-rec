@@ -3,14 +3,13 @@ import './App.css';
 import background from "./social-network-2.jpeg"
 import React, { useState, useEffect } from 'react';
 
-// make an API call to get the global constant NUMBER_RECS from app.py
-const response = await fetch('/getNumRecs');
-const NUMBER_RECS = parseInt(await response.text());
-
-// global constants
-const initButtonStates = Array.from({ length: NUMBER_RECS }, () => false);
+// make an API call to get the global constant TOTAL_RECS from app.py
+const response = await fetch('/getTotalRecs');
+const TOTAL_RECS = parseInt(await response.text());
+const initButtonStates = Array.from({ length: TOTAL_RECS }, () => false);
 
 const App = () => {
+
     const [films, setFilms] = useState([]);
     const [upButtonStates, setUpButtonStates] = useState(initButtonStates);
     const [downButtonStates, setDownButtonStates] = useState(initButtonStates);
@@ -66,7 +65,7 @@ const App = () => {
     // undo vector changes
     async function undoVectorChanges(index, add) {
         try {
-            const fetchUrl = "/undoChange?index=" + index.toString() + "&add=" + add
+            const fetchUrl = "/undoResponse?index=" + index.toString() + "&add=" + add
             const response = await fetch(fetchUrl);
 
             if (!response.ok) {
@@ -81,7 +80,7 @@ const App = () => {
 
     async function changeVector(index, add) {
         try {
-            const fetchUrl = "/changeVector?index=" + index.toString() + "&add=" + add
+            const fetchUrl = "/response?index=" + index.toString() + "&add=" + add
             const response = await fetch(fetchUrl);
 
             if (!response.ok) {
@@ -184,7 +183,7 @@ const App = () => {
 
     let filmRecs = films.map((film, i) =>
         <div key={i}>
-            <p>{film.similarity_score}% - {film.title} ({film.year}), {film.genres}. Wildcard: {film.wildcard}</p>
+            <p>{film.similarityScore}% - {film.title} ({film.year}), {film.genres}. Wildcard: {film.wildcard}</p>
             <button className="up-button" onClick={() => {handleUpButton(i);}}>
                 Up
             </button>
