@@ -266,11 +266,11 @@ def initRec():
 
 
 # initialises the wildcard profile.
-# imdbRating, runtime & numOfVotes are fixed, the rest (year & all genres) are inverted
+# imdbRating, runtime & numVotes are fixed, the rest (year & all genres) are inverted
 def initWildcardProfile():
     global wildcardProfile
     for i in range(0, VECTOR_LENGTH):
-        # don't invert imdbRating, runtime, or numOfVotes
+        # don't invert imdbRating, runtime, or numVotes
         if i != 1 and i != 2 and i != 3:
             weightHalf = getWeight(i) / 2.0
             wildcardProfile[i] = weightHalf - (userProfile[i] - weightHalf)  # invert the vector feature
@@ -285,7 +285,7 @@ def getWeight(i):
             return YEAR_WEIGHT
         case 1:  # imdbRating
             return 1.0
-        case 2:  # numOfVotes
+        case 2:  # numVotes
             return 1.0
         case 3:  # runtime
             return RUNTIME_WEIGHT

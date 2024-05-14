@@ -5,7 +5,39 @@ social media post, asking friends).
 3. account creation, cookies
 4. accommodate users without imdb/letterboxd account, they can search a DB and rate films on the website, user profile
 generated from their ratings
-5. **Diversify** dataset: add directors, actors, country, language
+5. **Diversify** dataset: add directors, actors, country, language TMDb API is free
+6. Implement date rated? higher weighting towards more recent ratings. taste evolves
+
+## Data Collection
+
+You could use tmdb api directly, or use these python libraries:
+ 
+* https://pypi.org/project/tmdb3/
+* https://github.com/wagnerrp/pytmdb3/
+
+this has crew list (includes director)
+TMDb also has country, language, budget, poster. very useful. API is free.
+
+afaik no publicly available dataset to download, API is done film-by-film, so would take a while to init a large 
+dataset. from what I've seen, id's are ints from 1 to X.
+
+you can use /find API with tmdb and use the imdb id (tt...) to get the exact film. good to know 
+
+afaik no way to import/change imdb date rated (shame smh)
+
+exported letterboxd data is very limited (only title, year, rating), but could be useful in cross-referencing.
+
+however, the only advantage of using letterboxd's data is the accurate date rated. otherwise it's not very helpful.
+
+## Figuring out the user profile
+
+What I don't like about year is that a film released in 1900 that is given a 10 has the same impact on the user profile 
+vector as a 1900 film with a 1 rating.
+
+## Recommender Systems eBook
+
+**Novelty:** very important to recommend novel or unexpected films. Repeated recommendation of the same items is not 
+helpful. Users are also interested in expanding their horizons
 
 ## Diversifying Results
 
@@ -23,10 +55,14 @@ action films is lower than documentaries. The vector feature leans towards actio
 
 #### Ideas to solve the quantity > meanRating problem
 
-1. Completely disregard quantity
+**1** Completely disregard quantity
 e.g. if you rated 2 documentary films a 10, then the documentary feature in the vector is a 1.0. This does not factor 
 in quantity whatsoever
-2. Balance quantity & meanRating
+
+What I don't like about this is that I feel like you should factor in quantity somehow. For example, if drama has a 
+mean rating of 7.6 across 300 films, that should have significance over 10 biography films with a mean rating of 7.9.
+
+**2** Balance quantity & meanRating
 Practically how? I don't know.
 
 In my notes, for drama as an example:
@@ -53,7 +89,7 @@ When a wildcard film is responded to, only the wildcard vector changes.
 When a non-wildcard film is responded to, only the user profile vector changes.
 
 ### Vectorized Data Form
-year_norm, imdbRating_norm, numOfVotes_norm, runtime_norm, action, adventure, animation, biography, comedy, crime, 
+year_norm, imdbRating_norm, numVotes_norm, runtime_norm, action, adventure, animation, biography, comedy, crime, 
 documentary, drama, family, fantasy, film-noir, history, horror, music, musical, mystery, news, romance, sci-fi, sport, 
 thriller, war, western
 
