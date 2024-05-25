@@ -62,18 +62,9 @@ in quantity whatsoever
 What I don't like about this is that I feel like you should factor in quantity somehow. For example, if drama has a 
 mean rating of 7.6 across 300 films, that should have significance over 10 biography films with a mean rating of 7.9.
 
-**2** Balance quantity & meanRating
-Practically how? I don't know.
+**2** Have multiple user profiles
 
-In my notes, for drama as an example:
-
-mean drama rating * (# genre films / # films)
-
-but this weights heavily towards films with quantity, doesn't solve the quantity > meanRating problem
-
-What if?: check black notebook for idea
-
-
+Perhaps create 23 user profiles (1 for each genre). Calculate weighted averages for these.
 
 #### Ideal Recommendation Hierarchy
 
