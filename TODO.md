@@ -33,6 +33,7 @@
 create endpoints for getters/setters
 - [ ] figure out how to diversify the recs
 - [ ] figure out how to speed up cosine sim comparisons (cache maybe?)
+- [ ] drop numVotes threshold to 10k?
 
 ### Backend
 - [x] all-film-data doesn't filter out films that have been rated
