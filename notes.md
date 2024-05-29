@@ -1,5 +1,5 @@
 ## For the potential future
-1. integrate letterboxd - realistically it's more used by people than imdb
+1. integrate letterboxd - realistically it's more used by people than imdb.
 2. **Collaborative filtering:** can be introduced by asking other people to upload their ~~imdb~~ letterboxd data. (reddit post, 
 social media post, asking friends).
 3. account creation, cookies. users can add to their IMDb/letterboxd watchlist through the website (integrate them somehow)
@@ -94,6 +94,14 @@ previous actions or explicit feedback"
 1. Cosine similarity - cosine of the angle between 2 vectors
 2. dot product
 3. Euclidean distance
+
+## Letterboxd Integration 
+
+* use diary.csv. Get rid of tags, Date, rewatch columns. 
+
+* diary.csv has potentially multiple entries for a single film, so only take the most recent one.
+
+* create a temp letterboxd & imdb account, play around with IMDb rating a film multiple times and seeing what happens when that is imported into lb.
 
 ## CHAT GPT
 
