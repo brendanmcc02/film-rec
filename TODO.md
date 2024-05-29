@@ -96,5 +96,6 @@ my-film-data-vec.json to file
 - [x] how much do I round values by? - not rounding values, no reason to do it
 - [x] calculate user profile using weighted averages
 - [x] mess around with weights of year and genres
+- [ ] integrate date rated - weight of how recently user has rated film.
 
 
