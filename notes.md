@@ -18,7 +18,7 @@ this has crew list (includes director)
 TMDb also has country, language, budget, poster. very useful. API is free.
 
 afaik no publicly available dataset to download, API is done film-by-film, so would take a while to init a large 
-dataset. from what I've seen, id's are ints from 1 to X.
+dataset. from what I've seen, IDs are ints from 1 to X.
 
 you can use /find API with tmdb and use the imdb id (tt...) to get the exact film. good to know 
 
