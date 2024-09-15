@@ -19,7 +19,7 @@ DIFF_NUMBER_OF_VOTES = 0
 DIFF_RUNTIME = 0
 YEAR_NORMS = {}
 VECTOR_LENGTH = 27
-NUM_RECS = 10
+NUM_RECS = 6
 NUM_WILDCARDS = 2
 TOTAL_RECS = NUM_RECS + NUM_WILDCARDS
 FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
@@ -113,7 +113,7 @@ def initRec():
     # for each film in ratings.csv:
     for film in myFilmDataList:
         # filter out non-movies, <40 min runtime, and with no genres
-        if film['Title Type'] == "movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != "":
+        if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != "":
             # convert genres to array
             genres = film['Genres'].replace("\"", "").split(", ")
             # map the film id to a dict of it's attributes

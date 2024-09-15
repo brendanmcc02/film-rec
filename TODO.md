@@ -98,5 +98,3 @@ my-film-data-vec.json to file
 - [x] calculate user profile using weighted averages
 - [x] mess around with weights of year and genres
 - [ ] integrate date rated - weight of how recently user has rated film.
-
-
