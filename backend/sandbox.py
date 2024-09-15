@@ -7,9 +7,12 @@ def main():
     allFilmData = json.load(allFilmDataFile)
     allFilmDataKeys = list(allFilmData.keys())
 
-    for key in allFilmDataKeys:
-        if len(allFilmData[key]['genres']) == 0:
-            print(key)
+    title = allFilmData['tt4912910']['title']
+
+    if title == "Mission: Impossible – Fallout":
+        print("lfg")
+    else:
+        print("fuck")
 
 
 if __name__ == "__main__":

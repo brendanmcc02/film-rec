@@ -1,10 +1,11 @@
-# given ratings.csv, vectorize both myFilmData & allFilmData, and then recommend N films
+# given ratings.csv or diary.csv, vectorize both myFilmData & allFilmData, and then recommend N films
 
 # imports
 from flask import Flask, request, jsonify
 import json
 import csv
 import numpy as np
+import os
 
 # global constants
 
@@ -41,13 +42,19 @@ allFilmData = {}
 allFilmDataVec = {}
 recs = []
 recStates = [0] * TOTAL_RECS
+isImdb = True
+myFilmDataName = ""
 
 app = Flask(__name__)
 
 
-# verifies that user-uploaded ratings.csv is ok
+# verifies that user-uploaded ratings.csv or diary.csv is ok
 @app.route('/verifyFile', methods=['POST'])
 def verifyFile():
+
+    global isImdb
+    global myFilmDataName
+
     # check if there's a file in the post request
     if 'file' not in request.files:
         return 'No file part', 400
@@ -55,31 +62,41 @@ def verifyFile():
 
     file.save("../data/" + file.filename)  # write to file
 
-    # list of expected attributes of each film object; error handling.
-    filmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL", "Title Type", "IMDb Rating",
-                      "Runtime (mins)", "Year", "Genres", "Num Votes", "Release Date", "Directors"]
+    # IMDB file
+    if os.path.exists("../data/ratings.csv"):
+        isImdb = True
+        myFilmDataName = "ratings.csv"
+        expectedFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL", "Title Type",
+                          "IMDb Rating",
+                          "Runtime (mins)", "Year", "Genres", "Num Votes", "Release Date", "Directors"]
+    elif os.path.exists("../data/diary.csv"):
+        isImdb = False
+        myFilmDataName = "diary.csv"
+        expectedFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating", "Rewatch", "Tags", "Watched Date"]
+    else:
+        return "Error: ratings.csv and diary.csv not found, check file name & file type.", 404
 
     try:
-        with open("../data/ratings.csv", newline='') as myFilmDataFile:
+        with open("../data/" + myFilmDataName, newline='') as myFilmDataFile:
             reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
                 # if there are more data than row headers:
                 if 'unexpectedData' in row:
-                    return "Error: ratings.csv does not conform to expected format.\n", 400
+                    return "Error: " + myFilmDataName + " does not conform to expected format.\n", 400
 
                 # if any of the expected row headers are not to be found:
                 keys = list(row.keys())
                 for k in keys:
-                    if k not in filmAttributes:
-                        return "Error: Row headers in ratings.csv does not conform to expected format.\n", 400
+                    if k not in expectedFilmAttributes:
+                        return "Error: Row headers in " + myFilmDataName + " does not conform to expected format.\n", 400
 
-        # ratings.csv has no issues
+        # ratings.csv or diary.csv has no issues
         return "Upload Success.", 200
     except FileNotFoundError:
-        return "Error: ratings.csv not found, check file name & file type.", 404
+        return "Error: ratings.csv and diary.csv not found, check file name & file type.", 404
     except Exception as e:
-        return "Error occurred with reading ratings.csv.\n" + str(e), 400
+        return "Error occurred with reading " + myFilmDataName + ".\n" + str(e), 400
 
 
 # initial recommendation of films to user
@@ -199,9 +216,6 @@ def initRec():
         MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, myFilmData[key]['numberOfVotes'])
         MIN_RUNTIME = min(MIN_RUNTIME, myFilmData[key]['runtime'])
         MAX_RUNTIME = max(MAX_RUNTIME, myFilmData[key]['runtime'])
-
-    # todo temp
-    print("max runtime:" + str(MAX_RUNTIME))
 
     # perform some pre-computation to avoid repetitive computation
     DIFF_IMDB_RATING = MAX_IMDB_RATING - MIN_IMDB_RATING

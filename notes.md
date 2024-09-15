@@ -15,7 +15,7 @@ You could use tmdb api directly, or use these python libraries:
 * https://github.com/wagnerrp/pytmdb3/
 
 this has crew list (includes director)
-TMDb also has country, language, budget, poster. very useful. API is free.
+TMDb also has country, language, budget, poster. very useful. API is free. 50 requests/second rate limit.
 
 afaik no publicly available dataset to download, API is done film-by-film, so would take a while to init a large 
 dataset. from what I've seen, IDs are ints from 1 to X.
@@ -96,11 +96,18 @@ previous actions or explicit feedback"
 
 ## Letterboxd Integration 
 
-* use diary.csv. Get rid of tags, Date, rewatch columns. 
-
+* use diary.csv. Get rid of tags, Date, rewatch columns.
 * diary.csv has potentially multiple entries for a single film, so only take the most recent one.
-
 * create a temp letterboxd & imdb account, play around with IMDb rating a film multiple times and seeing what happens when that is imported into lb.
+
+### Pre-processing
+
+* work backwards (last entry in `diary.csv`) and then remove duplicate entries
+* search by title
+  * lower case title
+  * sub hyphen characters (***hyphen characters are different between the 2 datasets!***)
+* if title matches: check if year matches
+* add this film to myFilmData, augmenting it with data (genres, runtime, numVotes, etc.) from allFilmData
 
 ## CHAT GPT
 

@@ -1,5 +1,8 @@
 ## TODO
 
+### New TODO List
+- [ ] create myFilmData from imported diary.csv through Flask (letterboxd)
+
 ### Data Retrieval
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)
 - [x] get rid of < 1930 films (basics.tsv), delete films with genres = '\\N'
@@ -18,7 +21,7 @@
 - [x] for .sh files change paths to be relative to device
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
-- [ ] is it possible to augment extra data? directors, country, language, etc.
+- [ ] augment extra data? directors, country, language, etc.
 
 ### General
 - [x] switch from my-film-data.json to ratings.csv
@@ -86,7 +89,7 @@ my-film-data-vec.json to file
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
 - [x] reduce run.sh to startup.sh
 
-### Vectorizing the data
+### Data Processing
 - [x] normalise years
 - [x] normalise imdbRating
 - [x] one-hot encoding for genres

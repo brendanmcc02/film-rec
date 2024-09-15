@@ -1,9 +1,6 @@
 .idea/
 ratings.csv
 data/ratings.csv
-book.xlsx
-~$book.xlsx
-letterboxd/
-profile
-watched
+diary.csv
+data/diary.csv
 ebook.pdf
