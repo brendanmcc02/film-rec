@@ -96,17 +96,19 @@ previous actions or explicit feedback"
 
 ## Letterboxd Integration 
 
-* use diary.csv. Get rid of tags, Date, rewatch columns.
-* diary.csv has potentially multiple entries for a single film, so only take the most recent one.
+* use diary.csv
 * create a temp letterboxd & imdb account, play around with IMDb rating a film multiple times and seeing what happens when that is imported into lb.
 
 ### Pre-processing
 
 * work backwards (last entry in `diary.csv`) and then remove duplicate entries
+  * the diary.csv can contain multiple entries for a single film. we only want the most recent one (hence work backwards)
 * search by title
   * lower case title
   * sub hyphen characters (***hyphen characters are different between the 2 datasets!***)
+  * print films that have no title matches, try to find edge cases and solve
 * if title matches: check if year matches
+  * print films with years that don't match
 * add this film to myFilmData, augmenting it with data (genres, runtime, numVotes, etc.) from allFilmData
 
 ## CHAT GPT

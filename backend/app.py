@@ -104,6 +104,7 @@ def verifyFile():
 def initRec():
     global VECTOR_LENGTH
     global profileChanges
+    global myFilmDataName
 
     # init profileChanges vector
     for i in range(0, TOTAL_RECS):
@@ -112,18 +113,22 @@ def initRec():
     # read in the file and append to list data structure
     try:
         myFilmDataList = []
-        with open("../data/ratings.csv", newline='') as myFilmDataFile:
+        with open("../data/" + myFilmDataName, newline='') as myFilmDataFile:
             reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
                 myFilmDataList.append(row)
     except Exception as e:
-        return "Error occurred with reading ratings.csv.\n" + str(e)
+        return "Error occurred with reading " + myFilmDataName + ".\n" + str(e)
 
     # read in all-film-data.json
     allFilmDataFile = open('../data/all-film-data.json')
     allFilmDataFull = json.load(allFilmDataFile)
     allFilmDataKeys = list(allFilmDataFull.keys())
+
+    # if the user uploaded letterboxd file, convert it to a format resembling the IMDb one
+    if not isImdb:
+        myFilmDataList = convertLetterboxdToImdb()
 
     myFilmData = {}  # init as a dict
 
@@ -548,6 +553,42 @@ def regen():
 @app.route('/getTotalRecs')
 def getTotalRecs():
     return str(TOTAL_RECS), 200
+
+
+# converts diary.csv (letterboxd exported data format) to an object resembling ratings.csv (imdb exported data format)
+def convertLetterboxdToImdb(allFilmData, old_myFilmDataList):
+    new_myFilmDataList = []
+
+    # reverse the list, we want to work with the most recent entries first
+    old_myFilmDataList = reversed(old_myFilmDataList)
+
+    filmYearDict = {}
+
+    # iterate through each film in diary.csv
+    for film in old_myFilmDataList:
+        filmTitle = film['Name']
+        filmYear = film['Year']
+        # ensure the film is not a duplicate
+        if filmTitle not in filmYearDict and filmYearDict[filmTitle] != filmYear:
+            filmYearDict[filmTitle] = film['Year']
+            filmId = searchFilm(filmTitle, filmYear)
+
+            if filmId != "-1":
+                # todo append myLetterboxdRating *2 & date rated to this object
+                new_myFilmDataList.append(allFilmData[filmId])
+            else:
+                print("film not found")
+        else:
+            print("film already exists. title: " + filmTitle + ". year:" + str(filmYear))
+
+    return new_myFilmDataList
+
+
+# given film title and year from letterboxd diary.csv, searches all-film-data.json for corresponding IMDb film.
+# returns film ID if found, else "-1".
+def searchFilm(filmTitle, filmYear):
+    # todo
+    return "-1"
 
 
 if __name__ == "__main__":
