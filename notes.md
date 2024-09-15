@@ -7,7 +7,6 @@ social media post, asking friends).
 5. accommodate users without imdb/letterboxd account, they can search a DB and rate films on the website, user profile
 generated from their ratings
 
-
 ## Data Collection
 
 You could use tmdb api directly, or use these python libraries:
