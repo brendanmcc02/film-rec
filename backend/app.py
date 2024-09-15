@@ -56,7 +56,7 @@ def verifyFile():
     file.save("../data/" + file.filename)  # write to file
 
     # list of expected attributes of each film object; error handling.
-    filmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "URL", "Title Type", "IMDb Rating",
+    filmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL", "Title Type", "IMDb Rating",
                       "Runtime (mins)", "Year", "Genres", "Num Votes", "Release Date", "Directors"]
 
     try:
@@ -118,16 +118,8 @@ def initRec():
             genres = film['Genres'].replace("\"", "").split(", ")
             # map the film id to a dict of it's attributes
             try:
-                filmId = film['Const']
-                # if the current film is also in all-film-data.json
-                if filmId in allFilmDataKeys:
-                    englishTitle = allFilmDataFull[filmId]['title']  # use the english title
-                else:
-                    # otherwise, use the title stored in ratings.csv (potentially non-english)
-                    englishTitle = film['Title']
-
                 myFilmData[film['Const']] = {
-                    "title": englishTitle,
+                    "title": film['Title'],
                     "year": int(film['Year']),
                     "myRating": int(film['Your Rating']),
                     "imdbRating": float(film['IMDb Rating']),
