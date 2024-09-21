@@ -105,10 +105,19 @@ previous actions or explicit feedback"
   * the diary.csv can contain multiple entries for a single film. we only want the most recent one (hence work backwards)
 * search by title
   * lower case title
-  * sub hyphen characters (***hyphen characters are different between the 2 datasets!***)
+  * remove:
+    * hyphen characters **with the preceding space attached!** (***hyphen characters are different between the 2 datasets! see MI fallout for example***)
+    * ! , " ' ( ) 
+  * sub:
+    * '&' and '+' for 'and'
+    * American words: e.g. 'colour' and 'color'
+  * manual intervention:
+    * star wars films
+    * harry potter philosopher and sorcerers stone
+    * 'dune' and 'dune: part one' (be mindful of the year, because dune 1984 exists)
+  * if there is a difference of 1 year between the films (e.g. ex machina has 2015 and 2014 year in the datasets), assume it's the same one
   * print films that have no title matches, try to find edge cases and solve
-* if title matches: check if year matches
-  * print films with years that don't match
+  * reduce NUM_OF_VOTES_THRESHOLD? because if a letterboxd user rates a film with <25k votes, it won't be in all-film-data.json
 * add this film to myFilmData, augmenting it with data (genres, runtime, numVotes, etc.) from allFilmData
 
 ## CHAT GPT

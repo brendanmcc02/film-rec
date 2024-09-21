@@ -6,6 +6,7 @@ import json
 import csv
 import numpy as np
 import os
+import string
 
 # global constants
 
@@ -67,8 +68,8 @@ def verifyFile():
         isImdb = True
         myFilmDataName = "ratings.csv"
         expectedFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL", "Title Type",
-                          "IMDb Rating",
-                          "Runtime (mins)", "Year", "Genres", "Num Votes", "Release Date", "Directors"]
+                                  "IMDb Rating",
+                                  "Runtime (mins)", "Year", "Genres", "Num Votes", "Release Date", "Directors"]
     elif os.path.exists("../data/diary.csv"):
         isImdb = False
         myFilmDataName = "diary.csv"
@@ -128,7 +129,7 @@ def initRec():
 
     # if the user uploaded letterboxd file, convert it to a format resembling the IMDb one
     if not isImdb:
-        myFilmDataList = convertLetterboxdToImdb()
+        myFilmDataList = convertLetterboxdToImdb(myFilmDataList, allFilmDataFull, allFilmDataKeys)
 
     myFilmData = {}  # init as a dict
 
@@ -136,8 +137,11 @@ def initRec():
     for film in myFilmDataList:
         # filter out non-movies, <40 min runtime, and with no genres
         if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != "":
-            # convert genres to array
-            genres = film['Genres'].replace("\"", "").split(", ")
+            # IMDb only: convert genres from comma-separated string to array
+            if isImdb:
+                genres = film['Genres'].replace("\"", "").split(", ")
+            else: # this pre-processing was already performed in the letterboxd-to-IMDb conversion
+                genres = film['Genres']
             # map the film id to a dict of it's attributes
             try:
                 myFilmData[film['Const']] = {
@@ -151,8 +155,6 @@ def initRec():
                 }
             except ValueError:
                 return ("value error with film: " + film['Const']), 400
-
-    global allFilmData
 
     myFilmDataKeys = list(myFilmData.keys())  # list of keys of my-film-data
 
@@ -177,6 +179,7 @@ def initRec():
     MIN_RUNTIME = allFilmDataFull[allFilmDataKeys[0]]['runtime']
     MAX_RUNTIME = allFilmDataFull[allFilmDataKeys[0]]['runtime']
 
+    global allFilmData
     allGenres = []  # get a list of unique genres
 
     # iterate through each film in allFilmData:
@@ -556,39 +559,79 @@ def getTotalRecs():
 
 
 # converts diary.csv (letterboxd exported data format) to an object resembling ratings.csv (imdb exported data format)
-def convertLetterboxdToImdb(allFilmData, old_myFilmDataList):
+def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys):
     new_myFilmDataList = []
 
     # reverse the list, we want to work with the most recent entries first
     old_myFilmDataList = reversed(old_myFilmDataList)
 
-    filmYearDict = {}
+    # dict where the key is the filmTitle and filmYear concatenated.
+    # e.g. Barbie (2023) has key: Barbie2023, value:True.
+    filmTitleYearDict = {}
 
     # iterate through each film in diary.csv
     for film in old_myFilmDataList:
         filmTitle = film['Name']
         filmYear = film['Year']
+        concatString = filmTitle + str(filmYear)
+        # some films have a different release year (difference +-1) from letterboxd to imdb, so this accounts for that
+        # edge case
+        # todo value error here smh
+        filmYear_plus_1 = filmYear + 1
+        filmYear_minus_1 = filmYear - 1
+        concatString_plus_1 = filmTitle + str(filmYear + 1)
+        concatString_minus_1 = filmTitle + str(filmYear_minus_1)
+
         # ensure the film is not a duplicate
-        if filmTitle not in filmYearDict and filmYearDict[filmTitle] != filmYear:
-            filmYearDict[filmTitle] = film['Year']
-            filmId = searchFilm(filmTitle, filmYear)
+        if (concatString not in filmTitleYearDict or concatString_plus_1 not in filmTitleYearDict
+                or concatString_minus_1 not in filmTitleYearDict):
+            filmTitleYearDict[concatString] = True
+            filmId = searchFilm(filmTitle, filmYear, allFilmDataFull, allFilmDataKeys)
 
             if filmId != "-1":
-                # todo append myLetterboxdRating *2 & date rated to this object
-                new_myFilmDataList.append(allFilmData[filmId])
+                new_myFilmDataList.append({
+                    "Const": filmId,
+                    "Title": allFilmDataFull[filmId]['title'],
+                    # "Title Type": allFilmDataFull[filmId]['titleType'], # todo get title type in all-film-data.json
+                    "Year": allFilmDataFull[filmId]['year'],
+                    "Your Rating": film['Rating'],
+                    "IMDb Rating": allFilmDataFull[filmId]['imdbRating'],
+                    "Num Votes": allFilmDataFull[filmId]['numberOfVotes'],
+                    "Runtime (mins)": allFilmDataFull[filmId]['runtime'],
+                    "genres": allFilmDataFull[filmId]['genres']
+                })
             else:
-                print("film not found")
-        else:
-            print("film already exists. title: " + filmTitle + ". year:" + str(filmYear))
+                print("film not found. title: " + filmTitle + ". year:" + str(filmYear))
+        # else:
+        #     print("film already exists. title: " + filmTitle + ". year:" + str(filmYear))
 
     return new_myFilmDataList
 
 
 # given film title and year from letterboxd diary.csv, searches all-film-data.json for corresponding IMDb film.
 # returns film ID if found, else "-1".
-def searchFilm(filmTitle, filmYear):
-    # todo
+def searchFilm(title, year, allFilmDataFull, allFilmDataKeys):
+    for filmId in allFilmDataKeys:
+        # pre-processing
+        title = letterboxdTitlePreprocessing(title)
+
+        # todo is int(filmYear) necessary?
+        if allFilmDataFull[filmId]['title'].lower() == title.lower() and allFilmDataFull[filmId]['year'] == int(year):
+            return filmId
+
     return "-1"
+
+
+def letterboxdTitlePreprocessing(title):
+    res = title.replace("–", "-")  # hyphen characters are different between the datasets
+    # ! , " ' ( )
+    # remove symbols
+    res = res.replace(" -", " ").replace("!", "").replace(",", "").replace("\"", "").replace("\'", "").replace("(", "").replace(")", "")
+
+    # sub symbols
+    res = res.replace("&", "and").replace("colour").replace("color")
+
+    return res
 
 
 if __name__ == "__main__":
