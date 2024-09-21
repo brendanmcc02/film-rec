@@ -576,10 +576,10 @@ def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys
         concatString = filmTitle + str(filmYear)
         # some films have a different release year (difference +-1) from letterboxd to imdb, so this accounts for that
         # edge case
-        # todo value error here smh
-        filmYear_plus_1 = filmYear + 1
-        filmYear_minus_1 = filmYear - 1
-        concatString_plus_1 = filmTitle + str(filmYear + 1)
+        filmYear_int = int(filmYear)
+        filmYear_plus_1 = filmYear_int + 1
+        filmYear_minus_1 = int(filmYear) - 1
+        concatString_plus_1 = filmTitle + str(filmYear_plus_1)
         concatString_minus_1 = filmTitle + str(filmYear_minus_1)
 
         # ensure the film is not a duplicate
@@ -612,26 +612,24 @@ def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys
 # returns film ID if found, else "-1".
 def searchFilm(title, year, allFilmDataFull, allFilmDataKeys):
     for filmId in allFilmDataKeys:
-        # pre-processing
-        title = letterboxdTitlePreprocessing(title)
-
-        # todo is int(filmYear) necessary?
-        if allFilmDataFull[filmId]['title'].lower() == title.lower() and allFilmDataFull[filmId]['year'] == int(year):
+        if (letterboxdTitlePreprocessing(allFilmDataFull[filmId]['title']) == letterboxdTitlePreprocessing(title)
+                and allFilmDataFull[filmId]['year'] == int(year)):
             return filmId
 
     return "-1"
 
 
+# title pre-processing for letterboxd vs imdb conversions
 def letterboxdTitlePreprocessing(title):
     res = title.replace("–", "-")  # hyphen characters are different between the datasets
-    # ! , " ' ( )
     # remove symbols
     res = res.replace(" -", " ").replace("!", "").replace(",", "").replace("\"", "").replace("\'", "").replace("(", "").replace(")", "")
 
     # sub symbols
-    res = res.replace("&", "and").replace("colour").replace("color")
+    res = res.replace("&", "and").replace("colour", "color")
 
-    return res
+    # lower case
+    return res.lower()
 
 
 if __name__ == "__main__":
