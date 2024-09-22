@@ -1,7 +1,7 @@
 ## TODO
 
 ### New TODO List
-- [ ] create myFilmData from imported diary.csv through Flask (letterboxd)
+- [x] create myFilmData from imported diary.csv through Flask (letterboxd)
 
 ### Data Retrieval
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)
