@@ -4,6 +4,8 @@
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
 - [x] integrate date rated - weight of how recently user has rated film.
 - [ ] tidy up code, make things as efficient as possible
+- [ ] double check i didn't remove any necessary `global`s and fuck it up
+- [x] deletion of ratings/diary.csv before saving to file
 - [ ] augment extra data? directors, country, language, etc.
 - [ ] figure out how to diversify recs
 
