@@ -1,4 +1,4 @@
-# given ratings.csv or diary.csv, vectorize both myFilmData & allFilmData, and then recommend N films
+# given ratings.csv or diary.csv, vectorize both myFilmData & allFilmData, and then recommend films
 
 # imports
 from flask import Flask, request, jsonify
@@ -9,19 +9,7 @@ import numpy as np
 import os
 
 # global constants
-
 RUNTIME_THRESHOLD = 40
-MIN_IMDB_RATING = 0.0
-MIN_YEAR = 0
-MIN_NUMBER_OF_VOTES = 0
-MIN_RUNTIME = 0
-MIN_DATE_RATED = datetime(1, 1, 1)
-DIFF_IMDB_RATING = 0.0
-DIFF_YEAR = 0
-DIFF_NUMBER_OF_VOTES = 0
-DIFF_RUNTIME = 0
-DIFF_DATE_RATED = datetime(1, 1, 1)
-YEAR_NORMS = {}
 VECTOR_LENGTH = 27
 NUM_RECS = 6
 NUM_WILDCARDS = 2
@@ -35,7 +23,13 @@ GENRE_WEIGHT = 0.75
 # from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
 YEAR_WEIGHT = 0.3
 RUNTIME_WEIGHT = 0.3
-
+DIFF_IMDB_RATING = 0.0
+DIFF_YEAR = 0
+DIFF_NUMBER_OF_VOTES = 0
+DIFF_RUNTIME = 0
+DIFF_DATE_RATED = datetime(1, 1, 1)
+IS_IMDB = True
+MYFILMDATA_FILENAME = ""
 
 # global variables
 userProfile = np.zeros(VECTOR_LENGTH)
@@ -45,8 +39,11 @@ allFilmData = {}
 allFilmDataVec = {}
 recs = []
 recStates = [0] * TOTAL_RECS
-isImdb = True
-myFilmDataName = ""
+minImdbRating = 0.0
+minYear = 0
+minNumberOfVotes = 0
+minRuntime = 0
+minDateRated = datetime(1, 1, 1)
 
 app = Flask(__name__)
 
@@ -54,9 +51,8 @@ app = Flask(__name__)
 # verifies that user-uploaded ratings.csv or diary.csv is ok
 @app.route('/verifyFile', methods=['POST'])
 def verifyFile():
-
-    global isImdb
-    global myFilmDataName
+    global IS_IMDB
+    global MYFILMDATA_FILENAME
 
     # check if there's a file in the post request
     if 'file' not in request.files:
@@ -67,47 +63,46 @@ def verifyFile():
 
     # IMDB file
     if os.path.exists("../data/ratings.csv"):
-        isImdb = True
-        myFilmDataName = "ratings.csv"
+        IS_IMDB = True
+        MYFILMDATA_FILENAME = "ratings.csv"
         expectedFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL", "Title Type",
                                   "IMDb Rating",
                                   "Runtime (mins)", "Year", "Genres", "Num Votes", "Release Date", "Directors"]
     elif os.path.exists("../data/diary.csv"):
-        isImdb = False
-        myFilmDataName = "diary.csv"
+        IS_IMDB = False
+        MYFILMDATA_FILENAME = "diary.csv"
         expectedFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating", "Rewatch", "Tags", "Watched Date"]
     else:
         return "Error: ratings.csv and diary.csv not found, check file name & file type.", 404
 
     try:
-        with open("../data/" + myFilmDataName, newline='') as myFilmDataFile:
+        with open("../data/" + MYFILMDATA_FILENAME, newline='') as myFilmDataFile:
             reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
                 # if there are more data than row headers:
                 if 'unexpectedData' in row:
-                    return "Error: " + myFilmDataName + " does not conform to expected format.\n", 400
+                    return "Error: " + MYFILMDATA_FILENAME + " does not conform to expected format.\n", 400
 
                 # if any of the expected row headers are not to be found:
                 keys = list(row.keys())
                 for k in keys:
                     if k not in expectedFilmAttributes:
-                        return "Error: Row headers in " + myFilmDataName + " does not conform to expected format.\n", 400
+                        return ("Error: Row headers in " + MYFILMDATA_FILENAME + " does not conform to expected format.\n",
+                                400)
 
         # ratings.csv or diary.csv has no issues
         return "Upload Success.", 200
     except FileNotFoundError:
         return "Error: ratings.csv and diary.csv not found, check file name & file type.", 404
     except Exception as e:
-        return "Error occurred with reading " + myFilmDataName + ".\n" + str(e), 400
+        return "Error occurred with reading " + MYFILMDATA_FILENAME + ".\n" + str(e), 400
 
 
 # initial recommendation of films to user
 @app.route('/initRec')
 def initRec():
-    global VECTOR_LENGTH
     global profileChanges
-    global myFilmDataName
 
     # init profileChanges vector
     for i in range(0, TOTAL_RECS):
@@ -116,13 +111,13 @@ def initRec():
     # read in the file and append to list data structure
     try:
         myFilmDataList = []
-        with open("../data/" + myFilmDataName, newline='') as myFilmDataFile:
+        with open("../data/" + MYFILMDATA_FILENAME, newline='') as myFilmDataFile:
             reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
                 myFilmDataList.append(row)
     except Exception as e:
-        return "Error occurred with reading " + myFilmDataName + ".\n" + str(e)
+        return "Error occurred with reading " + MYFILMDATA_FILENAME + ".\n" + str(e)
 
     # read in all-film-data.json
     allFilmDataFile = open('../data/all-film-data.json')
@@ -130,7 +125,7 @@ def initRec():
     allFilmDataKeys = list(allFilmDataFull.keys())
 
     # if the user uploaded letterboxd file, convert it to a format resembling the IMDb one
-    if not isImdb:
+    if not IS_IMDB:
         myFilmDataList = convertLetterboxdToImdb(myFilmDataList, allFilmDataFull, allFilmDataKeys)
 
     myFilmData = {}  # init as a dict
@@ -140,7 +135,7 @@ def initRec():
         # filter out non-movies, <40 min runtime, and with no genres
         if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != "":
             # IMDb only: convert genres from comma-separated string to array
-            if isImdb:
+            if IS_IMDB:
                 genres = film['Genres'].replace("\"", "").split(", ")
             else:  # this pre-processing was already performed in the letterboxd-to-IMDb conversion
                 genres = film['Genres']
@@ -161,28 +156,26 @@ def initRec():
 
     myFilmDataKeys = list(myFilmData.keys())  # list of keys of my-film-data
 
-    global MIN_IMDB_RATING
-    global MIN_YEAR
-    global MIN_NUMBER_OF_VOTES
-    global MIN_RUNTIME
-    global MIN_DATE_RATED
+    global minImdbRating
+    global minYear
+    global minNumberOfVotes
+    global minRuntime
+    global minDateRated
     global DIFF_IMDB_RATING
     global DIFF_YEAR
     global DIFF_NUMBER_OF_VOTES
     global DIFF_RUNTIME
     global DIFF_DATE_RATED
-    global YEAR_NORMS
 
     # initialise the min & max values of various attributes;
     # this is needed for normalising vector values.
-    # todo add date_rated shit here
-    MIN_IMDB_RATING = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
+    minImdbRating = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
     MAX_IMDB_RATING = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
-    MIN_YEAR = allFilmDataFull[allFilmDataKeys[0]]['year']
+    minYear = allFilmDataFull[allFilmDataKeys[0]]['year']
     MAX_YEAR = allFilmDataFull[allFilmDataKeys[0]]['year']
-    MIN_NUMBER_OF_VOTES = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
+    minNumberOfVotes = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
     MAX_NUMBER_OF_VOTES = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
-    MIN_RUNTIME = allFilmDataFull[allFilmDataKeys[0]]['runtime']
+    minRuntime = allFilmDataFull[allFilmDataKeys[0]]['runtime']
     MAX_RUNTIME = allFilmDataFull[allFilmDataKeys[0]]['runtime']
 
     global allFilmData
@@ -202,13 +195,14 @@ def initRec():
                 allGenres.append(genre)
 
         # modify min & max of the various attributes
-        MIN_IMDB_RATING = min(MIN_IMDB_RATING, allFilmDataFull[key]['imdbRating'])
+        # todo duplicate code, wrap in function
+        minImdbRating = min(minImdbRating, allFilmDataFull[key]['imdbRating'])
         MAX_IMDB_RATING = max(MAX_IMDB_RATING, allFilmDataFull[key]['imdbRating'])
-        MIN_YEAR = min(MIN_YEAR, allFilmDataFull[key]['year'])
+        minYear = min(minYear, allFilmDataFull[key]['year'])
         MAX_YEAR = max(MAX_YEAR, allFilmDataFull[key]['year'])
-        MIN_NUMBER_OF_VOTES = min(MIN_NUMBER_OF_VOTES, allFilmDataFull[key]['numberOfVotes'])
+        minNumberOfVotes = min(minNumberOfVotes, allFilmDataFull[key]['numberOfVotes'])
         MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, allFilmDataFull[key]['numberOfVotes'])
-        MIN_RUNTIME = min(MIN_RUNTIME, allFilmDataFull[key]['runtime'])
+        minRuntime = min(minRuntime, allFilmDataFull[key]['runtime'])
         MAX_RUNTIME = max(MAX_RUNTIME, allFilmDataFull[key]['runtime'])
 
     allGenres = sorted(allGenres)  # sort alphabetically
@@ -220,41 +214,54 @@ def initRec():
     global allFilmDataVec
     myFilmDataVec = {}
 
+    global minDateRated
+    minDateRated = myFilmData[myFilmDataKeys[0]]['dateRated']
+    MAX_DATE_RATED = myFilmData[myFilmDataKeys[0]]['dateRated']
+
     # iterate through my-film-data and alter the min & max values to ensure they are the same across both datasets
     for key in myFilmDataKeys:
-        MIN_IMDB_RATING = min(MIN_IMDB_RATING, myFilmData[key]['imdbRating'])
+        minImdbRating = min(minImdbRating, myFilmData[key]['imdbRating'])
         MAX_IMDB_RATING = max(MAX_IMDB_RATING, myFilmData[key]['imdbRating'])
-        MIN_YEAR = min(MIN_YEAR, myFilmData[key]['year'])
+        minYear = min(minYear, myFilmData[key]['year'])
         MAX_YEAR = max(MAX_YEAR, myFilmData[key]['year'])
-        MIN_NUMBER_OF_VOTES = min(MIN_NUMBER_OF_VOTES, myFilmData[key]['numberOfVotes'])
+        minNumberOfVotes = min(minNumberOfVotes, myFilmData[key]['numberOfVotes'])
         MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, myFilmData[key]['numberOfVotes'])
-        MIN_RUNTIME = min(MIN_RUNTIME, myFilmData[key]['runtime'])
+        minRuntime = min(minRuntime, myFilmData[key]['runtime'])
         MAX_RUNTIME = max(MAX_RUNTIME, myFilmData[key]['runtime'])
+        minDateRated = min(minDateRated, myFilmData[key]['dateRated'])
+        MAX_DATE_RATED = max(MAX_DATE_RATED, myFilmData[key]['dateRated'])
 
     # perform some pre-computation to avoid repetitive computation
-    DIFF_IMDB_RATING = MAX_IMDB_RATING - MIN_IMDB_RATING
-    DIFF_YEAR = MAX_YEAR - MIN_YEAR
-    DIFF_NUMBER_OF_VOTES = MAX_NUMBER_OF_VOTES - MIN_NUMBER_OF_VOTES
-    DIFF_RUNTIME = MAX_RUNTIME - MIN_RUNTIME
+    DIFF_IMDB_RATING = MAX_IMDB_RATING - minImdbRating
+    DIFF_YEAR = MAX_YEAR - minYear
+    DIFF_NUMBER_OF_VOTES = MAX_NUMBER_OF_VOTES - minNumberOfVotes
+    DIFF_RUNTIME = MAX_RUNTIME - minRuntime
+    DIFF_DATE_RATED = MAX_DATE_RATED - minDateRated
+
+    yearNorms = {}
 
     # pre-compute normalised years for each year
-    for y in range(MIN_YEAR, MAX_YEAR + 1):
-        YEAR_NORMS[y] = (y - MIN_YEAR) / DIFF_YEAR
+    for y in range(minYear, MAX_YEAR + 1):
+        yearNorms[y] = (y - minYear) / DIFF_YEAR
 
     # vectorize all-film-data
     for key in allFilmDataKeys:
         # vectorize the film
-        vector = vectorize(allFilmData[key], allGenres)
+        vector = vectorize(allFilmData[key], allGenres, yearNorms)
         # add to dict
         allFilmDataVec[key] = vector
 
     # vectorize my-film-data
     for key in myFilmDataKeys:
         # vectorize the film
-        vector = vectorize(myFilmData[key], allGenres)
-        # scalar multiply by myRating
+        vector = vectorize(myFilmData[key], allGenres, yearNorms)
+
         for i in range(0, VECTOR_LENGTH):
-            vector[i] *= (myFilmData[key]['myRating'] / 10.0)
+            # dateRatedScalar: normalize the dateRated as a float between 0.8 and 1.0.
+            dateRatedScalar = (((myFilmData[key]['dateRated'] - minDateRated) / DIFF_DATE_RATED) * 0.2) + 0.8
+            # scalar multiply by myRating and dateRated
+            vector[i] *= (myFilmData[key]['myRating'] / 10.0) * dateRatedScalar
+
         # add to dict
         myFilmDataVec[key] = vector
 
@@ -272,13 +279,11 @@ def initRec():
     # divide the userProfile vector by the weighted average
     userProfile = np.divide(userProfile, weightedAverageSum)
 
-    # curveGenres()
-
-    print("Initial userProfile:\n" + str(userProfile))
+    # print("Initial userProfile:\n" + str(userProfile))
 
     initWildcardProfile()
 
-    print("Initial wildcardProfile:\n" + str(wildcardProfile))
+    # print("Initial wildcardProfile:\n" + str(wildcardProfile))
 
     genRecs()
 
@@ -357,19 +362,19 @@ def getRecs(isWildcard, allFilmDataKeys):
 
 
 # given a film, return it's vectorized form (return type: list)
-def vectorize(film, allGenres):
+def vectorize(film, allGenres, yearNorms):
     vector = []
     # 1. normalise the year; apply weight
-    yearNorm = YEAR_NORMS[film['year']] * YEAR_WEIGHT
+    yearNorm = yearNorms[film['year']] * YEAR_WEIGHT
     vector.append(yearNorm)
     # 2. normalise imdbRating
-    imdbRatingNorm = (film['imdbRating'] - MIN_IMDB_RATING) / DIFF_IMDB_RATING
+    imdbRatingNorm = (film['imdbRating'] - minImdbRating) / DIFF_IMDB_RATING
     vector.append(imdbRatingNorm)
     # 3. normalise numberOfVotes
-    numberOfVotesNorm = (film['numberOfVotes'] - MIN_NUMBER_OF_VOTES) / DIFF_NUMBER_OF_VOTES
+    numberOfVotesNorm = (film['numberOfVotes'] - minNumberOfVotes) / DIFF_NUMBER_OF_VOTES
     vector.append(numberOfVotesNorm)
     # 4. normalise runtime; apply weight
-    runtimeNorm = ((film['runtime'] - MIN_RUNTIME) / DIFF_RUNTIME) * RUNTIME_WEIGHT
+    runtimeNorm = ((film['runtime'] - minRuntime) / DIFF_RUNTIME) * RUNTIME_WEIGHT
     vector.append(runtimeNorm)
     # 5. one-hot encoding on genres
     oneHotEncode(vector, film['genres'], allGenres)

@@ -1,12 +1,13 @@
-## TODO
+# TODO
 
-### New TODO List
+## New TODO List
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
-- [ ] integrate date rated - weight of how recently user has rated film.
-- [ ] figure out how to diversify recs
+- [x] integrate date rated - weight of how recently user has rated film.
+- [ ] tidy up code, make things as efficient as possible
 - [ ] augment extra data? directors, country, language, etc.
+- [ ] figure out how to diversify recs
 
-### Data Retrieval
+## Data Retrieval
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)
 - [x] get rid of < 1930 films (basics.tsv), delete films with genres = '\\N'
 - [x] get rid of films with <60 min runtime
@@ -25,7 +26,7 @@
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
 
-### General
+## General
 - [x] switch from my-film-data.json to ratings.csv
 - [x] add numVotes & runtime to human data
 - [x] vectorize numberOfVotes & runtime
@@ -39,7 +40,7 @@ create endpoints for getters/setters
 - [ ] figure out how to speed up cosine sim comparisons (cache maybe?)
 - [ ] drop numVotes threshold to 10k?
 
-### Backend
+## Backend
 - [x] all-film-data doesn't filter out films that have been rated
 - [x] vectorize all-film-data in init-all-film-data.py
 - [x] init-my-film-data filters out films that have been rated from all-film-data (also rm vector entries)
@@ -63,7 +64,7 @@ my-film-data-vec.json to file
 - [x] implement wildcard feedback factor
 - [x] implement profileChanges instead of separate wildcardProfileChanges & userProfileChanges
 
-### Frontend
+## Frontend
 - [x] do text div 
 - [x] do file upload (visuals only) div
 - [x] href what is rating.csv/how to export it
@@ -75,22 +76,23 @@ my-film-data-vec.json to file
 - [x] /initial_recs api calls more than once?
 - [ ] make results page look presentable/nice
 
-### Tidying up code
+## Tidying up code
 - [x] go through all code removing redundancy, fine-tuning
 - [x] rename variables & func to lowerCamelCase
 - [x] change variables that are not constant from UPPER_CASE to underscore case
-- [ ] minimise global variables (you only need to call global if you want to **modify** the variable)
+- [x] minimise global variables (you only need to call global if you want to **modify** the variable)
+- [ ] error handling on potential div by 0 errors
 
-### Windows
+## Windows
 - [x] config frontend: npm, etc.
 - [x] run flask app
 - [ ] ~~finish converting init-all-film-data.sh to .bat~~
 
-### Scripts
+## Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
 - [x] reduce run.sh to startup.sh
 
-### Data Processing
+## Data Processing
 - [x] normalise years
 - [x] normalise imdbRating
 - [x] one-hot encoding for genres

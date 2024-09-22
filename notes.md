@@ -50,10 +50,18 @@ newer ratings.
 
 * As mentioned in the previous section, people's taste in films change over time. Here is my idea to integrate this
 numerically into my solution:
-  * Normalise dateRated as a value between 1.0 and 0.8: 1.0 being the latest film you watched, 0.8 being the earliest.
-  * Scalar multiply this value to the film vector, similar to how we scalar multiply the film vector by myRating
-* (imdb) ratings.csv: 'Date Rated'
-* (letterboxd) diary.csv: 'Watched Date'
+1. Relative:
+  a. Normalise dateRated as a value between 1.0 and 0.8: 1.0 being the latest film you watched, 0.8 being the earliest.
+  b. Scalar multiply this value to the film vector, similar to how we scalar multiply the film vector by myRating
+2. Fixed:
+  a. Range the scalar values between 0.5 and 1.0. Imdb was released in October 1990, so we can set that as 0.5 (base),
+     and today's date as 1.0.
+  b. scalar multiply this value by the vector, like described previously.
+
+### Doing Relative dateRated Normalization
+
+We want to do 0.8<x<1.0.
+Normalize the value, *0.2 then +0.8
 
 ## Diversifying Results
 
