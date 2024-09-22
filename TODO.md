@@ -2,6 +2,9 @@
 
 ### New TODO List
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
+- [ ] integrate date rated - weight of how recently user has rated film.
+- [ ] figure out how to diversify recs
+- [ ] augment extra data? directors, country, language, etc.
 
 ### Data Retrieval
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)
@@ -21,7 +24,6 @@
 - [x] for .sh files change paths to be relative to device
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
-- [ ] augment extra data? directors, country, language, etc.
 
 ### General
 - [x] switch from my-film-data.json to ratings.csv
@@ -34,7 +36,6 @@
 - [x] don't fix imdbRating to 1.0
 - [x] instead of writing all-film-data-vec, my-film-data, etc. to file, create global variables in app.py, and then 
 create endpoints for getters/setters
-- [ ] figure out how to diversify the recs
 - [ ] figure out how to speed up cosine sim comparisons (cache maybe?)
 - [ ] drop numVotes threshold to 10k?
 
@@ -83,7 +84,7 @@ my-film-data-vec.json to file
 ### Windows
 - [x] config frontend: npm, etc.
 - [x] run flask app
-- [ ] finish converting init-all-film-data.sh to .bat
+- [ ] ~~finish converting init-all-film-data.sh to .bat~~
 
 ### Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
@@ -100,4 +101,3 @@ my-film-data-vec.json to file
 - [x] how much do I round values by? - not rounding values, no reason to do it
 - [x] calculate user profile using weighted averages
 - [x] mess around with weights of year and genres
-- [ ] integrate date rated - weight of how recently user has rated film.

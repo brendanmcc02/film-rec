@@ -1,10 +1,10 @@
 ## For the potential future
-1. integrate letterboxd - realistically it's more used by people than imdb.
-2. **Collaborative filtering:** can be introduced by asking other people to upload their ~~imdb~~ letterboxd data. (reddit post, 
-social media post, asking friends).
-3. account creation, cookies. users can add to their IMDb/letterboxd watchlist through the website (integrate them somehow)
-4. **Diversify** dataset: add directors, actors, country, language, etc.
-5. accommodate users without imdb/letterboxd account, they can search a DB and rate films on the website, user profile
+1. **Collaborative filtering:** can be introduced by asking other people to upload their imdb/letterboxd data. (reddit 
+post, social media post, asking friends).
+2. account creation, cookies. users can add to their IMDb/letterboxd watchlist through the website (integrate them 
+somehow)
+3. **Diversify** dataset: add directors, actors, country, language, etc.
+4. accommodate users without imdb/letterboxd account, they can search a DB and rate films on the website, user profile
 generated from their ratings
 
 ## Data Collection
@@ -35,12 +35,25 @@ vector as a 1900 film with a 1 rating.
 
 ## Recommender Systems eBook
 
-**Novelty:** very important to recommend novel or unexpected films. Users are also interested in expanding their horizons.
-This is where my wildcard idea would work well: invert everything except imdbRating, (maybe fix numVotes to 0 to encourage lesser-known films?)
+**Novelty:** very important to recommend novel or unexpected films. Users are also interested in expanding their 
+horizons. This is where my wildcard idea would work well: invert everything except imdbRating, (maybe fix numVotes to 0 
+to encourage lesser-known films?)
 
-**Diverse Results:** For example, if the user's highest genre is drama, don't recommend 20 drama films. Also throw in other recommendations from different genres that we know they also like (e.g. biographies could be a close second to drama, these should also be recommended).
+**Diverse Results:** For example, if the user's highest genre is drama, don't recommend 20 drama films. Also throw in 
+other recommendations from different genres that we know they also like (e.g. biographies could be a close second to 
+drama, these should also be recommended).
 
-**Taste evolution:** User's taste evolves over time. So perhaps have less weighting towards older ratings compared to newer ratings.
+**Taste evolution:** User's taste evolves over time. So perhaps have less weighting towards older ratings compared to 
+newer ratings.
+
+## Integrating Date Rated
+
+* As mentioned in the previous section, people's taste in films change over time. Here is my idea to integrate this
+numerically into my solution:
+  * Normalise dateRated as a value between 1.0 and 0.8: 1.0 being the latest film you watched, 0.8 being the earliest.
+  * Scalar multiply this value to the film vector, similar to how we scalar multiply the film vector by myRating
+* (imdb) ratings.csv: 'Date Rated'
+* (letterboxd) diary.csv: 'Watched Date'
 
 ## Diversifying Results
 
@@ -59,7 +72,8 @@ action films is lower than documentaries. The vector feature leans towards actio
 #### Ideas to solve the quantity > meanRating problem
 
 **1** Completely disregard quantity
-e.g. if you rated 2 documentary films a 10, then the documentary feature in the vector is a 1.0. This does not factor in quantity whatsoever
+e.g. if you rated 2 documentary films a 10, then the documentary feature in the vector is a 1.0. This does not factor in
+quantity whatsoever
 
 What I don't like about this is that I feel like you should factor in quantity somehow. For example, if drama has a 
 mean rating of 7.6 across 300 films, that should have significance over 10 biography films with a mean rating of 7.9.
@@ -94,32 +108,6 @@ previous actions or explicit feedback"
 2. dot product
 3. Euclidean distance
 
-## Letterboxd Integration 
-
-* use diary.csv
-* create a temp letterboxd & imdb account, play around with IMDb rating a film multiple times and seeing what happens when that is imported into lb.
-
-### Pre-processing
-
-* work backwards (last entry in `diary.csv`) and then remove duplicate entries
-  * the diary.csv can contain multiple entries for a single film. we only want the most recent one (hence work backwards)
-* search by title
-  * lower case title
-  * remove:
-    * hyphen characters **with the preceding space attached!** (***hyphen characters are different between the 2 datasets! see MI fallout for example***)
-    * ! , " ' ( ) 
-  * sub:
-    * '&' and '+' for 'and'
-    * American words: e.g. 'colour' and 'color'
-  * manual intervention:
-    * star wars films
-    * harry potter philosopher and sorcerers stone
-    * 'dune' and 'dune: part one' (be mindful of the year, because dune 1984 exists)
-  * if there is a difference of 1 year between the films (e.g. ex machina has 2015 and 2014 year in the datasets), assume it's the same one
-  * print films that have no title matches, try to find edge cases and solve
-  * reduce NUM_OF_VOTES_THRESHOLD? because if a letterboxd user rates a film with <25k votes, it won't be in all-film-data.json
-* add this film to myFilmData, augmenting it with data (genres, runtime, numVotes, etc.) from allFilmData
-
 ## CHAT GPT
 
 Great choice! Content-based filtering can work well when you have user preferences and detailed information about items.
@@ -152,7 +140,7 @@ and actors.
 ### 4. Similarity Calculation:
 
 - Use a similarity metric (e.g., cosine similarity) to measure the similarity between the user profile vector and the 
-- vectors of all movies in the IMDb dataset.
+vectors of all movies in the IMDb dataset.
 - Calculate the similarity scores for each movie.
 
 ### 5. Recommendation Generation:
@@ -174,11 +162,11 @@ and actors.
 
 - **Weighting Features:** You might want to experiment with different weights for features based on their importance in 
 user preferences.
-
-- **Dynamic User Profiles:** Allow users to update their preferences over time to improve the accuracy of recommendations.
-
+- **Dynamic User Profiles:** Allow users to update their preferences over time to improve the accuracy of 
+recommendations.
 - **Scale and Efficiency:** Depending on the size of your IMDb dataset, consider optimizing your recommendation
 - algorithm for efficiency.
 
 Remember that this is a simplified guide, and you might need to adapt these steps based on the specific details and 
-requirements of your project. Also, as you develop your system, it's essential to gather user feedback and continuously refine your recommendation algorithm for better accuracy.
+requirements of your project. Also, as you develop your system, it's essential to gather user feedback and continuously 
+refine your recommendation algorithm for better accuracy.

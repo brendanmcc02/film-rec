@@ -2,11 +2,11 @@
 
 # imports
 from flask import Flask, request, jsonify
+from datetime import datetime
 import json
 import csv
 import numpy as np
 import os
-import string
 
 # global constants
 
@@ -15,10 +15,12 @@ MIN_IMDB_RATING = 0.0
 MIN_YEAR = 0
 MIN_NUMBER_OF_VOTES = 0
 MIN_RUNTIME = 0
+MIN_DATE_RATED = datetime(1, 1, 1)
 DIFF_IMDB_RATING = 0.0
 DIFF_YEAR = 0
 DIFF_NUMBER_OF_VOTES = 0
 DIFF_RUNTIME = 0
+DIFF_DATE_RATED = datetime(1, 1, 1)
 YEAR_NORMS = {}
 VECTOR_LENGTH = 27
 NUM_RECS = 6
@@ -148,6 +150,7 @@ def initRec():
                     "title": film['Title'],
                     "year": int(film['Year']),
                     "myRating": int(film['Your Rating']),
+                    "dateRated": datetime.strptime(film['Date Rated'], "%Y-%m-%d"),
                     "imdbRating": float(film['IMDb Rating']),
                     "numberOfVotes": int(film['Num Votes']),
                     "runtime": int(film['Runtime (mins)']),
@@ -162,14 +165,17 @@ def initRec():
     global MIN_YEAR
     global MIN_NUMBER_OF_VOTES
     global MIN_RUNTIME
+    global MIN_DATE_RATED
     global DIFF_IMDB_RATING
     global DIFF_YEAR
     global DIFF_NUMBER_OF_VOTES
     global DIFF_RUNTIME
+    global DIFF_DATE_RATED
     global YEAR_NORMS
 
     # initialise the min & max values of various attributes;
     # this is needed for normalising vector values.
+    # todo add date_rated shit here
     MIN_IMDB_RATING = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
     MAX_IMDB_RATING = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
     MIN_YEAR = allFilmDataFull[allFilmDataKeys[0]]['year']
@@ -587,6 +593,7 @@ def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys
                     "Title Type": "Movie",
                     "Year": allFilmDataFull[filmId]['year'],
                     "Your Rating": float(film['Rating']) * 2.0,
+                    "Date Rated": film['Watched Date'],
                     "IMDb Rating": allFilmDataFull[filmId]['imdbRating'],
                     "Num Votes": allFilmDataFull[filmId]['numberOfVotes'],
                     "Runtime (mins)": allFilmDataFull[filmId]['runtime'],
