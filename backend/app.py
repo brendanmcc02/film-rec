@@ -211,9 +211,9 @@ def initRec():
         # but was working on making a function out of the 8-line duplicate code. tbh I say we just work with the
         # duplicate code because the work-around is so fucking painful and not worth it and adds to much overhead.
         # DRY can go fuck itself in this very specific scenario
-        [maxImdbRating, maxYear, maxNumberOfVotes, maxRuntime, maxDateRated] =
-            (modifyMinMaxValues(allFilmDataFull[key], False, maxImdbRating, maxYear, maxNumberOfVotes,
-                                maxRuntime, maxDateRated))
+        # [maxImdbRating, maxYear, maxNumberOfVotes, maxRuntime, maxDateRated] =
+        #     (modifyMinMaxValues(allFilmDataFull[key], False, maxImdbRating, maxYear, maxNumberOfVotes,
+        #                         maxRuntime, maxDateRated))
 
     allGenres = sorted(allGenres)  # sort alphabetically
 
