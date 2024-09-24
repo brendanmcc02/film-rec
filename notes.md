@@ -72,6 +72,7 @@ does help this somewhat, but I want to have the best starting state possible, an
 
 1. don't curve genres
 2. balance quantity & mean rating of genres (see below)
+3. **new** 30-days vector, recency. pick up on trends
 
 vectors are unfavourably weighted towards film genres that have a high quantity.
 For example, there is a large quantity of action films, and a low quantity of documentary films, but the mean rating of 
