@@ -1,3 +1,5 @@
+rebrand as boxd-recs: augmentation to letterboxd? marketing
+
 ## For the potential future
 1. **Collaborative filtering:** can be introduced by asking other people to upload their imdb/letterboxd data. (reddit 
 post, social media post, asking friends).
