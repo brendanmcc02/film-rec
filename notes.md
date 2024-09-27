@@ -58,6 +58,10 @@ numerically into my solution:
      and today's date as 1.0.
   b. scalar multiply this value by the vector, like described previously.
 
+* **Samuel:** penalise older films much more heavily to get a noticeable effect.
+* rather than linearly normalising the scalar multiplicand, could do a sin/s curve
+* fix maxDateRated to a constant to today's date, not the latest film rated in the dataset.
+
 ### Doing Relative dateRated Normalization
 
 We want to do 0.8<x<1.0.
