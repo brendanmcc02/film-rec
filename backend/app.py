@@ -131,6 +131,10 @@ def initRec():
     except Exception as e:
         return "Error occurred with reading " + MYFILMDATA_FILENAME + ".\n" + str(e)
 
+    # delete ratings.csv or diary.csv - we don't want to store/keep any user info after they upload
+    if os.path.exists("../data/" + MYFILMDATA_FILENAME):
+        os.remove("../data/" + MYFILMDATA_FILENAME)
+
     # read in all-film-data.json
     allFilmDataFile = open('../data/all-film-data.json')
     allFilmDataFull = json.load(allFilmDataFile)
