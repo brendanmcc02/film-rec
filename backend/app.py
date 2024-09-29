@@ -354,6 +354,9 @@ def getRecs(isWildcard, allFilmDataKeys):
         maxRec = NUM_WILDCARDS
         vector = wildcardProfile
 
+    # pre-compute the vector magnitude to make cosine sim calculations more efficient
+    vectorMagnitude = np.linalg.norm(vector)
+
     # Similarity dict:
     # key = filmId, value = similarity to userProfile (float: 0 - 100.0)
     similarities = {}
@@ -361,7 +364,7 @@ def getRecs(isWildcard, allFilmDataKeys):
     # for each film in all-film-data-vectorized
     for filmId in allFilmDataKeys:
         # calculate similarity to userProfile
-        similarities[filmId] = cosineSimilarity(allFilmDataVec[filmId], vector)
+        similarities[filmId] = cosineSimilarity(allFilmDataVec[filmId], vector, vectorMagnitude)
 
     # sort similarities in descending order.
     similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
@@ -409,8 +412,9 @@ def oneHotEncode(vector, filmGenres, allGenres):
 
 
 # gets the cosine similarity between two vectors
-def cosineSimilarity(a, b):
-    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+# additionally, takes in the magnitude of vector b as pre-computation to make calculations more efficient
+def cosineSimilarity(a, b, bMagnitude):
+    return np.dot(a, b) / (np.linalg.norm(a) * bMagnitude)
 
 
 # given a user profile vector, curve the genres
