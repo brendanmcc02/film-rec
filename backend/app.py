@@ -30,8 +30,6 @@ DIFF_YEAR = 0
 DIFF_NUMBER_OF_VOTES = 0
 DIFF_RUNTIME = 0
 DIFF_DATE_RATED = datetime(1, 1, 1)
-IS_IMDB = True
-MYFILMDATA_FILENAME = ""
 
 # global variables
 userProfile = np.zeros(VECTOR_LENGTH)
@@ -46,6 +44,8 @@ minYear = 0
 minNumberOfVotes = 0
 minRuntime = 0
 minDateRated = datetime(1, 1, 1)
+isImdb = True
+myFilmDataFilename = ""
 
 app = Flask(__name__)
 
@@ -53,8 +53,8 @@ app = Flask(__name__)
 # verifies that user-uploaded ratings.csv or diary.csv is ok
 @app.route('/verifyFile', methods=['POST'])
 def verifyFile():
-    global IS_IMDB
-    global MYFILMDATA_FILENAME
+    global isImdb
+    global myFilmDataFilename
 
     # check if there's a file in the post request
     if 'file' not in request.files:
@@ -69,32 +69,32 @@ def verifyFile():
 
     # IMDB file
     if os.path.exists("../data/ratings.csv"):
-        IS_IMDB = True
-        MYFILMDATA_FILENAME = "ratings.csv"
+        isImdb = True
+        myFilmDataFilename = "ratings.csv"
         expectedFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL", "Title Type",
                                   "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes", "Release Date",
                                   "Directors"]
     elif os.path.exists("../data/diary.csv"):
-        IS_IMDB = False
-        MYFILMDATA_FILENAME = "diary.csv"
+        isImdb = False
+        myFilmDataFilename = "diary.csv"
         expectedFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating", "Rewatch", "Tags", "Watched Date"]
     else:
         return "Error: ratings.csv and diary.csv not found. Likely an error with writing to file.", 404
 
     try:
-        with open("../data/" + MYFILMDATA_FILENAME, encoding="utf8") as myFilmDataFile:
+        with open("../data/" + myFilmDataFilename, encoding="utf8") as myFilmDataFile:
             reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
                 # if there are more data than row headers:
                 if 'unexpectedData' in row:
-                    return "Error: " + MYFILMDATA_FILENAME + " does not conform to expected format.\n", 400
+                    return "Error: " + myFilmDataFilename + " does not conform to expected format.\n", 400
 
                 # if any of the expected row headers are not to be found:
                 keys = list(row.keys())
                 for k in keys:
                     if k not in expectedFilmAttributes:
-                        return ("Error: Row headers in " + MYFILMDATA_FILENAME +
+                        return ("Error: Row headers in " + myFilmDataFilename +
                                 " does not conform to expected format.\n", 400)
 
         # ratings.csv or diary.csv has no issues
@@ -104,7 +104,7 @@ def verifyFile():
     except Exception as e:
         # delete the files before exiting
         deleteFiles()
-        return "Error occurred with reading " + MYFILMDATA_FILENAME + ".\n" + str(e), 400
+        return "Error occurred with reading " + myFilmDataFilename + ".\n" + str(e), 400
 
 
 # initial recommendation of films to user
@@ -119,7 +119,7 @@ def initRec():
     # read in the file and append to list data structure
     try:
         myFilmDataList = []
-        with open("../data/" + MYFILMDATA_FILENAME, encoding='utf8') as myFilmDataFile:
+        with open("../data/" + myFilmDataFilename, encoding='utf8') as myFilmDataFile:
             reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
@@ -128,7 +128,7 @@ def initRec():
         return "Error: ratings.csv and diary.csv not found, check file name & file type.", 404
     except Exception as e:
         deleteFiles()
-        return "Error occurred with reading " + MYFILMDATA_FILENAME + ".\n" + str(e), 400
+        return "Error occurred with reading " + myFilmDataFilename + ".\n" + str(e), 400
 
     # delete ratings.csv or diary.csv - we don't want to store/keep any user info after they upload
     deleteFiles()
@@ -139,7 +139,7 @@ def initRec():
     allFilmDataKeys = list(allFilmDataFull.keys())
 
     # if the user uploaded letterboxd file, convert it to a format resembling the IMDb one
-    if not IS_IMDB:
+    if not isImdb:
         myFilmDataList = convertLetterboxdToImdb(myFilmDataList, allFilmDataFull, allFilmDataKeys)
 
     myFilmData = {}  # init as a dict
@@ -148,7 +148,7 @@ def initRec():
         # filter out non-movies, <RUNTIME_THRESHOLD minute runtime, and with no genres
         if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != "":
             # IMDb only: convert genres from comma-separated string to array
-            if IS_IMDB:
+            if isImdb:
                 genres = film['Genres'].replace("\"", "").split(", ")
             # this pre-processing was already performed in the letterboxd-to-IMDb conversion
             else:
@@ -183,15 +183,15 @@ def initRec():
     # initialise the min & max values of various attributes.
     # this is needed for normalising vector values.
     minImdbRating = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
-    MAX_IMDB_RATING = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
+    maxImdbRating = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
     minYear = allFilmDataFull[allFilmDataKeys[0]]['year']
-    MAX_YEAR = allFilmDataFull[allFilmDataKeys[0]]['year']
+    maxYear = allFilmDataFull[allFilmDataKeys[0]]['year']
     minNumberOfVotes = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
-    MAX_NUMBER_OF_VOTES = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
+    maxNumberOfVotes = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
     minRuntime = allFilmDataFull[allFilmDataKeys[0]]['runtime']
-    MAX_RUNTIME = allFilmDataFull[allFilmDataKeys[0]]['runtime']
+    maxRuntime = allFilmDataFull[allFilmDataKeys[0]]['runtime']
     minDateRated = myFilmData[myFilmDataKeys[0]]['dateRated']
-    MAX_DATE_RATED = datetime.now()
+    maxDateRated = datetime.now()
 
     global allFilmData
     allGenres = []  # list of unique genres
@@ -210,13 +210,13 @@ def initRec():
 
         # modify min & max of the various film attributes
         minImdbRating = min(minImdbRating, allFilmDataFull[key]['imdbRating'])
-        MAX_IMDB_RATING = max(MAX_IMDB_RATING, allFilmDataFull[key]['imdbRating'])
+        maxImdbRating = max(maxImdbRating, allFilmDataFull[key]['imdbRating'])
         minYear = min(minYear, allFilmDataFull[key]['year'])
-        MAX_YEAR = max(MAX_YEAR, allFilmDataFull[key]['year'])
+        maxYear = max(maxYear, allFilmDataFull[key]['year'])
         minNumberOfVotes = min(minNumberOfVotes, allFilmDataFull[key]['numberOfVotes'])
-        MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, allFilmDataFull[key]['numberOfVotes'])
+        maxNumberOfVotes = max(maxNumberOfVotes, allFilmDataFull[key]['numberOfVotes'])
         minRuntime = min(minRuntime, allFilmDataFull[key]['runtime'])
-        MAX_RUNTIME = max(MAX_RUNTIME, allFilmDataFull[key]['runtime'])
+        maxRuntime = max(maxRuntime, allFilmDataFull[key]['runtime'])
 
 
     allGenres = sorted(allGenres)  # sort alphabetically
@@ -231,30 +231,30 @@ def initRec():
     # iterate through my-film-data and alter the min & max values to ensure they are the same across both datasets
     for key in myFilmDataKeys:
         minImdbRating = min(minImdbRating, myFilmData[key]['imdbRating'])
-        MAX_IMDB_RATING = max(MAX_IMDB_RATING, myFilmData[key]['imdbRating'])
+        maxImdbRating = max(maxImdbRating, myFilmData[key]['imdbRating'])
         minYear = min(minYear, myFilmData[key]['year'])
-        MAX_YEAR = max(MAX_YEAR, myFilmData[key]['year'])
+        maxYear = max(maxYear, myFilmData[key]['year'])
         minNumberOfVotes = min(minNumberOfVotes, myFilmData[key]['numberOfVotes'])
-        MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, myFilmData[key]['numberOfVotes'])
+        maxNumberOfVotes = max(maxNumberOfVotes, myFilmData[key]['numberOfVotes'])
         minRuntime = min(minRuntime, myFilmData[key]['runtime'])
-        MAX_RUNTIME = max(MAX_RUNTIME, myFilmData[key]['runtime'])
+        maxRuntime = max(maxRuntime, myFilmData[key]['runtime'])
         minDateRated = min(minDateRated, myFilmData[key]['dateRated'])
 
     # perform some pre-computation to avoid repetitive computation
-    DIFF_IMDB_RATING = MAX_IMDB_RATING - minImdbRating
-    DIFF_YEAR = MAX_YEAR - minYear
-    DIFF_NUMBER_OF_VOTES = MAX_NUMBER_OF_VOTES - minNumberOfVotes
-    DIFF_RUNTIME = MAX_RUNTIME - minRuntime
-    DIFF_DATE_RATED = MAX_DATE_RATED - minDateRated
+    DIFF_IMDB_RATING = maxImdbRating - minImdbRating
+    DIFF_YEAR = maxYear - minYear
+    DIFF_NUMBER_OF_VOTES = maxNumberOfVotes - minNumberOfVotes
+    DIFF_RUNTIME = maxRuntime - minRuntime
+    DIFF_DATE_RATED = maxDateRated - minDateRated
 
     # pre-compute normalised years for each year
     yearNorms = {}
-    for y in range(minYear, MAX_YEAR + 1):
+    for y in range(minYear, maxYear + 1):
         yearNorms[y] = (y - minYear) / DIFF_YEAR
 
     # pre-compute normalised imdbRatings for each imdbRating
     imdbRatingNorms = {}
-    for i in np.arange(minImdbRating, MAX_IMDB_RATING + 0.1, 0.1):
+    for i in np.arange(minImdbRating, maxImdbRating + 0.1, 0.1):
         i = round(i,1)
         imdbRatingNorms[str(i)] = (i - minImdbRating) / DIFF_IMDB_RATING
 

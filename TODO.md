@@ -5,8 +5,8 @@
 - [x] integrate date rated - weight of how recently user has rated film.
 - [x] tidy up code, make things as efficient as possible
 - [x] fix windows upload diary.csv error
-- [ ] figure out how to speed up cosine sim comparisons (cache maybe?)
-- [ ] double check I didn't remove any necessary `global`s and fuck it up
+- [x] cache cosine sim comparisons
+- [x] double check I didn't remove any necessary `global`s and fuck it up
 - [x] deletion of ratings/diary.csv before saving to file
 - [ ] recent profile vector (last 30 days)
 - [ ] augment extra data? directors, country, language, etc.
