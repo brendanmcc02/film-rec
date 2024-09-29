@@ -180,15 +180,15 @@ def initRec():
     # initialise the min & max values of various attributes.
     # this is needed for normalising vector values.
     minImdbRating = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
-    maxImdbRating = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
+    MAX_IMDB_RATING = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
     minYear = allFilmDataFull[allFilmDataKeys[0]]['year']
-    maxYear = allFilmDataFull[allFilmDataKeys[0]]['year']
+    MAX_YEAR = allFilmDataFull[allFilmDataKeys[0]]['year']
     minNumberOfVotes = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
-    maxNumberOfVotes = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
+    MAX_NUMBER_OF_VOTES = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
     minRuntime = allFilmDataFull[allFilmDataKeys[0]]['runtime']
-    maxRuntime = allFilmDataFull[allFilmDataKeys[0]]['runtime']
+    MAX_RUNTIME = allFilmDataFull[allFilmDataKeys[0]]['runtime']
     minDateRated = myFilmData[myFilmDataKeys[0]]['dateRated']
-    maxDateRated = myFilmData[myFilmDataKeys[0]]['dateRated']
+    MAX_DATE_RATED = datetime.now()
 
     global allFilmData
     allGenres = []  # list of unique genres
@@ -206,14 +206,15 @@ def initRec():
                 allGenres.append(genre)
 
         # modify min & max of the various film attributes
-        # todo check this still works!!!
-        # todo brendan i am so sorry but its really late and i need to go to college tomorrow. bit of a mess,
-        # but was working on making a function out of the 8-line duplicate code. tbh I say we just work with the
-        # duplicate code because the work-around is so fucking painful and not worth it and adds to much overhead.
-        # DRY can go fuck itself in this very specific scenario
-        # [maxImdbRating, maxYear, maxNumberOfVotes, maxRuntime, maxDateRated] =
-        #     (modifyMinMaxValues(allFilmDataFull[key], False, maxImdbRating, maxYear, maxNumberOfVotes,
-        #                         maxRuntime, maxDateRated))
+        minImdbRating = min(minImdbRating, allFilmDataFull[key]['imdbRating'])
+        MAX_IMDB_RATING = max(MAX_IMDB_RATING, allFilmDataFull[key]['imdbRating'])
+        minYear = min(minYear, allFilmDataFull[key]['year'])
+        MAX_YEAR = max(MAX_YEAR, allFilmDataFull[key]['year'])
+        minNumberOfVotes = min(minNumberOfVotes, allFilmDataFull[key]['numberOfVotes'])
+        MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, allFilmDataFull[key]['numberOfVotes'])
+        minRuntime = min(minRuntime, allFilmDataFull[key]['runtime'])
+        MAX_RUNTIME = max(MAX_RUNTIME, allFilmDataFull[key]['runtime'])
+
 
     allGenres = sorted(allGenres)  # sort alphabetically
 
@@ -227,27 +228,26 @@ def initRec():
     # iterate through my-film-data and alter the min & max values to ensure they are the same across both datasets
     for key in myFilmDataKeys:
         minImdbRating = min(minImdbRating, myFilmData[key]['imdbRating'])
-        maxImdbRating = max(maxImdbRating, myFilmData[key]['imdbRating'])
+        MAX_IMDB_RATING = max(MAX_IMDB_RATING, myFilmData[key]['imdbRating'])
         minYear = min(minYear, myFilmData[key]['year'])
-        maxYear = max(maxYear, myFilmData[key]['year'])
+        MAX_YEAR = max(MAX_YEAR, myFilmData[key]['year'])
         minNumberOfVotes = min(minNumberOfVotes, myFilmData[key]['numberOfVotes'])
-        maxNumberOfVotes = max(maxNumberOfVotes, myFilmData[key]['numberOfVotes'])
+        MAX_NUMBER_OF_VOTES = max(MAX_NUMBER_OF_VOTES, myFilmData[key]['numberOfVotes'])
         minRuntime = min(minRuntime, myFilmData[key]['runtime'])
-        maxRuntime = max(maxRuntime, myFilmData[key]['runtime'])
+        MAX_RUNTIME = max(MAX_RUNTIME, myFilmData[key]['runtime'])
         minDateRated = min(minDateRated, myFilmData[key]['dateRated'])
-        maxDateRated = max(maxDateRated, myFilmData[key]['dateRated'])
 
     # perform some pre-computation to avoid repetitive computation
-    DIFF_IMDB_RATING = maxImdbRating - minImdbRating
-    DIFF_YEAR = maxYear - minYear
-    DIFF_NUMBER_OF_VOTES = maxNumberOfVotes - minNumberOfVotes
-    DIFF_RUNTIME = maxRuntime - minRuntime
-    DIFF_DATE_RATED = maxDateRated - minDateRated
+    DIFF_IMDB_RATING = MAX_IMDB_RATING - minImdbRating
+    DIFF_YEAR = MAX_YEAR - minYear
+    DIFF_NUMBER_OF_VOTES = MAX_NUMBER_OF_VOTES - minNumberOfVotes
+    DIFF_RUNTIME = MAX_RUNTIME - minRuntime
+    DIFF_DATE_RATED = MAX_DATE_RATED - minDateRated
 
     yearNorms = {}
 
     # pre-compute normalised years for each year
-    for y in range(minYear, maxYear + 1):
+    for y in range(minYear, MAX_YEAR + 1):
         yearNorms[y] = (y - minYear) / DIFF_YEAR
 
     # vectorize all-film-data
@@ -680,28 +680,6 @@ def letterboxdTitleConversion(letterboxdTitle, year):
             return "My Left Foot"
         case _:
             return letterboxdTitle
-
-
-def modifyMinMaxValues(film, isMyFilmDataFilm, maxImdbRating, maxYear, maxNumberOfVotes, maxRuntime, maxDateRated):
-    global minImdbRating
-    global minYear
-    global minNumberOfVotes
-    global minRuntime
-    global minDateRated
-    minImdbRating = min(minImdbRating, film['imdbRating'])
-    maxImdbRating = max(maxImdbRating, film['imdbRating'])
-    minYear = min(minYear, film['year'])
-    maxYear = max(maxYear, film['year'])
-    minNumberOfVotes = min(minNumberOfVotes, film['numberOfVotes'])
-    maxNumberOfVotes = max(maxNumberOfVotes, film['numberOfVotes'])
-    minRuntime = min(minRuntime, film['runtime'])
-    maxRuntime = max(maxRuntime, film['runtime'])
-
-    if isMyFilmDataFilm:
-        minDateRated = film['dateRated']
-        maxDateRated = film['dateRated']
-
-    return [maxImdbRating, maxYear, maxNumberOfVotes, maxRuntime, maxDateRated]
 
 
 if __name__ == "__main__":
