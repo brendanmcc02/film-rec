@@ -1,5 +1,4 @@
 # given ratings.csv or diary.csv, vectorize both myFilmData & allFilmData, and then recommend films
-from idlelib.iomenu import encoding
 
 # imports
 from flask import Flask, request, jsonify
@@ -12,10 +11,12 @@ import os
 # global constants
 RUNTIME_THRESHOLD = 40
 VECTOR_LENGTH = 27
-NUM_RECS = 6
-NUM_WILDCARDS = 2
-TOTAL_RECS = NUM_RECS + NUM_WILDCARDS
-FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
+NUM_USER_RECS = 4
+NUM_RECENCY_RECS = 2
+NUM_WILDCARD_RECS = 2
+TOTAL_RECS = NUM_USER_RECS + NUM_RECENCY_RECS + NUM_WILDCARD_RECS
+USER_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
+RECENCY_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the recency profile
 WILDCARD_FEEDBACK_FACTOR = 0.2  # the rate at which wildcard recs affect the wildcard profile
 # from experimenting (yearNorm weight was fixed at 0.3), ~0.75 was a good sweet spot in the sense that
 # it picked both single- and multi-genre films. The algorithm still heavily favoured the 4 genres that had the
@@ -33,8 +34,9 @@ DIFF_DATE_RATED = datetime(1, 1, 1)
 
 # global variables
 userProfile = np.zeros(VECTOR_LENGTH)
-profileChanges = []
+recencyProfile = np.zeros(VECTOR_LENGTH)
 wildcardProfile = np.zeros(VECTOR_LENGTH)
+profileChanges = []
 allFilmData = {}
 allFilmDataVec = {}
 recs = []
@@ -265,6 +267,10 @@ def initRec():
         # add to dict
         allFilmDataVec[key] = vector
 
+    # init a dict to store pre-computed dateRatedScalar values; more efficient.
+    # key: film id, value: dateRatedScalar
+    dateRatedScalarDict = {}
+
     # vectorize my-film-data
     for key in myFilmDataKeys:
         # vectorize the film
@@ -274,6 +280,7 @@ def initRec():
             # dateRatedScalar: normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
             dateRatedScalar = (((myFilmData[key]['dateRated'] - minDateRated) / DIFF_DATE_RATED) *
                                (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
+            dateRatedScalarDict[key] = dateRatedScalar  # add this value to the dict for pre-computation
             # scalar multiply by myRating and dateRated
             vector[i] *= (myFilmData[key]['myRating'] / 10.0) * dateRatedScalar
 
@@ -282,19 +289,23 @@ def initRec():
 
     weightedAverageSum = 0.0  # init to some temp value
 
-    # create us profile based on my-film-data-vectorized:
+    # create user profile based on my-film-data-vectorized:
     global userProfile
 
     for key in myFilmDataKeys:
         # sum the (already weighted) vectors together
         userProfile += myFilmDataVec[key]
         # increment the weighted average
-        weightedAverageSum += (myFilmData[key]['myRating'] / 10.0)
+        weightedAverageSum += (myFilmData[key]['myRating'] / 10.0) + (dateRatedScalarDict[key])
 
     # divide the userProfile vector by the weighted average
     userProfile = np.divide(userProfile, weightedAverageSum)
 
     # print("Initial userProfile:\n" + str(userProfile))
+
+    initRecencyProfile(myFilmData, myFilmDataKeys, myFilmDataVec, maxDateRated)
+
+    # print("Initial recencyProfile:\n" + str(recencyProfile))
 
     initWildcardProfile()
 
@@ -305,7 +316,28 @@ def initRec():
     return jsonify(recs), 200
 
 
-# initialises the wildcard profile.
+# initialises the recency profile
+def initRecencyProfile(myFilmData, myFilmDataKeys, myFilmDataVec, maxDateRated):
+    global recencyProfile
+    weightedAverageSum = 0
+
+    for key in myFilmDataKeys:
+        # if the film was rated in the last 30 days:
+        daysDiff = maxDateRated - myFilmData[key]['dateRated']
+        if daysDiff.days <= 30:
+            # sum the (already weighted) vectors together
+            recencyProfile += myFilmDataVec[key]
+            # increment the weighted average
+            weightedAverageSum += (myFilmData[key]['myRating'] / 10.0)
+        else:
+            # terminate; ratings.csv & diary.csv are sorted by date (latest first, oldest last),
+            # so no need to look further
+            break
+
+    recencyProfile = np.divide(recencyProfile, weightedAverageSum)
+
+
+# initialises the wildcard profile
 # imdbRating, runtime & numVotes are fixed, the rest (year & all genres) are inverted
 def initWildcardProfile():
     global wildcardProfile
@@ -333,26 +365,32 @@ def getWeight(i):
             return GENRE_WEIGHT
 
 
-# generate both non-wildcard & wildcard recs
+# generate recs
 def genRecs():
     allFilmDataKeys = list(allFilmData.keys())
 
     # generate recs
-    getRecs(False, allFilmDataKeys)  # generate non-wildcard recs
-    getRecs(True, allFilmDataKeys)  # generate wildcard recs
-
+    getRecs("user", allFilmDataKeys)      # generate user recs
+    getRecs("recency", allFilmDataKeys)   # generate recency recs
+    getRecs("wildcard", allFilmDataKeys)  # generate wildcard recs
 
 # get film recommendations
-def getRecs(isWildcard, allFilmDataKeys):
+def getRecs(recType, allFilmDataKeys):
     global recs
 
-    if not isWildcard:
+    if recType == "wildcard":
+        maxRec = NUM_WILDCARD_RECS
+        vector = wildcardProfile
+    elif recType == "recency":
+        maxRec = NUM_RECENCY_RECS
+        vector = recencyProfile
+    elif recType == "user":
         recs = []
-        maxRec = NUM_RECS
+        maxRec = NUM_USER_RECS
         vector = userProfile
     else:
-        maxRec = NUM_WILDCARDS
-        vector = wildcardProfile
+        print("unknown rec type: " + str(recType))
+        return "unknown rec type: ", 400
 
     # pre-compute the vector magnitude to make cosine sim calculations more efficient
     vectorMagnitude = np.linalg.norm(vector)
@@ -369,14 +407,28 @@ def getRecs(isWildcard, allFilmDataKeys):
     # sort similarities in descending order.
     similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
 
+    duplicateRec = False
+
     for i in range(0, maxRec):
         filmId = similarities[i][0]
-        film = allFilmData[filmId]
-        similarityScore = similarities[i][1]
-        film['id'] = filmId
-        film['similarityScore'] = round(similarityScore * 100.0, 2)
-        film['isWildcard'] = isWildcard
-        recs.append(film)
+        # check if the recommended film has already been recommended by another vector:
+        # this check exists because we don't want the userProfile vector recommending the same films as
+        # the recencyProfile for example
+        for rec in recs:
+            if rec['id'] == filmId:
+                maxRec += 1
+                duplicateRec = True
+                break
+
+        if not duplicateRec:
+            film = allFilmData[filmId]
+            similarityScore = similarities[i][1]
+            film['id'] = filmId
+            film['similarityScore'] = round(similarityScore * 100.0, 2)
+            film['recType'] = recType
+            recs.append(film)
+
+        duplicateRec = False
 
 
 # given a film, return it's vectorized form (return type: list)
@@ -444,59 +496,74 @@ def response():
     index = int(request.args.get('index'))
     add = request.args.get('add').lower() == 'true'
 
-    # non-wildcard rec
-    if index < NUM_RECS:
-        returnText = changeVector(index, add, False)
-    # wildcard rec
+    SUM_USER_RECENCY_RECS = NUM_USER_RECS + NUM_RECENCY_RECS
+
+    if index < NUM_USER_RECS:
+        returnText = changeVector(index, add, "user")
+    elif index < SUM_USER_RECENCY_RECS:
+        returnText = changeVector(index, add, "recency")
     else:
-        returnText = changeVector(index, add, True)
+        returnText = changeVector(index, add, "wildcard")
 
     return returnText, 200
 
 
-# changes vector parameters of either user profile or wildcard profile
-def changeVector(index, add, isWildcard):
+# changes vector parameters
+def changeVector(index, add, recType):
     global userProfile
+    global recencyProfile
     global wildcardProfile
     global profileChanges
 
     recVector = allFilmDataVec[recs[index]['id']]
 
-    if isWildcard:
+    # todo can these repetitive if-else chains be simplified?
+
+    if recType == "wildcard":
         vectorChange = (recVector - wildcardProfile) * WILDCARD_FEEDBACK_FACTOR
+    elif recType == "recency":
+        vectorChange = (recVector - recencyProfile) * RECENCY_FEEDBACK_FACTOR
+    elif recType == "user":
+        vectorChange = (recVector - userProfile) * USER_FEEDBACK_FACTOR
     else:
-        vectorChange = (recVector - userProfile) * FEEDBACK_FACTOR
+        return "unknown rec type:" + str(recType)
 
     profileChanges[index] = vectorChange  # store the vector change
 
     # if the rec was liked
     if add:
-        if isWildcard:
+        if recType == "wildcard":
             wildcardProfile += vectorChange
-        else:
+        elif recType == "recency":
+            recencyProfile += vectorChange
+        elif recType == "user":
             userProfile += vectorChange
+        else:
+            return "unknown rec type:" + str(recType)
         recStates[index] = 1
     # else, the rec was disliked
     else:
-        if isWildcard:
+        if recType == "wildcard":
             wildcardProfile -= vectorChange
-        else:
+        elif recType == "recency":
+            recencyProfile -= vectorChange
+        elif recType == "user":
             userProfile -= vectorChange
+        else:
+            return "unknown rec type:" + str(recType)
         recStates[index] = -1
 
     # after changing vector parameters, ensure that all vector features are >= 0.0 && <= 1.0
-    if isWildcard:
+    if recType == "wildcard":
         keepBoundary(wildcardProfile)
-    else:
+    elif recType == "recency":
+        keepBoundary(recencyProfile)
+    elif recType == "user":
         keepBoundary(userProfile)
-
-    # todo temp
-    if isWildcard:
-        print("wildcard profile:\n" + str(wildcardProfile))
     else:
-        print("user profile:\n" + str(userProfile))
+        return "unknown rec type:" + str(recType)
 
-    return ("changed " + ("wildcard" if isWildcard else "user") + " profile due to " +
+    return ("changed " + recs[index]['recType'] + " profile due to " +
             ("liking" if add else "disliking") + " of " + recs[index]['title'])
 
 
@@ -515,50 +582,55 @@ def keepBoundary(vector):
 def undoResponse():
     index = int(request.args.get('index'))
     add = request.args.get('add').lower() == 'true'
+    SUM_USER_RECENCY_RECS = NUM_USER_RECS + NUM_RECENCY_RECS
 
-    # non-wildcard rec
-    if index < NUM_RECS:
-        return undoChange(index, add, False), 200
-    # wildcard rec
+    if index < NUM_USER_RECS:
+        return undoChange(index, add, "user"), 200
+    if index < SUM_USER_RECENCY_RECS:
+        return undoChange(index, add, "recency"), 200
     else:
-        return undoChange(index, add, True), 200
+        return undoChange(index, add, "wildcard"), 200
 
 
 # undo the vector parameter changes
-def undoChange(index, add, isWildcard):
+def undoChange(index, add, recType):
     global userProfile
+    global recencyProfile
     global wildcardProfile
     global profileChanges
 
     vectorChange = profileChanges[index]
 
+    # todo can these repetitive if-else chains be simplified?
     # if the film was previously disliked
     if add:
-        if isWildcard:
+        if recType == "wildcard":
             wildcardProfile += vectorChange
-        else:
+        elif recType == "recency":
+            recencyProfile += vectorChange
+        elif recType == "user":
             userProfile += vectorChange
+        else:
+            return "unknown rec type:" + str(recType)
 
         recStates[index] = 0
     # else, the film was previously liked
     else:
-        if isWildcard:
+        if recType == "wildcard":
             wildcardProfile -= vectorChange
-        else:
+        elif recType == "recency":
+            recencyProfile -= vectorChange
+        elif recType == "user":
             userProfile -= vectorChange
+        else:
+            return "unknown rec type:" + str(recType)
 
         recStates[index] = 0
-
-    # todo temp
-    if isWildcard:
-        print("wildcard profile:\n" + str(wildcardProfile))
-    else:
-        print("user profile:\n" + str(userProfile))
 
     # make the profile change a zero vector at the specified index
     profileChanges[index] = np.zeros(VECTOR_LENGTH)
 
-    return ("undid " + ("wildcard" if isWildcard else "user") + " profile change due to previous " +
+    return ("undid " + recType + " profile change due to previous " +
             ("disliking" if add else "liking") + " of " + recs[index]['title'])
 
 

@@ -183,7 +183,7 @@ const App = () => {
 
     let filmRecs = films.map((film, i) =>
         <div key={i}>
-            <p>{film.similarityScore}% - {film.title} ({film.year}), {film.genres}. Wildcard: {film.wildcard}</p>
+            <p>{film.similarityScore}% - {film.title} ({film.year}), {film.genres}. recType: {film.recType}</p>
             <button className="up-button" onClick={() => {handleUpButton(i);}}>
                 Up
             </button>
