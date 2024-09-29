@@ -23,6 +23,7 @@ GENRE_WEIGHT = 0.75
 # from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
 YEAR_WEIGHT = 0.3
 RUNTIME_WEIGHT = 0.3
+DATE_RATED_WEIGHT = 0.5
 DIFF_IMDB_RATING = 0.0
 DIFF_YEAR = 0
 DIFF_NUMBER_OF_VOTES = 0
@@ -244,27 +245,33 @@ def initRec():
     DIFF_RUNTIME = MAX_RUNTIME - minRuntime
     DIFF_DATE_RATED = MAX_DATE_RATED - minDateRated
 
-    yearNorms = {}
-
     # pre-compute normalised years for each year
+    yearNorms = {}
     for y in range(minYear, MAX_YEAR + 1):
         yearNorms[y] = (y - minYear) / DIFF_YEAR
+
+    # pre-compute normalised imdbRatings for each imdbRating
+    imdbRatingNorms = {}
+    for i in np.arange(minImdbRating, MAX_IMDB_RATING + 0.1, 0.1):
+        i = round(i,1)
+        imdbRatingNorms[str(i)] = (i - minImdbRating) / DIFF_IMDB_RATING
 
     # vectorize all-film-data
     for key in allFilmDataKeys:
         # vectorize the film
-        vector = vectorize(allFilmData[key], allGenres, yearNorms)
+        vector = vectorize(allFilmData[key], allGenres, yearNorms, imdbRatingNorms)
         # add to dict
         allFilmDataVec[key] = vector
 
     # vectorize my-film-data
     for key in myFilmDataKeys:
         # vectorize the film
-        vector = vectorize(myFilmData[key], allGenres, yearNorms)
+        vector = vectorize(myFilmData[key], allGenres, yearNorms, imdbRatingNorms)
 
         for i in range(0, VECTOR_LENGTH):
-            # dateRatedScalar: normalize the dateRated as a float between 0.8 and 1.0.
-            dateRatedScalar = (((myFilmData[key]['dateRated'] - minDateRated) / DIFF_DATE_RATED) * 0.2) + 0.8
+            # dateRatedScalar: normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
+            dateRatedScalar = (((myFilmData[key]['dateRated'] - minDateRated) / DIFF_DATE_RATED) *
+                               (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
             # scalar multiply by myRating and dateRated
             vector[i] *= (myFilmData[key]['myRating'] / 10.0) * dateRatedScalar
 
@@ -368,13 +375,13 @@ def getRecs(isWildcard, allFilmDataKeys):
 
 
 # given a film, return it's vectorized form (return type: list)
-def vectorize(film, allGenres, yearNorms):
+def vectorize(film, allGenres, yearNorms, imdbRatingNorms):
     vector = []
     # 1. normalise the year; apply weight
     yearNorm = yearNorms[film['year']] * YEAR_WEIGHT
     vector.append(yearNorm)
     # 2. normalise imdbRating
-    imdbRatingNorm = (film['imdbRating'] - minImdbRating) / DIFF_IMDB_RATING
+    imdbRatingNorm = imdbRatingNorms[str(film['imdbRating'])]
     vector.append(imdbRatingNorm)
     # 3. normalise numberOfVotes
     numberOfVotesNorm = (film['numberOfVotes'] - minNumberOfVotes) / DIFF_NUMBER_OF_VOTES
