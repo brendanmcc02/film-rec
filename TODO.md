@@ -9,6 +9,8 @@
 - [x] double check I didn't remove any necessary `global`s and fuck it up
 - [x] deletion of ratings/diary.csv before saving to file
 - [x] recent profile vector (last 30 days)
+- [ ] letterboxd conversion: rather than relying on diary.csv, append latest `Watched Date` to corresponding entry in
+`ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in ratings.csv
 - [ ] augment extra data? directors, country, language, etc.
 - [ ] figure out how to diversify recs
 

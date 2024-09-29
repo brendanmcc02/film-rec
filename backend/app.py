@@ -328,6 +328,8 @@ def initRecencyProfile(myFilmData, myFilmDataKeys, myFilmDataVec, maxDateRated):
             # sum the (already weighted) vectors together
             recencyProfile += myFilmDataVec[key]
             # increment the weighted average
+            # note: not adding dateRatedScalar to the weightedAverageSum because I don't want vectors to be
+            # scalar multiplied because we are only dealing with films in the last 30 days
             weightedAverageSum += (myFilmData[key]['myRating'] / 10.0)
         else:
             # terminate; ratings.csv & diary.csv are sorted by date (latest first, oldest last),
