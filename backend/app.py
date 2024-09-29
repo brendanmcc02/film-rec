@@ -1,4 +1,5 @@
 # given ratings.csv or diary.csv, vectorize both myFilmData & allFilmData, and then recommend films
+from idlelib.iomenu import encoding
 
 # imports
 from flask import Flask, request, jsonify
@@ -61,13 +62,8 @@ def verifyFile():
 
     file = request.files['file']
 
-    # delete ratings.csv
-    if os.path.exists("../data/ratings.csv"):
-        os.remove("../data/ratings.csv")
-
-    # delete diary.csv
-    if os.path.exists("../data/diary.csv"):
-        os.remove("../data/diary.csv")
+    # delete diary.csv & ratings.csv
+    deleteFiles()
 
     file.save("../data/" + file.filename)  # write to file
 
@@ -107,11 +103,7 @@ def verifyFile():
         return "Error: ratings.csv and diary.csv not found, check file name & file type.", 404
     except Exception as e:
         # delete the files before exiting
-        if os.path.exists("../data/ratings.csv"):
-            os.remove("../data/ratings.csv")
-
-        if os.path.exists("../data/diary.csv"):
-            os.remove("../data/diary.csv")
+        deleteFiles()
         return "Error occurred with reading " + MYFILMDATA_FILENAME + ".\n" + str(e), 400
 
 
@@ -127,7 +119,7 @@ def initRec():
     # read in the file and append to list data structure
     try:
         myFilmDataList = []
-        with open("../data/" + MYFILMDATA_FILENAME, newline='') as myFilmDataFile:
+        with open("../data/" + MYFILMDATA_FILENAME, encoding='utf8') as myFilmDataFile:
             reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
@@ -135,11 +127,11 @@ def initRec():
     except FileNotFoundError:
         return "Error: ratings.csv and diary.csv not found, check file name & file type.", 404
     except Exception as e:
-        return "Error occurred with reading " + MYFILMDATA_FILENAME + ".\n" + str(e)
+        deleteFiles()
+        return "Error occurred with reading " + MYFILMDATA_FILENAME + ".\n" + str(e), 400
 
     # delete ratings.csv or diary.csv - we don't want to store/keep any user info after they upload
-    if os.path.exists("../data/" + MYFILMDATA_FILENAME):
-        os.remove("../data/" + MYFILMDATA_FILENAME)
+    deleteFiles()
 
     # read in all-film-data.json
     allFilmDataFile = open('../data/all-film-data.json')
@@ -694,6 +686,15 @@ def letterboxdTitleConversion(letterboxdTitle, year):
             return "My Left Foot"
         case _:
             return letterboxdTitle
+
+
+# deletes ratings.csv & diary.csv
+def deleteFiles():
+    if os.path.exists("../data/ratings.csv"):
+        os.remove("../data/ratings.csv")
+
+    if os.path.exists("../data/diary.csv"):
+        os.remove("../data/diary.csv")
 
 
 if __name__ == "__main__":

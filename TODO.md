@@ -3,7 +3,9 @@
 ## New TODO List
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
 - [x] integrate date rated - weight of how recently user has rated film.
-- [ ] tidy up code, make things as efficient as possible
+- [x] tidy up code, make things as efficient as possible
+- [x] fix windows upload diary.csv error
+- [ ] figure out how to speed up cosine sim comparisons (cache maybe?)
 - [ ] double check I didn't remove any necessary `global`s and fuck it up
 - [x] deletion of ratings/diary.csv before saving to file
 - [ ] recent profile vector (last 30 days)
@@ -40,7 +42,6 @@
 - [x] don't fix imdbRating to 1.0
 - [x] instead of writing all-film-data-vec, my-film-data, etc. to file, create global variables in app.py, and then 
 create endpoints for getters/setters
-- [ ] figure out how to speed up cosine sim comparisons (cache maybe?)
 - [ ] drop numVotes threshold to 10k?
 
 ## Backend
