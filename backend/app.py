@@ -86,7 +86,7 @@ def verifyFile():
         return "Error: ratings.csv and diary.csv not found. Likely an error with writing to file.", 404
 
     try:
-        with open("../data/" + MYFILMDATA_FILENAME, newline='') as myFilmDataFile:
+        with open("../data/" + MYFILMDATA_FILENAME, encoding="utf8") as myFilmDataFile:
             reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
@@ -106,6 +106,12 @@ def verifyFile():
     except FileNotFoundError:
         return "Error: ratings.csv and diary.csv not found, check file name & file type.", 404
     except Exception as e:
+        # delete the files before exiting
+        if os.path.exists("../data/ratings.csv"):
+            os.remove("../data/ratings.csv")
+
+        if os.path.exists("../data/diary.csv"):
+            os.remove("../data/diary.csv")
         return "Error occurred with reading " + MYFILMDATA_FILENAME + ".\n" + str(e), 400
 
 
@@ -284,7 +290,7 @@ def initRec():
 
     weightedAverageSum = 0.0  # init to some temp value
 
-    # create user profile based on my-film-data-vectorized:
+    # create us profile based on my-film-data-vectorized:
     global userProfile
 
     for key in myFilmDataKeys:
@@ -590,7 +596,7 @@ def getTotalRecs():
 def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys):
     new_myFilmDataList = []
 
-    # reverse the list, we want to work with the most recent entries first
+    # reverse the list. we want to work with the most recent entries first
     old_myFilmDataList = reversed(old_myFilmDataList)
 
     # dict where the key is the filmTitle and filmYear concatenated.
@@ -605,10 +611,10 @@ def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys
 
         # ensure the film is not a duplicate
         if concatString not in filmTitleYearDict:
-            filmTitleYearDict[concatString] = True
             filmId = searchFilm(filmTitle, filmYear, allFilmDataFull, allFilmDataKeys)
 
             if filmId != "-1":
+                filmTitleYearDict[concatString] = True  # add to dict
                 new_myFilmDataList.append({
                     "Const": filmId,
                     "Title": allFilmDataFull[filmId]['title'],
@@ -621,8 +627,7 @@ def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys
                     "Runtime (mins)": allFilmDataFull[filmId]['runtime'],
                     "Genres": allFilmDataFull[filmId]['genres']
                 })
-            else:
-                del filmTitleYearDict[concatString]  # delete the dict entry
+            # else:
                 # print("film not found. title: " + filmTitle + ". year:" + str(filmYear))
         # else:
         #     print("film already exists. title: " + filmTitle + ". year:" + str(filmYear))
@@ -638,7 +643,7 @@ def searchFilm(title, year, allFilmDataFull, allFilmDataKeys):
             # if there is a difference <= 1 between the years of the matched films
             # this check exists because some films have different year releases between letterboxd & imdb.
             # e.g. Ex Machina is 2014 in IMDb, but 2015 in Letterboxd
-            if abs(int(year) - allFilmDataFull[filmId]['year']) <= 1:
+            if abs(year - allFilmDataFull[filmId]['year']) <= 1:
                 return filmId
 
     return "-1"
@@ -646,13 +651,11 @@ def searchFilm(title, year, allFilmDataFull, allFilmDataKeys):
 
 # title pre-processing for letterboxd vs imdb conversions
 def letterboxdTitlePreprocessing(title):
-    res = title.replace("–", "-")  # hyphen characters are different between the datasets
-    # remove symbols
-    res = (res.replace(" -", " ").replace("!", "").replace(",", "").replace("\"", "").replace("\'", "").replace("(", "")
-           .replace(")", "").replace(" ", ""))
+    # some symbols are different between the datasets
+    res = title.replace("–", "-").replace(" ", "").replace("&", "and")
 
-    # sub symbols
-    res = res.replace("&", "and").replace("colour", "color").replace("Colour", "Color")
+    # American English translations
+    res = res.replace("colour", "color").replace("Colour", "Color")
 
     # lower case
     return res.lower()
