@@ -30,11 +30,6 @@ exported letterboxd data is very limited (only title, year, rating), but could b
 
 however, the only advantage of using letterboxd's data is the accurate date rated. otherwise it's not very helpful.
 
-## Figuring out the user profile
-
-What I don't like about year is that a film released in 1900 that is given a 10 has the same impact on the user profile 
-vector as a 1900 film with a 1 rating.
-
 ## Recommender Systems eBook
 
 **Novelty:** very important to recommend novel or unexpected films. Users are also interested in expanding their 
