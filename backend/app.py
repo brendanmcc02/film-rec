@@ -271,21 +271,24 @@ def initRec():
     # key: film id, value: dateRatedScalar
     dateRatedScalarDict = {}
 
+    # init a dict to store pre-computed normalised myRating values; more efficient.
+    # key: film id, value: normalisedMyRating
+    myRatingScalarDict = {}
+
     # vectorize my-film-data
     for key in myFilmDataKeys:
         # vectorize the film
         vector = vectorize(myFilmData[key], allGenres, yearNorms, imdbRatingNorms)
+        # dateRatedScalar: normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
+        dateRatedScalar = (((myFilmData[key]['dateRated'] - minDateRated) / DIFF_DATE_RATED) *
+                           (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
+        dateRatedScalarDict[key] = dateRatedScalar  # add this value to the dict for pre-computation
 
-        for i in range(0, VECTOR_LENGTH):
-            # dateRatedScalar: normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
-            dateRatedScalar = (((myFilmData[key]['dateRated'] - minDateRated) / DIFF_DATE_RATED) *
-                               (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
-            dateRatedScalarDict[key] = dateRatedScalar  # add this value to the dict for pre-computation
-            # scalar multiply by myRating and dateRated
-            vector[i] *= (myFilmData[key]['myRating'] / 10.0) * dateRatedScalar
+        myRatingScalar = round((myFilmData[key]['myRating'] / 10.0), 1)
+        myRatingScalarDict[key] = myRatingScalar
 
-        # add to dict
-        myFilmDataVec[key] = vector
+        # add scalar-multiplied vector to dict
+        myFilmDataVec[key] = vector * myRatingScalar * dateRatedScalar
 
     weightedAverageSum = 0.0  # init to some temp value
 
@@ -296,7 +299,7 @@ def initRec():
         # sum the (already weighted) vectors together
         userProfile += myFilmDataVec[key]
         # increment the weighted average
-        weightedAverageSum += (myFilmData[key]['myRating'] / 10.0) + (dateRatedScalarDict[key])
+        weightedAverageSum += myRatingScalarDict[key] + dateRatedScalarDict[key]
 
     # divide the userProfile vector by the weighted average
     userProfile = np.divide(userProfile, weightedAverageSum)
@@ -433,8 +436,9 @@ def getRecs(recType, allFilmDataKeys):
         duplicateRec = False
 
 
-# given a film, return it's vectorized form (return type: list)
+# given a film, return it's vectorized form (return type: numpy vector)
 def vectorize(film, allGenres, yearNorms, imdbRatingNorms):
+    # init as a list, will be converted to numpy vector type later
     vector = []
     # 1. normalise the year; apply weight
     yearNorm = yearNorms[film['year']] * YEAR_WEIGHT
@@ -449,13 +453,13 @@ def vectorize(film, allGenres, yearNorms, imdbRatingNorms):
     runtimeNorm = ((film['runtime'] - minRuntime) / DIFF_RUNTIME) * RUNTIME_WEIGHT
     vector.append(runtimeNorm)
     # 5. one-hot encoding on genres
-    oneHotEncode(vector, film['genres'], allGenres)
+    oneHotEncodeGenres(vector, film['genres'], allGenres)
 
-    return vector
+    return np.array(vector)
 
 
 # given a vector, append the one-hot encoding of genres to the vector
-def oneHotEncode(vector, filmGenres, allGenres):
+def oneHotEncodeGenres(vector, filmGenres, allGenres):
     for g in allGenres:
         if g in filmGenres:
             vector.append(1)
@@ -707,8 +711,8 @@ def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys
                     "Runtime (mins)": allFilmDataFull[filmId]['runtime'],
                     "Genres": allFilmDataFull[filmId]['genres']
                 })
-            else:
-                print("film not found. title: " + filmTitle + ". year:" + str(filmYear))
+            # else:
+            #     print("film not found. title: " + filmTitle + ". year:" + str(filmYear))
         # else:
         #     print("film already exists. title: " + filmTitle + ". year:" + str(filmYear))
 

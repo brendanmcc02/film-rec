@@ -9,9 +9,8 @@
 - [x] double check I didn't remove any necessary `global`s and fuck it up
 - [x] deletion of ratings/diary.csv before saving to file
 - [x] recent profile vector (last 30 days)
-- [ ] I believe letterboxd title conversions are vastly inefficient - compute title conversion once for each film and 
-store it in a dict? I think right now I'm doing very repetitive calculations 
-- [ ] work with np vector instead of list? is it more efficient?
+- [x] letterboxd search can be much more efficient 
+- [x] work with np vector instead of list? is it more efficient?
 - [ ] letterboxd conversion: rather than relying on diary.csv, append latest `Watched Date` to corresponding entry in
 `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in ratings.csv
 - [ ] augment extra data? directors, country, language, etc.
