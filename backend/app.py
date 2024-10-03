@@ -64,48 +64,41 @@ def verifyFile():
 
     file = request.files['file']
 
-    # delete diary.csv & ratings.csv
-    deleteFiles()
+    myFilmDataFilename = file.filename
 
     file.save("../data/" + file.filename)  # write to file
 
-    # IMDB file
-    if os.path.exists("../data/ratings.csv"):
-        isImdb = True
-        myFilmDataFilename = "ratings.csv"
-        expectedFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL", "Title Type",
-                                  "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes", "Release Date",
-                                  "Directors"]
-    elif os.path.exists("../data/diary.csv"):
-        isImdb = False
-        myFilmDataFilename = "diary.csv"
-        expectedFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating", "Rewatch", "Tags", "Watched Date"]
-    else:
-        return "Error: ratings.csv and diary.csv not found. Likely an error with writing to file.", 404
+    expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
+                                      "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
+                                      "Release Date", "Directors"]
+    expectedLetterboxdFileFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating", "Rewatch", "Tags",
+                                            "Watched Date"]
 
     try:
-        with open("../data/" + myFilmDataFilename, encoding="utf8") as myFilmDataFile:
+        with open("../data/" + myFilmDataFilename, encoding='utf-8') as myFilmDataFile:
             reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
                 # if there are more data than row headers:
                 if 'unexpectedData' in row:
-                    return "Error: " + myFilmDataFilename + " does not conform to expected format.\n", 400
+                    return "Error: " + myFilmDataFilename + " has more data than row headers.\n", 400
 
                 # if any of the expected row headers are not to be found:
                 keys = list(row.keys())
                 for k in keys:
-                    if k not in expectedFilmAttributes:
-                        return ("Error: Row headers in " + myFilmDataFilename +
-                                " does not conform to expected format.\n", 400)
+                    if k not in expectedImdbFileFilmAttributes:
+                        isImdb = False  # imdb file format not found, so must be letterboxd
+                        if k not in expectedLetterboxdFileFilmAttributes:
+                            return ("Error: Row headers in " + myFilmDataFilename +
+                                    " does not conform to expected format.\n", 400)
 
         # ratings.csv or diary.csv has no issues
         return "Upload Success.", 200
     except FileNotFoundError:
-        return "Error: ratings.csv and diary.csv not found, check file name & file type.", 404
+        return "Error: file not found.", 404
     except Exception as e:
         # delete the files before exiting
-        deleteFiles()
+        deleteRatingsFile()
         return "Error occurred with reading " + myFilmDataFilename + ".\n" + str(e), 400
 
 
@@ -127,13 +120,13 @@ def initRec():
             for row in reader:
                 myFilmDataList.append(row)
     except FileNotFoundError:
-        return "Error: ratings.csv and diary.csv not found, check file name & file type.", 404
+        return "Error: " + myFilmDataFilename + " not found, check file name & file type.", 404
     except Exception as e:
-        deleteFiles()
+        deleteRatingsFile()
         return "Error occurred with reading " + myFilmDataFilename + ".\n" + str(e), 400
 
-    # delete ratings.csv or diary.csv - we don't want to store/keep any user info after they upload
-    deleteFiles()
+    # delete the user-uploaded .csv file - we don't want to store/keep any user info after they upload
+    deleteRatingsFile()
 
     # read in all-film-data.json
     allFilmDataFile = open('../data/all-film-data.json')
@@ -782,13 +775,10 @@ def letterboxdToImdbTitleConversion(letterboxdTitle, year):
             return letterboxdTitle
 
 
-# deletes ratings.csv & diary.csv
-def deleteFiles():
-    if os.path.exists("../data/ratings.csv"):
-        os.remove("../data/ratings.csv")
-
-    if os.path.exists("../data/diary.csv"):
-        os.remove("../data/diary.csv")
+# deletes user-uploaded ratings csv file
+def deleteRatingsFile():
+    if os.path.exists("../data/" + myFilmDataFilename):
+        os.remove("../data/" + myFilmDataFilename)
 
 
 if __name__ == "__main__":

@@ -21,7 +21,8 @@ const App = () => {
 
   const handleFileUpload = async () => {
     if (selectedFile) {
-      if (selectedFile.name === "ratings.csv" || selectedFile.name === "diary.csv") {
+      let fileExtension = selectedFile.name.split('.').pop();
+      if (fileExtension === "csv") {
         const formData = new FormData();
         formData.append('file', selectedFile);
 
@@ -40,7 +41,7 @@ const App = () => {
           setErrorText(error.message); // Update errorText state
         }
       } else {
-        setErrorText("File must be named ratings.csv or diary.csv"); // Update errorText state
+        setErrorText("File must be .csv"); // Update errorText state
       }
     } else {
       setErrorText("You must select a file first"); // Update errorText state
@@ -64,7 +65,7 @@ const App = () => {
         <h3>Letterboxd users: Upload the <a
             href="https://letterboxd.com/data/export"><u>diary.csv</u></a> file.</h3>
         <h3>IMDB Users: Upload your <a href="https://www.wikihow.com/Export-Your-IMDb-Custom-Lists-to-a-CSV-File"><u>exported
-          ratings</u></a> and name the file ratings.csv.</h3>
+          ratings</u></a> csv file.</h3>
       </div>
 
       <div className="file-div">

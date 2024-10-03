@@ -13,6 +13,7 @@
 - [x] work with np vector instead of list? is it more efficient?
 - [ ] letterboxd conversion: rather than relying on diary.csv, append latest `Watched Date` to corresponding entry in
 `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in ratings.csv
+- [ ] ensure that a user can go back to home page and upload new file and recs still work smoothly
 - [ ] augment extra data? directors, country, language, etc.
 - [ ] figure out how to diversify recs
 
