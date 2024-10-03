@@ -673,32 +673,42 @@ def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys
     # e.g. Barbie (2023) has key: Barbie2023, value:True.
     filmTitleYearDict = {}
 
+    # create a dict with preprocessed titles of all films in allFilmData (more efficient as this is used as a parameter
+    # to the searchFilm() method
+    preprocessedAllFilmDataTitles = {}
+
+    for key in allFilmDataKeys:
+        preprocessedAllFilmDataTitles[key] = letterboxdTitlePreprocessing(allFilmDataFull[key]['title'])
+
     # iterate through each film in diary.csv
     for film in old_myFilmDataList:
         filmYear = int(film['Year'])
-        filmTitle = letterboxdTitleConversion(film['Name'], filmYear)
+        filmTitle = letterboxdToImdbTitleConversion(film['Name'], filmYear)
         concatString = filmTitle + str(filmYear)
 
         # ensure the film is not a duplicate
         if concatString not in filmTitleYearDict:
-            filmId = searchFilm(filmTitle, filmYear, allFilmDataFull, allFilmDataKeys)
+            filmId = searchFilm(filmTitle, filmYear, allFilmDataFull, allFilmDataKeys, preprocessedAllFilmDataTitles)
 
             if filmId != "-1":
                 filmTitleYearDict[concatString] = True  # add to dict
                 new_myFilmDataList.append({
                     "Const": filmId,
-                    "Title": allFilmDataFull[filmId]['title'],
+                    "Title": filmTitle,
                     "Title Type": "Movie",
+                    # we want to use the year attribute from all-film-data.json as opposed to the letterboxd one,
+                    # sometimes there is a 1-year difference between imdb & letterboxd versions of the same film.
+                    # best to keep it consistent and follow imdb
                     "Year": allFilmDataFull[filmId]['year'],
-                    "Your Rating": float(film['Rating']) * 2.0,
+                    "Your Rating": round(float(film['Rating']) * 2.0, 1),
                     "Date Rated": film['Watched Date'],
                     "IMDb Rating": allFilmDataFull[filmId]['imdbRating'],
                     "Num Votes": allFilmDataFull[filmId]['numberOfVotes'],
                     "Runtime (mins)": allFilmDataFull[filmId]['runtime'],
                     "Genres": allFilmDataFull[filmId]['genres']
                 })
-            # else:
-                # print("film not found. title: " + filmTitle + ". year:" + str(filmYear))
+            else:
+                print("film not found. title: " + filmTitle + ". year:" + str(filmYear))
         # else:
         #     print("film already exists. title: " + filmTitle + ". year:" + str(filmYear))
 
@@ -707,9 +717,9 @@ def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys
 
 # given film title and year from letterboxd diary.csv, searches all-film-data.json for corresponding IMDb film.
 # returns film ID if found, else "-1".
-def searchFilm(title, year, allFilmDataFull, allFilmDataKeys):
+def searchFilm(title, year, allFilmDataFull, allFilmDataKeys, preprocessedAllFilmDataTitles):
     for filmId in allFilmDataKeys:
-        if letterboxdTitlePreprocessing(allFilmDataFull[filmId]['title']) == letterboxdTitlePreprocessing(title):
+        if letterboxdTitlePreprocessing(title) == preprocessedAllFilmDataTitles[filmId]:
             # if there is a difference <= 1 between the years of the matched films
             # this check exists because some films have different year releases between letterboxd & imdb.
             # e.g. Ex Machina is 2014 in IMDb, but 2015 in Letterboxd
@@ -733,7 +743,7 @@ def letterboxdTitlePreprocessing(title):
 
 # some titles differ between Letterboxd & IMDb. There is no cleaner solution that hard-coding some of the differences
 # I found.
-def letterboxdTitleConversion(letterboxdTitle, year):
+def letterboxdToImdbTitleConversion(letterboxdTitle, year):
     match letterboxdTitle:
         case "Star Wars: Episode II – Attack of the Clones":
             return "Star Wars: Episode II - Attack of the Clones"
@@ -762,6 +772,8 @@ def letterboxdTitleConversion(letterboxdTitle, year):
             return "Birds of Prey"
         case "My Left Foot: The Story of Christy Brown":
             return "My Left Foot"
+        case "(500) Days of Summer":
+            return "500 Days of Summer"
         case _:
             return letterboxdTitle
 
