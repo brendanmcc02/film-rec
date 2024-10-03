@@ -1,16 +1,17 @@
-import numpy as np
-import json
-from datetime import datetime
+# import numpy as np
+# import json
+# from datetime import datetime
+import os
+import glob
+
 
 def main():
     # allFilmDataFile = open('../data/all-film-data.json')
     # allFilmData = json.load(allFilmDataFile)
     # allFilmDataKeys = list(allFilmData.keys())
 
-    for i in range(1, 10):
-        print(str(i))
-        if i%2 == 0:
-            break
+    for f in glob.glob("../data/*.csv"):
+        os.remove(f)
 
 
 if __name__ == "__main__":

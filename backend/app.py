@@ -7,6 +7,7 @@ import json
 import csv
 import numpy as np
 import os
+import glob
 
 # global constants
 RUNTIME_THRESHOLD = 40
@@ -136,7 +137,7 @@ def verifyFile():
         return "Error: file not found.", 404
     except Exception as e:
         # delete the files before exiting
-        deleteRatingsFile()
+        deleteCsvFiles()
         return "Error occurred with reading " + myFilmDataFilename + ".\n" + str(e), 400
 
 
@@ -160,11 +161,11 @@ def initRec():
     except FileNotFoundError:
         return "Error: " + myFilmDataFilename + " not found, check file name & file type.", 404
     except Exception as e:
-        deleteRatingsFile()
+        deleteCsvFiles()
         return "Error occurred with reading " + myFilmDataFilename + ".\n" + str(e), 400
 
     # delete the user-uploaded .csv file - we don't want to store/keep any user info after they upload
-    deleteRatingsFile()
+    deleteCsvFiles()
 
     # read in all-film-data.json
     allFilmDataFile = open('../data/all-film-data.json')
@@ -813,10 +814,10 @@ def letterboxdToImdbTitleConversion(letterboxdTitle, year):
             return letterboxdTitle
 
 
-# deletes user-uploaded ratings csv file
-def deleteRatingsFile():
-    if os.path.exists("../data/" + myFilmDataFilename):
-        os.remove("../data/" + myFilmDataFilename)
+# deletes all .csv files
+def deleteCsvFiles():
+    for f in glob.glob("../data/*.csv"):
+        os.remove(f)
 
 
 if __name__ == "__main__":
