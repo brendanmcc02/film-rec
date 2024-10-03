@@ -1,6 +1,4 @@
 .idea/
-ratings.csv
-data/ratings.csv
-diary.csv
-data/diary.csv
+*.csv
+data/*.csv
 ebook.pdf
