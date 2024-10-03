@@ -1,4 +1,4 @@
-# given ratings.csv or diary.csv, vectorize both myFilmData & allFilmData, and then recommend films
+# given user-uploaded .csv file, vectorize both myFilmData & allFilmData, and then recommend films
 
 # imports
 from flask import Flask, request, jsonify
@@ -52,11 +52,47 @@ myFilmDataFilename = ""
 app = Flask(__name__)
 
 
-# verifies that user-uploaded ratings.csv or diary.csv is ok
+# initialises all global variables back to default value.
+# allows for clean slate for re-uploading files, etc.
+def init():
+    global userProfile
+    global recencyProfile
+    global wildcardProfile
+    global profileChanges
+    global allFilmData
+    global allFilmDataVec
+    global recs
+    global recStates
+    global minImdbRating
+    global minYear
+    global minNumberOfVotes
+    global minRuntime
+    global minDateRated
+    global isImdb
+
+    userProfile = np.zeros(VECTOR_LENGTH)
+    recencyProfile = np.zeros(VECTOR_LENGTH)
+    wildcardProfile = np.zeros(VECTOR_LENGTH)
+    profileChanges = []
+    allFilmData = {}
+    allFilmDataVec = {}
+    recs = []
+    recStates = [0] * TOTAL_RECS
+    minImdbRating = 0.0
+    minYear = 0
+    minNumberOfVotes = 0
+    minRuntime = 0
+    minDateRated = datetime(1, 1, 1)
+
+
+# verifies that user-uploaded .csv file is ok
 @app.route('/verifyFile', methods=['POST'])
 def verifyFile():
     global isImdb
     global myFilmDataFilename
+
+    isImdb = True
+    myFilmDataFilename = ""
 
     # check if there's a file in the post request
     if 'file' not in request.files:
@@ -92,7 +128,9 @@ def verifyFile():
                             return ("Error: Row headers in " + myFilmDataFilename +
                                     " does not conform to expected format.\n", 400)
 
-        # ratings.csv or diary.csv has no issues
+        # clean slate, re-initialise all global variables back to their default values
+        init()
+        # user-uploaded .csv file has no issues
         return "Upload Success.", 200
     except FileNotFoundError:
         return "Error: file not found.", 404
@@ -328,7 +366,7 @@ def initRecencyProfile(myFilmData, myFilmDataKeys, myFilmDataVec, maxDateRated):
             # scalar multiplied because we are only dealing with films in the last 30 days
             weightedAverageSum += (myFilmData[key]['myRating'] / 10.0)
         else:
-            # terminate; ratings.csv & diary.csv are sorted by date (latest first, oldest last),
+            # terminate; user-uploaded .csv file is sorted by date (latest first, oldest last),
             # so no need to look further
             break
 
@@ -659,7 +697,7 @@ def getTotalRecs():
     return str(TOTAL_RECS), 200
 
 
-# converts diary.csv (letterboxd exported data format) to an object resembling ratings.csv (imdb exported data format)
+# converts diary.csv (letterboxd exported data format) to an object resembling the imdb exported data format
 def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys):
     new_myFilmDataList = []
 

@@ -11,16 +11,16 @@
 - [x] recent profile vector (last 30 days)
 - [x] letterboxd search can be much more efficient 
 - [x] work with np vector instead of list? is it more efficient?
+- [x] ensure that a user can go back to home page and upload new file and recs still work smoothly
 - [ ] letterboxd conversion: rather than relying on diary.csv, append latest `Watched Date` to corresponding entry in
 `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in ratings.csv
-- [ ] ensure that a user can go back to home page and upload new file and recs still work smoothly
 - [ ] augment extra data? directors, country, language, etc.
 - [ ] figure out how to diversify recs
 
 ## Data Retrieval
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)
 - [x] get rid of < 1930 films (basics.tsv), delete films with genres = '\\N'
-  - [x] get rid of films with <60 min runtime
+- [x] get rid of films with <60 min runtime
 - [x] merge/match up the two datasets
 - [x] get rid of films with < 10,000 votes
 - [x] change the order of .json attributes
