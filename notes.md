@@ -30,19 +30,6 @@ exported letterboxd data is very limited (only title, year, rating), but could b
 
 however, the only advantage of using letterboxd's data is the accurate date rated. otherwise it's not very helpful.
 
-## Recommender Systems eBook
-
-**Novelty:** very important to recommend novel or unexpected films. Users are also interested in expanding their 
-horizons. This is where my wildcard idea would work well: invert everything except imdbRating, (maybe fix numVotes to 0 
-to encourage lesser-known films?)
-
-**Diverse Results:** For example, if the user's highest genre is drama, don't recommend 20 drama films. Also throw in 
-other recommendations from different genres that we know they also like (e.g. biographies could be a close second to 
-drama, these should also be recommended).
-
-**Taste evolution:** User's taste evolves over time. So perhaps have less weighting towards older ratings compared to 
-newer ratings.
-
 ## Integrating Date Rated
 
 * As mentioned in the previous section, people's taste in films change over time. Here is my idea to integrate this
@@ -74,6 +61,7 @@ does help this somewhat, but I want to have the best starting state possible, an
 1. don't curve genres
 2. balance quantity & mean rating of genres (see below)
 3. **new** 30-days vector, recency. pick up on trends
+4. **Clustering**
 
 vectors are unfavourably weighted towards film genres that have a high quantity.
 For example, there is a large quantity of action films, and a low quantity of documentary films, but the mean rating of 

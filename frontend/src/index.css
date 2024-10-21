@@ -85,7 +85,7 @@ input[type="file"] {
   position: absolute;
   width: 33%;
   left: 20%;
-  top: 50%;
+  top: 10%;
   transform: translate(0, -50%);
 }
 
