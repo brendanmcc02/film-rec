@@ -1,6 +1,6 @@
 # Recommender Systems Notes
 
-# Chapter 1
+# Chapter 1 - Introduction
 
 ## A Good Recommender System:
 
@@ -37,14 +37,16 @@ After reading & understanding the different types of recommender systems, the on
 
 ## Train & Test Data
 
-In traditional ML, you would have a train-test split. In the case of collaborative filtering (which will have a very sparse matrix), the train data are all the cells with a value, and the test data is simply all the empty cells. That's essentially the translation.
+In traditional ML, you would have a train-test split. In the case of collaborative filtering (which will have a very sparse matrix), 
+the train data are all the cells with a value, and the test data is simply all the empty cells. That's essentially the translation.
 
-# Chapter 2
+# Chapter 2 - Neighbourhood-Based Collaborative Filtering
 
-He says that its common and recommended to pre-compute things in an 'offline' phase - do as less as you can on the fly.
+* He says that its common and recommended to pre-compute things in an 'offline' phase - do as less as you can on the fly.
+* The following 2 approaches make use of an user-item matrix, think of users as rows, items. (e.g. films) as columns.
+* Neighbourhood-Based Collaborative Filtering can be thought of as a generalisation of KNN.
 
 ## User-Based Neighbourhood Models
-*aka: Collaborative-Based Filtering*
 
 **Pearson Correlation Co-efficient:** A similarity metric between two linear variables. value is between -1 and 1:
 * `-1`: Negative Correlation. When one of the variables increase, the other decreases.
@@ -60,4 +62,52 @@ Lots of interesting stuff is mention in this section, while it was an interestin
 
 ## Item-Based Neighbourhood Models
 
-*aka Content-Based Filtering*
+At first I had written down that this is basically content-based filtering, but I realised it's not - at least that's my understanding right now.
+
+When measuring the similarity between 2 items (e.g. films), it uses an adjusted (ratings are mean-centered at 0) cosine similarity between 2 items.
+
+The intuition behind the maths here, is that 2 items are deemed similar if **users rate the item similarly**. For example, if user A rates item I a 5/5 and user B rates item I a 1/5,
+this will have a low cosine similarity.
+
+So if you want to predict the rating of user `u`'s rating of an item `t`, you perform a weighted average calculation on the top-k films that are most similar (using adjusted cosine) to 
+item `t` that the user `u` has rated. Bit of a mouthful. The formula speaks a thousand words: `Equation (2.15), Page 40`.
+
+## Clustering
+
+These calculations are infeasible and do not scale well at all - as a result, instead of calculating similarities to everything, you cluster your data and only compute similarities 
+within that cluster. There is a great increase in efficency at the cost of slight decrease in accuracy.
+
+* `<<` means much less than
+
+## Regression Modeling for Neighbourhood Models
+
+You can formulate the problem as a linear regression model.
+
+Like in ML, you have a regularization parameter `λ>0` (lambda) that is a weight applied to the linear regression function that prevents overfitting.
+
+## Determining Neighbourhoods as Graphs
+
+Interesting subsection - user-item relations can be modelled using graphs: you have a bipartite graph where users and items are nodes, and edges exist between a user and an item if there is an 
+observed rating between them. Neighbourhoods can then be determined by using the *Katz measure* - put simply: it is the length of walks between user `u` and `v` (weighted with parameter `β
+<1`). Once a neighbourhood is determined, the previous neighbourhood models can be used.
+
+# Chapter 3 - Model-Based Collaborative Filtering
+
+In Chapter 2, neighbourhood-based collaborative filtering is known as an *instance-based 
+learning method* - predictions are essentially made on the spot (however there is an *offline phase* 
+to make computation more efficent). In this chapter, a model will be created using traditional ML 
+methods. It is far more efficient in space complexity, less likely to overfit, and faster training speed.
+
+*I will not be reading the rest of the chapter as it relates to **collaborative filtering**, and 
+in my problem I want to focus on **content-based filtering.***
+
+# Chapter 4 - Content-Based Recommender Systems
+
+## Limitations of Content-Based filtering
+
+* **Cold-start problem** for new users
+* Less likely to give novel, diverse or serendipitous recommendations
+
+This chapter will concern itself moreso with unstructured domains (as opposed to structured). 
+It says the methods can be easily translated to structured domains (which I understand is my 
+film data problem).
