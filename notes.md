@@ -1,4 +1,9 @@
-rebrand as boxd-recs: augmentation to letterboxd? marketing
+## Random thoughts
+
+* rebrand as boxd-recs: augmentation to letterboxd? marketing
+* I could do manual clustering and aggregate all vectors of each genre into one user profile each
+  * or do clustering using a proper method
+* try portion of some test data and see how my recommendation system works with these films
 
 ## For the potential future
 1. **Collaborative filtering:** can be introduced by asking other people to upload their imdb/letterboxd data. (reddit 
@@ -80,6 +85,22 @@ mean rating of 7.6 across 300 films, that should have significance over 10 biogr
 
 Perhaps create 23 user profiles (1 for each genre). Calculate weighted averages for these.
 
+**3** Rather than linearly applying the myRating weight to each vector (e.g. a 10/10 means you multiply by 1, 5/10 means you multiply by 0.5), 
+you can have a heavy s-curve: e.g.:
+
+| myRating | weight |
+| -------- | ------ |
+| 10       | 1.0    |
+| 9        | 0.95   |
+| 8        | 0.85   |
+| 7        | 0.6    |
+| 6        | 0.45   |
+| 5        | 0.3    |
+| 4        | 0.25   |
+| 3        | 0.2    |
+| 2        | 0.1    |
+| 1        | 0.05   |
+
 #### Ideal Recommendation Hierarchy
 
 1. High mean rating, high quantity
@@ -92,6 +113,7 @@ Perhaps create 23 user profiles (1 for each genre). Calculate weighted averages 
 Have a wildcard vector. Init to the inverse of User Profile: but keep imdbRating, numVotes, runtime fixed.
 When a wildcard film is responded to, only the wildcard vector changes.
 When a non-wildcard film is responded to, only the user profile vector changes.
+* instead of inverting **all** genre values, only pick the lowest 3 to invert. set the rest to 0?
 
 ### Vectorized Data Form
 year_norm, imdbRating_norm, numVotes_norm, runtime_norm, action, adventure, animation, biography, comedy, crime, 
@@ -101,7 +123,7 @@ thriller, war, western
 content based filtering: "uses item features to recommend other items similar to what the user likes, based on their 
 previous actions or explicit feedback"
 
-### Similarity measures
+## Similarity measures
 1. Cosine similarity - cosine of the angle between 2 vectors
 2. dot product
 3. Euclidean distance

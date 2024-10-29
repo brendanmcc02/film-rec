@@ -111,3 +111,23 @@ in my problem I want to focus on **content-based filtering.***
 This chapter will concern itself moreso with unstructured domains (as opposed to structured). 
 It says the methods can be easily translated to structured domains (which I understand is my 
 film data problem).
+
+## Nearest Neighbour Classification
+
+This method will compute the predicted rating of an unseen film by averaging the ratings of the unseen's films k-nearest neighbours that the user has seen. You can additionally apply weights to 
+the ratings, e.g. 'closer' films get more weight, 'further' ones get less weight. After doing all 
+these calculations on all unseen films, for a top-k recommendation system you would rank the films 
+and return the top-k films.
+
+## Bayes Classifier
+
+Pretty interesting, the book has a great explanation. Essentially, based on past ratings, you calculate 
+conditional probabilities to inform you of the predicted rating for an unseen film.
+
+If I actually do intend to use this, there are some important notes regarding Laplacian smoothing, 
+which is very useful for cold starts for example. This also prevents overfitting.
+
+This method will be return a predicted rating on each unseen film, and they are then sorted and the 
+top-k films are returned based off these.
+
+## Rule-Based Classifiers
