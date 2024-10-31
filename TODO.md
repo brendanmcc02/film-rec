@@ -16,6 +16,7 @@
 `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in ratings.csv
 - [ ] augment extra data? directors, country, language, etc.
 - [ ] figure out how to diversify recs
+- [ ] reduce comments in code and make it more readable (after watching code aesthetic's video)
 
 ## Data Retrieval
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)
