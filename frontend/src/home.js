@@ -27,7 +27,7 @@ const App = () => {
         formData.append('file', selectedFile);
 
         try {
-          const response = await fetch('/verifyFile', {
+          const response = await fetch('/verifyUserUploadedFile', {
             method: 'POST',
             body: formData
           });

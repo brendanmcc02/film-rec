@@ -1,6 +1,3 @@
-# given user-uploaded .csv file, vectorize both myFilmData & allFilmData, and then recommend films
-
-# imports
 from flask import Flask, request, jsonify
 from datetime import datetime
 import json
@@ -9,16 +6,15 @@ import numpy as np
 import os
 import glob
 
-# global constants
 RUNTIME_THRESHOLD = 40
 VECTOR_LENGTH = 27
 NUM_USER_RECS = 4
 NUM_RECENCY_RECS = 2
 NUM_WILDCARD_RECS = 2
 TOTAL_RECS = NUM_USER_RECS + NUM_RECENCY_RECS + NUM_WILDCARD_RECS
-USER_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
-RECENCY_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the recency profile
-WILDCARD_FEEDBACK_FACTOR = 0.2  # the rate at which wildcard recs affect the wildcard profile
+USER_PROFILE_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
+RECENCY_FEEDBACK_FACTOR = 0.05
+WILDCARD_FEEDBACK_FACTOR = 0.2
 # from experimenting (yearNorm weight was fixed at 0.3), ~0.75 was a good sweet spot in the sense that
 # it picked both single- and multi-genre films. The algorithm still heavily favoured the 4 genres that had the
 # highest weighing, but this is expected and good behaviour.
@@ -33,7 +29,6 @@ DIFF_NUMBER_OF_VOTES = 0
 DIFF_RUNTIME = 0
 DIFF_DATE_RATED = datetime(1, 1, 1)
 
-# global variables
 userProfile = np.zeros(VECTOR_LENGTH)
 recencyProfile = np.zeros(VECTOR_LENGTH)
 wildcardProfile = np.zeros(VECTOR_LENGTH)
@@ -47,15 +42,13 @@ minYear = 0
 minNumberOfVotes = 0
 minRuntime = 0
 minDateRated = datetime(1, 1, 1)
-isImdb = True
+isImdbFile = True
 myFilmDataFilename = ""
 
 app = Flask(__name__)
 
 
-# initialises all global variables back to default value.
-# allows for clean slate for re-uploading files, etc.
-def init():
+def resetGlobalVariables():
     global userProfile
     global recencyProfile
     global wildcardProfile
@@ -69,7 +62,7 @@ def init():
     global minNumberOfVotes
     global minRuntime
     global minDateRated
-    global isImdb
+    global isImdbFile
 
     userProfile = np.zeros(VECTOR_LENGTH)
     recencyProfile = np.zeros(VECTOR_LENGTH)
@@ -86,25 +79,20 @@ def init():
     minDateRated = datetime(1, 1, 1)
 
 
-# verifies that user-uploaded .csv file is ok
-@app.route('/verifyFile', methods=['POST'])
-def verifyFile():
-    global isImdb
+@app.route('/verifyUserUploadedFile', methods=['POST'])
+def verifyUserUploadedFile():
+    global isImdbFile
     global myFilmDataFilename
 
-    isImdb = True
+    isImdbFile = True
     myFilmDataFilename = ""
 
-    # check if there's a file in the post request
     if 'file' not in request.files:
-        return 'No file part', 400
+        return 'No file found in the request', 400
 
     file = request.files['file']
-
     myFilmDataFilename = file.filename
-
-    file.save("../data/" + file.filename)  # write to file
-
+    file.save("../data/" + file.filename)
     expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
                                       "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
                                       "Release Date", "Directors"]
@@ -116,27 +104,22 @@ def verifyFile():
             reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
-                # if there are more data than row headers:
                 if 'unexpectedData' in row:
                     return "Error: " + myFilmDataFilename + " has more data than row headers.\n", 400
 
-                # if any of the expected row headers are not to be found:
                 keys = list(row.keys())
                 for k in keys:
                     if k not in expectedImdbFileFilmAttributes:
-                        isImdb = False  # imdb file format not found, so must be letterboxd
+                        isImdbFile = False
                         if k not in expectedLetterboxdFileFilmAttributes:
                             return ("Error: Row headers in " + myFilmDataFilename +
                                     " does not conform to expected format.\n", 400)
 
-        # clean slate, re-initialise all global variables back to their default values
-        init()
-        # user-uploaded .csv file has no issues
+        resetGlobalVariables()
         return "Upload Success.", 200
     except FileNotFoundError:
         return "Error: file not found.", 404
     except Exception as e:
-        # delete the files before exiting
         deleteCsvFiles()
         return "Error occurred with reading " + myFilmDataFilename + ".\n" + str(e), 400
 
@@ -147,10 +130,10 @@ def initRec():
     global profileChanges
 
     # init profileChanges vector
+    # todo simplify to one-liner
     for i in range(0, TOTAL_RECS):
         profileChanges.append(np.zeros(VECTOR_LENGTH))
 
-    # read in the file and append to list data structure
     try:
         myFilmDataList = []
         with open("../data/" + myFilmDataFilename, encoding='utf8') as myFilmDataFile:
@@ -164,16 +147,13 @@ def initRec():
         deleteCsvFiles()
         return "Error occurred with reading " + myFilmDataFilename + ".\n" + str(e), 400
 
-    # delete the user-uploaded .csv file - we don't want to store/keep any user info after they upload
     deleteCsvFiles()
-
-    # read in all-film-data.json
     allFilmDataFile = open('../data/all-film-data.json')
     allFilmDataFull = json.load(allFilmDataFile)
     allFilmDataKeys = list(allFilmDataFull.keys())
 
     # if the user uploaded letterboxd file, convert it to a format resembling the IMDb one
-    if not isImdb:
+    if not isImdbFile:
         myFilmDataList = convertLetterboxdToImdb(myFilmDataList, allFilmDataFull, allFilmDataKeys)
 
     myFilmData = {}  # init as a dict
@@ -182,7 +162,7 @@ def initRec():
         # filter out non-movies, <RUNTIME_THRESHOLD minute runtime, and with no genres
         if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != "":
             # IMDb only: convert genres from comma-separated string to array
-            if isImdb:
+            if isImdbFile:
                 genres = film['Genres'].replace("\"", "").split(", ")
             # this pre-processing was already performed in the letterboxd-to-IMDb conversion
             else:
@@ -562,7 +542,7 @@ def changeVector(index, add, recType):
     elif recType == "recency":
         vectorChange = (recVector - recencyProfile) * RECENCY_FEEDBACK_FACTOR
     elif recType == "user":
-        vectorChange = (recVector - userProfile) * USER_FEEDBACK_FACTOR
+        vectorChange = (recVector - userProfile) * USER_PROFILE_FEEDBACK_FACTOR
     else:
         return "unknown rec type:" + str(recType)
 
@@ -765,20 +745,14 @@ def searchFilm(title, year, allFilmDataFull, allFilmDataKeys, preprocessedAllFil
     return "-1"
 
 
-# title pre-processing for letterboxd vs imdb conversions
 def letterboxdTitlePreprocessing(title):
-    # some symbols are different between the datasets
     res = title.replace("–", "-").replace(" ", "").replace("&", "and")
-
-    # American English translations
     res = res.replace("colour", "color").replace("Colour", "Color")
 
     # lower case
     return res.lower()
 
 
-# some titles differ between Letterboxd & IMDb. There is no cleaner solution that hard-coding some of the differences
-# I found.
 def letterboxdToImdbTitleConversion(letterboxdTitle, year):
     match letterboxdTitle:
         case "Star Wars: Episode II – Attack of the Clones":
@@ -814,7 +788,6 @@ def letterboxdToImdbTitleConversion(letterboxdTitle, year):
             return letterboxdTitle
 
 
-# deletes all .csv files
 def deleteCsvFiles():
     for f in glob.glob("../data/*.csv"):
         os.remove(f)

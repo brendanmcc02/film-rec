@@ -58,7 +58,7 @@ create endpoints for getters/setters
 - [x] add last-download.txt. if downloaded <24 hours, skip the step
 - [x] finish init-my-file-data.py to reflect above changes
 - [x] research how/where to store files, run .py scripts etc.
-- [x] upload button calls /verifyFile API
+- [x] upload button calls /verifyUserUploadedFile API
 - [x] upload error handling
 - [x] change return type of recs function
 - [x] init_rec writes all-film-data.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, 
@@ -81,7 +81,7 @@ my-film-data-vec.json to file
 - [x] finish home page (visuals only, file upload func later)
 - [x] re-do text element showing selected files, errors, etc. (lost changes rip)
 - [x] manage multiple pages (check sweng project)
-- [x] go to results page if verifyFile ok
+- [x] go to results page if verifyUserUploadedFile ok
 - [x] verify api calls for vector change funcs are working
 - [x] /initial_recs api calls more than once?
 - [ ] make results page look presentable/nice
