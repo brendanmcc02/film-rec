@@ -131,3 +131,32 @@ This method will be return a predicted rating on each unseen film, and they are 
 top-k films are returned based off these.
 
 ## Rule-Based Classifiers
+
+Quite an interesting and intuitive concept. Some definitions to get started:
+
+* **Support:** the fraction of rows satisfying both antecendent & consequent.
+* **Confidence:** the fraction of rows satisfying from the consequent from the rows 
+already known to satisfy the antecendent.
+
+## Interpretation
+
+An advantage of content-based filtering is that you can make a clear interpretation to the 
+user why the item was recommended - e.g. "because you like 1980s Romantic Comedies...". It is 
+mentioned this is easier to do with Bayes and Rule-Based classifiers, but still possible (yet 
+more difficult) with regression-based ones (I would classify my vector approach as something 
+very similar to linear regression).
+
+## Disadvantages of Content-Based Filtering
+
+* The only recommendations to the user are based on what they have seen already - the result is lack of novelty and serendipity
+    * *How can I work around this without the use of collaborate filtering?*
+
+## Reflections
+
+Ok, I'm a little bit disappointed because this chapter was supposed to be 'the big one'. The classifiers discussed were a bit underwhelming, and I did not see a huge advantage to them compared to my vector method. In fact, my vector method is basically (i.e. very similar to) linear regression, which was discussed in this chapter (I didn't talk about it because there wasn't anything too novel to write about).
+
+# Chapter 7 - Evaluating Recommender Systems
+
+Offline methods are by far the more commonly used evaluation methods from a research and practice persepective.
+
+**Coverage:** The size of the proportion of items the recommender system can recommend. For example, a recommender system that only recommends films from 2024 has small coverage because it will not recommend films outside of 2024 - a large portion of films will never get recommended.
