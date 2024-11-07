@@ -6,6 +6,9 @@
 * try portion of some test data and see how my recommendation system works with these films
 * try to deduce why a film was recommended to a user "e.g. because you like 1980s rom-coms..."
 
+## Main Takeaways from the Recommender Systems textbook
+* 
+
 ## For the potential future
 1. **Collaborative filtering:** can be introduced by asking other people to upload their imdb/letterboxd data. (reddit 
 post, social media post, asking friends).
