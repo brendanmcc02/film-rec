@@ -20,7 +20,7 @@
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
-- [ ] augment country, language and poster using TMDB API
+- [ ] augment country, language and poster using TMDB API **getting memory error but should work**
 
 ## Data Cleaning
 - [x] normalise years
