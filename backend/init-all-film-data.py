@@ -86,7 +86,7 @@ def main():
     ###### todo temp
     allFilmDataFile = open('../data/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
-
+    count = 0
     ########
     print("\nMaking API calls to get Language, Countries & Poster...\n")
 
@@ -115,7 +115,24 @@ def main():
     apiCount = 0
 
     for imdbFilmId in allFilmDataKeys:
-        if imdbFilmId not in cachedTmbdFilmData:
+        ######### todo temp
+        count = count + 1
+
+        if count % 100 == 0:
+            print(str(count) + " " + str(imdbFilmId))
+
+        elif count >= 1999 and count % 50 == 0:
+            with open('../data/cached-tmdb-film-data.json', 'w') as convert_file:
+                convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
+
+            with open('../data/all-film-data.json', 'w') as convert_file:
+                convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
+        ##############
+        if imdbFilmId in cachedTmbdFilmData:
+            allFilmData[imdbFilmId]['language'] = cachedTmbdFilmData[imdbFilmId]['language']
+            allFilmData[imdbFilmId]['countries'] = cachedTmbdFilmData[imdbFilmId]['countries']
+            allFilmData[imdbFilmId]['poster'] = cachedTmbdFilmData[imdbFilmId]['poster']
+        else:
             url = f"https://api.themoviedb.org/3/find/{imdbFilmId}?external_source=imdb_id"
             tmdbFilmId = ""
             response = requests.get(url, headers=headers)
@@ -173,7 +190,7 @@ def main():
 # API is rate limited to 50 calls per second
 def checkRateLimit(apiCount):
     apiCount = apiCount + 1
-    apiCount = apiCount % 50
+    apiCount = apiCount % 40
     if apiCount == 0:
         time.sleep(1.1)
 
