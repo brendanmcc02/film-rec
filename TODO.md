@@ -19,7 +19,7 @@
 - [x] init all-film-data.py
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
-- [ ] augment country, language and poster using TMDB API
+- [x] augment letterboxdTitle, countries, languages and poster using TMDB API
 
 ## Data Cleaning
 - [x] normalise years
@@ -142,3 +142,4 @@ create endpoints for getters/setters
 corresponding entry in `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in 
 `ratings.csv`
 - [ ] ~~augment directors~~ you have to make a separate TMBD api request to get director, not worth it imo
+- [ ] change some files to get rid of hyphens so I don't need an imported library to import them

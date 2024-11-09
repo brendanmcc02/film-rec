@@ -1,3 +1,5 @@
+# this is not intended to be run as a standalone file, rather it is run using `init-all-film-data.sh`
+
 import json
 import csv
 import time
@@ -77,7 +79,9 @@ def main():
     # for film in stage_2_allFilmData:
     #     allFilmData[film['id']] = {
     #         'title': film['title'],
+    #         'letterboxdTitle': "",
     #         'year': film['year'],
+    #         'letterboxdYear': 0,
     #         'imdbRating': film['imdbRating'],
     #         'numberOfVotes': film['numberOfVotes'],
     #         'runtime': film['runtime'],
@@ -89,12 +93,9 @@ def main():
     allFilmData = json.load(allFilmDataFile)
     count = 0
     ########
-    print("\nMaking API calls to get Language, Countries & Poster...\n")
+    print("\nMaking API calls to get Letterboxd Title, Letterboxd Year, Languages, Countries & Poster...\n")
 
     baseImageUrl = "https://image.tmdb.org/t/p/w500"
-
-    # "https://api.themoviedb.org/3/find/tt?external_source=imdb_id"
-    # baseApiUrl = "https://api.themoviedb.org/3/movie/155?language=en-US"
 
     accessToken = ""
     try:
@@ -102,7 +103,7 @@ def main():
     except FileNotFoundError:
         print("Access Token File Not Found")
     except Exception as e:
-        print("Error occurred while trying to read Access Token File")
+        print("Error occurred while trying to read Access Token File " + str(e))
 
     headers = {
         "accept": "application/json",
@@ -122,7 +123,7 @@ def main():
         if count % 100 == 0:
             print(str(count) + " " + str(imdbFilmId))
 
-        elif count >= 1999 and count % 50 == 0:
+        elif count % 100 == 0:
             with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
                 convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
 
@@ -130,7 +131,9 @@ def main():
                 convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
         ##############
         if imdbFilmId in cachedTmbdFilmData:
-            allFilmData[imdbFilmId]['language'] = cachedTmbdFilmData[imdbFilmId]['language']
+            allFilmData[imdbFilmId]['letterboxdTitle'] = cachedTmbdFilmData[imdbFilmId]['letterboxdTitle']
+            allFilmData[imdbFilmId]['letterboxdYear'] = cachedTmbdFilmData[imdbFilmId]['letterboxdYear']
+            allFilmData[imdbFilmId]['languages'] = cachedTmbdFilmData[imdbFilmId]['languages']
             allFilmData[imdbFilmId]['countries'] = cachedTmbdFilmData[imdbFilmId]['countries']
             allFilmData[imdbFilmId]['poster'] = cachedTmbdFilmData[imdbFilmId]['poster']
         else:
@@ -160,18 +163,25 @@ def main():
             if response.status_code == 200:
                 jsonResponse = response.json()
 
-                filmLanguage = str(jsonResponse['original_language'])
+                filmTitle = str(jsonResponse['original_title'])
+                filmYear = int(jsonResponse['release_date'].split('-')[0])
+                filmPoster = baseImageUrl + str(jsonResponse['poster_path'])
+
+                filmLanguages = []
+                for language in jsonResponse['spoken_languages']:
+                    filmLanguages.append(language['iso_639_1'])
 
                 filmCountries = []
                 for country in jsonResponse['origin_country']:
                     filmCountries.append(country)
 
-                filmPoster = baseImageUrl + str(jsonResponse['poster_path'])
-
-                cachedTmbdFilmData[imdbFilmId] = {"language": filmLanguage, "countries": filmCountries,
+                cachedTmbdFilmData[imdbFilmId] = {"letterboxdTitle": filmTitle, "letterboxdYear": filmYear,
+                                                  "languages": filmLanguages, "countries": filmCountries,
                                                   "poster": filmPoster}
 
-                allFilmData[imdbFilmId]['language'] = filmLanguage
+                allFilmData[imdbFilmId]['letterboxdTitle'] = filmTitle
+                allFilmData[imdbFilmId]['letterboxdYear'] = filmYear
+                allFilmData[imdbFilmId]['languages'] = filmLanguages
                 allFilmData[imdbFilmId]['countries'] = filmCountries
                 allFilmData[imdbFilmId]['poster'] = filmPoster
             elif response.status_code == 429:

@@ -1,3 +1,5 @@
+# this is not intended to be run as a standalone file, rather it is run using `init-all-film-data.sh`
+
 import urllib.request
 from datetime import datetime, timedelta
 

@@ -12,7 +12,7 @@ def main():
     # allFilmData = json.load(allFilmDataFile)
     # allFilmDataKeys = list(allFilmData.keys())
 
-    imdbFilmId = "tt0468569"
+    imdbFilmId = "tt0076759"
     baseImageUrl = "https://image.tmdb.org/t/p/w500"
 
     # "https://api.themoviedb.org/3/find/tt?external_source=imdb_id"
@@ -24,7 +24,7 @@ def main():
     except FileNotFoundError:
         print("Access Token File Not Found")
     except Exception as e:
-        print("Error occurred while trying to read Access Token File")
+        print("Error occurred while trying to read Access Token File" + str(e))
 
     headers = {
         "accept": "application/json",
@@ -36,42 +36,43 @@ def main():
 
     apiCount = 0
 
-    if imdbFilmId not in cachedTmbdFilmData:
-        url = f"https://api.themoviedb.org/3/find/{imdbFilmId}?external_source=imdb_id"
-        tmdbFilmId = ""
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            jsonResponse = response.json()
-            tmdbFilmId = str(jsonResponse['movie_results'][0]['id'])
-        elif response.status_code == 429:
-            print(f"Rate Limit Exceeded. API Count = {apiCount}. Film ID: {imdbFilmId}\n")
-        else:
-            print("Error. Status Code = " + str(response.status_code) + "\n")
+    # if imdbFilmId not in cachedTmbdFilmData:
+    url = f"https://api.themoviedb.org/3/find/{imdbFilmId}?external_source=imdb_id"
+    tmdbFilmId = ""
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        jsonResponse = response.json()
+        tmdbFilmId = str(jsonResponse['movie_results'][0]['id'])
+    elif response.status_code == 429:
+        print(f"Rate Limit Exceeded. API Count = {apiCount}. Film ID: {imdbFilmId}\n")
+    else:
+        print("Error. Status Code = " + str(response.status_code) + "\n")
 
-        url = f"https://api.themoviedb.org/3/movie/{tmdbFilmId}?language=en-US"
-        response = requests.get(url, headers=headers)
+    url = f"https://api.themoviedb.org/3/movie/{tmdbFilmId}?language=en-US"
+    response = requests.get(url, headers=headers)
 
-        if response.status_code == 200:
-            jsonResponse = response.json()
+    if response.status_code == 200:
+        jsonResponse = response.json()
 
-            filmLanguage = str(jsonResponse['original_language'])
+        print(jsonResponse)
+        filmLanguage = str(jsonResponse['original_language'])
 
-            filmCountries = []
-            for country in jsonResponse['origin_country']:
-                filmCountries.append(country)
+        filmCountries = []
+        for country in jsonResponse['origin_country']:
+            filmCountries.append(country)
 
-            filmPoster = baseImageUrl + str(jsonResponse['poster_path'])
+        filmPoster = baseImageUrl + str(jsonResponse['poster_path'])
 
-            cachedTmbdFilmData[imdbFilmId] = {"language": filmLanguage, "countries": filmCountries,
-                                              "poster": filmPoster}
+        cachedTmbdFilmData[imdbFilmId] = {"language": filmLanguage, "countries": filmCountries,
+                                          "poster": filmPoster}
 
-        elif response.status_code == 429:
-            print("Rate Limit Exceeded. API Count = " + apiCount + ". Film ID: " + imdbFilmId + "\n")
-        else:
-            print("Error. Status Code = " + str(response.status_code) + "\n")
+    elif response.status_code == 429:
+        print("Rate Limit Exceeded. API Count = " + apiCount + ". Film ID: " + imdbFilmId + "\n")
+    else:
+        print("Error. Status Code = " + str(response.status_code) + "\n")
 
-    with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
-        convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
+    # with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
+    #     convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
 
     # "https://api.themoviedb.org/3/movie/155?language=en-US"
     # origin_country: array
