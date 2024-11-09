@@ -1,22 +1,6 @@
 # TODO
 
-## New TODO List
-- [x] create myFilmData from imported diary.csv through Flask (letterboxd)
-- [x] integrate date rated - weight of how recently user has rated film.
-- [x] tidy up code, make things as efficient as possible
-- [x] fix windows upload diary.csv error
-- [x] cache cosine sim comparisons
-- [x] double check I didn't remove any necessary `global`s and fuck it up
-- [x] deletion of ratings/diary.csv before saving to file
-- [x] recent profile vector (last 30 days)
-- [x] letterboxd search can be much more efficient 
-- [x] work with np vector instead of list? is it more efficient?
-- [x] ensure that a user can go back to home page and upload new file and recs still work smoothly
-- [ ] letterboxd conversion: rather than relying on diary.csv, append latest `Watched Date` to corresponding entry in
-`ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in ratings.csv
-- [ ] augment extra data? directors, country, language, etc.
-- [ ] figure out how to diversify recs
-- [ ] reduce comments in code and make it more readable (after watching code aesthetic's video)
+# Data Processing
 
 ## Data Retrieval
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)
@@ -37,20 +21,21 @@
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
 
-## General
-- [x] switch from my-film-data.json to ratings.csv
-- [x] add numVotes & runtime to human data
-- [x] vectorize numberOfVotes & runtime
-- [x] change run.sh to reflect various changes
-- [x] error handling for imported ratings.csv
-- [x] delete title.x.tsv files after getting all-film-data.json
-- [x] don't normalise myRating
-- [x] don't fix imdbRating to 1.0
-- [x] instead of writing all-film-data-vec, my-film-data, etc. to file, create global variables in app.py, and then 
-create endpoints for getters/setters
+## Data Cleaning
+- [x] normalise years
+- [x] normalise imdbRating
+- [x] one-hot encoding for genres
+- [x] vectorize all-film-data
+- [x] verify vectorizing was done correctly
+- [x] vectorize my-film-data
+- [x] how to weight myRating - currently doing scalar multiplication
+- [x] how much do I round values by? - not rounding values, no reason to do it
+- [x] calculate user profile using weighted averages
+- [x] mess around with weights of year and genres
 - [ ] drop numVotes threshold to 10k?
 
-## Backend
+# Recommendation Algorithm
+
 - [x] all-film-data doesn't filter out films that have been rated
 - [x] vectorize all-film-data in init-all-film-data.py
 - [x] init-my-film-data filters out films that have been rated from all-film-data (also rm vector entries)
@@ -73,8 +58,10 @@ my-film-data-vec.json to file
 - [x] fix runtime vector wildcard
 - [x] implement wildcard feedback factor
 - [x] implement profileChanges instead of separate wildcardProfileChanges & userProfileChanges
+- [x] integrate date rated - weight of how recently user has rated film.
+- [x] cache cosine sim comparisons
 
-## Frontend
+# Frontend
 - [x] do text div 
 - [x] do file upload (visuals only) div
 - [x] href what is rating.csv/how to export it
@@ -86,30 +73,51 @@ my-film-data-vec.json to file
 - [x] /initial_recs api calls more than once?
 - [ ] make results page look presentable/nice
 
-## Tidying up code
+# General
+
+## Code-Related. Efficencies & Functionality
+- [x] double check I didn't remove any necessary `global`s and fuck it up
+- [x] tidy up code, make things as efficient as possible
+- [x] recent profile vector (last 30 days)
+- [x] work with np vector instead of list? is it more efficient? 
+- [x] letterboxd search can be much more efficient
+- [x] ensure that a user can go back to home page and upload new file and recs still work smoothly
 - [x] go through all code removing redundancy, fine-tuning
 - [x] rename variables & func to lowerCamelCase
 - [x] change variables that are not constant from UPPER_CASE to underscore case
 - [x] minimise global variables (you only need to call global if you want to **modify** the variable)
 - [ ] error handling on potential div by 0 errors
+- [ ] reduce comments in code and make it more readable (after watching code aesthetic's video)
+- [ ] letterboxd conversion: rather than relying on diary.csv, append latest `Watched Date` to corresponding entry in
+`ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in ratings.csv
 
-## Windows
+## Misc
+- [x] switch from my-film-data.json to ratings.csv
+- [x] add numVotes & runtime to human data
+- [x] vectorize numberOfVotes & runtime
+- [x] error handling for imported ratings.csv
+- [x] delete title.x.tsv files after getting all-film-data.json
+- [x] don't normalise myRating
+- [x] don't fix imdbRating to 1.0
+- [x] instead of writing all-film-data-vec, my-film-data, etc. to file, create global variables in app.py, and then 
+create endpoints for getters/setters
+- [x] deletion of ratings/diary.csv before saving to file
+- [x] create myFilmData from imported diary.csv through Flask (letterboxd)
+
+
+## Windows OS
 - [x] config frontend: npm, etc.
 - [x] run flask app
+- [x] fix windows upload diary.csv error
 - [ ] ~~finish converting init-all-film-data.sh to .bat~~
 
 ## Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
 - [x] reduce run.sh to startup.sh
+- [x] change run.sh to reflect various changes
 
-## Data Processing
-- [x] normalise years
-- [x] normalise imdbRating
-- [x] one-hot encoding for genres
-- [x] vectorize all-film-data
-- [x] verify vectorizing was done correctly
-- [x] vectorize my-film-data
-- [x] how to weight myRating - currently doing scalar multiplication
-- [x] how much do I round values by? - not rounding values, no reason to do it
-- [x] calculate user profile using weighted averages
-- [x] mess around with weights of year and genres
+# High-Level TODO
+- [x] Read relevant parts of the Recommender Systems textbook
+- [ ] Increase complexity and quality of Data Collection
+- [ ] Increase complexity and quality of the Recommendation Algorithm
+- [ ] Present the results on a clean website

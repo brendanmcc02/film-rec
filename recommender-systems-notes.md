@@ -60,7 +60,7 @@ Lots of interesting stuff is mention in this section, while it was an interestin
 
 ## Item-Based Neighbourhood Models
 
-At first I had written down that this is basically content-based filtering, but I realised it's not - at least that's my understanding right now.
+At first, I had written down that this is basically content-based filtering, but I realised it's not - at least that's my understanding right now.
 
 When measuring the similarity between 2 items (e.g. films), it uses an adjusted (ratings are mean-centered at 0) cosine similarity between 2 items.
 
@@ -108,7 +108,7 @@ in my problem I want to focus on **content-based filtering.***
 * **Cold-start problem** for new users
 * Less likely to give novel, diverse or serendipitous recommendations
 
-This chapter will concern itself moreso with unstructured domains (as opposed to structured). 
+This chapter will concern itself more so with unstructured domains (as opposed to structured). 
 It says the methods can be easily translated to structured domains (which I understand is my 
 film data problem).
 

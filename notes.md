@@ -1,13 +1,22 @@
 ## Random thoughts
 
 * rebrand as boxd-recs: augmentation to letterboxd? marketing
-* I could do manual clustering and aggregate all vectors of each genre into one user profile each
-  * or do clustering using a proper method
-* try portion of some test data and see how my recommendation system works with these films
-* try to deduce why a film was recommended to a user "e.g. because you like 1980s rom-coms..."
 
 ## Main Takeaways from the Recommender Systems textbook
-* 
+* Recall the aspects of a good recommender system - think about novelty, diversity and serendipity
+  * **Diversity** - I'm thinking of implementing clustering as opposed to just one user profile
+  * **Novely** - Still need to explore this, atm I'm thinking of a wildcard profile
+  * **Serendipity** - Can be challenging without collaborative filtering, but there might be some workarounds. still 
+  need to explore.
+* Use some tools to evaluate the recommender system
+* A possible efficiency implementation is to instead of performing user profile dot products with **every film**, you 
+cluster the films and only perform cosine sim comparisons on individual films within clusters with relatively high 
+cosine similarity
+* Think about how to overcome the **cold start problem**, i.e. when users have 0 films and they check the site.
+  * Additionally, what if the user only has 5 films rated? or 10? where do you draw the line between fully relying on 
+    their data, or filling in the gaps?
+* Think about ways to add **interpretation**, e.g. *"because you liked 1980s rom-coms..."*. This adds a layer of
+sophistication to your recommender system and increases users trust in the recommendations
 
 ## For the potential future
 1. **Collaborative filtering:** can be introduced by asking other people to upload their imdb/letterboxd data. (reddit 
