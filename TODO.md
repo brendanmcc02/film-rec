@@ -17,9 +17,9 @@
 - [x] create hashmap for stage 4 (instead of linear searching)
 - [x] verify data is correct
 - [x] init all-film-data.py
-- [x] for .sh files change paths to be relative to device
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
+- [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
 
 ## Data Cleaning
 - [x] normalise years
@@ -88,8 +88,6 @@ my-film-data-vec.json to file
 - [x] minimise global variables (you only need to call global if you want to **modify** the variable)
 - [ ] error handling on potential div by 0 errors
 - [ ] reduce comments in code and make it more readable (after watching code aesthetic's video)
-- [ ] letterboxd conversion: rather than relying on diary.csv, append latest `Watched Date` to corresponding entry in
-`ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in ratings.csv
 
 ## Misc
 - [x] switch from my-film-data.json to ratings.csv
@@ -103,7 +101,8 @@ my-film-data-vec.json to file
 create endpoints for getters/setters
 - [x] deletion of ratings/diary.csv before saving to file
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
-
+- [ ] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
+- [ ] bug: imdb recency doesn't work
 
 ## Windows OS
 - [x] config frontend: npm, etc.
@@ -115,9 +114,16 @@ create endpoints for getters/setters
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
 - [x] reduce run.sh to startup.sh
 - [x] change run.sh to reflect various changes
+- [x] for .sh files change paths to be relative to device
 
 # High-Level TODO
 - [x] Read relevant parts of the Recommender Systems textbook
 - [ ] Increase complexity and quality of Data Collection
 - [ ] Increase complexity and quality of the Recommendation Algorithm
 - [ ] Present the results on a clean website
+
+# Nice to Have
+**Not essential, but to do be done later if I have the time/feel like it**
+- [ ] letterboxd conversion: rather than relying only on `diary.csv` or `ratings.csv`, append latest `Watched Date` to 
+corresponding entry in `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in 
+`ratings.csv`

@@ -43,7 +43,7 @@ minNumberOfVotes = 0
 minRuntime = 0
 minDateRated = datetime(1, 1, 1)
 isImdbFile = True
-myFilmDataFilename = ""
+userFilmDataFilename = ""
 
 app = Flask(__name__)
 
@@ -82,37 +82,36 @@ def resetGlobalVariables():
 @app.route('/verifyUserUploadedFile', methods=['POST'])
 def verifyUserUploadedFile():
     global isImdbFile
-    global myFilmDataFilename
+    global userFilmDataFilename
 
     isImdbFile = True
-    myFilmDataFilename = ""
+    userFilmDataFilename = ""
 
     if 'file' not in request.files:
         return 'No file found in the request', 400
 
     file = request.files['file']
-    myFilmDataFilename = file.filename
+    userFilmDataFilename = file.filename
     file.save("../data/" + file.filename)
     expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
                                       "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
                                       "Release Date", "Directors"]
-    expectedLetterboxdFileFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating", "Rewatch", "Tags",
-                                            "Watched Date"]
+    expectedLetterboxdFileFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating"]
 
     try:
-        with open("../data/" + myFilmDataFilename, encoding='utf-8') as myFilmDataFile:
-            reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
+        with open("../data/" + userFilmDataFilename, encoding='utf-8') as userFilmDataFile:
+            reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
                 if 'unexpectedData' in row:
-                    return "Error: " + myFilmDataFilename + " has more data than row headers.\n", 400
+                    return "Error: " + userFilmDataFilename + " has more data than row headers.\n", 400
 
                 keys = list(row.keys())
                 for k in keys:
                     if k not in expectedImdbFileFilmAttributes:
                         isImdbFile = False
                         if k not in expectedLetterboxdFileFilmAttributes:
-                            return ("Error: Row headers in " + myFilmDataFilename +
+                            return ("Error: Row headers in " + userFilmDataFilename +
                                     " does not conform to expected format.\n", 400)
 
         resetGlobalVariables()
@@ -121,7 +120,7 @@ def verifyUserUploadedFile():
         return "Error: file not found.", 404
     except Exception as e:
         deleteCsvFiles()
-        return "Error occurred with reading " + myFilmDataFilename + ".\n" + str(e), 400
+        return "Error occurred with reading " + userFilmDataFilename + ".\n" + str(e), 400
 
 
 # initial recommendation of films to user
@@ -135,31 +134,29 @@ def initRec():
         profileChanges.append(np.zeros(VECTOR_LENGTH))
 
     try:
-        myFilmDataList = []
-        with open("../data/" + myFilmDataFilename, encoding='utf8') as myFilmDataFile:
-            reader = csv.DictReader(myFilmDataFile, delimiter=',', restkey='unexpectedData')
+        userFilmDataList = []
+        with open("../data/" + userFilmDataFilename, encoding='utf8') as userFilmDataFile:
+            reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
-                myFilmDataList.append(row)
+                userFilmDataList.append(row)
     except FileNotFoundError:
-        return "Error: " + myFilmDataFilename + " not found, check file name & file type.", 404
+        return "Error: " + userFilmDataFilename + " not found, check file name & file type.", 404
     except Exception as e:
         deleteCsvFiles()
-        return "Error occurred with reading " + myFilmDataFilename + ".\n" + str(e), 400
+        return "Error occurred with reading " + userFilmDataFilename + ".\n" + str(e), 400
 
     deleteCsvFiles()
     allFilmDataFile = open('../data/all-film-data.json')
     allFilmDataFull = json.load(allFilmDataFile)
     allFilmDataKeys = list(allFilmDataFull.keys())
 
-    # if the user uploaded letterboxd file, convert it to a format resembling the IMDb one
     if not isImdbFile:
-        myFilmDataList = convertLetterboxdToImdb(myFilmDataList, allFilmDataFull, allFilmDataKeys)
+        userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmDataFull, allFilmDataKeys)
 
-    myFilmData = {}  # init as a dict
+    userFilmData = {}
 
-    for film in myFilmDataList:
-        # filter out non-movies, <RUNTIME_THRESHOLD minute runtime, and with no genres
+    for film in userFilmDataList:
         if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != "":
             # IMDb only: convert genres from comma-separated string to array
             if isImdbFile:
@@ -168,7 +165,7 @@ def initRec():
             else:
                 genres = film['Genres']
             try:
-                myFilmData[film['Const']] = {
+                userFilmData[film['Const']] = {
                     "title": film['Title'],
                     "year": int(film['Year']),
                     "myRating": int(film['Your Rating']),
@@ -181,7 +178,7 @@ def initRec():
             except ValueError:
                 return ("value error with film: " + film['Const']), 400
 
-    myFilmDataKeys = list(myFilmData.keys())
+    userFilmDataKeys = list(userFilmData.keys())
 
     global DIFF_IMDB_RATING
     global DIFF_YEAR
@@ -204,7 +201,7 @@ def initRec():
     maxNumberOfVotes = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
     minRuntime = allFilmDataFull[allFilmDataKeys[0]]['runtime']
     maxRuntime = allFilmDataFull[allFilmDataKeys[0]]['runtime']
-    minDateRated = myFilmData[myFilmDataKeys[0]]['dateRated']
+    minDateRated = userFilmData[userFilmDataKeys[0]]['dateRated']
     maxDateRated = datetime.now()
 
     global allFilmData
@@ -213,7 +210,7 @@ def initRec():
     for key in allFilmDataKeys:
         # take films out from allFilmData that the user has seen; we don't want to recommend films that the user
         # has seen before.
-        if key not in myFilmDataKeys:
+        if key not in userFilmDataKeys:
             # add it to a new, filtered allFilmData dict
             allFilmData[key] = allFilmDataFull[key]
 
@@ -238,21 +235,21 @@ def initRec():
     # create a new list of allFilmData keys after filtering some films out of allFilmDataFull
     allFilmDataKeys = list(allFilmData.keys())
 
-    # init dicts for vectorized allFilmData & myFilmData
+    # init dicts for vectorized allFilmData & userFilmData
     global allFilmDataVec
-    myFilmDataVec = {}
+    userFilmDataVec = {}
 
     # iterate through my-film-data and alter the min & max values to ensure they are the same across both datasets
-    for key in myFilmDataKeys:
-        minImdbRating = min(minImdbRating, myFilmData[key]['imdbRating'])
-        maxImdbRating = max(maxImdbRating, myFilmData[key]['imdbRating'])
-        minYear = min(minYear, myFilmData[key]['year'])
-        maxYear = max(maxYear, myFilmData[key]['year'])
-        minNumberOfVotes = min(minNumberOfVotes, myFilmData[key]['numberOfVotes'])
-        maxNumberOfVotes = max(maxNumberOfVotes, myFilmData[key]['numberOfVotes'])
-        minRuntime = min(minRuntime, myFilmData[key]['runtime'])
-        maxRuntime = max(maxRuntime, myFilmData[key]['runtime'])
-        minDateRated = min(minDateRated, myFilmData[key]['dateRated'])
+    for key in userFilmDataKeys:
+        minImdbRating = min(minImdbRating, userFilmData[key]['imdbRating'])
+        maxImdbRating = max(maxImdbRating, userFilmData[key]['imdbRating'])
+        minYear = min(minYear, userFilmData[key]['year'])
+        maxYear = max(maxYear, userFilmData[key]['year'])
+        minNumberOfVotes = min(minNumberOfVotes, userFilmData[key]['numberOfVotes'])
+        maxNumberOfVotes = max(maxNumberOfVotes, userFilmData[key]['numberOfVotes'])
+        minRuntime = min(minRuntime, userFilmData[key]['runtime'])
+        maxRuntime = max(maxRuntime, userFilmData[key]['runtime'])
+        minDateRated = min(minDateRated, userFilmData[key]['dateRated'])
 
     # perform some pre-computation to avoid repetitive computation
     DIFF_IMDB_RATING = maxImdbRating - minImdbRating
@@ -288,28 +285,28 @@ def initRec():
     myRatingScalarDict = {}
 
     # vectorize my-film-data
-    for key in myFilmDataKeys:
+    for key in userFilmDataKeys:
         # vectorize the film
-        vector = vectorize(myFilmData[key], allGenres, yearNorms, imdbRatingNorms)
+        vector = vectorize(userFilmData[key], allGenres, yearNorms, imdbRatingNorms)
         # dateRatedScalar: normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
-        dateRatedScalar = (((myFilmData[key]['dateRated'] - minDateRated) / DIFF_DATE_RATED) *
+        dateRatedScalar = (((userFilmData[key]['dateRated'] - minDateRated) / DIFF_DATE_RATED) *
                            (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
         dateRatedScalarDict[key] = dateRatedScalar  # add this value to the dict for pre-computation
 
-        myRatingScalar = round((myFilmData[key]['myRating'] / 10.0), 1)
+        myRatingScalar = round((userFilmData[key]['myRating'] / 10.0), 1)
         myRatingScalarDict[key] = myRatingScalar
 
         # add scalar-multiplied vector to dict
-        myFilmDataVec[key] = vector * myRatingScalar * dateRatedScalar
+        userFilmDataVec[key] = vector * myRatingScalar * dateRatedScalar
 
     weightedAverageSum = 0.0  # init to some temp value
 
     # create user profile based on my-film-data-vectorized:
     global userProfile
 
-    for key in myFilmDataKeys:
+    for key in userFilmDataKeys:
         # sum the (already weighted) vectors together
-        userProfile += myFilmDataVec[key]
+        userProfile += userFilmDataVec[key]
         # increment the weighted average
         weightedAverageSum += myRatingScalarDict[key] + dateRatedScalarDict[key]
 
@@ -318,7 +315,7 @@ def initRec():
 
     # print("Initial userProfile:\n" + str(userProfile))
 
-    initRecencyProfile(myFilmData, myFilmDataKeys, myFilmDataVec, maxDateRated)
+    initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVec, maxDateRated)
 
     # print("Initial recencyProfile:\n" + str(recencyProfile))
 
@@ -326,31 +323,29 @@ def initRec():
 
     # print("Initial wildcardProfile:\n" + str(wildcardProfile))
 
-    genRecs()
+    generateRecs()
 
     return jsonify(recs), 200
 
 
 # initialises the recency profile
-def initRecencyProfile(myFilmData, myFilmDataKeys, myFilmDataVec, maxDateRated):
+def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVec, maxDateRated):
     global recencyProfile
-    weightedAverageSum = 0
+    weightedAverageSum = 0.0
 
-    for key in myFilmDataKeys:
-        # if the film was rated in the last 30 days:
-        daysDiff = maxDateRated - myFilmData[key]['dateRated']
+    for key in userFilmDataKeys:
+        daysDiff = maxDateRated - userFilmData[key]['dateRated']
         if daysDiff.days <= 30:
-            # sum the (already weighted) vectors together
-            recencyProfile += myFilmDataVec[key]
-            # increment the weighted average
+            recencyProfile += userFilmDataVec[key]
             # note: not adding dateRatedScalar to the weightedAverageSum because I don't want vectors to be
             # scalar multiplied because we are only dealing with films in the last 30 days
-            weightedAverageSum += (myFilmData[key]['myRating'] / 10.0)
+            weightedAverageSum += (userFilmData[key]['myRating'] / 10.0)
         else:
             # terminate; user-uploaded .csv file is sorted by date (latest first, oldest last),
             # so no need to look further
             break
 
+    # todo div by 0 error - what if there's no recent films?
     recencyProfile = np.divide(recencyProfile, weightedAverageSum)
 
 
@@ -382,17 +377,14 @@ def getWeight(i):
             return GENRE_WEIGHT
 
 
-# generate recs
-def genRecs():
+def generateRecs():
     allFilmDataKeys = list(allFilmData.keys())
+    getFilmRecs("user", allFilmDataKeys)      # generate user recs
+    getFilmRecs("recency", allFilmDataKeys)   # generate recency recs
+    getFilmRecs("wildcard", allFilmDataKeys)  # generate wildcard recs
 
-    # generate recs
-    getRecs("user", allFilmDataKeys)      # generate user recs
-    getRecs("recency", allFilmDataKeys)   # generate recency recs
-    getRecs("wildcard", allFilmDataKeys)  # generate wildcard recs
 
-# get film recommendations
-def getRecs(recType, allFilmDataKeys):
+def getFilmRecs(recType, allFilmDataKeys):
     global recs
 
     if recType == "wildcard":
@@ -412,22 +404,20 @@ def getRecs(recType, allFilmDataKeys):
     # pre-compute the vector magnitude to make cosine sim calculations more efficient
     vectorMagnitude = np.linalg.norm(vector)
 
-    # Similarity dict:
-    # key = filmId, value = similarity to userProfile (float: 0 - 100.0)
-    similarities = {}
+    cosineSimilarities = {}
 
     # for each film in all-film-data-vectorized
     for filmId in allFilmDataKeys:
         # calculate similarity to userProfile
-        similarities[filmId] = cosineSimilarity(allFilmDataVec[filmId], vector, vectorMagnitude)
+        cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVec[filmId], vector, vectorMagnitude)
 
-    # sort similarities in descending order.
-    similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
+    # sort in descending order.
+    cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
 
     duplicateRec = False
 
     for i in range(0, maxRec):
-        filmId = similarities[i][0]
+        filmId = cosineSimilarities[i][0]
         # check if the recommended film has already been recommended by another vector:
         # this check exists because we don't want the userProfile vector recommending the same films as
         # the recencyProfile for example
@@ -435,11 +425,13 @@ def getRecs(recType, allFilmDataKeys):
             if rec['id'] == filmId:
                 maxRec += 1
                 duplicateRec = True
+                # todo temp
+                print(str(rec['id']))
                 break
 
         if not duplicateRec:
             film = allFilmData[filmId]
-            similarityScore = similarities[i][1]
+            similarityScore = cosineSimilarities[i][1]
             film['id'] = filmId
             film['similarityScore'] = round(similarityScore * 100.0, 2)
             film['recType'] = recType
@@ -667,7 +659,7 @@ def regen():
     recStates = [0] * TOTAL_RECS
 
     # re-calculate new recs
-    genRecs()
+    generateRecs()
 
     return jsonify(recs), 200
 
@@ -678,71 +670,55 @@ def getTotalRecs():
     return str(TOTAL_RECS), 200
 
 
-# converts diary.csv (letterboxd exported data format) to an object resembling the imdb exported data format
-def convertLetterboxdToImdb(old_myFilmDataList, allFilmDataFull, allFilmDataKeys):
-    new_myFilmDataList = []
+def convertLetterboxdFormatToImdbFormat(oldUserFilmDataList, allFilmDataFull, allFilmDataKeys):
+    newUserFilmDataList = []
 
-    # reverse the list. we want to work with the most recent entries first
-    old_myFilmDataList = reversed(old_myFilmDataList)
+    # we want to work with latest entries first
+    oldUserFilmDataList = reversed(oldUserFilmDataList)
 
-    # dict where the key is the filmTitle and filmYear concatenated.
-    # e.g. Barbie (2023) has key: Barbie2023, value:True.
-    filmTitleYearDict = {}
-
-    # create a dict with preprocessed titles of all films in allFilmData (more efficient as this is used as a parameter
-    # to the searchFilm() method
-    preprocessedAllFilmDataTitles = {}
+    # cache titles for more efficiency in searchImdbFilm() method
+    cachedAllFilmDataTitles = {}
 
     for key in allFilmDataKeys:
-        preprocessedAllFilmDataTitles[key] = letterboxdTitlePreprocessing(allFilmDataFull[key]['title'])
+        cachedAllFilmDataTitles[key] = letterboxdTitlePreprocessing(allFilmDataFull[key]['title'])
 
-    # iterate through each film in diary.csv
-    for film in old_myFilmDataList:
+    for film in oldUserFilmDataList:
         filmYear = int(film['Year'])
         filmTitle = letterboxdToImdbTitleConversion(film['Name'], filmYear)
-        concatString = filmTitle + str(filmYear)
 
-        # ensure the film is not a duplicate
-        if concatString not in filmTitleYearDict:
-            filmId = searchFilm(filmTitle, filmYear, allFilmDataFull, allFilmDataKeys, preprocessedAllFilmDataTitles)
+        filmId = searchImdbFilm(filmTitle, filmYear, allFilmDataFull, allFilmDataKeys, cachedAllFilmDataTitles)
 
-            if filmId != "-1":
-                filmTitleYearDict[concatString] = True  # add to dict
-                new_myFilmDataList.append({
-                    "Const": filmId,
-                    "Title": filmTitle,
-                    "Title Type": "Movie",
-                    # we want to use the year attribute from all-film-data.json as opposed to the letterboxd one,
-                    # sometimes there is a 1-year difference between imdb & letterboxd versions of the same film.
-                    # best to keep it consistent and follow imdb
-                    "Year": allFilmDataFull[filmId]['year'],
-                    "Your Rating": round(float(film['Rating']) * 2.0, 1),
-                    "Date Rated": film['Watched Date'],
-                    "IMDb Rating": allFilmDataFull[filmId]['imdbRating'],
-                    "Num Votes": allFilmDataFull[filmId]['numberOfVotes'],
-                    "Runtime (mins)": allFilmDataFull[filmId]['runtime'],
-                    "Genres": allFilmDataFull[filmId]['genres']
-                })
-            # else:
-            #     print("film not found. title: " + filmTitle + ". year:" + str(filmYear))
+        if filmId != "not found":
+            newUserFilmDataList.append({
+                "Const": filmId,
+                "Title": filmTitle,
+                "Title Type": "Movie",
+                # we want to use the year attribute from all-film-data.json as opposed to the letterboxd one,
+                # sometimes there is a 1-year difference between imdb & letterboxd versions of the same film.
+                # best to keep it consistent and follow imdb
+                "Year": allFilmDataFull[filmId]['year'],
+                "Your Rating": round(float(film['Rating']) * 2.0, 1),
+                "Date Rated": film['Date'],
+                "IMDb Rating": allFilmDataFull[filmId]['imdbRating'],
+                "Num Votes": allFilmDataFull[filmId]['numberOfVotes'],
+                "Runtime (mins)": allFilmDataFull[filmId]['runtime'],
+                "Genres": allFilmDataFull[filmId]['genres']
+            })
         # else:
-        #     print("film already exists. title: " + filmTitle + ". year:" + str(filmYear))
+        #     print("film not found. title: " + filmTitle + ". year:" + str(filmYear))
 
-    return new_myFilmDataList
+    return newUserFilmDataList
 
 
-# given film title and year from letterboxd diary.csv, searches all-film-data.json for corresponding IMDb film.
-# returns film ID if found, else "-1".
-def searchFilm(title, year, allFilmDataFull, allFilmDataKeys, preprocessedAllFilmDataTitles):
+def searchImdbFilm(letterboxdTitle, letterboxdYear, allFilmDataFull, allFilmDataKeys, cachedAllFilmDataTitles):
     for filmId in allFilmDataKeys:
-        if letterboxdTitlePreprocessing(title) == preprocessedAllFilmDataTitles[filmId]:
-            # if there is a difference <= 1 between the years of the matched films
-            # this check exists because some films have different year releases between letterboxd & imdb.
+        if letterboxdTitlePreprocessing(letterboxdTitle) == cachedAllFilmDataTitles[filmId]:
+            # some films have different year releases between letterboxd & imdb.
             # e.g. Ex Machina is 2014 in IMDb, but 2015 in Letterboxd
-            if abs(year - allFilmDataFull[filmId]['year']) <= 1:
+            if abs(letterboxdYear - allFilmDataFull[filmId]['year']) <= 1:
                 return filmId
 
-    return "-1"
+    return "not found"
 
 
 def letterboxdTitlePreprocessing(title):

@@ -18,15 +18,6 @@ cosine similarity
 * Think about ways to add **interpretation**, e.g. *"because you liked 1980s rom-coms..."*. This adds a layer of
 sophistication to your recommender system and increases users trust in the recommendations
 
-## For the potential future
-1. **Collaborative filtering:** can be introduced by asking other people to upload their imdb/letterboxd data. (reddit 
-post, social media post, asking friends).
-2. account creation, cookies. users can add to their IMDb/letterboxd watchlist through the website (integrate them 
-somehow)
-3. **Diversify** dataset: add directors, actors, country, language, etc.
-4. accommodate users without imdb/letterboxd account, they can search a DB and rate films on the website, user profile
-generated from their ratings
-
 ## Data Collection
 
 You could use tmdb api directly, or use these python libraries:
@@ -61,7 +52,7 @@ numerically into my solution:
   b. scalar multiply this value by the vector, like described previously.
 
 * **Samuel:** penalise older films much more heavily to get a noticeable effect.
-* rather than linearly normalising the scalar multiplicand, could do a sin/s curve
+* rather than linearly normalising the scalar multiplicand, could do a sine curve
 * fix maxDateRated to a constant to today's date, not the latest film rated in the dataset.
 
 ### Doing Relative dateRated Normalization
@@ -140,6 +131,15 @@ previous actions or explicit feedback"
 1. Cosine similarity - cosine of the angle between 2 vectors
 2. dot product
 3. Euclidean distance
+
+## For the potential future
+1. **Collaborative filtering:** can be introduced by asking other people to upload their imdb/letterboxd data. (reddit 
+post, social media post, asking friends).
+2. account creation, cookies. users can add to their IMDb/letterboxd watchlist through the website (integrate them 
+somehow)
+3. **Diversify** dataset: add directors, actors, country, language, etc.
+4. accommodate users without imdb/letterboxd account, they can search a DB and rate films on the website, user profile
+generated from their ratings
 
 ## CHAT GPT
 
