@@ -20,7 +20,7 @@
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
-- [ ] augment country, language and poster using TMDB API **getting memory error but should work**
+- [ ] augment country, language and poster using TMDB API
 
 ## Data Cleaning
 - [x] normalise years
@@ -33,12 +33,24 @@
 - [x] how much do I round values by? - not rounding values, no reason to do it
 - [x] calculate user profile using weighted averages
 - [x] mess around with weights of year and genres
-- [ ] drop numVotes threshold to 10k?
+- [x] drop numVotes threshold to 10k
+
+## Vectorizing the Data
+- [x] vectorize all-film-data in init-all-film-data.py
+- [x] vector change in thumbs up/down
+- [x] revert vector change
+- [x] regen function
+- [x] wildcard recs
+- [x] everytime you change a vector (wildcard/user profile), ensure all values >=0.0 && <= 1.0
+- [x] fix runtime vector wildcard
+- [x] implement wildcard feedback factor
+- [x] implement profileChanges instead of separate wildcardProfileChanges & userProfileChanges
+- [x] integrate date rated - weight of how recently user has rated film.
+- [x] cache cosine sim comparisons
+- [ ] one hot encode language & country
 
 # Recommendation Algorithm
-
 - [x] all-film-data doesn't filter out films that have been rated
-- [x] vectorize all-film-data in init-all-film-data.py
 - [x] init-my-film-data filters out films that have been rated from all-film-data (also rm vector entries)
 - [x] keep title.basics.tsv & title.ratings.tsv
 - [x] add last-download.txt. if downloaded <24 hours, skip the step
@@ -51,16 +63,6 @@
 my-film-data-vec.json to file
 - [x] call init_rec endpoint once when new page is loaded
 - [x] thumbs up/down state logic
-- [x] vector change in thumbs up/down
-- [x] revert vector change
-- [x] regen function
-- [x] wildcard recs
-- [x] everytime you change a vector (wildcard/user profile), ensure all values >=0.0 && <= 1.0
-- [x] fix runtime vector wildcard
-- [x] implement wildcard feedback factor
-- [x] implement profileChanges instead of separate wildcardProfileChanges & userProfileChanges
-- [x] integrate date rated - weight of how recently user has rated film.
-- [x] cache cosine sim comparisons
 
 # Frontend
 - [x] do text div 
@@ -72,6 +74,7 @@ my-film-data-vec.json to file
 - [x] go to results page if verifyUserUploadedFile ok
 - [x] verify api calls for vector change funcs are working
 - [x] /initial_recs api calls more than once?
+- [ ] fix title pos bug on recs page
 - [ ] make results page look presentable/nice
 
 # General
@@ -90,6 +93,7 @@ my-film-data-vec.json to file
 - [ ] error handling on potential div by 0 errors
 - [ ] reduce comments in code and make it more readable (after watching code aesthetic's video)
 - [ ] error handling on all file imports, api requests, etc. try-except
+- [ ] separate code pieces into separate classes/files; modularity wya
 
 ## Misc
 - [x] switch from my-film-data.json to ratings.csv

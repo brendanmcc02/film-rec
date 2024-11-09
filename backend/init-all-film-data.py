@@ -3,9 +3,7 @@ import csv
 import time
 import requests
 
-# global constants
-RUNTIME_THRESHOLD = 40
-NUM_OF_VOTES_THRESHOLD = 25000
+from constants import RUNTIME_THRESHOLD, NUM_OF_VOTES_THRESHOLD
 MIN_IMDB_RATING = 0.0
 MIN_YEAR = 0
 MIN_NUMBER_OF_VOTES = 0
@@ -90,7 +88,7 @@ def main():
     allFilmData = json.load(allFilmDataFile)
 
     ########
-    print("\nMaking API calls to get Languages, Countries & Poster...\n")
+    print("\nMaking API calls to get Language, Countries & Poster...\n")
 
     baseImageUrl = "https://image.tmdb.org/t/p/w500"
 
@@ -148,7 +146,7 @@ def main():
                 cachedTmbdFilmData[imdbFilmId] = {"language": filmLanguage, "countries": filmCountries,
                                                   "poster": filmPoster}
 
-                allFilmData[imdbFilmId]['languages'] = filmLanguage
+                allFilmData[imdbFilmId]['language'] = filmLanguage
                 allFilmData[imdbFilmId]['countries'] = filmCountries
                 allFilmData[imdbFilmId]['poster'] = filmPoster
 

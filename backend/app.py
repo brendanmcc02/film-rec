@@ -5,9 +5,9 @@ import csv
 import numpy as np
 import os
 import glob
+from constants import RUNTIME_THRESHOLD
 
-RUNTIME_THRESHOLD = 40
-VECTOR_LENGTH = 27
+PROFILE_VECTOR_LENGTH = 1
 NUM_USER_RECS = 4
 NUM_RECENCY_RECS = 2
 NUM_WILDCARD_RECS = 2
@@ -29,12 +29,12 @@ DIFF_NUMBER_OF_VOTES = 0
 DIFF_RUNTIME = 0
 DIFF_DATE_RATED = datetime(1, 1, 1)
 
-userProfile = np.zeros(VECTOR_LENGTH)
-recencyProfile = np.zeros(VECTOR_LENGTH)
-wildcardProfile = np.zeros(VECTOR_LENGTH)
-profileChanges = []
+userProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+recencyProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+wildcardProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+vectorProfileChanges = []
 allFilmData = {}
-allFilmDataVec = {}
+allFilmDataVectorized = {}
 recs = []
 recStates = [0] * TOTAL_RECS
 minImdbRating = 0.0
@@ -52,9 +52,9 @@ def resetGlobalVariables():
     global userProfile
     global recencyProfile
     global wildcardProfile
-    global profileChanges
+    global vectorProfileChanges
     global allFilmData
-    global allFilmDataVec
+    global allFilmDataVectorized
     global recs
     global recStates
     global minImdbRating
@@ -64,12 +64,12 @@ def resetGlobalVariables():
     global minDateRated
     global isImdbFile
 
-    userProfile = np.zeros(VECTOR_LENGTH)
-    recencyProfile = np.zeros(VECTOR_LENGTH)
-    wildcardProfile = np.zeros(VECTOR_LENGTH)
-    profileChanges = []
+    userProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+    recencyProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+    wildcardProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+    vectorProfileChanges = []
     allFilmData = {}
-    allFilmDataVec = {}
+    allFilmDataVectorized = {}
     recs = []
     recStates = [0] * TOTAL_RECS
     minImdbRating = 0.0
@@ -126,13 +126,6 @@ def verifyUserUploadedFile():
 # initial recommendation of films to user
 @app.route('/initRec')
 def initRec():
-    global profileChanges
-
-    # init profileChanges vector
-    # todo simplify to one-liner
-    for i in range(0, TOTAL_RECS):
-        profileChanges.append(np.zeros(VECTOR_LENGTH))
-
     try:
         userFilmDataList = []
         with open("../data/" + userFilmDataFilename, encoding='utf8') as userFilmDataFile:
@@ -158,10 +151,8 @@ def initRec():
 
     for film in userFilmDataList:
         if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != "":
-            # IMDb only: convert genres from comma-separated string to array
             if isImdbFile:
                 genres = film['Genres'].replace("\"", "").split(", ")
-            # this pre-processing was already performed in the letterboxd-to-IMDb conversion
             else:
                 genres = film['Genres']
             try:
@@ -191,7 +182,6 @@ def initRec():
     global minRuntime
     global minDateRated
 
-    # initialise the min & max values of various attributes.
     # this is needed for normalising vector values.
     minImdbRating = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
     maxImdbRating = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
@@ -205,21 +195,27 @@ def initRec():
     maxDateRated = datetime.now()
 
     global allFilmData
-    allGenres = []  # list of unique genres
+    allGenres = []
+    allLanguages = []
+    allCountries = []
 
     for key in allFilmDataKeys:
-        # take films out from allFilmData that the user has seen; we don't want to recommend films that the user
-        # has seen before.
+        # take films out from allFilmData that the user has seen
         if key not in userFilmDataKeys:
-            # add it to a new, filtered allFilmData dict
             allFilmData[key] = allFilmDataFull[key]
 
-        # if a genre is not in allGenres yet, append it
         for genre in allFilmDataFull[key]['genres']:
             if genre not in allGenres:
                 allGenres.append(genre)
 
-        # modify min & max of the various film attributes
+        filmLanguage = allFilmDataFull[key]['language']
+        if filmLanguage not in allLanguages:
+            allLanguages.append(filmLanguage)
+
+        for country in allFilmDataFull[key]['countries']:
+            if country not in allCountries:
+                allCountries.append(country)
+
         minImdbRating = min(minImdbRating, allFilmDataFull[key]['imdbRating'])
         maxImdbRating = max(maxImdbRating, allFilmDataFull[key]['imdbRating'])
         minYear = min(minYear, allFilmDataFull[key]['year'])
@@ -229,17 +225,17 @@ def initRec():
         minRuntime = min(minRuntime, allFilmDataFull[key]['runtime'])
         maxRuntime = max(maxRuntime, allFilmDataFull[key]['runtime'])
 
-
-    allGenres = sorted(allGenres)  # sort alphabetically
+    allGenres = sorted(allGenres)
+    allLanguages = sorted(allLanguages)
+    allCountries = sorted(allCountries)
 
     # create a new list of allFilmData keys after filtering some films out of allFilmDataFull
     allFilmDataKeys = list(allFilmData.keys())
 
-    # init dicts for vectorized allFilmData & userFilmData
-    global allFilmDataVec
-    userFilmDataVec = {}
+    global allFilmDataVectorized
+    userFilmDataVectorized = {}
 
-    # iterate through my-film-data and alter the min & max values to ensure they are the same across both datasets
+    # alter the min & max values to ensure they are the same across both datasets
     for key in userFilmDataKeys:
         minImdbRating = min(minImdbRating, userFilmData[key]['imdbRating'])
         maxImdbRating = max(maxImdbRating, userFilmData[key]['imdbRating'])
@@ -258,64 +254,62 @@ def initRec():
     DIFF_RUNTIME = maxRuntime - minRuntime
     DIFF_DATE_RATED = maxDateRated - minDateRated
 
-    # pre-compute normalised years for each year
-    yearNorms = {}
+    cachedNormalizedYears = {}
     for y in range(minYear, maxYear + 1):
-        yearNorms[y] = (y - minYear) / DIFF_YEAR
+        cachedNormalizedYears[y] = ((y - minYear) / DIFF_YEAR) * YEAR_WEIGHT
 
-    # pre-compute normalised imdbRatings for each imdbRating
-    imdbRatingNorms = {}
+    cachedNormalizedImdbRatings = {}
     for i in np.arange(minImdbRating, maxImdbRating + 0.1, 0.1):
-        i = round(i,1)
-        imdbRatingNorms[str(i)] = (i - minImdbRating) / DIFF_IMDB_RATING
+        i = round(i, 1)
+        cachedNormalizedImdbRatings[str(i)] = (i - minImdbRating) / DIFF_IMDB_RATING
 
     # vectorize all-film-data
     for key in allFilmDataKeys:
-        # vectorize the film
-        vector = vectorize(allFilmData[key], allGenres, yearNorms, imdbRatingNorms)
-        # add to dict
-        allFilmDataVec[key] = vector
+        vector = vectorizeFilm(allFilmData[key], allGenres, allLanguages, allCountries, cachedNormalizedYears,
+                               cachedNormalizedImdbRatings)
+        allFilmDataVectorized[key] = vector
 
     # init a dict to store pre-computed dateRatedScalar values; more efficient.
     # key: film id, value: dateRatedScalar
-    dateRatedScalarDict = {}
+    cachedDateRatedScalars = {}
 
     # init a dict to store pre-computed normalised myRating values; more efficient.
     # key: film id, value: normalisedMyRating
-    myRatingScalarDict = {}
+    cachedMyRatingScalars = {}
 
     # vectorize my-film-data
     for key in userFilmDataKeys:
-        # vectorize the film
-        vector = vectorize(userFilmData[key], allGenres, yearNorms, imdbRatingNorms)
+        vector = vectorizeFilm(userFilmData[key], allGenres, cachedNormalizedYears, cachedNormalizedImdbRatings)
         # dateRatedScalar: normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
         dateRatedScalar = (((userFilmData[key]['dateRated'] - minDateRated) / DIFF_DATE_RATED) *
                            (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
-        dateRatedScalarDict[key] = dateRatedScalar  # add this value to the dict for pre-computation
+        cachedDateRatedScalars[key] = dateRatedScalar
 
+        # imdbRatings run from 1-10, we want values to run from 0.1 - 1.0
         myRatingScalar = round((userFilmData[key]['myRating'] / 10.0), 1)
-        myRatingScalarDict[key] = myRatingScalar
+        cachedMyRatingScalars[key] = myRatingScalar
 
-        # add scalar-multiplied vector to dict
-        userFilmDataVec[key] = vector * myRatingScalar * dateRatedScalar
+        # recall that vectors are scalar multiplied by myRating & dateRated
+        userFilmDataVectorized[key] = vector * myRatingScalar * dateRatedScalar
 
-    weightedAverageSum = 0.0  # init to some temp value
+    weightedAverageSum = 0.0
 
-    # create user profile based on my-film-data-vectorized:
+    global vectorProfileChanges
+    for i in range(0, TOTAL_RECS):
+        vectorProfileChanges.append(np.zeros(PROFILE_VECTOR_LENGTH))
+
     global userProfile
+    userProfile = np.zeros(PROFILE_VECTOR_LENGTH)
 
     for key in userFilmDataKeys:
-        # sum the (already weighted) vectors together
-        userProfile += userFilmDataVec[key]
-        # increment the weighted average
-        weightedAverageSum += myRatingScalarDict[key] + dateRatedScalarDict[key]
+        userProfile += userFilmDataVectorized[key]
+        weightedAverageSum += cachedMyRatingScalars[key] + cachedDateRatedScalars[key]
 
-    # divide the userProfile vector by the weighted average
     userProfile = np.divide(userProfile, weightedAverageSum)
 
     # print("Initial userProfile:\n" + str(userProfile))
 
-    initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVec, maxDateRated)
+    initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated)
 
     # print("Initial recencyProfile:\n" + str(recencyProfile))
 
@@ -328,15 +322,15 @@ def initRec():
     return jsonify(recs), 200
 
 
-# initialises the recency profile
-def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVec, maxDateRated):
+def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated):
     global recencyProfile
+    recencyProfile = np.zeros(PROFILE_VECTOR_LENGTH)
     weightedAverageSum = 0.0
 
     for key in userFilmDataKeys:
         daysDiff = maxDateRated - userFilmData[key]['dateRated']
         if daysDiff.days <= 30:
-            recencyProfile += userFilmDataVec[key]
+            recencyProfile += userFilmDataVectorized[key]
             # note: not adding dateRatedScalar to the weightedAverageSum because I don't want vectors to be
             # scalar multiplied because we are only dealing with films in the last 30 days
             weightedAverageSum += (userFilmData[key]['myRating'] / 10.0)
@@ -349,22 +343,25 @@ def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVec, maxDateR
     recencyProfile = np.divide(recencyProfile, weightedAverageSum)
 
 
-# initialises the wildcard profile
-# imdbRating, runtime & numVotes are fixed, the rest (year & all genres) are inverted
+# todo invert country & language
 def initWildcardProfile():
     global wildcardProfile
-    for i in range(0, VECTOR_LENGTH):
+    wildcardProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+
+    for i in range(0, PROFILE_VECTOR_LENGTH):
         # don't invert imdbRating, runtime, or numVotes
         if i != 1 and i != 2 and i != 3:
-            weightHalf = getWeight(i) / 2.0
+            weightHalf = getWeightByVectorIndex(i) / 2.0
             wildcardProfile[i] = weightHalf - (userProfile[i] - weightHalf)  # invert the vector feature
         else:
             wildcardProfile[i] = userProfile[i]
 
 
-# given an index of a vector, return the associated weight
-def getWeight(i):
-    match i:
+def getWeightByVectorIndex(vectorIndex):
+    # any index over 27 in the vector is either a country or language
+    if vectorIndex >= 27:
+        return 1.0
+    match vectorIndex:
         case 0:  # year
             return YEAR_WEIGHT
         case 1:  # imdbRating
@@ -406,10 +403,8 @@ def getFilmRecs(recType, allFilmDataKeys):
 
     cosineSimilarities = {}
 
-    # for each film in all-film-data-vectorized
     for filmId in allFilmDataKeys:
-        # calculate similarity to userProfile
-        cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVec[filmId], vector, vectorMagnitude)
+        cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVectorized[filmId], vector, vectorMagnitude)
 
     # sort in descending order.
     cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
@@ -440,32 +435,36 @@ def getFilmRecs(recType, allFilmDataKeys):
         duplicateRec = False
 
 
-# given a film, return it's vectorized form (return type: numpy vector)
-def vectorize(film, allGenres, yearNorms, imdbRatingNorms):
-    # init as a list, will be converted to numpy vector type later
+def vectorizeFilm(film, allGenres, allLanguages, allCountries, cachedNormalizedYears, cachedNormalizedImdbRatings):
     vector = []
-    # 1. normalise the year; apply weight
-    yearNorm = yearNorms[film['year']] * YEAR_WEIGHT
-    vector.append(yearNorm)
-    # 2. normalise imdbRating
-    imdbRatingNorm = imdbRatingNorms[str(film['imdbRating'])]
+
+    normalizedYear = cachedNormalizedYears[film['year']]
+    vector.append(normalizedYear)
+
+    imdbRatingNorm = cachedNormalizedImdbRatings[str(film['imdbRating'])]
     vector.append(imdbRatingNorm)
-    # 3. normalise numberOfVotes
+
     numberOfVotesNorm = (film['numberOfVotes'] - minNumberOfVotes) / DIFF_NUMBER_OF_VOTES
     vector.append(numberOfVotesNorm)
-    # 4. normalise runtime; apply weight
+
     runtimeNorm = ((film['runtime'] - minRuntime) / DIFF_RUNTIME) * RUNTIME_WEIGHT
     vector.append(runtimeNorm)
-    # 5. one-hot encoding on genres
-    oneHotEncodeGenres(vector, film['genres'], allGenres)
+
+    oneHotEncode(vector, film['genres'], allGenres)
+    oneHotEncode(vector, film['language'], allLanguages)
+    oneHotEncode(vector, film['countries'], allCountries)
+
+    global PROFILE_VECTOR_LENGTH
+    if PROFILE_VECTOR_LENGTH == 1:
+        PROFILE_VECTOR_LENGTH = len(vector)
 
     return np.array(vector)
 
 
-# given a vector, append the one-hot encoding of genres to the vector
-def oneHotEncodeGenres(vector, filmGenres, allGenres):
-    for g in allGenres:
-        if g in filmGenres:
+# used to one-hot encode genres, countries, languages
+def oneHotEncode(vector, filmList, allList):
+    for element in allList:
+        if element in filmList:
             vector.append(1)
         else:
             vector.append(0)
@@ -473,8 +472,6 @@ def oneHotEncodeGenres(vector, filmGenres, allGenres):
     return vector
 
 
-# gets the cosine similarity between two vectors
-# additionally, takes in the magnitude of vector b as pre-computation to make calculations more efficient
 def cosineSimilarity(a, b, bMagnitude):
     return np.dot(a, b) / (np.linalg.norm(a) * bMagnitude)
 
@@ -489,13 +486,13 @@ def curveGenres():
     MIN_GENRE_VALUE = userProfile[4]
     MAX_GENRE_VALUE = userProfile[4]
 
-    for i in range(4, VECTOR_LENGTH):
+    for i in range(4, 27):
         MIN_GENRE_VALUE = min(MIN_GENRE_VALUE, userProfile[i])
         MAX_GENRE_VALUE = max(MAX_GENRE_VALUE, userProfile[i])
 
     DIFF_GENRE = MAX_GENRE_VALUE - MIN_GENRE_VALUE
 
-    for i in range(4, VECTOR_LENGTH):
+    for i in range(4, 27):
         userProfile[i] = (userProfile[i] - MIN_GENRE_VALUE) / DIFF_GENRE  # normalise the genres
         userProfile[i] = userProfile[i] * GENRE_WEIGHT
 
@@ -523,9 +520,9 @@ def changeVector(index, add, recType):
     global userProfile
     global recencyProfile
     global wildcardProfile
-    global profileChanges
+    global vectorProfileChanges
 
-    recVector = allFilmDataVec[recs[index]['id']]
+    recVector = allFilmDataVectorized[recs[index]['id']]
 
     # todo can these repetitive if-else chains be simplified?
 
@@ -538,7 +535,7 @@ def changeVector(index, add, recType):
     else:
         return "unknown rec type:" + str(recType)
 
-    profileChanges[index] = vectorChange  # store the vector change
+    vectorProfileChanges[index] = vectorChange  # store the vector change
 
     # if the rec was liked
     if add:
@@ -565,11 +562,11 @@ def changeVector(index, add, recType):
 
     # after changing vector parameters, ensure that all vector features are >= 0.0 && <= 1.0
     if recType == "wildcard":
-        keepBoundary(wildcardProfile)
+        keepVectorBoundary(wildcardProfile)
     elif recType == "recency":
-        keepBoundary(recencyProfile)
+        keepVectorBoundary(recencyProfile)
     elif recType == "user":
-        keepBoundary(userProfile)
+        keepVectorBoundary(userProfile)
     else:
         return "unknown rec type:" + str(recType)
 
@@ -578,8 +575,8 @@ def changeVector(index, add, recType):
 
 
 # ensures that all vector features are >= 0.0 && <= 1.0
-def keepBoundary(vector):
-    for i in range(0, VECTOR_LENGTH):
+def keepVectorBoundary(vector):
+    for i in range(0, PROFILE_VECTOR_LENGTH):
         if vector[i] < 0.0:
             vector[i] = 0.0
         elif vector[i] > 1.0:
@@ -607,9 +604,9 @@ def undoChange(index, add, recType):
     global userProfile
     global recencyProfile
     global wildcardProfile
-    global profileChanges
+    global vectorProfileChanges
 
-    vectorChange = profileChanges[index]
+    vectorChange = vectorProfileChanges[index]
 
     # todo can these repetitive if-else chains be simplified?
     # if the film was previously disliked
@@ -638,7 +635,7 @@ def undoChange(index, add, recType):
         recStates[index] = 0
 
     # make the profile change a zero vector at the specified index
-    profileChanges[index] = np.zeros(VECTOR_LENGTH)
+    vectorProfileChanges[index] = np.zeros(PROFILE_VECTOR_LENGTH)
 
     return ("undid " + recType + " profile change due to previous " +
             ("disliking" if add else "liking") + " of " + recs[index]['title'])
@@ -650,15 +647,14 @@ def regen():
     # for each film that was liked or disliked:
     for i in range(0, TOTAL_RECS):
         if recStates[i] != 0:
-            # remove from allFilmData & allFilmDataVec
+            # remove from allFilmData & allFilmDataVectorized
             filmId = recs[i]['id']
             del allFilmData[filmId]
-            del allFilmDataVec[filmId]
+            del allFilmDataVectorized[filmId]
 
     # reset recStates
     recStates = [0] * TOTAL_RECS
 
-    # re-calculate new recs
     generateRecs()
 
     return jsonify(recs), 200
