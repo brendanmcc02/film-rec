@@ -18,10 +18,10 @@ const App = () => {
         fetch('/initRec')
             .then((response) => response.json())
             .then((jsonData) => {
-                setFilms(jsonData); // Update state with fetched data
+                setFilms(jsonData); // Update state with fetched database
             })
             .catch((error) => {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching database:', error);
             });
     }, []); // Empty dependency array ensures this effect runs once on component mount
 

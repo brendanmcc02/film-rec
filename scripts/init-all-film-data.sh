@@ -6,9 +6,9 @@ git pull
 printf "\n[1/2] Downloading title.basics.tsv & title.ratings.tsv..."
 
 # download title.basics.tsv.gz & title.ratings.tsv.gz (only if it's been >3 days)
-cd backend/ || exit
+cd data-processing/ || exit
 python3 download-all-film-data.py
-cd ../data || exit
+cd ../database || exit
 
 # unzip the .gz files, only if .gz files have been downloaded
 if test -f title.basics.tsv.gz; then
@@ -27,13 +27,13 @@ fi
 if test -f title.basics.tsv; then
   if test -f title.ratings.tsv; then
     printf "\n[2/2] Initialising all-film-data.json..."
-    cd ../backend/ || exit
+    cd ../data-processing/ || exit
     python3 init-all-film-data.py
 
-    rm ../data/title.basics.tsv
-    rm ../data/title.ratings.tsv
+    rm ../database/title.basics.tsv
+    rm ../database/title.ratings.tsv
 
-    git add ../data/
+    git add ../database/
     git commit -m "downloaded and filtered all-film-data.json"
     git push
   fi

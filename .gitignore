@@ -1,6 +1,6 @@
 .idea/
 *.csv
-data/*.csv
+database/*.csv
 *.pdf
 letterboxd-export/
 access-token.txt

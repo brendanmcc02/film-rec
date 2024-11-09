@@ -5,8 +5,13 @@ import csv
 import numpy as np
 import os
 import glob
-from constants import RUNTIME_THRESHOLD
+import importlib
+from vectorize import *
+# it's not possible to import filenames with hyphens, so I'm using a library to do it :/
+letterboxd_conversion = importlib.import_module('../letterboxd-conversion')
+all_film_data = importlib.import_module('../init-all-film-data')
 
+RUNTIME_THRESHOLD = all_film_data.RUNTIME_THRESHOLD
 PROFILE_VECTOR_LENGTH = 1
 NUM_USER_RECS = 4
 NUM_RECENCY_RECS = 2
@@ -92,14 +97,13 @@ def verifyUserUploadedFile():
 
     file = request.files['file']
     userFilmDataFilename = file.filename
-    file.save("../data/" + file.filename)
+    file.save("../database/" + file.filename)
     expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
                                       "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
                                       "Release Date", "Directors"]
-    expectedLetterboxdFileFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating"]
 
     try:
-        with open("../data/" + userFilmDataFilename, encoding='utf-8') as userFilmDataFile:
+        with open("../database/" + userFilmDataFilename, encoding='utf-8') as userFilmDataFile:
             reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
@@ -110,7 +114,7 @@ def verifyUserUploadedFile():
                 for k in keys:
                     if k not in expectedImdbFileFilmAttributes:
                         isImdbFile = False
-                        if k not in expectedLetterboxdFileFilmAttributes:
+                        if k not in letterboxd_conversion.expectedLetterboxdFileFilmAttributes:
                             return ("Error: Row headers in " + userFilmDataFilename +
                                     " does not conform to expected format.\n", 400)
 
@@ -128,7 +132,7 @@ def verifyUserUploadedFile():
 def initRec():
     try:
         userFilmDataList = []
-        with open("../data/" + userFilmDataFilename, encoding='utf8') as userFilmDataFile:
+        with open("../database/" + userFilmDataFilename, encoding='utf8') as userFilmDataFile:
             reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
@@ -140,12 +144,13 @@ def initRec():
         return "Error occurred with reading " + userFilmDataFilename + ".\n" + str(e), 400
 
     deleteCsvFiles()
-    allFilmDataFile = open('../data/all-film-data.json')
+    allFilmDataFile = open('../database/all-film-data.json')
     allFilmDataFull = json.load(allFilmDataFile)
     allFilmDataKeys = list(allFilmDataFull.keys())
 
     if not isImdbFile:
-        userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmDataFull, allFilmDataKeys)
+        userFilmDataList = letterboxd_conversion.convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmDataFull,
+                                                                                     allFilmDataKeys)
 
     userFilmData = {}
 
@@ -159,7 +164,7 @@ def initRec():
                 userFilmData[film['Const']] = {
                     "title": film['Title'],
                     "year": int(film['Year']),
-                    "myRating": int(film['Your Rating']),
+                    "userRating": int(film['Your Rating']),
                     "dateRated": datetime.strptime(film['Date Rated'], "%Y-%m-%d"),
                     "imdbRating": float(film['IMDb Rating']),
                     "numberOfVotes": int(film['Num Votes']),
@@ -263,34 +268,41 @@ def initRec():
         i = round(i, 1)
         cachedNormalizedImdbRatings[str(i)] = (i - minImdbRating) / DIFF_IMDB_RATING
 
-    # vectorize all-film-data
+    global PROFILE_VECTOR_LENGTH
+
+    # vectorize all-film-database
     for key in allFilmDataKeys:
         vector = vectorizeFilm(allFilmData[key], allGenres, allLanguages, allCountries, cachedNormalizedYears,
-                               cachedNormalizedImdbRatings)
+                               cachedNormalizedImdbRatings, minNumberOfVotes, DIFF_NUMBER_OF_VOTES, minRuntime,
+                               DIFF_RUNTIME)
+        if PROFILE_VECTOR_LENGTH == 1:
+            PROFILE_VECTOR_LENGTH = len(vector)
         allFilmDataVectorized[key] = vector
 
     # init a dict to store pre-computed dateRatedScalar values; more efficient.
     # key: film id, value: dateRatedScalar
     cachedDateRatedScalars = {}
 
-    # init a dict to store pre-computed normalised myRating values; more efficient.
-    # key: film id, value: normalisedMyRating
-    cachedMyRatingScalars = {}
+    # init a dict to store pre-computed normalised userRating values; more efficient.
+    # key: film id, value: normalisedUserRating
+    cachedUserRatingScalars = {}
 
-    # vectorize my-film-data
+    # vectorize user-film-database
     for key in userFilmDataKeys:
-        vector = vectorizeFilm(userFilmData[key], allGenres, cachedNormalizedYears, cachedNormalizedImdbRatings)
+        vector = vectorizeFilm(userFilmData[key], allGenres, allLanguages, allCountries, cachedNormalizedYears,
+                               cachedNormalizedImdbRatings, minNumberOfVotes, DIFF_NUMBER_OF_VOTES, minRuntime,
+                               DIFF_RUNTIME)
         # dateRatedScalar: normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
         dateRatedScalar = (((userFilmData[key]['dateRated'] - minDateRated) / DIFF_DATE_RATED) *
                            (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
         cachedDateRatedScalars[key] = dateRatedScalar
 
         # imdbRatings run from 1-10, we want values to run from 0.1 - 1.0
-        myRatingScalar = round((userFilmData[key]['myRating'] / 10.0), 1)
-        cachedMyRatingScalars[key] = myRatingScalar
+        userRatingScalar = round((userFilmData[key]['userRating'] / 10.0), 1)
+        cachedUserRatingScalars[key] = userRatingScalar
 
-        # recall that vectors are scalar multiplied by myRating & dateRated
-        userFilmDataVectorized[key] = vector * myRatingScalar * dateRatedScalar
+        # recall that vectors are scalar multiplied by userRating & dateRated
+        userFilmDataVectorized[key] = vector * userRatingScalar * dateRatedScalar
 
     weightedAverageSum = 0.0
 
@@ -303,7 +315,7 @@ def initRec():
 
     for key in userFilmDataKeys:
         userProfile += userFilmDataVectorized[key]
-        weightedAverageSum += cachedMyRatingScalars[key] + cachedDateRatedScalars[key]
+        weightedAverageSum += cachedUserRatingScalars[key] + cachedDateRatedScalars[key]
 
     userProfile = np.divide(userProfile, weightedAverageSum)
 
@@ -333,7 +345,7 @@ def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, m
             recencyProfile += userFilmDataVectorized[key]
             # note: not adding dateRatedScalar to the weightedAverageSum because I don't want vectors to be
             # scalar multiplied because we are only dealing with films in the last 30 days
-            weightedAverageSum += (userFilmData[key]['myRating'] / 10.0)
+            weightedAverageSum += (userFilmData[key]['userRating'] / 10.0)
         else:
             # terminate; user-uploaded .csv file is sorted by date (latest first, oldest last),
             # so no need to look further
@@ -435,68 +447,6 @@ def getFilmRecs(recType, allFilmDataKeys):
         duplicateRec = False
 
 
-def vectorizeFilm(film, allGenres, allLanguages, allCountries, cachedNormalizedYears, cachedNormalizedImdbRatings):
-    vector = []
-
-    normalizedYear = cachedNormalizedYears[film['year']]
-    vector.append(normalizedYear)
-
-    imdbRatingNorm = cachedNormalizedImdbRatings[str(film['imdbRating'])]
-    vector.append(imdbRatingNorm)
-
-    numberOfVotesNorm = (film['numberOfVotes'] - minNumberOfVotes) / DIFF_NUMBER_OF_VOTES
-    vector.append(numberOfVotesNorm)
-
-    runtimeNorm = ((film['runtime'] - minRuntime) / DIFF_RUNTIME) * RUNTIME_WEIGHT
-    vector.append(runtimeNorm)
-
-    oneHotEncode(vector, film['genres'], allGenres)
-    oneHotEncode(vector, film['language'], allLanguages)
-    oneHotEncode(vector, film['countries'], allCountries)
-
-    global PROFILE_VECTOR_LENGTH
-    if PROFILE_VECTOR_LENGTH == 1:
-        PROFILE_VECTOR_LENGTH = len(vector)
-
-    return np.array(vector)
-
-
-# used to one-hot encode genres, countries, languages
-def oneHotEncode(vector, filmList, allList):
-    for element in allList:
-        if element in filmList:
-            vector.append(1)
-        else:
-            vector.append(0)
-
-    return vector
-
-
-def cosineSimilarity(a, b, bMagnitude):
-    return np.dot(a, b) / (np.linalg.norm(a) * bMagnitude)
-
-
-# given a user profile vector, curve the genres
-# for example, if drama is the highest rated genre with a score of 0.4, make the value = 1.0 and then scale
-# the other genres relative to this max value (1.0 in this case).
-# after the genres are normalised, I apply a weight of GENRE_WEIGHT to all genres.
-def curveGenres():
-    global userProfile
-    # normalise the genres in the user profile
-    MIN_GENRE_VALUE = userProfile[4]
-    MAX_GENRE_VALUE = userProfile[4]
-
-    for i in range(4, 27):
-        MIN_GENRE_VALUE = min(MIN_GENRE_VALUE, userProfile[i])
-        MAX_GENRE_VALUE = max(MAX_GENRE_VALUE, userProfile[i])
-
-    DIFF_GENRE = MAX_GENRE_VALUE - MIN_GENRE_VALUE
-
-    for i in range(4, 27):
-        userProfile[i] = (userProfile[i] - MIN_GENRE_VALUE) / DIFF_GENRE  # normalise the genres
-        userProfile[i] = userProfile[i] * GENRE_WEIGHT
-
-
 # called when user responds (thumbs up/down) to a film
 @app.route('/response')
 def response():
@@ -562,25 +512,16 @@ def changeVector(index, add, recType):
 
     # after changing vector parameters, ensure that all vector features are >= 0.0 && <= 1.0
     if recType == "wildcard":
-        keepVectorBoundary(wildcardProfile)
+        keepVectorBoundary(wildcardProfile, PROFILE_VECTOR_LENGTH)
     elif recType == "recency":
-        keepVectorBoundary(recencyProfile)
+        keepVectorBoundary(recencyProfile, PROFILE_VECTOR_LENGTH)
     elif recType == "user":
-        keepVectorBoundary(userProfile)
+        keepVectorBoundary(userProfile, PROFILE_VECTOR_LENGTH)
     else:
         return "unknown rec type:" + str(recType)
 
     return ("changed " + recs[index]['recType'] + " profile due to " +
             ("liking" if add else "disliking") + " of " + recs[index]['title'])
-
-
-# ensures that all vector features are >= 0.0 && <= 1.0
-def keepVectorBoundary(vector):
-    for i in range(0, PROFILE_VECTOR_LENGTH):
-        if vector[i] < 0.0:
-            vector[i] = 0.0
-        elif vector[i] > 1.0:
-            vector[i] = 1.0
 
 
 # called when a user undoes a response, e.g. they have 'thumbs down' pressed on a film, and then they press the
@@ -666,102 +607,8 @@ def getTotalRecs():
     return str(TOTAL_RECS), 200
 
 
-def convertLetterboxdFormatToImdbFormat(oldUserFilmDataList, allFilmDataFull, allFilmDataKeys):
-    newUserFilmDataList = []
-
-    # we want to work with latest entries first
-    oldUserFilmDataList = reversed(oldUserFilmDataList)
-
-    # cache titles for more efficiency in searchImdbFilm() method
-    cachedAllFilmDataTitles = {}
-
-    for key in allFilmDataKeys:
-        cachedAllFilmDataTitles[key] = letterboxdTitlePreprocessing(allFilmDataFull[key]['title'])
-
-    for film in oldUserFilmDataList:
-        filmYear = int(film['Year'])
-        filmTitle = letterboxdToImdbTitleConversion(film['Name'], filmYear)
-
-        filmId = searchImdbFilm(filmTitle, filmYear, allFilmDataFull, allFilmDataKeys, cachedAllFilmDataTitles)
-
-        if filmId != "not found":
-            newUserFilmDataList.append({
-                "Const": filmId,
-                "Title": filmTitle,
-                "Title Type": "Movie",
-                # we want to use the year attribute from all-film-data.json as opposed to the letterboxd one,
-                # sometimes there is a 1-year difference between imdb & letterboxd versions of the same film.
-                # best to keep it consistent and follow imdb
-                "Year": allFilmDataFull[filmId]['year'],
-                "Your Rating": round(float(film['Rating']) * 2.0, 1),
-                "Date Rated": film['Date'],
-                "IMDb Rating": allFilmDataFull[filmId]['imdbRating'],
-                "Num Votes": allFilmDataFull[filmId]['numberOfVotes'],
-                "Runtime (mins)": allFilmDataFull[filmId]['runtime'],
-                "Genres": allFilmDataFull[filmId]['genres']
-            })
-        # else:
-        #     print("film not found. title: " + filmTitle + ". year:" + str(filmYear))
-
-    return newUserFilmDataList
-
-
-def searchImdbFilm(letterboxdTitle, letterboxdYear, allFilmDataFull, allFilmDataKeys, cachedAllFilmDataTitles):
-    for filmId in allFilmDataKeys:
-        if letterboxdTitlePreprocessing(letterboxdTitle) == cachedAllFilmDataTitles[filmId]:
-            # some films have different year releases between letterboxd & imdb.
-            # e.g. Ex Machina is 2014 in IMDb, but 2015 in Letterboxd
-            if abs(letterboxdYear - allFilmDataFull[filmId]['year']) <= 1:
-                return filmId
-
-    return "not found"
-
-
-def letterboxdTitlePreprocessing(title):
-    res = title.replace("–", "-").replace(" ", "").replace("&", "and")
-    res = res.replace("colour", "color").replace("Colour", "Color")
-
-    # lower case
-    return res.lower()
-
-
-def letterboxdToImdbTitleConversion(letterboxdTitle, year):
-    match letterboxdTitle:
-        case "Star Wars: Episode II – Attack of the Clones":
-            return "Star Wars: Episode II - Attack of the Clones"
-        case "Star Wars: Episode III – Revenge of the Sith":
-            return "Star Wars: Episode III - Revenge of the Sith"
-        case "Star Wars":
-            return "Star Wars: Episode IV - A New Hope"
-        case "The Empire Strikes Back":
-            return "Star Wars: Episode V - The Empire Strikes Back"
-        case "Return of the Jedi":
-            return "Star Wars: Episode VI - Return of the Jedi"
-        case "Star Wars: The Force Awakens":
-            return "Star Wars: Episode VII - The Force Awakens"
-        case "Star Wars: The Last Jedi":
-            return "Star Wars: Episode VIII - The Last Jedi"
-        case "Star Wars: The Rise of Skywalker":
-            return "Star Wars: Episode IX - The Rise of Skywalker"
-        case "Harry Potter and the Philosopher's Stone":
-            return "Harry Potter and the Sorcerer's Stone"
-        case "Dune":
-            if year == 2021:
-                return "Dune: Part One"
-            else:
-                return letterboxdTitle
-        case "Birds of Prey (and the Fantabulous Emancipation of One Harley Quinn)":
-            return "Birds of Prey"
-        case "My Left Foot: The Story of Christy Brown":
-            return "My Left Foot"
-        case "(500) Days of Summer":
-            return "500 Days of Summer"
-        case _:
-            return letterboxdTitle
-
-
 def deleteCsvFiles():
-    for f in glob.glob("../data/*.csv"):
+    for f in glob.glob("../database/*.csv"):
         os.remove(f)
 
 

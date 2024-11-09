@@ -8,7 +8,7 @@ import json
 
 
 def main():
-    # allFilmDataFile = open('../data/all-film-data.json')
+    # allFilmDataFile = open('../database/all-film-data.json')
     # allFilmData = json.load(allFilmDataFile)
     # allFilmDataKeys = list(allFilmData.keys())
 
@@ -31,7 +31,7 @@ def main():
         "Authorization": f"Bearer {accessToken}"
     }
 
-    cachedTmbdFilmDataFile = open('../data/cached-tmdb-film-data.json')
+    cachedTmbdFilmDataFile = open('../database/cached-tmdb-film-data.json')
     cachedTmbdFilmData = json.load(cachedTmbdFilmDataFile)
 
     apiCount = 0
@@ -70,7 +70,7 @@ def main():
         else:
             print("Error. Status Code = " + str(response.status_code) + "\n")
 
-    with open('../data/cached-tmdb-film-data.json', 'w') as convert_file:
+    with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
         convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
 
     # "https://api.themoviedb.org/3/movie/155?language=en-US"

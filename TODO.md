@@ -19,7 +19,6 @@
 - [x] init all-film-data.py
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
-- [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
 - [ ] augment country, language and poster using TMDB API
 
 ## Data Cleaning
@@ -33,7 +32,15 @@
 - [x] how much do I round values by? - not rounding values, no reason to do it
 - [x] calculate user profile using weighted averages
 - [x] mess around with weights of year and genres
-- [x] drop numVotes threshold to 10k
+
+## Letterboxd conversion
+- [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
+- [ ] get the tmdb title (aka letterboxd) when making the api and cache that somewhere instead of fucking around with 
+preprocessing
+
+## Offline Phase
+- [ ] cache allGenres, allLanguages, allCountries to a json file
+- [ ] ~~letterboxd title preprocessing when writing `all-film-data.json`~~ might not be necessary
 
 ## Vectorizing the Data
 - [x] vectorize all-film-data in init-all-film-data.py
@@ -109,6 +116,7 @@ create endpoints for getters/setters
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
 - [ ] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
 - [ ] bug: imdb recency doesn't work
+- [ ] can cache vector magnitude of allFilmDataVectorized
 
 ## Windows OS
 - [x] config frontend: npm, etc.

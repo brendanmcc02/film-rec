@@ -3,7 +3,8 @@ import csv
 import time
 import requests
 
-from constants import RUNTIME_THRESHOLD, NUM_OF_VOTES_THRESHOLD
+RUNTIME_THRESHOLD = 40
+NUM_OF_VOTES_THRESHOLD = 25000
 MIN_IMDB_RATING = 0.0
 MIN_YEAR = 0
 MIN_NUMBER_OF_VOTES = 0
@@ -18,7 +19,7 @@ year_norms = {}
 def main():
     # print("\nImporting title.basics.tsv...")
     # title_basics_raw = []
-    # with open("../data/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
+    # with open("../database/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
     #     reader = csv.DictReader(title_basics_file, delimiter='\t')
     #     for row in reader:
     #         title_basics_raw.append(dict(row))
@@ -50,7 +51,7 @@ def main():
     #
     # # the key is the film id, and the value is a dictionary of the attributes (averageRating & numVotes) of the film
     # title_ratings = {}
-    # with open("../data/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
+    # with open("../database/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
     #     reader = csv.DictReader(title_ratings_file, delimiter='\t')
     #     for row in reader:
     #         rowDict = dict(row)
@@ -84,7 +85,7 @@ def main():
     #     }
 
     ###### todo temp
-    allFilmDataFile = open('../data/all-film-data.json')
+    allFilmDataFile = open('../database/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
     count = 0
     ########
@@ -108,7 +109,7 @@ def main():
         "Authorization": f"Bearer {accessToken}"
     }
 
-    cachedTmbdFilmDataFile = open('../data/cached-tmdb-film-data.json')
+    cachedTmbdFilmDataFile = open('../database/cached-tmdb-film-data.json')
     cachedTmbdFilmData = json.load(cachedTmbdFilmDataFile)
 
     allFilmDataKeys = list(allFilmData.keys())
@@ -122,10 +123,10 @@ def main():
             print(str(count) + " " + str(imdbFilmId))
 
         elif count >= 1999 and count % 50 == 0:
-            with open('../data/cached-tmdb-film-data.json', 'w') as convert_file:
+            with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
                 convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
 
-            with open('../data/all-film-data.json', 'w') as convert_file:
+            with open('../database/all-film-data.json', 'w') as convert_file:
                 convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
         ##############
         if imdbFilmId in cachedTmbdFilmData:
@@ -180,10 +181,10 @@ def main():
 
     print("\nFinal Dataset size: " + str(len(allFilmData)) + " films.\n")
 
-    with open('../data/cached-tmdb-film-data.json', 'w') as convert_file:
+    with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
         convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
 
-    with open('../data/all-film-data.json', 'w') as convert_file:
+    with open('../database/all-film-data.json', 'w') as convert_file:
         convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
 
 
