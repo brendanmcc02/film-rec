@@ -119,19 +119,26 @@ def main():
             url = f"https://api.themoviedb.org/3/find/{imdbFilmId}?external_source=imdb_id"
             tmdbFilmId = ""
             response = requests.get(url, headers=headers)
+            apiCount = checkRateLimit(apiCount)
             if response.status_code == 200:
                 jsonResponse = response.json()
-                tmdbFilmId = str(jsonResponse['movie_results'][0]['id'])
-                apiCount = checkRateLimit(apiCount)
+                if len(jsonResponse['movie_results']) > 0:
+                    tmdbFilmId = str(jsonResponse['movie_results'][0]['id'])
             elif response.status_code == 429:
                 print(f"Rate Limit Exceeded. API Count = {apiCount}. Film ID: {imdbFilmId}\n")
-                apiCount = checkRateLimit(apiCount)
+            elif response.status_code == 404:
+                print(f"Error Status Code = {response.status_code}\n")
             else:
-                print("Error. Status Code = " + str(response.status_code) + "\n")
+                print(f"Unexpected Error. Status Code = {response.status_code}\n")
+
+            # if the imdb film is not found in tmdb
+            if tmdbFilmId == "":
+                del allFilmData[imdbFilmId]
+                continue
 
             url = f"https://api.themoviedb.org/3/movie/{tmdbFilmId}?language=en-US"
             response = requests.get(url, headers=headers)
-
+            apiCount = checkRateLimit(apiCount)
             if response.status_code == 200:
                 jsonResponse = response.json()
 
@@ -149,13 +156,10 @@ def main():
                 allFilmData[imdbFilmId]['language'] = filmLanguage
                 allFilmData[imdbFilmId]['countries'] = filmCountries
                 allFilmData[imdbFilmId]['poster'] = filmPoster
-
-                apiCount = checkRateLimit(apiCount)
             elif response.status_code == 429:
-                print("Rate Limit Exceeded. API Count = " + apiCount + ". Film ID: " + imdbFilmId + "\n")
-                apiCount = checkRateLimit(apiCount)
+                print(f"Rate Limit Exceeded. API Count = {apiCount}. Film ID: {imdbFilmId}\n")
             else:
-                print("Error. Status Code = " + str(response.status_code) + "\n")
+                print(f"Error. Status Code = {response.status_code}\n")
 
     print("\nFinal Dataset size: " + str(len(allFilmData)) + " films.\n")
 
