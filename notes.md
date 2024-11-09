@@ -1,3 +1,5 @@
+155 tdk tmdb id
+
 ## Random thoughts
 
 * rebrand as boxd-recs: augmentation to letterboxd? marketing
@@ -5,7 +7,7 @@
 ## Main Takeaways from the Recommender Systems textbook
 * Recall the aspects of a good recommender system - think about novelty, diversity and serendipity
   * **Diversity** - I'm thinking of implementing clustering as opposed to just one user profile
-  * **Novely** - Still need to explore this, atm I'm thinking of a wildcard profile
+  * **Novelty** - Still need to explore this, atm I'm thinking of a wildcard profile
   * **Serendipity** - Can be challenging without collaborative filtering, but there might be some workarounds. still 
   need to explore.
 * Use some tools to evaluate the recommender system
@@ -18,26 +20,16 @@ cosine similarity
 * Think about ways to add **interpretation**, e.g. *"because you liked 1980s rom-coms..."*. This adds a layer of
 sophistication to your recommender system and increases users trust in the recommendations
 
-## Data Collection
+## TMDB API
 
-You could use tmdb api directly, or use these python libraries:
- 
-* https://pypi.org/project/tmdb3/
-* https://github.com/wagnerrp/pytmdb3/
-
-this has crew list (includes director)
-TMDb also has country, language, budget, poster. very useful. API is free. 50 requests/second rate limit.
-
-afaik no publicly available dataset to download, API is done film-by-film, so would take a while to init a large 
-dataset. from what I've seen, IDs are ints from 1 to X.
-
-you can use /find API with tmdb and use the imdb id (tt...) to get the exact film. good to know 
-
-afaik no way to import/change imdb date rated (shame smh)
-
-exported letterboxd data is very limited (only title, year, rating), but could be useful in cross-referencing.
-
-however, the only advantage of using letterboxd's data is the accurate date rated. otherwise it's not very helpful.
+* have a separate `cached-tmbd-film-data.json`
+* this will be a json dictionary (key: imdb id, value: {language, countries, poster})
+* iterate through each film in `all-film-data.json`:
+  * check if we already have the film cached in `cached-tmbd-film-data.json`
+  * if we do, skip
+  * **IMPORTANT, RATE LIMIT IS 50/SEC!**
+  * else, make a TMDB api call and store language, countries, poster
+  * do data cleaning in this step as well?
 
 ## Integrating Date Rated
 

@@ -20,6 +20,7 @@
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
+- [ ] augment country, language and poster using TMDB API
 
 ## Data Cleaning
 - [x] normalise years
@@ -88,6 +89,7 @@ my-film-data-vec.json to file
 - [x] minimise global variables (you only need to call global if you want to **modify** the variable)
 - [ ] error handling on potential div by 0 errors
 - [ ] reduce comments in code and make it more readable (after watching code aesthetic's video)
+- [ ] error handling on all file imports, api requests, etc. try-except
 
 ## Misc
 - [x] switch from my-film-data.json to ratings.csv
@@ -127,3 +129,4 @@ create endpoints for getters/setters
 - [ ] letterboxd conversion: rather than relying only on `diary.csv` or `ratings.csv`, append latest `Watched Date` to 
 corresponding entry in `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in 
 `ratings.csv`
+- [ ] ~~augment directors~~ you have to make a separate TMBD api request to get director, not worth it imo

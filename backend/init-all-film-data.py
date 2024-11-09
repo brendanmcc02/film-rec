@@ -1,8 +1,7 @@
-# given title.basics.tsv & title.ratings.tsv, filter and produce all-film-data.json
-
-# imports
 import json
 import csv
+import time
+import requests
 
 # global constants
 RUNTIME_THRESHOLD = 40
@@ -20,7 +19,6 @@ year_norms = {}
 
 def main():
     print("\nImporting title.basics.tsv...")
-    # import title-basics.tsv as list of dicts
     title_basics_raw = []
     with open("../data/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
         reader = csv.DictReader(title_basics_file, delimiter='\t')
@@ -33,21 +31,15 @@ def main():
 
     stage_1_allFilmData = []
 
-    # iterate through each film:
     for film in title_basics_raw:
         try:
-            # if the film is a movie, has genres, and has >= 40 min runtime:
             if (film["titleType"] == 'movie' and film['genres'] != r"\N"
                     and int(film['runtimeMinutes']) >= RUNTIME_THRESHOLD):
                 newFilm = {}
-                # rename attributes
                 newFilm['id'] = film['tconst']
                 newFilm['title'] = film['primaryTitle']
-                newFilm['year'] = int(film['startYear'])  # convert from str to int
+                newFilm['year'] = int(film['startYear'])
                 newFilm['runtime'] = int(film['runtimeMinutes'])
-
-                # convert genres from string to array of strings
-                # e.g. genres: "Action, Family" => genres: {"Action", "Family"}
                 newFilm['genres'] = film['genres'].split(',')
 
                 stage_1_allFilmData.append(newFilm)
@@ -58,7 +50,6 @@ def main():
 
     stage_2_allFilmData = []
 
-    # import title-ratings.tsv as a dict.
     # the key is the film id, and the value is a dictionary of the attributes (averageRating & numVotes) of the film
     title_ratings = {}
     with open("../data/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
@@ -68,7 +59,6 @@ def main():
             filmId = rowDict['tconst']
             title_ratings[filmId] = rowDict
 
-    # iterate through each film in stage_1
     for film in stage_1_allFilmData:
         filmId = film['id']
         try:
@@ -76,17 +66,16 @@ def main():
                 film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
                 film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
                 stage_2_allFilmData.append(film)
-        # some films may not have 'numVotes' or 'averageRating' attributes
         except ValueError:
             pass
+        except Exception as e:
+            print("Error occurred with processing title.ratings.tsv " + str(e))
 
     print("\nChanging the order of json attributes...")
 
     allFilmData = {}
 
-    # for each film in stage 2:
     for film in stage_2_allFilmData:
-        # change the order of json attributes
         allFilmData[film['id']] = {
             'title': film['title'],
             'year': film['year'],
@@ -96,11 +85,92 @@ def main():
             'genres': film['genres']
         }
 
+    print("\nMaking API calls to get Languages, Countries & Poster...\n")
+
+    baseImageUrl = "https://image.tmdb.org/t/p/w500"
+
+    # "https://api.themoviedb.org/3/find/tt?external_source=imdb_id"
+    # baseApiUrl = "https://api.themoviedb.org/3/movie/155?language=en-US"
+
+    accessToken = ""
+    try:
+        accessToken = str(open('../access-token.txt').read())
+    except FileNotFoundError:
+        print("Access Token File Not Found")
+    except Exception as e:
+        print("Error occurred while trying to read Access Token File")
+
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {accessToken}"
+    }
+
+    cachedTmbdFilmDataFile = open('../data/cached-tmdb-film-data.json')
+    cachedTmbdFilmData = json.load(cachedTmbdFilmDataFile)
+
+    allFilmDataKeys = list(allFilmData.keys())
+    apiCount = 0
+
+    for imdbFilmId in allFilmDataKeys:
+        if imdbFilmId not in cachedTmbdFilmData:
+            url = f"https://api.themoviedb.org/3/find/{imdbFilmId}?external_source=imdb_id"
+            tmdbFilmId = ""
+            response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                jsonResponse = response.json()
+                tmdbFilmId = str(jsonResponse['movie_results'][0]['id'])
+                apiCount = checkRateLimit(apiCount)
+            elif response.status_code == 429:
+                print(f"Rate Limit Exceeded. API Count = {apiCount}. Film ID: {imdbFilmId}\n")
+                apiCount = checkRateLimit(apiCount)
+            else:
+                print("Error. Status Code = " + str(response.status_code) + "\n")
+
+            url = f"https://api.themoviedb.org/3/movie/{tmdbFilmId}?language=en-US"
+            response = requests.get(url, headers=headers)
+
+            if response.status_code == 200:
+                jsonResponse = response.json()
+
+                filmLanguage = str(jsonResponse['original_language'])
+
+                filmCountries = []
+                for country in jsonResponse['origin_country']:
+                    filmCountries.append(country)
+
+                filmPoster = baseImageUrl + str(jsonResponse['poster_path'])
+
+                cachedTmbdFilmData[imdbFilmId] = {"language": filmLanguage, "countries": filmCountries,
+                                                  "poster": filmPoster}
+
+                allFilmData[imdbFilmId]['languages'] = filmLanguage
+                allFilmData[imdbFilmId]['countries'] = filmCountries
+                allFilmData[imdbFilmId]['poster'] = filmPoster
+
+                apiCount = checkRateLimit(apiCount)
+            elif response.status_code == 429:
+                print("Rate Limit Exceeded. API Count = " + apiCount + ". Film ID: " + imdbFilmId + "\n")
+                apiCount = checkRateLimit(apiCount)
+            else:
+                print("Error. Status Code = " + str(response.status_code) + "\n")
+
     print("\nFinal Dataset size: " + str(len(allFilmData)) + " films.\n")
 
-    # write to all-film-data.json
+    with open('../data/cached-tmdb-film-data.json', 'w') as convert_file:
+        convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
+
     with open('../data/all-film-data.json', 'w') as convert_file:
         convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
+
+
+# API is rate limited to 50 calls per second
+def checkRateLimit(apiCount):
+    apiCount = apiCount + 1
+    apiCount = apiCount % 50
+    if apiCount == 0:
+        time.sleep(1.1)
+
+    return apiCount
 
 
 if __name__ == "__main__":
