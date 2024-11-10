@@ -6,7 +6,7 @@ git pull
 printf "\n[1/2] Downloading title.basics.tsv & title.ratings.tsv..."
 
 # download title.basics.tsv.gz & title.ratings.tsv.gz (only if it's been >3 days)
-cd data-processing/ || exit
+cd backend/ || exit
 python3 download-all-film-data.py
 cd ../database || exit
 
@@ -27,7 +27,7 @@ fi
 if test -f title.basics.tsv; then
   if test -f title.ratings.tsv; then
     printf "\n[2/2] Initialising all-film-data.json..."
-    cd ../data-processing/ || exit
+    cd ../backend/ || exit
     python3 init-all-film-data.py
 
     rm ../database/title.basics.tsv

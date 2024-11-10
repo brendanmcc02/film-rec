@@ -39,10 +39,6 @@
 - [x] get the tmdb title (aka letterboxd) when making the api and cache that somewhere instead of fucking around with 
 preprocessing
 
-## Offline Phase
-- [ ] cache allGenres, allLanguages, allCountries to a json file. for lang & countries do a dictionary with key iso, 
-value full name e.g. `"en": "English"`
-
 ## Vectorizing the Data
 - [x] vectorize all-film-data in init-all-film-data.py
 - [x] vector change in thumbs up/down
@@ -56,6 +52,9 @@ value full name e.g. `"en": "English"`
 - [x] integrate date rated - weight of how recently user has rated film.
 - [x] cache cosine sim comparisons
 - [x] one hot encode language & country
+- [x] vectorize all-film-data in offline phase **test that it works!**
+- [x] cache allGenres, allLanguages, allCountries to a json file **test that it works!**
+- [x] cache & store all-film-data vector magnitudes in offline phase **test that it works!**
 
 # Backend
 - [ ] for imdb, only vectorize films in userData that is in allFilmData (otherwise we can't get access to film languages, 
@@ -122,7 +121,6 @@ create endpoints for getters/setters
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
 - [ ] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
 - [ ] bug: imdb recency doesn't work
-- [ ] can cache vector magnitude of allFilmDataVectorized
 
 ## Windows OS
 - [x] config frontend: npm, etc.

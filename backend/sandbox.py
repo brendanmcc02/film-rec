@@ -12,7 +12,7 @@ def main():
     # allFilmData = json.load(allFilmDataFile)
     # allFilmDataKeys = list(allFilmData.keys())
 
-    imdbFilmId = "tt1022603"
+    imdbFilmId = "tt0111495"
     baseImageUrl = "https://image.tmdb.org/t/p/w500"
 
     # "https://api.themoviedb.org/3/find/tt?external_source=imdb_id"

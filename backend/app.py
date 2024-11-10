@@ -1,3 +1,8 @@
+# todo:
+# * PROFILE_VECTOR_LENGTH can be imported from cache.json
+# get rid of DIFF_* values, except DIFF_DATE_RATED
+# get rid of min* values, except minDateRated
+
 from flask import Flask, request, jsonify
 from datetime import datetime
 import json
@@ -20,13 +25,6 @@ TOTAL_RECS = NUM_USER_RECS + NUM_RECENCY_RECS + NUM_WILDCARD_RECS
 USER_PROFILE_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
 RECENCY_FEEDBACK_FACTOR = 0.05
 WILDCARD_FEEDBACK_FACTOR = 0.2
-# from experimenting (yearNorm weight was fixed at 0.3), ~0.75 was a good sweet spot in the sense that
-# it picked both single- and multi-genre films. The algorithm still heavily favoured the 4 genres that had the
-# highest weighing, but this is expected and good behaviour.
-GENRE_WEIGHT = 0.75
-# from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
-YEAR_WEIGHT = 0.3
-RUNTIME_WEIGHT = 0.3
 DATE_RATED_WEIGHT = 0.5
 DIFF_IMDB_RATING = 0.0
 DIFF_YEAR = 0
@@ -261,7 +259,7 @@ def initRec():
 
     cachedNormalizedYears = {}
     for y in range(minYear, maxYear + 1):
-        cachedNormalizedYears[y] = ((y - minYear) / DIFF_YEAR) * YEAR_WEIGHT
+        cachedNormalizedYears[y] = ((y - minYear) / DIFF_YEAR) * all_film_data.YEAR_WEIGHT
 
     cachedNormalizedImdbRatings = {}
     for i in np.arange(minImdbRating, maxImdbRating + 0.1, 0.1):
@@ -270,7 +268,7 @@ def initRec():
 
     global PROFILE_VECTOR_LENGTH
 
-    # vectorize all-film-database
+    # vectorize all-film-data
     for key in allFilmDataKeys:
         vector = vectorizeFilm(allFilmData[key], allGenres, allLanguages, allCountries, cachedNormalizedYears,
                                cachedNormalizedImdbRatings, minNumberOfVotes, DIFF_NUMBER_OF_VOTES, minRuntime,
@@ -287,7 +285,7 @@ def initRec():
     # key: film id, value: normalisedUserRating
     cachedUserRatingScalars = {}
 
-    # vectorize user-film-database
+    # vectorize user-film-data
     for key in userFilmDataKeys:
         vector = vectorizeFilm(userFilmData[key], allGenres, allLanguages, allCountries, cachedNormalizedYears,
                                cachedNormalizedImdbRatings, minNumberOfVotes, DIFF_NUMBER_OF_VOTES, minRuntime,
@@ -375,7 +373,7 @@ def getWeightByVectorIndex(vectorIndex):
         return 1.0
     match vectorIndex:
         case 0:  # year
-            return YEAR_WEIGHT
+            return all_film_data.YEAR_WEIGHT
         case 1:  # imdbRating
             return 1.0
         case 2:  # numVotes
