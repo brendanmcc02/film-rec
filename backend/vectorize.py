@@ -19,7 +19,7 @@ def vectorizeFilm(film, allGenres, allLanguages, allCountries, cachedNormalizedY
     vector.append(runtimeNorm)
 
     oneHotEncode(vector, film['genres'], allGenres)
-    oneHotEncode(vector, film['language'], allLanguages)
+    oneHotEncode(vector, film['languages'], allLanguages)
     oneHotEncode(vector, film['countries'], allCountries)
 
     return np.array(vector)

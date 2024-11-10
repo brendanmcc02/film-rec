@@ -19,87 +19,89 @@ NUM_OF_VOTES_THRESHOLD = 25000
 
 
 def main():
-    print("\nImporting title.basics.tsv...")
-    title_basics_raw = []
-    with open("../database/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
-        reader = csv.DictReader(title_basics_file, delimiter='\t')
-        for row in reader:
-            title_basics_raw.append(dict(row))
+    # print("\nImporting title.basics.tsv...")
+    # title_basics_raw = []
+    # with open("../database/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
+    #     reader = csv.DictReader(title_basics_file, delimiter='\t')
+    #     for row in reader:
+    #         title_basics_raw.append(dict(row))
+    #
+    # print("Imported title.basics.tsv.")
+    # print("\nFiltering out films:\n1. that are not movies\n2. with no genres\n3. <"
+    #       + str(RUNTIME_THRESHOLD) + " min runtime")
+    #
+    # stage_1_allFilmData = []
+    #
+    # for film in title_basics_raw:
+    #     try:
+    #         if (film["titleType"] == 'movie' and film['genres'] != r"\N"
+    #                 and int(film['runtimeMinutes']) >= RUNTIME_THRESHOLD):
+    #             newFilm = {}
+    #             newFilm['id'] = film['tconst']
+    #             newFilm['title'] = film['primaryTitle']
+    #             newFilm['year'] = int(film['startYear'])
+    #             newFilm['runtime'] = int(film['runtimeMinutes'])
+    #             newFilm['genres'] = film['genres'].split(',')
+    #
+    #             stage_1_allFilmData.append(newFilm)
+    #     except ValueError:
+    #         pass
+    #
+    # print("\nMerging with title.ratings.tsv and filtering out films with <" + str(NUM_OF_VOTES_THRESHOLD) + " votes...")
+    #
+    # stage_2_allFilmData = []
+    #
+    # # the key is the film id, and the value is a dictionary of the attributes (averageRating & numVotes) of the film
+    # title_ratings = {}
+    # with open("../database/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
+    #     reader = csv.DictReader(title_ratings_file, delimiter='\t')
+    #     for row in reader:
+    #         rowDict = dict(row)
+    #         filmId = rowDict['tconst']
+    #         title_ratings[filmId] = rowDict
+    #
+    # for film in stage_1_allFilmData:
+    #     filmId = film['id']
+    #     try:
+    #         if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUM_OF_VOTES_THRESHOLD:
+    #             film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
+    #             film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
+    #             stage_2_allFilmData.append(film)
+    #     except ValueError:
+    #         pass
+    #     except Exception as e:
+    #         print("Error occurred with processing title.ratings.tsv " + str(e))
+    #
+    # print("\nChanging the order of json attributes...")
+    #
+    # allFilmData = {}
+    # allGenres = []
+    #
+    # for film in stage_2_allFilmData:
+    #     allFilmData[film['id']] = {
+    #         'title': film['title'],
+    #         'letterboxdTitle': "",
+    #         'year': film['year'],
+    #         'letterboxdYear': 0,
+    #         'imdbRating': film['imdbRating'],
+    #         'numberOfVotes': film['numberOfVotes'],
+    #         'runtime': film['runtime'],
+    #         'genres': film['genres']
+    #     }
+    #
+    #     for genre in film['genres']:
+    #         if genre not in allGenres:
+    #             allGenres.append(genre)
+    #
+    # allGenres = sorted(allGenres)
 
-    print("Imported title.basics.tsv.")
-    print("\nFiltering out films:\n1. that are not movies\n2. with no genres\n3. <"
-          + str(RUNTIME_THRESHOLD) + " min runtime")
-
-    stage_1_allFilmData = []
-
-    for film in title_basics_raw:
-        try:
-            if (film["titleType"] == 'movie' and film['genres'] != r"\N"
-                    and int(film['runtimeMinutes']) >= RUNTIME_THRESHOLD):
-                newFilm = {}
-                newFilm['id'] = film['tconst']
-                newFilm['title'] = film['primaryTitle']
-                newFilm['year'] = int(film['startYear'])
-                newFilm['runtime'] = int(film['runtimeMinutes'])
-                newFilm['genres'] = film['genres'].split(',')
-
-                stage_1_allFilmData.append(newFilm)
-        except ValueError:
-            pass
-
-    print("\nMerging with title.ratings.tsv and filtering out films with <" + str(NUM_OF_VOTES_THRESHOLD) + " votes...")
-
-    stage_2_allFilmData = []
-
-    # the key is the film id, and the value is a dictionary of the attributes (averageRating & numVotes) of the film
-    title_ratings = {}
-    with open("../database/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
-        reader = csv.DictReader(title_ratings_file, delimiter='\t')
-        for row in reader:
-            rowDict = dict(row)
-            filmId = rowDict['tconst']
-            title_ratings[filmId] = rowDict
-
-    for film in stage_1_allFilmData:
-        filmId = film['id']
-        try:
-            if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUM_OF_VOTES_THRESHOLD:
-                film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
-                film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
-                stage_2_allFilmData.append(film)
-        except ValueError:
-            pass
-        except Exception as e:
-            print("Error occurred with processing title.ratings.tsv " + str(e))
-
-    print("\nChanging the order of json attributes...")
-
-    allFilmData = {}
-    allGenres = []
-
-    for film in stage_2_allFilmData:
-        allFilmData[film['id']] = {
-            'title': film['title'],
-            'letterboxdTitle': "",
-            'year': film['year'],
-            'letterboxdYear': 0,
-            'imdbRating': film['imdbRating'],
-            'numberOfVotes': film['numberOfVotes'],
-            'runtime': film['runtime'],
-            'genres': film['genres']
-        }
-
-        for genre in film['genres']:
-            if genre not in allGenres:
-                allGenres.append(genre)
-
-
-
-    # ###### todo temp
-    # allFilmDataFile = open('../database/all-film-data.json')
-    # allFilmData = json.load(allFilmDataFile)
-    # count = 0
-    # ########
+    ###### todo temp
+    allFilmDataFile = open('../database/all-film-data.json')
+    allFilmData = json.load(allFilmDataFile)
+    count = 0
+    allGenres = ["War", "Drama", "Comedy", "Romance", "Sci-Fi", "Thriller"]
+    allGenres = sorted(allGenres)
+    ########
     print("\nMaking API calls to get Letterboxd Title, Letterboxd Year, Languages, Countries & Poster...\n")
 
     baseImageUrl = "https://image.tmdb.org/t/p/w500"
@@ -137,16 +139,16 @@ def main():
     maxRuntime = allFilmData[allFilmDataKeys[0]]['runtime']
 
     for imdbFilmId in allFilmDataKeys:
-        # ######### todo temp
-        # count = count + 1
-        # print(str(count) + " " + str(imdbFilmId))
-        # if count % 100 == 0:
-        #     with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
-        #         convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
-        #
-        #     with open('../database/all-film-data.json', 'w') as convert_file:
-        #         convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
-        # ##############
+        ######### todo temp
+        count = count + 1
+        print(str(count) + " " + str(imdbFilmId))
+        if count % 100 == 0:
+            with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
+                convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
+
+            with open('../database/all-film-data.json', 'w') as convert_file:
+                convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
+        ##############
         if imdbFilmId in cachedTmbdFilmData:
             allFilmData[imdbFilmId]['letterboxdTitle'] = cachedTmbdFilmData[imdbFilmId]['letterboxdTitle']
             allFilmData[imdbFilmId]['letterboxdYear'] = cachedTmbdFilmData[imdbFilmId]['letterboxdYear']
@@ -256,18 +258,21 @@ def main():
     allFilmDataVectorized = {}
     allFilmDataVectorizedMagnitudes = {}
     profileVectorLength = 0
+    allLanguages = sorted(allLanguages)
+    allCountries = sorted(allCountries)
 
     for filmId in allFilmDataKeys:
-        allFilmDataVectorized[filmId] = vectorizeFilm(allFilmData[filmId], allGenres, allLanguages, allCountries,
+        allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allLanguages, allCountries,
                                                       cachedNormalizedYears, cachedNormalizedImdbRatings,
-                                                      minNumberOfVotes, diffNumberOfVotes, minRuntime, diffRuntime)
-        if profileVectorLength > 0:
+                                                      minNumberOfVotes, diffNumberOfVotes, minRuntime, diffRuntime))
+        if profileVectorLength == 0:
             profileVectorLength = len(allFilmDataVectorized[filmId])
 
-        allFilmDataVectorizedMagnitudes[filmId] = np.linalg.norm(allFilmDataVectorized[filmId])
+        allFilmDataVectorizedMagnitudes[filmId] = float(np.linalg.norm(allFilmDataVectorized[filmId]))
 
     with open('../database/all-film-data-vectorized.json', 'w') as convert_file:
-        convert_file.write(json.dumps(allFilmDataVectorized, indent=4, separators=(',', ': ')))
+        convert_file.write(json.dumps(allFilmDataVectorized, indent=4, separators=(',', ': '))
+                           .replace(",\n        ", ", ").replace("],", "],"))
 
     cache = {'allGenres': allGenres, 'allLanguages': allLanguages, 'allCountries': allCountries,
              'normalizedYears': cachedNormalizedYears, 'normalizedImdbRatings': cachedNormalizedImdbRatings,

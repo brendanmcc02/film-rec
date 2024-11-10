@@ -13,9 +13,9 @@
             "Romance"
         ],
         "languages": [
-            "en",
-            "fr",
-            "sv"
+            "English",
+            "French",
+            "Swedish"
         ],
         "countries": [
             "US"
@@ -36,11 +36,31 @@
             "Thriller"
         ],
         "languages": [
-            "en"
+            "English"
         ],
         "countries": [
             "GB"
         ],
         "poster": "https://image.tmdb.org/t/p/w500/9goPE2IoMIXxTLWzl7aizwuIiLh.jpg"
+    },
+    "tt0004972": {
+        "title": "The Birth of a Nation",
+        "letterboxdTitle": "The Birth of a Nation",
+        "year": 1915,
+        "letterboxdYear": 1915,
+        "imdbRating": 6.1,
+        "numberOfVotes": 26827,
+        "runtime": 195,
+        "genres": [
+            "Drama",
+            "War"
+        ],
+        "languages": [
+            "No Language"
+        ],
+        "countries": [
+            "US"
+        ],
+        "poster": "https://image.tmdb.org/t/p/w500/pNpOXpQI5GSUfiWypubYtMh9928.jpg"
     }
 }
