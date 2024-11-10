@@ -6,9 +6,10 @@ import numpy as np
 import os
 import glob
 from vectorize import *
-from init_all_film_data import YEAR_WEIGHT, GENRE_WEIGHT, RUNTIME_THRESHOLD
+from init_all_film_data import YEAR_WEIGHT, GENRE_WEIGHT, RUNTIME_THRESHOLD, NUM_OF_VOTES_THRESHOLD
 from letterboxd_conversion import expectedLetterboxdFileFilmAttributes, convertLetterboxdFormatToImdbFormat
 
+DATE_RATED_WEIGHT = 0.5
 NUM_USER_RECS = 4
 NUM_RECENCY_RECS = 2
 NUM_WILDCARD_RECS = 2
@@ -16,15 +17,17 @@ TOTAL_RECS = NUM_USER_RECS + NUM_RECENCY_RECS + NUM_WILDCARD_RECS
 USER_PROFILE_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
 RECENCY_FEEDBACK_FACTOR = 0.05
 WILDCARD_FEEDBACK_FACTOR = 0.2
+PROFILE_VECTOR_LENGTH = 0
 
+allFilmDataUnseen = {}
 diffDateRated = datetime(1, 1, 1)
-userProfile = np.zeros(PROFILE_VECTOR_LENGTH)
-recencyProfile = np.zeros(PROFILE_VECTOR_LENGTH)
-wildcardProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+minDateRated = datetime.now()
+userProfile = np.zeros(0)
+recencyProfile = np.zeros(0)
+wildcardProfile = np.zeros(0)
 vectorProfileChanges = []
 recs = []
 recStates = [0] * TOTAL_RECS
-minDateRated = datetime(1, 1, 1)
 isImdbFile = True
 userFilmDataFilename = ""
 
@@ -36,22 +39,22 @@ def resetGlobalVariables():
     global recencyProfile
     global wildcardProfile
     global vectorProfileChanges
-    global allFilmData
+    global allFilmDataUnseen
     global allFilmDataVectorized
     global recs
     global recStates
     global minDateRated
     global isImdbFile
 
-    userProfile = np.zeros(PROFILE_VECTOR_LENGTH)
-    recencyProfile = np.zeros(PROFILE_VECTOR_LENGTH)
-    wildcardProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+    userProfile = np.zeros(0)
+    recencyProfile = np.zeros(0)
+    wildcardProfile = np.zeros(0)
     vectorProfileChanges = []
-    allFilmData = {}
+    allFilmDataUnseen = {}
     allFilmDataVectorized = {}
     recs = []
     recStates = [0] * TOTAL_RECS
-    minDateRated = datetime(1, 1, 1)
+    minDateRated = datetime.now()
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])
@@ -108,145 +111,71 @@ def initRec():
             for row in reader:
                 userFilmDataList.append(row)
     except FileNotFoundError:
-        return "Error: " + userFilmDataFilename + " not found, check file name & file type.", 404
+        return f"Error: {userFilmDataFilename} not found, check file name & file type.", 404
     except Exception as e:
         deleteCsvFiles()
-        return "Error occurred with reading " + userFilmDataFilename + ".\n" + str(e), 400
+        return f"Error occurred with reading {userFilmDataFilename}.\n" + str(e), 400
 
     deleteCsvFiles()
     allFilmDataFile = open('../database/all-film-data.json')
-    allFilmDataFull = json.load(allFilmDataFile)
-    allFilmDataKeys = list(allFilmDataFull.keys())
+    allFilmData = json.load(allFilmDataFile)
+    allFilmDataKeys = list(allFilmData.keys())
 
     if not isImdbFile:
-        userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmDataFull, allFilmDataKeys)
+        userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, allFilmDataKeys)
 
     userFilmData = {}
+    global diffDateRated
+    global minDateRated
+
+    minDateRated = datetime.now()
+    maxDateRated = datetime.now()
 
     for film in userFilmDataList:
-        if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != "":
+        if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != ""\
+                and int(film['Num Votes']) >= NUM_OF_VOTES_THRESHOLD:
             if isImdbFile:
                 genres = film['Genres'].replace("\"", "").split(", ")
             else:
                 genres = film['Genres']
             try:
-                userFilmData[film['Const']] = {
-                    "title": film['Title'],
-                    "year": int(film['Year']),
-                    "userRating": int(film['Your Rating']),
-                    "dateRated": datetime.strptime(film['Date Rated'], "%Y-%m-%d"),
-                    "imdbRating": float(film['IMDb Rating']),
-                    "numberOfVotes": int(film['Num Votes']),
-                    "runtime": int(film['Runtime (mins)']),
-                    "genres": genres
-                }
+                filmId = film['Const']
+                if filmId in allFilmData:
+                    dateRated = datetime.strptime(film['Date Rated'], "%Y-%m-%d")
+
+                    userFilmData[film['Const']] = {
+                        "title": film['Title'],
+                        "year": int(film['Year']),
+                        "userRating": int(film['Your Rating']),
+                        "dateRated": dateRated,
+                        "imdbRating": float(film['IMDb Rating']),
+                        "numberOfVotes": int(film['Num Votes']),
+                        "runtime": int(film['Runtime (mins)']),
+                        "genres": genres,
+                        "languages": allFilmData[filmId]['languages'],
+                        "countries": allFilmData[filmId]['countries']
+                    }
+
+                    minDateRated = min(minDateRated, dateRated)
+                else:
+                    print(f"Film in userFilmData not found in allFilmData, {filmId}\n")
             except ValueError:
                 return ("value error with film: " + film['Const']), 400
 
+    # perform some pre-computation to avoid repetitive computation
+    diffDateRated = maxDateRated - minDateRated
     userFilmDataKeys = list(userFilmData.keys())
 
-    global DIFF_IMDB_RATING
-    global DIFF_YEAR
-    global DIFF_NUMBER_OF_VOTES
-    global DIFF_RUNTIME
-    global diffDateRated
-    global minImdbRating
-    global minYear
-    global minNumberOfVotes
-    global minRuntime
-    global minDateRated
-
-    # this is needed for normalising vector values.
-    minImdbRating = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
-    maxImdbRating = allFilmDataFull[allFilmDataKeys[0]]['imdbRating']
-    minYear = allFilmDataFull[allFilmDataKeys[0]]['year']
-    maxYear = allFilmDataFull[allFilmDataKeys[0]]['year']
-    minNumberOfVotes = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
-    maxNumberOfVotes = allFilmDataFull[allFilmDataKeys[0]]['numberOfVotes']
-    minRuntime = allFilmDataFull[allFilmDataKeys[0]]['runtime']
-    maxRuntime = allFilmDataFull[allFilmDataKeys[0]]['runtime']
-    minDateRated = userFilmData[userFilmDataKeys[0]]['dateRated']
-    maxDateRated = datetime.now()
-
-    global allFilmData
-    allGenres = []
-    allLanguages = []
-    allCountries = []
+    global allFilmDataUnseen
 
     for key in allFilmDataKeys:
         # take films out from allFilmData that the user has seen
-        if key not in userFilmDataKeys:
-            allFilmData[key] = allFilmDataFull[key]
+        if key not in userFilmData:
+            allFilmDataUnseen[key] = allFilmData[key]
 
-        for genre in allFilmDataFull[key]['genres']:
-            if genre not in allGenres:
-                allGenres.append(genre)
-
-        filmLanguage = allFilmDataFull[key]['language']
-        if filmLanguage not in allLanguages:
-            allLanguages.append(filmLanguage)
-
-        for country in allFilmDataFull[key]['countries']:
-            if country not in allCountries:
-                allCountries.append(country)
-
-        minImdbRating = min(minImdbRating, allFilmDataFull[key]['imdbRating'])
-        maxImdbRating = max(maxImdbRating, allFilmDataFull[key]['imdbRating'])
-        minYear = min(minYear, allFilmDataFull[key]['year'])
-        maxYear = max(maxYear, allFilmDataFull[key]['year'])
-        minNumberOfVotes = min(minNumberOfVotes, allFilmDataFull[key]['numberOfVotes'])
-        maxNumberOfVotes = max(maxNumberOfVotes, allFilmDataFull[key]['numberOfVotes'])
-        minRuntime = min(minRuntime, allFilmDataFull[key]['runtime'])
-        maxRuntime = max(maxRuntime, allFilmDataFull[key]['runtime'])
-
-    allGenres = sorted(allGenres)
-    allLanguages = sorted(allLanguages)
-    allCountries = sorted(allCountries)
-
-    # create a new list of allFilmData keys after filtering some films out of allFilmDataFull
-    allFilmDataKeys = list(allFilmData.keys())
-
-    global allFilmDataVectorized
     userFilmDataVectorized = {}
 
-    # alter the min & max values to ensure they are the same across both datasets
-    for key in userFilmDataKeys:
-        minImdbRating = min(minImdbRating, userFilmData[key]['imdbRating'])
-        maxImdbRating = max(maxImdbRating, userFilmData[key]['imdbRating'])
-        minYear = min(minYear, userFilmData[key]['year'])
-        maxYear = max(maxYear, userFilmData[key]['year'])
-        minNumberOfVotes = min(minNumberOfVotes, userFilmData[key]['numberOfVotes'])
-        maxNumberOfVotes = max(maxNumberOfVotes, userFilmData[key]['numberOfVotes'])
-        minRuntime = min(minRuntime, userFilmData[key]['runtime'])
-        maxRuntime = max(maxRuntime, userFilmData[key]['runtime'])
-        minDateRated = min(minDateRated, userFilmData[key]['dateRated'])
-
-    # perform some pre-computation to avoid repetitive computation
-    DIFF_IMDB_RATING = maxImdbRating - minImdbRating
-    DIFF_YEAR = maxYear - minYear
-    DIFF_NUMBER_OF_VOTES = maxNumberOfVotes - minNumberOfVotes
-    DIFF_RUNTIME = maxRuntime - minRuntime
-    diffDateRated = maxDateRated - minDateRated
-
-    cachedNormalizedYears = {}
-    for y in range(minYear, maxYear + 1):
-        cachedNormalizedYears[y] = ((y - minYear) / DIFF_YEAR) * YEAR_WEIGHT
-
-    cachedNormalizedImdbRatings = {}
-    for i in np.arange(minImdbRating, maxImdbRating + 0.1, 0.1):
-        i = round(i, 1)
-        cachedNormalizedImdbRatings[str(i)] = (i - minImdbRating) / DIFF_IMDB_RATING
-
     global PROFILE_VECTOR_LENGTH
-
-    # vectorize all-film-data
-    for key in allFilmDataKeys:
-        vector = vectorizeFilm(allFilmData[key], allGenres, allLanguages, allCountries, cachedNormalizedYears,
-                               cachedNormalizedImdbRatings, minNumberOfVotes, DIFF_NUMBER_OF_VOTES, minRuntime,
-                               DIFF_RUNTIME)
-        if PROFILE_VECTOR_LENGTH == 1:
-            PROFILE_VECTOR_LENGTH = len(vector)
-        allFilmDataVectorized[key] = vector
 
     # init a dict to store pre-computed dateRatedScalar values; more efficient.
     # key: film id, value: dateRatedScalar
@@ -256,11 +185,14 @@ def initRec():
     # key: film id, value: normalisedUserRating
     cachedUserRatingScalars = {}
 
+    cacheFile = open('../database/cache.json')
+    cache = json.load(cacheFile)
+
     # vectorize user-film-data
     for key in userFilmDataKeys:
-        vector = vectorizeFilm(userFilmData[key], allGenres, allLanguages, allCountries, cachedNormalizedYears,
-                               cachedNormalizedImdbRatings, minNumberOfVotes, DIFF_NUMBER_OF_VOTES, minRuntime,
-                               DIFF_RUNTIME)
+        vector = vectorizeFilm(userFilmData[key], cache['allGenres'], cache['allLanguages'], cache['allCountries'],
+                               cache['normalizedYears'], cache['normalizedImdbRatings'], cache['minNumberOfVotes'],
+                               cache['diffNumberOfVotes'], cache['minRuntime'], cache['diffRuntime'])
         # dateRatedScalar: normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
         dateRatedScalar = (((userFilmData[key]['dateRated'] - minDateRated) / diffDateRated) *
                            (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
@@ -274,6 +206,7 @@ def initRec():
         userFilmDataVectorized[key] = vector * userRatingScalar * dateRatedScalar
 
     weightedAverageSum = 0.0
+    PROFILE_VECTOR_LENGTH = cache['profileVectorLength']
 
     global vectorProfileChanges
     for i in range(0, TOTAL_RECS):
@@ -288,15 +221,15 @@ def initRec():
 
     userProfile = np.divide(userProfile, weightedAverageSum)
 
-    # print("Initial userProfile:\n" + str(userProfile))
+    print("Initial userProfile:\n" + str(userProfile))
 
     initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated)
 
-    # print("Initial recencyProfile:\n" + str(recencyProfile))
+    print("Initial recencyProfile:\n" + str(recencyProfile))
 
     initWildcardProfile()
 
-    # print("Initial wildcardProfile:\n" + str(wildcardProfile))
+    print("Initial wildcardProfile:\n" + str(wildcardProfile))
 
     generateRecs()
 
@@ -356,7 +289,7 @@ def getWeightByVectorIndex(vectorIndex):
 
 
 def generateRecs():
-    allFilmDataKeys = list(allFilmData.keys())
+    allFilmDataKeys = list(allFilmDataUnseen.keys())
     getFilmRecs("user", allFilmDataKeys)      # generate user recs
     getFilmRecs("recency", allFilmDataKeys)   # generate recency recs
     getFilmRecs("wildcard", allFilmDataKeys)  # generate wildcard recs
@@ -406,7 +339,7 @@ def getFilmRecs(recType, allFilmDataKeys):
                 break
 
         if not duplicateRec:
-            film = allFilmData[filmId]
+            film = allFilmDataUnseen[filmId]
             similarityScore = cosineSimilarities[i][1]
             film['id'] = filmId
             film['similarityScore'] = round(similarityScore * 100.0, 2)
@@ -557,9 +490,9 @@ def regen():
     # for each film that was liked or disliked:
     for i in range(0, TOTAL_RECS):
         if recStates[i] != 0:
-            # remove from allFilmData & allFilmDataVectorized
+            # remove from allFilmDataUnseen & allFilmDataVectorized
             filmId = recs[i]['id']
-            del allFilmData[filmId]
+            del allFilmDataUnseen[filmId]
             del allFilmDataVectorized[filmId]
 
     # reset recStates

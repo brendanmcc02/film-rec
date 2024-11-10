@@ -52,14 +52,14 @@ preprocessing
 - [x] integrate date rated - weight of how recently user has rated film.
 - [x] cache cosine sim comparisons
 - [x] one hot encode language & country
-- [x] vectorize all-film-data in offline phase **test that it works!**
-- [x] cache allGenres, allLanguages, allCountries to a json file **test that it works!**
-- [x] cache & store all-film-data vector magnitudes in offline phase **test that it works!**
+- [x] vectorize all-film-data in offline phase
+- [x] cache allGenres, allLanguages, allCountries to a json file
+- [x] cache & store all-film-data vector magnitudes in offline phase
 
 # Backend
-- [ ] for imdb, only vectorize films in userData that is in allFilmData (otherwise we can't get access to film languages, 
+- [x] for imdb, only vectorize films in userData that are in allFilmData (otherwise we can't get access to film languages, 
 countries, poster)
-- [ ] I think it's done for letterboxd already but double check functionality
+- [x] I think it's done for letterboxd already but double check functionality
 
 # Recommendation Algorithm
 - [x] all-film-data doesn't filter out films that have been rated
