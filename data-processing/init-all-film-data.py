@@ -119,11 +119,8 @@ def main():
     for imdbFilmId in allFilmDataKeys:
         ######### todo temp
         count = count + 1
-
+        print(str(count) + " " + str(imdbFilmId))
         if count % 100 == 0:
-            print(str(count) + " " + str(imdbFilmId))
-
-        elif count % 100 == 0:
             with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
                 convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
 
@@ -154,6 +151,7 @@ def main():
 
             # if the imdb film is not found in tmdb
             if tmdbFilmId == "":
+                print(f"IMDB film not found in TMDB: {imdbFilmId}\n")
                 del allFilmData[imdbFilmId]
                 continue
 
@@ -201,9 +199,9 @@ def main():
 # API is rate limited to 50 calls per second
 def checkRateLimit(apiCount):
     apiCount = apiCount + 1
-    apiCount = apiCount % 40
+    apiCount = apiCount % 40  # wait every 40 calls to be safe
     if apiCount == 0:
-        time.sleep(1.1)
+        time.sleep(1)
 
     return apiCount
 

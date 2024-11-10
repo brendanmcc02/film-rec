@@ -20,6 +20,7 @@
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
 - [x] augment letterboxdTitle, countries, languages and poster using TMDB API
+- [ ] finish running `init-all-film-data.py`
 
 ## Data Cleaning
 - [x] normalise years
@@ -35,12 +36,12 @@
 
 ## Letterboxd conversion
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
-- [ ] get the tmdb title (aka letterboxd) when making the api and cache that somewhere instead of fucking around with 
+- [x] get the tmdb title (aka letterboxd) when making the api and cache that somewhere instead of fucking around with 
 preprocessing
 
 ## Offline Phase
-- [ ] cache allGenres, allLanguages, allCountries to a json file
-- [ ] ~~letterboxd title preprocessing when writing `all-film-data.json`~~ might not be necessary
+- [ ] cache allGenres, allLanguages, allCountries to a json file. for lang & countries do a dictionary with key iso, 
+value full name e.g. `"en": "English"`
 
 ## Vectorizing the Data
 - [x] vectorize all-film-data in init-all-film-data.py
@@ -54,7 +55,12 @@ preprocessing
 - [x] implement profileChanges instead of separate wildcardProfileChanges & userProfileChanges
 - [x] integrate date rated - weight of how recently user has rated film.
 - [x] cache cosine sim comparisons
-- [ ] one hot encode language & country
+- [x] one hot encode language & country
+
+# Backend
+- [ ] for imdb, only vectorize films in userData that is in allFilmData (otherwise we can't get access to film languages, 
+countries, poster)
+- [ ] I think it's done for letterboxd already but double check functionality
 
 # Recommendation Algorithm
 - [x] all-film-data doesn't filter out films that have been rated
@@ -142,4 +148,4 @@ create endpoints for getters/setters
 corresponding entry in `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in 
 `ratings.csv`
 - [ ] ~~augment directors~~ you have to make a separate TMBD api request to get director, not worth it imo
-- [ ] change some files to get rid of hyphens so I don't need an imported library to import them
+- [ ] change some files to get rid of hyphens, so I don't need an imported library to import them

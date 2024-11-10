@@ -12,7 +12,7 @@ def main():
     # allFilmData = json.load(allFilmDataFile)
     # allFilmDataKeys = list(allFilmData.keys())
 
-    imdbFilmId = "tt0076759"
+    imdbFilmId = "tt1022603"
     baseImageUrl = "https://image.tmdb.org/t/p/w500"
 
     # "https://api.themoviedb.org/3/find/tt?external_source=imdb_id"
@@ -54,7 +54,7 @@ def main():
     if response.status_code == 200:
         jsonResponse = response.json()
 
-        print(jsonResponse)
+        print(str(jsonResponse))
         filmLanguage = str(jsonResponse['original_language'])
 
         filmCountries = []
