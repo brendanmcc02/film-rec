@@ -146,4 +146,4 @@ create endpoints for getters/setters
 corresponding entry in `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in 
 `ratings.csv`
 - [ ] ~~augment directors~~ you have to make a separate TMBD api request to get director, not worth it imo
-- [ ] change some files to get rid of hyphens, so I don't need an imported library to import them
+- [x] change some files to get rid of hyphens, so I don't need an imported library to import them

@@ -7,7 +7,7 @@ printf "\n[1/2] Downloading title.basics.tsv & title.ratings.tsv..."
 
 # download title.basics.tsv.gz & title.ratings.tsv.gz (only if it's been >3 days)
 cd backend/ || exit
-python3 download-all-film-data.py
+python3 download_all_film_data.py
 cd ../database || exit
 
 # unzip the .gz files, only if .gz files have been downloaded

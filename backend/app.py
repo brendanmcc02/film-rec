@@ -1,8 +1,3 @@
-# todo:
-# * PROFILE_VECTOR_LENGTH can be imported from cache.json
-# get rid of DIFF_* values, except DIFF_DATE_RATED
-# get rid of min* values, except minDateRated
-
 from flask import Flask, request, jsonify
 from datetime import datetime
 import json
@@ -10,14 +5,10 @@ import csv
 import numpy as np
 import os
 import glob
-import importlib
 from vectorize import *
-# it's not possible to import filenames with hyphens, so I'm using a library to do it :/
-letterboxd_conversion = importlib.import_module('../letterboxd-conversion')
-all_film_data = importlib.import_module('../init-all-film-data')
+from init_all_film_data import YEAR_WEIGHT, GENRE_WEIGHT, RUNTIME_THRESHOLD
+from letterboxd_conversion import expectedLetterboxdFileFilmAttributes, convertLetterboxdFormatToImdbFormat
 
-RUNTIME_THRESHOLD = all_film_data.RUNTIME_THRESHOLD
-PROFILE_VECTOR_LENGTH = 1
 NUM_USER_RECS = 4
 NUM_RECENCY_RECS = 2
 NUM_WILDCARD_RECS = 2
@@ -25,25 +16,14 @@ TOTAL_RECS = NUM_USER_RECS + NUM_RECENCY_RECS + NUM_WILDCARD_RECS
 USER_PROFILE_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
 RECENCY_FEEDBACK_FACTOR = 0.05
 WILDCARD_FEEDBACK_FACTOR = 0.2
-DATE_RATED_WEIGHT = 0.5
-DIFF_IMDB_RATING = 0.0
-DIFF_YEAR = 0
-DIFF_NUMBER_OF_VOTES = 0
-DIFF_RUNTIME = 0
-DIFF_DATE_RATED = datetime(1, 1, 1)
 
+diffDateRated = datetime(1, 1, 1)
 userProfile = np.zeros(PROFILE_VECTOR_LENGTH)
 recencyProfile = np.zeros(PROFILE_VECTOR_LENGTH)
 wildcardProfile = np.zeros(PROFILE_VECTOR_LENGTH)
 vectorProfileChanges = []
-allFilmData = {}
-allFilmDataVectorized = {}
 recs = []
 recStates = [0] * TOTAL_RECS
-minImdbRating = 0.0
-minYear = 0
-minNumberOfVotes = 0
-minRuntime = 0
 minDateRated = datetime(1, 1, 1)
 isImdbFile = True
 userFilmDataFilename = ""
@@ -60,10 +40,6 @@ def resetGlobalVariables():
     global allFilmDataVectorized
     global recs
     global recStates
-    global minImdbRating
-    global minYear
-    global minNumberOfVotes
-    global minRuntime
     global minDateRated
     global isImdbFile
 
@@ -75,10 +51,6 @@ def resetGlobalVariables():
     allFilmDataVectorized = {}
     recs = []
     recStates = [0] * TOTAL_RECS
-    minImdbRating = 0.0
-    minYear = 0
-    minNumberOfVotes = 0
-    minRuntime = 0
     minDateRated = datetime(1, 1, 1)
 
 
@@ -112,7 +84,7 @@ def verifyUserUploadedFile():
                 for k in keys:
                     if k not in expectedImdbFileFilmAttributes:
                         isImdbFile = False
-                        if k not in letterboxd_conversion.expectedLetterboxdFileFilmAttributes:
+                        if k not in expectedLetterboxdFileFilmAttributes:
                             return ("Error: Row headers in " + userFilmDataFilename +
                                     " does not conform to expected format.\n", 400)
 
@@ -147,8 +119,7 @@ def initRec():
     allFilmDataKeys = list(allFilmDataFull.keys())
 
     if not isImdbFile:
-        userFilmDataList = letterboxd_conversion.convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmDataFull,
-                                                                                     allFilmDataKeys)
+        userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmDataFull, allFilmDataKeys)
 
     userFilmData = {}
 
@@ -178,7 +149,7 @@ def initRec():
     global DIFF_YEAR
     global DIFF_NUMBER_OF_VOTES
     global DIFF_RUNTIME
-    global DIFF_DATE_RATED
+    global diffDateRated
     global minImdbRating
     global minYear
     global minNumberOfVotes
@@ -255,11 +226,11 @@ def initRec():
     DIFF_YEAR = maxYear - minYear
     DIFF_NUMBER_OF_VOTES = maxNumberOfVotes - minNumberOfVotes
     DIFF_RUNTIME = maxRuntime - minRuntime
-    DIFF_DATE_RATED = maxDateRated - minDateRated
+    diffDateRated = maxDateRated - minDateRated
 
     cachedNormalizedYears = {}
     for y in range(minYear, maxYear + 1):
-        cachedNormalizedYears[y] = ((y - minYear) / DIFF_YEAR) * all_film_data.YEAR_WEIGHT
+        cachedNormalizedYears[y] = ((y - minYear) / DIFF_YEAR) * YEAR_WEIGHT
 
     cachedNormalizedImdbRatings = {}
     for i in np.arange(minImdbRating, maxImdbRating + 0.1, 0.1):
@@ -291,7 +262,7 @@ def initRec():
                                cachedNormalizedImdbRatings, minNumberOfVotes, DIFF_NUMBER_OF_VOTES, minRuntime,
                                DIFF_RUNTIME)
         # dateRatedScalar: normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
-        dateRatedScalar = (((userFilmData[key]['dateRated'] - minDateRated) / DIFF_DATE_RATED) *
+        dateRatedScalar = (((userFilmData[key]['dateRated'] - minDateRated) / diffDateRated) *
                            (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
         cachedDateRatedScalars[key] = dateRatedScalar
 
@@ -373,7 +344,7 @@ def getWeightByVectorIndex(vectorIndex):
         return 1.0
     match vectorIndex:
         case 0:  # year
-            return all_film_data.YEAR_WEIGHT
+            return YEAR_WEIGHT
         case 1:  # imdbRating
             return 1.0
         case 2:  # numVotes
