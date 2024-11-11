@@ -318,6 +318,7 @@ def getFilmRecs(recType, allFilmDataKeys):
     cosineSimilarities = {}
 
     for filmId in allFilmDataKeys:
+        # todo get vectorMagnitude of allFilmData vector from all-film-data-vectorized-magnitudes.json
         cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVectorized[filmId], vector, vectorMagnitude)
 
     # sort in descending order.
@@ -503,7 +504,6 @@ def regen():
     return jsonify(recs), 200
 
 
-# getter for the number of recommendations
 @app.route('/getTotalRecs')
 def getTotalRecs():
     return str(TOTAL_RECS), 200

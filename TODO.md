@@ -20,7 +20,7 @@
 - [x] add title attribute to dataset
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
 - [x] augment letterboxdTitle, countries, languages and poster using TMDB API
-- [ ] finish running `init-all-film-data.py`
+- [x] finish running `init-all-film-data.py`
 
 ## Data Cleaning
 - [x] normalise years
@@ -33,6 +33,8 @@
 - [x] how much do I round values by? - not rounding values, no reason to do it
 - [x] calculate user profile using weighted averages
 - [x] mess around with weights of year and genres
+- [ ] don't store whole poster image url, just the unique part (can prepend later)
+- [ ] check for `\u*`, are they messed up or is it ok?
 
 ## Letterboxd conversion
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
@@ -136,7 +138,7 @@ create endpoints for getters/setters
 
 # High-Level TODO
 - [x] Read relevant parts of the Recommender Systems textbook
-- [ ] Increase complexity and quality of Data Collection
+- [x] Increase complexity and quality of Data Collection
 - [ ] Increase complexity and quality of the Recommendation Algorithm
 - [ ] Present the results on a clean website
 
