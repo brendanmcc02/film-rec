@@ -1,15 +1,15 @@
 # downloads, filters, and produces all-film-data.json
 
+clear
 cd ..
 git pull
 
-printf "\n[1/2] Downloading title.basics.tsv & title.ratings.tsv..."
-
-# download title.basics.tsv.gz & title.ratings.tsv.gz (only if it's been >3 days)
+# download title.basics.tsv.gz & title.ratings.tsv.gz (only if it's been >1 days)
 cd backend/ || exit
 python3 download_all_film_data.py
 cd ../database || exit
 
+printf "\n[1/2] Downloading title.basics.tsv & title.ratings.tsv..."
 # unzip the .gz files, only if .gz files have been downloaded
 if test -f title.basics.tsv.gz; then
   if test -f title.basics.tsv; then
@@ -38,6 +38,6 @@ if test -f title.basics.tsv; then
     git push
   fi
 else
-  printf "\n[2/2] all-film-data.json was initialised >3 days ago, so the script was not run.\n"
+  printf "\n all-film-data.json was initialised >1 days ago, so the script was not run.\n"
 fi
 

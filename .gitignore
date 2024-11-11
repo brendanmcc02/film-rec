@@ -4,4 +4,5 @@ database/*.csv
 *.pdf
 letterboxd-export/
 access-token.txt
+backup-access-token.txt
 backend/__pycache__/

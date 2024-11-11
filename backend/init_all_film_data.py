@@ -4,7 +4,6 @@ import json
 import csv
 import time
 import requests
-import datetime
 from vectorize import *
 
 # from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
@@ -36,12 +35,8 @@ def main():
     #     try:
     #         if (film["titleType"] == 'movie' and film['genres'] != r"\N"
     #                 and int(film['runtimeMinutes']) >= RUNTIME_THRESHOLD):
-    #             newFilm = {}
-    #             newFilm['id'] = film['tconst']
-    #             newFilm['title'] = film['primaryTitle']
-    #             newFilm['year'] = int(film['startYear'])
-    #             newFilm['runtime'] = int(film['runtimeMinutes'])
-    #             newFilm['genres'] = film['genres'].split(',')
+    #             newFilm = {'id': film['tconst'], 'title': film['primaryTitle'], 'year': int(film['startYear']),
+    #                        'runtime': int(film['runtimeMinutes']), 'genres': film['genres'].split(',')}
     #
     #             stage_1_allFilmData.append(newFilm)
     #     except ValueError:
@@ -95,20 +90,26 @@ def main():
     #
     # allGenres = sorted(allGenres)
 
-    ###### todo temp
+    # ###### todo temp
     allFilmDataFile = open('../database/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
-    count = 0
-    allGenres = ["War", "Drama", "Comedy", "Romance", "Sci-Fi", "Thriller"]
+    allFilmDataKeys = list(allFilmData.keys())
+    allGenres = []
+    for filmId in allFilmDataKeys:
+        for genre in allFilmData[filmId]['genres']:
+            if genre not in allGenres:
+                allGenres.append(genre)
+
     allGenres = sorted(allGenres)
-    ########
+
+    # ########
     print("\nMaking API calls to get Letterboxd Title, Letterboxd Year, Languages, Countries & Poster...\n")
 
     baseImageUrl = "https://image.tmdb.org/t/p/w500"
 
     accessToken = ""
     try:
-        accessToken = str(open('../access-token.txt').read())
+        accessToken = str(open('../backup-access-token.txt').read())
     except FileNotFoundError:
         print("Access Token File Not Found")
     except Exception as e:
@@ -126,7 +127,6 @@ def main():
     allCountries = []
 
     allFilmDataKeys = list(allFilmData.keys())
-    apiCount = 0
 
     # this is needed for normalising vector values.
     minImdbRating = allFilmData[allFilmDataKeys[0]]['imdbRating']
@@ -138,17 +138,11 @@ def main():
     minRuntime = allFilmData[allFilmDataKeys[0]]['runtime']
     maxRuntime = allFilmData[allFilmDataKeys[0]]['runtime']
 
+    count = 0
+
     for imdbFilmId in allFilmDataKeys:
-        ######### todo temp
         count = count + 1
         print(str(count) + " " + str(imdbFilmId))
-        if count % 100 == 0:
-            with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
-                convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
-
-            with open('../database/all-film-data.json', 'w') as convert_file:
-                convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
-        ##############
         if imdbFilmId in cachedTmbdFilmData:
             allFilmData[imdbFilmId]['letterboxdTitle'] = cachedTmbdFilmData[imdbFilmId]['letterboxdTitle']
             allFilmData[imdbFilmId]['letterboxdYear'] = cachedTmbdFilmData[imdbFilmId]['letterboxdYear']
@@ -167,13 +161,14 @@ def main():
             url = f"https://api.themoviedb.org/3/find/{imdbFilmId}?external_source=imdb_id"
             tmdbFilmId = ""
             response = requests.get(url, headers=headers)
-            apiCount = checkRateLimit(apiCount)
+            time.sleep(0.2)
             if response.status_code == 200:
                 jsonResponse = response.json()
                 if len(jsonResponse['movie_results']) > 0:
                     tmdbFilmId = str(jsonResponse['movie_results'][0]['id'])
             elif response.status_code == 429:
-                print(f"Rate Limit Exceeded. API Count = {apiCount}. Film ID: {imdbFilmId}\n")
+                print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
+                time.sleep(60)
             elif response.status_code == 404:
                 print(f"Error Status Code = {response.status_code}\n")
             else:
@@ -187,19 +182,19 @@ def main():
 
             url = f"https://api.themoviedb.org/3/movie/{tmdbFilmId}?language=en-US"
             response = requests.get(url, headers=headers)
-            apiCount = checkRateLimit(apiCount)
+            time.sleep(0.2)
             if response.status_code == 200:
                 jsonResponse = response.json()
 
-                filmTitle = str(jsonResponse['original_title'])
+                filmTitle = str(jsonResponse['title'])
                 filmYear = int(jsonResponse['release_date'].split('-')[0])
                 filmPoster = baseImageUrl + str(jsonResponse['poster_path'])
 
                 filmLanguages = []
                 for language in jsonResponse['spoken_languages']:
                     filmLanguages.append(language['english_name'])
-                    if language not in allLanguages:
-                        allLanguages.append(language)
+                    if language['english_name'] not in allLanguages:
+                        allLanguages.append(language['english_name'])
 
                 filmCountries = []
                 for country in jsonResponse['origin_country']:
@@ -217,7 +212,8 @@ def main():
                 allFilmData[imdbFilmId]['countries'] = filmCountries
                 allFilmData[imdbFilmId]['poster'] = filmPoster
             elif response.status_code == 429:
-                print(f"Rate Limit Exceeded. API Count = {apiCount}. Film ID: {imdbFilmId}\n")
+                print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
+                time.sleep(60)
             else:
                 print(f"Error. Status Code = {response.status_code}\n")
 
@@ -263,8 +259,9 @@ def main():
 
     for filmId in allFilmDataKeys:
         allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allLanguages, allCountries,
-                                                      cachedNormalizedYears, cachedNormalizedImdbRatings,
-                                                      minNumberOfVotes, diffNumberOfVotes, minRuntime, diffRuntime))
+                                                           cachedNormalizedYears, cachedNormalizedImdbRatings,
+                                                           minNumberOfVotes, diffNumberOfVotes, minRuntime,
+                                                           diffRuntime))
         if profileVectorLength == 0:
             profileVectorLength = len(allFilmDataVectorized[filmId])
 
@@ -284,16 +281,6 @@ def main():
 
     with open('../database/all-film-data-vectorized-magnitudes.json', 'w') as convert_file:
         convert_file.write(json.dumps(allFilmDataVectorizedMagnitudes, indent=4, separators=(',', ': ')))
-
-
-# API is rate limited to 50 calls per second
-def checkRateLimit(apiCount):
-    apiCount = apiCount + 1
-    apiCount = apiCount % 40  # wait every 40 calls to be safe
-    if apiCount == 0:
-        time.sleep(1)
-
-    return apiCount
 
 
 if __name__ == "__main__":

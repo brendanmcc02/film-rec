@@ -12,7 +12,7 @@ def main():
     # allFilmData = json.load(allFilmDataFile)
     # allFilmDataKeys = list(allFilmData.keys())
 
-    imdbFilmId = "tt0111495"
+    imdbFilmId = "tt1016150"
     baseImageUrl = "https://image.tmdb.org/t/p/w500"
 
     # "https://api.themoviedb.org/3/find/tt?external_source=imdb_id"
@@ -20,7 +20,7 @@ def main():
 
     accessToken = ""
     try:
-        accessToken = str(open('../access-token.txt').read())
+        accessToken = str(open('../backup-access-token.txt').read())
     except FileNotFoundError:
         print("Access Token File Not Found")
     except Exception as e:
@@ -67,7 +67,7 @@ def main():
                                           "poster": filmPoster}
 
     elif response.status_code == 429:
-        print("Rate Limit Exceeded. API Count = " + apiCount + ". Film ID: " + imdbFilmId + "\n")
+        print("Rate Limit Exceeded. API Count = " + str(apiCount) + ". Film ID: " + imdbFilmId + "\n")
     else:
         print("Error. Status Code = " + str(response.status_code) + "\n")
 
