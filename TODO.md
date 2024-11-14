@@ -33,7 +33,7 @@
 - [x] how much do I round values by? - not rounding values, no reason to do it
 - [x] calculate user profile using weighted averages
 - [x] mess around with weights of year and genres
-- [ ] don't store whole poster image url, just the unique part (can prepend later)
+- [x] don't store whole poster image url, just the unique part (can prepend later)
 - [ ] check for `\u*`, are they messed up or is it ok?
 
 ## Letterboxd conversion
@@ -128,7 +128,6 @@ create endpoints for getters/setters
 - [x] config frontend: npm, etc.
 - [x] run flask app
 - [x] fix windows upload diary.csv error
-- [ ] ~~finish converting init-all-film-data.sh to .bat~~
 
 ## Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it

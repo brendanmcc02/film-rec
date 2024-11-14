@@ -105,8 +105,6 @@ def main():
     # # ########
     print("\nMaking API calls to get Letterboxd Title, Letterboxd Year, Languages, Countries & Poster...\n")
 
-    baseImageUrl = "https://image.tmdb.org/t/p/w500"
-
     accessToken = ""
     try:
         accessToken = str(open('../backup-access-token.txt').read())
@@ -148,7 +146,9 @@ def main():
             allFilmData[imdbFilmId]['letterboxdYear'] = cachedTmbdFilmData[imdbFilmId]['letterboxdYear']
             allFilmData[imdbFilmId]['languages'] = cachedTmbdFilmData[imdbFilmId]['languages']
             allFilmData[imdbFilmId]['countries'] = cachedTmbdFilmData[imdbFilmId]['countries']
-            allFilmData[imdbFilmId]['poster'] = cachedTmbdFilmData[imdbFilmId]['poster']
+            allFilmData[imdbFilmId]['mainPoster'] = cachedTmbdFilmData[imdbFilmId]['mainPoster']
+            allFilmData[imdbFilmId]['backdropPoster'] = cachedTmbdFilmData[imdbFilmId]['backdrop_path']
+            allFilmData[imdbFilmId]['summary'] = cachedTmbdFilmData[imdbFilmId]['summary']
 
             for language in allFilmData[imdbFilmId]['languages']:
                 if language not in allLanguages:
@@ -188,7 +188,9 @@ def main():
 
                 filmTitle = str(jsonResponse['title'])
                 filmYear = int(jsonResponse['release_date'].split('-')[0])
-                filmPoster = baseImageUrl + str(jsonResponse['poster_path'])
+                mainPoster = str(jsonResponse['poster_path'])
+                backdropPoster = str(jsonResponse['backdrop_path'])
+                filmSummary = str(jsonResponse['overview'])
 
                 filmLanguages = []
                 for language in jsonResponse['spoken_languages']:
@@ -204,13 +206,16 @@ def main():
 
                 cachedTmbdFilmData[imdbFilmId] = {"letterboxdTitle": filmTitle, "letterboxdYear": filmYear,
                                                   "languages": filmLanguages, "countries": filmCountries,
-                                                  "poster": filmPoster}
+                                                  "mainPoster": mainPoster, "backdropPoster": backdropPoster,
+                                                  "summary": filmSummary}
 
                 allFilmData[imdbFilmId]['letterboxdTitle'] = filmTitle
                 allFilmData[imdbFilmId]['letterboxdYear'] = filmYear
                 allFilmData[imdbFilmId]['languages'] = filmLanguages
                 allFilmData[imdbFilmId]['countries'] = filmCountries
-                allFilmData[imdbFilmId]['poster'] = filmPoster
+                allFilmData[imdbFilmId]['mainPoster'] = mainPoster
+                allFilmData[imdbFilmId]['backdropPoster'] = backdropPoster
+                allFilmData[imdbFilmId]['summary'] = filmSummary
             elif response.status_code == 429:
                 print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
                 time.sleep(60)
