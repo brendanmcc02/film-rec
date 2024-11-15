@@ -187,7 +187,12 @@ def main():
                 jsonResponse = response.json()
 
                 filmTitle = str(jsonResponse['title'])
-                filmYear = int(jsonResponse['release_date'].split('-')[0])
+                filmYear = 0
+                if jsonResponse['release_date'].split('-')[0] != '':
+                    filmYear = int(jsonResponse['release_date'].split('-')[0])
+                else:
+                    # TODO
+                    pass
                 mainPoster = str(jsonResponse['poster_path'])
                 backdropPoster = str(jsonResponse['backdrop_path'])
                 filmSummary = str(jsonResponse['overview'])
