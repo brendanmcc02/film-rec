@@ -20,6 +20,8 @@ WILDCARD_FEEDBACK_FACTOR = 0.2
 PROFILE_VECTOR_LENGTH = 0
 
 allFilmDataUnseen = {}
+allFilmDataVectorized = {}
+allFilmDataVectorizedMagnitudes = {}
 diffDateRated = datetime(1, 1, 1)
 minDateRated = datetime.now()
 userProfile = np.zeros(0)
@@ -40,21 +42,22 @@ def resetGlobalVariables():
     global wildcardProfile
     global vectorProfileChanges
     global allFilmDataUnseen
-    global allFilmDataVectorized
     global recs
     global recStates
     global minDateRated
     global isImdbFile
+    global userFilmDataFilename
 
     userProfile = np.zeros(0)
     recencyProfile = np.zeros(0)
     wildcardProfile = np.zeros(0)
     vectorProfileChanges = []
     allFilmDataUnseen = {}
-    allFilmDataVectorized = {}
     recs = []
     recStates = [0] * TOTAL_RECS
     minDateRated = datetime.now()
+    isImdbFile = True
+    userFilmDataFilename = ""
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])
@@ -120,6 +123,14 @@ def initRec():
     allFilmDataFile = open('../database/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
     allFilmDataKeys = list(allFilmData.keys())
+
+    global allFilmDataVectorized
+    global allFilmDataVectorizedMagnitudes
+
+    allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
+    allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+    allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
+    allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
 
     if not isImdbFile:
         userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, allFilmDataKeys)
@@ -300,26 +311,27 @@ def getFilmRecs(recType, allFilmDataKeys):
 
     if recType == "wildcard":
         maxRec = NUM_WILDCARD_RECS
-        vector = wildcardProfile
+        profileVector = wildcardProfile
     elif recType == "recency":
         maxRec = NUM_RECENCY_RECS
-        vector = recencyProfile
+        profileVector = recencyProfile
     elif recType == "user":
         recs = []
         maxRec = NUM_USER_RECS
-        vector = userProfile
+        profileVector = userProfile
     else:
         print("unknown rec type: " + str(recType))
         return "unknown rec type: ", 400
 
     # pre-compute the vector magnitude to make cosine sim calculations more efficient
-    vectorMagnitude = np.linalg.norm(vector)
+    profileVectorMagnitude = np.linalg.norm(profileVector)
 
     cosineSimilarities = {}
 
     for filmId in allFilmDataKeys:
-        # todo get vectorMagnitude of allFilmData vector from all-film-data-vectorized-magnitudes.json
-        cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVectorized[filmId], vector, vectorMagnitude)
+        filmVectorMagnitude = allFilmDataVectorizedMagnitudes[filmId]
+        cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVectorized[filmId], profileVector,
+                                                      filmVectorMagnitude, profileVectorMagnitude)
 
     # sort in descending order.
     cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
@@ -491,10 +503,9 @@ def regen():
     # for each film that was liked or disliked:
     for i in range(0, TOTAL_RECS):
         if recStates[i] != 0:
-            # remove from allFilmDataUnseen & allFilmDataVectorized
+            # remove from allFilmDataUnseen
             filmId = recs[i]['id']
             del allFilmDataUnseen[filmId]
-            del allFilmDataVectorized[filmId]
 
     # reset recStates
     recStates = [0] * TOTAL_RECS
