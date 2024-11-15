@@ -62,6 +62,7 @@ preprocessing
 - [x] for imdb, only vectorize films in userData that are in allFilmData (otherwise we can't get access to film languages, 
 countries, poster)
 - [x] I think it's done for letterboxd already but double check functionality
+- [ ] check functionality of backend works after offline phase additions
 
 # Recommendation Algorithm
 - [x] all-film-data doesn't filter out films that have been rated
@@ -77,6 +78,8 @@ countries, poster)
 my-film-data-vec.json to file
 - [x] call init_rec endpoint once when new page is loaded
 - [x] thumbs up/down state logic
+
+# Testing & Evaluation
 
 # Frontend
 - [x] do text div 
