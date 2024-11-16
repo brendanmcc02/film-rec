@@ -57,7 +57,6 @@ def resetGlobalVariables():
     recStates = [0] * TOTAL_RECS
     minDateRated = datetime.now()
     isImdbFile = True
-    userFilmDataFilename = ""
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])
