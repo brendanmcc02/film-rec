@@ -35,6 +35,7 @@
 - [x] mess around with weights of year and genres
 - [x] don't store whole poster image url, just the unique part (can prepend later)
 - [ ] check for `\u*`, are they messed up or is it ok?
+- [ ] delete poster attribute in all-film-data.json
 
 ## Letterboxd conversion
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly

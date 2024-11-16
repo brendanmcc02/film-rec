@@ -90,7 +90,7 @@ def main():
 
     allGenres = sorted(allGenres)
 
-    # # ###### todo temp
+    # ###### todo temp
     # allFilmDataFile = open('../database/all-film-data.json')
     # allFilmData = json.load(allFilmDataFile)
     # allFilmDataKeys = list(allFilmData.keys())
@@ -101,13 +101,12 @@ def main():
     #             allGenres.append(genre)
     #
     # allGenres = sorted(allGenres)
-    #
-    # # ########
-    print("\nMaking API calls to get Letterboxd Title, Letterboxd Year, Languages, Countries & Poster...\n")
+    # ########
+    print("\nMaking API calls to get Letterboxd Title, Letterboxd Year, Languages, Countries, Posters, Summary...\n")
 
     accessToken = ""
     try:
-        accessToken = str(open('../backup-access-token.txt').read())
+        accessToken = str(open('../access-token.txt').read())
     except FileNotFoundError:
         print("Access Token File Not Found")
     except Exception as e:
@@ -141,7 +140,7 @@ def main():
     for imdbFilmId in allFilmDataKeys:
         count = count + 1
         print(str(count) + " " + str(imdbFilmId))
-        if count % 500 == 0:
+        if count % 100 == 0:
             with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
                 convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
 
@@ -154,7 +153,7 @@ def main():
             allFilmData[imdbFilmId]['languages'] = cachedTmbdFilmData[imdbFilmId]['languages']
             allFilmData[imdbFilmId]['countries'] = cachedTmbdFilmData[imdbFilmId]['countries']
             allFilmData[imdbFilmId]['mainPoster'] = cachedTmbdFilmData[imdbFilmId]['mainPoster']
-            allFilmData[imdbFilmId]['backdropPoster'] = cachedTmbdFilmData[imdbFilmId]['backdrop_path']
+            allFilmData[imdbFilmId]['backdropPoster'] = cachedTmbdFilmData[imdbFilmId]['backdropPoster']
             allFilmData[imdbFilmId]['summary'] = cachedTmbdFilmData[imdbFilmId]['summary']
 
             for language in allFilmData[imdbFilmId]['languages']:
@@ -303,7 +302,8 @@ def isIncorrectResponse(jsonResponse):
         if ('title' in jsonResponse and 'poster_path' in jsonResponse and 'release_date' in jsonResponse
                 and 'backdrop_path' in jsonResponse and 'overview' in jsonResponse and
                 'spoken_languages' in jsonResponse and 'origin_country' in jsonResponse):
-            # this might not execute due to compiler/interpreter efficiency: it's not used
+            # this might not execute due to compiler/interpreter efficiency: it's not used.
+            # so i'm actually not sure if this check works
             filmYear = int(jsonResponse['release_date'].split('-')[0])
             for language in jsonResponse['spoken_languages']:
                 if 'english_name' not in language:
