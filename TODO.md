@@ -34,13 +34,16 @@
 - [x] calculate user profile using weighted averages
 - [x] mess around with weights of year and genres
 - [x] don't store whole poster image url, just the unique part (can prepend later)
+- [x] delete poster attribute in all-film-data.json
+- [x] manually create `cached-letterboxd-title-year.json` 
+- [x] integrate `cached-letterboxd-title-year.json` func into script
 - [ ] check for `\u*`, are they messed up or is it ok?
-- [ ] delete poster attribute in all-film-data.json
 
 ## Letterboxd conversion
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
 - [x] get the tmdb title (aka letterboxd) when making the api and cache that somewhere instead of fucking around with 
 preprocessing
+- [ ] when converting letterboxd to imdb format use the cached-tmdb-film-data.json
 
 ## Vectorizing the Data
 - [x] vectorize all-film-data in init-all-film-data.py

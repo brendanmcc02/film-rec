@@ -135,6 +135,7 @@ def main():
     minRuntime = allFilmData[allFilmDataKeys[0]]['runtime']
     maxRuntime = allFilmData[allFilmDataKeys[0]]['runtime']
 
+    cachedLetterboxdTitleYear = {}
     count = 0
 
     for imdbFilmId in allFilmDataKeys:
@@ -225,6 +226,10 @@ def main():
                 allFilmData[imdbFilmId]['mainPoster'] = mainPoster
                 allFilmData[imdbFilmId]['backdropPoster'] = backdropPoster
                 allFilmData[imdbFilmId]['summary'] = filmSummary
+
+                letterboxdTitleYear = (cachedTmbdFilmData[imdbFilmId]['letterboxdTitle'] +
+                                       str(cachedTmbdFilmData[imdbFilmId]['letterboxdYear']))
+                cachedLetterboxdTitleYear[letterboxdTitleYear] = imdbFilmId
             elif response.status_code == 429:
                 print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
                 time.sleep(60)
@@ -242,11 +247,14 @@ def main():
 
     print(f"\nFinal Dataset size: {len(allFilmData)} films.\n")
 
+    with open('../database/all-film-data.json', 'w') as convert_file:
+        convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
+
     with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
         convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
 
-    with open('../database/all-film-data.json', 'w') as convert_file:
-        convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
+    with open('../database/cached-letterboxd-title-year.json', 'w') as convert_file:
+        convert_file.write(json.dumps(cachedLetterboxdTitleYear, indent=4, separators=(',', ': ')))
 
     print(f"\nVectorizing all-film-data.json\n")
 

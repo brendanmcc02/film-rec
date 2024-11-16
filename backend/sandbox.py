@@ -13,12 +13,15 @@ def main():
     allFilmDataFile = open('../database/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
     allFilmDataKeys = list(allFilmData.keys())
+    cachedLetterboxdTitleYear = {}
 
     for imdbFilmId in allFilmDataKeys:
-        del allFilmData[imdbFilmId]['poster']
+        letterboxdTitleYear = (allFilmData[imdbFilmId]['letterboxdTitle'] +
+                               str(allFilmData[imdbFilmId]['letterboxdYear']))
+        cachedLetterboxdTitleYear[letterboxdTitleYear] = imdbFilmId
 
-    with open('../database/all-film-data.json', 'w') as convert_file:
-        convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
+    with open('../database/cached-letterboxd-title-year.json', 'w') as convert_file:
+        convert_file.write(json.dumps(cachedLetterboxdTitleYear, indent=4, separators=(',', ': ')))
 
     # allLanguages = []
     # allCountries = []

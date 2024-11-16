@@ -57,15 +57,14 @@ def resetGlobalVariables():
     recStates = [0] * TOTAL_RECS
     minDateRated = datetime.now()
     isImdbFile = True
+    userFilmDataFilename = ""
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])
 def verifyUserUploadedFile():
     global isImdbFile
     global userFilmDataFilename
-
-    isImdbFile = True
-    userFilmDataFilename = ""
+    resetGlobalVariables()
 
     if 'file' not in request.files:
         return 'No file found in the request', 400
@@ -93,7 +92,6 @@ def verifyUserUploadedFile():
                             return ("Error: Row headers in " + userFilmDataFilename +
                                     " does not conform to expected format.\n", 400)
 
-        resetGlobalVariables()
         return "Upload Success.", 200
     except FileNotFoundError:
         return "Error: file not found.", 404
@@ -130,9 +128,11 @@ def initRec():
     allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
     allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
     allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
+    cachedLetterboxdTitleYearFile = open('../database/cached-letterboxd-title-year.json')
+    cachedLetterboxdTitleYear = json.load(cachedLetterboxdTitleYearFile)
 
     if not isImdbFile:
-        userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, allFilmDataKeys)
+        userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitleYear)
 
     userFilmData = {}
     global diffDateRated
