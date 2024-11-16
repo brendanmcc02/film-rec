@@ -166,6 +166,10 @@ def main():
                 jsonResponse = response.json()
                 if len(jsonResponse['movie_results']) > 0:
                     tmdbFilmId = str(jsonResponse['movie_results'][0]['id'])
+                else:
+                    print(f"IMDB film not found in TMDB: {imdbFilmId}\n")
+                    del allFilmData[imdbFilmId]
+                    continue
             elif response.status_code == 429:
                 print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
                 time.sleep(60)
@@ -174,25 +178,18 @@ def main():
             else:
                 print(f"Unexpected Error. Status Code = {response.status_code}\n")
 
-            # if the imdb film is not found in tmdb
-            if tmdbFilmId == "":
-                print(f"IMDB film not found in TMDB: {imdbFilmId}\n")
-                del allFilmData[imdbFilmId]
-                continue
-
             url = f"https://api.themoviedb.org/3/movie/{tmdbFilmId}?language=en-US"
             response = requests.get(url, headers=headers)
             time.sleep(0.2)
             if response.status_code == 200:
                 jsonResponse = response.json()
 
+                if isIncorrectResponse(jsonResponse):
+                    print(f"Incorrect Response. IMDB Film ID: {imdbFilmId}\n")
+                    continue
+
                 filmTitle = str(jsonResponse['title'])
-                filmYear = 0
-                if jsonResponse['release_date'].split('-')[0] != '':
-                    filmYear = int(jsonResponse['release_date'].split('-')[0])
-                else:
-                    # TODO
-                    pass
+                filmYear = int(jsonResponse['release_date'].split('-')[0])
                 mainPoster = str(jsonResponse['poster_path'])
                 backdropPoster = str(jsonResponse['backdrop_path'])
                 filmSummary = str(jsonResponse['overview'])
@@ -291,6 +288,25 @@ def main():
 
     with open('../database/all-film-data-vectorized-magnitudes.json', 'w') as convert_file:
         convert_file.write(json.dumps(allFilmDataVectorizedMagnitudes, indent=4, separators=(',', ': ')))
+
+
+def isIncorrectResponse(jsonResponse):
+    try:
+        if ('title' in jsonResponse and 'release_date' in jsonResponse and 'poster_path' in jsonResponse and
+                'release_date' in jsonResponse and 'backdrop_path' in jsonResponse and 'overview' in jsonResponse and
+                'spoken_languages' in jsonResponse and 'origin_country' in jsonResponse):
+            # this might not execute due to compiler/interpreter efficiency: it's not used
+            filmYear = int(jsonResponse['release_date'].split('-')[0])
+            for language in jsonResponse['spoken_languages']:
+                if 'english_name' not in language:
+                    return True
+        else:
+            return True
+    except ValueError:
+        print("Value Error when validating json response.\n")
+        return True
+
+    return False
 
 
 if __name__ == "__main__":
