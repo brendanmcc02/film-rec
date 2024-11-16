@@ -164,7 +164,8 @@ def main():
             time.sleep(0.2)
             if response.status_code == 200:
                 jsonResponse = response.json()
-                if len(jsonResponse['movie_results']) > 0:
+                if ('movie_results' in jsonResponse and len(jsonResponse['movie_results']) > 0
+                        and 'id' in jsonResponse['movie_results'][0]):
                     tmdbFilmId = str(jsonResponse['movie_results'][0]['id'])
                 else:
                     print(f"IMDB film not found in TMDB: {imdbFilmId}\n")
@@ -292,8 +293,8 @@ def main():
 
 def isIncorrectResponse(jsonResponse):
     try:
-        if ('title' in jsonResponse and 'release_date' in jsonResponse and 'poster_path' in jsonResponse and
-                'release_date' in jsonResponse and 'backdrop_path' in jsonResponse and 'overview' in jsonResponse and
+        if ('title' in jsonResponse and 'poster_path' in jsonResponse and 'release_date' in jsonResponse
+                and 'backdrop_path' in jsonResponse and 'overview' in jsonResponse and
                 'spoken_languages' in jsonResponse and 'origin_country' in jsonResponse):
             # this might not execute due to compiler/interpreter efficiency: it's not used
             filmYear = int(jsonResponse['release_date'].split('-')[0])
