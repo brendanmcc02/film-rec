@@ -37,6 +37,8 @@
 - [x] delete poster attribute in all-film-data.json
 - [x] manually create `cached-letterboxd-title-year.json` 
 - [x] integrate `cached-letterboxd-title-year.json` func into script
+- [x] get rid of `letterboxdYear` attribute
+- [x] convert `cached-letterboxd-title-year.json` to `cached-letterboxd-title.json`
 - [ ] check for `\u*`, are they messed up or is it ok?
 
 ## Letterboxd conversion

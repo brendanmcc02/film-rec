@@ -128,11 +128,11 @@ def initRec():
     allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
     allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
     allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
-    cachedLetterboxdTitleYearFile = open('../database/cached-letterboxd-title-year.json')
-    cachedLetterboxdTitleYear = json.load(cachedLetterboxdTitleYearFile)
+    cachedLetterboxdYearsFile = open('../database/cached-letterboxd-titles.json')
+    cachedLetterboxdYears = json.load(cachedLetterboxdYearsFile)
 
     if not isImdbFile:
-        userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitleYear)
+        userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdYears)
 
     userFilmData = {}
     global diffDateRated

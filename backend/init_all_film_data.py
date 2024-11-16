@@ -135,7 +135,7 @@ def main():
     minRuntime = allFilmData[allFilmDataKeys[0]]['runtime']
     maxRuntime = allFilmData[allFilmDataKeys[0]]['runtime']
 
-    cachedLetterboxdTitleYear = {}
+    cachedLetterboxdTitles = {}
     count = 0
 
     for imdbFilmId in allFilmDataKeys:
@@ -196,8 +196,8 @@ def main():
                     print(f"Incorrect Response. IMDB Film ID: {imdbFilmId}\n")
                     continue
 
-                filmTitle = str(jsonResponse['title'])
-                filmYear = int(jsonResponse['release_date'].split('-')[0])
+                letterboxdTitle = str(jsonResponse['title'])
+                letterboxdYear = int(jsonResponse['release_date'].split('-')[0])
                 mainPoster = str(jsonResponse['poster_path'])
                 backdropPoster = str(jsonResponse['backdrop_path'])
                 filmSummary = str(jsonResponse['overview'])
@@ -214,22 +214,21 @@ def main():
                     if country not in allCountries:
                         allCountries.append(country)
 
-                cachedTmbdFilmData[imdbFilmId] = {"letterboxdTitle": filmTitle, "letterboxdYear": filmYear,
+                cachedTmbdFilmData[imdbFilmId] = {"letterboxdTitle": letterboxdTitle, "letterboxdYear": letterboxdYear,
                                                   "languages": filmLanguages, "countries": filmCountries,
                                                   "mainPoster": mainPoster, "backdropPoster": backdropPoster,
                                                   "summary": filmSummary}
 
-                allFilmData[imdbFilmId]['letterboxdTitle'] = filmTitle
-                allFilmData[imdbFilmId]['letterboxdYear'] = filmYear
+                allFilmData[imdbFilmId]['letterboxdTitle'] = letterboxdTitle
+                allFilmData[imdbFilmId]['letterboxdYear'] = letterboxdYear
                 allFilmData[imdbFilmId]['languages'] = filmLanguages
                 allFilmData[imdbFilmId]['countries'] = filmCountries
                 allFilmData[imdbFilmId]['mainPoster'] = mainPoster
                 allFilmData[imdbFilmId]['backdropPoster'] = backdropPoster
                 allFilmData[imdbFilmId]['summary'] = filmSummary
 
-                letterboxdTitleYear = (cachedTmbdFilmData[imdbFilmId]['letterboxdTitle'] +
-                                       str(cachedTmbdFilmData[imdbFilmId]['letterboxdYear']))
-                cachedLetterboxdTitleYear[letterboxdTitleYear] = imdbFilmId
+                cachedLetterboxdTitles[letterboxdTitle] = {"imdbFilmId": imdbFilmId, "letterboxdYear": letterboxdYear,
+                                                           "imdbYear": allFilmData[imdbFilmId]['year']}
             elif response.status_code == 429:
                 print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
                 time.sleep(60)
@@ -253,8 +252,8 @@ def main():
     with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
         convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
 
-    with open('../database/cached-letterboxd-title-year.json', 'w') as convert_file:
-        convert_file.write(json.dumps(cachedLetterboxdTitleYear, indent=4, separators=(',', ': ')))
+    with open('../database/cached-letterboxd-titles.json', 'w') as convert_file:
+        convert_file.write(json.dumps(cachedLetterboxdTitles, indent=4, separators=(',', ': ')))
 
     print(f"\nVectorizing all-film-data.json\n")
 
@@ -312,7 +311,7 @@ def isIncorrectResponse(jsonResponse):
                 'spoken_languages' in jsonResponse and 'origin_country' in jsonResponse):
             # this might not execute due to compiler/interpreter efficiency: it's not used.
             # so i'm actually not sure if this check works
-            filmYear = int(jsonResponse['release_date'].split('-')[0])
+            letterboxdYear = int(jsonResponse['release_date'].split('-')[0])
             for language in jsonResponse['spoken_languages']:
                 if 'english_name' not in language:
                     return True
