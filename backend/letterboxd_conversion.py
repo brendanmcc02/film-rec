@@ -1,16 +1,19 @@
 expectedLetterboxdFileFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating"]
 
 
-def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cachedLetterboxdTitleYear):
+def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cachedLetterboxdTitles):
     imdbUserFilmData = []
 
     # we want to work with latest entries first
     letterboxdUserFilmData = reversed(letterboxdUserFilmData)
 
     for letterboxdFilm in letterboxdUserFilmData:
-        letterboxdTitleYear = letterboxdFilm["Name"] + letterboxdFilm["Year"]
-        if letterboxdTitleYear in cachedLetterboxdTitleYear:
-            imdbFilmId = cachedLetterboxdTitleYear[letterboxdTitleYear]
+        letterboxdTitle = letterboxdFilm["Name"]
+        letterboxdYear = int(letterboxdFilm["Year"])
+        if (letterboxdTitle in cachedLetterboxdTitles and
+                (letterboxdYear == cachedLetterboxdTitles[letterboxdTitle]['letterboxdYear'] or
+                 letterboxdYear == cachedLetterboxdTitles[letterboxdTitle]['imdbYear'])):
+            imdbFilmId = cachedLetterboxdTitles[letterboxdTitle]['imdbFilmId']
             imdbUserFilmData.append({
                 "Const": imdbFilmId,
                 # for consistency, use the imdb title instead of the letterboxd one
@@ -26,6 +29,6 @@ def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cac
                 "Genres": allFilmData[imdbFilmId]['genres']
             })
         else:
-            print(f"Film not found {letterboxdTitleYear}")
+            print(f"Film not found {letterboxdTitle}")
 
     return imdbUserFilmData
