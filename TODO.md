@@ -46,7 +46,7 @@
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
 - [x] get the tmdb title (aka letterboxd) when making the api and cache that somewhere instead of fucking around with 
 preprocessing
-- [ ] when converting letterboxd to imdb format use the cached-tmdb-film-data.json
+- [x] when converting letterboxd to imdb format use the cached-tmdb-film-data.json
 
 ## Vectorizing the Data
 - [x] vectorize all-film-data in init-all-film-data.py
@@ -69,7 +69,7 @@ preprocessing
 - [x] for imdb, only vectorize films in userData that are in allFilmData (otherwise we can't get access to film languages, 
 countries, poster)
 - [x] I think it's done for letterboxd already but double check functionality
-- [ ] check functionality of backend works after offline phase additions
+- [x] check functionality of backend works after offline phase additions
 
 # Recommendation Algorithm
 - [x] all-film-data doesn't filter out films that have been rated
@@ -85,6 +85,7 @@ countries, poster)
 my-film-data-vec.json to file
 - [x] call init_rec endpoint once when new page is loaded
 - [x] thumbs up/down state logic
+- [ ] bug with user profile?
 
 # Testing & Evaluation
 

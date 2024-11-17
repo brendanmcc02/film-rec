@@ -6,7 +6,7 @@ def vectorizeFilm(film, allGenres, allLanguages, allCountries, cachedNormalizedY
                   minNumberOfVotes, diffNumberOfVotes, minRuntime, diffRuntime):
     vector = []
 
-    normalizedYear = cachedNormalizedYears[film['year']]
+    normalizedYear = cachedNormalizedYears[str(film['year'])]
     vector.append(normalizedYear)
 
     imdbRatingNorm = cachedNormalizedImdbRatings[str(film['imdbRating'])]

@@ -347,7 +347,7 @@ def getFilmRecs(recType, allFilmDataKeys):
                 maxRec += 1
                 duplicateRec = True
                 # todo temp
-                print(str(rec['id']))
+                print("duplicate rec: " + str(rec['id']))
                 break
 
         if not duplicateRec:
