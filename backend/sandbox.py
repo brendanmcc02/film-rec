@@ -17,9 +17,17 @@ def main():
     cachedLetterboxdTitles = {}
 
     for key in allFilmDataKeys:
-        cachedLetterboxdTitles[allFilmData[key]['letterboxdTitle']] = {"imdbFilmId": key,
-                                                                       "letterboxdYear": allFilmData[key]['letterboxdYear'],
-                                                                        "imdbYear": allFilmData[key]['year']}
+        imdbYear = allFilmData[key]['year']
+        letterboxdTitle = allFilmData[key]['letterboxdTitle']
+        letterboxdYear = allFilmData[key]['letterboxdYear']
+        uniqueYears = [imdbYear]
+        if letterboxdYear != imdbYear:
+            uniqueYears.append(letterboxdYear)
+
+        if letterboxdTitle in cachedLetterboxdTitles:
+            cachedLetterboxdTitles[letterboxdTitle].append({"imdbFilmId": key, "years": uniqueYears})
+        else:
+            cachedLetterboxdTitles[letterboxdTitle] = [{"imdbFilmId": key, "years": uniqueYears}]
 
     with open('../database/cached-letterboxd-titles.json', 'w') as convert_file:
         convert_file.write(json.dumps(cachedLetterboxdTitles, indent=4, separators=(',', ': ')))

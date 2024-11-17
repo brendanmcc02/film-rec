@@ -227,8 +227,15 @@ def main():
                 allFilmData[imdbFilmId]['backdropPoster'] = backdropPoster
                 allFilmData[imdbFilmId]['summary'] = filmSummary
 
-                cachedLetterboxdTitles[letterboxdTitle] = {"imdbFilmId": imdbFilmId, "letterboxdYear": letterboxdYear,
-                                                           "imdbYear": allFilmData[imdbFilmId]['year']}
+                imdbYear = allFilmData[imdbFilmId]['year']
+                uniqueYears = [imdbYear]
+                if letterboxdYear != imdbYear:
+                    uniqueYears.append(letterboxdYear)
+
+                if letterboxdTitle in cachedLetterboxdTitles:
+                    cachedLetterboxdTitles[letterboxdTitle].append({"imdbFilmId": imdbFilmId, "years": uniqueYears})
+                else:
+                    cachedLetterboxdTitles[letterboxdTitle] = [{"imdbFilmId": imdbFilmId, "years": uniqueYears}]
             elif response.status_code == 429:
                 print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
                 time.sleep(60)

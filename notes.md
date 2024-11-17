@@ -197,3 +197,6 @@ requirements of your project. Also, as you develop your system, it's essential t
 refine your recommendation algorithm for better accuracy.
 
 # temp
+
+cachedLetterboxdTitles = list of objects
+objects = {"imdbFilmID:", "uniqueYears"}

@@ -39,7 +39,7 @@
 - [x] integrate `cached-letterboxd-title-year.json` func into script
 - [x] get rid of `letterboxdYear` attribute
 - [x] convert `cached-letterboxd-title-year.json` to `cached-letterboxd-title.json`
-- [ ] convert back to `cached-letterboxd-title-year.json` and work around the letterboxd/tmdb nonsense :(
+- [x] solve the letterboxd title year nonsense
 - [ ] check for `\u*`, are they messed up or is it ok?
 
 ## Letterboxd conversion
