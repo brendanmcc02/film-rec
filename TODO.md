@@ -85,7 +85,7 @@ countries, poster)
 my-film-data-vec.json to file
 - [x] call init_rec endpoint once when new page is loaded
 - [x] thumbs up/down state logic
-- [ ] bug with user profile?
+- [x] bug with user profile?
 
 # Testing & Evaluation
 

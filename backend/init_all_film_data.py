@@ -8,11 +8,6 @@ from vectorize import *
 
 # from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
 YEAR_WEIGHT = 0.3
-# from experimenting (yearNorm weight was fixed at 0.3), ~0.75 was a good sweet spot in the sense that
-# it picked both single- and multi-genre films. The algorithm still heavily favoured the 4 genres that had the
-# highest weighing, but this is expected and good behaviour.
-# todo this isn't being used?
-GENRE_WEIGHT = 0.75
 RUNTIME_THRESHOLD = 40
 NUM_OF_VOTES_THRESHOLD = 25000
 

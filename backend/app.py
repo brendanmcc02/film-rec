@@ -6,7 +6,7 @@ import numpy as np
 import os
 import glob
 from vectorize import *
-from init_all_film_data import YEAR_WEIGHT, GENRE_WEIGHT, RUNTIME_THRESHOLD, NUM_OF_VOTES_THRESHOLD
+from init_all_film_data import YEAR_WEIGHT, RUNTIME_THRESHOLD, NUM_OF_VOTES_THRESHOLD
 from letterboxd_conversion import expectedLetterboxdFileFilmAttributes, convertLetterboxdFormatToImdbFormat
 
 DATE_RATED_WEIGHT = 0.5
@@ -185,8 +185,6 @@ def initRec():
 
     userFilmDataVectorized = {}
 
-    global PROFILE_VECTOR_LENGTH
-
     # init a dict to store pre-computed dateRatedScalar values; more efficient.
     # key: film id, value: dateRatedScalar
     cachedDateRatedScalars = {}
@@ -215,35 +213,40 @@ def initRec():
         # recall that vectors are scalar multiplied by userRating & dateRated
         userFilmDataVectorized[key] = vector * userRatingScalar * dateRatedScalar
 
-    weightedAverageSum = 0.0
+    global PROFILE_VECTOR_LENGTH
     PROFILE_VECTOR_LENGTH = cache['profileVectorLength']
 
     global vectorProfileChanges
     for i in range(0, TOTAL_RECS):
         vectorProfileChanges.append(np.zeros(PROFILE_VECTOR_LENGTH))
 
-    global userProfile
-    userProfile = np.zeros(PROFILE_VECTOR_LENGTH)
-
-    for key in userFilmDataKeys:
-        userProfile += userFilmDataVectorized[key]
-        weightedAverageSum += cachedUserRatingScalars[key] + cachedDateRatedScalars[key]
-
-    userProfile = np.divide(userProfile, weightedAverageSum)
-
-    print("Initial userProfile:\n" + str(userProfile))
+    initUserprofile(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
+                    cache['allGenres'])
+    stringifyVector(userProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated)
-
-    print("Initial recencyProfile:\n" + str(recencyProfile))
+    # stringifyVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     initWildcardProfile()
-
-    print("Initial wildcardProfile:\n" + str(wildcardProfile))
+    # stringifyVector(wildcardProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     generateRecs()
 
     return jsonify(recs), 200
+
+
+def initUserprofile(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
+                    allGenres):
+    global userProfile
+    weightedAverageSum = 0.0
+    userProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+
+    for key in userFilmDataKeys:
+        userProfile += userFilmDataVectorized[key]
+        weightedAverageSum += (cachedUserRatingScalars[key] * cachedDateRatedScalars[key])
+
+    userProfile = np.divide(userProfile, weightedAverageSum)
+    curveGenres(userProfile, allGenres)
 
 
 def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated):
