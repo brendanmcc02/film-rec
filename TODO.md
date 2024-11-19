@@ -1,8 +1,4 @@
-# TODO
-
-# Data Processing
-
-## Data Retrieval
+# Data Retrieval
 - [x] get rid of non-movies, rename attributes, convert genres to array, delete unnecessary attributes (basics.tsv)
 - [x] get rid of < 1930 films (basics.tsv), delete films with genres = '\\N'
 - [x] get rid of films with <60 min runtime
@@ -22,7 +18,7 @@
 - [x] augment letterboxdTitle, countries, languages and poster using TMDB API
 - [x] finish running `init-all-film-data.py`
 
-## Data Cleaning
+# Data Cleaning
 - [x] normalise years
 - [x] normalise imdbRating
 - [x] one-hot encoding for genres
@@ -42,13 +38,13 @@
 - [x] solve the letterboxd title year nonsense
 - [ ] check for `\u*`, are they messed up or is it ok?
 
-## Letterboxd conversion
+# Letterboxd conversion
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
 - [x] get the tmdb title (aka letterboxd) when making the api and cache that somewhere instead of fucking around with 
 preprocessing
 - [x] when converting letterboxd to imdb format use the cached-tmdb-film-data.json
 
-## Vectorizing the Data
+# Vectorizing the Data
 - [x] vectorize all-film-data in init-all-film-data.py
 - [x] vector change in thumbs up/down
 - [x] revert vector change
@@ -64,28 +60,19 @@ preprocessing
 - [x] vectorize all-film-data in offline phase
 - [x] cache allGenres, allLanguages, allCountries to a json file
 - [x] cache & store all-film-data vector magnitudes in offline phase
+- [x] recent profile vector (last 30 days)
+
+# Recommendation Algorithm Round 2
+* 
+
+# Improving Efficiency
+- [ ] cluster allFilmDataVec to make cosine sims more performant
 
 # Backend
 - [x] for imdb, only vectorize films in userData that are in allFilmData (otherwise we can't get access to film languages, 
 countries, poster)
 - [x] I think it's done for letterboxd already but double check functionality
 - [x] check functionality of backend works after offline phase additions
-
-# Recommendation Algorithm
-- [x] all-film-data doesn't filter out films that have been rated
-- [x] init-my-film-data filters out films that have been rated from all-film-data (also rm vector entries)
-- [x] keep title.basics.tsv & title.ratings.tsv
-- [x] add last-download.txt. if downloaded <24 hours, skip the step
-- [x] finish init-my-file-data.py to reflect above changes
-- [x] research how/where to store files, run .py scripts etc.
-- [x] upload button calls /verifyUserUploadedFile API
-- [x] upload error handling
-- [x] change return type of recs function
-- [x] init_rec writes all-film-data.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, 
-my-film-data-vec.json to file
-- [x] call init_rec endpoint once when new page is loaded
-- [x] thumbs up/down state logic
-- [x] bug with user profile?
 
 # Testing & Evaluation
 
@@ -104,10 +91,9 @@ my-film-data-vec.json to file
 
 # General
 
-## Code-Related. Efficencies & Functionality
+## Code-Related & Functionality
 - [x] double check I didn't remove any necessary `global`s and fuck it up
 - [x] tidy up code, make things as efficient as possible
-- [x] recent profile vector (last 30 days)
 - [x] work with np vector instead of list? is it more efficient? 
 - [x] letterboxd search can be much more efficient
 - [x] ensure that a user can go back to home page and upload new file and recs still work smoothly
@@ -145,6 +131,22 @@ create endpoints for getters/setters
 - [x] reduce run.sh to startup.sh
 - [x] change run.sh to reflect various changes
 - [x] for .sh files change paths to be relative to device
+
+# Recommendation Algorithm Round 1
+- [x] all-film-data doesn't filter out films that have been rated
+- [x] init-my-film-data filters out films that have been rated from all-film-data (also rm vector entries)
+- [x] keep title.basics.tsv & title.ratings.tsv
+- [x] add last-download.txt. if downloaded <24 hours, skip the step
+- [x] finish init-my-file-data.py to reflect above changes
+- [x] research how/where to store files, run .py scripts etc.
+- [x] upload button calls /verifyUserUploadedFile API
+- [x] upload error handling
+- [x] change return type of recs function
+- [x] init_rec writes all-film-data.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, 
+my-film-data-vec.json to file
+- [x] call init_rec endpoint once when new page is loaded
+- [x] thumbs up/down state logic
+- [x] bug with user profile?
 
 # High-Level TODO
 - [x] Read relevant parts of the Recommender Systems textbook

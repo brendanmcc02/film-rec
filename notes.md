@@ -1,4 +1,23 @@
-155 tdk tmdb id
+# Clustering userFilmData
+
+*worry about cold start problem later*
+
+* 
+
+# Improving cosine sim calculations by Clustering allFilmDataVec
+An idea to improve cosine sim calculations: instead of performing user profile dot products with **every film**, you 
+cluster the films and only perform cosine sim comparisons on individual films within clusters with relatively high 
+cosine similarity.
+
+**How to concretely implement this**
+
+1. Cluster allFilmDataVec
+2. When you want to start doing cosine sim between profile vectors and films, instead
+do cosine sim between the profile vector and the clusters
+3. Pick the top-matched cluster, and only perform cosine sim comparisons to films 
+**within** the chosen cluster
+   * I was thinking about choosing top-3 clusters instead of just 1, but I'm not sure this will
+   yield a big difference as the user profile will already have been clustered
 
 ## Random thoughts
 
@@ -20,17 +39,6 @@ cosine similarity
 * Think about ways to add **interpretation**, e.g. *"because you liked 1980s rom-coms..."*. This adds a layer of
 sophistication to your recommender system and increases users trust in the recommendations
 
-## TMDB API
-
-* have a separate `cached-tmbd-film-data.json`
-* this will be a json dictionary (key: imdb id, value: {language, countries, poster})
-* iterate through each film in `all-film-data.json`:
-  * check if we already have the film cached in `cached-tmbd-film-data.json`
-  * if we do, skip
-  * **IMPORTANT, RATE LIMIT IS 50/SEC!**
-  * else, make a TMDB api call and store language, countries, poster
-  * do data cleaning in this step as well?
-
 ## Integrating Date Rated
 
 * As mentioned in the previous section, people's taste in films change over time. Here is my idea to integrate this
@@ -46,11 +54,6 @@ numerically into my solution:
 * **Samuel:** penalise older films much more heavily to get a noticeable effect.
 * rather than linearly normalising the scalar multiplicand, could do a sine curve
 * fix maxDateRated to a constant to today's date, not the latest film rated in the dataset.
-
-### Doing Relative dateRated Normalization
-
-We want to do 0.8<x<1.0.
-Normalize the value, *0.2 then +0.8
 
 ## Diversifying Results
 
