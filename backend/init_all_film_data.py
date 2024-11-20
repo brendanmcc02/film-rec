@@ -2,6 +2,7 @@
 
 import json
 import csv
+import math
 import time
 import requests
 from vectorize import *
@@ -288,7 +289,9 @@ def main():
         if profileVectorLength == 0:
             profileVectorLength = len(allFilmDataVectorized[filmId])
 
-        allFilmDataVectorizedMagnitudes[filmId] = float(np.linalg.norm(allFilmDataVectorized[filmId]))
+        allFilmDataVectorizedMagnitudes[filmId] = calculateUnbiasedVectorMagnitude(allFilmDataVectorized[filmId],
+                                                                                   len(allGenres), len(allLanguages),
+                                                                                   len(allCountries))
 
     with open('../database/all-film-data-vectorized.json', 'w') as convert_file:
         convert_file.write(json.dumps(allFilmDataVectorized, indent=4, separators=(',', ': '))

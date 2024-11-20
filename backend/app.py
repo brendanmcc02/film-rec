@@ -32,6 +32,9 @@ recs = []
 recStates = [0] * TOTAL_RECS
 isImdbFile = True
 userFilmDataFilename = ""
+allGenresLength = 0
+allLanguagesLength = 0
+allCountriesLength = 0
 
 app = Flask(__name__)
 
@@ -47,6 +50,9 @@ def resetGlobalVariables():
     global minDateRated
     global isImdbFile
     global userFilmDataFilename
+    global allGenresLength
+    global allLanguagesLength
+    global allCountriesLength
 
     userProfile = np.zeros(0)
     recencyProfile = np.zeros(0)
@@ -58,6 +64,9 @@ def resetGlobalVariables():
     minDateRated = datetime.now()
     isImdbFile = True
     userFilmDataFilename = ""
+    allGenresLength = 0
+    allLanguagesLength = 0
+    allCountriesLength = 0
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])
@@ -103,6 +112,17 @@ def verifyUserUploadedFile():
 # initial recommendation of films to user
 @app.route('/initRec')
 def initRec():
+    global allFilmDataVectorized
+    global allFilmDataVectorizedMagnitudes
+    global diffDateRated
+    global minDateRated
+    global allFilmDataUnseen
+    global PROFILE_VECTOR_LENGTH
+    global vectorProfileChanges
+    global allGenresLength
+    global allLanguagesLength
+    global allCountriesLength
+
     try:
         userFilmDataList = []
         with open("../database/" + userFilmDataFilename, encoding='utf8') as userFilmDataFile:
@@ -121,9 +141,6 @@ def initRec():
     allFilmData = json.load(allFilmDataFile)
     allFilmDataKeys = list(allFilmData.keys())
 
-    global allFilmDataVectorized
-    global allFilmDataVectorizedMagnitudes
-
     allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
     allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
     allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
@@ -135,8 +152,6 @@ def initRec():
         userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitles)
 
     userFilmData = {}
-    global diffDateRated
-    global minDateRated
 
     minDateRated = datetime.now()
     maxDateRated = datetime.now()
@@ -176,8 +191,6 @@ def initRec():
     diffDateRated = maxDateRated - minDateRated
     userFilmDataKeys = list(userFilmData.keys())
 
-    global allFilmDataUnseen
-
     for key in allFilmDataKeys:
         # take films out from allFilmData that the user has seen
         if key not in userFilmData:
@@ -195,6 +208,9 @@ def initRec():
 
     cacheFile = open('../database/cache.json')
     cache = json.load(cacheFile)
+    allGenresLength = len(cache['allGenres'])
+    allLanguagesLength = len(cache['allLanguages'])
+    allCountriesLength = len(cache['allCountries'])
 
     # vectorize user-film-data
     for key in userFilmDataKeys:
@@ -213,10 +229,8 @@ def initRec():
         # recall that vectors are scalar multiplied by userRating & dateRated
         userFilmDataVectorized[key] = vector * userRatingScalar * dateRatedScalar
 
-    global PROFILE_VECTOR_LENGTH
     PROFILE_VECTOR_LENGTH = cache['profileVectorLength']
 
-    global vectorProfileChanges
     for i in range(0, TOTAL_RECS):
         vectorProfileChanges.append(np.zeros(PROFILE_VECTOR_LENGTH))
 
@@ -326,14 +340,15 @@ def getFilmRecs(recType, allFilmDataKeys):
         return "unknown rec type: ", 400
 
     # pre-compute the vector magnitude to make cosine sim calculations more efficient
-    profileVectorMagnitude = np.linalg.norm(profileVector)
+    profileVectorMagnitudes = calculateUnbiasedVectorMagnitude(profileVector, allGenresLength, allLanguagesLength,
+                                                               allCountriesLength)
 
     cosineSimilarities = {}
 
     for filmId in allFilmDataKeys:
         filmVectorMagnitude = allFilmDataVectorizedMagnitudes[filmId]
         cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVectorized[filmId], profileVector,
-                                                      filmVectorMagnitude, profileVectorMagnitude)
+                                                      filmVectorMagnitude, profileVectorMagnitudes)
 
     # sort in descending order.
     cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
