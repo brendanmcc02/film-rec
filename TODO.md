@@ -19,6 +19,7 @@
 - [x] finish running `init-all-film-data.py`
 - [ ] bug with `tt4330758`, make more bulletproof + better error handling
 - [ ] some key error with `cacheNormalisedYears`? see below
+- [ ] `cached-letterboxd-titles.json` does not work, file has been reduced drastically
 
 ```txt
 File "/home/brendanmcc02/Desktop/projects/film-rec/backend/init_all_film_data.py", line 333, in <module>
