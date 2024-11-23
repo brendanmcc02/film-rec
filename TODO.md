@@ -17,19 +17,9 @@
 - [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
 - [x] augment letterboxdTitle, countries, languages and poster using TMDB API
 - [x] finish running `init-all-film-data.py`
-- [ ] bug with `tt4330758`, make more bulletproof + better error handling
-- [ ] some key error with `cacheNormalisedYears`? see below
-- [ ] `cached-letterboxd-titles.json` does not work, file has been reduced drastically
-
-```txt
-File "/home/brendanmcc02/Desktop/projects/film-rec/backend/init_all_film_data.py", line 333, in <module>
-    main()
-  File "/home/brendanmcc02/Desktop/projects/film-rec/backend/init_all_film_data.py", line 285, in main
-    allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allLanguages, allCountries,
-  File "/home/brendanmcc02/Desktop/projects/film-rec/backend/vectorize.py", line 19, in vectorizeFilm
-    normalizedYear = cachedNormalizedYears[str(film['year'])]
-KeyError: '1915'
-```
+- [x] bug with `tt4330758`, make more bulletproof + better error handling
+- [x] some key error with `cacheNormalisedYears`? see below
+- [x] `cached-letterboxd-titles.json` does not work, file has been reduced drastically
 
 # Data Cleaning
 - [x] normalise years

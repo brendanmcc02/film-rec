@@ -2,7 +2,6 @@
 
 import json
 import csv
-import math
 import time
 import requests
 from vectorize import *
@@ -131,7 +130,8 @@ def main():
     minRuntime = allFilmData[allFilmDataKeys[0]]['runtime']
     maxRuntime = allFilmData[allFilmDataKeys[0]]['runtime']
 
-    cachedLetterboxdTitles = {}
+    cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
+    cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
     count = 0
 
     for imdbFilmId in allFilmDataKeys:
@@ -188,7 +188,7 @@ def main():
             if response.status_code == 200:
                 jsonResponse = response.json()
 
-                if isIncorrectResponse(jsonResponse):
+                if isInvalidResponse(jsonResponse):
                     print(f"Incorrect Response. IMDB Film ID: {imdbFilmId}\n")
                     continue
 
@@ -309,14 +309,13 @@ def main():
         convert_file.write(json.dumps(allFilmDataVectorizedMagnitudes, indent=4, separators=(',', ': ')))
 
 
-def isIncorrectResponse(jsonResponse):
+def isInvalidResponse(jsonResponse):
     try:
-        if ('title' in jsonResponse and 'poster_path' in jsonResponse and 'release_date' in jsonResponse
-                and 'backdrop_path' in jsonResponse and 'overview' in jsonResponse and
-                'spoken_languages' in jsonResponse and 'origin_country' in jsonResponse):
-            # this might not execute due to compiler/interpreter efficiency: it's not used.
-            # so i'm actually not sure if this check works
-            letterboxdYear = int(jsonResponse['release_date'].split('-')[0])
+        if ('title' in jsonResponse and jsonResponse['title'] != '' and 'poster_path' in jsonResponse
+                and jsonResponse['poster_path'] != '' and 'release_date' in jsonResponse and
+                jsonResponse['release_date'] != '' and 'backdrop_path' in jsonResponse and
+                jsonResponse['backdrop_path'] != '' and 'overview' in jsonResponse and jsonResponse['overview'] != ''
+                and 'spoken_languages' in jsonResponse and 'origin_country' in jsonResponse):
             for language in jsonResponse['spoken_languages']:
                 if 'english_name' not in language:
                     return True
@@ -327,6 +326,7 @@ def isIncorrectResponse(jsonResponse):
         return True
 
     return False
+
 
 
 if __name__ == "__main__":

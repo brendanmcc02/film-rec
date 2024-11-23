@@ -16,7 +16,7 @@ def vectorizeFilm(film, allGenres, allLanguages, allCountries, cachedNormalizedY
                   minNumberOfVotes, diffNumberOfVotes, minRuntime, diffRuntime):
     vector = []
 
-    normalizedYear = cachedNormalizedYears[str(film['year'])]
+    normalizedYear = cachedNormalizedYears[film['year']]
     vector.append(normalizedYear)
 
     imdbRatingNorm = cachedNormalizedImdbRatings[str(film['imdbRating'])]
@@ -121,7 +121,10 @@ def calculateUnbiasedVectorMagnitude(vector, allGenresLength, allLanguagesLength
             meanGenreVectorSum += vector[i]
             meanGenreVectorQuantity += 1
 
-    meanGenreVectorValue = meanGenreVectorSum / meanGenreVectorQuantity
+    if meanGenreVectorQuantity != 0:
+        meanGenreVectorValue = meanGenreVectorSum / meanGenreVectorQuantity
+    else:
+        meanGenreVectorValue = 0
     unbiasedVectorMagnitude += meanGenreVectorValue * meanGenreVectorValue
 
     profileLanguageEndIndex = profileGenreEndIndex + allLanguagesLength
@@ -132,7 +135,10 @@ def calculateUnbiasedVectorMagnitude(vector, allGenresLength, allLanguagesLength
             meanLanguageVectorSum += vector[i]
             meanLanguageVectorQuantity += 1
 
-    meanLanguageVectorValue = meanGenreVectorSum / meanGenreVectorQuantity
+    if meanLanguageVectorQuantity != 0:
+        meanLanguageVectorValue = meanLanguageVectorSum / meanLanguageVectorQuantity
+    else:
+        meanLanguageVectorValue = 0
     unbiasedVectorMagnitude += meanLanguageVectorValue * meanLanguageVectorValue
 
     vectorCountryEndIndex = profileLanguageEndIndex + allCountriesLength
@@ -143,7 +149,10 @@ def calculateUnbiasedVectorMagnitude(vector, allGenresLength, allLanguagesLength
             meanCountryVectorSum += vector[i]
             meanCountryVectorQuantity += 1
 
-    meanCountryVectorValue = meanCountryVectorSum / meanCountryVectorQuantity
+    if meanCountryVectorQuantity != 0:
+        meanCountryVectorValue = meanCountryVectorSum / meanCountryVectorQuantity
+    else:
+        meanCountryVectorValue = 0
     unbiasedVectorMagnitude += meanCountryVectorValue * meanCountryVectorValue
 
     return np.sqrt(unbiasedVectorMagnitude)
