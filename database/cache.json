@@ -408,8 +408,8 @@
         "9.2": 0.9879518072289155,
         "9.3": 1.0
     },
-    "minNumberOfVotes": 25002,
-    "diffNumberOfVotes": 2935365,
+    "minNumberOfVotes": 25007,
+    "diffNumberOfVotes": 2941197,
     "minRuntime": 45,
     "diffRuntime": 276,
     "profileVectorLength": 209
