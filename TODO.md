@@ -64,10 +64,10 @@ preprocessing
 - [x] cache allGenres, allLanguages, allCountries to a json file
 - [x] cache & store all-film-data vector magnitudes in offline phase
 - [x] recent profile vector (last 30 days)
-- [ ] add specialised way to calculate vector magnitude (i.e. dont over prioritise multi-genre/lang/country films unfairly)
+- [x] add specialised way to calculate vector magnitude (i.e. dont over prioritise multi-genre/lang/country films unfairly)
 
 # Recommendation Algorithm Round 2
-* 
+- [ ]
 
 # Improving Efficiency
 - [ ] cluster allFilmDataVec to make cosine sims more performant
