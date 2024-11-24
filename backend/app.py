@@ -189,6 +189,11 @@ def initRec():
 
     # perform some pre-computation to avoid repetitive computation
     diffDateRated = maxDateRated - minDateRated
+
+    if diffDateRated == 0.0:
+        print("Note. diffDateRated = 0.")
+        diffDateRated = 1.0
+
     userFilmDataKeys = list(userFilmData.keys())
 
     for key in allFilmDataKeys:

@@ -190,6 +190,7 @@ def main():
 
                 if isInvalidResponse(jsonResponse):
                     print(f"Incorrect Response. IMDB Film ID: {imdbFilmId}\n")
+                    del allFilmData[imdbFilmId]
                     continue
 
                 letterboxdTitle = str(jsonResponse['title'])
@@ -262,13 +263,21 @@ def main():
 
     # perform some pre-computation to avoid repetitive computation
     diffImdbRating = maxImdbRating - minImdbRating
-    diffYear = maxYear - minYear
     diffNumberOfVotes = maxNumberOfVotes - minNumberOfVotes
     diffRuntime = maxRuntime - minRuntime
+    diffYear = maxYear - minYear
+
+    if diffYear == 0:
+        print("diffYear = 0. Error with minYear & maxYear.")
+        raise ZeroDivisionError
 
     cachedNormalizedYears = {}
     for y in range(minYear, maxYear + 1):
         cachedNormalizedYears[y] = ((y - minYear) / diffYear) * YEAR_WEIGHT
+
+    if diffImdbRating == 0.0:
+        print("diffImdbRating = 0.0 Error with minImdbRating & maxImdbRating.")
+        raise ZeroDivisionError
 
     cachedNormalizedImdbRatings = {}
     for i in np.arange(minImdbRating, maxImdbRating + 0.1, 0.1):
@@ -280,6 +289,14 @@ def main():
     profileVectorLength = 0
     allLanguages = sorted(allLanguages)
     allCountries = sorted(allCountries)
+
+    if diffNumberOfVotes == 0:
+        print("diffNumberOfVotes = 0. Error with minNumberOfVotes & maxNumberOfVotes.")
+        raise ZeroDivisionError
+
+    if diffRuntime == 0:
+        print("diffRuntime = 0. Error with minRuntime & maxRuntime.")
+        raise ZeroDivisionError
 
     for filmId in allFilmDataKeys:
         allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allLanguages, allCountries,

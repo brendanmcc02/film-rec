@@ -106,9 +106,10 @@ countries, poster)
 - [x] change variables that are not constant from UPPER_CASE to underscore case
 - [x] minimise global variables (you only need to call global if you want to **modify** the variable)
 - [ ] error handling on potential div by 0 errors
-- [ ] reduce comments in code and make it more readable (after watching code aesthetic's video)
+- [x] reduce comments in code and make it more readable (after watching code aesthetic's video)
 - [ ] error handling on all file imports, api requests, etc. try-except
 - [ ] separate code pieces into separate classes/files; modularity wya
+- [ ] load in all files on the home page instead of waiting for the user to upload their files
 
 ## Misc
 - [x] switch from my-film-data.json to ratings.csv

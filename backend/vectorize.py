@@ -16,14 +16,28 @@ def vectorizeFilm(film, allGenres, allLanguages, allCountries, cachedNormalizedY
                   minNumberOfVotes, diffNumberOfVotes, minRuntime, diffRuntime):
     vector = []
 
-    normalizedYear = cachedNormalizedYears[film['year']]
-    vector.append(normalizedYear)
+    if film['year'] in cachedNormalizedYears:
+        normalizedYear = cachedNormalizedYears[film['year']]
+        vector.append(normalizedYear)
+    else:
+        print(f"Error. Film year not in cached normalized years: {film['year']}")
 
-    imdbRatingNorm = cachedNormalizedImdbRatings[str(film['imdbRating'])]
-    vector.append(imdbRatingNorm)
+    if str(film['imdbRating']) in cachedNormalizedImdbRatings:
+        imdbRatingNorm = cachedNormalizedImdbRatings[str(film['imdbRating'])]
+        vector.append(imdbRatingNorm)
+    else:
+        print(f"Error. Film imdb rating not in cached normalized imdb ratings. {str(film['imdbRating'])}")
+
+    if diffNumberOfVotes == 0:
+        print("diffNumberOfVotes = 0.")
+        raise ZeroDivisionError
 
     numberOfVotesNorm = (film['numberOfVotes'] - minNumberOfVotes) / diffNumberOfVotes
     vector.append(numberOfVotesNorm)
+
+    if diffRuntime == 0:
+        print("diffNumberOfVotes = 0.")
+        raise ZeroDivisionError
 
     runtimeNorm = ((film['runtime'] - minRuntime) / diffRuntime) * RUNTIME_WEIGHT
     vector.append(runtimeNorm)
@@ -47,6 +61,10 @@ def oneHotEncode(vector, filmList, allList):
 
 
 def cosineSimilarity(a, b, aMagnitude, bMagnitude):
+    if aMagnitude == 0.0 or bMagnitude == 0.0:
+        print("Divide by 0 error with cosine similarity calculation.")
+        raise ZeroDivisionError
+
     return np.dot(a, b) / (aMagnitude * bMagnitude)
 
 
@@ -75,6 +93,10 @@ def curveGenres(userProfile, allGenres):
     print(f"min:{minGenreValue}, max:{maxGenreValue}")
 
     diffGenreValue = maxGenreValue - minGenreValue
+
+    if diffGenreValue == 0.0:
+        print("Error. diffGenreValue is 0.")
+        raise ZeroDivisionError
 
     for i in range(PROFILE_GENRE_START_INDEX, userProfileGenreEndIndex):
         userProfile[i] = (userProfile[i] - minGenreValue) / diffGenreValue
@@ -121,7 +143,7 @@ def calculateUnbiasedVectorMagnitude(vector, allGenresLength, allLanguagesLength
             meanGenreVectorSum += vector[i]
             meanGenreVectorQuantity += 1
 
-    if meanGenreVectorQuantity != 0:
+    if meanGenreVectorQuantity > 0:
         meanGenreVectorValue = meanGenreVectorSum / meanGenreVectorQuantity
     else:
         meanGenreVectorValue = 0
@@ -135,7 +157,7 @@ def calculateUnbiasedVectorMagnitude(vector, allGenresLength, allLanguagesLength
             meanLanguageVectorSum += vector[i]
             meanLanguageVectorQuantity += 1
 
-    if meanLanguageVectorQuantity != 0:
+    if meanLanguageVectorQuantity > 0:
         meanLanguageVectorValue = meanLanguageVectorSum / meanLanguageVectorQuantity
     else:
         meanLanguageVectorValue = 0
@@ -149,7 +171,7 @@ def calculateUnbiasedVectorMagnitude(vector, allGenresLength, allLanguagesLength
             meanCountryVectorSum += vector[i]
             meanCountryVectorQuantity += 1
 
-    if meanCountryVectorQuantity != 0:
+    if meanCountryVectorQuantity > 0:
         meanCountryVectorValue = meanCountryVectorSum / meanCountryVectorQuantity
     else:
         meanCountryVectorValue = 0

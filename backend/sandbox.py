@@ -12,31 +12,38 @@ from vectorize import calculateUnbiasedVectorMagnitude
 
 
 def main():
+
+
     allFilmDataFile = open('../database/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
     allFilmDataKeys = list(allFilmData.keys())
 
+    for key in allFilmDataKeys:
+        if 'languages' not in allFilmData[key]:
+            print(str(key))
 
-    allLanguages = []
-    allCountries = []
-
-    imdbFilmId = "tt4330758"
-
-    # "https://api.themoviedb.org/3/find/tt?external_source=imdb_id"
-    # baseApiUrl = "https://api.themoviedb.org/3/movie/155?language=en-US"
-
-    accessToken = ""
-    try:
-        accessToken = str(open('../backup-access-token.txt').read())
-    except FileNotFoundError:
-        print("Access Token File Not Found")
-    except Exception as e:
-        print("Error occurred while trying to read Access Token File" + str(e))
-
-    headers = {
-        "accept": "application/json",
-        "Authorization": f"Bearer {accessToken}"
-    }
+    #
+    #
+    # allLanguages = []
+    # allCountries = []
+    #
+    # imdbFilmId = "tt4330758"
+    #
+    # # "https://api.themoviedb.org/3/find/tt?external_source=imdb_id"
+    # # baseApiUrl = "https://api.themoviedb.org/3/movie/155?language=en-US"
+    #
+    # accessToken = ""
+    # try:
+    #     accessToken = str(open('../backup-access-token.txt').read())
+    # except FileNotFoundError:
+    #     print("Access Token File Not Found")
+    # except Exception as e:
+    #     print("Error occurred while trying to read Access Token File" + str(e))
+    #
+    # headers = {
+    #     "accept": "application/json",
+    #     "Authorization": f"Bearer {accessToken}"
+    # }
 
     # if imdbFilmId in cachedTmbdFilmData:
     #     allFilmData[imdbFilmId]['letterboxdTitle'] = cachedTmbdFilmData[imdbFilmId]['letterboxdTitle']
@@ -55,35 +62,35 @@ def main():
     #         if country not in allCountries:
     #             allCountries.append(country)
     # else:
-    url = f"https://api.themoviedb.org/3/find/{imdbFilmId}?external_source=imdb_id"
-    tmdbFilmId = ""
-    response = requests.get(url, headers=headers)
-    time.sleep(0.2)
-    if response.status_code == 200:
-        jsonResponse = response.json()
-        if len(jsonResponse['movie_results']) > 0:
-            tmdbFilmId = str(jsonResponse['movie_results'][0]['id'])
-        else:
-            print(f"IMDB film not found in TMDB: {imdbFilmId}\n")
-            del allFilmData[imdbFilmId]
-    elif response.status_code == 429:
-        print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
-        time.sleep(60)
-    elif response.status_code == 404:
-        print(f"Error Status Code = {response.status_code}\n")
-    else:
-        print(f"Unexpected Error. Status Code = {response.status_code}\n")
-
-    url = f"https://api.themoviedb.org/3/movie/{tmdbFilmId}?language=en-US"
-    response = requests.get(url, headers=headers)
-    time.sleep(0.2)
-    if response.status_code == 200:
-        jsonResponse = response.json()
-        # if isIncorrectResponse(jsonResponse):
-        #     print(f"JSON Response is invalid. IMDB Film ID: {imdbFilmId}\n")
-        #     exit(10000)
-
-        print(str(jsonResponse))
+    # url = f"https://api.themoviedb.org/3/find/{imdbFilmId}?external_source=imdb_id"
+    # tmdbFilmId = ""
+    # response = requests.get(url, headers=headers)
+    # time.sleep(0.2)
+    # if response.status_code == 200:
+    #     jsonResponse = response.json()
+    #     if len(jsonResponse['movie_results']) > 0:
+    #         tmdbFilmId = str(jsonResponse['movie_results'][0]['id'])
+    #     else:
+    #         print(f"IMDB film not found in TMDB: {imdbFilmId}\n")
+    #         del allFilmData[imdbFilmId]
+    # elif response.status_code == 429:
+    #     print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
+    #     time.sleep(60)
+    # elif response.status_code == 404:
+    #     print(f"Error Status Code = {response.status_code}\n")
+    # else:
+    #     print(f"Unexpected Error. Status Code = {response.status_code}\n")
+    #
+    # url = f"https://api.themoviedb.org/3/movie/{tmdbFilmId}?language=en-US"
+    # response = requests.get(url, headers=headers)
+    # time.sleep(0.2)
+    # if response.status_code == 200:
+    #     jsonResponse = response.json()
+    #     # if isIncorrectResponse(jsonResponse):
+    #     #     print(f"JSON Response is invalid. IMDB Film ID: {imdbFilmId}\n")
+    #     #     exit(10000)
+    #
+    #     print(str(jsonResponse))
 
         # filmLanguages = []
         # for language in jsonResponse['spoken_languages']:
