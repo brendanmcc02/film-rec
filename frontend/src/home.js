@@ -56,6 +56,8 @@ const App = () => {
     backgroundSize: 'cover'
   }
 
+  fetch('/loadJsonFiles');
+
   return (
     <>
       <div style={backgroundStyle}></div>

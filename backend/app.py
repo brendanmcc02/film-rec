@@ -1,3 +1,6 @@
+# files that can be loaded beforehand easily:
+
+
 from flask import Flask, request, jsonify
 from datetime import datetime
 import json
@@ -22,6 +25,7 @@ PROFILE_VECTOR_LENGTH = 0
 allFilmDataUnseen = {}
 allFilmDataVectorized = {}
 allFilmDataVectorizedMagnitudes = {}
+cachedLetterboxdTitles = {}
 diffDateRated = datetime(1, 1, 1)
 minDateRated = datetime.now()
 userProfile = np.zeros(0)
@@ -141,12 +145,7 @@ def initRec():
     allFilmData = json.load(allFilmDataFile)
     allFilmDataKeys = list(allFilmData.keys())
 
-    allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
-    allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
-    allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
-    allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
-    cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
-    cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+    # TODO FILES WERE HERE
 
     if not isImdbFile:
         userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitles)
@@ -540,6 +539,22 @@ def regen():
 @app.route('/getTotalRecs')
 def getTotalRecs():
     return str(TOTAL_RECS), 200
+
+
+@app.route('/loadJsonFiles')
+def loadJsonFiles():
+    global allFilmDataVectorized
+    global allFilmDataVectorizedMagnitudes
+    global cachedLetterboxdTitles
+
+    allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
+    allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+    allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
+    allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
+    cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
+    cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+
+    return 200
 
 
 def deleteCsvFiles():
