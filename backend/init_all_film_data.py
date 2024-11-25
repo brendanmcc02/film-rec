@@ -273,7 +273,7 @@ def main():
 
     cachedNormalizedYears = {}
     for y in range(minYear, maxYear + 1):
-        cachedNormalizedYears[y] = ((y - minYear) / diffYear) * YEAR_WEIGHT
+        cachedNormalizedYears[str(y)] = ((y - minYear) / diffYear) * YEAR_WEIGHT
 
     if diffImdbRating == 0.0:
         print("diffImdbRating = 0.0 Error with minImdbRating & maxImdbRating.")
