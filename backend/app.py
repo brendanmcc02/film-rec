@@ -26,6 +26,7 @@ allFilmDataUnseen = {}
 allFilmDataVectorized = {}
 allFilmDataVectorizedMagnitudes = {}
 cachedLetterboxdTitles = {}
+cache = {}
 diffDateRated = datetime(1, 1, 1)
 minDateRated = datetime.now()
 userProfile = np.zeros(0)
@@ -210,8 +211,6 @@ def initRec():
     # key: film id, value: normalisedUserRating
     cachedUserRatingScalars = {}
 
-    cacheFile = open('../database/cache.json')
-    cache = json.load(cacheFile)
     allGenresLength = len(cache['allGenres'])
     allLanguagesLength = len(cache['allLanguages'])
     allCountriesLength = len(cache['allCountries'])
@@ -546,6 +545,7 @@ def loadJsonFiles():
     global allFilmDataVectorized
     global allFilmDataVectorizedMagnitudes
     global cachedLetterboxdTitles
+    global cache
 
     allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
     allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
@@ -553,6 +553,8 @@ def loadJsonFiles():
     allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
     cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
     cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+    cacheFile = open('../database/cache.json')
+    cache = json.load(cacheFile)
 
     return 200
 
