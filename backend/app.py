@@ -547,16 +547,21 @@ def loadJsonFiles():
     global cachedLetterboxdTitles
     global cache
 
-    allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
-    allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
-    allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
-    allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
-    cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
-    cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
-    cacheFile = open('../database/cache.json')
-    cache = json.load(cacheFile)
+    try:
+        allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
+        allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+        allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
+        allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
+        cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
+        cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+        cacheFile = open('../database/cache.json')
+        cache = json.load(cacheFile)
+    except FileNotFoundError:
+        return "File Not Found Error", 404
+    except Exception as e:
+        return f"Error: {e}", 400
 
-    return 200
+    return "Files read successfully", 200
 
 
 def deleteCsvFiles():

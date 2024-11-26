@@ -67,7 +67,7 @@ preprocessing
 - [x] add specialised way to calculate vector magnitude (i.e. dont over prioritise multi-genre/lang/country films unfairly)
 
 # Recommendation Algorithm Round 2
-- [ ]
+- [ ] cosine sim percentage bug (over 100%?)
 
 # Improving Efficiency
 - [ ] cluster allFilmDataVec to make cosine sims more performant
@@ -154,12 +154,6 @@ my-film-data-vec.json to file
 - [x] call init_rec endpoint once when new page is loaded
 - [x] thumbs up/down state logic
 - [x] bug with user profile?
-
-# High-Level TODO
-- [x] Read relevant parts of the Recommender Systems textbook
-- [x] Increase complexity and quality of Data Collection
-- [ ] Increase complexity and quality of the Recommendation Algorithm
-- [ ] Present the results on a clean website
 
 # Nice to Have
 **Not essential, but to do be done later if I have the time/feel like it**

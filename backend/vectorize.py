@@ -16,8 +16,8 @@ def vectorizeFilm(film, allGenres, allLanguages, allCountries, cachedNormalizedY
                   minNumberOfVotes, diffNumberOfVotes, minRuntime, diffRuntime):
     vector = []
 
-    if film['year'] in cachedNormalizedYears:
-        normalizedYear = cachedNormalizedYears[film['year']]
+    if str(film['year']) in cachedNormalizedYears:
+        normalizedYear = cachedNormalizedYears[str(film['year'])]
         vector.append(normalizedYear)
     else:
         print(f"Error. Film year not in cached normalized years: {film['year']}")
