@@ -25537,6 +25537,12 @@
             "years": [
                 2006
             ]
+        },
+        {
+            "imdbFilmId": "tt0106881",
+            "years": [
+                1993
+            ]
         }
     ],
     "The Painted Veil": [
@@ -53176,6 +53182,54 @@
             "imdbFilmId": "tt27056012",
             "years": [
                 2024
+            ]
+        }
+    ],
+    "Gigi": [
+        {
+            "imdbFilmId": "tt0051658",
+            "years": [
+                1958
+            ]
+        }
+    ],
+    "Soul Plane": [
+        {
+            "imdbFilmId": "tt0367085",
+            "years": [
+                2004
+            ]
+        }
+    ],
+    "Megalopolis": [
+        {
+            "imdbFilmId": "tt10128846",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Wicked": [
+        {
+            "imdbFilmId": "tt1262426",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Moana 2": [
+        {
+            "imdbFilmId": "tt13622970",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Ballerina": [
+        {
+            "imdbFilmId": "tt2261287",
+            "years": [
+                2016
             ]
         }
     ]
