@@ -16,6 +16,10 @@ def vectorizeFilm(film, allGenres, allLanguages, allCountries, cachedNormalizedY
                   minNumberOfVotes, diffNumberOfVotes, minRuntime, diffRuntime):
     vector = []
 
+    if isFilmInvalid(film):
+        print("Film is invalid")
+        return np.zeros(1)
+
     if str(film['year']) in cachedNormalizedYears:
         normalizedYear = cachedNormalizedYears[str(film['year'])]
         vector.append(normalizedYear)
@@ -47,6 +51,17 @@ def vectorizeFilm(film, allGenres, allLanguages, allCountries, cachedNormalizedY
     oneHotEncode(vector, film['countries'], allCountries)
 
     return np.array(vector)
+
+
+def isFilmInvalid(film):
+    expectedFilmKeys = ['year', 'imdbRating', 'numberOfVotes', 'runtime', 'genres', 'languages', 'countries']
+
+    for key in expectedFilmKeys:
+        if key not in film:
+            print(f"Error. Key {key} not in {film['title']}.")
+            return True
+
+    return False
 
 
 # used to one-hot encode genres, countries, languages

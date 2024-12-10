@@ -85,7 +85,7 @@ def main():
 
     allGenres = sorted(allGenres)
 
-    # ###### todo temp
+    # ###### temp
     # allFilmDataFile = open('../database/all-film-data.json')
     # allFilmData = json.load(allFilmDataFile)
     # allFilmDataKeys = list(allFilmData.keys())
@@ -133,6 +133,7 @@ def main():
     cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
     cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
     count = 0
+    invalidAllFilmDataKeys = []
 
     for imdbFilmId in allFilmDataKeys:
         count = count + 1
@@ -173,6 +174,7 @@ def main():
                 else:
                     print(f"IMDB film not found in TMDB: {imdbFilmId}\n")
                     del allFilmData[imdbFilmId]
+                    invalidAllFilmDataKeys.append(imdbFilmId)
                     continue
             elif response.status_code == 429:
                 print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
@@ -191,6 +193,7 @@ def main():
                 if isInvalidResponse(jsonResponse):
                     print(f"Incorrect Response. IMDB Film ID: {imdbFilmId}\n")
                     del allFilmData[imdbFilmId]
+                    invalidAllFilmDataKeys.append(imdbFilmId)
                     continue
 
                 letterboxdTitle = str(jsonResponse['title'])
@@ -248,6 +251,9 @@ def main():
         minRuntime = min(minRuntime, allFilmData[imdbFilmId]['runtime'])
         maxRuntime = max(maxRuntime, allFilmData[imdbFilmId]['runtime'])
 
+    for imdbFilmId in invalidAllFilmDataKeys:
+        allFilmDataKeys.remove(imdbFilmId)
+
     print(f"\nFinal Dataset size: {len(allFilmData)} films.\n")
 
     with open('../database/all-film-data.json', 'w') as convert_file:
@@ -299,16 +305,20 @@ def main():
         raise ZeroDivisionError
 
     for filmId in allFilmDataKeys:
-        allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allLanguages, allCountries,
-                                                           cachedNormalizedYears, cachedNormalizedImdbRatings,
-                                                           minNumberOfVotes, diffNumberOfVotes, minRuntime,
-                                                           diffRuntime))
-        if profileVectorLength == 0:
-            profileVectorLength = len(allFilmDataVectorized[filmId])
+        if filmId not in allFilmData:
+            print(f"Film ID not found in allFilmData: {filmId}.")
+        else:
+            allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allLanguages,
+                                                               allCountries, cachedNormalizedYears,
+                                                               cachedNormalizedImdbRatings, minNumberOfVotes,
+                                                               diffNumberOfVotes, minRuntime, diffRuntime))
+            if profileVectorLength == 0:
+                profileVectorLength = len(allFilmDataVectorized[filmId])
 
-        allFilmDataVectorizedMagnitudes[filmId] = calculateUnbiasedVectorMagnitude(allFilmDataVectorized[filmId],
-                                                                                   len(allGenres), len(allLanguages),
-                                                                                   len(allCountries))
+            allFilmDataVectorizedMagnitudes[filmId] = calculateUnbiasedVectorMagnitude(allFilmDataVectorized[filmId],
+                                                                                       len(allGenres),
+                                                                                       len(allLanguages),
+                                                                                       len(allCountries))
 
     with open('../database/all-film-data-vectorized.json', 'w') as convert_file:
         convert_file.write(json.dumps(allFilmDataVectorized, indent=4, separators=(',', ': '))

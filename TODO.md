@@ -18,6 +18,7 @@
 - [x] augment letterboxdTitle, countries, languages and poster using TMDB API
 - [x] finish running `init-all-film-data.py`
 - [x] bug with `tt4330758`, make more bulletproof + better error handling
+- [x] `tt4330758` ~~NOT SOLVED HOMIE~~
 - [x] some key error with `cacheNormalisedYears`? see below
 - [x] `cached-letterboxd-titles.json` does not work, file has been reduced drastically
 
