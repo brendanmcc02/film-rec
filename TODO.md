@@ -68,7 +68,6 @@ preprocessing
 - [x] add specialised way to calculate vector magnitude (i.e. dont over prioritise multi-genre/lang/country films unfairly)
 
 # Recommendation Algorithm Round 2
-- [ ] cosine sim percentage bug (over 100%?)
 
 # Improving Efficiency
 - [ ] cluster allFilmDataVec to make cosine sims more performant
@@ -80,6 +79,7 @@ countries, poster)
 - [x] check functionality of backend works after offline phase additions
 
 # Testing & Evaluation
+- [ ] test if specialized vector magnitude makes a better difference
 
 # Frontend
 - [x] do text div 
@@ -108,7 +108,7 @@ countries, poster)
 - [x] minimise global variables (you only need to call global if you want to **modify** the variable)
 - [x] error handling on potential div by 0 errors
 - [x] reduce comments in code and make it more readable (after watching code aesthetic's video)
-- [ ] load in all files on the home page instead of waiting for the user to upload their files **just need to do for 
+- [x] load in all files on the home page instead of waiting for the user to upload their files **just need to do for 
 `all-film-data.json`**
 - [ ] error handling on all file imports, api requests, etc. try-except
 - [ ] separate code pieces into separate classes/files; modularity wya

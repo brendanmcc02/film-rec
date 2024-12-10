@@ -146,8 +146,6 @@ def initRec():
     allFilmData = json.load(allFilmDataFile)
     allFilmDataKeys = list(allFilmData.keys())
 
-    # TODO FILES WERE HERE
-
     if not isImdbFile:
         userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitles)
 
