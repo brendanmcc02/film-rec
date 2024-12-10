@@ -1,6 +1,3 @@
-# files that can be loaded beforehand easily:
-
-
 from flask import Flask, request, jsonify
 from datetime import datetime
 import json

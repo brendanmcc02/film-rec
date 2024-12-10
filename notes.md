@@ -1,8 +1,39 @@
+# Advanced Recommendation Algorithm Part 2
+
+A problem with the initial iteration of the recommendation algorithm was that it was an 'all-in-one'. It tried to 
+capture **all** a user's film preferences in just **one** vector. Instead, a user profile should be composed of not just
+one user profile, but many.
+
+The next question is: how many? And how do we determine them? I was thinking of using an established technique such as 
+k-means clustering, but in the context of film recommendation, I feel that the clustering can be done with some more 
+intervention and intuition, as we are aware of the context of our application. Here is my idea:
+
+You have one user profile for each genre, so 23 user profiles. You then iterate through each film in userFilmData, 
+altering the relevant user profiles.
+
+For example, let's say the user has rated La La Land (Comedy, Drama, Music) a 10/10. We would modify the comedy, drama 
+and music user profiles to account for this. All the other user profiles remain untouched.
+
+After going through all films in userFilmData, we can rank the various user profiles based on magnitude. Let's only 
+choose the top 3 for example. Let's say this is Drama, Comedy and Action.
+
+We can then use these 3 user profiles to compare to unseen films in allFilmData. This ensures diverse results, instead 
+of just recommending one type of film.
+
+## Problems and their Potential Solutions
+
+* If a user likes just 1 western film (and let's say they gave it a 10/10), this would likely be a skewed result, as 
+there is only a sample size of 1 for that specific genre.
+  * Maybe we can apply some sort of weight (relative to the number of films they watched in that specific genre)
+  * for example: `min(1.0, numFilms / NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD)`
+  * `NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD = 5`
+
+## To think about
+* Weighted average or normal average?
+
 # Clustering userFilmData
 
 *worry about cold start problem later*
-
-* 
 
 # Improving cosine sim calculations by Clustering allFilmDataVec
 An idea to improve cosine sim calculations: instead of performing user profile dot products with **every film**, you 
