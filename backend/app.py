@@ -18,6 +18,8 @@ USER_PROFILE_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the us
 RECENCY_FEEDBACK_FACTOR = 0.05
 WILDCARD_FEEDBACK_FACTOR = 0.2
 PROFILE_VECTOR_LENGTH = 0
+NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD = 5
+NUMBER_OF_TOP_GENRE_PROFILES = 3
 
 allFilmDataUnseen = {}
 allFilmDataVectorized = {}
@@ -26,7 +28,8 @@ cachedLetterboxdTitles = {}
 cache = {}
 diffDateRated = datetime(1, 1, 1)
 minDateRated = datetime.now()
-userProfile = np.zeros(0)
+genreProfiles = []
+topKGenreProfiles = []
 recencyProfile = np.zeros(0)
 wildcardProfile = np.zeros(0)
 vectorProfileChanges = []
@@ -42,7 +45,8 @@ app = Flask(__name__)
 
 
 def resetGlobalVariables():
-    global userProfile
+    global genreProfiles
+    global topKGenreProfiles
     global recencyProfile
     global wildcardProfile
     global vectorProfileChanges
@@ -56,7 +60,12 @@ def resetGlobalVariables():
     global allLanguagesLength
     global allCountriesLength
 
-    userProfile = np.zeros(0)
+    genreProfiles = []
+    for _ in cache['allGenres']:
+        genreProfiles.append(np.zeros(0))
+
+    topKGenreProfiles = []
+
     recencyProfile = np.zeros(0)
     wildcardProfile = np.zeros(0)
     vectorProfileChanges = []
@@ -191,10 +200,10 @@ def initRec():
 
     userFilmDataKeys = list(userFilmData.keys())
 
-    for key in allFilmDataKeys:
+    for imdbFilmId in allFilmDataKeys:
         # take films out from allFilmData that the user has seen
-        if key not in userFilmData:
-            allFilmDataUnseen[key] = allFilmData[key]
+        if imdbFilmId not in userFilmData:
+            allFilmDataUnseen[imdbFilmId] = allFilmData[imdbFilmId]
 
     userFilmDataVectorized = {}
 
@@ -211,30 +220,32 @@ def initRec():
     allCountriesLength = len(cache['allCountries'])
 
     # vectorize user-film-data
-    for key in userFilmDataKeys:
-        vector = vectorizeFilm(userFilmData[key], cache['allGenres'], cache['allLanguages'], cache['allCountries'],
+    for imdbFilmId in userFilmDataKeys:
+        vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allLanguages'], cache['allCountries'],
                                cache['normalizedYears'], cache['normalizedImdbRatings'], cache['minNumberOfVotes'],
                                cache['diffNumberOfVotes'], cache['minRuntime'], cache['diffRuntime'])
         # dateRatedScalar: normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
-        dateRatedScalar = (((userFilmData[key]['dateRated'] - minDateRated) / diffDateRated) *
+        dateRatedScalar = (((userFilmData[imdbFilmId]['dateRated'] - minDateRated) / diffDateRated) *
                            (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
-        cachedDateRatedScalars[key] = dateRatedScalar
+        cachedDateRatedScalars[imdbFilmId] = dateRatedScalar
 
         # imdbRatings run from 1-10, we want values to run from 0.1 - 1.0
-        userRatingScalar = round((userFilmData[key]['userRating'] / 10.0), 1)
-        cachedUserRatingScalars[key] = userRatingScalar
+        userRatingScalar = round((userFilmData[imdbFilmId]['userRating'] / 10.0), 1)
+        cachedUserRatingScalars[imdbFilmId] = userRatingScalar
 
         # recall that vectors are scalar multiplied by userRating & dateRated
-        userFilmDataVectorized[key] = vector * userRatingScalar * dateRatedScalar
+        userFilmDataVectorized[imdbFilmId] = vector * userRatingScalar * dateRatedScalar
 
     PROFILE_VECTOR_LENGTH = cache['profileVectorLength']
 
     for i in range(0, TOTAL_RECS):
         vectorProfileChanges.append(np.zeros(PROFILE_VECTOR_LENGTH))
 
-    initUserprofile(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
-                    cache['allGenres'])
-    stringifyVector(userProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+    initGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
+                      cache['allGenres'])
+
+    for genreProfile in genreProfiles:
+        stringifyVector(genreProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated)
     # stringifyVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
@@ -247,18 +258,67 @@ def initRec():
     return jsonify(recs), 200
 
 
-def initUserprofile(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
-                    allGenres):
-    global userProfile
-    weightedAverageSum = 0.0
-    userProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+def initGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
+                      allGenres):
+    # TODO last thing I was doing:
+    # getting a bit lost with data structures. we want to sort the genres by magnitudes, but I need a way to find out
+    # which genre is the one that's the top.
+    # maybe genreProfiles shouldn't be global, it should be topKGenreProfiles instead (if you think about it,
+    # outside of this function, we shouldn't care about all genre profiles. only the top k ones, because that's the
+    # only info necessary (afaik) to use outside of this function.
+    global genreProfiles
+    global topKGenreProfiles
+    genreWeightedAverageSums = []
+    genreQuantityFilmsWatched = []
+    genreProfileMagnitudes = {}
 
-    for key in userFilmDataKeys:
-        userProfile += userFilmDataVectorized[key]
-        weightedAverageSum += (cachedUserRatingScalars[key] * cachedDateRatedScalars[key])
+    for genre in allGenres:
+        genreProfileMagnitudes[genre] = 0.0
 
-    userProfile = np.divide(userProfile, weightedAverageSum)
-    curveGenres(userProfile, allGenres)
+    for i in range(len(genreProfiles)):
+        genreProfiles[i] = np.zeros(PROFILE_VECTOR_LENGTH)
+        genreWeightedAverageSums[i] = 0.0
+        genreQuantityFilmsWatched[i] = 0
+
+    for imdbFilmId in userFilmDataKeys:
+        genreIndexes = getFilmGenreIndexes(userFilmDataVectorized[imdbFilmId])
+        for genreIndex in genreIndexes:
+            genreProfiles[genreIndex] += userFilmDataVectorized[imdbFilmId]
+            genreWeightedAverageSums[genreIndex] += (cachedUserRatingScalars[imdbFilmId] *
+                                                     cachedDateRatedScalars[imdbFilmId])
+            genreQuantityFilmsWatched[genreIndex] += 1
+
+    for i in range(len(genreProfiles)):
+        genreProfiles[i] = np.divide(genreProfiles[i], genreWeightedAverageSums[i])
+        genreProfiles[i] *= min(1.0, genreQuantityFilmsWatched[i] / NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD)
+
+    for i in range(len(genreProfiles)):
+        curveGenres(genreProfiles[i], allGenres)
+
+    i = 0
+    for genre in allGenres:
+        genreProfileMagnitudes[genre] = calculateUnbiasedVectorMagnitude(genreProfiles[i], allGenresLength,
+                                                                         allLanguagesLength, allCountriesLength)
+        i += 1
+
+    # todo pick top NUMBER_OF_TOP_GENRE_PROFILES ranked off magnitude
+    topKGenreProfiles = []
+    # sort in descending order.
+    genreProfileMagnitudes = sorted(genreProfileMagnitudes.items(), key=lambda x: x[1], reverse=True)
+
+    for i in range(NUMBER_OF_TOP_GENRE_PROFILES):
+        topKGenreProfiles.append({"genre": "", "genreProfile": []})
+
+
+def getFilmGenreIndexes(film):
+    filmGenreIndexes = []
+    profileGenreEndIndex = PROFILE_GENRE_START_INDEX + allGenresLength
+
+    for i in range(PROFILE_GENRE_START_INDEX, profileGenreEndIndex):
+        if film[i] == 1.0:
+            filmGenreIndexes.append(i - PROFILE_GENRE_START_INDEX)
+
+    return filmGenreIndexes
 
 
 def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated):
@@ -266,13 +326,13 @@ def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, m
     recencyProfile = np.zeros(PROFILE_VECTOR_LENGTH)
     weightedAverageSum = 0.0
 
-    for key in userFilmDataKeys:
-        daysDiff = maxDateRated - userFilmData[key]['dateRated']
+    for imdbFilmId in userFilmDataKeys:
+        daysDiff = maxDateRated - userFilmData[imdbFilmId]['dateRated']
         if daysDiff.days <= 30:
-            recencyProfile += userFilmDataVectorized[key]
+            recencyProfile += userFilmDataVectorized[imdbFilmId]
             # note: not adding dateRatedScalar to the weightedAverageSum because I don't want vectors to be
             # scalar multiplied because we are only dealing with films in the last 30 days
-            weightedAverageSum += (userFilmData[key]['userRating'] / 10.0)
+            weightedAverageSum += (userFilmData[imdbFilmId]['userRating'] / 10.0)
         else:
             # terminate; user-uploaded .csv file is sorted by date (latest first, oldest last),
             # so no need to look further
