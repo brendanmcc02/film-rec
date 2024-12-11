@@ -12,7 +12,7 @@ from letterboxd_conversion import expectedLetterboxdFileFilmAttributes, convertL
 DATE_RATED_WEIGHT = 0.5
 NUM_USER_RECS = 4
 NUM_RECENCY_RECS = 2
-NUM_WILDCARD_RECS = 2
+NUM_WILDCARD_RECS = 0
 TOTAL_RECS = NUM_USER_RECS + NUM_RECENCY_RECS + NUM_WILDCARD_RECS
 USER_PROFILE_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
 RECENCY_FEEDBACK_FACTOR = 0.05
@@ -28,7 +28,6 @@ cachedLetterboxdTitles = {}
 cache = {}
 diffDateRated = datetime(1, 1, 1)
 minDateRated = datetime.now()
-genreProfiles = []
 topKGenreProfiles = []
 recencyProfile = np.zeros(0)
 wildcardProfile = np.zeros(0)
@@ -45,7 +44,6 @@ app = Flask(__name__)
 
 
 def resetGlobalVariables():
-    global genreProfiles
     global topKGenreProfiles
     global recencyProfile
     global wildcardProfile
@@ -60,11 +58,9 @@ def resetGlobalVariables():
     global allLanguagesLength
     global allCountriesLength
 
-    genreProfiles = []
-    for _ in cache['allGenres']:
-        genreProfiles.append(np.zeros(0))
-
     topKGenreProfiles = []
+    for _ in range(NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD):
+        topKGenreProfiles.append(np.zeros(0))
 
     recencyProfile = np.zeros(0)
     wildcardProfile = np.zeros(0)
@@ -241,16 +237,16 @@ def initRec():
     for i in range(0, TOTAL_RECS):
         vectorProfileChanges.append(np.zeros(PROFILE_VECTOR_LENGTH))
 
-    initGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
-                      cache['allGenres'])
+    initTopKGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
+                          cache['allGenres'])
 
-    for genreProfile in genreProfiles:
+    for genreProfile in topKGenreProfiles:
         stringifyVector(genreProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated)
     # stringifyVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
-    initWildcardProfile()
+    # initWildcardProfile()
     # stringifyVector(wildcardProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     generateRecs()
@@ -258,67 +254,57 @@ def initRec():
     return jsonify(recs), 200
 
 
-def initGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
-                      allGenres):
-    # TODO last thing I was doing:
-    # getting a bit lost with data structures. we want to sort the genres by magnitudes, but I need a way to find out
-    # which genre is the one that's the top.
-    # maybe genreProfiles shouldn't be global, it should be topKGenreProfiles instead (if you think about it,
-    # outside of this function, we shouldn't care about all genre profiles. only the top k ones, because that's the
-    # only info necessary (afaik) to use outside of this function.
-    global genreProfiles
+# TODO maybe this can go into vectorize.py? does it need to be here?
+def initTopKGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
+                          allGenres):
     global topKGenreProfiles
-    genreWeightedAverageSums = []
-    genreQuantityFilmsWatched = []
-    genreProfileMagnitudes = {}
+    genreProfiles = {}
+    genreWeightedAverageSums = {}
+    genreQuantityFilmsWatched = {}
 
     for genre in allGenres:
-        genreProfileMagnitudes[genre] = 0.0
-
-    for i in range(len(genreProfiles)):
-        genreProfiles[i] = np.zeros(PROFILE_VECTOR_LENGTH)
-        genreWeightedAverageSums[i] = 0.0
-        genreQuantityFilmsWatched[i] = 0
+        genreProfiles[genre] = {"genre": genre, "profile": np.zeros(PROFILE_VECTOR_LENGTH), "magnitude": 0.0}
+        genreWeightedAverageSums[genre] = 0.0
+        genreQuantityFilmsWatched[genre] = 0
 
     for imdbFilmId in userFilmDataKeys:
-        genreIndexes = getFilmGenreIndexes(userFilmDataVectorized[imdbFilmId])
-        for genreIndex in genreIndexes:
-            genreProfiles[genreIndex] += userFilmDataVectorized[imdbFilmId]
-            genreWeightedAverageSums[genreIndex] += (cachedUserRatingScalars[imdbFilmId] *
-                                                     cachedDateRatedScalars[imdbFilmId])
-            genreQuantityFilmsWatched[genreIndex] += 1
+        filmGenres = getFilmGenres(userFilmDataVectorized[imdbFilmId], allGenres)
+        for genre in filmGenres:
+            genreProfiles[genre]['profile'] += userFilmDataVectorized[imdbFilmId]
+            genreWeightedAverageSums[genre] += (cachedUserRatingScalars[imdbFilmId] *
+                                                cachedDateRatedScalars[imdbFilmId])
+            genreQuantityFilmsWatched[genre] += 1
 
-    for i in range(len(genreProfiles)):
-        genreProfiles[i] = np.divide(genreProfiles[i], genreWeightedAverageSums[i])
-        genreProfiles[i] *= min(1.0, genreQuantityFilmsWatched[i] / NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD)
-
-    for i in range(len(genreProfiles)):
-        curveGenres(genreProfiles[i], allGenres)
-
-    i = 0
     for genre in allGenres:
-        genreProfileMagnitudes[genre] = calculateUnbiasedVectorMagnitude(genreProfiles[i], allGenresLength,
-                                                                         allLanguagesLength, allCountriesLength)
-        i += 1
+        genreProfiles[genre]['profile'] = np.divide(genreProfiles[genre]['profile'], genreWeightedAverageSums[genre])
+        genreProfiles[genre]['profile'] *= min(1.0, genreQuantityFilmsWatched[genre] /
+                                               NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD)
+        genreProfiles[genre]['magnitude'] = calculateUnbiasedVectorMagnitude(genreProfiles[genre]['profile'],
+                                                                             allGenresLength, allLanguagesLength,
+                                                                             allCountriesLength)
 
-    # todo pick top NUMBER_OF_TOP_GENRE_PROFILES ranked off magnitude
+    # sort in descending order
+    genreProfiles = sorted(genreProfiles.items(), key=lambda item: item[1]['magnitude'])
+
     topKGenreProfiles = []
-    # sort in descending order.
-    genreProfileMagnitudes = sorted(genreProfileMagnitudes.items(), key=lambda x: x[1], reverse=True)
-
     for i in range(NUMBER_OF_TOP_GENRE_PROFILES):
-        topKGenreProfiles.append({"genre": "", "genreProfile": []})
+        topKGenreProfiles.append({"genre": genreProfiles[i][1], "genreProfile": genreProfiles[i][2]})
 
 
-def getFilmGenreIndexes(film):
+def getFilmGenres(vectorizedFilm, allGenres):
     filmGenreIndexes = []
     profileGenreEndIndex = PROFILE_GENRE_START_INDEX + allGenresLength
 
     for i in range(PROFILE_GENRE_START_INDEX, profileGenreEndIndex):
-        if film[i] == 1.0:
+        if vectorizedFilm[i] == 1.0:
             filmGenreIndexes.append(i - PROFILE_GENRE_START_INDEX)
 
-    return filmGenreIndexes
+    filmGenres = []
+
+    for genreIndex in filmGenreIndexes:
+        filmGenres.append(allGenres[genreIndex])
+
+    return filmGenres
 
 
 def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated):
@@ -342,18 +328,18 @@ def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, m
     recencyProfile = np.divide(recencyProfile, weightedAverageSum)
 
 
-# todo invert country & language
-def initWildcardProfile():
-    global wildcardProfile
-    wildcardProfile = np.zeros(PROFILE_VECTOR_LENGTH)
-
-    for i in range(0, PROFILE_VECTOR_LENGTH):
-        # don't invert imdbRating, runtime, or numVotes
-        if i != 1 and i != 2 and i != 3:
-            weightHalf = getWeightByVectorIndex(i) / 2.0
-            wildcardProfile[i] = weightHalf - (userProfile[i] - weightHalf)  # invert the vector feature
-        else:
-            wildcardProfile[i] = userProfile[i]
+# # todo invert country & language
+# def initWildcardProfile():
+#     global wildcardProfile
+#     wildcardProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+#
+#     for i in range(0, PROFILE_VECTOR_LENGTH):
+#         # don't invert imdbRating, runtime, or numVotes
+#         if i != 1 and i != 2 and i != 3:
+#             weightHalf = getWeightByVectorIndex(i) / 2.0
+#             wildcardProfile[i] = weightHalf - (userProfile[i] - weightHalf)  # invert the vector feature
+#         else:
+#             wildcardProfile[i] = userProfile[i]
 
 
 def getWeightByVectorIndex(vectorIndex):
@@ -377,7 +363,7 @@ def generateRecs():
     allFilmDataKeys = list(allFilmDataUnseen.keys())
     getFilmRecs("user", allFilmDataKeys)      # generate user recs
     getFilmRecs("recency", allFilmDataKeys)   # generate recency recs
-    getFilmRecs("wildcard", allFilmDataKeys)  # generate wildcard recs
+    # getFilmRecs("wildcard", allFilmDataKeys)  # generate wildcard recs
 
 
 def getFilmRecs(recType, allFilmDataKeys):
