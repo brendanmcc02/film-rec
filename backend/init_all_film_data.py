@@ -9,7 +9,7 @@ from vectorize import *
 # from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
 YEAR_WEIGHT = 0.3
 RUNTIME_THRESHOLD = 40
-NUM_OF_VOTES_THRESHOLD = 25000
+NUM_VOTES_THRESHOLD = 25000
 
 
 def main():
@@ -37,7 +37,7 @@ def main():
         except ValueError:
             pass
 
-    print("\nMerging with title.ratings.tsv and filtering out films with <" + str(NUM_OF_VOTES_THRESHOLD) + " votes...")
+    print("\nMerging with title.ratings.tsv and filtering out films with <" + str(NUM_VOTES_THRESHOLD) + " votes...")
 
     stage_2_allFilmData = []
 
@@ -53,7 +53,7 @@ def main():
     for film in stage_1_allFilmData:
         filmId = film['id']
         try:
-            if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUM_OF_VOTES_THRESHOLD:
+            if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUM_VOTES_THRESHOLD:
                 film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
                 film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
                 stage_2_allFilmData.append(film)

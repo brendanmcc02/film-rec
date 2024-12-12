@@ -68,10 +68,10 @@ preprocessing
 - [x] add specialised way to calculate vector magnitude (i.e. dont over prioritise multi-genre/lang/country films unfairly)
 
 # Recommendation Algorithm Round 2
-- [ ] create 23 user profiles, modify each of them through iteration of `userFilmData`
-- [ ] use weighted or normal average?
-- [ ] apply `NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD` weight to profile after iteration of `userFilmData`
-- [ ] pick top k (maybe 3?) profiles ranked on magnitude
+- [x] create 23 user profiles, modify each of them through iteration of `userFilmData`
+- [x] ~~use weighted or normal average?~~ using weighted
+- [x] apply `NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD` weight to profile after iteration of `userFilmData`
+- [x] pick top k (maybe 3?) profiles ranked on magnitude
 - [ ] show the recommendations of these films
 
 # Improving Efficiency

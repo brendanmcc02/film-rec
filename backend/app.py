@@ -6,20 +6,20 @@ import numpy as np
 import os
 import glob
 from vectorize import *
-from init_all_film_data import YEAR_WEIGHT, RUNTIME_THRESHOLD, NUM_OF_VOTES_THRESHOLD
+from init_all_film_data import YEAR_WEIGHT, RUNTIME_THRESHOLD, NUM_VOTES_THRESHOLD
 from letterboxd_conversion import expectedLetterboxdFileFilmAttributes, convertLetterboxdFormatToImdbFormat
 
 DATE_RATED_WEIGHT = 0.5
-NUM_USER_RECS = 4
+NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 5
+NUM_TOP_GENRE_PROFILES = 3
+NUM_GENRE_PROFILE_RECS = 4
 NUM_RECENCY_RECS = 2
 NUM_WILDCARD_RECS = 0
-TOTAL_RECS = NUM_USER_RECS + NUM_RECENCY_RECS + NUM_WILDCARD_RECS
+TOTAL_RECS = (NUM_GENRE_PROFILE_RECS * NUM_TOP_GENRE_PROFILES) + NUM_RECENCY_RECS + NUM_WILDCARD_RECS
 USER_PROFILE_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
 RECENCY_FEEDBACK_FACTOR = 0.05
 WILDCARD_FEEDBACK_FACTOR = 0.2
 PROFILE_VECTOR_LENGTH = 0
-NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD = 5
-NUMBER_OF_TOP_GENRE_PROFILES = 3
 
 allFilmDataUnseen = {}
 allFilmDataVectorized = {}
@@ -59,7 +59,7 @@ def resetGlobalVariables():
     global allCountriesLength
 
     topKGenreProfiles = []
-    for _ in range(NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD):
+    for _ in range(NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD):
         topKGenreProfiles.append(np.zeros(0))
 
     recencyProfile = np.zeros(0)
@@ -158,7 +158,7 @@ def initRec():
 
     for film in userFilmDataList:
         if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != ""\
-                and int(film['Num Votes']) >= NUM_OF_VOTES_THRESHOLD:
+                and int(film['Num Votes']) >= NUM_VOTES_THRESHOLD:
             if isImdbFile:
                 genres = film['Genres'].replace("\"", "").split(", ")
             else:
@@ -241,7 +241,8 @@ def initRec():
                           cache['allGenres'])
 
     for genreProfile in topKGenreProfiles:
-        stringifyVector(genreProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+        print(f"{genreProfile['genre']}:")
+        stringifyVector(genreProfile['profile'], cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated)
     # stringifyVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
@@ -278,7 +279,7 @@ def initTopKGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRa
     for genre in allGenres:
         genreProfiles[genre]['profile'] = np.divide(genreProfiles[genre]['profile'], genreWeightedAverageSums[genre])
         genreProfiles[genre]['profile'] *= min(1.0, genreQuantityFilmsWatched[genre] /
-                                               NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD)
+                                               NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
         genreProfiles[genre]['magnitude'] = calculateUnbiasedVectorMagnitude(genreProfiles[genre]['profile'],
                                                                              allGenresLength, allLanguagesLength,
                                                                              allCountriesLength)
@@ -287,8 +288,8 @@ def initTopKGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRa
     genreProfiles = sorted(genreProfiles.items(), key=lambda item: item[1]['magnitude'])
 
     topKGenreProfiles = []
-    for i in range(NUMBER_OF_TOP_GENRE_PROFILES):
-        topKGenreProfiles.append({"genre": genreProfiles[i][1], "genreProfile": genreProfiles[i][2]})
+    for i in range(NUM_TOP_GENRE_PROFILES):
+        topKGenreProfiles.append({"genre": genreProfiles[i][1], "profile": genreProfiles[i][2]})
 
 
 def getFilmGenres(vectorizedFilm, allGenres):
@@ -360,53 +361,46 @@ def getWeightByVectorIndex(vectorIndex):
 
 
 def generateRecs():
+    global recs
+    recs = []
+
     allFilmDataKeys = list(allFilmDataUnseen.keys())
-    getFilmRecs("user", allFilmDataKeys)      # generate user recs
-    getFilmRecs("recency", allFilmDataKeys)   # generate recency recs
+
+    # todo I was here last
+    for genreProfile in topKGenreProfiles:
+        getFilmRecs("user", allFilmDataKeys, NUM_GENRE_PROFILE_RECS, genreProfile['profile'])
+
+    getFilmRecs("recency", allFilmDataKeys, NUM_RECENCY_RECS, recencyProfile)
     # getFilmRecs("wildcard", allFilmDataKeys)  # generate wildcard recs
 
 
-def getFilmRecs(recType, allFilmDataKeys):
+def getFilmRecs(recType, allFilmDataKeys, maxNumberOfRecs, profileVector):
     global recs
 
-    if recType == "wildcard":
-        maxRec = NUM_WILDCARD_RECS
-        profileVector = wildcardProfile
-    elif recType == "recency":
-        maxRec = NUM_RECENCY_RECS
-        profileVector = recencyProfile
-    elif recType == "user":
-        recs = []
-        maxRec = NUM_USER_RECS
-        profileVector = userProfile
-    else:
-        print("unknown rec type: " + str(recType))
-        return "unknown rec type: ", 400
-
     # pre-compute the vector magnitude to make cosine sim calculations more efficient
-    profileVectorMagnitudes = calculateUnbiasedVectorMagnitude(profileVector, allGenresLength, allLanguagesLength,
-                                                               allCountriesLength)
+    profileVectorMagnitude = calculateUnbiasedVectorMagnitude(profileVector, allGenresLength, allLanguagesLength,
+                                                              allCountriesLength)
 
     cosineSimilarities = {}
 
     for filmId in allFilmDataKeys:
         filmVectorMagnitude = allFilmDataVectorizedMagnitudes[filmId]
         cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVectorized[filmId], profileVector,
-                                                      filmVectorMagnitude, profileVectorMagnitudes)
+                                                      filmVectorMagnitude, profileVectorMagnitude)
 
     # sort in descending order.
     cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
 
     duplicateRec = False
 
-    for i in range(0, maxRec):
+    for i in range(0, maxNumberOfRecs):
         filmId = cosineSimilarities[i][0]
         # check if the recommended film has already been recommended by another vector:
         # this check exists because we don't want the userProfile vector recommending the same films as
         # the recencyProfile for example
         for rec in recs:
             if rec['id'] == filmId:
-                maxRec += 1
+                maxNumberOfRecs += 1
                 duplicateRec = True
                 # todo temp
                 print("duplicate rec: " + str(rec['id']))
