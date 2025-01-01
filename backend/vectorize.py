@@ -77,8 +77,7 @@ def oneHotEncode(vector, filmList, allList):
 
 def cosineSimilarity(a, b, aMagnitude, bMagnitude):
     if aMagnitude == 0.0 or bMagnitude == 0.0:
-        print("Divide by 0 error with cosine similarity calculation.")
-        raise ZeroDivisionError
+        return 0.0
 
     return np.dot(a, b) / (aMagnitude * bMagnitude)
 
@@ -193,3 +192,54 @@ def calculateUnbiasedVectorMagnitude(vector, allGenresLength, allLanguagesLength
     unbiasedVectorMagnitude += meanCountryVectorValue * meanCountryVectorValue
 
     return np.sqrt(unbiasedVectorMagnitude)
+
+
+def initGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
+                      allGenres, profileVectorLength, allLanguagesLength, allCountriesLength,
+                      numFilmsWatchedInGenreThreshold):
+    genreProfiles = {}
+
+    allGenresLength = len(allGenres)
+
+    for genre in allGenres:
+        genreProfiles[genre] = {"profile": np.zeros(profileVectorLength), "magnitude": 0.0, 
+                                "weightedAverageSum": 0.0, "quantityFilmsWatched": 0}
+
+    for imdbFilmId in userFilmDataKeys:
+        filmGenres = getFilmGenres(userFilmDataVectorized[imdbFilmId], allGenres)
+        for genre in filmGenres:
+            genreProfiles[genre]['profile'] += userFilmDataVectorized[imdbFilmId]
+            genreProfiles[genre]['weightedAverageSum'] += (cachedUserRatingScalars[imdbFilmId] *
+                                                           cachedDateRatedScalars[imdbFilmId])
+            genreProfiles[genre]['quantityFilmsWatched'] += 1
+
+    for genre in allGenres:
+        if genreProfiles[genre]['weightedAverageSum'] == 0.0:
+            continue
+        
+        genreProfiles[genre]['profile'] = np.divide(genreProfiles[genre]['profile'], 
+                                                    genreProfiles[genre]['weightedAverageSum'])
+        genreProfiles[genre]['profile'] *= min(1.0, genreProfiles[genre]['quantityFilmsWatched'] /
+                                               numFilmsWatchedInGenreThreshold)
+        genreProfiles[genre]['magnitude'] = calculateUnbiasedVectorMagnitude(genreProfiles[genre]['profile'],
+                                                                             allGenresLength, allLanguagesLength,
+                                                                             allCountriesLength)
+
+    # return a sorted list
+    return sorted(genreProfiles.items(), key=lambda item: item[1]['magnitude'], reverse=True)
+
+
+def getFilmGenres(vectorizedFilm, allGenres):
+    filmGenreIndexes = []
+    profileGenreEndIndex = PROFILE_GENRE_START_INDEX + len(allGenres)
+
+    for i in range(PROFILE_GENRE_START_INDEX, profileGenreEndIndex):
+        if vectorizedFilm[i] > 0.0:
+            filmGenreIndexes.append(i - PROFILE_GENRE_START_INDEX)
+
+    filmGenres = []
+
+    for genreIndex in filmGenreIndexes:
+        filmGenres.append(allGenres[genreIndex])
+
+    return filmGenres

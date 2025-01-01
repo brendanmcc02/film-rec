@@ -12,15 +12,15 @@ from letterboxd_conversion import expectedLetterboxdFileFilmAttributes, convertL
 DATE_RATED_WEIGHT = 0.5
 NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 5
 NUM_TOP_GENRE_PROFILES = 3
-NUM_GENRE_PROFILE_RECS = 4
+NUM_GENRE_PROFILE_RECS = 2
 NUM_RECENCY_RECS = 2
 NUM_WILDCARD_RECS = 0
 TOTAL_RECS = (NUM_GENRE_PROFILE_RECS * NUM_TOP_GENRE_PROFILES) + NUM_RECENCY_RECS + NUM_WILDCARD_RECS
-USER_PROFILE_FEEDBACK_FACTOR = 0.05  # the rate at which feedback changes the user profile
+USER_PROFILE_FEEDBACK_FACTOR = 0.05
 RECENCY_FEEDBACK_FACTOR = 0.05
 WILDCARD_FEEDBACK_FACTOR = 0.2
-PROFILE_VECTOR_LENGTH = 0
 
+profileVectorLength = 0
 allFilmDataUnseen = {}
 allFilmDataVectorized = {}
 allFilmDataVectorizedMagnitudes = {}
@@ -28,7 +28,7 @@ cachedLetterboxdTitles = {}
 cache = {}
 diffDateRated = datetime(1, 1, 1)
 minDateRated = datetime.now()
-topKGenreProfiles = []
+genreProfiles = []
 recencyProfile = np.zeros(0)
 wildcardProfile = np.zeros(0)
 vectorProfileChanges = []
@@ -44,7 +44,7 @@ app = Flask(__name__)
 
 
 def resetGlobalVariables():
-    global topKGenreProfiles
+    global genreProfiles
     global recencyProfile
     global wildcardProfile
     global vectorProfileChanges
@@ -58,10 +58,7 @@ def resetGlobalVariables():
     global allLanguagesLength
     global allCountriesLength
 
-    topKGenreProfiles = []
-    for _ in range(NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD):
-        topKGenreProfiles.append(np.zeros(0))
-
+    genreProfiles = []
     recencyProfile = np.zeros(0)
     wildcardProfile = np.zeros(0)
     vectorProfileChanges = []
@@ -124,11 +121,12 @@ def initRec():
     global diffDateRated
     global minDateRated
     global allFilmDataUnseen
-    global PROFILE_VECTOR_LENGTH
+    global profileVectorLength
     global vectorProfileChanges
     global allGenresLength
     global allLanguagesLength
     global allCountriesLength
+    global genreProfiles
 
     try:
         userFilmDataList = []
@@ -187,7 +185,6 @@ def initRec():
             except ValueError:
                 return ("value error with film: " + film['Const']), 400
 
-    # perform some pre-computation to avoid repetitive computation
     diffDateRated = maxDateRated - minDateRated
 
     if diffDateRated == 0.0:
@@ -203,14 +200,10 @@ def initRec():
 
     userFilmDataVectorized = {}
 
-    # init a dict to store pre-computed dateRatedScalar values; more efficient.
-    # key: film id, value: dateRatedScalar
+    # init a dict to store pre-computed scalar values values
     cachedDateRatedScalars = {}
-
-    # init a dict to store pre-computed normalised userRating values; more efficient.
-    # key: film id, value: normalisedUserRating
     cachedUserRatingScalars = {}
-
+    
     allGenresLength = len(cache['allGenres'])
     allLanguagesLength = len(cache['allLanguages'])
     allCountriesLength = len(cache['allCountries'])
@@ -220,7 +213,7 @@ def initRec():
         vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allLanguages'], cache['allCountries'],
                                cache['normalizedYears'], cache['normalizedImdbRatings'], cache['minNumberOfVotes'],
                                cache['diffNumberOfVotes'], cache['minRuntime'], cache['diffRuntime'])
-        # dateRatedScalar: normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
+        # normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
         dateRatedScalar = (((userFilmData[imdbFilmId]['dateRated'] - minDateRated) / diffDateRated) *
                            (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
         cachedDateRatedScalars[imdbFilmId] = dateRatedScalar
@@ -232,17 +225,18 @@ def initRec():
         # recall that vectors are scalar multiplied by userRating & dateRated
         userFilmDataVectorized[imdbFilmId] = vector * userRatingScalar * dateRatedScalar
 
-    PROFILE_VECTOR_LENGTH = cache['profileVectorLength']
+    profileVectorLength = cache['profileVectorLength']
 
-    for i in range(0, TOTAL_RECS):
-        vectorProfileChanges.append(np.zeros(PROFILE_VECTOR_LENGTH))
+    for _ in range(0, TOTAL_RECS):
+        vectorProfileChanges.append(np.zeros(profileVectorLength))
 
-    initTopKGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
-                          cache['allGenres'])
+    genreProfiles = initGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
+                      cache['allGenres'], profileVectorLength, allLanguagesLength, allCountriesLength,
+                      NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
 
-    for genreProfile in topKGenreProfiles:
-        print(f"{genreProfile['genre']}:")
-        stringifyVector(genreProfile['profile'], cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+    # for genreProfile in genreProfiles:
+    #     print(f"{genreProfile[0]}:")
+    #     stringifyVector(genreProfile[1]['profile'], cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated)
     # stringifyVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
@@ -255,62 +249,10 @@ def initRec():
     return jsonify(recs), 200
 
 
-# TODO maybe this can go into vectorize.py? does it need to be here?
-def initTopKGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
-                          allGenres):
-    global topKGenreProfiles
-    genreProfiles = {}
-    genreWeightedAverageSums = {}
-    genreQuantityFilmsWatched = {}
-
-    for genre in allGenres:
-        genreProfiles[genre] = {"genre": genre, "profile": np.zeros(PROFILE_VECTOR_LENGTH), "magnitude": 0.0}
-        genreWeightedAverageSums[genre] = 0.0
-        genreQuantityFilmsWatched[genre] = 0
-
-    for imdbFilmId in userFilmDataKeys:
-        filmGenres = getFilmGenres(userFilmDataVectorized[imdbFilmId], allGenres)
-        for genre in filmGenres:
-            genreProfiles[genre]['profile'] += userFilmDataVectorized[imdbFilmId]
-            genreWeightedAverageSums[genre] += (cachedUserRatingScalars[imdbFilmId] *
-                                                cachedDateRatedScalars[imdbFilmId])
-            genreQuantityFilmsWatched[genre] += 1
-
-    for genre in allGenres:
-        genreProfiles[genre]['profile'] = np.divide(genreProfiles[genre]['profile'], genreWeightedAverageSums[genre])
-        genreProfiles[genre]['profile'] *= min(1.0, genreQuantityFilmsWatched[genre] /
-                                               NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
-        genreProfiles[genre]['magnitude'] = calculateUnbiasedVectorMagnitude(genreProfiles[genre]['profile'],
-                                                                             allGenresLength, allLanguagesLength,
-                                                                             allCountriesLength)
-
-    # sort in descending order
-    genreProfiles = sorted(genreProfiles.items(), key=lambda item: item[1]['magnitude'])
-
-    topKGenreProfiles = []
-    for i in range(NUM_TOP_GENRE_PROFILES):
-        topKGenreProfiles.append({"genre": genreProfiles[i][1], "profile": genreProfiles[i][2]})
-
-
-def getFilmGenres(vectorizedFilm, allGenres):
-    filmGenreIndexes = []
-    profileGenreEndIndex = PROFILE_GENRE_START_INDEX + allGenresLength
-
-    for i in range(PROFILE_GENRE_START_INDEX, profileGenreEndIndex):
-        if vectorizedFilm[i] == 1.0:
-            filmGenreIndexes.append(i - PROFILE_GENRE_START_INDEX)
-
-    filmGenres = []
-
-    for genreIndex in filmGenreIndexes:
-        filmGenres.append(allGenres[genreIndex])
-
-    return filmGenres
-
-
+# TODO put this in vectorize.py?
 def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated):
     global recencyProfile
-    recencyProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+    recencyProfile = np.zeros(profileVectorLength)
     weightedAverageSum = 0.0
 
     for imdbFilmId in userFilmDataKeys:
@@ -332,9 +274,9 @@ def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, m
 # # todo invert country & language
 # def initWildcardProfile():
 #     global wildcardProfile
-#     wildcardProfile = np.zeros(PROFILE_VECTOR_LENGTH)
+#     wildcardProfile = np.zeros(profileVectorLength)
 #
-#     for i in range(0, PROFILE_VECTOR_LENGTH):
+#     for i in range(0, profileVectorLength):
 #         # don't invert imdbRating, runtime, or numVotes
 #         if i != 1 and i != 2 and i != 3:
 #             weightHalf = getWeightByVectorIndex(i) / 2.0
@@ -366,9 +308,8 @@ def generateRecs():
 
     allFilmDataKeys = list(allFilmDataUnseen.keys())
 
-    # todo I was here last
-    for genreProfile in topKGenreProfiles:
-        getFilmRecs("user", allFilmDataKeys, NUM_GENRE_PROFILE_RECS, genreProfile['profile'])
+    for i in range(0, NUM_TOP_GENRE_PROFILES):
+        getFilmRecs(genreProfiles[i][0], allFilmDataKeys, NUM_GENRE_PROFILE_RECS, genreProfiles[i][1]['profile'])
 
     getFilmRecs("recency", allFilmDataKeys, NUM_RECENCY_RECS, recencyProfile)
     # getFilmRecs("wildcard", allFilmDataKeys)  # generate wildcard recs
@@ -376,6 +317,7 @@ def generateRecs():
 
 def getFilmRecs(recType, allFilmDataKeys, maxNumberOfRecs, profileVector):
     global recs
+    global allFilmDataVectorizedMagnitudes
 
     # pre-compute the vector magnitude to make cosine sim calculations more efficient
     profileVectorMagnitude = calculateUnbiasedVectorMagnitude(profileVector, allGenresLength, allLanguagesLength,
@@ -388,25 +330,21 @@ def getFilmRecs(recType, allFilmDataKeys, maxNumberOfRecs, profileVector):
         cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVectorized[filmId], profileVector,
                                                       filmVectorMagnitude, profileVectorMagnitude)
 
-    # sort in descending order.
+    # sort in descending order
     cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
 
-    duplicateRec = False
+    isDuplicateRec = False
 
     for i in range(0, maxNumberOfRecs):
         filmId = cosineSimilarities[i][0]
-        # check if the recommended film has already been recommended by another vector:
-        # this check exists because we don't want the userProfile vector recommending the same films as
-        # the recencyProfile for example
+        # check if the recommended film has already been recommended earlier
         for rec in recs:
             if rec['id'] == filmId:
                 maxNumberOfRecs += 1
-                duplicateRec = True
-                # todo temp
+                isDuplicateRec = True
                 print("duplicate rec: " + str(rec['id']))
-                break
 
-        if not duplicateRec:
+        if not isDuplicateRec:
             film = allFilmDataUnseen[filmId]
             similarityScore = cosineSimilarities[i][1]
             film['id'] = filmId
@@ -414,7 +352,7 @@ def getFilmRecs(recType, allFilmDataKeys, maxNumberOfRecs, profileVector):
             film['recType'] = recType
             recs.append(film)
 
-        duplicateRec = False
+        isDuplicateRec = False
 
 
 # called when user responds (thumbs up/down) to a film
@@ -482,11 +420,11 @@ def changeVector(index, add, recType):
 
     # after changing vector parameters, ensure that all vector features are >= 0.0 && <= 1.0
     if recType == "wildcard":
-        keepVectorBoundary(wildcardProfile, PROFILE_VECTOR_LENGTH)
+        keepVectorBoundary(wildcardProfile, profileVectorLength)
     elif recType == "recency":
-        keepVectorBoundary(recencyProfile, PROFILE_VECTOR_LENGTH)
+        keepVectorBoundary(recencyProfile, profileVectorLength)
     elif recType == "user":
-        keepVectorBoundary(userProfile, PROFILE_VECTOR_LENGTH)
+        keepVectorBoundary(userProfile, profileVectorLength)
     else:
         return "unknown rec type:" + str(recType)
 
@@ -546,7 +484,7 @@ def undoChange(index, add, recType):
         recStates[index] = 0
 
     # make the profile change a zero vector at the specified index
-    vectorProfileChanges[index] = np.zeros(PROFILE_VECTOR_LENGTH)
+    vectorProfileChanges[index] = np.zeros(profileVectorLength)
 
     return ("undid " + recType + " profile change due to previous " +
             ("disliking" if add else "liking") + " of " + recs[index]['title'])
