@@ -1,3 +1,7 @@
+# what I was doing last
+
+figure out what tf is going on with weights
+
 # Advanced Recommendation Algorithm Part 2
 
 A problem with the initial iteration of the recommendation algorithm was that it was an 'all-in-one'. It tried to 

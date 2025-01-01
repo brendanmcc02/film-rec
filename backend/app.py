@@ -10,7 +10,7 @@ from init_all_film_data import YEAR_WEIGHT, RUNTIME_THRESHOLD, NUM_VOTES_THRESHO
 from letterboxd_conversion import expectedLetterboxdFileFilmAttributes, convertLetterboxdFormatToImdbFormat
 
 DATE_RATED_WEIGHT = 0.5
-NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 5
+NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 10
 NUM_TOP_GENRE_PROFILES = 3
 NUM_GENRE_PROFILE_RECS = 2
 NUM_RECENCY_RECS = 2
@@ -127,6 +127,7 @@ def initRec():
     global allLanguagesLength
     global allCountriesLength
     global genreProfiles
+    global recencyProfile
 
     try:
         userFilmDataList = []
@@ -236,39 +237,19 @@ def initRec():
 
     # for genreProfile in genreProfiles:
     #     print(f"{genreProfile[0]}:")
-    #     stringifyVector(genreProfile[1]['profile'], cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+    #     printStringifiedVector(genreProfile[1]['profile'], cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
-    initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated)
-    # stringifyVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+    recencyProfile = initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated, profileVectorLength, 
+                                        cachedUserRatingScalars, cachedDateRatedScalars, allGenresLength, cache['allCountries'],
+                                        cache['allLanguages'], cache['allGenres'])
+    printStringifiedVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     # initWildcardProfile()
-    # stringifyVector(wildcardProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+    # printStringifiedVector(wildcardProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     generateRecs()
 
     return jsonify(recs), 200
-
-
-# TODO put this in vectorize.py?
-def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated):
-    global recencyProfile
-    recencyProfile = np.zeros(profileVectorLength)
-    weightedAverageSum = 0.0
-
-    for imdbFilmId in userFilmDataKeys:
-        daysDiff = maxDateRated - userFilmData[imdbFilmId]['dateRated']
-        if daysDiff.days <= 30:
-            recencyProfile += userFilmDataVectorized[imdbFilmId]
-            # note: not adding dateRatedScalar to the weightedAverageSum because I don't want vectors to be
-            # scalar multiplied because we are only dealing with films in the last 30 days
-            weightedAverageSum += (userFilmData[imdbFilmId]['userRating'] / 10.0)
-        else:
-            # terminate; user-uploaded .csv file is sorted by date (latest first, oldest last),
-            # so no need to look further
-            break
-
-    # todo div by 0 error - what if there's no recent films?
-    recencyProfile = np.divide(recencyProfile, weightedAverageSum)
 
 
 # # todo invert country & language
@@ -286,6 +267,7 @@ def initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, m
 
 
 def getWeightByVectorIndex(vectorIndex):
+    # TODO this is outdated, country and language have weights now
     # any index over 27 in the vector is either a country or language
     if vectorIndex >= 27:
         return 1.0

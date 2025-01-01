@@ -6,7 +6,6 @@ import time
 import requests
 from vectorize import *
 
-# from experimenting, 0.3 was a very good weight as it did not overvalue the year, but still took it into account.
 YEAR_WEIGHT = 0.3
 RUNTIME_THRESHOLD = 40
 NUM_VOTES_THRESHOLD = 25000
@@ -276,6 +275,8 @@ def main():
     if diffYear == 0:
         print("diffYear = 0. Error with minYear & maxYear.")
         raise ZeroDivisionError
+
+    # TODO do cachedNormalizedRuntimes & other if necessary
 
     cachedNormalizedYears = {}
     for y in range(minYear, maxYear + 1):

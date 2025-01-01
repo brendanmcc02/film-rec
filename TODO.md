@@ -71,8 +71,8 @@ preprocessing
 - [x] create 23 user profiles, modify each of them through iteration of `userFilmData`
 - [x] ~~use weighted or normal average?~~ using weighted
 - [x] apply `NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD` weight to profile after iteration of `userFilmData`
-- [x] pick top k (maybe 3?) profiles ranked on magnitude
-- [ ] show the recommendations of these films
+- [x] pick top k profiles ranked on magnitude
+- [x] show the recommendations of these films
 
 # Improving Efficiency
 - [ ] cluster allFilmDataVec to make cosine sims more performant
@@ -131,7 +131,7 @@ countries, poster)
 create endpoints for getters/setters
 - [x] deletion of ratings/diary.csv before saving to file
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
-- [ ] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
+- [x] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
 - [ ] bug: imdb recency doesn't work
 
 ## Windows OS
