@@ -76,6 +76,9 @@ preprocessing
 - [x] pick top k profiles ranked on magnitude
 - [x] show the recommendations of these films
 
+## Wildcard
+- [ ] brainstorm ideas
+
 # Improving Efficiency
 - [ ] cluster allFilmDataVec to make cosine sims more performant
 

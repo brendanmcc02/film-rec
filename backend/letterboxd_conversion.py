@@ -4,7 +4,7 @@ expectedLetterboxdFileFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI"
 def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cachedLetterboxdTitles):
     imdbUserFilmData = []
 
-    # we want to work with latest entries first
+    # work with latest entries first
     letterboxdUserFilmData = reversed(letterboxdUserFilmData)
 
     for letterboxdFilm in letterboxdUserFilmData:
@@ -22,7 +22,7 @@ def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cac
                         "Title Type": "Movie",
                         # for consistency, use the imdb year instead of the letterboxd one
                         "Year": allFilmData[imdbFilmId]['year'],
-                        "Your Rating": round(float(letterboxdFilm['Rating']) * 2.0, 1),
+                        "Your Rating": int(float(letterboxdFilm['Rating']) * 2.0),
                         "Date Rated": letterboxdFilm['Date'],
                         "IMDb Rating": allFilmData[imdbFilmId]['imdbRating'],
                         "Num Votes": allFilmData[imdbFilmId]['numberOfVotes'],

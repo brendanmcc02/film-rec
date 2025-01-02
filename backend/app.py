@@ -6,8 +6,8 @@ import numpy as np
 import os
 import glob
 from vectorize import *
-from init_all_film_data import YEAR_WEIGHT, RUNTIME_THRESHOLD, NUM_VOTES_THRESHOLD
-from letterboxd_conversion import expectedLetterboxdFileFilmAttributes, convertLetterboxdFormatToImdbFormat
+from init_all_film_data import RUNTIME_THRESHOLD, NUM_VOTES_THRESHOLD
+from letterboxd_conversion import *
 
 DATE_RATED_WEIGHT = 0.5
 NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 10
@@ -166,6 +166,7 @@ def initRec():
                 filmId = film['Const']
                 if filmId in allFilmData:
                     dateRated = datetime.strptime(film['Date Rated'], "%Y-%m-%d")
+                    minDateRated = min(minDateRated, dateRated)
 
                     userFilmData[film['Const']] = {
                         "title": film['Title'],
@@ -179,8 +180,6 @@ def initRec():
                         "languages": allFilmData[filmId]['languages'],
                         "countries": allFilmData[filmId]['countries']
                     }
-
-                    minDateRated = min(minDateRated, dateRated)
                 else:
                     print(f"Film in userFilmData not found in allFilmData, {filmId}\n")
             except ValueError:
@@ -189,7 +188,7 @@ def initRec():
     diffDateRated = maxDateRated - minDateRated
 
     if diffDateRated == 0.0:
-        print("Note. diffDateRated = 0.")
+        print("Note: diffDateRated = 0.")
         diffDateRated = 1.0
 
     userFilmDataKeys = list(userFilmData.keys())
@@ -234,14 +233,14 @@ def initRec():
                       cache['allGenres'], profileVectorLength, allLanguagesLength, allCountriesLength,
                       NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
 
-    # for genreProfile in genreProfiles:
-    #     print(f"{genreProfile['genre']}:")
-    #     printStringifiedVector(genreProfile['profile'], cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+    for genreProfile in genreProfiles:
+        print(f"{genreProfile['genre']}:")
+        printStringifiedVector(genreProfile['profile'], cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     recencyProfile = initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated, profileVectorLength, 
                                         cachedUserRatingScalars, cachedDateRatedScalars, allGenresLength, cache['allCountries'],
                                         cache['allLanguages'], cache['allGenres'])
-    printStringifiedVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+    # printStringifiedVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     # initWildcardProfile()
     # printStringifiedVector(wildcardProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
