@@ -38,7 +38,6 @@ isImdbFile = True
 userFilmDataFilename = ""
 allGenresLength = 0
 allLanguagesLength = 0
-allCountriesLength = 0
 
 app = Flask(__name__)
 
@@ -56,7 +55,6 @@ def resetGlobalVariables():
     global userFilmDataFilename
     global allGenresLength
     global allLanguagesLength
-    global allCountriesLength
 
     genreProfiles = []
     recencyProfile = np.zeros(0)
@@ -70,7 +68,6 @@ def resetGlobalVariables():
     userFilmDataFilename = ""
     allGenresLength = 0
     allLanguagesLength = 0
-    allCountriesLength = 0
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])
@@ -125,7 +122,6 @@ def initRec():
     global vectorProfileChanges
     global allGenresLength
     global allLanguagesLength
-    global allCountriesLength
     global genreProfiles
     global recencyProfile
 
@@ -177,8 +173,7 @@ def initRec():
                         "numberOfVotes": int(film['Num Votes']),
                         "runtime": int(film['Runtime (mins)']),
                         "genres": genres,
-                        "languages": allFilmData[filmId]['languages'],
-                        "countries": allFilmData[filmId]['countries']
+                        "languages": allFilmData[filmId]['languages']
                     }
                 else:
                     print(f"Film in userFilmData not found in allFilmData, {filmId}\n")
@@ -206,11 +201,10 @@ def initRec():
     
     allGenresLength = len(cache['allGenres'])
     allLanguagesLength = len(cache['allLanguages'])
-    allCountriesLength = len(cache['allCountries'])
 
     # vectorize user-film-data
     for imdbFilmId in userFilmDataKeys:
-        vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allLanguages'], cache['allCountries'],
+        vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allLanguages'],
                                cache['normalizedYears'], cache['normalizedImdbRatings'], cache['minNumberOfVotes'],
                                cache['diffNumberOfVotes'], cache['normalizedRuntimes'])
         # normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
@@ -230,27 +224,23 @@ def initRec():
         vectorProfileChanges.append(np.zeros(profileVectorLength))
 
     genreProfiles = initGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
-                      cache['allGenres'], profileVectorLength, allLanguagesLength, allCountriesLength,
-                      NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
-
-    for genreProfile in genreProfiles:
-        print(f"{genreProfile['genre']}:")
-        printStringifiedVector(genreProfile['profile'], cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+                      cache['allGenres'], profileVectorLength, NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
+    # for genreProfile in genreProfiles:
+    #     print(f"{genreProfile['genre']}:")
+    #     printStringifiedVector(genreProfile['profile'], cache['allGenres'], cache['allLanguages'])
 
     recencyProfile = initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated, profileVectorLength, 
-                                        cachedUserRatingScalars, cachedDateRatedScalars, allGenresLength, cache['allCountries'],
-                                        cache['allLanguages'], cache['allGenres'])
-    # printStringifiedVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+                                        cachedUserRatingScalars, cachedDateRatedScalars)
+    # printStringifiedVector(recencyProfile, cache['allGenres'], cache['allLanguages'])
 
     # initWildcardProfile()
-    # printStringifiedVector(wildcardProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+    # printStringifiedVector(wildcardProfile, cache['allGenres'], cache['allLanguages'])
 
     generateRecs()
 
     return jsonify(recs), 200
 
 
-# # todo invert country & language
 # def initWildcardProfile():
 #     global wildcardProfile
 #     wildcardProfile = np.zeros(profileVectorLength)
@@ -258,7 +248,7 @@ def initRec():
 #     for i in range(0, profileVectorLength):
 #         # don't invert imdbRating, runtime, or numVotes
 #         if i != 1 and i != 2 and i != 3:
-#             weightHalf = getWeightByVectorIndex(i, ) / 2.0
+#             weightHalf = getWeightByVectorIndex(i) / 2.0
 #             wildcardProfile[i] = weightHalf - (userProfile[i] - weightHalf)  # invert the vector feature
 #         else:
 #             wildcardProfile[i] = userProfile[i]

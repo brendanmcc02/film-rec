@@ -198,7 +198,7 @@ def curveAccordingToMax(userProfile, list, weight, startIndex):
         userProfile[index] *= weight
 
 
-def getWeightByVectorIndex(vectorIndex, allGenresLength, allLanguagesLength):
+def getWeightByVectorIndex(vectorIndex, allGenresLength):
     profileLanguageStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
 
     if vectorIndex >= profileLanguageStartIndex:
