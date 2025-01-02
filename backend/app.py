@@ -11,11 +11,13 @@ from letterboxd_conversion import *
 
 DATE_RATED_WEIGHT = 0.5
 NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 10
-NUM_TOP_GENRE_PROFILES = 3
-NUM_GENRE_PROFILE_RECS = 2
+NUM_TOP_GENRE_PROFILES = 2
+NUM_GENRE_PROFILE_RECS = 1
 NUM_RECENCY_RECS = 2
-NUM_WILDCARD_RECS = 0
-TOTAL_RECS = (NUM_GENRE_PROFILE_RECS * NUM_TOP_GENRE_PROFILES) + NUM_RECENCY_RECS + NUM_WILDCARD_RECS
+NUM_OLD_RECS = 1
+NUM_OBSCURE_RECS = 1
+NUM_INTERNATIONAL_RECS = 4
+TOTAL_RECS = (NUM_GENRE_PROFILE_RECS * NUM_TOP_GENRE_PROFILES) + NUM_RECENCY_RECS + NUM_OLD_RECS + NUM_OBSCURE_RECS
 USER_PROFILE_FEEDBACK_FACTOR = 0.05
 RECENCY_FEEDBACK_FACTOR = 0.05
 WILDCARD_FEEDBACK_FACTOR = 0.2
@@ -30,7 +32,9 @@ diffDateRated = datetime(1, 1, 1)
 minDateRated = datetime.now()
 genreProfiles = []
 recencyProfile = np.zeros(0)
-wildcardProfile = np.zeros(0)
+oldProfiles = []
+obscureProfiles = []
+internationalProfiles = []
 vectorProfileChanges = []
 recs = []
 recStates = [0] * TOTAL_RECS
@@ -45,7 +49,9 @@ app = Flask(__name__)
 def resetGlobalVariables():
     global genreProfiles
     global recencyProfile
-    global wildcardProfile
+    global oldProfiles
+    global obscureProfiles
+    global internationalProfiles
     global vectorProfileChanges
     global allFilmDataUnseen
     global recs
@@ -58,7 +64,9 @@ def resetGlobalVariables():
 
     genreProfiles = []
     recencyProfile = np.zeros(0)
-    wildcardProfile = np.zeros(0)
+    oldProfiles = []
+    obscureProfiles = []
+    internationalProfiles = []
     vectorProfileChanges = []
     allFilmDataUnseen = {}
     recs = []
@@ -124,6 +132,9 @@ def initRec():
     global allLanguagesLength
     global genreProfiles
     global recencyProfile
+    global oldProfiles
+    global obscureProfiles
+    global internationalProfiles
 
     try:
         userFilmDataList = []
@@ -233,25 +244,21 @@ def initRec():
                                         cachedUserRatingScalars, cachedDateRatedScalars)
     # printStringifiedVector(recencyProfile, cache['allGenres'], cache['allLanguages'])
 
-    # initWildcardProfile()
-    # printStringifiedVector(wildcardProfile, cache['allGenres'], cache['allLanguages'])
+    oldProfiles = initOldProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES)
+    # for profile in oldProfiles:
+    #     printStringifiedVector(profile, cache['allGenres'], cache['allLanguages'])
+
+    obscureProfiles = initObscureProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES)
+    # for profile in obscureProfiles:
+    #     printStringifiedVector(profile, cache['allGenres'], cache['allLanguages'])
+
+    internationalProfiles = initInternationalProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES, cache['allLanguages'], allGenresLength)
+    for profile in internationalProfiles:
+        printStringifiedVector(profile, cache['allGenres'], cache['allLanguages'])
 
     generateRecs()
 
     return jsonify(recs), 200
-
-
-# def initWildcardProfile():
-#     global wildcardProfile
-#     wildcardProfile = np.zeros(profileVectorLength)
-#
-#     for i in range(0, profileVectorLength):
-#         # don't invert imdbRating, runtime, or numVotes
-#         if i != 1 and i != 2 and i != 3:
-#             weightHalf = getWeightByVectorIndex(i) / 2.0
-#             wildcardProfile[i] = weightHalf - (userProfile[i] - weightHalf)  # invert the vector feature
-#         else:
-#             wildcardProfile[i] = userProfile[i]
 
 
 def generateRecs():
@@ -264,7 +271,15 @@ def generateRecs():
         getFilmRecs(genreProfiles[i]['genre'], allFilmDataKeys, NUM_GENRE_PROFILE_RECS, genreProfiles[i]['profile'])
 
     getFilmRecs("recency", allFilmDataKeys, NUM_RECENCY_RECS, recencyProfile)
-    # getFilmRecs("wildcard", allFilmDataKeys)  # generate wildcard recs
+
+    for oldProfile in oldProfiles:
+        getFilmRecs("old", allFilmDataKeys, NUM_OLD_RECS, oldProfile)
+        
+    for obscureProfile in obscureProfiles:
+        getFilmRecs("obscure", allFilmDataKeys, NUM_OBSCURE_RECS, obscureProfile)
+
+    for internationalProfile in internationalProfiles:
+        getFilmRecs("international", allFilmDataKeys, NUM_INTERNATIONAL_RECS, internationalProfile)
 
 
 def getFilmRecs(recType, allFilmDataKeys, maxNumberOfRecs, profileVector):
@@ -327,7 +342,7 @@ def response():
 def changeVector(index, add, recType):
     global userProfile
     global recencyProfile
-    global wildcardProfile
+    global oldProfile
     global vectorProfileChanges
 
     recVector = allFilmDataVectorized[recs[index]['id']]
@@ -335,7 +350,7 @@ def changeVector(index, add, recType):
     # todo can these repetitive if-else chains be simplified?
 
     if recType == "wildcard":
-        vectorChange = (recVector - wildcardProfile) * WILDCARD_FEEDBACK_FACTOR
+        vectorChange = (recVector - oldProfile) * WILDCARD_FEEDBACK_FACTOR
     elif recType == "recency":
         vectorChange = (recVector - recencyProfile) * RECENCY_FEEDBACK_FACTOR
     elif recType == "user":
@@ -348,7 +363,7 @@ def changeVector(index, add, recType):
     # if the rec was liked
     if add:
         if recType == "wildcard":
-            wildcardProfile += vectorChange
+            oldProfile += vectorChange
         elif recType == "recency":
             recencyProfile += vectorChange
         elif recType == "user":
@@ -359,7 +374,7 @@ def changeVector(index, add, recType):
     # else, the rec was disliked
     else:
         if recType == "wildcard":
-            wildcardProfile -= vectorChange
+            oldProfile -= vectorChange
         elif recType == "recency":
             recencyProfile -= vectorChange
         elif recType == "user":
@@ -370,7 +385,7 @@ def changeVector(index, add, recType):
 
     # after changing vector parameters, ensure that all vector features are >= 0.0 && <= 1.0
     if recType == "wildcard":
-        keepVectorBoundary(wildcardProfile, profileVectorLength)
+        keepVectorBoundary(oldProfile, profileVectorLength)
     elif recType == "recency":
         keepVectorBoundary(recencyProfile, profileVectorLength)
     elif recType == "user":
@@ -402,7 +417,7 @@ def undoResponse():
 def undoChange(index, add, recType):
     global userProfile
     global recencyProfile
-    global wildcardProfile
+    global oldProfile
     global vectorProfileChanges
 
     vectorChange = vectorProfileChanges[index]
@@ -411,7 +426,7 @@ def undoChange(index, add, recType):
     # if the film was previously disliked
     if add:
         if recType == "wildcard":
-            wildcardProfile += vectorChange
+            oldProfile += vectorChange
         elif recType == "recency":
             recencyProfile += vectorChange
         elif recType == "user":
@@ -423,7 +438,7 @@ def undoChange(index, add, recType):
     # else, the film was previously liked
     else:
         if recType == "wildcard":
-            wildcardProfile -= vectorChange
+            oldProfile -= vectorChange
         elif recType == "recency":
             recencyProfile -= vectorChange
         elif recType == "user":

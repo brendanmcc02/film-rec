@@ -2,7 +2,7 @@ import numpy as np
 
 YEAR_WEIGHT = 0.5
 IMDB_RATING_WEIGHT = 1.0
-NUM_OF_VOTES_WEIGHT = 0.3
+NUM_OF_VOTES_WEIGHT = 1.0
 RUNTIME_WEIGHT = 0.3
 GENRE_WEIGHT = 0.75
 LANGUAGE_WEIGHT = 0.3
@@ -82,8 +82,8 @@ def cosineSimilarity(a, b, aMagnitude, bMagnitude):
     return np.dot(a, b) / (aMagnitude * bMagnitude)
 
 
-def keepVectorBoundary(vector, PROFILE_VECTOR_LENGTH):
-    for i in range(0, PROFILE_VECTOR_LENGTH):
+def keepVectorBoundary(vector, profileVectorLength):
+    for i in range(0, profileVectorLength):
         if vector[i] < 0.0:
             vector[i] = 0.0
         elif vector[i] > 1.0:
@@ -92,7 +92,7 @@ def keepVectorBoundary(vector, PROFILE_VECTOR_LENGTH):
 
 def printStringifiedVector(vector, allGenres, allLanguages):
     print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUM_OF_VOTES_WEIGHT: {NUM_OF_VOTES_WEIGHT}, RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, "
-          f"GENRE_WEIGHT: {GENRE_WEIGHT}, LANGUAGE_WEIGHT: {LANGUAGE_WEIGHT}\n")
+          f"GENRE_WEIGHT: {GENRE_WEIGHT}\nLANGUAGE_WEIGHT: {LANGUAGE_WEIGHT}")
     stringifiedVector = (f"Year: {round(vector[PROFILE_YEAR_INDEX], 3)}\n"
                          f"IMDb Rating: {round(vector[PROFILE_IMDB_RATING_INDEX], 3)}\n"
                          f"NumOfVotes: {round(vector[PROFILE_NUM_OF_VOTES_INDEX], 3)}\n"
@@ -177,15 +177,72 @@ def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, ma
         return np.zeros(profileVectorLength)
     
 
+# def initUserProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength, cachedUserRatingScalars, 
+#                     cachedDateRatedScalars):
+#     userProfile = np.zeros(profileVectorLength)
+#     weightedAverageSum = 0.0
+
+#     for imdbFilmId in userFilmDataIds:
+#         userProfile += userFilmDataVectorized[imdbFilmId]
+#         weightedAverageSum += (cachedUserRatingScalars[imdbFilmId] * cachedDateRatedScalars[imdbFilmId])
+
+#     if weightedAverageSum > 0.0:
+#         userProfile = np.divide(userProfile, weightedAverageSum)
+#         return userProfile
+#     else:
+#         return np.zeros(profileVectorLength)
+
+
+def initOldProfiles(genreProfiles, numTopGenreProfiles):
+    oldProfiles = []
+
+    for i in range(0, numTopGenreProfiles):
+        oldProfiles.append(np.copy(genreProfiles[i]['profile']))
+        oldProfiles[i][PROFILE_YEAR_INDEX] = 0.0
+
+    return oldProfiles
+
+
+def initObscureProfiles(genreProfiles, numTopGenreProfiles):
+    obscureProfiles = []
+
+    for i in range(0, numTopGenreProfiles):
+        obscureProfiles.append(np.copy(genreProfiles[i]['profile']))
+        obscureProfiles[i][PROFILE_NUM_OF_VOTES_INDEX] = 0.0
+
+    return obscureProfiles
+
+
+def initInternationalProfiles(genreProfiles, numTopGenreProfiles, allLanguages, allGenresLength):
+    internationalProfiles = []
+
+    for i in range(0, numTopGenreProfiles):
+        internationalProfiles.append(np.copy(genreProfiles[i]['profile']))
+
+        languageStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
+        maxLanguageIndex = languageStartIndex
+        maxLanguageValue = internationalProfiles[i][languageStartIndex]
+        
+        for index in range(languageStartIndex, (languageStartIndex + len(allLanguages))):
+            if internationalProfiles[i][index] > maxLanguageValue:
+                maxLanguageValue = internationalProfiles[i][index]
+                maxLanguageIndex = index
+
+        internationalProfiles[i][maxLanguageIndex] = 0.0
+        curveAccordingToMax(internationalProfiles[i], allLanguages, LANGUAGE_WEIGHT, languageStartIndex)
+
+    return internationalProfiles
+
+
 # used to curve genre or languages vectors according to max value
-def curveAccordingToMax(userProfile, list, weight, startIndex):
+def curveAccordingToMax(profileVector, list, weight, startIndex):
     userProfileGenreEndIndex = startIndex + len(list)
-    minValue = userProfile[startIndex]
-    maxValue = userProfile[startIndex]
+    minValue = profileVector[startIndex]
+    maxValue = profileVector[startIndex]
 
     for index in range(startIndex, userProfileGenreEndIndex):
-        minValue = min(minValue, userProfile[index])
-        maxValue = max(maxValue, userProfile[index])
+        minValue = min(minValue, profileVector[index])
+        maxValue = max(maxValue, profileVector[index])
 
     diffValue = maxValue - minValue
 
@@ -194,8 +251,8 @@ def curveAccordingToMax(userProfile, list, weight, startIndex):
         raise ZeroDivisionError
 
     for index in range(startIndex, userProfileGenreEndIndex):
-        userProfile[index] = (userProfile[index] - minValue) / diffValue
-        userProfile[index] *= weight
+        profileVector[index] = (profileVector[index] - minValue) / diffValue
+        profileVector[index] *= weight
 
 
 def getWeightByVectorIndex(vectorIndex, allGenresLength):

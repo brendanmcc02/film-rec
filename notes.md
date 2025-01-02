@@ -1,7 +1,7 @@
-# Wildcard Profile
+# what I was doing last
 
-Purpose: **novelty** in recs. serendipity is a bit harder to capture
-
+* make international films work
+* why does japanese in one of the profiles have 0.26 when the scaling should be up to 0.3?
 
 # Clustering userFilmData
 

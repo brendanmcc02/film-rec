@@ -69,7 +69,7 @@ preprocessing
 
 # Recommendation Algorithm Round 2
 
-- [ ] get rid of countries? having country + language might be diminishing returns
+- [x] get rid of countries. having country + language might be diminishing returns
 
 ## Genre Profiles
 - [x] create 23 user profiles, modify each of them through iteration of `userFilmData`
@@ -78,8 +78,17 @@ preprocessing
 - [x] pick top k profiles ranked on magnitude
 - [x] show the recommendations of these films
 
-## Wildcard Profile
-- [ ] brainstorm ideas
+## Wildcard Profiles
+
+### Old Profile
+- [x] implement basic version
+- [x] implement advanced version with multiple genres
+
+### Obscure Profile
+- [x] implement basic version
+- [x] implement advanced version with multiple genres
+
+### International Profile
 
 # Improving Efficiency
 - [ ] cluster allFilmDataVec to make cosine sims more performant
@@ -96,6 +105,7 @@ countries, poster)
 - [ ] is it worth curving genres/languages? atm I don't do it
 - [ ] play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films
         the user watched? e.g. 5%?
+- [ ] better results if you fix `imdbRating = 1.0`?
 
 # Frontend
 - [x] do text div 
