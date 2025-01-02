@@ -6,7 +6,6 @@ import time
 import requests
 from vectorize import *
 
-YEAR_WEIGHT = 0.3
 RUNTIME_THRESHOLD = 40
 NUM_VOTES_THRESHOLD = 25000
 
@@ -119,7 +118,6 @@ def main():
 
     allFilmDataKeys = list(allFilmData.keys())
 
-    # this is needed for normalising vector values.
     minImdbRating = allFilmData[allFilmDataKeys[0]]['imdbRating']
     maxImdbRating = allFilmData[allFilmDataKeys[0]]['imdbRating']
     minYear = allFilmData[allFilmDataKeys[0]]['year']
@@ -266,7 +264,6 @@ def main():
 
     print(f"\nVectorizing all-film-data.json\n")
 
-    # perform some pre-computation to avoid repetitive computation
     diffImdbRating = maxImdbRating - minImdbRating
     diffNumberOfVotes = maxNumberOfVotes - minNumberOfVotes
     diffRuntime = maxRuntime - minRuntime
@@ -276,20 +273,26 @@ def main():
         print("diffYear = 0. Error with minYear & maxYear.")
         raise ZeroDivisionError
 
-    # TODO do cachedNormalizedRuntimes & other if necessary
-
     cachedNormalizedYears = {}
-    for y in range(minYear, maxYear + 1):
-        cachedNormalizedYears[str(y)] = ((y - minYear) / diffYear) * YEAR_WEIGHT
+    for year in range(minYear, maxYear + 1):
+        cachedNormalizedYears[str(year)] = ((year - minYear) / diffYear) * YEAR_WEIGHT
 
     if diffImdbRating == 0.0:
-        print("diffImdbRating = 0.0 Error with minImdbRating & maxImdbRating.")
+        print("diffImdbRating = 0.0, Error with minImdbRating & maxImdbRating.")
         raise ZeroDivisionError
 
     cachedNormalizedImdbRatings = {}
-    for i in np.arange(minImdbRating, maxImdbRating + 0.1, 0.1):
-        i = round(i, 1)
-        cachedNormalizedImdbRatings[str(i)] = (i - minImdbRating) / diffImdbRating
+    for imdbRating in np.arange(minImdbRating, maxImdbRating + 0.1, 0.1):
+        imdbRating = round(imdbRating, 1)
+        cachedNormalizedImdbRatings[str(imdbRating)] = (imdbRating - minImdbRating) / diffImdbRating
+
+    if diffRuntime == 0:
+        print("diffRuntime = 0. Error with minRuntime & maxRuntime.")
+        raise ZeroDivisionError
+
+    cachedNormalizedRuntimes = {}
+    for runtime in range(minRuntime, maxRuntime + 1):
+        cachedNormalizedRuntimes[str(runtime)] = ((runtime - minRuntime) / diffRuntime) * RUNTIME_WEIGHT
 
     allFilmDataVectorized = {}
     allFilmDataVectorizedMagnitudes = {}
@@ -301,10 +304,6 @@ def main():
         print("diffNumberOfVotes = 0. Error with minNumberOfVotes & maxNumberOfVotes.")
         raise ZeroDivisionError
 
-    if diffRuntime == 0:
-        print("diffRuntime = 0. Error with minRuntime & maxRuntime.")
-        raise ZeroDivisionError
-
     for filmId in allFilmDataKeys:
         if filmId not in allFilmData:
             print(f"Film ID not found in allFilmData: {filmId}.")
@@ -312,7 +311,7 @@ def main():
             allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allLanguages,
                                                                allCountries, cachedNormalizedYears,
                                                                cachedNormalizedImdbRatings, minNumberOfVotes,
-                                                               diffNumberOfVotes, minRuntime, diffRuntime))
+                                                               diffNumberOfVotes, cachedNormalizedRuntimes))
             if profileVectorLength == 0:
                 profileVectorLength = len(allFilmDataVectorized[filmId])
 
@@ -327,8 +326,8 @@ def main():
 
     cache = {'allGenres': allGenres, 'allLanguages': allLanguages, 'allCountries': allCountries,
              'normalizedYears': cachedNormalizedYears, 'normalizedImdbRatings': cachedNormalizedImdbRatings,
-             'minNumberOfVotes': minNumberOfVotes, 'diffNumberOfVotes': diffNumberOfVotes, 'minRuntime': minRuntime,
-             'diffRuntime': diffRuntime, 'profileVectorLength': profileVectorLength}
+             'normalizedRuntimes': cachedNormalizedRuntimes, 'minNumberOfVotes': minNumberOfVotes, 
+             'diffNumberOfVotes': diffNumberOfVotes, 'profileVectorLength': profileVectorLength}
 
     with open('../database/cache.json', 'w') as convert_file:
         convert_file.write(json.dumps(cache, indent=4, separators=(',', ': ')))

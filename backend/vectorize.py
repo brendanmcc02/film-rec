@@ -1,9 +1,10 @@
 import numpy as np
-from init_all_film_data import YEAR_WEIGHT
+YEAR_WEIGHT = 0.3
+NUM_VOTES_WEIGHT = 0.3
 RUNTIME_WEIGHT = 0.3
 GENRE_WEIGHT = 0.75
-COUNTRY_WEIGHT = 0.3
-LANGUAGE_WEIGHT = 0.3
+COUNTRY_WEIGHT = 0.5
+LANGUAGE_WEIGHT = 0.5
 PROFILE_YEAR_INDEX = 0
 PROFILE_IMDB_RATING_INDEX = 1
 PROFILE_NUM_OF_VOTES_INDEX = 2
@@ -13,7 +14,7 @@ RECENCY_PROFILE_DAYS_THRESHOLD = 30
 
 
 def vectorizeFilm(film, allGenres, allLanguages, allCountries, cachedNormalizedYears, cachedNormalizedImdbRatings,
-                  minNumberOfVotes, diffNumberOfVotes, minRuntime, diffRuntime):
+                  minNumberOfVotes, diffNumberOfVotes, cachedNormalizedRuntimes):
     vector = []
 
     if isFilmInvalid(film):
@@ -36,15 +37,14 @@ def vectorizeFilm(film, allGenres, allLanguages, allCountries, cachedNormalizedY
         print("diffNumberOfVotes = 0.")
         raise ZeroDivisionError
 
-    numberOfVotesNorm = (film['numberOfVotes'] - minNumberOfVotes) / diffNumberOfVotes
+    numberOfVotesNorm = ((film['numberOfVotes'] - minNumberOfVotes) / diffNumberOfVotes) * NUM_VOTES_WEIGHT
     vector.append(numberOfVotesNorm)
 
-    if diffRuntime == 0:
-        print("diffNumberOfVotes = 0.")
-        raise ZeroDivisionError
-
-    runtimeNorm = ((film['runtime'] - minRuntime) / diffRuntime) * RUNTIME_WEIGHT
-    vector.append(runtimeNorm)
+    if str(film['runtime']) in cachedNormalizedRuntimes:
+        runtimeNorm = cachedNormalizedRuntimes[str(film['runtime'])]
+        vector.append(runtimeNorm)
+    else:
+        print(f"Error. Film runtime not in cached normalized runtimes. {str(film['runtime'])}")
 
     oneHotEncode(vector, film['genres'], allGenres)
     oneHotEncode(vector, film['languages'], allLanguages)
@@ -91,8 +91,8 @@ def keepVectorBoundary(vector, PROFILE_VECTOR_LENGTH):
 
 
 def printStringifiedVector(vector, allGenres, allCountries, allLanguages):
-    print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, COUNTRY_WEIGHT: {COUNTRY_WEIGHT}, "
-          f"LANGUAGE_WEIGHT: {LANGUAGE_WEIGHT}\n")
+    print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUM_OF_VOTES_WEIGHT: {NUM_VOTES_WEIGHT}, RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, "
+          f"LANGUAGE_WEIGHT: {LANGUAGE_WEIGHT}, COUNTRY_WEIGHT: {COUNTRY_WEIGHT}\n")
     stringifiedVector = (f"Year: {round(vector[PROFILE_YEAR_INDEX], 3)}\n"
                          f"IMDb Rating: {round(vector[PROFILE_IMDB_RATING_INDEX], 3)}\n"
                          f"NumOfVotes: {round(vector[PROFILE_NUM_OF_VOTES_INDEX], 3)}\n"
@@ -200,7 +200,7 @@ def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingS
 
     # TODO curve country and language vectors according to max value
 
-    # return a sorted list
+    # return sorted (descending) list
     return sorted(genreProfiles.items(), key=lambda item: item[1]['magnitude'], reverse=True)
 
 
@@ -232,7 +232,7 @@ def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, ma
             recencyProfile += userFilmDataVectorized[imdbFilmId]
             weightedAverageSum += (cachedUserRatingScalars[imdbFilmId] * cachedDateRatedScalars[imdbFilmId])
         else:
-            # .csv file is sorted by date, no need to look further
+            # file is sorted by date, no need to look further
             break
 
     if weightedAverageSum > 0.0:
@@ -246,8 +246,8 @@ def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, ma
         countriesStartIndex = languagesStartIndex + len(allLanguages)
         curveAccordingToMax(recencyProfile, allCountries, COUNTRY_WEIGHT, countriesStartIndex)
         return recencyProfile
-    
-    return np.zeros(profileVectorLength)
+    else:
+        return np.zeros(profileVectorLength)
     
 # used to curve country or languages vectors according to max value
 def curveAccordingToMax(userProfile, list, weight, startIndex):

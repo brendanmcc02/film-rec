@@ -213,7 +213,7 @@ def initRec():
     for imdbFilmId in userFilmDataKeys:
         vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allLanguages'], cache['allCountries'],
                                cache['normalizedYears'], cache['normalizedImdbRatings'], cache['minNumberOfVotes'],
-                               cache['diffNumberOfVotes'], cache['minRuntime'], cache['diffRuntime'])
+                               cache['diffNumberOfVotes'], cache['normalizedRuntimes'])
         # normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
         dateRatedScalar = (((userFilmData[imdbFilmId]['dateRated'] - minDateRated) / diffDateRated) *
                            (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
