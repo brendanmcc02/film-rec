@@ -89,6 +89,10 @@ preprocessing
 - [x] implement advanced version with multiple genres
 
 ### International Profile
+- [x] implement basic version
+- [ ] fix bugs
+
+### 'Loved' Profile (only 9- & 10-star films)
 
 # Improving Efficiency
 - [ ] cluster allFilmDataVec to make cosine sims more performant
