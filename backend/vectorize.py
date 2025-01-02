@@ -1,8 +1,8 @@
 import numpy as np
 
-YEAR_WEIGHT = 0.75
+YEAR_WEIGHT = 0.5
 IMDB_RATING_WEIGHT = 1.0
-NUM_OF_VOTES_WEIGHT = 0.5
+NUM_OF_VOTES_WEIGHT = 0.3
 RUNTIME_WEIGHT = 0.3
 GENRE_WEIGHT = 0.75
 LANGUAGE_WEIGHT = 0.3
@@ -185,6 +185,7 @@ def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, ma
         return recencyProfile
     else:
         return np.zeros(profileVectorLength)
+    
     
 # used to curve country or languages vectors according to max value
 def curveAccordingToMax(userProfile, list, weight, startIndex):

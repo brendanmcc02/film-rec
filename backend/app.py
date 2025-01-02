@@ -10,8 +10,8 @@ from init_all_film_data import YEAR_WEIGHT, RUNTIME_THRESHOLD, NUM_VOTES_THRESHO
 from letterboxd_conversion import expectedLetterboxdFileFilmAttributes, convertLetterboxdFormatToImdbFormat
 
 DATE_RATED_WEIGHT = 0.5
-NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
-NUM_TOP_GENRE_PROFILES = 5
+NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 10
+NUM_TOP_GENRE_PROFILES = 3
 NUM_GENRE_PROFILE_RECS = 2
 NUM_RECENCY_RECS = 2
 NUM_WILDCARD_RECS = 0
@@ -238,10 +238,10 @@ def initRec():
     #     print(f"{genreProfile['genre']}:")
     #     printStringifiedVector(genreProfile['profile'], cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
-    # recencyProfile = initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated, profileVectorLength, 
-    #                                     cachedUserRatingScalars, cachedDateRatedScalars, allGenresLength, cache['allCountries'],
-    #                                     cache['allLanguages'], cache['allGenres'])
-    # printStringifiedVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+    recencyProfile = initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated, profileVectorLength, 
+                                        cachedUserRatingScalars, cachedDateRatedScalars, allGenresLength, cache['allCountries'],
+                                        cache['allLanguages'], cache['allGenres'])
+    printStringifiedVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     # initWildcardProfile()
     # printStringifiedVector(wildcardProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
@@ -274,7 +274,7 @@ def generateRecs():
     for i in range(0, NUM_TOP_GENRE_PROFILES):
         getFilmRecs(genreProfiles[i]['genre'], allFilmDataKeys, NUM_GENRE_PROFILE_RECS, genreProfiles[i]['profile'])
 
-    # getFilmRecs("recency", allFilmDataKeys, NUM_RECENCY_RECS, recencyProfile)
+    getFilmRecs("recency", allFilmDataKeys, NUM_RECENCY_RECS, recencyProfile)
     # getFilmRecs("wildcard", allFilmDataKeys)  # generate wildcard recs
 
 
@@ -295,14 +295,14 @@ def getFilmRecs(recType, allFilmDataKeys, maxNumberOfRecs, profileVector):
 
     isDuplicateRec = False
 
-    for i in range(0, maxNumberOfRecs):
+    i = 0
+    while i < maxNumberOfRecs:
         filmId = cosineSimilarities[i][0]
         # check if the recommended film has already been recommended earlier
         for rec in recs:
             if rec['id'] == filmId:
                 maxNumberOfRecs += 1
                 isDuplicateRec = True
-                print("duplicate rec: " + str(rec['id']))
 
         if not isDuplicateRec:
             film = allFilmDataUnseen[filmId]
@@ -313,6 +313,7 @@ def getFilmRecs(recType, allFilmDataKeys, maxNumberOfRecs, profileVector):
             recs.append(film)
 
         isDuplicateRec = False
+        i += 1
 
 
 # called when user responds (thumbs up/down) to a film

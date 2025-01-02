@@ -68,6 +68,8 @@ preprocessing
 - [x] add specialised way to calculate vector magnitude (i.e. dont over prioritise multi-genre/lang/country films unfairly)
 
 # Recommendation Algorithm Round 2
+
+## Genre Profiles
 - [x] create 23 user profiles, modify each of them through iteration of `userFilmData`
 - [x] ~~use weighted or normal average?~~ using weighted
 - [x] apply `NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD` weight to profile after iteration of `userFilmData`
@@ -84,7 +86,12 @@ countries, poster)
 - [x] check functionality of backend works after offline phase additions
 
 # Testing & Evaluation
-- [ ] test if specialized vector magnitude makes a better difference
+- [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
+- [ ] play around with different `*_WEIGHT` values
+- [ ] does curving genres make a difference? atm I don't do it
+- [ ] play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films
+        the user watched? e.g. 5%?
+- [ ] keep one of languages or countries? having both might be noisy/diminishing returns
 
 # Frontend
 - [x] do text div 
@@ -166,5 +173,4 @@ my-film-data-vec.json to file
 - [ ] letterboxd conversion: rather than relying only on `diary.csv` or `ratings.csv`, append latest `Watched Date` to 
 corresponding entry in `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in 
 `ratings.csv`
-- [ ] ~~augment directors~~ you have to make a separate TMBD api request to get director, not worth it imo
 - [x] change some files to get rid of hyphens, so I don't need an imported library to import them
