@@ -8,7 +8,6 @@ import numpy as np
 import requests
 import json
 import time
-from vectorize import calculateUnbiasedVectorMagnitude
 
 
 def main():

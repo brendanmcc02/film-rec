@@ -10,8 +10,8 @@ from init_all_film_data import YEAR_WEIGHT, RUNTIME_THRESHOLD, NUM_VOTES_THRESHO
 from letterboxd_conversion import expectedLetterboxdFileFilmAttributes, convertLetterboxdFormatToImdbFormat
 
 DATE_RATED_WEIGHT = 0.5
-NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 10
-NUM_TOP_GENRE_PROFILES = 3
+NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
+NUM_TOP_GENRE_PROFILES = 5
 NUM_GENRE_PROFILE_RECS = 2
 NUM_RECENCY_RECS = 2
 NUM_WILDCARD_RECS = 0
@@ -201,7 +201,7 @@ def initRec():
 
     userFilmDataVectorized = {}
 
-    # init a dict to store pre-computed scalar values values
+    # init a dict with pre-computed scalar values
     cachedDateRatedScalars = {}
     cachedUserRatingScalars = {}
     
@@ -223,7 +223,6 @@ def initRec():
         userRatingScalar = round((userFilmData[imdbFilmId]['userRating'] / 10.0), 1)
         cachedUserRatingScalars[imdbFilmId] = userRatingScalar
 
-        # recall that vectors are scalar multiplied by userRating & dateRated
         userFilmDataVectorized[imdbFilmId] = vector * userRatingScalar * dateRatedScalar
 
     profileVectorLength = cache['profileVectorLength']
@@ -236,13 +235,13 @@ def initRec():
                       NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
 
     # for genreProfile in genreProfiles:
-    #     print(f"{genreProfile[0]}:")
-    #     printStringifiedVector(genreProfile[1]['profile'], cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+    #     print(f"{genreProfile['genre']}:")
+    #     printStringifiedVector(genreProfile['profile'], cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
-    recencyProfile = initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated, profileVectorLength, 
-                                        cachedUserRatingScalars, cachedDateRatedScalars, allGenresLength, cache['allCountries'],
-                                        cache['allLanguages'], cache['allGenres'])
-    printStringifiedVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
+    # recencyProfile = initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated, profileVectorLength, 
+    #                                     cachedUserRatingScalars, cachedDateRatedScalars, allGenresLength, cache['allCountries'],
+    #                                     cache['allLanguages'], cache['allGenres'])
+    # printStringifiedVector(recencyProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
 
     # initWildcardProfile()
     # printStringifiedVector(wildcardProfile, cache['allGenres'], cache['allCountries'], cache['allLanguages'])
@@ -260,28 +259,10 @@ def initRec():
 #     for i in range(0, profileVectorLength):
 #         # don't invert imdbRating, runtime, or numVotes
 #         if i != 1 and i != 2 and i != 3:
-#             weightHalf = getWeightByVectorIndex(i) / 2.0
+#             weightHalf = getWeightByVectorIndex(i, ) / 2.0
 #             wildcardProfile[i] = weightHalf - (userProfile[i] - weightHalf)  # invert the vector feature
 #         else:
 #             wildcardProfile[i] = userProfile[i]
-
-
-def getWeightByVectorIndex(vectorIndex):
-    # TODO this is outdated, country and language have weights now
-    # any index over 27 in the vector is either a country or language
-    if vectorIndex >= 27:
-        return 1.0
-    match vectorIndex:
-        case 0:  # year
-            return YEAR_WEIGHT
-        case 1:  # imdbRating
-            return 1.0
-        case 2:  # numVotes
-            return 1.0
-        case 3:  # runtime
-            return RUNTIME_WEIGHT
-        case _:  # genres
-            return GENRE_WEIGHT
 
 
 def generateRecs():
@@ -291,9 +272,9 @@ def generateRecs():
     allFilmDataKeys = list(allFilmDataUnseen.keys())
 
     for i in range(0, NUM_TOP_GENRE_PROFILES):
-        getFilmRecs(genreProfiles[i][0], allFilmDataKeys, NUM_GENRE_PROFILE_RECS, genreProfiles[i][1]['profile'])
+        getFilmRecs(genreProfiles[i]['genre'], allFilmDataKeys, NUM_GENRE_PROFILE_RECS, genreProfiles[i]['profile'])
 
-    getFilmRecs("recency", allFilmDataKeys, NUM_RECENCY_RECS, recencyProfile)
+    # getFilmRecs("recency", allFilmDataKeys, NUM_RECENCY_RECS, recencyProfile)
     # getFilmRecs("wildcard", allFilmDataKeys)  # generate wildcard recs
 
 
@@ -301,10 +282,7 @@ def getFilmRecs(recType, allFilmDataKeys, maxNumberOfRecs, profileVector):
     global recs
     global allFilmDataVectorizedMagnitudes
 
-    # pre-compute the vector magnitude to make cosine sim calculations more efficient
-    profileVectorMagnitude = calculateUnbiasedVectorMagnitude(profileVector, allGenresLength, allLanguagesLength,
-                                                              allCountriesLength)
-
+    profileVectorMagnitude = np.linalg.norm(profileVector)
     cosineSimilarities = {}
 
     for filmId in allFilmDataKeys:
