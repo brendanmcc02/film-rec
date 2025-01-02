@@ -69,6 +69,8 @@ preprocessing
 
 # Recommendation Algorithm Round 2
 
+- [ ] get rid of countries? having country + language might be diminishing returns
+
 ## Genre Profiles
 - [x] create 23 user profiles, modify each of them through iteration of `userFilmData`
 - [x] ~~use weighted or normal average?~~ using weighted
@@ -76,7 +78,7 @@ preprocessing
 - [x] pick top k profiles ranked on magnitude
 - [x] show the recommendations of these films
 
-## Wildcard
+## Wildcard Profile
 - [ ] brainstorm ideas
 
 # Improving Efficiency
@@ -91,10 +93,9 @@ countries, poster)
 # Testing & Evaluation
 - [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
 - [ ] play around with different `*_WEIGHT` values
-- [ ] does curving genres make a difference? atm I don't do it
+- [ ] is it worth curving genres/languages? atm I don't do it
 - [ ] play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films
         the user watched? e.g. 5%?
-- [ ] keep one of languages or countries? having both might be noisy/diminishing returns
 
 # Frontend
 - [x] do text div 

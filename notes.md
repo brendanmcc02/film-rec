@@ -1,13 +1,18 @@
+# Wildcard Profile
+
+Purpose: **novelty** in recs. serendipity is a bit harder to capture
+
+
 # Clustering userFilmData
 
 *worry about cold start problem later*
 
-# Improving cosine sim calculations by Clustering allFilmDataVec
+## Improving cosine sim calculations by Clustering allFilmDataVec
 An idea to improve cosine sim calculations: instead of performing user profile dot products with **every film**, you 
 cluster the films and only perform cosine sim comparisons on individual films within clusters with relatively high 
 cosine similarity.
 
-**How to concretely implement this**
+### How to concretely implement this
 
 1. Cluster allFilmDataVec
 2. When you want to start doing cosine sim between profile vectors and films, instead
@@ -17,11 +22,11 @@ do cosine sim between the profile vector and the clusters
    * I was thinking about choosing top-3 clusters instead of just 1, but I'm not sure this will
    yield a big difference as the user profile will already have been clustered
 
-## Random thoughts
+# Random thoughts
 
 * rebrand as boxd-recs: augmentation to letterboxd? marketing
 
-## Main Takeaways from the Recommender Systems textbook
+# Main Takeaways from the Recommender Systems textbook
 * Recall the aspects of a good recommender system - think about novelty, diversity and serendipity
   * **Diversity** - I'm thinking of implementing clustering as opposed to just one user profile
   * **Novelty** - Still need to explore this, atm I'm thinking of a wildcard profile
@@ -37,78 +42,10 @@ cosine similarity
 * Think about ways to add **interpretation**, e.g. *"because you liked 1980s rom-coms..."*. This adds a layer of
 sophistication to your recommender system and increases users trust in the recommendations
 
-## Similarity measures
-1. Cosine similarity - cosine of the angle between 2 vectors
-2. dot product
-3. Euclidean distance
-
-## For the potential future
+# For the potential future
 1. **Collaborative filtering:** can be introduced by asking other people to upload their imdb/letterboxd data. (reddit 
 post, social media post, asking friends).
 2. account creation, cookies. users can add to their IMDb/letterboxd watchlist through the website (integrate them 
 somehow)
 3. ~~accommodate users without imdb/letterboxd account, they can search a DB and rate films on the website, user profile
 generated from their ratings~~
-
-## CHAT GPT
-
-Great choice! Content-based filtering can work well when you have user preferences and detailed information about items.
-Here's a simplified step-by-step guide on how you could implement a content-based movie recommendation system using your
-two datasets:
-
-### 1. Data Preparation:
-
-#### Movies You Like Dataset:
-- This dataset should contain information about movies you've liked or interacted with.
-- Include details like movie ID, title, genres, actors, directors, release year, etc.
-- Create a user profile based on the features of the movies you liked.
-
-#### IMDb Movies Dataset:
-- This dataset should contain comprehensive information about all movies on IMDb.
-- Extract relevant features like movie ID, title, genres, actors, directors, release year, etc.
-- Create a vector representation for each movie based on these features.
-
-### 2. Feature Extraction:
-
-- Represent each movie in both datasets as a vector. You can use one-hot encoding for categorical features like genres 
-and actors.
-- Normalize numerical features such as release year.
-
-### 3. User Profile Creation:
-
-- Create a user profile vector based on the features of the movies you like.
-- Combine the feature vectors of the movies you like, possibly with weighted averages based on your preferences.
-
-### 4. Similarity Calculation:
-
-- Use a similarity metric (e.g., cosine similarity) to measure the similarity between the user profile vector and the 
-vectors of all movies in the IMDb dataset.
-- Calculate the similarity scores for each movie.
-
-### 5. Recommendation Generation:
-
-- Rank the movies based on their similarity scores.
-- Recommend the top N movies with the highest similarity scores that the user hasn't interacted with.
-
-### 6. Integration with Web App:
-
-- Implement the recommendation logic in your backend using your chosen programming language and framework.
-- Expose an API endpoint that takes a user's liked movies as input and returns recommended movies.
-
-### 7. Testing and Evaluation:
-
-- Evaluate the system using metrics like precision, recall, or Mean Squared Error (MSE).
-- Fine-tune your algorithm based on user feedback and evaluation results.
-
-### Additional Considerations:
-
-- **Weighting Features:** You might want to experiment with different weights for features based on their importance in 
-user preferences.
-- **Dynamic User Profiles:** Allow users to update their preferences over time to improve the accuracy of 
-recommendations.
-- **Scale and Efficiency:** Depending on the size of your IMDb dataset, consider optimizing your recommendation
-- algorithm for efficiency.
-
-Remember that this is a simplified guide, and you might need to adapt these steps based on the specific details and 
-requirements of your project. Also, as you develop your system, it's essential to gather user feedback and continuously 
-refine your recommendation algorithm for better accuracy.

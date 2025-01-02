@@ -13,13 +13,15 @@ import time
 def main():
 
 
-    allFilmDataFile = open('../database/all-film-data.json')
-    allFilmData = json.load(allFilmDataFile)
-    allFilmDataKeys = list(allFilmData.keys())
+    file = open('../database/cached-tmdb-film-data.json')
+    dictionary = json.load(file)
+    keys = list(dictionary.keys())
 
-    for key in allFilmDataKeys:
-        if 'languages' not in allFilmData[key]:
-            print(str(key))
+    for key in keys:
+        del dictionary[key]['countries']
+
+    with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
+        convert_file.write(json.dumps(dictionary, indent=4, separators=(',', ': ')))
 
     #
     #
