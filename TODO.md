@@ -70,6 +70,7 @@ preprocessing
 # Recommendation Algorithm Round 2
 
 - [x] get rid of countries. having country + language might be diminishing returns
+- [x] do countries instead of languages BECAUSE ALVIN & THE CHIPMUNKS IS BEING RECOMMENDED AS A FOREIGN FILM
 
 ## Genre Profiles
 - [x] create 23 user profiles, modify each of them through iteration of `userFilmData`
@@ -90,7 +91,8 @@ preprocessing
 
 ### International Profile
 - [x] implement basic version
-- [ ] fix bugs
+- [x] use countries instead of languages (fuck Alvin & the Chipmunks)
+- [x] if GB or US is max, set both to 0.0 instead of only one of them
 
 ### 'Loved' Profile (only 9- & 10-star films)
 

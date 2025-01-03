@@ -41,7 +41,7 @@ recStates = [0] * TOTAL_RECS
 isImdbFile = True
 userFilmDataFilename = ""
 allGenresLength = 0
-allLanguagesLength = 0
+allCountriesLength = 0
 
 app = Flask(__name__)
 
@@ -60,7 +60,7 @@ def resetGlobalVariables():
     global isImdbFile
     global userFilmDataFilename
     global allGenresLength
-    global allLanguagesLength
+    global allCountriesLength
 
     genreProfiles = []
     recencyProfile = np.zeros(0)
@@ -75,7 +75,7 @@ def resetGlobalVariables():
     isImdbFile = True
     userFilmDataFilename = ""
     allGenresLength = 0
-    allLanguagesLength = 0
+    allCountriesLength = 0
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])
@@ -129,7 +129,7 @@ def initRec():
     global profileVectorLength
     global vectorProfileChanges
     global allGenresLength
-    global allLanguagesLength
+    global allCountriesLength
     global genreProfiles
     global recencyProfile
     global oldProfiles
@@ -184,7 +184,7 @@ def initRec():
                         "numberOfVotes": int(film['Num Votes']),
                         "runtime": int(film['Runtime (mins)']),
                         "genres": genres,
-                        "languages": allFilmData[filmId]['languages']
+                        "countries": allFilmData[filmId]['countries']
                     }
                 else:
                     print(f"Film in userFilmData not found in allFilmData, {filmId}\n")
@@ -211,11 +211,11 @@ def initRec():
     cachedUserRatingScalars = {}
     
     allGenresLength = len(cache['allGenres'])
-    allLanguagesLength = len(cache['allLanguages'])
+    allCountriesLength = len(cache['allCountries'])
 
     # vectorize user-film-data
     for imdbFilmId in userFilmDataKeys:
-        vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allLanguages'],
+        vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allCountries'],
                                cache['normalizedYears'], cache['normalizedImdbRatings'], cache['minNumberOfVotes'],
                                cache['diffNumberOfVotes'], cache['normalizedRuntimes'])
         # normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
@@ -238,23 +238,23 @@ def initRec():
                       cache['allGenres'], profileVectorLength, NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
     # for genreProfile in genreProfiles:
     #     print(f"{genreProfile['genre']}:")
-    #     printStringifiedVector(genreProfile['profile'], cache['allGenres'], cache['allLanguages'])
+    #     printStringifiedVector(genreProfile['profile'], cache['allGenres'], cache['allCountries'])
 
     recencyProfile = initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated, profileVectorLength, 
                                         cachedUserRatingScalars, cachedDateRatedScalars)
-    # printStringifiedVector(recencyProfile, cache['allGenres'], cache['allLanguages'])
+    # printStringifiedVector(recencyProfile, cache['allGenres'], cache['allCountries'])
 
     oldProfiles = initOldProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES)
     # for profile in oldProfiles:
-    #     printStringifiedVector(profile, cache['allGenres'], cache['allLanguages'])
+    #     printStringifiedVector(profile, cache['allGenres'], cache['allCountries'])
 
     obscureProfiles = initObscureProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES)
     # for profile in obscureProfiles:
-    #     printStringifiedVector(profile, cache['allGenres'], cache['allLanguages'])
+    #     printStringifiedVector(profile, cache['allGenres'], cache['allCountries'])
 
-    internationalProfiles = initInternationalProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES, cache['allLanguages'], allGenresLength)
+    internationalProfiles = initInternationalProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES, cache['allCountries'], allGenresLength)
     # for profile in internationalProfiles:
-    #     printStringifiedVector(profile, cache['allGenres'], cache['allLanguages'])
+    #     printStringifiedVector(profile, cache['allGenres'], cache['allCountries'])
 
     generateRecs()
 

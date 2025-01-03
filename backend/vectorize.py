@@ -212,7 +212,14 @@ def initInternationalProfiles(genreProfiles, numTopGenreProfiles, allCountries, 
                 maxCountryValue = internationalProfiles[i][index]
                 maxCountryIndex = index
 
-        internationalProfiles[i][maxCountryIndex] = 0.0
+        usIndex = allCountries.index("US") + countryStartIndex
+        gbIndex = allCountries.index("GB") + countryStartIndex
+        if maxCountryIndex == usIndex or maxCountryIndex == gbIndex:
+            internationalProfiles[i][usIndex] = 0.0
+            internationalProfiles[i][gbIndex] = 0.0
+        else:        
+            internationalProfiles[i][maxCountryIndex] = 0.0
+
         curveAccordingToMax(internationalProfiles[i], allCountries, COUNTRY_WEIGHT, countryStartIndex)
 
     return internationalProfiles
