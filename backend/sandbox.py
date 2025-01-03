@@ -18,7 +18,7 @@ def main():
     keys = list(dictionary.keys())
 
     for key in keys:
-        del dictionary[key]['countries']
+        del dictionary[key]['languages']
 
     with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
         convert_file.write(json.dumps(dictionary, indent=4, separators=(',', ': ')))

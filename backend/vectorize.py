@@ -1,11 +1,11 @@
 import numpy as np
 
-YEAR_WEIGHT = 0.5
+YEAR_WEIGHT = 1.0
 IMDB_RATING_WEIGHT = 1.0
 NUM_OF_VOTES_WEIGHT = 1.0
 RUNTIME_WEIGHT = 0.3
-GENRE_WEIGHT = 0.75
-LANGUAGE_WEIGHT = 0.3
+GENRE_WEIGHT = 1.0
+COUNTRY_WEIGHT = 1.0
 PROFILE_YEAR_INDEX = 0
 PROFILE_IMDB_RATING_INDEX = 1
 PROFILE_NUM_OF_VOTES_INDEX = 2
@@ -14,7 +14,7 @@ PROFILE_GENRE_START_INDEX = 4
 RECENCY_PROFILE_DAYS_THRESHOLD = 30
 
 
-def vectorizeFilm(film, allGenres, allLanguages, cachedNormalizedYears, cachedNormalizedImdbRatings,
+def vectorizeFilm(film, allGenres, allCountries, cachedNormalizedYears, cachedNormalizedImdbRatings,
                   minNumberOfVotes, diffNumberOfVotes, cachedNormalizedRuntimes):
     vector = []
 
@@ -48,13 +48,13 @@ def vectorizeFilm(film, allGenres, allLanguages, cachedNormalizedYears, cachedNo
         print(f"Error. Film runtime not in cached normalized runtimes. {str(film['runtime'])}")
 
     oneHotEncode(vector, film['genres'], allGenres, GENRE_WEIGHT)
-    oneHotEncode(vector, film['languages'], allLanguages, LANGUAGE_WEIGHT)
+    oneHotEncode(vector, film['countries'], allCountries, COUNTRY_WEIGHT)
 
     return np.array(vector)
 
 
 def isFilmInvalid(film):
-    expectedFilmKeys = ['year', 'imdbRating', 'numberOfVotes', 'runtime', 'genres', 'languages']
+    expectedFilmKeys = ['year', 'imdbRating', 'numberOfVotes', 'runtime', 'genres', 'countries']
 
     for key in expectedFilmKeys:
         if key not in film:
@@ -64,7 +64,7 @@ def isFilmInvalid(film):
     return False
 
 
-# used to one-hot encode genres or languages
+# used to one-hot encode genres or countries
 def oneHotEncode(vector, filmList, allList, weight):
     for element in allList:
         if element in filmList:
@@ -90,9 +90,9 @@ def keepVectorBoundary(vector, profileVectorLength):
             vector[i] = 1.0
 
 
-def printStringifiedVector(vector, allGenres, allLanguages):
+def printStringifiedVector(vector, allGenres, allCountries):
     print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUM_OF_VOTES_WEIGHT: {NUM_OF_VOTES_WEIGHT}, RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, "
-          f"GENRE_WEIGHT: {GENRE_WEIGHT}\nLANGUAGE_WEIGHT: {LANGUAGE_WEIGHT}")
+          f"GENRE_WEIGHT: {GENRE_WEIGHT}\nCOUNTRY_WEIGHT: {COUNTRY_WEIGHT}")
     stringifiedVector = (f"Year: {round(vector[PROFILE_YEAR_INDEX], 3)}\n"
                          f"IMDb Rating: {round(vector[PROFILE_IMDB_RATING_INDEX], 3)}\n"
                          f"NumOfVotes: {round(vector[PROFILE_NUM_OF_VOTES_INDEX], 3)}\n"
@@ -103,8 +103,8 @@ def printStringifiedVector(vector, allGenres, allLanguages):
         stringifiedVector += f"{genre}: {round(vector[i], 3)}\n"
         i = i + 1
 
-    for language in allLanguages:
-        stringifiedVector += f"{language}: {round(vector[i], 3)}\n"
+    for country in allCountries:
+        stringifiedVector += f"{country}: {round(vector[i], 3)}\n"
         i = i + 1
 
     print(f"\n{stringifiedVector}\n")
@@ -175,22 +175,6 @@ def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, ma
         return recencyProfile
     else:
         return np.zeros(profileVectorLength)
-    
-
-# def initUserProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength, cachedUserRatingScalars, 
-#                     cachedDateRatedScalars):
-#     userProfile = np.zeros(profileVectorLength)
-#     weightedAverageSum = 0.0
-
-#     for imdbFilmId in userFilmDataIds:
-#         userProfile += userFilmDataVectorized[imdbFilmId]
-#         weightedAverageSum += (cachedUserRatingScalars[imdbFilmId] * cachedDateRatedScalars[imdbFilmId])
-
-#     if weightedAverageSum > 0.0:
-#         userProfile = np.divide(userProfile, weightedAverageSum)
-#         return userProfile
-#     else:
-#         return np.zeros(profileVectorLength)
 
 
 def initOldProfiles(genreProfiles, numTopGenreProfiles):
@@ -213,28 +197,28 @@ def initObscureProfiles(genreProfiles, numTopGenreProfiles):
     return obscureProfiles
 
 
-def initInternationalProfiles(genreProfiles, numTopGenreProfiles, allLanguages, allGenresLength):
+def initInternationalProfiles(genreProfiles, numTopGenreProfiles, allCountries, allGenresLength):
     internationalProfiles = []
 
     for i in range(0, numTopGenreProfiles):
         internationalProfiles.append(np.copy(genreProfiles[i]['profile']))
 
-        languageStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
-        maxLanguageIndex = languageStartIndex
-        maxLanguageValue = internationalProfiles[i][languageStartIndex]
+        countryStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
+        maxCountryIndex = countryStartIndex
+        maxCountryValue = internationalProfiles[i][countryStartIndex]
         
-        for index in range(languageStartIndex, (languageStartIndex + len(allLanguages))):
-            if internationalProfiles[i][index] > maxLanguageValue:
-                maxLanguageValue = internationalProfiles[i][index]
-                maxLanguageIndex = index
+        for index in range(countryStartIndex, (countryStartIndex + len(allCountries))):
+            if internationalProfiles[i][index] > maxCountryValue:
+                maxCountryValue = internationalProfiles[i][index]
+                maxCountryIndex = index
 
-        internationalProfiles[i][maxLanguageIndex] = 0.0
-        curveAccordingToMax(internationalProfiles[i], allLanguages, LANGUAGE_WEIGHT, languageStartIndex)
+        internationalProfiles[i][maxCountryIndex] = 0.0
+        curveAccordingToMax(internationalProfiles[i], allCountries, COUNTRY_WEIGHT, countryStartIndex)
 
     return internationalProfiles
 
 
-# used to curve genre or languages vectors according to max value
+# used to curve genre/country values according to max genre/country value
 def curveAccordingToMax(profileVector, list, weight, startIndex):
     userProfileGenreEndIndex = startIndex + len(list)
     minValue = profileVector[startIndex]
@@ -256,10 +240,10 @@ def curveAccordingToMax(profileVector, list, weight, startIndex):
 
 
 def getWeightByVectorIndex(vectorIndex, allGenresLength):
-    profileLanguageStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
+    profileCountryStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
 
-    if vectorIndex >= profileLanguageStartIndex:
-        return LANGUAGE_WEIGHT
+    if vectorIndex >= profileCountryStartIndex:
+        return COUNTRY_WEIGHT
     elif vectorIndex >= PROFILE_GENRE_START_INDEX:
         return GENRE_WEIGHT
     elif vectorIndex == PROFILE_RUNTIME_INDEX:

@@ -13,11 +13,11 @@ DATE_RATED_WEIGHT = 0.5
 NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 10
 NUM_TOP_GENRE_PROFILES = 2
 NUM_GENRE_PROFILE_RECS = 1
-NUM_RECENCY_RECS = 2
+NUM_RECENCY_RECS = 1
 NUM_OLD_RECS = 1
 NUM_OBSCURE_RECS = 1
-NUM_INTERNATIONAL_RECS = 4
-TOTAL_RECS = (NUM_GENRE_PROFILE_RECS * NUM_TOP_GENRE_PROFILES) + NUM_RECENCY_RECS + NUM_OLD_RECS + NUM_OBSCURE_RECS
+NUM_INTERNATIONAL_RECS = 1
+TOTAL_RECS = (NUM_GENRE_PROFILE_RECS * NUM_TOP_GENRE_PROFILES) + NUM_RECENCY_RECS + NUM_OLD_RECS + NUM_OBSCURE_RECS + NUM_INTERNATIONAL_RECS
 USER_PROFILE_FEEDBACK_FACTOR = 0.05
 RECENCY_FEEDBACK_FACTOR = 0.05
 WILDCARD_FEEDBACK_FACTOR = 0.2
@@ -253,8 +253,8 @@ def initRec():
     #     printStringifiedVector(profile, cache['allGenres'], cache['allLanguages'])
 
     internationalProfiles = initInternationalProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES, cache['allLanguages'], allGenresLength)
-    for profile in internationalProfiles:
-        printStringifiedVector(profile, cache['allGenres'], cache['allLanguages'])
+    # for profile in internationalProfiles:
+    #     printStringifiedVector(profile, cache['allGenres'], cache['allLanguages'])
 
     generateRecs()
 

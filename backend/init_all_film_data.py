@@ -11,91 +11,91 @@ NUM_VOTES_THRESHOLD = 25000
 
 
 def main():
-    # print("\nImporting title.basics.tsv...")
-    # title_basics_raw = []
-    # with open("../database/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
-    #     reader = csv.DictReader(title_basics_file, delimiter='\t')
-    #     for row in reader:
-    #         title_basics_raw.append(dict(row))
+    print("\nImporting title.basics.tsv...")
+    title_basics_raw = []
+    with open("../database/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
+        reader = csv.DictReader(title_basics_file, delimiter='\t')
+        for row in reader:
+            title_basics_raw.append(dict(row))
 
-    # print("Imported title.basics.tsv.")
-    # print("\nFiltering out films:\n1. that are not movies\n2. with no genres\n3. <"
-    #       + str(RUNTIME_THRESHOLD) + " min runtime")
+    print("Imported title.basics.tsv.")
+    print("\nFiltering out films:\n1. that are not movies\n2. with no genres\n3. <"
+          + str(RUNTIME_THRESHOLD) + " min runtime")
 
-    # stage_1_allFilmData = []
+    stage_1_allFilmData = []
 
-    # for film in title_basics_raw:
-    #     try:
-    #         if (film["titleType"] == 'movie' and film['genres'] != r"\N"
-    #                 and int(film['runtimeMinutes']) >= RUNTIME_THRESHOLD):
-    #             newFilm = {'id': film['tconst'], 'title': film['primaryTitle'], 'year': int(film['startYear']),
-    #                        'runtime': int(film['runtimeMinutes']), 'genres': film['genres'].split(',')}
+    for film in title_basics_raw:
+        try:
+            if (film["titleType"] == 'movie' and film['genres'] != r"\N"
+                    and int(film['runtimeMinutes']) >= RUNTIME_THRESHOLD):
+                newFilm = {'id': film['tconst'], 'title': film['primaryTitle'], 'year': int(film['startYear']),
+                           'runtime': int(film['runtimeMinutes']), 'genres': film['genres'].split(',')}
 
-    #             stage_1_allFilmData.append(newFilm)
-    #     except ValueError:
-    #         pass
+                stage_1_allFilmData.append(newFilm)
+        except ValueError:
+            pass
 
-    # print("\nMerging with title.ratings.tsv and filtering out films with <" + str(NUM_VOTES_THRESHOLD) + " votes...")
+    print("\nMerging with title.ratings.tsv and filtering out films with <" + str(NUM_VOTES_THRESHOLD) + " votes...")
 
-    # stage_2_allFilmData = []
+    stage_2_allFilmData = []
 
-    # # the key is the film id, and the value is a dictionary of the attributes (averageRating & numVotes) of the film
-    # title_ratings = {}
-    # with open("../database/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
-    #     reader = csv.DictReader(title_ratings_file, delimiter='\t')
-    #     for row in reader:
-    #         rowDict = dict(row)
-    #         filmId = rowDict['tconst']
-    #         title_ratings[filmId] = rowDict
+    # the key is the film id, and the value is a dictionary of the attributes (averageRating & numVotes) of the film
+    title_ratings = {}
+    with open("../database/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
+        reader = csv.DictReader(title_ratings_file, delimiter='\t')
+        for row in reader:
+            rowDict = dict(row)
+            filmId = rowDict['tconst']
+            title_ratings[filmId] = rowDict
 
-    # for film in stage_1_allFilmData:
-    #     filmId = film['id']
-    #     try:
-    #         if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUM_VOTES_THRESHOLD:
-    #             film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
-    #             film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
-    #             stage_2_allFilmData.append(film)
-    #     except ValueError:
-    #         pass
-    #     except Exception as e:
-    #         print("Error occurred with processing title.ratings.tsv " + str(e))
+    for film in stage_1_allFilmData:
+        filmId = film['id']
+        try:
+            if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUM_VOTES_THRESHOLD:
+                film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
+                film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
+                stage_2_allFilmData.append(film)
+        except ValueError:
+            pass
+        except Exception as e:
+            print("Error occurred with processing title.ratings.tsv " + str(e))
 
-    # print("\nChanging the order of json attributes...")
+    print("\nChanging the order of json attributes...")
 
-    # allFilmData = {}
-    # allGenres = []
-
-    # for film in stage_2_allFilmData:
-    #     allFilmData[film['id']] = {
-    #         'title': film['title'],
-    #         'letterboxdTitle': "",
-    #         'year': film['year'],
-    #         'letterboxdYear': 0,
-    #         'imdbRating': film['imdbRating'],
-    #         'numberOfVotes': film['numberOfVotes'],
-    #         'runtime': film['runtime'],
-    #         'genres': film['genres']
-    #     }
-
-    #     for genre in film['genres']:
-    #         if genre not in allGenres:
-    #             allGenres.append(genre)
-
-    ###### temp
-    allFilmDataFile = open('../database/all-film-data.json')
-    allFilmData = json.load(allFilmDataFile)
-    allFilmDataKeys = list(allFilmData.keys())
+    allFilmData = {}
     allGenres = []
-    for filmId in allFilmDataKeys:
-        for genre in allFilmData[filmId]['genres']:
+
+    for film in stage_2_allFilmData:
+        allFilmData[film['id']] = {
+            'title': film['title'],
+            'letterboxdTitle': "",
+            'year': film['year'],
+            'letterboxdYear': 0,
+            'imdbRating': film['imdbRating'],
+            'numberOfVotes': film['numberOfVotes'],
+            'runtime': film['runtime'],
+            'genres': film['genres']
+        }
+
+        for genre in film['genres']:
             if genre not in allGenres:
                 allGenres.append(genre)
-    ######
+
+    # ###### temp
+    # allFilmDataFile = open('../database/all-film-data.json')
+    # allFilmData = json.load(allFilmDataFile)
+    # allFilmDataKeys = list(allFilmData.keys())
+    # allGenres = []
+    # for filmId in allFilmDataKeys:
+    #     for genre in allFilmData[filmId]['genres']:
+    #         if genre not in allGenres:
+    #             allGenres.append(genre)
+    # ######
 
     allGenres = sorted(allGenres)
 
     # ########
-    print("\nMaking API calls to get Letterboxd Title, Letterboxd Year, Languages, Posters, Summary...\n")
+    print("\nMaking API calls to get Letterboxd Title, Letterboxd Year, Countries, Posters, Summary...\n")
 
     accessToken = ""
     try:
@@ -113,7 +113,7 @@ def main():
     cachedTmbdFilmDataFile = open('../database/cached-tmdb-film-data.json')
     cachedTmbdFilmData = json.load(cachedTmbdFilmDataFile)
 
-    allLanguages = []
+    allCountries = []
 
     allFilmDataKeys = list(allFilmData.keys())
 
@@ -144,14 +144,14 @@ def main():
         if imdbFilmId in cachedTmbdFilmData:
             allFilmData[imdbFilmId]['letterboxdTitle'] = cachedTmbdFilmData[imdbFilmId]['letterboxdTitle']
             allFilmData[imdbFilmId]['letterboxdYear'] = cachedTmbdFilmData[imdbFilmId]['letterboxdYear']
-            allFilmData[imdbFilmId]['languages'] = cachedTmbdFilmData[imdbFilmId]['languages']
+            allFilmData[imdbFilmId]['countries'] = cachedTmbdFilmData[imdbFilmId]['countries']
             allFilmData[imdbFilmId]['mainPoster'] = cachedTmbdFilmData[imdbFilmId]['mainPoster']
             allFilmData[imdbFilmId]['backdropPoster'] = cachedTmbdFilmData[imdbFilmId]['backdropPoster']
             allFilmData[imdbFilmId]['summary'] = cachedTmbdFilmData[imdbFilmId]['summary']
 
-            for language in allFilmData[imdbFilmId]['languages']:
-                if language not in allLanguages:
-                    allLanguages.append(language)
+            for country in allFilmData[imdbFilmId]['countries']:
+                if country not in allCountries:
+                    allCountries.append(country)
         else:
             url = f"https://api.themoviedb.org/3/find/{imdbFilmId}?external_source=imdb_id"
             tmdbFilmId = ""
@@ -193,19 +193,19 @@ def main():
                 backdropPoster = str(jsonResponse['backdrop_path'])
                 filmSummary = str(jsonResponse['overview'])
 
-                filmLanguages = []
-                for language in jsonResponse['spoken_languages']:
-                    filmLanguages.append(language['english_name'])
-                    if language['english_name'] not in allLanguages:
-                        allLanguages.append(language['english_name'])
+                filmCountries = []
+                for country in jsonResponse['origin_country']:
+                    filmCountries.append(country)
+                    if country not in allCountries:
+                        allCountries.append(country)
 
                 cachedTmbdFilmData[imdbFilmId] = {"letterboxdTitle": letterboxdTitle, "letterboxdYear": letterboxdYear,
-                                                  "languages": filmLanguages, "mainPoster": mainPoster, 
+                                                  "countries": filmCountries, "mainPoster": mainPoster, 
                                                   "backdropPoster": backdropPoster, "summary": filmSummary}
 
                 allFilmData[imdbFilmId]['letterboxdTitle'] = letterboxdTitle
                 allFilmData[imdbFilmId]['letterboxdYear'] = letterboxdYear
-                allFilmData[imdbFilmId]['languages'] = filmLanguages
+                allFilmData[imdbFilmId]['countries'] = filmCountries
                 allFilmData[imdbFilmId]['mainPoster'] = mainPoster
                 allFilmData[imdbFilmId]['backdropPoster'] = backdropPoster
                 allFilmData[imdbFilmId]['summary'] = filmSummary
@@ -283,7 +283,7 @@ def main():
     allFilmDataVectorized = {}
     allFilmDataVectorizedMagnitudes = {}
     profileVectorLength = 0
-    allLanguages = sorted(allLanguages)
+    allCountries = sorted(allCountries)
 
     if diffNumberOfVotes == 0:
         print("diffNumberOfVotes = 0. Error with minNumberOfVotes & maxNumberOfVotes.")
@@ -293,7 +293,7 @@ def main():
         if filmId not in allFilmData:
             print(f"Film ID not found in allFilmData: {filmId}.")
         else:
-            allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allLanguages,
+            allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allCountries,
                                                                cachedNormalizedYears, cachedNormalizedImdbRatings, 
                                                                minNumberOfVotes, diffNumberOfVotes, 
                                                                cachedNormalizedRuntimes))
@@ -306,7 +306,7 @@ def main():
         convert_file.write(json.dumps(allFilmDataVectorized, indent=4, separators=(',', ': '))
                            .replace(",\n        ", ", ").replace("],", "],"))
 
-    cache = {'allGenres': allGenres, 'allLanguages': allLanguages, 'normalizedYears': cachedNormalizedYears, 
+    cache = {'allGenres': allGenres, 'allCountries': allCountries, 'normalizedYears': cachedNormalizedYears, 
              'normalizedImdbRatings': cachedNormalizedImdbRatings, 'normalizedRuntimes': cachedNormalizedRuntimes, 
              'minNumberOfVotes': minNumberOfVotes, 'diffNumberOfVotes': diffNumberOfVotes, 
              'profileVectorLength': profileVectorLength}
@@ -324,17 +324,13 @@ def isInvalidResponse(jsonResponse):
                 and jsonResponse['poster_path'] != '' and 'release_date' in jsonResponse and
                 jsonResponse['release_date'] != '' and 'backdrop_path' in jsonResponse and
                 jsonResponse['backdrop_path'] != '' and 'overview' in jsonResponse and jsonResponse['overview'] != ''
-                and 'spoken_languages' in jsonResponse):
-            for language in jsonResponse['spoken_languages']:
-                if 'english_name' not in language:
-                    return True
+                and 'origin_country' in jsonResponse):
+            return False
         else:
             return True
     except ValueError:
         print("Value Error when validating json response.\n")
         return True
-
-    return False
 
 
 if __name__ == "__main__":
