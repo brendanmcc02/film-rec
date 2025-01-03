@@ -257,12 +257,12 @@ def curveAccordingToMax(profileVector, list, weight, startIndex):
 
     diffValue = maxValue - minValue
 
-    if diffValue == 0.0:
-        print("Error. diffValue is 0.")
-        raise ZeroDivisionError
-
     for index in range(startIndex, userProfileGenreEndIndex):
-        profileVector[index] = (profileVector[index] - minValue) / diffValue
+        if diffValue > 0.0:
+            profileVector[index] = (profileVector[index] - minValue) / diffValue
+        else:
+            profileVector[index] = 0.0
+
         profileVector[index] *= weight
 
 
