@@ -17,7 +17,9 @@ NUM_RECENCY_RECS = 1
 NUM_OLD_RECS = 1
 NUM_OBSCURE_RECS = 1
 NUM_INTERNATIONAL_RECS = 1
-TOTAL_RECS = (NUM_GENRE_PROFILE_RECS * NUM_TOP_GENRE_PROFILES) + NUM_RECENCY_RECS + NUM_OLD_RECS + NUM_OBSCURE_RECS + NUM_INTERNATIONAL_RECS
+NUM_FAVOURITE_RECS = 3
+TOTAL_RECS = ((NUM_GENRE_PROFILE_RECS * NUM_TOP_GENRE_PROFILES) + NUM_RECENCY_RECS + NUM_OLD_RECS + NUM_OBSCURE_RECS 
+              + NUM_INTERNATIONAL_RECS + NUM_FAVOURITE_RECS)
 USER_PROFILE_FEEDBACK_FACTOR = 0.05
 RECENCY_FEEDBACK_FACTOR = 0.05
 WILDCARD_FEEDBACK_FACTOR = 0.2
@@ -31,10 +33,11 @@ cache = {}
 diffDateRated = datetime(1, 1, 1)
 minDateRated = datetime.now()
 genreProfiles = []
-recencyProfile = np.zeros(0)
+recencyProfile = np.zeros(profileVectorLength)
 oldProfiles = []
 obscureProfiles = []
 internationalProfiles = []
+favouriteProfile = np.zeros(profileVectorLength)
 vectorProfileChanges = []
 recs = []
 recStates = [0] * TOTAL_RECS
@@ -52,6 +55,7 @@ def resetGlobalVariables():
     global oldProfiles
     global obscureProfiles
     global internationalProfiles
+    global favouriteProfile
     global vectorProfileChanges
     global allFilmDataUnseen
     global recs
@@ -63,10 +67,11 @@ def resetGlobalVariables():
     global allCountriesLength
 
     genreProfiles = []
-    recencyProfile = np.zeros(0)
+    recencyProfile = np.zeros(profileVectorLength)
     oldProfiles = []
     obscureProfiles = []
     internationalProfiles = []
+    favouriteProfile = np.zeros(profileVectorLength)
     vectorProfileChanges = []
     allFilmDataUnseen = {}
     recs = []
@@ -135,6 +140,7 @@ def initRec():
     global oldProfiles
     global obscureProfiles
     global internationalProfiles
+    global favouriteProfile
 
     try:
         userFilmDataList = []
@@ -152,13 +158,13 @@ def initRec():
     deleteCsvFiles()
     allFilmDataFile = open('../database/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
-    allFilmDataKeys = list(allFilmData.keys())
+    allFilmDataIds = list(allFilmData.keys())
 
     if not isImdbFile:
         userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitles)
 
     userFilmData = {}
-
+    favouriteFilmIds = []
     minDateRated = datetime.now()
     maxDateRated = datetime.now()
 
@@ -186,6 +192,9 @@ def initRec():
                         "genres": genres,
                         "countries": allFilmData[filmId]['countries']
                     }
+
+                    if userFilmData[filmId]['userRating'] >= 9:
+                        favouriteFilmIds.append(filmId)
                 else:
                     print(f"Film in userFilmData not found in allFilmData, {filmId}\n")
             except ValueError:
@@ -197,9 +206,9 @@ def initRec():
         print("Note: diffDateRated = 0.")
         diffDateRated = 1.0
 
-    userFilmDataKeys = list(userFilmData.keys())
+    userFilmDataIds = list(userFilmData.keys())
 
-    for imdbFilmId in allFilmDataKeys:
+    for imdbFilmId in allFilmDataIds:
         # take films out from allFilmData that the user has seen
         if imdbFilmId not in userFilmData:
             allFilmDataUnseen[imdbFilmId] = allFilmData[imdbFilmId]
@@ -214,7 +223,7 @@ def initRec():
     allCountriesLength = len(cache['allCountries'])
 
     # vectorize user-film-data
-    for imdbFilmId in userFilmDataKeys:
+    for imdbFilmId in userFilmDataIds:
         vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allCountries'],
                                cache['normalizedYears'], cache['normalizedImdbRatings'], cache['minNumberOfVotes'],
                                cache['diffNumberOfVotes'], cache['normalizedRuntimes'])
@@ -234,13 +243,13 @@ def initRec():
     for _ in range(0, TOTAL_RECS):
         vectorProfileChanges.append(np.zeros(profileVectorLength))
 
-    genreProfiles = initGenreProfiles(userFilmDataKeys, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
+    genreProfiles = initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
                       cache['allGenres'], profileVectorLength, NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
     # for genreProfile in genreProfiles:
     #     print(f"{genreProfile['genre']}:")
     #     printStringifiedVector(genreProfile['profile'], cache['allGenres'], cache['allCountries'])
 
-    recencyProfile = initRecencyProfile(userFilmData, userFilmDataKeys, userFilmDataVectorized, maxDateRated, profileVectorLength, 
+    recencyProfile = initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, profileVectorLength, 
                                         cachedUserRatingScalars, cachedDateRatedScalars)
     # printStringifiedVector(recencyProfile, cache['allGenres'], cache['allCountries'])
 
@@ -256,6 +265,10 @@ def initRec():
     # for profile in internationalProfiles:
     #     printStringifiedVector(profile, cache['allGenres'], cache['allCountries'])
 
+    favouriteProfile = initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength,
+                                            cachedUserRatingScalars, cachedDateRatedScalars, favouriteFilmIds)
+    printStringifiedVector(favouriteProfile, cache['allGenres'], cache['allCountries'])
+
     generateRecs()
 
     return jsonify(recs), 200
@@ -265,31 +278,39 @@ def generateRecs():
     global recs
     recs = []
 
-    allFilmDataKeys = list(allFilmDataUnseen.keys())
+    allFilmDataIds = list(allFilmDataUnseen.keys())
 
     for i in range(0, NUM_TOP_GENRE_PROFILES):
-        getFilmRecs(genreProfiles[i]['genre'], allFilmDataKeys, NUM_GENRE_PROFILE_RECS, genreProfiles[i]['profile'])
+        getFilmRecs(genreProfiles[i]['genre'], allFilmDataIds, NUM_GENRE_PROFILE_RECS, genreProfiles[i]['profile'])
 
-    getFilmRecs("recency", allFilmDataKeys, NUM_RECENCY_RECS, recencyProfile)
+    if np.array_equal(recencyProfile, np.zeros(profileVectorLength)):
+        print("No recency profile.")
+    else:
+        getFilmRecs("recency", allFilmDataIds, NUM_RECENCY_RECS, recencyProfile)
 
     for oldProfile in oldProfiles:
-        getFilmRecs("old", allFilmDataKeys, NUM_OLD_RECS, oldProfile)
+        getFilmRecs("old", allFilmDataIds, NUM_OLD_RECS, oldProfile)
         
     for obscureProfile in obscureProfiles:
-        getFilmRecs("obscure", allFilmDataKeys, NUM_OBSCURE_RECS, obscureProfile)
+        getFilmRecs("obscure", allFilmDataIds, NUM_OBSCURE_RECS, obscureProfile)
 
     for internationalProfile in internationalProfiles:
-        getFilmRecs("international", allFilmDataKeys, NUM_INTERNATIONAL_RECS, internationalProfile)
+        getFilmRecs("international", allFilmDataIds, NUM_INTERNATIONAL_RECS, internationalProfile)
+
+    if np.array_equal(favouriteProfile, np.zeros(profileVectorLength)):
+        print("No favourite profile.")
+    else:
+        getFilmRecs("favourite", allFilmDataIds, NUM_FAVOURITE_RECS, favouriteProfile)
 
 
-def getFilmRecs(recType, allFilmDataKeys, maxNumberOfRecs, profileVector):
+def getFilmRecs(recType, allFilmDataIds, maxNumberOfRecs, profileVector):
     global recs
     global allFilmDataVectorizedMagnitudes
 
     profileVectorMagnitude = np.linalg.norm(profileVector)
     cosineSimilarities = {}
 
-    for filmId in allFilmDataKeys:
+    for filmId in allFilmDataIds:
         filmVectorMagnitude = allFilmDataVectorizedMagnitudes[filmId]
         cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVectorized[filmId], profileVector,
                                                       filmVectorMagnitude, profileVectorMagnitude)

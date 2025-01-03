@@ -19,20 +19,21 @@ def vectorizeFilm(film, allGenres, allCountries, cachedNormalizedYears, cachedNo
     vector = []
 
     if isFilmInvalid(film):
-        print("Film is invalid")
-        return np.zeros(1)
+        raise KeyError
 
     if str(film['year']) in cachedNormalizedYears:
         normalizedYear = cachedNormalizedYears[str(film['year'])]
         vector.append(normalizedYear)
     else:
         print(f"Error. Film year not in cached normalized years: {film['year']}")
+        raise KeyError
 
     if str(film['imdbRating']) in cachedNormalizedImdbRatings:
         imdbRatingNorm = cachedNormalizedImdbRatings[str(film['imdbRating'])]
         vector.append(imdbRatingNorm)
     else:
         print(f"Error. Film imdb rating not in cached normalized imdb ratings. {str(film['imdbRating'])}")
+        raise KeyError
 
     if diffNumberOfVotes == 0:
         print("diffNumberOfVotes = 0.")
@@ -46,6 +47,7 @@ def vectorizeFilm(film, allGenres, allCountries, cachedNormalizedYears, cachedNo
         vector.append(runtimeNorm)
     else:
         print(f"Error. Film runtime not in cached normalized runtimes. {str(film['runtime'])}")
+        raise KeyError
 
     oneHotEncode(vector, film['genres'], allGenres, GENRE_WEIGHT)
     oneHotEncode(vector, film['countries'], allCountries, COUNTRY_WEIGHT)
@@ -116,13 +118,13 @@ def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingS
 
     for genre in allGenres:
         genreProfiles[genre] = {"genre": genre, "profile": np.zeros(profileVectorLength), "magnitude": 0.0, 
-                                "weightedAverageSum": 0.0, "quantityFilmsWatched": 0}
+                                "sumOfWeights": 0.0, "quantityFilmsWatched": 0}
 
     for imdbFilmId in userFilmDataIds:
         filmGenres = getFilmGenres(userFilmDataVectorized[imdbFilmId], allGenres)
         for genre in filmGenres:
             genreProfiles[genre]['profile'] += userFilmDataVectorized[imdbFilmId]
-            genreProfiles[genre]['weightedAverageSum'] += (cachedUserRatingScalars[imdbFilmId] *
+            genreProfiles[genre]['sumOfWeights'] += (cachedUserRatingScalars[imdbFilmId] *
                                                            cachedDateRatedScalars[imdbFilmId])
             genreProfiles[genre]['quantityFilmsWatched'] += 1
 
@@ -131,7 +133,7 @@ def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingS
             continue
         
         genreProfiles[genre]['profile'] = np.divide(genreProfiles[genre]['profile'], 
-                                                    genreProfiles[genre]['weightedAverageSum'])
+                                                    genreProfiles[genre]['sumOfWeights'])
         genreProfiles[genre]['profile'] *= min(1.0, (genreProfiles[genre]['quantityFilmsWatched'] /
                                                numFilmsWatchedInGenreThreshold))
         genreProfiles[genre]['magnitude'] = np.linalg.norm(genreProfiles[genre]['profile'])
@@ -159,19 +161,19 @@ def getFilmGenres(vectorizedFilm, allGenres):
 def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, profileVectorLength, 
                        cachedUserRatingScalars, cachedDateRatedScalars):
     recencyProfile = np.zeros(profileVectorLength)
-    weightedAverageSum = 0.0
+    sumOfWeights = 0.0
 
     for imdbFilmId in userFilmDataIds:
         timeDifference = maxDateRated - userFilmData[imdbFilmId]['dateRated']
         if timeDifference.days <= RECENCY_PROFILE_DAYS_THRESHOLD:
             recencyProfile += userFilmDataVectorized[imdbFilmId]
-            weightedAverageSum += (cachedUserRatingScalars[imdbFilmId] * cachedDateRatedScalars[imdbFilmId])
+            sumOfWeights += (cachedUserRatingScalars[imdbFilmId] * cachedDateRatedScalars[imdbFilmId])
         else:
             # file is sorted by date, no need to look further
             break
 
-    if weightedAverageSum > 0.0:
-        recencyProfile = np.divide(recencyProfile, weightedAverageSum)
+    if sumOfWeights > 0.0:
+        recencyProfile = np.divide(recencyProfile, sumOfWeights)
         return recencyProfile
     else:
         return np.zeros(profileVectorLength)
@@ -223,6 +225,23 @@ def initInternationalProfiles(genreProfiles, numTopGenreProfiles, allCountries, 
         curveAccordingToMax(internationalProfiles[i], allCountries, COUNTRY_WEIGHT, countryStartIndex)
 
     return internationalProfiles
+
+
+def initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
+                         cachedUserRatingScalars, cachedDateRatedScalars, favouriteFilmIds):
+    favouriteProfile = np.zeros(profileVectorLength)
+    sumOfWeights = 0.0
+
+    for imdbFilmId in userFilmDataIds:
+        if imdbFilmId in favouriteFilmIds:
+            favouriteProfile += userFilmDataVectorized[imdbFilmId]
+            sumOfWeights += (cachedUserRatingScalars[imdbFilmId] * cachedDateRatedScalars[imdbFilmId])
+
+    if sumOfWeights > 0.0:
+        favouriteProfile = np.divide(favouriteProfile, sumOfWeights)
+        return favouriteProfile
+    else:
+        return np.zeros(profileVectorLength)
 
 
 # used to curve genre/country values according to max genre/country value
