@@ -19,10 +19,10 @@ NUM_OBSCURE_RECOMMENDATIONS_PER_GENRE = 3
 NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE = 3
 NUM_FAVOURITE_RECOMMENDATIONS = 9
 TOTAL_RECOMMENDATIONS = ((NUM_GENRE_PROFILE_RECOMMENDATIONS * NUM_TOP_GENRE_PROFILES) + NUM_RECENCY_RECOMMENDATIONS + 
-              (NUM_OLD_RECOMMENDATIONS_PER_GENRE * NUM_TOP_GENRE_PROFILES) + 
-              (NUM_OBSCURE_RECOMMENDATIONS_PER_GENRE * NUM_TOP_GENRE_PROFILES) +
-              (NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE * NUM_TOP_GENRE_PROFILES)
-               + NUM_FAVOURITE_RECOMMENDATIONS)
+                         (NUM_OLD_RECOMMENDATIONS_PER_GENRE * NUM_TOP_GENRE_PROFILES) + 
+                         (NUM_OBSCURE_RECOMMENDATIONS_PER_GENRE * NUM_TOP_GENRE_PROFILES) +
+                         (NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE * NUM_TOP_GENRE_PROFILES)
+                         + NUM_FAVOURITE_RECOMMENDATIONS)
 REC_REVIEW_FEEDBACK_FACTOR = 0.05
 
 profileVectorLength = 0
@@ -271,8 +271,6 @@ def initRowsOfRecommendations():
 
     generateRecommendations()
 
-    print(str(rowsOfRecommendations))
-
     return jsonify(rowsOfRecommendations), 200
 
 
@@ -285,7 +283,7 @@ def generateRecommendations():
         if genreProfiles[i]['magnitude'] == 0.0:
             print("No genre profile.")
         else:
-            getFilmRecommendations(f"Because you like {genreProfiles[i]['genre']}", allFilmDataIds, 
+            getFilmRecommendations(f"Because you like {genreProfiles[i]['genre']} films", allFilmDataIds, 
                         NUM_GENRE_PROFILE_RECOMMENDATIONS, genreProfiles[i]['profile'], True)
         
     if np.array_equal(recencyProfile, np.zeros(profileVectorLength)):

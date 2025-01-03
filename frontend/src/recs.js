@@ -6,10 +6,11 @@ import React, { useState, useEffect } from 'react';
 const response = await fetch('/getTotalRecommendations');
 const TOTAL_RECS = parseInt(await response.text());
 const initButtonStates = Array.from({ length: TOTAL_RECS }, () => false);
+const basePosterURL = "https://image.tmdb.org/t/p/w500";
 
 const App = () => {
 
-    const [films, setFilms] = useState([]);
+    const [rowsOfRecommendations, setRowsOfRecommendations] = useState([]);
     const [upButtonStates, setUpButtonStates] = useState(initButtonStates);
     const [downButtonStates, setDownButtonStates] = useState(initButtonStates);
 
@@ -17,7 +18,7 @@ const App = () => {
         fetch('/initRowsOfRecommendations')
             .then((response) => response.json())
             .then((jsonData) => {
-                setFilms(jsonData); // Update state with fetched database
+                setRowsOfRecommendations(jsonData); // Update state with fetched database
             })
             .catch((error) => {
                 console.error('Error fetching database:', error);
@@ -162,7 +163,7 @@ const App = () => {
         if (changeMade) {
             try {
                 let response = await fetch('/regen');
-                setFilms(await response.json());
+                setRowsOfRecommendations(await response.json());
                 setUpButtonStates(initButtonStates); // reset up button states
                 setDownButtonStates(initButtonStates); // reset down button states
                 console.log("Called /regen");
@@ -174,32 +175,47 @@ const App = () => {
         }
     }
 
-    let filmRecs = films.map((film, i) =>
-        <div key={i}>
-            <p>{film.similarityScore}% - {film.title} ({film.year}), {film.genres}. recType: {film.recType}</p>
-            <button className="up-button" onClick={() => {handleUpButton(i);}}>
-                Up
-            </button>
-            <button className="down-button" onClick={() => {handleDownButton(i);}}>
-                Down
-            </button>
+    function getFilms(recommendedFilms) {
+        return recommendedFilms.map((film, i) => (
+            <div className="recommendedFilm" key={i}> 
+                <img src={`${basePosterURL}${film.mainPoster}`} alt={film.title} className="mainPosterImg" />
+                <div className="buttons">
+                    <button className="up-button" onClick={() => handleUpButton(film.index)}>
+                        Up
+                    </button>
+                    <button className="down-button" onClick={() => handleDownButton(film.index)}>
+                        Down
+                    </button>
+                </div>
+            </div>
+        ));
+    }
+    
+    let rows = rowsOfRecommendations.map((row, i) => (
+        <div key={i} className='recommendedRow'>
+            <h1 style={{color:'black'}}>{row.recommendedRowText}</h1>
+            <div className="rowOfFilms">{getFilms(row.recommendedFilms)}</div>
         </div>
-    );
+    ));
 
     return (
+        // <>
+        //     <div style={backgroundStyle}></div>
+        //     <div className="title">
+        //         <button className="regen-button" onClick={() => handleRegenButton()}>
+        //             Regen
+        //         </button>
+        //     </div>
+        //     <div className="rows">{rows}</div>
+        // </>
         <>
-            <div style={backgroundStyle}></div>
-            <div className="title">
-                <button className="regen-button" onClick={() => {handleRegenButton();}}>
-                    Regen
-                </button>
-            </div>
-
-            <div className="file-div">
-                {filmRecs}
+            {/* <div style={backgroundStyle}></div> */}
+            <div className='rows'>
+                {rows}
             </div>
         </>
     );
+    
 }
 
 export default App;

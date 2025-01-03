@@ -1,11 +1,1599 @@
 [
     {
-        'recommendedRowText': "Because you like genreProfiles[i]['genre']", 
-        'recommendedFilms': [
-            {
-                'title': 'Treasure Planet', 
-                'letterboxdTitle': 'Treasure Planet', 
-                'year': 2002, 'letterboxdYear': 2002, 'imdbRating': 7.2, 'numberOfVotes': 138134, 'runtime': 95, 'genres': ['Adventure', 'Animation', 'Family'], 'countries': ['US'], 'mainPoster': '/zMKatZ0c0NCoKzfizaCzVUcbKMf.jpg', 'backdropPoster': '/azBZZqVKZpFDbW7Q6gNPEj87ls5.jpg', 'summary': 'When space galleon cabin boy Jim Hawkins discovers a map to an intergalactic "loot of a thousand worlds," a cyborg cook named John Silver teaches him to battle supernovas and space storms on their journey to find treasure.', 'id': 'tt0133240', 'similarityScore': 87.75}, {'title': 'James and the Giant Peach', 'letterboxdTitle': 'James and the Giant Peach', 'year': 1996, 'letterboxdYear': 1996, 'imdbRating': 6.7, 'numberOfVotes': 75722, 'runtime': 79, 'genres': ['Adventure', 'Animation', 'Family'], 'countries': ['US'], 'mainPoster': '/nl2oB6EbD1fHFuP2TLUHDtqs7Ux.jpg', 'backdropPoster': '/6kTLm7zfwKAgAcGnaVU0uT4QYug.jpg', 'summary': 'When the young orphan boy James spills a magic bag of crocodile tongues, he finds himself in possession of a giant peach that flies him away to strange lands.', 'id': 'tt0116683', 'similarityScore': 87.47}, {'title': 'The Brave Little Toaster', 'letterboxdTitle': 'The Brave Little Toaster', 'year': 1987, 'letterboxdYear': 1987, 'imdbRating': 7.2, 'numberOfVotes': 28310, 'runtime': 90, 'genres': ['Adventure', 'Animation', 'Family'], 'countries': ['US'], 'mainPoster': '/ux31YN45YAc4AyovQqYwoGTulvU.jpg', 'backdropPoster': '/oRz5fPPkQ3A4mSVSOTJqWS9Rmgn.jpg', 'summary': "A group of dated appliances, finding themselves stranded in a summer home that their family had just sold, decide to seek out their eight year old 'master'.", 'id': 'tt0092695', 'similarityScore': 87.36}, {'title': 'The Great Mouse Detective', 'letterboxdTitle': 'The Great Mouse Detective', 'year': 1986, 'letterboxdYear': 1986, 'imdbRating': 7.1, 'numberOfVotes': 55942, 'runtime': 74, 'genres': ['Adventure', 'Animation', 'Family'], 'countries': ['US'], 'mainPoster': '/9uDr7vfjCFr39KGCcqrk44Cg7fQ.jpg', 'backdropPoster': '/ijCfzdRLhrdu9OUIaPsVt08ogT5.jpg', 'summary': "When the diabolical Professor Ratigan kidnaps London's master toymaker, the brilliant master of disguise Basil of Baker Street and his trusted sidekick Dawson try to elude the ultimate trap and foil the perfect crime.", 'id': 'tt0091149', 'similarityScore': 87.31}, {'title': 'An American Tail: Fievel Goes West', 'letterboxdTitle': 'An American Tail: Fievel Goes West', 'year': 1991, 'letterboxdYear': 1991, 'imdbRating': 6.5, 'numberOfVotes': 29002, 'runtime': 75, 'genres': ['Adventure', 'Animation', 'Family'], 'countries': ['US'], 'mainPoster': '/cImuS7FE9MHT5vnwIHGx1Ryh0K1.jpg', 'backdropPoster': '/8UpJ8svNnwVtpu8n62vGke8MOJf.jpg', 'summary': "Some time after the Mousekewitz's have settled in America, they find that they are still having problems with the threat of cats. That makes them eager to try another home out in the west, where they are promised that mice and cats live in peace. Unfortunately, the one making this claim is an oily con artist named Cat R. Waul who is intent on his own sinister plan.", 'id': 'tt0101329', 'similarityScore': 87.24}, {'title': 'Peter Pan', 'letterboxdTitle': 'Peter Pan', 'year': 1953, 'letterboxdYear': 1953, 'imdbRating': 7.3, 'numberOfVotes': 157366, 'runtime': 77, 'genres': ['Adventure', 'Animation', 'Family'], 'countries': ['US'], 'mainPoster': '/6UTZmeQcxbtW32MyR5nKIx7ID4f.jpg', 'backdropPoster': '/vwcfvPzYO3Gz975yRXp6DYSSbzo.jpg', 'summary': 'Leaving the safety of their nursery behind, Wendy, Michael and John follow Peter Pan to a magical world where childhood lasts forever. But while in Neverland, the kids must face Captain Hook and foil his attempts to get rid of Peter for good.', 'id': 'tt0046183', 'similarityScore': 85.47}, {'title': 'The Nightmare Before Christmas', 'letterboxdTitle': 'The Nightmare Before Christmas', 'year': 1993, 'letterboxdYear': 1993, 'imdbRating': 7.9, 'numberOfVotes': 390923, 'runtime': 76, 'genres': ['Animation', 'Family', 'Fantasy'], 'countries': ['US'], 'mainPoster': '/oQffRNjK8e19rF7xVYEN8ew0j7b.jpg', 'backdropPoster': '/xWT5F1DNxciNLEMXRl49iq8zvN7.jpg', 'summary': "Tired of scaring humans every October 31 with the same old bag of tricks, Jack Skellington, the spindly king of Halloween Town, kidnaps Santa Claus and plans to deliver shrunken heads and other ghoulish gifts to children on Christmas morning. But as Christmas approaches, Jack's rag-doll girlfriend, Sally, tries to foil his misguided plans.", 'id': 'tt0107688', 'similarityScore': 85.45}, {'title': 'Fantasia 2000', 'letterboxdTitle': 'Fantasia 2000', 'year': 1999, 'letterboxdYear': 2000, 'imdbRating': 7.1, 'numberOfVotes': 42306, 'runtime': 75, 'genres': ['Animation', 'Family', 'Fantasy'], 'countries': ['US'], 'mainPoster': '/5rwAtUaKEK48CPUijVfVU0IPKPZ.jpg', 'backdropPoster': '/wBQ2tSdXgAOAdH14VgXtN9qD0Ol.jpg', 'summary': "Blending lively music and brilliant animation, this sequel to the original 'Fantasia' restores 'The Sorcerer's Apprentice' and adds seven new shorts.", 'id': 'tt0120910', 'similarityScore': 85.3}, {'title': 'Sing', 'letterboxdTitle': 'Sing', 'year': 2016, 'letterboxdYear': 2016, 'imdbRating': 7.1, 'numberOfVotes': 199051, 'runtime': 108, 'genres': ['Animation', 'Comedy', 'Family'], 'countries': ['US'], 'mainPoster': '/zZTlF2eVVUkbdmccd3bNUU9T9sD.jpg', 'backdropPoster': '/59CCw4EtiahW0E5cfTrvdbqPQTo.jpg', 'summary': 'A koala named Buster recruits his best friend to help him drum up business for his theater by hosting a singing competition.', 'id': 'tt3470600', 'similarityScore': 84.49}]}, {'recommendedRowText': "Because you like genreProfiles[i]['genre']", 'recommendedFilms': [{'title': 'Wicked', 'letterboxdTitle': 'Wicked', 'year': 2024, 'letterboxdYear': 2024, 'imdbRating': 7.9, 'numberOfVotes': 83483, 'runtime': 160, 'genres': ['Fantasy', 'Musical', 'Romance'], 'countries': ['US'], 'mainPoster': '/xDGbZ0JJ3mYaGKy4Nzd9Kph6M9L.jpg', 'backdropPoster': '/bbNUSVOqgbJ2U5OtEeMC76qlqxH.jpg', 'summary': "In the land of Oz, ostracized and misunderstood green-skinned Elphaba is forced to share a room with the popular aristocrat Glinda at Shiz University, and the two's unlikely friendship is tested as they begin to fulfill their respective destinies as Glinda the Good and the Wicked Witch of the West.", 'id': 'tt1262426', 'similarityScore': 79.74}, {'title': "Isn't It Romantic", 'letterboxdTitle': "Isn't It Romantic", 'year': 2019, 'letterboxdYear': 2019, 'imdbRating': 5.9, 'numberOfVotes': 74827, 'runtime': 89, 'genres': ['Comedy', 'Fantasy', 'Musical'], 'countries': ['US'], 'mainPoster': '/5xNBYXuv8wqiLVDhsfqCOr75DL7.jpg', 'backdropPoster': '/4epIlsVpzk2k1fuFS2pzurpIQTJ.jpg', 'summary': 'For a long time, Natalie, an Australian architect living in New York City, had always believed that what she had seen in rom-coms is all fantasy. But after thwarting a mugger at a subway station only to be knocked out while fleeing, Natalie wakes up and discovers that her life has suddenly become her worst nightmare—a romantic comedy—and she is the leading lady.', 'id': 'tt2452244', 'similarityScore': 79.58}, {'title': 'Eight Crazy Nights', 'letterboxdTitle': 'Eight Crazy Nights', 'year': 2002, 'letterboxdYear': 2002, 'imdbRating': 5.3, 'numberOfVotes': 26848, 'runtime': 76, 'genres': ['Animation', 'Comedy', 'Musical'], 'countries': ['US'], 'mainPoster': '/mSVaYWRiu3853nvHwybCJdq5k7b.jpg', 'backdropPoster': '/vK8IuHHHNq6kn4tbw6KoqBdSmBq.jpg', 'summary': 'Davey Stone, a 33-year old party animal, finds himself in trouble with the law after his wild ways go too far.', 'id': 'tt0271263', 'similarityScore': 79.15}, {'title': 'Robin Hood: Men in Tights', 'letterboxdTitle': 'Robin Hood: Men in Tights', 'year': 1993, 'letterboxdYear': 1993, 'imdbRating': 6.7, 'numberOfVotes': 140152, 'runtime': 104, 'genres': ['Adventure', 'Comedy', 'Musical'], 'countries': ['US'], 'mainPoster': '/b59epUgkPPBqgWcu5Q0YrYRKDx1.jpg', 'backdropPoster': '/xFhpZ9UDUGXu52lCHdN39PIooRt.jpg', 'summary': 'Robin Hood comes home after fighting in the Crusades to learn that the noble King Richard is in exile and that the despotic King John now rules England, with the help of the Sheriff of Rottingham. Robin Hood assembles a band of fellow patriots to do battle with King John and the Sheriff.', 'id': 'tt0107977', 'similarityScore': 79.13}, {'title': 'Fiddler on the Roof', 'letterboxdTitle': 'Fiddler on the Roof', 'year': 1971, 'letterboxdYear': 1971, 'imdbRating': 8.0, 'numberOfVotes': 49031, 'runtime': 181, 'genres': ['Drama', 'Family', 'Musical'], 'countries': ['US'], 'mainPoster': '/qXIv5P7hUroBgn5lLkRcXYe7W4n.jpg', 'backdropPoster': '/rqnOgJWvlURkcOWfGqiACvkTAqG.jpg', 'summary': 'In a small Jewish community in a pre-Revolutionary Russian village, a poor milkman, determined to find good husbands for his five daughters, consults the traditional matchmaker – and also has words with God.', 'id': 'tt0067093', 'similarityScore': 78.35}, {'title': 'Everyone Says I Love You', 'letterboxdTitle': 'Everyone Says I Love You', 'year': 1996, 'letterboxdYear': 1996, 'imdbRating': 6.7, 'numberOfVotes': 40066, 'runtime': 101, 'genres': ['Comedy', 'Musical', 'Romance'], 'countries': ['US'], 'mainPoster': '/cFOZ4bNbWtnIIboc43M86yhwPBX.jpg', 'backdropPoster': '/rCUg0bQM8vu4OSaE0aHQOicPnC5.jpg', 'summary': 'A New York girl sets her father up with a beautiful woman in a shaky marriage while her half sister gets engaged.', 'id': 'tt0116242', 'similarityScore': 78.27}, {'title': 'Grease', 'letterboxdTitle': 'Grease', 'year': 1978, 'letterboxdYear': 1978, 'imdbRating': 7.2, 'numberOfVotes': 309489, 'runtime': 110, 'genres': ['Comedy', 'Musical', 'Romance'], 'countries': ['US'], 'mainPoster': '/tffa4pHTS5RAhzR4KFX9BfIVn8I.jpg', 'backdropPoster': '/pdhDFmVQSA0f5i5IL0gpWROjgZ5.jpg', 'summary': "Australian good girl Sandy and greaser Danny fell in love over the summer. But when they unexpectedly discover they're now in the same high school, will they be able to rekindle their romance despite their eccentric friends?", 'id': 'tt0077631', 'similarityScore': 78.16}, {'title': 'My Fair Lady', 'letterboxdTitle': 'My Fair Lady', 'year': 1964, 'letterboxdYear': 1964, 'imdbRating': 7.7, 'numberOfVotes': 103806, 'runtime': 170, 'genres': ['Drama', 'Family', 'Musical'], 'countries': ['US'], 'mainPoster': '/bTXVc29lGSNclf94VIZ49W4gGKl.jpg', 'backdropPoster': '/xMoQjqa3JUc2unO4nF9PmM1JTQu.jpg', 'summary': 'A snobbish phonetics professor agrees to a wager that he can take a flower girl and make her presentable in high society.', 'id': 'tt0058385', 'similarityScore': 77.98}, {'title': 'Funny Face', 'letterboxdTitle': 'Funny Face', 'year': 1957, 'letterboxdYear': 1957, 'imdbRating': 7.0, 'numberOfVotes': 33949, 'runtime': 103, 'genres': ['Comedy', 'Musical', 'Romance'], 'countries': ['US'], 'mainPoster': '/tzTjalpIz6NyFrWPPlOBFoBjb7z.jpg', 'backdropPoster': '/tHxsIOdnzvK3w0fWC4dcGG2Zj41.jpg', 'summary': 'A shy Greenwich Village book clerk is discovered by a fashion photographer and whisked off to Paris where she becomes a reluctant model.', 'id': 'tt0050419', 'similarityScore': 76.96}]}, {'recommendedRowText': "Because you like genreProfiles[i]['genre']", 'recommendedFilms': [{'title': 'Beauty and the Beast', 'letterboxdTitle': 'Beauty and the Beast', 'year': 2017, 'letterboxdYear': 2017, 'imdbRating': 7.1, 'numberOfVotes': 342281, 'runtime': 129, 'genres': ['Adventure', 'Family', 'Fantasy'], 'countries': ['US'], 'mainPoster': '/hKegSKIDep2ewJWPUQD7u0KqFIp.jpg', 'backdropPoster': '/uU1Mt4JWhDvl4vKb3AfxNsorkoM.jpg', 'summary': "A live-action adaptation of Disney's version of the classic tale of a cursed prince and a beautiful young woman who helps him break the spell.", 'id': 'tt2771200', 'similarityScore': 86.81}, {'title': 'The Little Mermaid', 'letterboxdTitle': 'The Little Mermaid', 'year': 2023, 'letterboxdYear': 2023, 'imdbRating': 7.2, 'numberOfVotes': 162708, 'runtime': 135, 'genres': ['Adventure', 'Family', 'Fantasy'], 'countries': ['US'], 'mainPoster': '/ym1dxyOk4jFcSl4Q2zmRrA5BEEN.jpg', 'backdropPoster': '/7VEUOEfRzzrQfWddlIyLUKvh6Nf.jpg', 'summary': 'The youngest of King Triton’s daughters, and the most defiant, Ariel longs to find out more about the world beyond the sea, and while visiting the surface, falls for the dashing Prince Eric. With mermaids forbidden to interact with humans, Ariel makes a deal with the evil sea witch, Ursula, which gives her a chance to experience life on land, but ultimately places her life – and her father’s crown – in jeopardy.', 'id': 'tt5971474', 'similarityScore': 86.74}, {'title': 'Alice in Wonderland', 'letterboxdTitle': 'Alice in Wonderland', 'year': 2010, 'letterboxdYear': 2010, 'imdbRating': 6.4, 'numberOfVotes': 450376, 'runtime': 108, 'genres': ['Adventure', 'Family', 'Fantasy'], 'countries': ['US'], 'mainPoster': '/o0kre9wRCZz3jjSjaru7QU0UtFz.jpg', 'backdropPoster': '/y8Rmadbft60Cupx6SmSvy8rHENH.jpg', 'summary': 'Alice, now 19 years old, returns to the whimsical world she first entered as a child and embarks on a journey to discover her true destiny.', 'id': 'tt1014759', 'similarityScore': 86.53}, {'title': 'Oz the Great and Powerful', 'letterboxdTitle': 'Oz the Great and Powerful', 'year': 2013, 'letterboxdYear': 2013, 'imdbRating': 6.3, 'numberOfVotes': 217257, 'runtime': 130, 'genres': ['Adventure', 'Family', 'Fantasy'], 'countries': ['US'], 'mainPoster': '/tkzfAUEKoUp4YFNbZV9hfpZOz0z.jpg', 'backdropPoster': '/a4KUVG5P5hBSgAgHHindbnyubTF.jpg', 'summary': "Oscar Diggs, a small-time circus illusionist and con-artist, is whisked from Kansas to the Land of Oz where the inhabitants assume he's the great wizard of prophecy, there to save Oz from the clutches of evil.", 'id': 'tt1623205', 'similarityScore': 86.43}]}, {'recommendedRowText': 'Based on what you watched recently', 'recommendedFilms': [{'title': 'A Man Called Otto', 'letterboxdTitle': 'A Man Called Otto', 'year': 2022, 'letterboxdYear': 2022, 'imdbRating': 7.5, 'numberOfVotes': 183495, 'runtime': 126, 'genres': ['Comedy', 'Drama'], 'countries': ['US'], 'mainPoster': '/130H1gap9lFfiTF9iDrqNIkFvC9.jpg', 'backdropPoster': '/v2LilmCylr3bL9TCZSj6syjowZh.jpg', 'summary': 'When a lively young family moves in next door, grumpy widower Otto Anderson meets his match in a quick-witted, pregnant woman named Marisol, leading to an unlikely friendship that turns his world upside down.', 'id': 'tt7405458', 'similarityScore': 89.65}, {'title': 'American Fiction', 'letterboxdTitle': 'American Fiction', 'year': 2023, 'letterboxdYear': 2023, 'imdbRating': 7.5, 'numberOfVotes': 104335, 'runtime': 117, 'genres': ['Comedy', 'Drama'], 'countries': ['US'], 'mainPoster': '/57MFWGHarg9jid7yfDTka4RmcMU.jpg', 'backdropPoster': '/3mpgltEMgPf8zFtPnAWdDVN8ZT1.jpg', 'summary': 'A novelist fed up with the establishment profiting from "Black" entertainment uses a pen name to write a book that propels him into the heart of hypocrisy and the madness he claims to disdain.', 'id': 'tt23561236', 'similarityScore': 89.58}, {'title': 'Mr. Church', 'letterboxdTitle': 'Mr. Church', 'year': 2016, 'letterboxdYear': 2016, 'imdbRating': 7.6, 'numberOfVotes': 32093, 'runtime': 104, 'genres': ['Comedy', 'Drama'], 'countries': ['US'], 'mainPoster': '/5fCfZEQwcbuqVPyMu7pN5XNpK5V.jpg', 'backdropPoster': '/y6jpd3c1UFoouBmIVWZMCGVyQmS.jpg', 'summary': 'A unique friendship develops when a little girl and her dying mother inherit a cook - Mr. Church. What begins as an arrangement that should only last six months, instead spans fifteen years.', 'id': 'tt4196848', 'similarityScore': 89.41}, {'title': 'Instant Family', 'letterboxdTitle': 'Instant Family', 'year': 2018, 'letterboxdYear': 2018, 'imdbRating': 7.3, 'numberOfVotes': 125567, 'runtime': 118, 'genres': ['Comedy', 'Drama'], 'countries': ['US'], 'mainPoster': '/dic3GdmMpxxfkCQfvZnasb5ZkSG.jpg', 'backdropPoster': '/mLHApYe5zuYb5UE0PWzkkgjMgmG.jpg', 'summary': 'When Pete and Ellie decide to start a family, they stumble into the world of foster care adoption. They hope to take in one small child but when they meet three siblings, including a rebellious 15 year old girl, they find themselves speeding from zero to three kids overnight.', 'id': 'tt7401588', 'similarityScore': 89.37}, {'title': 'Juno', 'letterboxdTitle': 'Juno', 'year': 2007, 'letterboxdYear': 2007, 'imdbRating': 7.4, 'numberOfVotes': 558192, 'runtime': 96, 'genres': ['Comedy', 'Drama'], 'countries': ['US'], 'mainPoster': '/jNIn2tVhpvFD6P9IojldI3mNYcn.jpg', 'backdropPoster': '/sRXMmeNHTSWRYdDz3zaHNyyPJ0u.jpg', 'summary': 'Faced with an unplanned pregnancy, sixteen year old high-schooler, Juno MacGuff, makes an unusual decision regarding her unborn child.', 'id': 'tt0467406', 'similarityScore': 89.36}, {'title': 'Mid90s', 'letterboxdTitle': 'mid90s', 'year': 2018, 'letterboxdYear': 2018, 'imdbRating': 7.4, 'numberOfVotes': 81311, 'runtime': 85, 'genres': ['Comedy', 'Drama'], 'countries': ['US'], 'mainPoster': '/9Tw0Y3DK5kGIU9X1yw3Q9gCkOlb.jpg', 'backdropPoster': '/BOeORWljjIPGuCwUgLls24ctF3.jpg', 'summary': 'In 1990s Los Angeles, a 13-year-old spends his summer navigating between a troubled home life and a crew of new friends he meets at a skate shop.', 'id': 'tt5613484', 'similarityScore': 89.36}, {'title': 'The Way Way Back', 'letterboxdTitle': 'The Way Way Back', 'year': 2013, 'letterboxdYear': 2013, 'imdbRating': 7.4, 'numberOfVotes': 159243, 'runtime': 103, 'genres': ['Comedy', 'Drama'], 'countries': ['US'], 'mainPoster': '/4DgA0EDDVv37C8xISc3Vv0rhxlL.jpg', 'backdropPoster': '/bPm5kQLlc2KypdYkUxGbrGfLJ82.jpg', 'summary': "Shy 14-year-old Duncan goes on summer vacation with his mother, her overbearing boyfriend, and her boyfriend's daughter. Having a rough time fitting in, Duncan finds an unexpected friend in Owen, manager of the Water Wizz water park.", 'id': 'tt1727388', 'similarityScore': 89.34}, {'title': 'The Descendants', 'letterboxdTitle': 'The Descendants', 'year': 2011, 'letterboxdYear': 2011, 'imdbRating': 7.3, 'numberOfVotes': 254862, 'runtime': 115, 'genres': ['Comedy', 'Drama'], 'countries': ['US'], 'mainPoster': '/8cDq5UlOPYeKm39okALCEOsZPxk.jpg', 'backdropPoster': '/afC5IhoNZb8MqDHuiWOAcLjqi6b.jpg', 'summary': 'With his wife Elizabeth on life support after a boating accident, Hawaiian land baron Matt King takes his daughters on a trip from Oahu to Kauai to confront a young real estate broker, who was having an affair with Elizabeth before her misfortune.', 'id': 'tt1033575', 'similarityScore': 89.3}, {'title': 'The Intern', 'letterboxdTitle': 'The Intern', 'year': 2015, 'letterboxdYear': 2015, 'imdbRating': 7.1, 'numberOfVotes': 287125, 'runtime': 121, 'genres': ['Comedy', 'Drama'], 'countries': ['US'], 'mainPoster': '/9UoAC9tu8kIyRy8AcJnGhnH0gOH.jpg', 'backdropPoster': '/i8Q2Ei2dPliMLgPWYhRTxIDzh7r.jpg', 'summary': "70-year-old widower Ben Whittaker has discovered that retirement isn't all it's cracked up to be. Seizing an opportunity to get back in the game, he becomes a senior intern at an online fashion site, founded and run by Jules Ostin.", 'id': 'tt2361509', 'similarityScore': 89.29}, {'title': 'White Christmas', 'letterboxdTitle': 'White Christmas', 'year': 1954, 'letterboxdYear': 1954, 'imdbRating': 7.5, 'numberOfVotes': 54515, 'runtime': 120, 'genres': ['Comedy', 'Musical', 'Romance'], 'countries': ['US'], 'mainPoster': '/A5kBQsHKbIptxJyELEpHQJROCRj.jpg', 'backdropPoster': '/97eLP7iJTCE03LhwtXfXRcLbg5H.jpg', 'summary': 'Two talented song-and-dance men team up after the war to become one of the hottest acts in show business. In time they befriend and become romantically involved with the beautiful Haynes sisters who comprise a sister act.', 'id': 'tt0047673', 'similarityScore': 75.42}, {'title': 'Gentlemen Prefer Blondes', 'letterboxdTitle': 'Gentlemen Prefer Blondes', 'year': 1953, 'letterboxdYear': 1953, 'imdbRating': 7.1, 'numberOfVotes': 44487, 'runtime': 91, 'genres': ['Comedy', 'Musical', 'Romance'], 'countries': ['US'], 'mainPoster': '/fDozhst5HVJJcd3BM8ZOsKniO7Q.jpg', 'backdropPoster': '/jnYGtYTHLPTFcnvKxnpAACGfW3K.jpg', 'summary': "Lorelei Lee is a beautiful showgirl engaged to be married to the wealthy Gus Esmond, much to the disapproval of Gus' rich father, Esmond Sr., who thinks that Lorelei is just after his money. When Lorelei goes on a cruise accompanied only by her best friend, Dorothy Shaw, Esmond Sr. hires Ernie Malone, a private detective, to follow her and report any questionable behavior that would disqualify her from the marriage.", 'id': 'tt0045810', 'similarityScore': 75.27}]}, {'recommendedRowText': 'Try out some international films', 'recommendedFilms': [{'title': 'Tales from Earthsea', 'letterboxdTitle': 'Tales from Earthsea', 'year': 2006, 'letterboxdYear': 2006, 'imdbRating': 6.3, 'numberOfVotes': 45674, 'runtime': 115, 'genres': ['Adventure', 'Animation', 'Fantasy'], 'countries': ['JP'], 'mainPoster': '/y0VnJt4eRPMjA1hpJ8f1EFoVaSf.jpg', 'backdropPoster': '/x5ufEAM7bS7DVXaovApamQh5BNE.jpg', 'summary': 'Something bizarre has come over the land. The kingdom is deteriorating. People are beginning to act strange... What\'s even more strange is that people are beginning to see dragons, which shouldn\'t enter the world of humans. Due to all these bizarre events, Ged, a wandering wizard, is investigating the cause. During his journey, he meets Prince Arren, a young distraught teenage boy. While Arren may look like a shy young teen, he has a severe dark side, which grants him strength, hatred, ruthlessness and has no mercy, especially when it comes to protecting Teru. For the witch Kumo this is a perfect opportunity. She can use the boy\'s "fears" against the very one who would help him, Ged.', 'id': 'tt0495596', 'similarityScore': 85.41}, {'title': 'The Girl Who Leapt Through Time', 'letterboxdTitle': 'The Girl Who Leapt Through Time', 'year': 2006, 'letterboxdYear': 2006, 'imdbRating': 7.7, 'numberOfVotes': 72419, 'runtime': 98, 'genres': ['Adventure', 'Animation', 'Comedy'], 'countries': ['JP'], 'mainPoster': '/xHnlWM8BmqY419YUccYy2KC5Jqo.jpg', 'backdropPoster': '/z5Q5uxodjr8sPS1MCmK4Ab9HMJd.jpg', 'summary': 'When 17-year-old Makoto Konno gains the ability to, quite literally, "leap" backwards through time, she immediately sets about improving her grades and preventing personal mishaps. However, she soon realises that changing the past isn\'t as simple as it seems, and eventually, will have to rely on her new powers to shape the future of herself and her friends.', 'id': 'tt0808506', 'similarityScore': 84.82}, {'title': 'Tokyo Godfathers', 'letterboxdTitle': 'Tokyo Godfathers', 'year': 2003, 'letterboxdYear': 2003, 'imdbRating': 7.8, 'numberOfVotes': 49627, 'runtime': 92, 'genres': ['Adventure', 'Animation', 'Comedy'], 'countries': ['JP'], 'mainPoster': '/sPC66btzQlzuRdPKiSDYZ5Hvxgc.jpg', 'backdropPoster': '/78F8cn6EXum1zpukF3HTNI8W0EA.jpg', 'summary': 'On Christmas Eve, three homeless people living on the streets of Tokyo discover a newborn baby among the trash and set out to find its parents.', 'id': 'tt0388473', 'similarityScore': 84.79}, {'title': 'The Secret of Kells', 'letterboxdTitle': 'The Secret of Kells', 'year': 2009, 'letterboxdYear': 2009, 'imdbRating': 7.5, 'numberOfVotes': 39113, 'runtime': 75, 'genres': ['Adventure', 'Animation', 'Family'], 'countries': ['IE'], 'mainPoster': '/tmiufIvSssZ2cmYJbro99gZvn2H.jpg', 'backdropPoster': '/740KCabjLKjsrxvEakmmJtDtAGY.jpg', 'summary': "Adventure awaits 12 year old Brendan who must fight Vikings and a serpent god to find a crystal and complete the legendary Book of Kells. In order to finish Brother Aiden's book, Brendan must overcome his deepest fears on a secret quest that will take him beyond the abbey walls and into the enchanted forest where dangerous mythical creatures hide. Will Brendan succeed in his quest?", 'id': 'tt0485601', 'similarityScore': 76.02}, {'title': 'Ella Enchanted', 'letterboxdTitle': 'Ella Enchanted', 'year': 2004, 'letterboxdYear': 2004, 'imdbRating': 6.3, 'numberOfVotes': 77145, 'runtime': 96, 'genres': ['Comedy', 'Family', 'Fantasy'], 'countries': ['IE', 'GB'], 'mainPoster': '/dH8yHmqUra0gqzMJJKXiyfKkB57.jpg', 'backdropPoster': '/qGjl2b8lw1YjSOuQ6NpVVW9Ddz0.jpg', 'summary': 'Ella lives in a magical world in which each child, at the moment of their birth, is given a virtuous "gift" from a fairy godmother. Ella\'s so-called gift, however, is obedience. This birthright proves itself to be quite the curse once Ella finds herself in the hands of several unscrupulous characters whom she quite literally cannot disobey. Determined to gain control of her life and decisions, Ella sets off on a journey to find her fairy godmother who she hopes will lift the curse. The path, however, isn\'t easy -- Ella must outwit a slew of unpleasant obstacles including ogres, giants, wicked stepsisters, elves and Prince Charmont\'s evil uncle, who wants to take over the crown and rule the kingdom.', 'id': 'tt0327679', 'similarityScore': 68.91}, {'title': 'Love & Friendship', 'letterboxdTitle': 'Love & Friendship', 'year': 2016, 'letterboxdYear': 2016, 'imdbRating': 6.4, 'numberOfVotes': 26824, 'runtime': 90, 'genres': ['Comedy', 'Drama', 'Romance'], 'countries': ['IE'], 'mainPoster': '/qnulUsG1RWFccLBWjFB9H6nms4F.jpg', 'backdropPoster': '/bkPf4yIlzAwet2PVTRz1fiEUDdL.jpg', 'summary': 'From Jane Austen’s novella, the beautiful and cunning Lady Susan Vernon visits the estate of her in-laws to wait out colorful rumors of her dalliances and to find husbands for herself and her daughter. Two young men, handsome Reginald DeCourcy and wealthy Sir James Martin, severely complicate her plans.', 'id': 'tt3068194', 'similarityScore': 66.83}]}, {'recommendedRowText': 'Based on your favourite films', 'recommendedFilms': [{'title': 'Gran Torino', 'letterboxdTitle': 'Gran Torino', 'year': 2008, 'letterboxdYear': 2008, 'imdbRating': 8.1, 'numberOfVotes': 830117, 'runtime': 116, 'genres': ['Drama'], 'countries': ['US'], 'mainPoster': '/zUybYvxWdAJy5hhYovsXtHSWI1l.jpg', 'backdropPoster': '/wmsePXV2z1b6ecXuKKrFbG0Q92P.jpg', 'summary': "Disgruntled Korean War veteran Walt Kowalski sets out to reform his neighbor, Thao Lor, a Hmong teenager who tried to steal Kowalski's prized possession: a 1972 Gran Torino.", 'id': 'tt1205489', 'similarityScore': 92.44}, {'title': 'The Help', 'letterboxdTitle': 'The Help', 'year': 2011, 'letterboxdYear': 2011, 'imdbRating': 8.1, 'numberOfVotes': 505578, 'runtime': 146, 'genres': ['Drama'], 'countries': ['US'], 'mainPoster': '/7XLSwxpfpPoJyTdJVot6a42TS2V.jpg', 'backdropPoster': '/wyvUmyzqGOBDyqLHRSukGDjI7bH.jpg', 'summary': 'Aibileen Clark is a middle-aged African-American maid who has spent her life raising white children and has recently lost her only son; Minny Jackson is an African-American maid who has often offended her employers despite her family\'s struggles with money and her desperate need for jobs; and Eugenia "Skeeter" Phelan is a young white woman who has recently moved back home after graduating college to find out her childhood maid has mysteriously disappeared. These three stories intertwine to explain how life in Jackson, Mississippi revolves around "the help"; yet they are always kept at a certain distance because of racial lines.', 'id': 'tt1454029', 'similarityScore': 92.23}, {'title': 'Magnolia', 'letterboxdTitle': 'Magnolia', 'year': 1999, 'letterboxdYear': 1999, 'imdbRating': 8.0, 'numberOfVotes': 334696, 'runtime': 188, 'genres': ['Drama'], 'countries': ['US'], 'mainPoster': '/uq2u8HgtLFJkjNq2kHb2jvipIPT.jpg', 'backdropPoster': '/zHUsTabS4RMOtGs2hZsvgrtb5y3.jpg', 'summary': 'On one random day in the San Fernando Valley, a dying father, a young wife, a male caretaker, a famous lost son, a police officer in love, a boy genius, an ex-boy genius, a game show host and an estranged daughter will each become part of a dazzling multiplicity of plots, but one story.', 'id': 'tt0175880', 'similarityScore': 91.57}, {'title': 'Boogie Nights', 'letterboxdTitle': 'Boogie Nights', 'year': 1997, 'letterboxdYear': 1997, 'imdbRating': 7.9, 'numberOfVotes': 288117, 'runtime': 155, 'genres': ['Drama'], 'countries': ['US'], 'mainPoster': '/wnE24UPCPQsQnbBOu4zVE2qaDNm.jpg', 'backdropPoster': '/uC54rlRdLMZ46fnrz5SoVYleNyv.jpg', 'summary': 'Set in 1977, back when sex was safe, pleasure was a business and business was booming, idealistic porn producer Jack Horner aspires to elevate his craft to an art form. Horner discovers Eddie Adams, a hot young talent working as a busboy in a nightclub, and welcomes him into the extended family of movie-makers, misfits and hangers-on that are always around. Adams\' rise from nobody to a celebrity adult entertainer is meteoric, and soon the whole world seems to know his porn alter ego, "Dirk Diggler". Now, when disco and drugs are in vogue, fashion is in flux and the party never seems to stop, Adams\' dreams of turning sex into stardom are about to collide with cold, hard reality.', 'id': 'tt0118749', 'similarityScore': 91.4}, {'title': 'Gifted', 'letterboxdTitle': 'Gifted', 'year': 2017, 'letterboxdYear': 2017, 'imdbRating': 7.6, 'numberOfVotes': 145061, 'runtime': 101, 'genres': ['Drama'], 'countries': ['US'], 'mainPoster': '/7YB2YrMwIm1g8FyZtlvmVDfRnAT.jpg', 'backdropPoster': '/6MmYsaK6poR8f4R8jsBnJBU5tfd.jpg', 'summary': 'Frank, a single man raising his child prodigy niece Mary, is drawn into a custody battle with his mother.', 'id': 'tt4481414', 'similarityScore': 91.36}, {'title': 'Nebraska', 'letterboxdTitle': 'Nebraska', 'year': 2013, 'letterboxdYear': 2013, 'imdbRating': 7.7, 'numberOfVotes': 125347, 'runtime': 115, 'genres': ['Drama'], 'countries': ['US'], 'mainPoster': '/o1t2Mw18EEBnl8v4Nby3PFjxnM1.jpg', 'backdropPoster': '/yePsFcldyZ6VnxaBr8ZbVEaOt4W.jpg', 'summary': 'An aging, booze-addled father takes a trip from Montana to Nebraska with his estranged son in order to claim what he believes to be a million-dollar sweepstakes prize.', 'id': 'tt1821549', 'similarityScore': 91.35}, {'title': 'Short Term 12', 'letterboxdTitle': 'Short Term 12', 'year': 2013, 'letterboxdYear': 2013, 'imdbRating': 7.9, 'numberOfVotes': 93029, 'runtime': 96, 'genres': ['Drama'], 'countries': ['US'], 'mainPoster': '/qKnsyaJZLXfiL2JhIJEkpA8C3LU.jpg', 'backdropPoster': '/gTDSid6kZT7vNp1vSNB0nLAnSeG.jpg', 'summary': "Grace, a compassionate young supervisor at a foster care facility, helps at-risk teens. But when a new charge dredges up memories of her own troubled past, Grace's tough exterior begins eroding.", 'id': 'tt2370248', 'similarityScore': 91.35}, {'title': 'Scent of a Woman', 'letterboxdTitle': 'Scent of a Woman', 'year': 1992, 'letterboxdYear': 1992, 'imdbRating': 8.0, 'numberOfVotes': 340760, 'runtime': 156, 'genres': ['Drama'], 'countries': ['US'], 'mainPoster': '/f75Fsfx8nA8JfSdJ61jhC8JwHps.jpg', 'backdropPoster': '/wwaVAZmQU2CBAJzBtahOSvqvpbc.jpg', 'summary': 'Charlie Simms is a student at a private preparatory school who comes from a poor family. To earn the money for his flight home to Gresham, Oregon for Christmas, Charlie takes a job over Thanksgiving looking after retired U.S. Army officer Lieutenant Colonel Frank Slade, a cantankerous middle-aged man who lives with his niece and her family.', 'id': 'tt0105323', 'similarityScore': 91.3}, {'title': 'Nomadland', 'letterboxdTitle': 'Nomadland', 'year': 2020, 'letterboxdYear': 2021, 'imdbRating': 7.3, 'numberOfVotes': 189501, 'runtime': 107, 'genres': ['Drama'], 'countries': ['US'], 'mainPoster': '/8Vc5EOUEIF1EUXuX9eLFf7BvN3P.jpg', 'backdropPoster': '/bjjZXrP8PEdFeJkKERc62xlarMI.jpg', 'summary': 'A woman in her sixties embarks on a journey through the western United States after losing everything in the Great Recession, living as a van-dwelling modern-day nomad.', 'id': 'tt9770150', 'similarityScore': 91.28}]}]
-
-            ]
-]
+       "recommendedRowText":"Because you like Animation",
+       "recommendedFilms":[
+          {
+             "title":"Treasure Planet",
+             "letterboxdTitle":"Treasure Planet",
+             "year":2002,
+             "letterboxdYear":2002,
+             "imdbRating":7.2,
+             "numberOfVotes":138134,
+             "runtime":95,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/zMKatZ0c0NCoKzfizaCzVUcbKMf.jpg",
+             "backdropPoster":"/azBZZqVKZpFDbW7Q6gNPEj87ls5.jpg",
+             "summary":"When space galleon cabin boy Jim Hawkins discovers a map to an intergalactic \"loot of a thousand worlds,\" a cyborg cook named John Silver teaches him to battle supernovas and space storms on their journey to find treasure.",
+             "id":"tt0133240",
+             "similarityScore":87.75
+          },
+          {
+             "title":"James and the Giant Peach",
+             "letterboxdTitle":"James and the Giant Peach",
+             "year":1996,
+             "letterboxdYear":1996,
+             "imdbRating":6.7,
+             "numberOfVotes":75722,
+             "runtime":79,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/nl2oB6EbD1fHFuP2TLUHDtqs7Ux.jpg",
+             "backdropPoster":"/6kTLm7zfwKAgAcGnaVU0uT4QYug.jpg",
+             "summary":"When the young orphan boy James spills a magic bag of crocodile tongues, he finds himself in possession of a giant peach that flies him away to strange lands.",
+             "id":"tt0116683",
+             "similarityScore":87.47
+          },
+          {
+             "title":"The Brave Little Toaster",
+             "letterboxdTitle":"The Brave Little Toaster",
+             "year":1987,
+             "letterboxdYear":1987,
+             "imdbRating":7.2,
+             "numberOfVotes":28310,
+             "runtime":90,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/ux31YN45YAc4AyovQqYwoGTulvU.jpg",
+             "backdropPoster":"/oRz5fPPkQ3A4mSVSOTJqWS9Rmgn.jpg",
+             "summary":"A group of dated appliances, finding themselves stranded in a summer home that their family had just sold, decide to seek out their eight year old 'master'.",
+             "id":"tt0092695",
+             "similarityScore":87.36
+          },
+          {
+             "title":"The Great Mouse Detective",
+             "letterboxdTitle":"The Great Mouse Detective",
+             "year":1986,
+             "letterboxdYear":1986,
+             "imdbRating":7.1,
+             "numberOfVotes":55942,
+             "runtime":74,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/9uDr7vfjCFr39KGCcqrk44Cg7fQ.jpg",
+             "backdropPoster":"/ijCfzdRLhrdu9OUIaPsVt08ogT5.jpg",
+             "summary":"When the diabolical Professor Ratigan kidnaps London's master toymaker, the brilliant master of disguise Basil of Baker Street and his trusted sidekick Dawson try to elude the ultimate trap and foil the perfect crime.",
+             "id":"tt0091149",
+             "similarityScore":87.31
+          },
+          {
+             "title":"An American Tail: Fievel Goes West",
+             "letterboxdTitle":"An American Tail: Fievel Goes West",
+             "year":1991,
+             "letterboxdYear":1991,
+             "imdbRating":6.5,
+             "numberOfVotes":29002,
+             "runtime":75,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/cImuS7FE9MHT5vnwIHGx1Ryh0K1.jpg",
+             "backdropPoster":"/8UpJ8svNnwVtpu8n62vGke8MOJf.jpg",
+             "summary":"Some time after the Mousekewitz's have settled in America, they find that they are still having problems with the threat of cats. That makes them eager to try another home out in the west, where they are promised that mice and cats live in peace. Unfortunately, the one making this claim is an oily con artist named Cat R. Waul who is intent on his own sinister plan.",
+             "id":"tt0101329",
+             "similarityScore":87.24
+          },
+          {
+             "title":"Peter Pan",
+             "letterboxdTitle":"Peter Pan",
+             "year":1953,
+             "letterboxdYear":1953,
+             "imdbRating":7.3,
+             "numberOfVotes":157366,
+             "runtime":77,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/6UTZmeQcxbtW32MyR5nKIx7ID4f.jpg",
+             "backdropPoster":"/vwcfvPzYO3Gz975yRXp6DYSSbzo.jpg",
+             "summary":"Leaving the safety of their nursery behind, Wendy, Michael and John follow Peter Pan to a magical world where childhood lasts forever. But while in Neverland, the kids must face Captain Hook and foil his attempts to get rid of Peter for good.",
+             "id":"tt0046183",
+             "similarityScore":85.47
+          },
+          {
+             "title":"The Nightmare Before Christmas",
+             "letterboxdTitle":"The Nightmare Before Christmas",
+             "year":1993,
+             "letterboxdYear":1993,
+             "imdbRating":7.9,
+             "numberOfVotes":390923,
+             "runtime":76,
+             "genres":[
+                "Animation",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/oQffRNjK8e19rF7xVYEN8ew0j7b.jpg",
+             "backdropPoster":"/xWT5F1DNxciNLEMXRl49iq8zvN7.jpg",
+             "summary":"Tired of scaring humans every October 31 with the same old bag of tricks, Jack Skellington, the spindly king of Halloween Town, kidnaps Santa Claus and plans to deliver shrunken heads and other ghoulish gifts to children on Christmas morning. But as Christmas approaches, Jack's rag-doll girlfriend, Sally, tries to foil his misguided plans.",
+             "id":"tt0107688",
+             "similarityScore":85.45
+          },
+          {
+             "title":"Fantasia 2000",
+             "letterboxdTitle":"Fantasia 2000",
+             "year":1999,
+             "letterboxdYear":2000,
+             "imdbRating":7.1,
+             "numberOfVotes":42306,
+             "runtime":75,
+             "genres":[
+                "Animation",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/5rwAtUaKEK48CPUijVfVU0IPKPZ.jpg",
+             "backdropPoster":"/wBQ2tSdXgAOAdH14VgXtN9qD0Ol.jpg",
+             "summary":"Blending lively music and brilliant animation, this sequel to the original 'Fantasia' restores 'The Sorcerer's Apprentice' and adds seven new shorts.",
+             "id":"tt0120910",
+             "similarityScore":85.3
+          },
+          {
+             "title":"Sing",
+             "letterboxdTitle":"Sing",
+             "year":2016,
+             "letterboxdYear":2016,
+             "imdbRating":7.1,
+             "numberOfVotes":199051,
+             "runtime":108,
+             "genres":[
+                "Animation",
+                "Comedy",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/zZTlF2eVVUkbdmccd3bNUU9T9sD.jpg",
+             "backdropPoster":"/59CCw4EtiahW0E5cfTrvdbqPQTo.jpg",
+             "summary":"A koala named Buster recruits his best friend to help him drum up business for his theater by hosting a singing competition.",
+             "id":"tt3470600",
+             "similarityScore":84.49
+          }
+       ]
+    },
+    {
+       "recommendedRowText":"Because you like Musical",
+       "recommendedFilms":[
+          {
+             "title":"Wicked",
+             "letterboxdTitle":"Wicked",
+             "year":2024,
+             "letterboxdYear":2024,
+             "imdbRating":7.9,
+             "numberOfVotes":83483,
+             "runtime":160,
+             "genres":[
+                "Fantasy",
+                "Musical",
+                "Romance"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/xDGbZ0JJ3mYaGKy4Nzd9Kph6M9L.jpg",
+             "backdropPoster":"/bbNUSVOqgbJ2U5OtEeMC76qlqxH.jpg",
+             "summary":"In the land of Oz, ostracized and misunderstood green-skinned Elphaba is forced to share a room with the popular aristocrat Glinda at Shiz University, and the two's unlikely friendship is tested as they begin to fulfill their respective destinies as Glinda the Good and the Wicked Witch of the West.",
+             "id":"tt1262426",
+             "similarityScore":79.74
+          },
+          {
+             "title":"Isn't It Romantic",
+             "letterboxdTitle":"Isn't It Romantic",
+             "year":2019,
+             "letterboxdYear":2019,
+             "imdbRating":5.9,
+             "numberOfVotes":74827,
+             "runtime":89,
+             "genres":[
+                "Comedy",
+                "Fantasy",
+                "Musical"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/5xNBYXuv8wqiLVDhsfqCOr75DL7.jpg",
+             "backdropPoster":"/4epIlsVpzk2k1fuFS2pzurpIQTJ.jpg",
+             "summary":"For a long time, Natalie, an Australian architect living in New York City, had always believed that what she had seen in rom-coms is all fantasy. But after thwarting a mugger at a subway station only to be knocked out while fleeing, Natalie wakes up and discovers that her life has suddenly become her worst nightmare—a romantic comedy—and she is the leading lady.",
+             "id":"tt2452244",
+             "similarityScore":79.58
+          },
+          {
+             "title":"Eight Crazy Nights",
+             "letterboxdTitle":"Eight Crazy Nights",
+             "year":2002,
+             "letterboxdYear":2002,
+             "imdbRating":5.3,
+             "numberOfVotes":26848,
+             "runtime":76,
+             "genres":[
+                "Animation",
+                "Comedy",
+                "Musical"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/mSVaYWRiu3853nvHwybCJdq5k7b.jpg",
+             "backdropPoster":"/vK8IuHHHNq6kn4tbw6KoqBdSmBq.jpg",
+             "summary":"Davey Stone, a 33-year old party animal, finds himself in trouble with the law after his wild ways go too far.",
+             "id":"tt0271263",
+             "similarityScore":79.15
+          },
+          {
+             "title":"Robin Hood: Men in Tights",
+             "letterboxdTitle":"Robin Hood: Men in Tights",
+             "year":1993,
+             "letterboxdYear":1993,
+             "imdbRating":6.7,
+             "numberOfVotes":140152,
+             "runtime":104,
+             "genres":[
+                "Adventure",
+                "Comedy",
+                "Musical"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/b59epUgkPPBqgWcu5Q0YrYRKDx1.jpg",
+             "backdropPoster":"/xFhpZ9UDUGXu52lCHdN39PIooRt.jpg",
+             "summary":"Robin Hood comes home after fighting in the Crusades to learn that the noble King Richard is in exile and that the despotic King John now rules England, with the help of the Sheriff of Rottingham. Robin Hood assembles a band of fellow patriots to do battle with King John and the Sheriff.",
+             "id":"tt0107977",
+             "similarityScore":79.13
+          },
+          {
+             "title":"Fiddler on the Roof",
+             "letterboxdTitle":"Fiddler on the Roof",
+             "year":1971,
+             "letterboxdYear":1971,
+             "imdbRating":8.0,
+             "numberOfVotes":49031,
+             "runtime":181,
+             "genres":[
+                "Drama",
+                "Family",
+                "Musical"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/qXIv5P7hUroBgn5lLkRcXYe7W4n.jpg",
+             "backdropPoster":"/rqnOgJWvlURkcOWfGqiACvkTAqG.jpg",
+             "summary":"In a small Jewish community in a pre-Revolutionary Russian village, a poor milkman, determined to find good husbands for his five daughters, consults the traditional matchmaker – and also has words with God.",
+             "id":"tt0067093",
+             "similarityScore":78.35
+          },
+          {
+             "title":"Everyone Says I Love You",
+             "letterboxdTitle":"Everyone Says I Love You",
+             "year":1996,
+             "letterboxdYear":1996,
+             "imdbRating":6.7,
+             "numberOfVotes":40066,
+             "runtime":101,
+             "genres":[
+                "Comedy",
+                "Musical",
+                "Romance"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/cFOZ4bNbWtnIIboc43M86yhwPBX.jpg",
+             "backdropPoster":"/rCUg0bQM8vu4OSaE0aHQOicPnC5.jpg",
+             "summary":"A New York girl sets her father up with a beautiful woman in a shaky marriage while her half sister gets engaged.",
+             "id":"tt0116242",
+             "similarityScore":78.27
+          },
+          {
+             "title":"Grease",
+             "letterboxdTitle":"Grease",
+             "year":1978,
+             "letterboxdYear":1978,
+             "imdbRating":7.2,
+             "numberOfVotes":309489,
+             "runtime":110,
+             "genres":[
+                "Comedy",
+                "Musical",
+                "Romance"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/tffa4pHTS5RAhzR4KFX9BfIVn8I.jpg",
+             "backdropPoster":"/pdhDFmVQSA0f5i5IL0gpWROjgZ5.jpg",
+             "summary":"Australian good girl Sandy and greaser Danny fell in love over the summer. But when they unexpectedly discover they're now in the same high school, will they be able to rekindle their romance despite their eccentric friends?",
+             "id":"tt0077631",
+             "similarityScore":78.16
+          },
+          {
+             "title":"My Fair Lady",
+             "letterboxdTitle":"My Fair Lady",
+             "year":1964,
+             "letterboxdYear":1964,
+             "imdbRating":7.7,
+             "numberOfVotes":103806,
+             "runtime":170,
+             "genres":[
+                "Drama",
+                "Family",
+                "Musical"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/bTXVc29lGSNclf94VIZ49W4gGKl.jpg",
+             "backdropPoster":"/xMoQjqa3JUc2unO4nF9PmM1JTQu.jpg",
+             "summary":"A snobbish phonetics professor agrees to a wager that he can take a flower girl and make her presentable in high society.",
+             "id":"tt0058385",
+             "similarityScore":77.98
+          },
+          {
+             "title":"Funny Face",
+             "letterboxdTitle":"Funny Face",
+             "year":1957,
+             "letterboxdYear":1957,
+             "imdbRating":7.0,
+             "numberOfVotes":33949,
+             "runtime":103,
+             "genres":[
+                "Comedy",
+                "Musical",
+                "Romance"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/tzTjalpIz6NyFrWPPlOBFoBjb7z.jpg",
+             "backdropPoster":"/tHxsIOdnzvK3w0fWC4dcGG2Zj41.jpg",
+             "summary":"A shy Greenwich Village book clerk is discovered by a fashion photographer and whisked off to Paris where she becomes a reluctant model.",
+             "id":"tt0050419",
+             "similarityScore":76.96
+          }
+       ]
+    },
+    {
+       "recommendedRowText":"Because you like Family",
+       "recommendedFilms":[
+          {
+             "title":"Beauty and the Beast",
+             "letterboxdTitle":"Beauty and the Beast",
+             "year":2017,
+             "letterboxdYear":2017,
+             "imdbRating":7.1,
+             "numberOfVotes":342281,
+             "runtime":129,
+             "genres":[
+                "Adventure",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/hKegSKIDep2ewJWPUQD7u0KqFIp.jpg",
+             "backdropPoster":"/uU1Mt4JWhDvl4vKb3AfxNsorkoM.jpg",
+             "summary":"A live-action adaptation of Disney's version of the classic tale of a cursed prince and a beautiful young woman who helps him break the spell.",
+             "id":"tt2771200",
+             "similarityScore":86.81
+          },
+          {
+             "title":"The Little Mermaid",
+             "letterboxdTitle":"The Little Mermaid",
+             "year":2023,
+             "letterboxdYear":2023,
+             "imdbRating":7.2,
+             "numberOfVotes":162708,
+             "runtime":135,
+             "genres":[
+                "Adventure",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/ym1dxyOk4jFcSl4Q2zmRrA5BEEN.jpg",
+             "backdropPoster":"/7VEUOEfRzzrQfWddlIyLUKvh6Nf.jpg",
+             "summary":"The youngest of King Triton’s daughters, and the most defiant, Ariel longs to find out more about the world beyond the sea, and while visiting the surface, falls for the dashing Prince Eric. With mermaids forbidden to interact with humans, Ariel makes a deal with the evil sea witch, Ursula, which gives her a chance to experience life on land, but ultimately places her life – and her father’s crown – in jeopardy.",
+             "id":"tt5971474",
+             "similarityScore":86.74
+          },
+          {
+             "title":"Alice in Wonderland",
+             "letterboxdTitle":"Alice in Wonderland",
+             "year":2010,
+             "letterboxdYear":2010,
+             "imdbRating":6.4,
+             "numberOfVotes":450376,
+             "runtime":108,
+             "genres":[
+                "Adventure",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/o0kre9wRCZz3jjSjaru7QU0UtFz.jpg",
+             "backdropPoster":"/y8Rmadbft60Cupx6SmSvy8rHENH.jpg",
+             "summary":"Alice, now 19 years old, returns to the whimsical world she first entered as a child and embarks on a journey to discover her true destiny.",
+             "id":"tt1014759",
+             "similarityScore":86.53
+          },
+          {
+             "title":"Oz the Great and Powerful",
+             "letterboxdTitle":"Oz the Great and Powerful",
+             "year":2013,
+             "letterboxdYear":2013,
+             "imdbRating":6.3,
+             "numberOfVotes":217257,
+             "runtime":130,
+             "genres":[
+                "Adventure",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/tkzfAUEKoUp4YFNbZV9hfpZOz0z.jpg",
+             "backdropPoster":"/a4KUVG5P5hBSgAgHHindbnyubTF.jpg",
+             "summary":"Oscar Diggs, a small-time circus illusionist and con-artist, is whisked from Kansas to the Land of Oz where the inhabitants assume he's the great wizard of prophecy, there to save Oz from the clutches of evil.",
+             "id":"tt1623205",
+             "similarityScore":86.43
+          },
+          {
+             "title":"The BFG",
+             "letterboxdTitle":"The BFG",
+             "year":2016,
+             "letterboxdYear":2016,
+             "imdbRating":6.3,
+             "numberOfVotes":95511,
+             "runtime":117,
+             "genres":[
+                "Adventure",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/vssXmCrfCiARkQ0512oG0wjh2h9.jpg",
+             "backdropPoster":"/tOTtJelsPKX0bvSdvDVL2ou3cGS.jpg",
+             "summary":"The BFG is no ordinary bone-crunching giant. He is far too nice and jumbly. It's lucky for Sophie that he is. Had she been carried off in the middle of the night by the Bloodbottler, or any of the other giants—rather than the BFG—she would have soon become breakfast. When Sophie hears that the giants are flush-bunking off to England to swollomp a few nice little chiddlers, she decides she must stop them once and for all. And the BFG is going to help her!",
+             "id":"tt3691740",
+             "similarityScore":86.37
+          },
+          {
+             "title":"Inkheart",
+             "letterboxdTitle":"Inkheart",
+             "year":2008,
+             "letterboxdYear":2008,
+             "imdbRating":6.1,
+             "numberOfVotes":83432,
+             "runtime":106,
+             "genres":[
+                "Adventure",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/jqvhxcowBfckO8RWtaMMVc4QFeB.jpg",
+             "backdropPoster":"/mtxWo485jB3GeK3UxbfaguNtpU2.jpg",
+             "summary":"The adventures of a father and his young daughter, in their search for a long lost book that will help reunite a missing, close relative.",
+             "id":"tt0494238",
+             "similarityScore":86.24
+          },
+          {
+             "title":"Nim's Island",
+             "letterboxdTitle":"Nim's Island",
+             "year":2008,
+             "letterboxdYear":2008,
+             "imdbRating":6.0,
+             "numberOfVotes":37378,
+             "runtime":96,
+             "genres":[
+                "Adventure",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/vhNoXDpc7T5OdmAuu8DMHLB39uo.jpg",
+             "backdropPoster":"/yXqNFTsp2P3fSkSQvs0vxkQF586.jpg",
+             "summary":"A young girl inhabits an isolated island with her scientist father and communicates with a reclusive author of the novel she's reading.",
+             "id":"tt0410377",
+             "similarityScore":86.15
+          },
+          {
+             "title":"Percy Jackson: Sea of Monsters",
+             "letterboxdTitle":"Percy Jackson: Sea of Monsters",
+             "year":2013,
+             "letterboxdYear":2013,
+             "imdbRating":5.7,
+             "numberOfVotes":129304,
+             "runtime":106,
+             "genres":[
+                "Adventure",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/tAu90qEpLqwqiZLsMqpaMVr55oN.jpg",
+             "backdropPoster":"/fvrGb6zfQaQ8RD9pC8o9vv1b7W2.jpg",
+             "summary":"In their quest to confront the ultimate evil, Percy and his friends battle swarms of mythical creatures to find the mythical Golden Fleece and to stop an ancient evil from rising.",
+             "id":"tt1854564",
+             "similarityScore":86.04
+          },
+          {
+             "title":"Return to Oz",
+             "letterboxdTitle":"Return to Oz",
+             "year":1985,
+             "letterboxdYear":1985,
+             "imdbRating":6.8,
+             "numberOfVotes":31814,
+             "runtime":113,
+             "genres":[
+                "Adventure",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/dyMwaXA9nVhPiA5wYHsvfUAnbaB.jpg",
+             "backdropPoster":"/s3s0zoW2Vsllx24mw1UW1n9OmYa.jpg",
+             "summary":"Dorothy, saved from a psychiatric experiment by a mysterious girl, finds herself back in the land of her dreams, and makes delightful new friends, and dangerous new enemies.",
+             "id":"tt0089908",
+             "similarityScore":86.03
+          }
+       ]
+    },
+    {
+       "recommendedRowText":"Based on what you watched recently",
+       "recommendedFilms":[
+          {
+             "title":"A Man Called Otto",
+             "letterboxdTitle":"A Man Called Otto",
+             "year":2022,
+             "letterboxdYear":2022,
+             "imdbRating":7.5,
+             "numberOfVotes":183495,
+             "runtime":126,
+             "genres":[
+                "Comedy",
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/130H1gap9lFfiTF9iDrqNIkFvC9.jpg",
+             "backdropPoster":"/v2LilmCylr3bL9TCZSj6syjowZh.jpg",
+             "summary":"When a lively young family moves in next door, grumpy widower Otto Anderson meets his match in a quick-witted, pregnant woman named Marisol, leading to an unlikely friendship that turns his world upside down.",
+             "id":"tt7405458",
+             "similarityScore":89.65
+          },
+          {
+             "title":"American Fiction",
+             "letterboxdTitle":"American Fiction",
+             "year":2023,
+             "letterboxdYear":2023,
+             "imdbRating":7.5,
+             "numberOfVotes":104335,
+             "runtime":117,
+             "genres":[
+                "Comedy",
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/57MFWGHarg9jid7yfDTka4RmcMU.jpg",
+             "backdropPoster":"/3mpgltEMgPf8zFtPnAWdDVN8ZT1.jpg",
+             "summary":"A novelist fed up with the establishment profiting from \"Black\" entertainment uses a pen name to write a book that propels him into the heart of hypocrisy and the madness he claims to disdain.",
+             "id":"tt23561236",
+             "similarityScore":89.58
+          },
+          {
+             "title":"Mr. Church",
+             "letterboxdTitle":"Mr. Church",
+             "year":2016,
+             "letterboxdYear":2016,
+             "imdbRating":7.6,
+             "numberOfVotes":32093,
+             "runtime":104,
+             "genres":[
+                "Comedy",
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/5fCfZEQwcbuqVPyMu7pN5XNpK5V.jpg",
+             "backdropPoster":"/y6jpd3c1UFoouBmIVWZMCGVyQmS.jpg",
+             "summary":"A unique friendship develops when a little girl and her dying mother inherit a cook - Mr. Church. What begins as an arrangement that should only last six months, instead spans fifteen years.",
+             "id":"tt4196848",
+             "similarityScore":89.41
+          },
+          {
+             "title":"Instant Family",
+             "letterboxdTitle":"Instant Family",
+             "year":2018,
+             "letterboxdYear":2018,
+             "imdbRating":7.3,
+             "numberOfVotes":125567,
+             "runtime":118,
+             "genres":[
+                "Comedy",
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/dic3GdmMpxxfkCQfvZnasb5ZkSG.jpg",
+             "backdropPoster":"/mLHApYe5zuYb5UE0PWzkkgjMgmG.jpg",
+             "summary":"When Pete and Ellie decide to start a family, they stumble into the world of foster care adoption. They hope to take in one small child but when they meet three siblings, including a rebellious 15 year old girl, they find themselves speeding from zero to three kids overnight.",
+             "id":"tt7401588",
+             "similarityScore":89.37
+          },
+          {
+             "title":"Juno",
+             "letterboxdTitle":"Juno",
+             "year":2007,
+             "letterboxdYear":2007,
+             "imdbRating":7.4,
+             "numberOfVotes":558192,
+             "runtime":96,
+             "genres":[
+                "Comedy",
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/jNIn2tVhpvFD6P9IojldI3mNYcn.jpg",
+             "backdropPoster":"/sRXMmeNHTSWRYdDz3zaHNyyPJ0u.jpg",
+             "summary":"Faced with an unplanned pregnancy, sixteen year old high-schooler, Juno MacGuff, makes an unusual decision regarding her unborn child.",
+             "id":"tt0467406",
+             "similarityScore":89.36
+          },
+          {
+             "title":"Mid90s",
+             "letterboxdTitle":"mid90s",
+             "year":2018,
+             "letterboxdYear":2018,
+             "imdbRating":7.4,
+             "numberOfVotes":81311,
+             "runtime":85,
+             "genres":[
+                "Comedy",
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/9Tw0Y3DK5kGIU9X1yw3Q9gCkOlb.jpg",
+             "backdropPoster":"/BOeORWljjIPGuCwUgLls24ctF3.jpg",
+             "summary":"In 1990s Los Angeles, a 13-year-old spends his summer navigating between a troubled home life and a crew of new friends he meets at a skate shop.",
+             "id":"tt5613484",
+             "similarityScore":89.36
+          },
+          {
+             "title":"The Way Way Back",
+             "letterboxdTitle":"The Way Way Back",
+             "year":2013,
+             "letterboxdYear":2013,
+             "imdbRating":7.4,
+             "numberOfVotes":159243,
+             "runtime":103,
+             "genres":[
+                "Comedy",
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/4DgA0EDDVv37C8xISc3Vv0rhxlL.jpg",
+             "backdropPoster":"/bPm5kQLlc2KypdYkUxGbrGfLJ82.jpg",
+             "summary":"Shy 14-year-old Duncan goes on summer vacation with his mother, her overbearing boyfriend, and her boyfriend's daughter. Having a rough time fitting in, Duncan finds an unexpected friend in Owen, manager of the Water Wizz water park.",
+             "id":"tt1727388",
+             "similarityScore":89.34
+          },
+          {
+             "title":"The Descendants",
+             "letterboxdTitle":"The Descendants",
+             "year":2011,
+             "letterboxdYear":2011,
+             "imdbRating":7.3,
+             "numberOfVotes":254862,
+             "runtime":115,
+             "genres":[
+                "Comedy",
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/8cDq5UlOPYeKm39okALCEOsZPxk.jpg",
+             "backdropPoster":"/afC5IhoNZb8MqDHuiWOAcLjqi6b.jpg",
+             "summary":"With his wife Elizabeth on life support after a boating accident, Hawaiian land baron Matt King takes his daughters on a trip from Oahu to Kauai to confront a young real estate broker, who was having an affair with Elizabeth before her misfortune.",
+             "id":"tt1033575",
+             "similarityScore":89.3
+          },
+          {
+             "title":"The Intern",
+             "letterboxdTitle":"The Intern",
+             "year":2015,
+             "letterboxdYear":2015,
+             "imdbRating":7.1,
+             "numberOfVotes":287125,
+             "runtime":121,
+             "genres":[
+                "Comedy",
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/9UoAC9tu8kIyRy8AcJnGhnH0gOH.jpg",
+             "backdropPoster":"/i8Q2Ei2dPliMLgPWYhRTxIDzh7r.jpg",
+             "summary":"70-year-old widower Ben Whittaker has discovered that retirement isn't all it's cracked up to be. Seizing an opportunity to get back in the game, he becomes a senior intern at an online fashion site, founded and run by Jules Ostin.",
+             "id":"tt2361509",
+             "similarityScore":89.29
+          }
+       ]
+    },
+    {
+       "recommendedRowText":"Try out some older films",
+       "recommendedFilms":[
+          {
+             "title":"Alice in Wonderland",
+             "letterboxdTitle":"Alice in Wonderland",
+             "year":1951,
+             "letterboxdYear":1951,
+             "imdbRating":7.3,
+             "numberOfVotes":158246,
+             "runtime":75,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Comedy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/20cvfwfaFqNbe9Fc3VEHJuPRxmn.jpg",
+             "backdropPoster":"/b4yiLlIFuiULuuLTxT0Pt1QyT6J.jpg",
+             "summary":"On a golden afternoon, young Alice follows a White Rabbit, who disappears down a nearby rabbit hole. Quickly following him, she tumbles into the burrow - and enters the merry, topsy-turvy world of Wonderland! Memorable songs and whimsical escapades highlight Alice's journey, which culminates in a madcap encounter with the Queen of Hearts - and her army of playing cards!",
+             "id":"tt0043274",
+             "similarityScore":80.47
+          },
+          {
+             "title":"The Sword in the Stone",
+             "letterboxdTitle":"The Sword in the Stone",
+             "year":1963,
+             "letterboxdYear":1963,
+             "imdbRating":7.1,
+             "numberOfVotes":109067,
+             "runtime":79,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Comedy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/dYQhKThGXl3xQv71Ysw0RSmVmBA.jpg",
+             "backdropPoster":"/m1TOfgljbT3jOez3b4l1I1tm82W.jpg",
+             "summary":"Wart is a young boy who aspires to be a knight's squire. On a hunting trip he falls in on Merlin, a powerful but amnesiac wizard who has plans for him beyond mere squiredom. He starts by trying to give him an education, believing that once one has an education, one can go anywhere. Needless to say, it doesn't quite work out that way.",
+             "id":"tt0057546",
+             "similarityScore":79.63
+          },
+          {
+             "title":"The Many Adventures of Winnie the Pooh",
+             "letterboxdTitle":"The Many Adventures of Winnie the Pooh",
+             "year":1977,
+             "letterboxdYear":1977,
+             "imdbRating":7.5,
+             "numberOfVotes":40745,
+             "runtime":74,
+             "genres":[
+                "Animation",
+                "Comedy",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/2xwaFVLv5geVrFd81eUttv7OutF.jpg",
+             "backdropPoster":"/19lyrve8NcorainRPLXELTDVnA2.jpg",
+             "summary":"Whether we’re young or forever young at heart, the Hundred Acre Wood calls to that place in each of us that still believes in magic. Join pals Pooh, Piglet, Kanga, Roo, Owl, Rabbit, Tigger and Christopher Robin as they enjoy their days together and sing their way through adventures.",
+             "id":"tt0076363",
+             "similarityScore":79.59
+          },
+          {
+             "title":"White Christmas",
+             "letterboxdTitle":"White Christmas",
+             "year":1954,
+             "letterboxdYear":1954,
+             "imdbRating":7.5,
+             "numberOfVotes":54515,
+             "runtime":120,
+             "genres":[
+                "Comedy",
+                "Musical",
+                "Romance"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/A5kBQsHKbIptxJyELEpHQJROCRj.jpg",
+             "backdropPoster":"/97eLP7iJTCE03LhwtXfXRcLbg5H.jpg",
+             "summary":"Two talented song-and-dance men team up after the war to become one of the hottest acts in show business. In time they befriend and become romantically involved with the beautiful Haynes sisters who comprise a sister act.",
+             "id":"tt0047673",
+             "similarityScore":75.42
+          },
+          {
+             "title":"Gentlemen Prefer Blondes",
+             "letterboxdTitle":"Gentlemen Prefer Blondes",
+             "year":1953,
+             "letterboxdYear":1953,
+             "imdbRating":7.1,
+             "numberOfVotes":44487,
+             "runtime":91,
+             "genres":[
+                "Comedy",
+                "Musical",
+                "Romance"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/fDozhst5HVJJcd3BM8ZOsKniO7Q.jpg",
+             "backdropPoster":"/jnYGtYTHLPTFcnvKxnpAACGfW3K.jpg",
+             "summary":"Lorelei Lee is a beautiful showgirl engaged to be married to the wealthy Gus Esmond, much to the disapproval of Gus' rich father, Esmond Sr., who thinks that Lorelei is just after his money. When Lorelei goes on a cruise accompanied only by her best friend, Dorothy Shaw, Esmond Sr. hires Ernie Malone, a private detective, to follow her and report any questionable behavior that would disqualify her from the marriage.",
+             "id":"tt0045810",
+             "similarityScore":75.27
+          },
+          {
+             "title":"Gigi",
+             "letterboxdTitle":"Gigi",
+             "year":1958,
+             "letterboxdYear":1958,
+             "imdbRating":6.6,
+             "numberOfVotes":25075,
+             "runtime":115,
+             "genres":[
+                "Comedy",
+                "Musical",
+                "Romance"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/1sF5o9Cs5GMx3cYmXD64WEQBLJn.jpg",
+             "backdropPoster":"/52UZWu9S0wL2HYZmvoi5DcOOYiB.jpg",
+             "summary":"A home, a motorcar, servants, the latest fashions: the most eligible and most finicky bachelor in Paris offers them all to Gigi. But she, who's gone from girlish gawkishness to cultured glamour before our eyes, yearns for that wonderful something money can't buy.",
+             "id":"tt0051658",
+             "similarityScore":74.71
+          },
+          {
+             "title":"Around the World in 80 Days",
+             "letterboxdTitle":"Around the World in Eighty Days",
+             "year":1956,
+             "letterboxdYear":1956,
+             "imdbRating":6.7,
+             "numberOfVotes":30438,
+             "runtime":175,
+             "genres":[
+                "Adventure",
+                "Comedy",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/kk6Rrwh0toMz9tjuUHdS4O3v2Rk.jpg",
+             "backdropPoster":"/lj7aURTTktw8IRXiV1WYCxdEBKX.jpg",
+             "summary":"Based on the famous book by Jules Verne the movie follows Phileas Fogg on his journey around the world. Which has to be completed within 80 days, a very short period for those days.",
+             "id":"tt0048960",
+             "similarityScore":81.22
+          },
+          {
+             "title":"Willy Wonka & the Chocolate Factory",
+             "letterboxdTitle":"Willy Wonka & the Chocolate Factory",
+             "year":1971,
+             "letterboxdYear":1971,
+             "imdbRating":7.8,
+             "numberOfVotes":233996,
+             "runtime":100,
+             "genres":[
+                "Adventure",
+                "Comedy",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/xL2GISX0MODJfpHrMdLdZF6xWgW.jpg",
+             "backdropPoster":"/aAL7kV0l3yZtbCFs7J8m4gXldqR.jpg",
+             "summary":"When eccentric candy man Willy Wonka promises a lifetime supply of sweets and a tour of his chocolate factory to five lucky kids, penniless Charlie Bucket seeks the golden ticket that will make him a winner.",
+             "id":"tt0067992",
+             "similarityScore":80.85
+          },
+          {
+             "title":"The Muppet Movie",
+             "letterboxdTitle":"The Muppet Movie",
+             "year":1979,
+             "letterboxdYear":1979,
+             "imdbRating":7.6,
+             "numberOfVotes":40464,
+             "runtime":95,
+             "genres":[
+                "Adventure",
+                "Comedy",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/8LUjnIW5ph6pHoXDE3Zg4iVi6BV.jpg",
+             "backdropPoster":"/oyv0fdX6DQG1fSEYqn4JRHSPx4B.jpg",
+             "summary":"A Hollywood agent persuades Kermit the Frog to pursue a career in Hollywood. On his way there he meets his future muppet crew while being chased by the desperate owner of a frog-leg restaurant!",
+             "id":"tt0079588",
+             "similarityScore":79.99
+          }
+       ]
+    },
+    {
+       "recommendedRowText":"Try out some lesser-known films",
+       "recommendedFilms":[
+          {
+             "title":"Monster House",
+             "letterboxdTitle":"Monster House",
+             "year":2006,
+             "letterboxdYear":2006,
+             "imdbRating":6.7,
+             "numberOfVotes":144528,
+             "runtime":91,
+             "genres":[
+                "Animation",
+                "Comedy",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/r4BrEpGD2OlOTHvVwy0lXzxAGqs.jpg",
+             "backdropPoster":"/aDnCTWpWMHcQxOeGWsITmoLuEGy.jpg",
+             "summary":"Monsters under the bed are scary enough, but what happens when an entire house is out to get you? Three teens aim to find out when they go up against a decrepit neighboring home and unlock its frightening secrets.",
+             "id":"tt0385880",
+             "similarityScore":84.26
+          },
+          {
+             "title":"The Grinch",
+             "letterboxdTitle":"The Grinch",
+             "year":2018,
+             "letterboxdYear":2018,
+             "imdbRating":6.4,
+             "numberOfVotes":101091,
+             "runtime":85,
+             "genres":[
+                "Animation",
+                "Comedy",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/1Bc9VNd9CIHIyJtPKFqSQzrXWru.jpg",
+             "backdropPoster":"/5lWIYxYEqWi8j3ZloxXntw3ImBo.jpg",
+             "summary":"The Grinch hatches a scheme to ruin Christmas when the residents of Whoville plan their annual holiday celebration.",
+             "id":"tt2709692",
+             "similarityScore":84.18
+          },
+          {
+             "title":"The Mitchells vs. the Machines",
+             "letterboxdTitle":"The Mitchells vs. the Machines",
+             "year":2021,
+             "letterboxdYear":2021,
+             "imdbRating":7.6,
+             "numberOfVotes":132080,
+             "runtime":114,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Comedy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/mI2Di7HmskQQ34kz0iau6J1vr70.jpg",
+             "backdropPoster":"/vsZLf5uog08pAnfsMuDWrsLWUUF.jpg",
+             "summary":"A quirky, dysfunctional family's road trip is upended when they find themselves in the middle of the robot apocalypse and suddenly become humanity's unlikeliest last hope.",
+             "id":"tt7979580",
+             "similarityScore":83.85
+          },
+          {
+             "title":"Cry-Baby",
+             "letterboxdTitle":"Cry-Baby",
+             "year":1990,
+             "letterboxdYear":1990,
+             "imdbRating":6.5,
+             "numberOfVotes":66197,
+             "runtime":85,
+             "genres":[
+                "Comedy",
+                "Musical"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/qV1XYzb2QTvpcnfSnYVSunGQ4XA.jpg",
+             "backdropPoster":"/hExj5Q2lrXZCjZQT0N9j3MHpa9n.jpg",
+             "summary":"A prim and proper schoolgirl goes against her society grandmother's wishes when she dates a motorcycle-riding juvenile delinquent.",
+             "id":"tt0099329",
+             "similarityScore":75.97
+          },
+          {
+             "title":"Matilda",
+             "letterboxdTitle":"Matilda",
+             "year":1996,
+             "letterboxdYear":1996,
+             "imdbRating":7.0,
+             "numberOfVotes":182096,
+             "runtime":98,
+             "genres":[
+                "Comedy",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/wYoDpWInsBEVSmWStnRH06ddoyk.jpg",
+             "backdropPoster":"/iXlHfi9hq7nfSv31pBab8fpMfZh.jpg",
+             "summary":"Matilda Wormwood is an exquisite and intelligent little girl. Unfortunately, her parents, Harry and Zinnia misunderstand her because they think she is so different. As time passes, she finally starts school and has a kind teacher, loyal friends, and a sadistic headmistress. As she gets fed up with the constant cruelty, she begins to realize that she has a gift of telekinetic powers. After some days of practice, she suddenly turns the tables to stand up to Harry and Zinnia and outwit the headmistress.",
+             "id":"tt0117008",
+             "similarityScore":75.51
+          },
+          {
+             "title":"Hocus Pocus",
+             "letterboxdTitle":"Hocus Pocus",
+             "year":1993,
+             "letterboxdYear":1993,
+             "imdbRating":6.9,
+             "numberOfVotes":163219,
+             "runtime":96,
+             "genres":[
+                "Comedy",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/by4D4Q9NlUjFSEUA1yrxq6ksXmk.jpg",
+             "backdropPoster":"/ncr6KR7bBF8cps6yZKiTAwClpn1.jpg",
+             "summary":"After 300 years of slumber, three sister witches are accidentally resurrected in Salem on Halloween night, and it is up to three kids and their newfound feline friend to put an end to the witches' reign of terror once and for all.",
+             "id":"tt0107120",
+             "similarityScore":75.42
+          },
+          {
+             "title":"The Nutcracker and the Four Realms",
+             "letterboxdTitle":"The Nutcracker and the Four Realms",
+             "year":2018,
+             "letterboxdYear":2018,
+             "imdbRating":5.6,
+             "numberOfVotes":38621,
+             "runtime":99,
+             "genres":[
+                "Adventure",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/dstJBuMSteaUrM0DnBYEiWikyHW.jpg",
+             "backdropPoster":"/l2ji4YiNSPBV69WjGBgU0gCvRqy.jpg",
+             "summary":"When Clara’s mother leaves her a mysterious gift, she embarks on a journey to four secret realms—where she discovers her greatest strength could change the world.",
+             "id":"tt5523010",
+             "similarityScore":86.0
+          },
+          {
+             "title":"The Muppets",
+             "letterboxdTitle":"The Muppets",
+             "year":2011,
+             "letterboxdYear":2011,
+             "imdbRating":7.1,
+             "numberOfVotes":98271,
+             "runtime":103,
+             "genres":[
+                "Adventure",
+                "Comedy",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/rsNbxonO8gtylIXwiv7JeqwJ4Kb.jpg",
+             "backdropPoster":"/ysHWeVWSQZCIEBSEVf1nPddRn58.jpg",
+             "summary":"When Kermit the Frog and the Muppets learn that their beloved theater is slated for demolition, a sympathetic human, Gary, and his puppet brother, Walter, swoop in to help the gang put on a show and raise the $10 million they need to save the day.",
+             "id":"tt1204342",
+             "similarityScore":85.0
+          },
+          {
+             "title":"The Christmas Chronicles",
+             "letterboxdTitle":"The Christmas Chronicles",
+             "year":2018,
+             "letterboxdYear":2018,
+             "imdbRating":7.0,
+             "numberOfVotes":88186,
+             "runtime":104,
+             "genres":[
+                "Adventure",
+                "Comedy",
+                "Family"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/5Il2EMSF2KecrUKZPuen6BZmaCP.jpg",
+             "backdropPoster":"/brENMyyhk13WLzKHBK20rBKx0u7.jpg",
+             "summary":"Siblings Kate and Teddy try to prove Santa Claus is real, but when they accidentally cause his sleigh to crash, they have to save Christmas.",
+             "id":"tt2990140",
+             "similarityScore":84.98
+          }
+       ]
+    },
+    {
+       "recommendedRowText":"Try out some international films",
+       "recommendedFilms":[
+          {
+             "title":"Tales from Earthsea",
+             "letterboxdTitle":"Tales from Earthsea",
+             "year":2006,
+             "letterboxdYear":2006,
+             "imdbRating":6.3,
+             "numberOfVotes":45674,
+             "runtime":115,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Fantasy"
+             ],
+             "countries":[
+                "JP"
+             ],
+             "mainPoster":"/y0VnJt4eRPMjA1hpJ8f1EFoVaSf.jpg",
+             "backdropPoster":"/x5ufEAM7bS7DVXaovApamQh5BNE.jpg",
+             "summary":"Something bizarre has come over the land. The kingdom is deteriorating. People are beginning to act strange... What\\'s even more strange is that people are beginning to see dragons, which shouldn\\'t enter the world of humans. Due to all these bizarre events, Ged, a wandering wizard, is investigating the cause. During his journey, he meets Prince Arren, a young distraught teenage boy. While Arren may look like a shy young teen, he has a severe dark side, which grants him strength, hatred, ruthlessness and has no mercy, especially when it comes to protecting Teru. For the witch Kumo this is a perfect opportunity. She can use the boy\\'s \"fears\" against the very one who would help him, Ged.",
+             "id":"tt0495596",
+             "similarityScore":85.41
+          },
+          {
+             "title":"The Girl Who Leapt Through Time",
+             "letterboxdTitle":"The Girl Who Leapt Through Time",
+             "year":2006,
+             "letterboxdYear":2006,
+             "imdbRating":7.7,
+             "numberOfVotes":72419,
+             "runtime":98,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Comedy"
+             ],
+             "countries":[
+                "JP"
+             ],
+             "mainPoster":"/xHnlWM8BmqY419YUccYy2KC5Jqo.jpg",
+             "backdropPoster":"/z5Q5uxodjr8sPS1MCmK4Ab9HMJd.jpg",
+             "summary":"When 17-year-old Makoto Konno gains the ability to, quite literally, \"leap\" backwards through time, she immediately sets about improving her grades and preventing personal mishaps. However, she soon realises that changing the past isn\\'t as simple as it seems, and eventually, will have to rely on her new powers to shape the future of herself and her friends.",
+             "id":"tt0808506",
+             "similarityScore":84.82
+          },
+          {
+             "title":"Tokyo Godfathers",
+             "letterboxdTitle":"Tokyo Godfathers",
+             "year":2003,
+             "letterboxdYear":2003,
+             "imdbRating":7.8,
+             "numberOfVotes":49627,
+             "runtime":92,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Comedy"
+             ],
+             "countries":[
+                "JP"
+             ],
+             "mainPoster":"/sPC66btzQlzuRdPKiSDYZ5Hvxgc.jpg",
+             "backdropPoster":"/78F8cn6EXum1zpukF3HTNI8W0EA.jpg",
+             "summary":"On Christmas Eve, three homeless people living on the streets of Tokyo discover a newborn baby among the trash and set out to find its parents.",
+             "id":"tt0388473",
+             "similarityScore":84.79
+          },
+          {
+             "title":"The Secret of Kells",
+             "letterboxdTitle":"The Secret of Kells",
+             "year":2009,
+             "letterboxdYear":2009,
+             "imdbRating":7.5,
+             "numberOfVotes":39113,
+             "runtime":75,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Family"
+             ],
+             "countries":[
+                "IE"
+             ],
+             "mainPoster":"/tmiufIvSssZ2cmYJbro99gZvn2H.jpg",
+             "backdropPoster":"/740KCabjLKjsrxvEakmmJtDtAGY.jpg",
+             "summary":"Adventure awaits 12 year old Brendan who must fight Vikings and a serpent god to find a crystal and complete the legendary Book of Kells. In order to finish Brother Aiden's book, Brendan must overcome his deepest fears on a secret quest that will take him beyond the abbey walls and into the enchanted forest where dangerous mythical creatures hide. Will Brendan succeed in his quest?",
+             "id":"tt0485601",
+             "similarityScore":76.02
+          },
+          {
+             "title":"Ella Enchanted",
+             "letterboxdTitle":"Ella Enchanted",
+             "year":2004,
+             "letterboxdYear":2004,
+             "imdbRating":6.3,
+             "numberOfVotes":77145,
+             "runtime":96,
+             "genres":[
+                "Comedy",
+                "Family",
+                "Fantasy"
+             ],
+             "countries":[
+                "IE",
+                "GB"
+             ],
+             "mainPoster":"/dH8yHmqUra0gqzMJJKXiyfKkB57.jpg",
+             "backdropPoster":"/qGjl2b8lw1YjSOuQ6NpVVW9Ddz0.jpg",
+             "summary":"Ella lives in a magical world in which each child, at the moment of their birth, is given a virtuous \"gift\" from a fairy godmother. Ella\\'s so-called gift, however, is obedience. This birthright proves itself to be quite the curse once Ella finds herself in the hands of several unscrupulous characters whom she quite literally cannot disobey. Determined to gain control of her life and decisions, Ella sets off on a journey to find her fairy godmother who she hopes will lift the curse. The path, however, isn\\'t easy -- Ella must outwit a slew of unpleasant obstacles including ogres, giants, wicked stepsisters, elves and Prince Charmont\\'s evil uncle, who wants to take over the crown and rule the kingdom.",
+             "id":"tt0327679",
+             "similarityScore":68.91
+          },
+          {
+             "title":"Love & Friendship",
+             "letterboxdTitle":"Love & Friendship",
+             "year":2016,
+             "letterboxdYear":2016,
+             "imdbRating":6.4,
+             "numberOfVotes":26824,
+             "runtime":90,
+             "genres":[
+                "Comedy",
+                "Drama",
+                "Romance"
+             ],
+             "countries":[
+                "IE"
+             ],
+             "mainPoster":"/qnulUsG1RWFccLBWjFB9H6nms4F.jpg",
+             "backdropPoster":"/bkPf4yIlzAwet2PVTRz1fiEUDdL.jpg",
+             "summary":"From Jane Austen’s novella, the beautiful and cunning Lady Susan Vernon visits the estate of her in-laws to wait out colorful rumors of her dalliances and to find husbands for herself and her daughter. Two young men, handsome Reginald DeCourcy and wealthy Sir James Martin, severely complicate her plans.",
+             "id":"tt3068194",
+             "similarityScore":66.83
+          },
+          {
+             "title":"The Cat Returns",
+             "letterboxdTitle":"The Cat Returns",
+             "year":2002,
+             "letterboxdYear":2002,
+             "imdbRating":7.1,
+             "numberOfVotes":67333,
+             "runtime":75,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Comedy"
+             ],
+             "countries":[
+                "JP"
+             ],
+             "mainPoster":"/pqyY7IEWkCWNZ7EuRStQaJITEta.jpg",
+             "backdropPoster":"/zUCpWrWU2kLZd0f8gPG2vma0AiM.jpg",
+             "summary":"Young Haru rescues a cat from being run over, but soon learns it's no ordinary feline; it happens to be the Prince of the Cats.",
+             "id":"tt0347618",
+             "similarityScore":81.47
+          },
+          {
+             "title":"Lupin III: The Castle of Cagliostro",
+             "letterboxdTitle":"Lupin the Third: The Castle of Cagliostro",
+             "year":1979,
+             "letterboxdYear":1979,
+             "imdbRating":7.6,
+             "numberOfVotes":34414,
+             "runtime":102,
+             "genres":[
+                "Adventure",
+                "Animation",
+                "Comedy"
+             ],
+             "countries":[
+                "JP"
+             ],
+             "mainPoster":"/vRWNAjvhY3vIOirWONi50y9bFDW.jpg",
+             "backdropPoster":"/fCf8WfsRJEDFf1N6gA6o4ICRYp.jpg",
+             "summary":"After a successful robbery leaves famed thief Lupin the Third and his partner Jigen with nothing but a large amount of expertly crafted counterfeit bills, he decides to track down the forgers responsible—and steal any other treasures he may find in the Castle of Cagliostro, including the 'damsel in distress' he finds imprisoned there.",
+             "id":"tt0079833",
+             "similarityScore":80.85
+          },
+          {
+             "title":"I Want to Eat Your Pancreas",
+             "letterboxdTitle":"I Want to Eat Your Pancreas",
+             "year":2018,
+             "letterboxdYear":2018,
+             "imdbRating":8.1,
+             "numberOfVotes":27667,
+             "runtime":109,
+             "genres":[
+                "Animation",
+                "Drama",
+                "Family"
+             ],
+             "countries":[
+                "JP"
+             ],
+             "mainPoster":"/qDWA7fB4cZ4sBP6YgwlxvraDHi7.jpg",
+             "backdropPoster":"/YLyORLsYIjC0d1TFBSpJKk7piP.jpg",
+             "summary":"After his classmate and crush is diagnosed with a pancreatic disease, an average high schooler sets out to make the most of her final days.",
+             "id":"tt7236034",
+             "similarityScore":78.39
+          }
+       ]
+    },
+    {
+       "recommendedRowText":"Based on your favourite films",
+       "recommendedFilms":[
+          {
+             "title":"Gran Torino",
+             "letterboxdTitle":"Gran Torino",
+             "year":2008,
+             "letterboxdYear":2008,
+             "imdbRating":8.1,
+             "numberOfVotes":830117,
+             "runtime":116,
+             "genres":[
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/zUybYvxWdAJy5hhYovsXtHSWI1l.jpg",
+             "backdropPoster":"/wmsePXV2z1b6ecXuKKrFbG0Q92P.jpg",
+             "summary":"Disgruntled Korean War veteran Walt Kowalski sets out to reform his neighbor, Thao Lor, a Hmong teenager who tried to steal Kowalski's prized possession: a 1972 Gran Torino.",
+             "id":"tt1205489",
+             "similarityScore":92.44
+          },
+          {
+             "title":"The Help",
+             "letterboxdTitle":"The Help",
+             "year":2011,
+             "letterboxdYear":2011,
+             "imdbRating":8.1,
+             "numberOfVotes":505578,
+             "runtime":146,
+             "genres":[
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/7XLSwxpfpPoJyTdJVot6a42TS2V.jpg",
+             "backdropPoster":"/wyvUmyzqGOBDyqLHRSukGDjI7bH.jpg",
+             "summary":"Aibileen Clark is a middle-aged African-American maid who has spent her life raising white children and has recently lost her only son; Minny Jackson is an African-American maid who has often offended her employers despite her family\\'s struggles with money and her desperate need for jobs; and Eugenia \"Skeeter\" Phelan is a young white woman who has recently moved back home after graduating college to find out her childhood maid has mysteriously disappeared. These three stories intertwine to explain how life in Jackson, Mississippi revolves around \"the help\"; yet they are always kept at a certain distance because of racial lines.",
+             "id":"tt1454029",
+             "similarityScore":92.23
+          },
+          {
+             "title":"Magnolia",
+             "letterboxdTitle":"Magnolia",
+             "year":1999,
+             "letterboxdYear":1999,
+             "imdbRating":8.0,
+             "numberOfVotes":334696,
+             "runtime":188,
+             "genres":[
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/uq2u8HgtLFJkjNq2kHb2jvipIPT.jpg",
+             "backdropPoster":"/zHUsTabS4RMOtGs2hZsvgrtb5y3.jpg",
+             "summary":"On one random day in the San Fernando Valley, a dying father, a young wife, a male caretaker, a famous lost son, a police officer in love, a boy genius, an ex-boy genius, a game show host and an estranged daughter will each become part of a dazzling multiplicity of plots, but one story.",
+             "id":"tt0175880",
+             "similarityScore":91.57
+          },
+          {
+             "title":"Boogie Nights",
+             "letterboxdTitle":"Boogie Nights",
+             "year":1997,
+             "letterboxdYear":1997,
+             "imdbRating":7.9,
+             "numberOfVotes":288117,
+             "runtime":155,
+             "genres":[
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/wnE24UPCPQsQnbBOu4zVE2qaDNm.jpg",
+             "backdropPoster":"/uC54rlRdLMZ46fnrz5SoVYleNyv.jpg",
+             "summary":"Set in 1977, back when sex was safe, pleasure was a business and business was booming, idealistic porn producer Jack Horner aspires to elevate his craft to an art form. Horner discovers Eddie Adams, a hot young talent working as a busboy in a nightclub, and welcomes him into the extended family of movie-makers, misfits and hangers-on that are always around. Adams\\' rise from nobody to a celebrity adult entertainer is meteoric, and soon the whole world seems to know his porn alter ego, \"Dirk Diggler\". Now, when disco and drugs are in vogue, fashion is in flux and the party never seems to stop, Adams\\' dreams of turning sex into stardom are about to collide with cold, hard reality.",
+             "id":"tt0118749",
+             "similarityScore":91.4
+          },
+          {
+             "title":"Gifted",
+             "letterboxdTitle":"Gifted",
+             "year":2017,
+             "letterboxdYear":2017,
+             "imdbRating":7.6,
+             "numberOfVotes":145061,
+             "runtime":101,
+             "genres":[
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/7YB2YrMwIm1g8FyZtlvmVDfRnAT.jpg",
+             "backdropPoster":"/6MmYsaK6poR8f4R8jsBnJBU5tfd.jpg",
+             "summary":"Frank, a single man raising his child prodigy niece Mary, is drawn into a custody battle with his mother.",
+             "id":"tt4481414",
+             "similarityScore":91.36
+          },
+          {
+             "title":"Nebraska",
+             "letterboxdTitle":"Nebraska",
+             "year":2013,
+             "letterboxdYear":2013,
+             "imdbRating":7.7,
+             "numberOfVotes":125347,
+             "runtime":115,
+             "genres":[
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/o1t2Mw18EEBnl8v4Nby3PFjxnM1.jpg",
+             "backdropPoster":"/yePsFcldyZ6VnxaBr8ZbVEaOt4W.jpg",
+             "summary":"An aging, booze-addled father takes a trip from Montana to Nebraska with his estranged son in order to claim what he believes to be a million-dollar sweepstakes prize.",
+             "id":"tt1821549",
+             "similarityScore":91.35
+          },
+          {
+             "title":"Short Term 12",
+             "letterboxdTitle":"Short Term 12",
+             "year":2013,
+             "letterboxdYear":2013,
+             "imdbRating":7.9,
+             "numberOfVotes":93029,
+             "runtime":96,
+             "genres":[
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/qKnsyaJZLXfiL2JhIJEkpA8C3LU.jpg",
+             "backdropPoster":"/gTDSid6kZT7vNp1vSNB0nLAnSeG.jpg",
+             "summary":"Grace, a compassionate young supervisor at a foster care facility, helps at-risk teens. But when a new charge dredges up memories of her own troubled past, Grace's tough exterior begins eroding.",
+             "id":"tt2370248",
+             "similarityScore":91.35
+          },
+          {
+             "title":"Scent of a Woman",
+             "letterboxdTitle":"Scent of a Woman",
+             "year":1992,
+             "letterboxdYear":1992,
+             "imdbRating":8.0,
+             "numberOfVotes":340760,
+             "runtime":156,
+             "genres":[
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/f75Fsfx8nA8JfSdJ61jhC8JwHps.jpg",
+             "backdropPoster":"/wwaVAZmQU2CBAJzBtahOSvqvpbc.jpg",
+             "summary":"Charlie Simms is a student at a private preparatory school who comes from a poor family. To earn the money for his flight home to Gresham, Oregon for Christmas, Charlie takes a job over Thanksgiving looking after retired U.S. Army officer Lieutenant Colonel Frank Slade, a cantankerous middle-aged man who lives with his niece and her family.",
+             "id":"tt0105323",
+             "similarityScore":91.3
+          },
+          {
+             "title":"Nomadland",
+             "letterboxdTitle":"Nomadland",
+             "year":2020,
+             "letterboxdYear":2021,
+             "imdbRating":7.3,
+             "numberOfVotes":189501,
+             "runtime":107,
+             "genres":[
+                "Drama"
+             ],
+             "countries":[
+                "US"
+             ],
+             "mainPoster":"/8Vc5EOUEIF1EUXuX9eLFf7BvN3P.jpg",
+             "backdropPoster":"/bjjZXrP8PEdFeJkKERc62xlarMI.jpg",
+             "summary":"A woman in her sixties embarks on a journey through the western United States after losing everything in the Great Recession, living as a van-dwelling modern-day nomad.",
+             "id":"tt9770150",
+             "similarityScore":91.28
+          }
+       ]
+    }
+ ]

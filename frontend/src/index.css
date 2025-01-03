@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  overflow: hidden; /* hide scroll bars & disable scrolling */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -120,4 +119,57 @@ input[type="file"] {
 .regen-button {
     font-size: 20px;
     background-color: rgba(0, 0, 255, 0.5);
+}
+
+.rows {
+    display: flex;
+    flex-direction: column;
+}
+
+.recommendedRow {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px; /* Add space between rows */
+    padding: 10px;
+    background-color: #f9f9f9; /* Light background for better separation */
+    border-radius: 8px; /* Rounded corners for aesthetics */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.recommendedRowText {
+    font-size: 20px;
+    color: white;
+    font-family: lato-bold, serif;
+    margin-bottom: 10px; /* Space between title and films */
+}
+
+.rowOfFilms {
+  display: flex;
+  flex-direction: row;
+  gap: 15px; /* Space between films */
+  overflow-x: auto; /* Horizontal scrolling for smaller screens */
+  width: 100%;
+}
+
+.mainPosterImg {
+    width: 100%;
+}
+
+.recommendedFilm {
+    width: 50%;
+    align-items: center;
+    width: 150px;
+    text-align: center;
+}
+
+.flex-row {
+    /* position: fixed; */
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-col {
+    /* position: fixed; */
+    display: flex;
+    flex-direction: column;    
 }
