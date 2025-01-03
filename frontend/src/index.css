@@ -161,15 +161,3 @@ input[type="file"] {
     width: 150px;
     text-align: center;
 }
-
-.flex-row {
-    /* position: fixed; */
-    display: flex;
-    flex-direction: row;
-}
-
-.flex-col {
-    /* position: fixed; */
-    display: flex;
-    flex-direction: column;    
-}

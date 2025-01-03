@@ -243,6 +243,10 @@ def initRowsOfRecommendations():
     for _ in range(0, TOTAL_RECOMMENDATIONS):
         vectorProfileChanges.append(np.zeros(profileVectorLength))
 
+    favouriteProfile = initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength,
+                                            cachedUserRatingScalars, cachedDateRatedScalars, favouriteFilmIds)
+    # printStringifiedVector(favouriteProfile, cache['allGenres'], cache['allCountries'])
+
     genreProfiles = initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
                       cache['allGenres'], profileVectorLength, NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
     # for genreProfile in genreProfiles:
@@ -265,10 +269,6 @@ def initRowsOfRecommendations():
     # for profile in internationalProfiles:
     #     printStringifiedVector(profile, cache['allGenres'], cache['allCountries'])
 
-    favouriteProfile = initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength,
-                                            cachedUserRatingScalars, cachedDateRatedScalars, favouriteFilmIds)
-    # printStringifiedVector(favouriteProfile, cache['allGenres'], cache['allCountries'])
-
     generateRecommendations()
 
     return jsonify(rowsOfRecommendations), 200
@@ -278,6 +278,12 @@ def generateRecommendations():
     global rowsOfRecommendations
     rowsOfRecommendations = []
     allFilmDataIds = list(allFilmDataUnseen.keys())
+
+    if np.array_equal(favouriteProfile, np.zeros(profileVectorLength)):
+        print("No favourite profile.")
+    else:
+        getFilmRecommendations("Based on your favourite films", allFilmDataIds, NUM_FAVOURITE_RECOMMENDATIONS, 
+                    favouriteProfile, True)
 
     for i in range(0, NUM_TOP_GENRE_PROFILES):
         if genreProfiles[i]['magnitude'] == 0.0:
@@ -336,12 +342,6 @@ def generateRecommendations():
                         internationalProfile, createNewRecommendedRow)
 
         i += 1
-
-    if np.array_equal(favouriteProfile, np.zeros(profileVectorLength)):
-        print("No favourite profile.")
-    else:
-        getFilmRecommendations("Based on your favourite films", allFilmDataIds, NUM_FAVOURITE_RECOMMENDATIONS, 
-                    favouriteProfile, True)
 
 
 def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommendations, profileVector, createNewRecommendedRow):

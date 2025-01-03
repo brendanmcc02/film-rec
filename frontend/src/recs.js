@@ -25,14 +25,6 @@ const App = () => {
             });
     }, []); // Empty dependency array ensures this effect runs once on component mount
 
-    const backgroundStyle = {
-        backgroundImage: `url(${background})`,
-        height: '100vh',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover'
-    }
-
     async function handleUpButton(index) {
         const newUpButtonStates = await Promise.all(upButtonStates.map(async (state, i) => {
             if (i === index) {
@@ -200,16 +192,13 @@ const App = () => {
 
     return (
         // <>
-        //     <div style={backgroundStyle}></div>
         //     <div className="title">
         //         <button className="regen-button" onClick={() => handleRegenButton()}>
         //             Regen
         //         </button>
         //     </div>
-        //     <div className="rows">{rows}</div>
         // </>
         <>
-            {/* <div style={backgroundStyle}></div> */}
             <div className='rows'>
                 {rows}
             </div>
