@@ -159,7 +159,7 @@ def getFilmGenres(vectorizedFilm, allGenres):
     return filmGenres
 
 
-def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, profileVectorLength, 
+def initRowsOfRecommendationsencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, profileVectorLength, 
                        cachedUserRatingScalars, cachedDateRatedScalars):
     recencyProfile = np.zeros(profileVectorLength)
     sumOfWeights = 0.0

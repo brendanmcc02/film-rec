@@ -3,8 +3,7 @@ import './App.css';
 import background from "./social-network-2.jpeg"
 import React, { useState, useEffect } from 'react';
 
-// make an API call to get the global constant TOTAL_RECS from app.py
-const response = await fetch('/getTotalRecs');
+const response = await fetch('/getTotalRecommendations');
 const TOTAL_RECS = parseInt(await response.text());
 const initButtonStates = Array.from({ length: TOTAL_RECS }, () => false);
 
@@ -15,7 +14,7 @@ const App = () => {
     const [downButtonStates, setDownButtonStates] = useState(initButtonStates);
 
     useEffect(() => {
-        fetch('/initRec')
+        fetch('/initRowsOfRecommendations')
             .then((response) => response.json())
             .then((jsonData) => {
                 setFilms(jsonData); // Update state with fetched database
@@ -33,16 +32,14 @@ const App = () => {
         backgroundSize: 'cover'
     }
 
-    // called when up button is pressed
     async function handleUpButton(index) {
         const newUpButtonStates = await Promise.all(upButtonStates.map(async (state, i) => {
             if (i === index) {
                 if (state) {
-                    // undo vector changes
                     await undoVectorChanges(index, "false")
                     return false;
                 } else {
-                    // if the down button was pressed, undo vector changes
+                    // if the down button was pressed
                     if (downButtonStates[index]) {
                         await undoVectorChanges(index, "true");
                     }
@@ -62,7 +59,6 @@ const App = () => {
         setUpButtonStates(newUpButtonStates);
     }
 
-    // undo vector changes
     async function undoVectorChanges(index, add) {
         try {
             const fetchUrl = "/undoResponse?index=" + index.toString() + "&add=" + add
@@ -80,7 +76,7 @@ const App = () => {
 
     async function changeVector(index, add) {
         try {
-            const fetchUrl = "/response?index=" + index.toString() + "&add=" + add
+            const fetchUrl = "/reviewRec?index=" + index.toString() + "&add=" + add
             const response = await fetch(fetchUrl);
 
             if (!response.ok) {
@@ -93,17 +89,14 @@ const App = () => {
         }
     }
 
-    // called when down button is pressed
     async function handleDownButton(index) {
         const newDownButtonStates = await Promise.all(downButtonStates.map(async (state, i) => {
           if (i === index) {
               if (state) {
-                  // undo vector changes
                   await undoVectorChanges(index, "true")
                   return false;
               } else {
                   if (upButtonStates[index]) {
-                  // undo vector changes
                         await undoVectorChanges(index, "false");
                   }
 

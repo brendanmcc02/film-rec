@@ -1,8 +1,3 @@
-# what I was doing last
-
-* make international films work
-* why does japanese in one of the profiles have 0.26 when the scaling should be up to 0.3?
-
 # Clustering userFilmData
 
 *worry about cold start problem later*

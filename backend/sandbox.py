@@ -12,16 +12,15 @@ import time
 
 def main():
 
+    i = 2
+    while i < 10:
+        print(f"i = {i}")
+        for j in range(0, 10):
+            print(f"j = {j}")
+            if i == j:
+                break
 
-    file = open('../database/cached-tmdb-film-data.json')
-    dictionary = json.load(file)
-    keys = list(dictionary.keys())
-
-    for key in keys:
-        del dictionary[key]['languages']
-
-    with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
-        convert_file.write(json.dumps(dictionary, indent=4, separators=(',', ': ')))
+        i += 1
 
     #
     #

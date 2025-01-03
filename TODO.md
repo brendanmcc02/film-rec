@@ -79,39 +79,42 @@ preprocessing
 - [x] pick top k profiles ranked on magnitude
 - [x] show the recommendations of these films
 
-## Wildcard Profiles
-
-### Old Profile
+## Old Profile
 - [x] implement basic version
 - [x] implement advanced version with multiple genres
 
-### Obscure Profile
+## Obscure Profile
 - [x] implement basic version
 - [x] implement advanced version with multiple genres
 
-### International Profile
+## International Profile
 - [x] implement basic version
 - [x] use countries instead of languages (fuck Alvin & the Chipmunks)
 - [x] if GB or US is max, set both to 0.0 instead of only one of them
 
-### 'Loved' Profile (only 9- & 10-star films)
+## Favourite Profile
+- [x] implement
+- [x] error handling if no fav films
+
+# Reinforcement Learning Round 2
+
+## Testing & Evaluation
+- [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
+- [ ] play around with different `*_WEIGHT` values
+- [ ] is it worth curving genres/languages? atm I don't do it
+- [ ] play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films
+        the user watched? e.g. 5%?
+- [ ] better results if you fix `imdbRating = 1.0`? *maybe not, reduces novelty, also it's kinda boring*
 
 # Improving Efficiency
-- [ ] cluster allFilmDataVec to make cosine sims more performant
+- [ ] ~~cluster allFilmDataVec to make cosine sims more performant~~ I think the solution wouldn't be super clean, but also it runs fine so
+I'm not arsed
 
 # Backend
 - [x] for imdb, only vectorize films in userData that are in allFilmData (otherwise we can't get access to film languages, 
 countries, poster)
 - [x] I think it's done for letterboxd already but double check functionality
 - [x] check functionality of backend works after offline phase additions
-
-# Testing & Evaluation
-- [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
-- [ ] play around with different `*_WEIGHT` values
-- [ ] is it worth curving genres/languages? atm I don't do it
-- [ ] play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films
-        the user watched? e.g. 5%?
-- [ ] better results if you fix `imdbRating = 1.0`?
 
 # Frontend
 - [x] do text div 
@@ -145,7 +148,6 @@ countries, poster)
 - [ ] error handling on all file imports, api requests, etc. try-except
 - [ ] separate code pieces into separate classes/files; modularity wya
 
-
 ## Misc
 - [x] switch from my-film-data.json to ratings.csv
 - [x] add numVotes & runtime to human data
@@ -159,7 +161,7 @@ create endpoints for getters/setters
 - [x] deletion of ratings/diary.csv before saving to file
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
 - [x] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
-- [ ] bug: imdb recency doesn't work
+- [x] bug: imdb recency doesn't work
 
 ## Windows OS
 - [x] config frontend: npm, etc.
@@ -189,8 +191,7 @@ my-film-data-vec.json to file
 - [x] bug with user profile?
 
 # Nice to Have
-**Not essential, but to do be done later if I have the time/feel like it**
+- [x] change some files to get rid of hyphens, so I don't need an imported library to import them
 - [ ] letterboxd conversion: rather than relying only on `diary.csv` or `ratings.csv`, append latest `Watched Date` to 
 corresponding entry in `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in 
 `ratings.csv`
-- [x] change some files to get rid of hyphens, so I don't need an imported library to import them
