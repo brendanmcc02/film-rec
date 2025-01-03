@@ -138,7 +138,8 @@ def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingS
                                                numFilmsWatchedInGenreThreshold))
         genreProfiles[genre]['magnitude'] = np.linalg.norm(genreProfiles[genre]['profile'])
 
-    # return sorted (descending) list
+    # sort the dictionary (by magnitude) as a list with only the values (genre, profile, magnitude, sumOfWeights, quantityFilmsWatched)
+    # and omit the key
     return [value for _, value in sorted(genreProfiles.items(), key=lambda item: item[1]['magnitude'], reverse=True)]
 
 
@@ -277,7 +278,7 @@ def getWeightByVectorIndex(vectorIndex, allGenresLength):
     elif vectorIndex == PROFILE_NUM_OF_VOTES_INDEX:
         return NUM_OF_VOTES_WEIGHT
     elif vectorIndex == PROFILE_IMDB_RATING_INDEX:
-        return 1.0
+        return IMDB_RATING_WEIGHT
     elif vectorIndex == PROFILE_YEAR_INDEX:
         return YEAR_WEIGHT
     else:

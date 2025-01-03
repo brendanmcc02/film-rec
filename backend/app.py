@@ -20,9 +20,7 @@ NUM_INTERNATIONAL_RECS = 1
 NUM_FAVOURITE_RECS = 3
 TOTAL_RECS = ((NUM_GENRE_PROFILE_RECS * NUM_TOP_GENRE_PROFILES) + NUM_RECENCY_RECS + NUM_OLD_RECS + NUM_OBSCURE_RECS 
               + NUM_INTERNATIONAL_RECS + NUM_FAVOURITE_RECS)
-USER_PROFILE_FEEDBACK_FACTOR = 0.05
-RECENCY_FEEDBACK_FACTOR = 0.05
-WILDCARD_FEEDBACK_FACTOR = 0.2
+REC_REVIEW_FEEDBACK_FACTOR = 0.05
 
 profileVectorLength = 0
 allFilmDataUnseen = {}
@@ -267,7 +265,7 @@ def initRec():
 
     favouriteProfile = initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength,
                                             cachedUserRatingScalars, cachedDateRatedScalars, favouriteFilmIds)
-    printStringifiedVector(favouriteProfile, cache['allGenres'], cache['allCountries'])
+    # printStringifiedVector(favouriteProfile, cache['allGenres'], cache['allCountries'])
 
     generateRecs()
 
@@ -371,11 +369,11 @@ def changeVector(index, add, recType):
     # todo can these repetitive if-else chains be simplified?
 
     if recType == "wildcard":
-        vectorChange = (recVector - oldProfile) * WILDCARD_FEEDBACK_FACTOR
+        vectorChange = (recVector - oldProfile) * REC_REVIEW_FEEDBACK_FACTOR
     elif recType == "recency":
-        vectorChange = (recVector - recencyProfile) * RECENCY_FEEDBACK_FACTOR
+        vectorChange = (recVector - recencyProfile) * REC_REVIEW_FEEDBACK_FACTOR
     elif recType == "user":
-        vectorChange = (recVector - userProfile) * USER_PROFILE_FEEDBACK_FACTOR
+        vectorChange = (recVector - userProfile) * REC_REVIEW_FEEDBACK_FACTOR
     else:
         return "unknown rec type:" + str(recType)
 
