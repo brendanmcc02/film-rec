@@ -112,12 +112,29 @@ def printStringifiedVector(vector, allGenres, allCountries):
     print(f"\n{stringifiedVector}\n")
 
 
+def initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
+                         cachedUserRatingScalars, cachedDateRatedScalars, favouriteFilmIds):
+    favouriteProfile = np.zeros(profileVectorLength)
+    sumOfWeights = 0.0
+
+    for imdbFilmId in userFilmDataIds:
+        if imdbFilmId in favouriteFilmIds:
+            favouriteProfile += userFilmDataVectorized[imdbFilmId]
+            sumOfWeights += (cachedUserRatingScalars[imdbFilmId] * cachedDateRatedScalars[imdbFilmId])
+
+    if sumOfWeights > 0.0:
+        favouriteProfile = np.divide(favouriteProfile, sumOfWeights)
+        return {'profile': favouriteProfile, 'profileId': 'favourite'}
+    else:
+        return {'profile': np.zeros(profileVectorLength), 'profileId': 'favourite'}
+
+
 def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
                       allGenres, profileVectorLength, numFilmsWatchedInGenreThreshold):
     genreProfiles = {}
 
     for genre in allGenres:
-        genreProfiles[genre] = {"genre": genre, "profile": np.zeros(profileVectorLength), "magnitude": 0.0, 
+        genreProfiles[genre] = {"profileId": genre, "profile": np.zeros(profileVectorLength), "magnitude": 0.0, 
                                 "sumOfWeights": 0.0, "quantityFilmsWatched": 0}
 
     for imdbFilmId in userFilmDataIds:
@@ -159,7 +176,7 @@ def getFilmGenres(vectorizedFilm, allGenres):
     return filmGenres
 
 
-def initRowsOfRecommendationsencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, profileVectorLength, 
+def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, profileVectorLength, 
                        cachedUserRatingScalars, cachedDateRatedScalars):
     recencyProfile = np.zeros(profileVectorLength)
     sumOfWeights = 0.0
@@ -175,17 +192,17 @@ def initRowsOfRecommendationsencyProfile(userFilmData, userFilmDataIds, userFilm
 
     if sumOfWeights > 0.0:
         recencyProfile = np.divide(recencyProfile, sumOfWeights)
-        return recencyProfile
+        return {'profile': recencyProfile, 'profileId': 'recency'}
     else:
-        return np.zeros(profileVectorLength)
+        return {'profile': np.zeros(profileVectorLength), 'profileId': 'recency'}
 
 
 def initOldProfiles(genreProfiles, numTopGenreProfiles):
     oldProfiles = []
 
     for i in range(0, numTopGenreProfiles):
-        oldProfiles.append(np.copy(genreProfiles[i]['profile']))
-        oldProfiles[i][PROFILE_YEAR_INDEX] = 0.0
+        oldProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 'profileId': genreProfiles[i]['profileId']})
+        oldProfiles[i]['profile'][PROFILE_YEAR_INDEX] = 0.0
 
     return oldProfiles
 
@@ -194,8 +211,8 @@ def initObscureProfiles(genreProfiles, numTopGenreProfiles):
     obscureProfiles = []
 
     for i in range(0, numTopGenreProfiles):
-        obscureProfiles.append(np.copy(genreProfiles[i]['profile']))
-        obscureProfiles[i][PROFILE_NUM_OF_VOTES_INDEX] = 0.0
+        obscureProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 'profileId': genreProfiles[i]['profileId']})
+        obscureProfiles[i]['profile'][PROFILE_NUM_OF_VOTES_INDEX] = 0.0
 
     return obscureProfiles
 
@@ -204,45 +221,28 @@ def initInternationalProfiles(genreProfiles, numTopGenreProfiles, allCountries, 
     internationalProfiles = []
 
     for i in range(0, numTopGenreProfiles):
-        internationalProfiles.append(np.copy(genreProfiles[i]['profile']))
+        internationalProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 'profileId': genreProfiles[i]['profileId']})
 
         countryStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
         maxCountryIndex = countryStartIndex
-        maxCountryValue = internationalProfiles[i][countryStartIndex]
+        maxCountryValue = internationalProfiles[i]['profile'][countryStartIndex]
         
         for index in range(countryStartIndex, (countryStartIndex + len(allCountries))):
-            if internationalProfiles[i][index] > maxCountryValue:
-                maxCountryValue = internationalProfiles[i][index]
+            if internationalProfiles[i]['profile'][index] > maxCountryValue:
+                maxCountryValue = internationalProfiles[i]['profile'][index]
                 maxCountryIndex = index
 
         usIndex = allCountries.index("US") + countryStartIndex
         gbIndex = allCountries.index("GB") + countryStartIndex
         if maxCountryIndex == usIndex or maxCountryIndex == gbIndex:
-            internationalProfiles[i][usIndex] = 0.0
-            internationalProfiles[i][gbIndex] = 0.0
+            internationalProfiles[i]['profile'][usIndex] = 0.0
+            internationalProfiles[i]['profile'][gbIndex] = 0.0
         else:        
-            internationalProfiles[i][maxCountryIndex] = 0.0
+            internationalProfiles[i]['profile'][maxCountryIndex] = 0.0
 
-        curveAccordingToMax(internationalProfiles[i], allCountries, COUNTRY_WEIGHT, countryStartIndex)
+        curveAccordingToMax(internationalProfiles[i]['profile'], allCountries, COUNTRY_WEIGHT, countryStartIndex)
 
     return internationalProfiles
-
-
-def initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
-                         cachedUserRatingScalars, cachedDateRatedScalars, favouriteFilmIds):
-    favouriteProfile = np.zeros(profileVectorLength)
-    sumOfWeights = 0.0
-
-    for imdbFilmId in userFilmDataIds:
-        if imdbFilmId in favouriteFilmIds:
-            favouriteProfile += userFilmDataVectorized[imdbFilmId]
-            sumOfWeights += (cachedUserRatingScalars[imdbFilmId] * cachedDateRatedScalars[imdbFilmId])
-
-    if sumOfWeights > 0.0:
-        favouriteProfile = np.divide(favouriteProfile, sumOfWeights)
-        return favouriteProfile
-    else:
-        return np.zeros(profileVectorLength)
 
 
 # used to curve genre/country values according to max genre/country value

@@ -33,15 +33,13 @@ cachedLetterboxdTitles = {}
 cache = {}
 diffDateRated = datetime(1, 1, 1)
 minDateRated = datetime.now()
+favouriteProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'favourite'}
 genreProfiles = []
-recencyProfile = np.zeros(profileVectorLength)
+recencyProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'recency'}
 oldProfiles = []
 obscureProfiles = []
 internationalProfiles = []
-favouriteProfile = np.zeros(profileVectorLength)
-vectorProfileChanges = []
 rowsOfRecommendations = []
-recStates = [0] * TOTAL_RECOMMENDATIONS
 isImdbFile = True
 userFilmDataFilename = ""
 allGenresLength = 0
@@ -67,16 +65,14 @@ def resetGlobalVariables():
     global allGenresLength
     global allCountriesLength
 
+    favouriteProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'favourite'}
     genreProfiles = []
-    recencyProfile = np.zeros(profileVectorLength)
+    recencyProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'receny'}
     oldProfiles = []
     obscureProfiles = []
     internationalProfiles = []
-    favouriteProfile = np.zeros(profileVectorLength)
-    vectorProfileChanges = []
     allFilmDataUnseen = {}
     rowsOfRecommendations = []
-    recStates = [0] * TOTAL_RECOMMENDATIONS
     minDateRated = datetime.now()
     isImdbFile = True
     userFilmDataFilename = ""
@@ -132,7 +128,6 @@ def initRowsOfRecommendations():
     global minDateRated
     global allFilmDataUnseen
     global profileVectorLength
-    global vectorProfileChanges
     global allGenresLength
     global allCountriesLength
     global genreProfiles
@@ -240,34 +235,31 @@ def initRowsOfRecommendations():
 
     profileVectorLength = cache['profileVectorLength']
 
-    for _ in range(0, TOTAL_RECOMMENDATIONS):
-        vectorProfileChanges.append(np.zeros(profileVectorLength))
-
     favouriteProfile = initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength,
                                             cachedUserRatingScalars, cachedDateRatedScalars, favouriteFilmIds)
-    # printStringifiedVector(favouriteProfile, cache['allGenres'], cache['allCountries'])
+    # printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'])
 
     genreProfiles = initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
                       cache['allGenres'], profileVectorLength, NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
     # for genreProfile in genreProfiles:
-    #     print(f"{genreProfile['genre']}:")
+    #     print(f"{genreProfile['profileId']}:")
     #     printStringifiedVector(genreProfile['profile'], cache['allGenres'], cache['allCountries'])
 
-    recencyProfile = initRowsOfRecommendationsencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, profileVectorLength, 
+    recencyProfile = initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, profileVectorLength, 
                                         cachedUserRatingScalars, cachedDateRatedScalars)
-    # printStringifiedVector(recencyProfile, cache['allGenres'], cache['allCountries'])
+    # printStringifiedVector(recencyProfile['profile'], cache['allGenres'], cache['allCountries'])
 
     oldProfiles = initOldProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES)
     # for profile in oldProfiles:
-    #     printStringifiedVector(profile, cache['allGenres'], cache['allCountries'])
+    #     printStringifiedVector(profile['profile'], cache['allGenres'], cache['allCountries'])
 
     obscureProfiles = initObscureProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES)
     # for profile in obscureProfiles:
-    #     printStringifiedVector(profile, cache['allGenres'], cache['allCountries'])
+    #     printStringifiedVector(profile['profile'], cache['allGenres'], cache['allCountries'])
 
     internationalProfiles = initInternationalProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES, cache['allCountries'], allGenresLength)
     # for profile in internationalProfiles:
-    #     printStringifiedVector(profile, cache['allGenres'], cache['allCountries'])
+    #     printStringifiedVector(profile['profile'], cache['allGenres'], cache['allCountries'])
 
     generateRecommendations()
 
@@ -279,28 +271,29 @@ def generateRecommendations():
     rowsOfRecommendations = []
     allFilmDataIds = list(allFilmDataUnseen.keys())
 
-    if np.array_equal(favouriteProfile, np.zeros(profileVectorLength)):
+    if np.array_equal(favouriteProfile['profile'], np.zeros(profileVectorLength)):
         print("No favourite profile.")
     else:
         getFilmRecommendations("Based on your favourite films", allFilmDataIds, NUM_FAVOURITE_RECOMMENDATIONS, 
-                    favouriteProfile, True)
+                    favouriteProfile['profile'], True, favouriteProfile['profileId'])
 
     for i in range(0, NUM_TOP_GENRE_PROFILES):
         if genreProfiles[i]['magnitude'] == 0.0:
             print("No genre profile.")
         else:
-            getFilmRecommendations(f"Because you like {genreProfiles[i]['genre']} films", allFilmDataIds, 
-                        NUM_GENRE_PROFILE_RECOMMENDATIONS, genreProfiles[i]['profile'], True)
+            getFilmRecommendations(f"Because you like {genreProfiles[i]['profileId']} films", allFilmDataIds, 
+                                   NUM_GENRE_PROFILE_RECOMMENDATIONS, genreProfiles[i]['profile'], True, 
+                                   genreProfiles[i]['profileId'])
         
-    if np.array_equal(recencyProfile, np.zeros(profileVectorLength)):
+    if np.array_equal(recencyProfile['profile'], np.zeros(profileVectorLength)):
         print("No recency profile.")
     else:
         getFilmRecommendations("Based on what you watched recently", allFilmDataIds, NUM_RECENCY_RECOMMENDATIONS, 
-                               recencyProfile, True)
+                               recencyProfile['profile'], True, recencyProfile['profileId'])
 
     i = 0
     for oldProfile in oldProfiles:
-        if np.linalg.norm(oldProfile) == 0.0:
+        if np.linalg.norm(oldProfile['profile']) == 0.0:
             print("No old profile.")
         else:
             if i == 0:
@@ -308,14 +301,14 @@ def generateRecommendations():
             else:
                 createNewRecommendedRow = False
 
-            getFilmRecommendations("Try out some older films", allFilmDataIds, NUM_OLD_RECOMMENDATIONS_PER_GENRE, oldProfile, 
-                                   createNewRecommendedRow)
+            getFilmRecommendations("Try out some older films", allFilmDataIds, NUM_OLD_RECOMMENDATIONS_PER_GENRE, 
+                                   oldProfile['profile'], createNewRecommendedRow, oldProfile['profileId'])
         
         i += 1
         
     i = 0
     for obscureProfile in obscureProfiles:
-        if np.linalg.norm(obscureProfile) == 0.0:
+        if np.linalg.norm(obscureProfile['profile']) == 0.0:
             print("No obscure profile.")
         else:
             if i == 0:
@@ -324,13 +317,13 @@ def generateRecommendations():
                 createNewRecommendedRow = False
 
             getFilmRecommendations("Try out some lesser-known films", allFilmDataIds, NUM_OBSCURE_RECOMMENDATIONS_PER_GENRE, 
-                                   obscureProfile, createNewRecommendedRow)
+                                   obscureProfile['profile'], createNewRecommendedRow, obscureProfile['profileId'])
 
         i += 1
 
     i = 0
     for internationalProfile in internationalProfiles:
-        if np.linalg.norm(internationalProfile) == 0.0:
+        if np.linalg.norm(internationalProfile['profile']) == 0.0:
             print("No international profile.")
         else:
             if i == 0:
@@ -338,13 +331,15 @@ def generateRecommendations():
             else:
                 createNewRecommendedRow = False
 
-            getFilmRecommendations("Try out some international films", allFilmDataIds, NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE, 
-                                    internationalProfile, createNewRecommendedRow)
+            getFilmRecommendations("Try out some international films", allFilmDataIds, 
+                                   NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE, internationalProfile['profile'], 
+                                   createNewRecommendedRow, internationalProfile['profileId'])
 
         i += 1
 
 
-def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommendations, profileVector, createNewRecommendedRow):
+def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommendations, profileVector, 
+                           createNewRecommendedRow, profileId):
     global rowsOfRecommendations
     global allFilmDataVectorizedMagnitudes
 
@@ -368,6 +363,7 @@ def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommend
             similarityScore = cosineSimilarities[i][1]
             film['id'] = filmId
             film['similarityScore'] = round(similarityScore * 100.0, 2)
+            film['profileId'] = profileId
 
             if createNewRecommendedRow:
                 rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, "recommendedFilms": []})
@@ -391,31 +387,22 @@ def isFilmRecUnique(filmId):
 
 @app.route('/reviewRec')
 def reviewRec():
-    index = int(request.args.get('index'))
-    add = request.args.get('add').lower() == 'true'
+    filmId = int(request.args.get('filmId'))
+    isThumbsUp = request.args.get('isThumbsUp').lower() == 'true'
 
-    SUM_USER_RECENCY_RECOMMENDATIONS = NUM_USER_RECOMMENDATIONS + NUM_RECENCY_RECOMMENDATIONS
+    for row in rowsOfRecommendations:
+        for film in row['recommendedFilms']:
+            if film['id'] == filmId:
+                profileId = film['profileId']                
 
-    if index < NUM_USER_RECOMMENDATIONS:
-        returnText = changeVector(index, add, "user")
-    elif index < SUM_USER_RECENCY_RECOMMENDATIONS:
-        returnText = changeVector(index, add, "recency")
-    else:
-        returnText = changeVector(index, add, "wildcard")
+    # if rec was liked: add, else subtract the vector change from the profile
 
-    return returnText, 200
-
-
-# changes vector parameters
-def changeVector(index, add, recType):
     global userProfile
     global recencyProfile
     global oldProfile
     global vectorProfileChanges
 
     recVector = allFilmDataVectorized[rowsOfRecommendations[index]['id']]
-
-    # todo can these repetitive if-else chains be simplified?
 
     if recType == "wildcard":
         vectorChange = (recVector - oldProfile) * REC_REVIEW_FEEDBACK_FACTOR
@@ -465,64 +452,6 @@ def changeVector(index, add, recType):
             ("liking" if add else "disliking") + " of " + rowsOfRecommendations[index]['title'])
 
 
-# called when a user undoes a response, e.g. they have 'thumbs down' pressed on a film, and then they press the
-# button again to undo the response.
-@app.route('/undoResponse')
-def undoResponse():
-    index = int(request.args.get('index'))
-    add = request.args.get('add').lower() == 'true'
-    SUM_USER_RECENCY_RECOMMENDATIONS = NUM_USER_RECOMMENDATIONS + NUM_RECENCY_RECOMMENDATIONS
-
-    if index < NUM_USER_RECOMMENDATIONS:
-        return undoChange(index, add, "user"), 200
-    if index < SUM_USER_RECENCY_RECOMMENDATIONS:
-        return undoChange(index, add, "recency"), 200
-    else:
-        return undoChange(index, add, "wildcard"), 200
-
-
-# undo the vector parameter changes
-def undoChange(index, add, recType):
-    global userProfile
-    global recencyProfile
-    global oldProfile
-    global vectorProfileChanges
-
-    vectorChange = vectorProfileChanges[index]
-
-    # todo can these repetitive if-else chains be simplified?
-    # if the film was previously disliked
-    if add:
-        if recType == "wildcard":
-            oldProfile += vectorChange
-        elif recType == "recency":
-            recencyProfile += vectorChange
-        elif recType == "user":
-            userProfile += vectorChange
-        else:
-            return "unknown rec type:" + str(recType)
-
-        recStates[index] = 0
-    # else, the film was previously liked
-    else:
-        if recType == "wildcard":
-            oldProfile -= vectorChange
-        elif recType == "recency":
-            recencyProfile -= vectorChange
-        elif recType == "user":
-            userProfile -= vectorChange
-        else:
-            return "unknown rec type:" + str(recType)
-
-        recStates[index] = 0
-
-    # make the profile change a zero vector at the specified index
-    vectorProfileChanges[index] = np.zeros(profileVectorLength)
-
-    return ("undid " + recType + " profile change due to previous " +
-            ("disliking" if add else "liking") + " of " + rowsOfRecommendations[index]['title'])
-
-
 @app.route('/regen')
 def regen():
     global recStates
@@ -539,11 +468,6 @@ def regen():
     generateRecommendations()
 
     return jsonify(rowsOfRecommendations), 200
-
-
-@app.route('/getTotalRecommendations')
-def getTotalRecommendations():
-    return str(TOTAL_RECOMMENDATIONS), 200
 
 
 @app.route('/loadJsonFiles')
@@ -571,8 +495,8 @@ def loadJsonFiles():
 
 
 def deleteCsvFiles():
-    for f in glob.glob("../database/*.csv"):
-        os.remove(f)
+    for file in glob.glob("../database/*.csv"):
+        os.remove(file)
 
 
 if __name__ == "__main__":

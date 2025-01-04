@@ -51,28 +51,28 @@ const App = () => {
 
     async function handleUpButton(filmId) {
         console.log("Up button clicked for filmId: " + filmId);
-        // await changeVector(filmId, true);
+        // await reviewRec(filmId, true);
         setFilmButtonInvisible(filmId);
     }
 
     async function handleDownButton(filmId) {
         console.log("Down button clicked for filmId: " + filmId);
-        // await changeVector(filmId, false);
+        // await reviewRec(filmId, false);
         setFilmButtonInvisible(filmId);
     }
 
-    async function changeVector(index, add) {
+    async function reviewRec(filmId, isThumbsUp) {
         try {
-            const fetchUrl = "/reviewRec?index=" + index.toString() + "&add=" + add
+            const fetchUrl = "/reviewRec?filmId=" + filmId.toString() + "&isThumbsUp=" + isThumbsUp
             const response = await fetch(fetchUrl);
 
             if (!response.ok) {
-                console.log('Change user profile API request not ok. Index: ' + index);
+                console.log('Change user profile API request not ok. filmID: ' + filmId);
             } else {
                 console.log(await response.text());
             }
         } catch (error) {
-            console.log('Change user profile API request failed. Index: ' + index);
+            console.log('Change user profile API request failed. filmID: ' + filmId);
         }
     }
 
