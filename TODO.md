@@ -41,6 +41,7 @@
 - [x] convert `cached-letterboxd-title-year.json` to `cached-letterboxd-title.json`
 - [x] solve the letterboxd title year nonsense
 - [ ] check for `\u*`, are they messed up or is it ok?
+- [ ] add baseposterURL to dataset, reduces computation during online phase
 
 # Letterboxd conversion
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
@@ -78,6 +79,7 @@ preprocessing
 - [x] apply `NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD` weight to profile after iteration of `userFilmData`
 - [x] pick top k profiles ranked on magnitude
 - [x] show the recommendations of these films
+- [ ] potentially there is a lot of overlap between the profiles, so perhaps only include a genre profile if it has a certain cosine sim value difference to the other genre profiles?
 
 ## Old Profile
 - [x] implement basic version
@@ -102,9 +104,9 @@ preprocessing
 - [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
 - [ ] play around with different `*_WEIGHT` values
 - [ ] is it worth curving genres/languages? atm I don't do it
-- [ ] play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films
-        the user watched? e.g. 5%?
+- [ ] play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films the user watched? e.g. 5%?
 - [ ] better results if you fix `imdbRating = 1.0`? *maybe not, reduces novelty, also it's kinda boring*
+- [ ] `DATE_RATED_WEIGHT`? is it worth it?
 
 # Improving Efficiency
 - [ ] ~~cluster allFilmDataVec to make cosine sims more performant~~ I think the solution wouldn't be super clean, but also it runs fine so

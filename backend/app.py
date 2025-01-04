@@ -296,7 +296,7 @@ def generateRecommendations():
         print("No recency profile.")
     else:
         getFilmRecommendations("Based on what you watched recently", allFilmDataIds, NUM_RECENCY_RECOMMENDATIONS, 
-                    recencyProfile, True)
+                               recencyProfile, True)
 
     i = 0
     for oldProfile in oldProfiles:
@@ -309,7 +309,7 @@ def generateRecommendations():
                 createNewRecommendedRow = False
 
             getFilmRecommendations("Try out some older films", allFilmDataIds, NUM_OLD_RECOMMENDATIONS_PER_GENRE, oldProfile, 
-                        createNewRecommendedRow)
+                                   createNewRecommendedRow)
         
         i += 1
         
@@ -324,7 +324,7 @@ def generateRecommendations():
                 createNewRecommendedRow = False
 
             getFilmRecommendations("Try out some lesser-known films", allFilmDataIds, NUM_OBSCURE_RECOMMENDATIONS_PER_GENRE, 
-                        obscureProfile, createNewRecommendedRow)
+                                   obscureProfile, createNewRecommendedRow)
 
         i += 1
 
@@ -339,7 +339,7 @@ def generateRecommendations():
                 createNewRecommendedRow = False
 
             getFilmRecommendations("Try out some international films", allFilmDataIds, NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE, 
-                        internationalProfile, createNewRecommendedRow)
+                                    internationalProfile, createNewRecommendedRow)
 
         i += 1
 
