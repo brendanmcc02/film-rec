@@ -387,69 +387,36 @@ def isFilmRecUnique(filmId):
 
 @app.route('/reviewRec')
 def reviewRec():
-    filmId = int(request.args.get('filmId'))
+    filmId = request.args.get('filmId')
     isThumbsUp = request.args.get('isThumbsUp').lower() == 'true'
 
     for row in rowsOfRecommendations:
         for film in row['recommendedFilms']:
             if film['id'] == filmId:
-                profileId = film['profileId']                
+                profileId = film['profileId']
 
-    # if rec was liked: add, else subtract the vector change from the profile
+    profile = getProfile(profileId)
+    filmVector = allFilmDataVectorized[filmId]
 
-    global userProfile
-    global recencyProfile
-    global oldProfile
-    global vectorProfileChanges
-
-    recVector = allFilmDataVectorized[rowsOfRecommendations[index]['id']]
-
-    if recType == "wildcard":
-        vectorChange = (recVector - oldProfile) * REC_REVIEW_FEEDBACK_FACTOR
-    elif recType == "recency":
-        vectorChange = (recVector - recencyProfile) * REC_REVIEW_FEEDBACK_FACTOR
-    elif recType == "user":
-        vectorChange = (recVector - userProfile) * REC_REVIEW_FEEDBACK_FACTOR
+    if isThumbsUp:
+        profile += ((filmVector - profile) * REC_REVIEW_FEEDBACK_FACTOR)
     else:
-        return "unknown rec type:" + str(recType)
+        profile -= ((filmVector - profile) * REC_REVIEW_FEEDBACK_FACTOR)
 
-    vectorProfileChanges[index] = vectorChange  # store the vector change
+    return f"changed {profileId} profile due to {("liking" if isThumbsUp else "disliking")} of {filmId}", 200
 
-    # if the rec was liked
-    if add:
-        if recType == "wildcard":
-            oldProfile += vectorChange
-        elif recType == "recency":
-            recencyProfile += vectorChange
-        elif recType == "user":
-            userProfile += vectorChange
-        else:
-            return "unknown rec type:" + str(recType)
-        recStates[index] = 1
-    # else, the rec was disliked
+
+def getProfile(profileId):
+    if profileId == "favourite":
+        return favouriteProfile['profile']
+    elif profileId == "recency":
+        return recencyProfile['profile']
     else:
-        if recType == "wildcard":
-            oldProfile -= vectorChange
-        elif recType == "recency":
-            recencyProfile -= vectorChange
-        elif recType == "user":
-            userProfile -= vectorChange
-        else:
-            return "unknown rec type:" + str(recType)
-        recStates[index] = -1
+        for profile in genreProfiles:
+            if profile['profileId'] == profileId:
+                return profile['profile']
 
-    # after changing vector parameters, ensure that all vector features are >= 0.0 && <= 1.0
-    if recType == "wildcard":
-        keepVectorBoundary(oldProfile, profileVectorLength)
-    elif recType == "recency":
-        keepVectorBoundary(recencyProfile, profileVectorLength)
-    elif recType == "user":
-        keepVectorBoundary(userProfile, profileVectorLength)
-    else:
-        return "unknown rec type:" + str(recType)
-
-    return ("changed " + rowsOfRecommendations[index]['recType'] + " profile due to " +
-            ("liking" if add else "disliking") + " of " + rowsOfRecommendations[index]['title'])
+    return np.zeros(profileVectorLength)
 
 
 @app.route('/regen')

@@ -20,7 +20,6 @@ const App = () => {
                 );
     
                 setRowsOfRecommendationButtonVisibility(initialButtonVisibility);
-                console.log("Initial button visibility: ", initialButtonVisibility);
             })
             .catch((error) => {
                 console.error('Error fetching database:', error);
@@ -51,13 +50,13 @@ const App = () => {
 
     async function handleUpButton(filmId) {
         console.log("Up button clicked for filmId: " + filmId);
-        // await reviewRec(filmId, true);
+        await reviewRec(filmId, true);
         setFilmButtonInvisible(filmId);
     }
 
     async function handleDownButton(filmId) {
         console.log("Down button clicked for filmId: " + filmId);
-        // await reviewRec(filmId, false);
+        await reviewRec(filmId, false);
         setFilmButtonInvisible(filmId);
     }
 
