@@ -2,7 +2,7 @@
 *.csv
 database/*.csv
 *.pdf
-letterboxd-export/
+user-data/
 access-token.txt
 backup-access-token.txt
 backend/__pycache__/
