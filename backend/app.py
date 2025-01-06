@@ -9,21 +9,16 @@ from vectorize import *
 from init_all_film_data import RUNTIME_THRESHOLD, NUM_VOTES_THRESHOLD
 from letterboxd_conversion import *
 
-DATE_RATED_WEIGHT = 0.5
+DATE_RATED_WEIGHT = 0.75
+NUM_FAVOURITE_RECOMMENDATIONS = 6
 NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
 NUM_TOP_GENRE_PROFILES = 3
-NUM_GENRE_PROFILE_RECOMMENDATIONS = 9
-NUM_RECENCY_RECOMMENDATIONS = 9
-NUM_OLD_RECOMMENDATIONS_PER_GENRE = 3
-NUM_OBSCURE_RECOMMENDATIONS_PER_GENRE = 3
-NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE = 3
-NUM_FAVOURITE_RECOMMENDATIONS = 9
-TOTAL_RECOMMENDATIONS = ((NUM_GENRE_PROFILE_RECOMMENDATIONS * NUM_TOP_GENRE_PROFILES) + NUM_RECENCY_RECOMMENDATIONS + 
-                         (NUM_OLD_RECOMMENDATIONS_PER_GENRE * NUM_TOP_GENRE_PROFILES) + 
-                         (NUM_OBSCURE_RECOMMENDATIONS_PER_GENRE * NUM_TOP_GENRE_PROFILES) +
-                         (NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE * NUM_TOP_GENRE_PROFILES)
-                         + NUM_FAVOURITE_RECOMMENDATIONS)
-REC_REVIEW_FEEDBACK_FACTOR = 0.1
+NUM_GENRE_PROFILE_RECOMMENDATIONS = 6
+NUM_RECENCY_RECOMMENDATIONS = 6
+NUM_OLD_RECOMMENDATIONS_PER_GENRE = 2
+NUM_OBSCURE_RECOMMENDATIONS_PER_GENRE = 2
+NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE = 2
+RECOMMENDATION_REVIEW_FACTOR = 0.1
 
 profileVectorLength = 0
 allFilmDataUnseen = {}
@@ -55,7 +50,6 @@ def resetGlobalVariables():
     global obscureProfiles
     global internationalProfiles
     global favouriteProfile
-    global vectorProfileChanges
     global allFilmDataUnseen
     global rowsOfRecommendations
     global minDateRated
@@ -236,30 +230,19 @@ def initRowsOfRecommendations():
 
     favouriteProfile = initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength,
                                             cachedUserRatingScalars, cachedDateRatedScalars, favouriteFilmIds)
-    # printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'])
 
     genreProfiles = initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
                       cache['allGenres'], profileVectorLength, NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
-    # for genreProfile in genreProfiles:
-    #     print(f"{genreProfile['profileId']}:")
-    #     printStringifiedVector(genreProfile['profile'], cache['allGenres'], cache['allCountries'])
-
+    
     recencyProfile = initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, profileVectorLength, 
                                         cachedUserRatingScalars, cachedDateRatedScalars)
-    # printStringifiedVector(recencyProfile['profile'], cache['allGenres'], cache['allCountries'])
 
     oldProfiles = initOldProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES)
-    # for profile in oldProfiles:
-    #     printStringifiedVector(profile['profile'], cache['allGenres'], cache['allCountries'])
 
     obscureProfiles = initObscureProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES)
-    # for profile in obscureProfiles:
-    #     printStringifiedVector(profile['profile'], cache['allGenres'], cache['allCountries'])
 
     internationalProfiles = initInternationalProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES, cache['allCountries'], 
                                                       allGenresLength)
-    # for profile in internationalProfiles:
-    #     printStringifiedVector(profile['profile'], cache['allGenres'], cache['allCountries'])
 
     generateRecommendations()
 
@@ -276,25 +259,38 @@ def generateRecommendations():
         print("No favourite profile.")
     else:
         getFilmRecommendations("Based on your favourite films", allFilmDataIds, NUM_FAVOURITE_RECOMMENDATIONS, 
-                    favouriteProfile['profile'], True, favouriteProfile['profileId'])
+                               favouriteProfile['profile'], True, favouriteProfile['profileId'])
+        printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'])
 
-    genreProfiles = sorted(genreProfiles, key=lambda x: x['magnitude'], reverse=True)
+    genreProfiles = sorted(genreProfiles, key=lambda x: x['weightedMeanRating'], reverse=True)
+    
+    # todo temp
+    for gp in genreProfiles:
+        print(f"{gp['profileId']}: {gp['weightedMeanRating']}")
 
-    print(f"genre profiles {genreProfiles}")
-
-    for i in range(0, NUM_TOP_GENRE_PROFILES):
-        if genreProfiles[i]['magnitude'] == 0.0:
+    max = NUM_TOP_GENRE_PROFILES
+    i = 0
+    while i < max:
+        if genreProfiles[i]['weightedMeanRating'] == 0.0:
             print("No genre profile.")
+        elif maxGenresAreEqualBetweenProfiles(genreProfiles[i]['profile'], favouriteProfile['profile']):
+            max += 1
+            print(f"Favourite profile clashes with {genreProfiles[i]['profileId']} profile, going with "
+                  f"another genre profile instead.")
         else:
             getFilmRecommendations(f"Because you like {genreProfiles[i]['profileId']} films", allFilmDataIds, 
                                    NUM_GENRE_PROFILE_RECOMMENDATIONS, genreProfiles[i]['profile'], True, 
                                    genreProfiles[i]['profileId'])
+            # printStringifiedVector(genreProfiles[i]['profile'], cache['allGenres'], cache['allCountries'])
+        
+        i += 1
         
     if np.array_equal(recencyProfile['profile'], np.zeros(profileVectorLength)):
         print("No recency profile.")
     else:
         getFilmRecommendations("Based on what you watched recently", allFilmDataIds, NUM_RECENCY_RECOMMENDATIONS, 
                                recencyProfile['profile'], True, recencyProfile['profileId'])
+        # printStringifiedVector(recencyProfile['profile'], cache['allGenres'], cache['allCountries'])
 
     createNewRecommendedRow = True
     for oldProfile in oldProfiles:
@@ -303,6 +299,7 @@ def generateRecommendations():
         else:
             getFilmRecommendations("Try out some older films", allFilmDataIds, NUM_OLD_RECOMMENDATIONS_PER_GENRE, 
                                    oldProfile['profile'], createNewRecommendedRow, oldProfile['profileId'])
+            # printStringifiedVector(oldProfile['profile'], cache['allGenres'], cache['allCountries'])
             createNewRecommendedRow = False
         
     createNewRecommendedRow = True
@@ -312,6 +309,7 @@ def generateRecommendations():
         else:
             getFilmRecommendations("Try out some lesser-known films", allFilmDataIds, NUM_OBSCURE_RECOMMENDATIONS_PER_GENRE, 
                                    obscureProfile['profile'], createNewRecommendedRow, obscureProfile['profileId'])
+            # printStringifiedVector(obscureProfile['profile'], cache['allGenres'], cache['allCountries'])
             createNewRecommendedRow = False
 
     createNewRecommendedRow = True
@@ -322,7 +320,26 @@ def generateRecommendations():
             getFilmRecommendations("Try out some international films", allFilmDataIds, 
                                    NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE, internationalProfile['profile'], 
                                    createNewRecommendedRow, internationalProfile['profileId'])
+            # printStringifiedVector(internationalProfile['profile'], cache['allGenres'], cache['allCountries'])
             createNewRecommendedRow = False
+
+
+def maxGenresAreEqualBetweenProfiles(profileA, profileB):
+    maxGenreValueA = profileA[PROFILE_GENRE_START_INDEX]
+    maxGenreValueB = profileB[PROFILE_GENRE_START_INDEX]
+    maxGenreIndexA = PROFILE_GENRE_START_INDEX
+    maxGenreIndexB = PROFILE_GENRE_START_INDEX
+    
+    for i in range(PROFILE_GENRE_START_INDEX, len(cache['allGenres'])):
+        if profileA[i] > maxGenreValueA:
+            maxGenreValueA = profileA[i]
+            maxGenreIndexA = i
+
+        if profileB[i] > maxGenreValueB:
+            maxGenreValueB = profileB[i]
+            maxGenreIndexB = i
+
+    return maxGenreIndexA == maxGenreIndexB
 
 
 def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommendations, profileVector, 
@@ -338,14 +355,13 @@ def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommend
         cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVectorized[filmId], profileVector,
                                                       filmVectorMagnitude, profileVectorMagnitude)
 
-    # sort in descending order
     cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
 
     i = 0
     while i < numberOfRecommendations:
         filmId = cosineSimilarities[i][0]
         
-        if isFilmRecUnique(filmId):
+        if isFilmRecommendationUnique(filmId):
             film = allFilmDataUnseen[filmId]
             similarityScore = cosineSimilarities[i][1]
             film['id'] = filmId
@@ -364,7 +380,7 @@ def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommend
         i += 1
 
 
-def isFilmRecUnique(filmId):
+def isFilmRecommendationUnique(filmId):
     for rowOfRecommendations in rowsOfRecommendations:
         for recommendedFilm in rowOfRecommendations['recommendedFilms']:
             if recommendedFilm['id'] == filmId:
@@ -385,28 +401,44 @@ def reviewRecommendation():
                 film['wasFilmReviewed'] = True
 
     profile = getProfile(profileId)
+
+    # if the profile is a genre profile
+    if profileId in cache['allGenres']:
+        adjustment = profile['weightedMeanRating'] * RECOMMENDATION_REVIEW_FACTOR
+        if isThumbsUp:
+            profile['weightedMeanRating'] += adjustment
+        else:
+            profile['weightedMeanRating'] -= adjustment
+
     filmVector = allFilmDataVectorized[filmId]
-    adjustment = (filmVector - profile) * REC_REVIEW_FEEDBACK_FACTOR
+    
+    adjustment = (filmVector - profile['profile']) * RECOMMENDATION_REVIEW_FACTOR
+    for i in range(len(adjustment)):
+        if adjustment[i] == 0.0:
+            adjustment[i] = RECOMMENDATION_REVIEW_FACTOR
 
     if isThumbsUp:
-        profile += adjustment
+        profile['profile'] += adjustment
     else:
-        profile -= adjustment
+        profile['profile'] -= adjustment
+
+    keepVectorBoundary(profile['profile'], profileVectorLength)
 
     return f"changed {profileId} profile due to {("liking" if isThumbsUp else "disliking")} of {filmId}", 200
 
 
 def getProfile(profileId):
     if profileId == "favourite":
-        return favouriteProfile['profile']
+        return favouriteProfile
     elif profileId == "recency":
-        return recencyProfile['profile']
+        return recencyProfile
     else:
         for profile in genreProfiles:
             if profile['profileId'] == profileId:
-                return profile['profile']
+                return profile
 
-    return np.zeros(profileVectorLength)
+    print(f"Error: profile {profileId} not found. Returning zero vector.")
+    return {'profile': np.zeros(profileVectorLength), 'profileId': profileId}
 
 
 @app.route('/regenerateRecommendations')

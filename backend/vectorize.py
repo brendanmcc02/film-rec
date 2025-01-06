@@ -93,8 +93,8 @@ def keepVectorBoundary(vector, profileVectorLength):
 
 
 def printStringifiedVector(vector, allGenres, allCountries):
-    print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUM_OF_VOTES_WEIGHT: {NUM_OF_VOTES_WEIGHT}, RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, "
-          f"GENRE_WEIGHT: {GENRE_WEIGHT}\nCOUNTRY_WEIGHT: {COUNTRY_WEIGHT}")
+    print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUM_OF_VOTES_WEIGHT: {NUM_OF_VOTES_WEIGHT}, IMDB_RATING_WEIGHT: {IMDB_RATING_WEIGHT}"
+          f"RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, GENRE_WEIGHT: {GENRE_WEIGHT}\nCOUNTRY_WEIGHT: {COUNTRY_WEIGHT}")
     stringifiedVector = (f"Year: {round(vector[PROFILE_YEAR_INDEX], 3)}\n"
                          f"IMDb Rating: {round(vector[PROFILE_IMDB_RATING_INDEX], 3)}\n"
                          f"NumOfVotes: {round(vector[PROFILE_NUM_OF_VOTES_INDEX], 3)}\n"
@@ -129,34 +129,39 @@ def initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorL
         return {'profile': np.zeros(profileVectorLength), 'profileId': 'favourite'}
 
 
-def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
-                      allGenres, profileVectorLength, numFilmsWatchedInGenreThreshold):
+def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingScalars, 
+                      cachedDateRatedScalars, allGenres, profileVectorLength, 
+                      numFilmsWatchedInGenreThreshold):
     genreProfiles = {}
 
     for genre in allGenres:
-        genreProfiles[genre] = {"profileId": genre, "profile": np.zeros(profileVectorLength), "magnitude": 0.0, 
-                                "sumOfWeights": 0.0, "quantityFilmsWatched": 0}
+        genreProfiles[genre] = {"profileId": genre, "profile": np.zeros(profileVectorLength),
+                                "sumOfWeights": 0.0, "quantityFilmsWatched": 0,
+                                "weightedMeanRating": 0.0}
 
     for imdbFilmId in userFilmDataIds:
         filmGenres = getFilmGenres(userFilmDataVectorized[imdbFilmId], allGenres)
         for genre in filmGenres:
             genreProfiles[genre]['profile'] += userFilmDataVectorized[imdbFilmId]
             genreProfiles[genre]['sumOfWeights'] += (cachedUserRatingScalars[imdbFilmId] *
-                                                           cachedDateRatedScalars[imdbFilmId])
+                                                     cachedDateRatedScalars[imdbFilmId])
             genreProfiles[genre]['quantityFilmsWatched'] += 1
 
     for genre in allGenres:
         if genreProfiles[genre]['quantityFilmsWatched'] == 0:
             continue
         
+        numFilmsWatchedInGenreFactor = min(1.0, (genreProfiles[genre]['quantityFilmsWatched'] /
+                                                 numFilmsWatchedInGenreThreshold))
         genreProfiles[genre]['profile'] = np.divide(genreProfiles[genre]['profile'], 
                                                     genreProfiles[genre]['sumOfWeights'])
-        genreProfiles[genre]['profile'] *= min(1.0, (genreProfiles[genre]['quantityFilmsWatched'] /
-                                               numFilmsWatchedInGenreThreshold))
-        genreProfiles[genre]['magnitude'] = np.linalg.norm(genreProfiles[genre]['profile'])
+        genreProfiles[genre]['profile'] *= numFilmsWatchedInGenreFactor
+        genreProfiles[genre]['weightedMeanRating'] = (genreProfiles[genre]['sumOfWeights'] / 
+                                                      genreProfiles[genre]['quantityFilmsWatched'])
+        genreProfiles[genre]['weightedMeanRating'] *= numFilmsWatchedInGenreFactor
 
-    # sort the dictionary (by magnitude) as a list with only the values (genre, profile, magnitude, sumOfWeights, quantityFilmsWatched)
-    # and omit the key
+    # return as a list of tuples, where each tuple has the values (genre, profile, weightedMeanRating, 
+    # sumOfWeights, quantityFilmsWatched)
     return [value for _, value in genreProfiles.items()]
 
 
@@ -176,8 +181,8 @@ def getFilmGenres(vectorizedFilm, allGenres):
     return filmGenres
 
 
-def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, profileVectorLength, 
-                       cachedUserRatingScalars, cachedDateRatedScalars):
+def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, 
+                       profileVectorLength, cachedUserRatingScalars, cachedDateRatedScalars):
     recencyProfile = np.zeros(profileVectorLength)
     sumOfWeights = 0.0
 
@@ -201,7 +206,8 @@ def initOldProfiles(genreProfiles, numTopGenreProfiles):
     oldProfiles = []
 
     for i in range(0, numTopGenreProfiles):
-        oldProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 'profileId': genreProfiles[i]['profileId']})
+        oldProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 
+                            'profileId': genreProfiles[i]['profileId']})
         oldProfiles[i]['profile'][PROFILE_YEAR_INDEX] = 0.0
 
     return oldProfiles
@@ -211,7 +217,8 @@ def initObscureProfiles(genreProfiles, numTopGenreProfiles):
     obscureProfiles = []
 
     for i in range(0, numTopGenreProfiles):
-        obscureProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 'profileId': genreProfiles[i]['profileId']})
+        obscureProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 
+                                'profileId': genreProfiles[i]['profileId']})
         obscureProfiles[i]['profile'][PROFILE_NUM_OF_VOTES_INDEX] = 0.0
 
     return obscureProfiles
@@ -221,7 +228,8 @@ def initInternationalProfiles(genreProfiles, numTopGenreProfiles, allCountries, 
     internationalProfiles = []
 
     for i in range(0, numTopGenreProfiles):
-        internationalProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 'profileId': genreProfiles[i]['profileId']})
+        internationalProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 
+                                      'profileId': genreProfiles[i]['profileId']})
 
         countryStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
         maxCountryIndex = countryStartIndex
@@ -240,7 +248,8 @@ def initInternationalProfiles(genreProfiles, numTopGenreProfiles, allCountries, 
         else:        
             internationalProfiles[i]['profile'][maxCountryIndex] = 0.0
 
-        curveAccordingToMax(internationalProfiles[i]['profile'], allCountries, COUNTRY_WEIGHT, countryStartIndex)
+        curveAccordingToMax(internationalProfiles[i]['profile'], allCountries, COUNTRY_WEIGHT, 
+                            countryStartIndex)
 
     return internationalProfiles
 
@@ -264,23 +273,3 @@ def curveAccordingToMax(profileVector, list, weight, startIndex):
             profileVector[index] = 0.0
 
         profileVector[index] *= weight
-
-
-def getWeightByVectorIndex(vectorIndex, allGenresLength):
-    profileCountryStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
-
-    if vectorIndex >= profileCountryStartIndex:
-        return COUNTRY_WEIGHT
-    elif vectorIndex >= PROFILE_GENRE_START_INDEX:
-        return GENRE_WEIGHT
-    elif vectorIndex == PROFILE_RUNTIME_INDEX:
-        return RUNTIME_WEIGHT
-    elif vectorIndex == PROFILE_NUM_OF_VOTES_INDEX:
-        return NUM_OF_VOTES_WEIGHT
-    elif vectorIndex == PROFILE_IMDB_RATING_INDEX:
-        return IMDB_RATING_WEIGHT
-    elif vectorIndex == PROFILE_YEAR_INDEX:
-        return YEAR_WEIGHT
-    else:
-        print(f"Error. Invalid vector index: {vectorIndex}")
-        return 0.0
