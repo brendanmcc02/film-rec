@@ -1,8 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 
-const basePosterURL = "https://image.tmdb.org/t/p/w500";
-
 const App = () => {
     const [rowsOfRecommendations, setRowsOfRecommendations] = useState([]);
     const [rowsOfRecommendationButtonVisibility, setRowsOfRecommendationButtonVisibility] = useState([]);
@@ -112,7 +110,7 @@ const App = () => {
     function getFilms(recommendedFilms) {
         return recommendedFilms.map((film, i) => (
             <div className="recommendedFilm" key={i}> 
-                <img src={`${basePosterURL}${film.mainPoster}`} alt={film.title} className="mainPosterImg" />
+                <img src={`${film.mainPoster}`} alt={film.title} className="mainPosterImg" />
                 {isFilmButtonVisible(film.id) && 
                     <div className="buttons">
                         <button className="up-button" onClick={() => handleUpButton(film.id)}>

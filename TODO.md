@@ -40,8 +40,8 @@
 - [x] get rid of `letterboxdYear` attribute
 - [x] convert `cached-letterboxd-title-year.json` to `cached-letterboxd-title.json`
 - [x] solve the letterboxd title year nonsense
+- [x] add baseposterURL to dataset, reduces computation during online phase
 - [ ] check for `\u*`, are they messed up or is it ok?
-- [ ] add baseposterURL to dataset, reduces computation during online phase
 
 # Letterboxd conversion
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
@@ -149,6 +149,7 @@ countries, poster)
 `all-film-data.json`**
 - [ ] error handling on all file imports, api requests, etc. try-except
 - [ ] separate code pieces into separate classes/files; modularity wya
+- [ ] you can iterate through keys in a dict **without** the need to call `*.keys()`!!! change this!
 
 ## Misc
 - [x] switch from my-film-data.json to ratings.csv

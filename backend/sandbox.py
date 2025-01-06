@@ -12,15 +12,18 @@ import time
 
 def main():
 
-    i = 2
-    while i < 10:
-        print(f"i = {i}")
-        for j in range(0, 10):
-            print(f"j = {j}")
-            if i == j:
-                break
+    file = open('../database/cached-tmdb-film-data.json')
+    cached = json.load(file)
 
-        i += 1
+    for imdbFilmId in cached:
+        cached[imdbFilmId]['mainPoster'] = "https://image.tmdb.org/t/p/w500" + cached[imdbFilmId]['mainPoster']
+        cached[imdbFilmId]['backdropPoster'] = "https://image.tmdb.org/t/p/w500" + cached[imdbFilmId]['backdropPoster']
+
+    
+    with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
+        convert_file.write(json.dumps(cached, indent=4, separators=(',', ': ')))
+
+    # https://image.tmdb.org/t/p/w500
 
     #
     #

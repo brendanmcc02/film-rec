@@ -134,13 +134,6 @@ def main():
     for imdbFilmId in allFilmDataKeys:
         count = count + 1
         print(str(count) + " " + str(imdbFilmId))
-        if count % 100 == 0:
-            with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
-                convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
-
-            with open('../database/all-film-data.json', 'w') as convert_file:
-                convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
-
         if imdbFilmId in cachedTmbdFilmData:
             allFilmData[imdbFilmId]['letterboxdTitle'] = cachedTmbdFilmData[imdbFilmId]['letterboxdTitle']
             allFilmData[imdbFilmId]['letterboxdYear'] = cachedTmbdFilmData[imdbFilmId]['letterboxdYear']
