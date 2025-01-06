@@ -180,10 +180,12 @@ def main():
                     invalidAllFilmDataKeys.append(imdbFilmId)
                     continue
 
+                basePosterUrl = "https://image.tmdb.org/t/p/w500"
+
                 letterboxdTitle = str(jsonResponse['title'])
                 letterboxdYear = int(jsonResponse['release_date'].split('-')[0])
-                mainPoster = str(jsonResponse['poster_path'])
-                backdropPoster = str(jsonResponse['backdrop_path'])
+                mainPoster = basePosterUrl + str(jsonResponse['poster_path'])
+                backdropPoster = basePosterUrl + str(jsonResponse['backdrop_path'])
                 filmSummary = str(jsonResponse['overview'])
 
                 filmCountries = []
