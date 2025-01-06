@@ -9,7 +9,7 @@ const App = () => {
         fetch('/initRowsOfRecommendations')
             .then((response) => response.json())
             .then((jsonData) => {
-                setRowsOfRecommendations(jsonData); // Update state with fetched database
+                setRowsOfRecommendations(jsonData);
                 const initialButtonVisibility = jsonData.map((row) => 
                     row.recommendedFilms.map((film) => ({ 
                         filmID: film.id, 
@@ -33,7 +33,7 @@ const App = () => {
           }
         }
 
-        return false; 
+        return false;
     }
 
     function setFilmButtonInvisible(filmID) {
@@ -47,64 +47,59 @@ const App = () => {
       }
 
     async function handleUpButton(filmId) {
-        console.log("Up button clicked for filmId: " + filmId);
-        await reviewRec(filmId, true);
+        await reviewRecommendation(filmId, true);
         setFilmButtonInvisible(filmId);
     }
 
     async function handleDownButton(filmId) {
-        console.log("Down button clicked for filmId: " + filmId);
-        await reviewRec(filmId, false);
+        await reviewRecommendation(filmId, false);
         setFilmButtonInvisible(filmId);
     }
 
-    async function reviewRec(filmId, isThumbsUp) {
+    async function reviewRecommendation(filmId, isThumbsUp) {
         try {
-            const fetchUrl = "/reviewRec?filmId=" + filmId.toString() + "&isThumbsUp=" + isThumbsUp
+            const fetchUrl = "/reviewRecommendation?filmId=" + filmId.toString() + "&isThumbsUp=" + isThumbsUp
             const response = await fetch(fetchUrl);
 
             if (!response.ok) {
-                console.log('Change user profile API request not ok. filmID: ' + filmId);
+                console.log('reviewRecommendation response not ok. filmID: ' + filmId);
             } else {
                 console.log(await response.text());
             }
         } catch (error) {
-            console.log('Change user profile API request failed. filmID: ' + filmId);
+            console.log('error with reviewRecommendation. filmID: ' + filmId);
         }
     }
 
-    async function handleRegenButton() {
-        // let changeMade = false;
+    function hasUserReviewedAnyRecommendations() {
+        for (const row of rowsOfRecommendationButtonVisibility) {
+            for (const film of row) {
+              if (film.isFilmButtonVisible === false) {
+                return true;
+              }
+            }
+          }
+  
+          return false;
+    }
 
-        // // check if the user has given a 'thumbs up' to any film
-        // let len = upButtonStates.length;
-        // for (let i = 0; i < len && !changeMade; i++) {
-        //     if (upButtonStates[i]) {
-        //         changeMade = true;
-        //     }
-        // }
+    async function handleRegenerateRecommendationsButton() {
+        if (hasUserReviewedAnyRecommendations()) {
+            const response = await fetch('/regenerateRecommendations');
+            const jsonData = await response.json();
+            setRowsOfRecommendations(jsonData);
+            const initialButtonVisibility = jsonData.map((row) => 
+                row.recommendedFilms.map((film) => ({ 
+                    filmID: film.id, 
+                    isFilmButtonVisible: true
+                }))
+            );
 
-        // // check if the user has given a 'thumbs down' to any film
-        // for (let i = 0; i < len && !changeMade; i++) {
-        //     if (downButtonStates[i]) {
-        //         changeMade = true;
-        //     }
-        // }
-
-        // // only call /regen if the user has responded to > 1 rec
-        // if (changeMade) {
-        //     try {
-        //         let response = await fetch('/regen');
-        //         setRowsOfRecommendations(await response.json());
-        //         setUpButtonStates(initButtonStates); // reset up button states
-        //         setDownButtonStates(initButtonStates); // reset down button states
-        //         console.log("Called /regen");
-        //     } catch (error) {
-        //         console.error('Error fetching /regen API:', error);
-        //     }
-        // } else {
-        //     console.log("No changes made, so /regen not called.");
-        // }
+            setRowsOfRecommendationButtonVisibility(initialButtonVisibility);
+            console.log("Regenerated film recommendations.")
+        } else {
+            console.log("No film recommendations were reviewed by the user, so films were not regenerated.");
+        }
     }
 
     function getFilms(recommendedFilms) {
@@ -134,8 +129,8 @@ const App = () => {
 
     return (
         <>
-            <button className="regen-button" onClick={() => handleRegenButton()}>
-                    Regen
+            <button className="regen-button" onClick={() => handleRegenerateRecommendationsButton()}>
+                    Regenerate
             </button>
             <div className='rows'>
                 {rows}

@@ -10,7 +10,7 @@ from init_all_film_data import RUNTIME_THRESHOLD, NUM_VOTES_THRESHOLD
 from letterboxd_conversion import *
 
 DATE_RATED_WEIGHT = 0.5
-NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 10
+NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
 NUM_TOP_GENRE_PROFILES = 3
 NUM_GENRE_PROFILE_RECOMMENDATIONS = 9
 NUM_RECENCY_RECOMMENDATIONS = 9
@@ -23,7 +23,7 @@ TOTAL_RECOMMENDATIONS = ((NUM_GENRE_PROFILE_RECOMMENDATIONS * NUM_TOP_GENRE_PROF
                          (NUM_OBSCURE_RECOMMENDATIONS_PER_GENRE * NUM_TOP_GENRE_PROFILES) +
                          (NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE * NUM_TOP_GENRE_PROFILES)
                          + NUM_FAVOURITE_RECOMMENDATIONS)
-REC_REVIEW_FEEDBACK_FACTOR = 0.05
+REC_REVIEW_FEEDBACK_FACTOR = 0.1
 
 profileVectorLength = 0
 allFilmDataUnseen = {}
@@ -58,7 +58,6 @@ def resetGlobalVariables():
     global vectorProfileChanges
     global allFilmDataUnseen
     global rowsOfRecommendations
-    global recStates
     global minDateRated
     global isImdbFile
     global userFilmDataFilename
@@ -257,7 +256,8 @@ def initRowsOfRecommendations():
     # for profile in obscureProfiles:
     #     printStringifiedVector(profile['profile'], cache['allGenres'], cache['allCountries'])
 
-    internationalProfiles = initInternationalProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES, cache['allCountries'], allGenresLength)
+    internationalProfiles = initInternationalProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES, cache['allCountries'], 
+                                                      allGenresLength)
     # for profile in internationalProfiles:
     #     printStringifiedVector(profile['profile'], cache['allGenres'], cache['allCountries'])
 
@@ -268,6 +268,7 @@ def initRowsOfRecommendations():
 
 def generateRecommendations():
     global rowsOfRecommendations
+    global genreProfiles
     rowsOfRecommendations = []
     allFilmDataIds = list(allFilmDataUnseen.keys())
 
@@ -276,6 +277,10 @@ def generateRecommendations():
     else:
         getFilmRecommendations("Based on your favourite films", allFilmDataIds, NUM_FAVOURITE_RECOMMENDATIONS, 
                     favouriteProfile['profile'], True, favouriteProfile['profileId'])
+
+    genreProfiles = sorted(genreProfiles, key=lambda x: x['magnitude'], reverse=True)
+
+    print(f"genre profiles {genreProfiles}")
 
     for i in range(0, NUM_TOP_GENRE_PROFILES):
         if genreProfiles[i]['magnitude'] == 0.0:
@@ -291,51 +296,33 @@ def generateRecommendations():
         getFilmRecommendations("Based on what you watched recently", allFilmDataIds, NUM_RECENCY_RECOMMENDATIONS, 
                                recencyProfile['profile'], True, recencyProfile['profileId'])
 
-    i = 0
+    createNewRecommendedRow = True
     for oldProfile in oldProfiles:
         if np.linalg.norm(oldProfile['profile']) == 0.0:
             print("No old profile.")
         else:
-            if i == 0:
-                createNewRecommendedRow = True
-            else:
-                createNewRecommendedRow = False
-
             getFilmRecommendations("Try out some older films", allFilmDataIds, NUM_OLD_RECOMMENDATIONS_PER_GENRE, 
                                    oldProfile['profile'], createNewRecommendedRow, oldProfile['profileId'])
+            createNewRecommendedRow = False
         
-        i += 1
-        
-    i = 0
+    createNewRecommendedRow = True
     for obscureProfile in obscureProfiles:
         if np.linalg.norm(obscureProfile['profile']) == 0.0:
             print("No obscure profile.")
         else:
-            if i == 0:
-                createNewRecommendedRow = True
-            else:
-                createNewRecommendedRow = False
-
             getFilmRecommendations("Try out some lesser-known films", allFilmDataIds, NUM_OBSCURE_RECOMMENDATIONS_PER_GENRE, 
                                    obscureProfile['profile'], createNewRecommendedRow, obscureProfile['profileId'])
+            createNewRecommendedRow = False
 
-        i += 1
-
-    i = 0
+    createNewRecommendedRow = True
     for internationalProfile in internationalProfiles:
         if np.linalg.norm(internationalProfile['profile']) == 0.0:
             print("No international profile.")
         else:
-            if i == 0:
-                createNewRecommendedRow = True
-            else:
-                createNewRecommendedRow = False
-
             getFilmRecommendations("Try out some international films", allFilmDataIds, 
                                    NUM_INTERNATIONAL_RECOMMENDATIONS_PER_GENRE, internationalProfile['profile'], 
                                    createNewRecommendedRow, internationalProfile['profileId'])
-
-        i += 1
+            createNewRecommendedRow = False
 
 
 def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommendations, profileVector, 
@@ -364,6 +351,7 @@ def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommend
             film['id'] = filmId
             film['similarityScore'] = round(similarityScore * 100.0, 2)
             film['profileId'] = profileId
+            film['wasFilmReviewed'] = False
 
             if createNewRecommendedRow:
                 rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, "recommendedFilms": []})
@@ -385,8 +373,8 @@ def isFilmRecUnique(filmId):
     return True
 
 
-@app.route('/reviewRec')
-def reviewRec():
+@app.route('/reviewRecommendation')
+def reviewRecommendation():
     filmId = request.args.get('filmId')
     isThumbsUp = request.args.get('isThumbsUp').lower() == 'true'
 
@@ -394,14 +382,16 @@ def reviewRec():
         for film in row['recommendedFilms']:
             if film['id'] == filmId:
                 profileId = film['profileId']
+                film['wasFilmReviewed'] = True
 
     profile = getProfile(profileId)
     filmVector = allFilmDataVectorized[filmId]
+    adjustment = (filmVector - profile) * REC_REVIEW_FEEDBACK_FACTOR
 
     if isThumbsUp:
-        profile += ((filmVector - profile) * REC_REVIEW_FEEDBACK_FACTOR)
+        profile += adjustment
     else:
-        profile -= ((filmVector - profile) * REC_REVIEW_FEEDBACK_FACTOR)
+        profile -= adjustment
 
     return f"changed {profileId} profile due to {("liking" if isThumbsUp else "disliking")} of {filmId}", 200
 
@@ -419,18 +409,16 @@ def getProfile(profileId):
     return np.zeros(profileVectorLength)
 
 
-@app.route('/regen')
-def regen():
-    global recStates
-    # for each film that was liked or disliked:
-    for i in range(0, TOTAL_RECOMMENDATIONS):
-        if recStates[i] != 0:
-            # remove from allFilmDataUnseen
-            filmId = rowsOfRecommendations[i]['id']
-            del allFilmDataUnseen[filmId]
+@app.route('/regenerateRecommendations')
+def regenerateRecommendations():
+    global rowsOfRecommendations
+    global allFilmDataUnseen
 
-    # reset recStates
-    recStates = [0] * TOTAL_RECOMMENDATIONS
+    for row in rowsOfRecommendations:
+        for film in row['recommendedFilms']:
+            if film['wasFilmReviewed']:
+                filmId = film['id']
+                del allFilmDataUnseen[filmId]
 
     generateRecommendations()
 

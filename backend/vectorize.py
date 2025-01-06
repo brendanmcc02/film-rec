@@ -157,7 +157,7 @@ def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingS
 
     # sort the dictionary (by magnitude) as a list with only the values (genre, profile, magnitude, sumOfWeights, quantityFilmsWatched)
     # and omit the key
-    return [value for _, value in sorted(genreProfiles.items(), key=lambda item: item[1]['magnitude'], reverse=True)]
+    return [value for _, value in genreProfiles.items()]
 
 
 def getFilmGenres(vectorizedFilm, allGenres):

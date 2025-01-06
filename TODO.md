@@ -79,7 +79,8 @@ preprocessing
 - [x] apply `NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD` weight to profile after iteration of `userFilmData`
 - [x] pick top k profiles ranked on magnitude
 - [x] show the recommendations of these films
-- [ ] potentially there is a lot of overlap between the profiles, so perhaps only include a genre profile if it has a certain cosine sim value difference to the other genre profiles?
+- [ ] potentially there is a lot of overlap between the profiles, so perhaps only include a genre profile 
+if it has a certain cosine sim value difference to the other genre profiles?
 
 ## Old Profile
 - [x] implement basic version
@@ -99,6 +100,9 @@ preprocessing
 - [x] error handling if no fav films
 
 # Reinforcement Learning Round 2
+- [x] ensure `reviewRecommendation` works
+- [x] re-implement `regen` after extensive refactoring
+- [ ] revise the maths behind reinforcement learning
 
 ## Testing & Evaluation
 - [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
@@ -106,11 +110,8 @@ preprocessing
 - [ ] is it worth curving genres/languages? atm I don't do it
 - [ ] play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films the user watched? e.g. 5%?
 - [ ] better results if you fix `imdbRating = 1.0`? *maybe not, reduces novelty, also it's kinda boring*
-- [ ] `DATE_RATED_WEIGHT`? is it worth it?
-
-# Improving Efficiency
-- [ ] ~~cluster allFilmDataVec to make cosine sims more performant~~ I think the solution wouldn't be super clean, but also it runs fine so
-I'm not arsed
+- [ ] `DATE_RATED_WEIGHT`? is it worth it? should you relax it to e.g. 0.7/8 seeing as we have a recency vector?
+- [ ] `REC_REVIEW_FEEDBACK_FACTOR` bring up to 0.1/.15/.2?
 
 # Backend
 - [x] for imdb, only vectorize films in userData that are in allFilmData (otherwise we can't get access to film languages, 
@@ -150,6 +151,7 @@ countries, poster)
 - [ ] error handling on all file imports, api requests, etc. try-except
 - [ ] separate code pieces into separate classes/files; modularity wya
 - [ ] you can iterate through keys in a dict **without** the need to call `*.keys()`!!! change this!
+- [ ] error handling for zero vector returns (in case it happens)
 
 ## Misc
 - [x] switch from my-film-data.json to ratings.csv
@@ -195,6 +197,3 @@ my-film-data-vec.json to file
 
 # Nice to Have
 - [x] change some files to get rid of hyphens, so I don't need an imported library to import them
-- [ ] letterboxd conversion: rather than relying only on `diary.csv` or `ratings.csv`, append latest `Watched Date` to 
-corresponding entry in `ratings.csv`. not all films rated on letterboxd account are in diary.csv, but all are in 
-`ratings.csv`
