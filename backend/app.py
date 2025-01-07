@@ -327,11 +327,13 @@ def maxGenresAreEqualBetweenProfiles(profileA, profileB):
     return maxGenreIndexA == maxGenreIndexB
 
 
-def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommendations, profileVector, profileId):
+def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommendations, profileVector, 
+                           profileId):
     global rowsOfRecommendations
     global allFilmDataVectorizedMagnitudes
 
-    rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, "recommendedFilms": []})
+    rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, "recommendedFilms": [], 
+                                  "profileId": profileId})
     profileVectorMagnitude = np.linalg.norm(profileVector)
     cosineSimilarities = {}
 
@@ -351,7 +353,6 @@ def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommend
             similarityScore = cosineSimilarities[i][1]
             film['id'] = filmId
             film['similarityScore'] = round(similarityScore * 100.0, 2)
-            film['profileId'] = profileId
             film['wasFilmReviewed'] = False
 
             rowsOfRecommendations[-1]['recommendedFilms'].append(film)
@@ -378,7 +379,7 @@ def reviewRecommendation():
     for row in rowsOfRecommendations:
         for film in row['recommendedFilms']:
             if film['id'] == filmId:
-                profileId = film['profileId']
+                profileId = row['profileId']
                 film['wasFilmReviewed'] = True
 
     profile = getProfile(profileId)
@@ -393,7 +394,7 @@ def reviewRecommendation():
 
     filmVector = allFilmDataVectorized[filmId]
     adjustment = (filmVector - profile['profile']) * RECOMMENDATION_REVIEW_FACTOR
-    
+
     for i in range(len(adjustment)):
         if adjustment[i] == 0.0:
             adjustment[i] = RECOMMENDATION_REVIEW_FACTOR
