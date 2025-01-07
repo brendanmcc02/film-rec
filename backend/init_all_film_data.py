@@ -128,6 +128,8 @@ def main():
 
     cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
     cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+    cachedCountriesFile = open('../database/cached-countries.json')
+    cachedCountries = json.load(cachedCountriesFile)
     count = 0
     invalidAllFilmDataKeys = []
 
@@ -189,10 +191,11 @@ def main():
                 filmSummary = str(jsonResponse['overview'])
 
                 filmCountries = []
-                for country in jsonResponse['origin_country']:
-                    filmCountries.append(country)
-                    if country not in allCountries:
-                        allCountries.append(country)
+                for countryShorthand in jsonResponse['origin_country']:
+                    countryFullName = getCountryFullName(cachedCountries, countryShorthand)
+                    filmCountries.append(countryFullName)
+                    if countryFullName not in allCountries:
+                        allCountries.append(countryFullName)
 
                 cachedTmbdFilmData[imdbFilmId] = {"letterboxdTitle": letterboxdTitle, "letterboxdYear": letterboxdYear,
                                                   "countries": filmCountries, "mainPoster": mainPoster, 
@@ -326,6 +329,14 @@ def isInvalidResponse(jsonResponse):
     except ValueError:
         print("Value Error when validating json response.\n")
         return True
+
+
+def getCountryFullName(cachedCountries, shorthand):
+    for country in cachedCountries:
+        if country['shorthand'] == shorthand:
+            return country['name']
+        
+    return ""
 
 
 if __name__ == "__main__":

@@ -5,4 +5,5 @@ database/*.csv
 user-data/
 access-token.txt
 backup-access-token.txt
+openai-api-key.txt
 backend/__pycache__/

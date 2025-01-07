@@ -73,8 +73,7 @@ preprocessing
 - [x] get rid of countries. having country + language might be diminishing returns
 - [x] do countries instead of languages BECAUSE ALVIN & THE CHIPMUNKS IS BEING RECOMMENDED AS A FOREIGN FILM
 - [x] use user profile for old, obscure, international? results are disappointing despite multiple genres
-- [ ] include profileId in row instead of at film-level
-- [ ] cluster allFilmDataUnseen by genre
+- [x] include profileId in row instead of at film-level
 - [ ] interpret vector function "e.g. because you liked 2000s American Comedy Films"
 - [x] combine cachedUserRating and cachedDateRated together, multiplication operations are wasted
 
@@ -84,8 +83,6 @@ preprocessing
 - [x] apply `NUM_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD` weight to profile after iteration of `userFilmData`
 - [x] pick top k profiles ranked on magnitude
 - [x] show the recommendations of these films
-- [ ] ~~potentially there is a lot of overlap between the profiles, so perhaps only include a genre profile 
-if it has a certain cosine sim value difference to the other genre profiles?~~
 - [x] sort genres by (meanRating & dateRatedWeight) instead of vector magnitude because it's inherently flawed
 - [x] if a genre profile clashes with favouriteProfile, pick another genre
 
@@ -115,7 +112,7 @@ if it has a certain cosine sim value difference to the other genre profiles?~~
 ## Testing & Evaluation
 - [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
 - [ ] play around with different `*_WEIGHT` values
-- [ ] is it worth curving genres/languages? atm I don't do it
+- [ ] is it worth curving genres/countries? atm I don't do it
 - [ ] play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films the user watched? e.g. 5%?
 - [ ] better results if you fix `imdbRating = 1.0`? **maybe not, reduces novelty, also it's kinda boring**
 - [ ] `DATE_RATED_WEIGHT`? is it worth it? should you relax it to e.g. 0.7/8 seeing as we have a recency vector?

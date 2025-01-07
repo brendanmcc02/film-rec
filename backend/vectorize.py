@@ -92,9 +92,10 @@ def keepVectorBoundary(vector, profileVectorLength):
             vector[i] = 1.0
 
 
-def printStringifiedVector(vector, allGenres, allCountries):
-    print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUM_OF_VOTES_WEIGHT: {NUM_OF_VOTES_WEIGHT}, IMDB_RATING_WEIGHT: {IMDB_RATING_WEIGHT}"
-          f"RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, GENRE_WEIGHT: {GENRE_WEIGHT}\nCOUNTRY_WEIGHT: {COUNTRY_WEIGHT}")
+def printStringifiedVector(vector, allGenres, allCountries, text):
+    print(text)
+    print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUM_OF_VOTES_WEIGHT: {NUM_OF_VOTES_WEIGHT}, IMDB_RATING_WEIGHT: {IMDB_RATING_WEIGHT}\n"
+          f"RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, GENRE_WEIGHT: {GENRE_WEIGHT}, COUNTRY_WEIGHT: {COUNTRY_WEIGHT}")
     stringifiedVector = (f"Year: {round(vector[PROFILE_YEAR_INDEX], 3)}\n"
                          f"IMDb Rating: {round(vector[PROFILE_IMDB_RATING_INDEX], 3)}\n"
                          f"NumOfVotes: {round(vector[PROFILE_NUM_OF_VOTES_INDEX], 3)}\n"
@@ -211,9 +212,8 @@ def initUserProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength
 
     if sumOfWeights > 0.0:
         userProfile = np.divide(userProfile, sumOfWeights)
-        return {'profile': userProfile, 'profileId': 'user'}
-    else:
-        return {'profile': np.zeros(profileVectorLength), 'profileId': 'user'}
+        
+    return {'profile': userProfile, 'profileId': 'user'}
 
 
 def initOldProfile(userProfile):
@@ -240,11 +240,11 @@ def initInternationalProfile(userProfile, allCountries, allGenresLength):
                 maxCountryValue = internationalProfile['profile'][i]
                 maxCountryIndex = i
 
-    usIndex = allCountries.index("US") + countryStartIndex
-    gbIndex = allCountries.index("GB") + countryStartIndex
-    if maxCountryIndex == usIndex or maxCountryIndex == gbIndex:
-        internationalProfile['profile'][usIndex] = 0.0
-        internationalProfile['profile'][gbIndex] = 0.0
+    americanIndex = allCountries.index("American") + countryStartIndex
+    britishIndex = allCountries.index("British") + countryStartIndex
+    if maxCountryIndex == americanIndex or maxCountryIndex == britishIndex:
+        internationalProfile['profile'][americanIndex] = 0.0
+        internationalProfile['profile'][britishIndex] = 0.0
     else:        
         internationalProfile['profile'][maxCountryIndex] = 0.0
 
@@ -273,3 +273,25 @@ def curveAccordingToMax(profileVector, list, weight, startIndex):
             profileVector[index] = 0.0
 
         profileVector[index] *= weight
+
+
+def interpretProfile(profile, cachedNormalizedYears, allGenres, allCountries):
+    minYear = cachedNormalizedYears[0]
+    diffYear = cachedNormalizedYears[-1] - minYear
+    year = int(((profile[PROFILE_YEAR_INDEX] / YEAR_WEIGHT) * diffYear) + minYear)
+    yearText = str((year/10)*10) + "s"
+
+    countryStartIndex = PROFILE_GENRE_START_INDEX + len(allGenres)
+    maxCountryIndex = countryStartIndex
+    maxCountryValue = profile[countryStartIndex]
+
+    for i in range(countryStartIndex, (countryStartIndex + len(allCountries))):
+            if profile[i] > maxCountryValue:
+                maxCountryValue = profile[i]
+                maxCountryIndex = i
+
+    countryText = ""
+
+    genreText = ""
+
+    return f"{yearText} {countryText} {genreText}"

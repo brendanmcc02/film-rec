@@ -26,7 +26,6 @@ minDateRated = datetime.now()
 favouriteProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'favourite'}
 genreProfiles = []
 recencyProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'recency'}
-userProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'user'}
 oldProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'old'}
 obscureProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'obscure'}
 internationalProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'international'}
@@ -42,7 +41,6 @@ app = Flask(__name__)
 def resetGlobalVariables():
     global genreProfiles
     global recencyProfile
-    global userProfile
     global oldProfile
     global obscureProfile
     global internationalProfile
@@ -58,7 +56,6 @@ def resetGlobalVariables():
     favouriteProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'favourite'}
     genreProfiles = []
     recencyProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'receny'}
-    userProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'user'}
     oldProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'old'}
     obscureProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'obscure'}
     internationalProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'international'}
@@ -258,7 +255,7 @@ def generateRecommendations():
     else:
         getFilmRecommendations("Based on your favourite films", allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, 
                                favouriteProfile['profile'], favouriteProfile['profileId'])
-        # printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'])
+        # printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'], "Favourite")
 
     genreProfiles = sorted(genreProfiles, key=lambda x: x['weightedMeanRating'], reverse=True)
 
@@ -272,10 +269,12 @@ def generateRecommendations():
             print(f"{genreProfiles[i]['profileId']} profile clashes with Favourite profile, going with "
                   f"another genre profile instead.")
         else:
-            getFilmRecommendations(f"Because you like {genreProfiles[i]['profileId']} films", allFilmDataIds, 
-                                   NUM_RECOMMENDATIONS_PER_ROW, genreProfiles[i]['profile'], 
+            interpretedProfileText = interpretProfile(genreProfiles[i]['profile'])
+            getFilmRecommendations(f"Because you like {interpretedProfileText} films", 
+                                   allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, genreProfiles[i]['profile'], 
                                    genreProfiles[i]['profileId'])
-            # printStringifiedVector(genreProfiles[i]['profile'], cache['allGenres'], cache['allCountries'])
+            # printStringifiedVector(genreProfiles[i]['profile'], cache['allGenres'], cache['allCountries'], 
+                                #    genreProfiles[i]['profileId'])
         
         i += 1
         
@@ -284,21 +283,21 @@ def generateRecommendations():
     else:
         getFilmRecommendations("Based on what you watched recently", allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, 
                                recencyProfile['profile'], recencyProfile['profileId'])
-        # printStringifiedVector(recencyProfile['profile'], cache['allGenres'], cache['allCountries'])
+        # printStringifiedVector(recencyProfile['profile'], cache['allGenres'], cache['allCountries'], "Recency")
 
     if np.array_equal(oldProfile['profile'], np.zeros(profileVectorLength)):
         print("No old profile.")
     else:
         getFilmRecommendations("Try out some older films", allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, 
                                 oldProfile['profile'], oldProfile['profileId'])
-        # printStringifiedVector(oldProfile['profile'], cache['allGenres'], cache['allCountries'])
+        # printStringifiedVector(oldProfile['profile'], cache['allGenres'], cache['allCountries'], "Old")
         
     if np.array_equal(obscureProfile['profile'], np.zeros(profileVectorLength)):
         print("No obscure profile.")
     else:
         getFilmRecommendations("Try out some lesser-known films", allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, 
                                 obscureProfile['profile'], obscureProfile['profileId'])
-        # printStringifiedVector(obscureProfile['profile'], cache['allGenres'], cache['allCountries'])
+        # printStringifiedVector(obscureProfile['profile'], cache['allGenres'], cache['allCountries'], "Obscure")
 
     if np.array_equal(internationalProfile['profile'], np.zeros(profileVectorLength)):
         print("No international profile.")
@@ -306,7 +305,8 @@ def generateRecommendations():
         getFilmRecommendations("Try out some international films", allFilmDataIds, 
                                 NUM_RECOMMENDATIONS_PER_ROW, internationalProfile['profile'], 
                                 internationalProfile['profileId'])
-        # printStringifiedVector(internationalProfile['profile'], cache['allGenres'], cache['allCountries'])
+        # printStringifiedVector(internationalProfile['profile'], cache['allGenres'], cache['allCountries'], 
+                            #    "International")
 
 
 def maxGenresAreEqualBetweenProfiles(profileA, profileB):
