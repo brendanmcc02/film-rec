@@ -72,11 +72,11 @@ preprocessing
 
 - [x] get rid of countries. having country + language might be diminishing returns
 - [x] do countries instead of languages BECAUSE ALVIN & THE CHIPMUNKS IS BEING RECOMMENDED AS A FOREIGN FILM
-- [ ] use favourite profile for old, obscure, international? results are disappointing despite multiple genres
+- [x] use user profile for old, obscure, international? results are disappointing despite multiple genres
 - [ ] include profileId in row instead of at film-level
 - [ ] cluster allFilmDataUnseen by genre
 - [ ] interpret vector function "e.g. because you liked 2000s American Comedy Films"
-- [ ] combine cachedUserRating and cachedDateRated together, multiplication operations are wasted
+- [x] combine cachedUserRating and cachedDateRated together, multiplication operations are wasted
 
 ## Genre Profiles
 - [x] create 23 user profiles, modify each of them through iteration of `userFilmData`
@@ -161,6 +161,9 @@ countries, poster)
 - [ ] you can iterate through keys in a dict **without** the need to call `*.keys()`!!! change this!
 - [ ] error handling for zero vector returns (in case it happens)
 - [ ] `range(*)` is called once in python, no need to declare for loop limit beforehand
+- [ ] error handling for no recent films
+- [ ] error handling for no favourite films
+- [ ] error handling for no international films
 
 ## Misc
 - [x] switch from my-film-data.json to ratings.csv

@@ -200,56 +200,58 @@ def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, ma
         return {'profile': np.zeros(profileVectorLength), 'profileId': 'recency'}
 
 
-def initOldProfiles(genreProfiles, numTopGenreProfiles):
-    oldProfiles = []
+def initUserProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
+                    cachedDateRatedAndUserRatingWeights):
+    userProfile = np.zeros(profileVectorLength)
+    sumOfWeights = 0.0
 
-    for i in range(0, numTopGenreProfiles):
-        oldProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 
-                            'profileId': genreProfiles[i]['profileId']})
-        oldProfiles[i]['profile'][PROFILE_YEAR_INDEX] = 0.0
+    for imdbFilmId in userFilmDataIds:
+        userProfile += userFilmDataVectorized[imdbFilmId]
+        sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
-    return oldProfiles
-
-
-def initObscureProfiles(genreProfiles, numTopGenreProfiles):
-    obscureProfiles = []
-
-    for i in range(0, numTopGenreProfiles):
-        obscureProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 
-                                'profileId': genreProfiles[i]['profileId']})
-        obscureProfiles[i]['profile'][PROFILE_NUM_OF_VOTES_INDEX] = 0.0
-
-    return obscureProfiles
+    if sumOfWeights > 0.0:
+        userProfile = np.divide(userProfile, sumOfWeights)
+        return {'profile': userProfile, 'profileId': 'user'}
+    else:
+        return {'profile': np.zeros(profileVectorLength), 'profileId': 'user'}
 
 
-def initInternationalProfiles(genreProfiles, numTopGenreProfiles, allCountries, allGenresLength):
-    internationalProfiles = []
+def initOldProfile(userProfile):
+    oldProfile = {'profile': np.copy(userProfile), 'profileId': 'old'}
+    oldProfile['profile'][PROFILE_YEAR_INDEX] = 0.0
+    return oldProfile
 
-    for i in range(0, numTopGenreProfiles):
-        internationalProfiles.append({'profile': np.copy(genreProfiles[i]['profile']), 
-                                      'profileId': genreProfiles[i]['profileId']})
 
-        countryStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
-        maxCountryIndex = countryStartIndex
-        maxCountryValue = internationalProfiles[i]['profile'][countryStartIndex]
-        
-        for index in range(countryStartIndex, (countryStartIndex + len(allCountries))):
-            if internationalProfiles[i]['profile'][index] > maxCountryValue:
-                maxCountryValue = internationalProfiles[i]['profile'][index]
-                maxCountryIndex = index
+def initObscureProfile(userProfile):
+    obscureProfile = {'profile': np.copy(userProfile), 'profileId': 'obscure'}
+    obscureProfile['profile'][PROFILE_NUM_OF_VOTES_INDEX] = 0.0
+    return obscureProfile
 
-        usIndex = allCountries.index("US") + countryStartIndex
-        gbIndex = allCountries.index("GB") + countryStartIndex
-        if maxCountryIndex == usIndex or maxCountryIndex == gbIndex:
-            internationalProfiles[i]['profile'][usIndex] = 0.0
-            internationalProfiles[i]['profile'][gbIndex] = 0.0
-        else:        
-            internationalProfiles[i]['profile'][maxCountryIndex] = 0.0
 
-        curveAccordingToMax(internationalProfiles[i]['profile'], allCountries, COUNTRY_WEIGHT, 
-                            countryStartIndex)
+def initInternationalProfile(userProfile, allCountries, allGenresLength):
+    internationalProfile = {'profile': np.copy(userProfile), 'profileId': 'international'}
 
-    return internationalProfiles
+    countryStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
+    maxCountryIndex = countryStartIndex
+    maxCountryValue = internationalProfile['profile'][countryStartIndex]
+
+    for i in range(countryStartIndex, (countryStartIndex + len(allCountries))):
+            if internationalProfile['profile'][i] > maxCountryValue:
+                maxCountryValue = internationalProfile['profile'][i]
+                maxCountryIndex = i
+
+    usIndex = allCountries.index("US") + countryStartIndex
+    gbIndex = allCountries.index("GB") + countryStartIndex
+    if maxCountryIndex == usIndex or maxCountryIndex == gbIndex:
+        internationalProfile['profile'][usIndex] = 0.0
+        internationalProfile['profile'][gbIndex] = 0.0
+    else:        
+        internationalProfile['profile'][maxCountryIndex] = 0.0
+
+    curveAccordingToMax(internationalProfile['profile'], allCountries, COUNTRY_WEIGHT, 
+                        countryStartIndex)
+
+    return internationalProfile
 
 
 # used to curve genre/country values according to max genre/country value
