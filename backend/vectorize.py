@@ -275,12 +275,7 @@ def curveAccordingToMax(profileVector, list, weight, startIndex):
         profileVector[index] *= weight
 
 
-def interpretProfile(profile, cachedNormalizedYears, allGenres, allCountries):
-    minYear = cachedNormalizedYears[0]
-    diffYear = cachedNormalizedYears[-1] - minYear
-    year = int(((profile[PROFILE_YEAR_INDEX] / YEAR_WEIGHT) * diffYear) + minYear)
-    yearText = str((year/10)*10) + "s"
-
+def interpretProfile(profile, allGenres, allCountries):
     countryStartIndex = PROFILE_GENRE_START_INDEX + len(allGenres)
     maxCountryIndex = countryStartIndex
     maxCountryValue = profile[countryStartIndex]
@@ -290,8 +285,15 @@ def interpretProfile(profile, cachedNormalizedYears, allGenres, allCountries):
                 maxCountryValue = profile[i]
                 maxCountryIndex = i
 
-    countryText = ""
+    countryText = allCountries[maxCountryIndex - countryStartIndex]
 
-    genreText = ""
+    maxGenreIndex = PROFILE_GENRE_START_INDEX
+    maxGenreValue = profile[maxGenreIndex]
+    for i in range(PROFILE_GENRE_START_INDEX, countryStartIndex):
+        if profile[i] > maxGenreValue:
+            maxGenreValue = profile[i]
+            maxGenreIndex = i
 
-    return f"{yearText} {countryText} {genreText}"
+    genreText = allGenres[maxGenreIndex - PROFILE_GENRE_START_INDEX]
+
+    return f"{countryText} {genreText}"

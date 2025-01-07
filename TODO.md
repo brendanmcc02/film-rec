@@ -74,7 +74,7 @@ preprocessing
 - [x] do countries instead of languages BECAUSE ALVIN & THE CHIPMUNKS IS BEING RECOMMENDED AS A FOREIGN FILM
 - [x] use user profile for old, obscure, international? results are disappointing despite multiple genres
 - [x] include profileId in row instead of at film-level
-- [ ] interpret vector function "e.g. because you liked 2000s American Comedy Films"
+- [x] interpret vector function "e.g. because you liked 2000s American Comedy Films"
 - [x] combine cachedUserRating and cachedDateRated together, multiplication operations are wasted
 
 ## Genre Profiles
