@@ -275,8 +275,8 @@ def curveAccordingToMax(profileVector, list, weight, startIndex):
         profileVector[index] *= weight
 
 
-def interpretProfile(profile, allGenres, allCountries):
-    countryStartIndex = PROFILE_GENRE_START_INDEX + len(allGenres)
+def getProfileMaxCountry(profile, allGenresLength, allCountries):
+    countryStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
     maxCountryIndex = countryStartIndex
     maxCountryValue = profile[countryStartIndex]
 
@@ -285,15 +285,4 @@ def interpretProfile(profile, allGenres, allCountries):
                 maxCountryValue = profile[i]
                 maxCountryIndex = i
 
-    countryText = allCountries[maxCountryIndex - countryStartIndex]
-
-    maxGenreIndex = PROFILE_GENRE_START_INDEX
-    maxGenreValue = profile[maxGenreIndex]
-    for i in range(PROFILE_GENRE_START_INDEX, countryStartIndex):
-        if profile[i] > maxGenreValue:
-            maxGenreValue = profile[i]
-            maxGenreIndex = i
-
-    genreText = allGenres[maxGenreIndex - PROFILE_GENRE_START_INDEX]
-
-    return f"{countryText} {genreText}"
+    return allCountries[maxCountryIndex - countryStartIndex]

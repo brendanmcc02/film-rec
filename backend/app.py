@@ -269,9 +269,8 @@ def generateRecommendations():
             print(f"{genreProfiles[i]['profileId']} profile clashes with Favourite profile, going with "
                   f"another genre profile instead.")
         else:
-            interpretedProfileText = interpretProfile(genreProfiles[i]['profile'], cache['allGenres'], 
-                                                      cache['allCountries'])
-            getFilmRecommendations(f"Because you like {interpretedProfileText} films", 
+            countryText = getProfileMaxCountry(genreProfiles[i]['profile'], allGenresLength, cache['allCountries'])
+            getFilmRecommendations(f"Because you like {countryText} {genreProfiles[i]['profileId']} films", 
                                    allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, genreProfiles[i]['profile'], 
                                    genreProfiles[i]['profileId'])
             # printStringifiedVector(genreProfiles[i]['profile'], cache['allGenres'], cache['allCountries'], 
