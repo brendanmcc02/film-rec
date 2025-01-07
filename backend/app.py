@@ -392,8 +392,8 @@ def reviewRecommendation():
             profile['weightedMeanRating'] -= adjustment
 
     filmVector = allFilmDataVectorized[filmId]
-    
     adjustment = (filmVector - profile['profile']) * RECOMMENDATION_REVIEW_FACTOR
+    
     for i in range(len(adjustment)):
         if adjustment[i] == 0.0:
             adjustment[i] = RECOMMENDATION_REVIEW_FACTOR
@@ -413,6 +413,12 @@ def getProfile(profileId):
         return favouriteProfile
     elif profileId == "recency":
         return recencyProfile
+    elif profileId == "old":
+        return oldProfile
+    elif profileId == "obscure":
+        return obscureProfile
+    elif profileId == "international":
+        return internationalProfile
     else:
         for profile in genreProfiles:
             if profile['profileId'] == profileId:
