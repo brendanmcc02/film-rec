@@ -113,14 +113,14 @@ def printStringifiedVector(vector, allGenres, allCountries):
 
 
 def initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
-                         cachedUserRatingScalars, cachedDateRatedScalars, favouriteFilmIds):
+                         cachedDateRatedAndUserRatingWeights, favouriteFilmIds):
     favouriteProfile = np.zeros(profileVectorLength)
     sumOfWeights = 0.0
 
     for imdbFilmId in userFilmDataIds:
         if imdbFilmId in favouriteFilmIds:
             favouriteProfile += userFilmDataVectorized[imdbFilmId]
-            sumOfWeights += (cachedUserRatingScalars[imdbFilmId] * cachedDateRatedScalars[imdbFilmId])
+            sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
     if sumOfWeights > 0.0:
         favouriteProfile = np.divide(favouriteProfile, sumOfWeights)
@@ -129,9 +129,8 @@ def initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorL
         return {'profile': np.zeros(profileVectorLength), 'profileId': 'favourite'}
 
 
-def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingScalars, 
-                      cachedDateRatedScalars, allGenres, profileVectorLength, 
-                      numFilmsWatchedInGenreThreshold):
+def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights, 
+                      allGenres, profileVectorLength, numFilmsWatchedInGenreThreshold):
     genreProfiles = {}
 
     for genre in allGenres:
@@ -143,8 +142,7 @@ def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingS
         filmGenres = getFilmGenres(userFilmDataVectorized[imdbFilmId], allGenres)
         for genre in filmGenres:
             genreProfiles[genre]['profile'] += userFilmDataVectorized[imdbFilmId]
-            genreProfiles[genre]['sumOfWeights'] += (cachedUserRatingScalars[imdbFilmId] *
-                                                     cachedDateRatedScalars[imdbFilmId])
+            genreProfiles[genre]['sumOfWeights'] += cachedDateRatedAndUserRatingWeights[imdbFilmId]
             genreProfiles[genre]['quantityFilmsWatched'] += 1
 
     for genre in allGenres:
@@ -182,7 +180,7 @@ def getFilmGenres(vectorizedFilm, allGenres):
 
 
 def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, 
-                       profileVectorLength, cachedUserRatingScalars, cachedDateRatedScalars):
+                       profileVectorLength, cachedDateRatedAndUserRatingWeights):
     recencyProfile = np.zeros(profileVectorLength)
     sumOfWeights = 0.0
 
@@ -190,7 +188,7 @@ def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, ma
         timeDifference = maxDateRated - userFilmData[imdbFilmId]['dateRated']
         if timeDifference.days <= RECENCY_PROFILE_DAYS_THRESHOLD:
             recencyProfile += userFilmDataVectorized[imdbFilmId]
-            sumOfWeights += (cachedUserRatingScalars[imdbFilmId] * cachedDateRatedScalars[imdbFilmId])
+            sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
         else:
             # file is sorted by date, no need to look further
             break

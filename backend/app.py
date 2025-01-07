@@ -204,8 +204,7 @@ def initRowsOfRecommendations():
     userFilmDataVectorized = {}
 
     # init a dict with pre-computed scalar values
-    cachedDateRatedScalars = {}
-    cachedUserRatingScalars = {}
+    cachedDateRatedAndUserRatingWeights = {}
     
     allGenresLength = len(cache['allGenres'])
     allCountriesLength = len(cache['allCountries'])
@@ -215,27 +214,26 @@ def initRowsOfRecommendations():
         vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allCountries'],
                                cache['normalizedYears'], cache['normalizedImdbRatings'], cache['minNumberOfVotes'],
                                cache['diffNumberOfVotes'], cache['normalizedRuntimes'])
-        # normalize the dateRatedScalar as a float between DATE_RATED_WEIGHT and 1.0.
-        dateRatedScalar = (((userFilmData[imdbFilmId]['dateRated'] - minDateRated) / diffDateRated) *
+        # normalize the dateRatedWeight as a float between DATE_RATED_WEIGHT and 1.0.
+        dateRatedWeight = (((userFilmData[imdbFilmId]['dateRated'] - minDateRated) / diffDateRated) *
                            (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
-        cachedDateRatedScalars[imdbFilmId] = dateRatedScalar
 
         # imdbRatings run from 1-10, we want values to run from 0.1 - 1.0
-        userRatingScalar = round((userFilmData[imdbFilmId]['userRating'] / 10.0), 1)
-        cachedUserRatingScalars[imdbFilmId] = userRatingScalar
+        userRatingWeight = round((userFilmData[imdbFilmId]['userRating'] / 10.0), 1)
+        cachedDateRatedAndUserRatingWeights[imdbFilmId] = dateRatedWeight * userRatingWeight
 
-        userFilmDataVectorized[imdbFilmId] = vector * userRatingScalar * dateRatedScalar
+        userFilmDataVectorized[imdbFilmId] = vector * dateRatedWeight * userRatingWeight
 
     profileVectorLength = cache['profileVectorLength']
 
     favouriteProfile = initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength,
-                                            cachedUserRatingScalars, cachedDateRatedScalars, favouriteFilmIds)
+                                            cachedDateRatedAndUserRatingWeights, favouriteFilmIds)
 
-    genreProfiles = initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedUserRatingScalars, cachedDateRatedScalars,
+    genreProfiles = initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
                       cache['allGenres'], profileVectorLength, NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD)
     
     recencyProfile = initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, profileVectorLength, 
-                                        cachedUserRatingScalars, cachedDateRatedScalars)
+                                        cachedDateRatedAndUserRatingWeights)
 
     oldProfiles = initOldProfiles(genreProfiles, NUM_TOP_GENRE_PROFILES)
 

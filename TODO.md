@@ -72,6 +72,11 @@ preprocessing
 
 - [x] get rid of countries. having country + language might be diminishing returns
 - [x] do countries instead of languages BECAUSE ALVIN & THE CHIPMUNKS IS BEING RECOMMENDED AS A FOREIGN FILM
+- [ ] use favourite profile for old, obscure, international? results are disappointing despite multiple genres
+- [ ] include profileId in row instead of at film-level
+- [ ] cluster allFilmDataUnseen by genre
+- [ ] interpret vector function "e.g. because you liked 2000s American Comedy Films"
+- [ ] combine cachedUserRating and cachedDateRated together, multiplication operations are wasted
 
 ## Genre Profiles
 - [x] create 23 user profiles, modify each of them through iteration of `userFilmData`
@@ -82,7 +87,7 @@ preprocessing
 - [ ] ~~potentially there is a lot of overlap between the profiles, so perhaps only include a genre profile 
 if it has a certain cosine sim value difference to the other genre profiles?~~
 - [x] sort genres by (meanRating & dateRatedWeight) instead of vector magnitude because it's inherently flawed
-- [ ] if a genre profile clashes with favouriteProfile, pick another genre
+- [x] if a genre profile clashes with favouriteProfile, pick another genre
 
 ## Old Profile
 - [x] implement basic version
