@@ -165,7 +165,7 @@ my-film-data-vec.json to file
 
 ## Testing & Evaluation
 - [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
-- [ ] is it worth curving genres/countries? atm I don't do it
+- [x] curve genres **better results**
 - [ ] play around with different `*_WEIGHT` values
 - [ ] ~~play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films the user watched? e.g. 5%?~~
 - [ ] ~~better results if you fix `imdbRating = 1.0`? **maybe not, reduces novelty, also it's kinda boring**~~

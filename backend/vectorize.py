@@ -93,7 +93,7 @@ def keepVectorBoundary(vector, profileVectorLength):
 
 
 def printStringifiedVector(vector, allGenres, allCountries, text):
-    print(text)
+    print("\n" + text)
     print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUM_OF_VOTES_WEIGHT: {NUM_OF_VOTES_WEIGHT}, IMDB_RATING_WEIGHT: {IMDB_RATING_WEIGHT},\n"
           f"RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, GENRE_WEIGHT: {GENRE_WEIGHT}, COUNTRY_WEIGHT: {COUNTRY_WEIGHT}")
     stringifiedVector = (f"Year: {round(vector[PROFILE_YEAR_INDEX], 3)}\n"
@@ -132,7 +132,7 @@ def initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorL
 
 
 def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights, 
-                      allGenres, profileVectorLength, numFilmsWatchedInGenreThreshold):
+                      allGenres, profileVectorLength, numFilmsWatchedInGenreThreshold, allCountries):
     genreProfiles = {}
 
     for genre in allGenres:
@@ -153,6 +153,9 @@ def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedDateRatedAn
         
         genreProfiles[genre]['profile'] = np.divide(genreProfiles[genre]['profile'], 
                                                     genreProfiles[genre]['sumOfWeights'])
+        # curve countries
+        curveAccordingToMax(genreProfiles[genre]['profile'], allCountries, COUNTRY_WEIGHT, 
+                            PROFILE_GENRE_START_INDEX + len(allGenres))
         genreProfiles[genre]['weightedMeanRating'] = (genreProfiles[genre]['sumOfWeights'] / 
                                                       genreProfiles[genre]['quantityFilmsWatched'])
         numFilmsWatchedInGenreFactor = min(1.0, (genreProfiles[genre]['quantityFilmsWatched'] /
@@ -181,7 +184,8 @@ def getFilmGenres(vectorizedFilm, allGenres):
 
 
 def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, 
-                       profileVectorLength, cachedDateRatedAndUserRatingWeights):
+                       profileVectorLength, cachedDateRatedAndUserRatingWeights, allGenres,
+                       allCountries):
     recencyProfile = np.zeros(profileVectorLength)
     sumOfWeights = 0.0
 
@@ -196,13 +200,18 @@ def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, ma
 
     if sumOfWeights > 0.0:
         recencyProfile = np.divide(recencyProfile, sumOfWeights)
+        # curve genres
+        curveAccordingToMax(recencyProfile, allGenres, GENRE_WEIGHT, PROFILE_GENRE_START_INDEX)
+        # curve countries
+        curveAccordingToMax(recencyProfile, allCountries, COUNTRY_WEIGHT, 
+                            PROFILE_GENRE_START_INDEX + len(allGenres))
         return {'profile': recencyProfile, 'profileId': 'recency'}
     else:
         return {'profile': np.zeros(profileVectorLength), 'profileId': 'recency'}
 
 
 def initUserProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
-                    cachedDateRatedAndUserRatingWeights):
+                    cachedDateRatedAndUserRatingWeights, allGenres, allCountries):
     userProfile = np.zeros(profileVectorLength)
     sumOfWeights = 0.0
 
@@ -212,11 +221,17 @@ def initUserProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength
 
     if sumOfWeights > 0.0:
         userProfile = np.divide(userProfile, sumOfWeights)
+        # curve genres
+        curveAccordingToMax(userProfile, allGenres, GENRE_WEIGHT, PROFILE_GENRE_START_INDEX)
+        # curve countries
+        curveAccordingToMax(userProfile, allCountries, COUNTRY_WEIGHT, 
+                            PROFILE_GENRE_START_INDEX + len(allGenres))
         
     return {'profile': userProfile, 'profileId': 'user'}
 
 
 def initOldProfile(userProfile):
+    # note: userProfile already has curved genres and countries
     oldProfile = {'profile': np.copy(userProfile), 'profileId': 'old'}
     oldProfile['profile'][PROFILE_YEAR_INDEX] = 0.0
     return oldProfile
@@ -242,6 +257,7 @@ def initInternationalProfile(userProfile, allCountries, allGenresLength):
     else:        
         internationalProfile['profile'][maxCountryIndex] = 0.0
 
+    # curve countries
     curveAccordingToMax(internationalProfile['profile'], allCountries, COUNTRY_WEIGHT, 
                         countryStartIndex)
 
@@ -250,21 +266,21 @@ def initInternationalProfile(userProfile, allCountries, allGenresLength):
 
 # used to curve genre/country values according to max genre/country value
 def curveAccordingToMax(profileVector, list, weight, startIndex):
-    userProfileGenreEndIndex = startIndex + len(list)
+    endIndex = startIndex + len(list)
     minValue = profileVector[startIndex]
     maxValue = profileVector[startIndex]
 
-    for index in range(startIndex, userProfileGenreEndIndex):
+    for index in range(startIndex, endIndex):
         minValue = min(minValue, profileVector[index])
         maxValue = max(maxValue, profileVector[index])
 
     diffValue = maxValue - minValue
 
-    for index in range(startIndex, userProfileGenreEndIndex):
+    for index in range(startIndex, endIndex):
         if diffValue > 0.0:
             profileVector[index] = (profileVector[index] - minValue) / diffValue
-        else:
-            profileVector[index] = 0.0
+        elif minValue > 0.0:
+            profileVector[index] = 1.0
 
         profileVector[index] *= weight
 
