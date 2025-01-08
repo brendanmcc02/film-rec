@@ -12,10 +12,9 @@ import urllib.request
 
 
 def main():
-    try:
-        urllib.request.urlretrieve("https://datasets.imdbws.com/title.basics.tsv.gz", "../dataase/title.basics.tsv.gz")
-    except urllib.error.URLError:
-        print("Error. URL not found. It may be outdated.")
+    zero_vec = np.zeros(1)
+
+    print(str(zero_vec[2]))
 
 
 if __name__ == "__main__":
