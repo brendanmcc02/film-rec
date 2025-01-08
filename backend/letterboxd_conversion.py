@@ -8,8 +8,17 @@ def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cac
     letterboxdUserFilmData = reversed(letterboxdUserFilmData)
 
     for letterboxdFilm in letterboxdUserFilmData:
-        letterboxdTitle = letterboxdFilm["Name"]
-        letterboxdYear = int(letterboxdFilm["Year"])
+        if "Name" in letterboxdFilm:
+            letterboxdTitle = letterboxdFilm["Name"]
+        else:
+            print("Error. 'Name' attribute not in letterboxd film")
+            raise KeyError
+        
+        if "Year" in letterboxdFilm:
+            letterboxdYear = int(letterboxdFilm["Year"])
+        else:
+            print("Error. 'Year' attribute not in letterboxd film")
+            raise KeyError
 
         if letterboxdTitle in cachedLetterboxdTitles:
             for cachedFilm in cachedLetterboxdTitles[letterboxdTitle]:
@@ -29,7 +38,7 @@ def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cac
                         "Runtime (mins)": allFilmData[imdbFilmId]['runtime'],
                         "Genres": allFilmData[imdbFilmId]['genres']
                     })
-        # else:
-        #     print(f"Film not found {letterboxdTitle}")
+        else:
+            print(f"Letterboxd Film not found in cached-letterboxd-titles.json:\n{letterboxdTitle}")
 
     return imdbUserFilmData
