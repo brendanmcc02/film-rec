@@ -94,18 +94,19 @@ def keepVectorBoundary(vector, profileVectorLength):
 
 def printStringifiedVector(vector, allGenres, allCountries, text):
     print(text)
-    print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUM_OF_VOTES_WEIGHT: {NUM_OF_VOTES_WEIGHT}, IMDB_RATING_WEIGHT: {IMDB_RATING_WEIGHT}\n"
+    print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUM_OF_VOTES_WEIGHT: {NUM_OF_VOTES_WEIGHT}, IMDB_RATING_WEIGHT: {IMDB_RATING_WEIGHT},\n"
           f"RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, GENRE_WEIGHT: {GENRE_WEIGHT}, COUNTRY_WEIGHT: {COUNTRY_WEIGHT}")
     stringifiedVector = (f"Year: {round(vector[PROFILE_YEAR_INDEX], 3)}\n"
                          f"IMDb Rating: {round(vector[PROFILE_IMDB_RATING_INDEX], 3)}\n"
                          f"NumOfVotes: {round(vector[PROFILE_NUM_OF_VOTES_INDEX], 3)}\n"
-                         f"Runtime: {round(vector[PROFILE_RUNTIME_INDEX], 3)}\n")
+                         f"Runtime: {round(vector[PROFILE_RUNTIME_INDEX], 3)}\n###############\n")
 
     i = PROFILE_GENRE_START_INDEX
     for genre in allGenres:
         stringifiedVector += f"{genre}: {round(vector[i], 3)}\n"
         i = i + 1
 
+    stringifiedVector += "###############\n"
     for country in allCountries:
         stringifiedVector += f"{country}: {round(vector[i], 3)}\n"
         i = i + 1
@@ -150,13 +151,12 @@ def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedDateRatedAn
         if genreProfiles[genre]['quantityFilmsWatched'] == 0:
             continue
         
-        numFilmsWatchedInGenreFactor = min(1.0, (genreProfiles[genre]['quantityFilmsWatched'] /
-                                                 numFilmsWatchedInGenreThreshold))
         genreProfiles[genre]['profile'] = np.divide(genreProfiles[genre]['profile'], 
                                                     genreProfiles[genre]['sumOfWeights'])
-        genreProfiles[genre]['profile'] *= numFilmsWatchedInGenreFactor
         genreProfiles[genre]['weightedMeanRating'] = (genreProfiles[genre]['sumOfWeights'] / 
                                                       genreProfiles[genre]['quantityFilmsWatched'])
+        numFilmsWatchedInGenreFactor = min(1.0, (genreProfiles[genre]['quantityFilmsWatched'] /
+                                                 numFilmsWatchedInGenreThreshold))
         genreProfiles[genre]['weightedMeanRating'] *= numFilmsWatchedInGenreFactor
 
     # return as a list of tuples, where each tuple has the values (genre, profile, weightedMeanRating, 
