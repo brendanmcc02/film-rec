@@ -76,7 +76,11 @@ def verifyUserUploadedFile():
 
     file = request.files['file']
     userFilmDataFilename = file.filename
-    file.save("../database/" + file.filename)
+    try:
+        file.save("../database/" + file.filename)
+    except FileNotFoundError:
+        print("Check directory name is ok")
+        raise FileNotFoundError
     expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
                                       "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
                                       "Release Date", "Directors"]
@@ -87,22 +91,22 @@ def verifyUserUploadedFile():
 
             for row in reader:
                 if 'unexpectedData' in row:
-                    return "Error: " + userFilmDataFilename + " has more data than row headers.\n", 400
+                    return f"Error: {userFilmDataFilename} has more data than row headers.\n", 400
 
                 keys = list(row.keys())
                 for k in keys:
                     if k not in expectedImdbFileFilmAttributes:
                         isImdbFile = False
                         if k not in expectedLetterboxdFileFilmAttributes:
-                            return ("Error: Row headers in " + userFilmDataFilename +
-                                    " does not conform to expected format.\n", 400)
+                            return (f"Error: Row headers in {userFilmDataFilename} "
+                                    f"does not conform to expected format.\n", 400)
 
         return "Upload Success.", 200
     except FileNotFoundError:
         return "Error: file not found.", 404
     except Exception as e:
         deleteCsvFiles()
-        return "Error occurred with reading " + userFilmDataFilename + ".\n" + str(e), 400
+        return f"Error occurred with reading {userFilmDataFilename}.\n{e}", 400
 
 
 @app.route('/initRowsOfRecommendations')
@@ -135,7 +139,11 @@ def initRowsOfRecommendations():
         return f"Error occurred with reading {userFilmDataFilename}.\n" + str(e), 400
 
     deleteCsvFiles()
-    allFilmDataFile = open('../database/all-film-data.json')
+    try:
+        allFilmDataFile = open('../database/all-film-data.json')
+    except FileNotFoundError:
+        print("Check all-film-data.json exists.")
+        raise FileNotFoundError
     allFilmData = json.load(allFilmDataFile)
     allFilmDataIds = list(allFilmData.keys())
 
@@ -177,7 +185,7 @@ def initRowsOfRecommendations():
                 else:
                     print(f"Film in userFilmData not found in allFilmData, {filmId}\n")
             except ValueError:
-                return ("value error with film: " + film['Const']), 400
+                return f"value error with film: {film['Const']}", 400
 
     diffDateRated = maxDateRated - minDateRated
     isDiffDateRatedZero = False
@@ -188,7 +196,6 @@ def initRowsOfRecommendations():
     userFilmDataIds = list(userFilmData.keys())
 
     for imdbFilmId in allFilmDataIds:
-        # take films out from allFilmData that the user has seen
         if imdbFilmId not in userFilmData:
             allFilmDataUnseen[imdbFilmId] = allFilmData[imdbFilmId]
 
