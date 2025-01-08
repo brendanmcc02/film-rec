@@ -76,6 +76,7 @@ preprocessing
 - [x] include profileId in row instead of at film-level
 - [x] interpret vector function "e.g. because you liked 2000s American Comedy Films"
 - [x] combine cachedUserRating and cachedDateRated together, multiplication operations are wasted
+- [x] delete obscureProfile? doesn't really work as expected, films aren't so 'obscure'
 
 ## Genre Profiles
 - [x] create 23 user profiles, modify each of them through iteration of `userFilmData`

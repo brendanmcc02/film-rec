@@ -222,12 +222,6 @@ def initOldProfile(userProfile):
     return oldProfile
 
 
-def initObscureProfile(userProfile):
-    obscureProfile = {'profile': np.copy(userProfile), 'profileId': 'obscure'}
-    obscureProfile['profile'][PROFILE_NUM_OF_VOTES_INDEX] = 0.0
-    return obscureProfile
-
-
 def initInternationalProfile(userProfile, allCountries, allGenresLength):
     internationalProfile = {'profile': np.copy(userProfile), 'profileId': 'international'}
 
