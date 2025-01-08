@@ -192,10 +192,13 @@ def main():
 
                 filmCountries = []
                 for countryShorthand in jsonResponse['origin_country']:
-                    countryFullName = getCountryFullName(cachedCountries, countryShorthand)
-                    filmCountries.append(countryFullName)
-                    if countryFullName not in allCountries:
-                        allCountries.append(countryFullName)
+                    if countryShorthand in cachedCountries:
+                        countryFullName = cachedCountries[countryShorthand]
+                        filmCountries.append(countryFullName)
+                        if countryFullName not in allCountries:
+                            allCountries.append(countryFullName)
+                    else:
+                        print(f"Unrecognised Country: {countryShorthand}")
 
                 cachedTmbdFilmData[imdbFilmId] = {"letterboxdTitle": letterboxdTitle, "letterboxdYear": letterboxdYear,
                                                   "countries": filmCountries, "mainPoster": mainPoster, 
@@ -329,14 +332,6 @@ def isInvalidResponse(jsonResponse):
     except ValueError:
         print("Value Error when validating json response.\n")
         return True
-
-
-def getCountryFullName(cachedCountries, shorthand):
-    for country in cachedCountries:
-        if country['shorthand'] == shorthand:
-            return country['name']
-        
-    return ""
 
 
 if __name__ == "__main__":

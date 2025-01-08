@@ -13,15 +13,13 @@ def main():
     cachedCountriesFile = open('../database/cached-countries.json')
     cachedCountries = json.load(cachedCountriesFile)
 
-    cachedTmdbFile = open('../database/cached-tmdb-film-data.json')
-    cachedTmdb = json.load(cachedTmdbFile)
+    newDict = {}
 
-    for entry in cachedTmdb:
-        for i in range(len(cachedTmdb[entry]['countries'])):
-            cachedTmdb[entry]['countries'][i] = getCountryFullName(cachedCountries, cachedTmdb[entry]['countries'][i])
+    for country in cachedCountries:
+        newDict[country['shorthand']] = country['name']
 
-    with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
-        convert_file.write(json.dumps(cachedTmdb, indent=4, separators=(',', ': ')))
+    with open('../database/cached-countries.json', 'w') as convert_file:
+        convert_file.write(json.dumps(newDict, indent=4, separators=(',', ': ')))
 
 def getCountryFullName(cachedCountries, shorthand):
     for country in cachedCountries:

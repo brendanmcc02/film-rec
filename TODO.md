@@ -77,7 +77,8 @@ preprocessing
 - [x] interpret vector function "e.g. because you liked 2000s American Comedy Films"
 - [x] combine cachedUserRating and cachedDateRated together, multiplication operations are wasted
 - [x] delete obscureProfile? doesn't really work as expected, films aren't so 'obscure'
-- [ ] move around the profiles to something better
+- [x] move around the profiles to something better
+- [x] remove clashing, worse results
 
 ## Genre Profiles
 - [x] create 23 user profiles, modify each of them through iteration of `userFilmData`
@@ -111,60 +112,13 @@ preprocessing
 - [x] revise the maths behind reinforcement learning
 - [x] revise genre profile implementation after testing RL
 
-## Testing & Evaluation
-- [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
-- [ ] play around with different `*_WEIGHT` values
-- [ ] is it worth curving genres/countries? atm I don't do it
-- [ ] play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films the user watched? e.g. 5%?
-- [ ] better results if you fix `imdbRating = 1.0`? **maybe not, reduces novelty, also it's kinda boring**
-- [ ] `DATE_RATED_WEIGHT`? is it worth it? should you relax it to e.g. 0.7/8 seeing as we have a recency vector?
-- [ ] `REC_REVIEW_FEEDBACK_FACTOR` bring up to 0.1/.15/.2?
-
 # Backend
 - [x] for imdb, only vectorize films in userData that are in allFilmData (otherwise we can't get access to film languages, 
 countries, poster)
 - [x] I think it's done for letterboxd already but double check functionality
 - [x] check functionality of backend works after offline phase additions
 
-# Frontend
-- [x] do text div 
-- [x] do file upload (visuals only) div
-- [x] href what is rating.csv/how to export it
-- [x] finish home page (visuals only, file upload func later)
-- [x] re-do text element showing selected files, errors, etc. (lost changes rip)
-- [x] manage multiple pages (check sweng project)
-- [x] go to results page if verifyUserUploadedFile ok
-- [x] verify api calls for vector change funcs are working
-- [x] /initial_recs api calls more than once?
-- [ ] fix title pos bug on recs page
-- [ ] make results page look presentable/nice
-
-# General
-
-## Code-Related & Functionality
-- [x] double check I didn't remove any necessary `global`s and fuck it up
-- [x] tidy up code, make things as efficient as possible
-- [x] work with np vector instead of list? is it more efficient? 
-- [x] letterboxd search can be much more efficient
-- [x] ensure that a user can go back to home page and upload new file and recs still work smoothly
-- [x] go through all code removing redundancy, fine-tuning
-- [x] rename variables & func to lowerCamelCase
-- [x] change variables that are not constant from UPPER_CASE to underscore case
-- [x] minimise global variables (you only need to call global if you want to **modify** the variable)
-- [x] error handling on potential div by 0 errors
-- [x] reduce comments in code and make it more readable (after watching code aesthetic's video)
-- [x] load in all files on the home page instead of waiting for the user to upload their files **just need to do for 
-`all-film-data.json`**
-- [ ] error handling on all file imports, api requests, etc. try-except
-- [ ] separate code pieces into separate classes/files; modularity wya
-- [ ] you can iterate through keys in a dict **without** the need to call `*.keys()`!!! change this!
-- [ ] error handling for zero vector returns (in case it happens)
-- [ ] `range(*)` is called once in python, no need to declare for loop limit beforehand
-- [ ] error handling for no recent films
-- [ ] error handling for no favourite films
-- [ ] error handling for no international films
-
-## Misc
+# Misc
 - [x] switch from my-film-data.json to ratings.csv
 - [x] add numVotes & runtime to human data
 - [x] vectorize numberOfVotes & runtime
@@ -179,12 +133,12 @@ create endpoints for getters/setters
 - [x] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
 - [x] bug: imdb recency doesn't work
 
-## Windows OS
+# Windows OS
 - [x] config frontend: npm, etc.
 - [x] run flask app
 - [x] fix windows upload diary.csv error
 
-## Scripts
+# Scripts
 - [x] merge the 3 .sh files into one, consider renaming it as vectorizing can be included into it
 - [x] reduce run.sh to startup.sh
 - [x] change run.sh to reflect various changes
@@ -208,3 +162,48 @@ my-film-data-vec.json to file
 
 # Nice to Have
 - [x] change some files to get rid of hyphens, so I don't need an imported library to import them
+
+## Testing & Evaluation
+- [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
+- [ ] is it worth curving genres/countries? atm I don't do it
+- [ ] play around with different `*_WEIGHT` values
+- [ ] ~~play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films the user watched? e.g. 5%?~~
+- [ ] ~~better results if you fix `imdbRating = 1.0`? **maybe not, reduces novelty, also it's kinda boring**~~
+- [ ] `DATE_RATED_WEIGHT`? is it worth it? should you relax it to e.g. 0.7/8 seeing as we have a recency vector?
+- [ ] `REC_REVIEW_FEEDBACK_FACTOR` bring up to 0.1/.15/.2?
+
+# Code-Related & Functionality
+- [x] double check I didn't remove any necessary `global`s and fuck it up
+- [x] tidy up code, make things as efficient as possible
+- [x] work with np vector instead of list? is it more efficient? 
+- [x] letterboxd search can be much more efficient
+- [x] ensure that a user can go back to home page and upload new file and recs still work smoothly
+- [x] go through all code removing redundancy, fine-tuning
+- [x] rename variables & func to lowerCamelCase
+- [x] change variables that are not constant from UPPER_CASE to underscore case
+- [x] minimise global variables (you only need to call global if you want to **modify** the variable)
+- [x] error handling on potential div by 0 errors
+- [x] reduce comments in code and make it more readable (after watching code aesthetic's video)
+- [x] load in all files on the home page instead of waiting for the user to upload their files **just need to do for 
+`all-film-data.json`**
+- [ ] error handling on all file imports, api requests, etc. try-except
+- [ ] separate code pieces into separate classes/files; modularity wya
+- [ ] you can iterate through keys in a dict **without** the need to call `*.keys()`!!! change this!
+- [ ] error handling for zero vector returns (in case it happens)
+- [ ] `range(*)` is called once in python, no need to declare for loop limit beforehand
+- [ ] error handling for no recent films
+- [ ] error handling for no favourite films
+- [ ] error handling for no international films
+
+# Frontend
+- [x] do text div 
+- [x] do file upload (visuals only) div
+- [x] href what is rating.csv/how to export it
+- [x] finish home page (visuals only, file upload func later)
+- [x] re-do text element showing selected files, errors, etc. (lost changes rip)
+- [x] manage multiple pages (check sweng project)
+- [x] go to results page if verifyUserUploadedFile ok
+- [x] verify api calls for vector change funcs are working
+- [x] /initial_recs api calls more than once?
+- [ ] fix title pos bug on recs page
+- [ ] make results page look presentable/nice
