@@ -68,18 +68,6 @@ preprocessing
 - [x] recent profile vector (last 30 days)
 - [x] add specialised way to calculate vector magnitude (i.e. dont over prioritise multi-genre/lang/country films unfairly)
 
-# Recommendation Algorithm Round 2
-
-- [x] get rid of countries. having country + language might be diminishing returns
-- [x] do countries instead of languages BECAUSE ALVIN & THE CHIPMUNKS IS BEING RECOMMENDED AS A FOREIGN FILM
-- [x] use user profile for old, obscure, international? results are disappointing despite multiple genres
-- [x] include profileId in row instead of at film-level
-- [x] interpret vector function "e.g. because you liked 2000s American Comedy Films"
-- [x] combine cachedUserRating and cachedDateRated together, multiplication operations are wasted
-- [x] delete obscureProfile? doesn't really work as expected, films aren't so 'obscure'
-- [x] move around the profiles to something better
-- [x] remove clashing, worse results
-
 ## Genre Profiles
 - [x] create 23 user profiles, modify each of them through iteration of `userFilmData`
 - [x] ~~use weighted or normal average?~~ using weighted
@@ -163,14 +151,24 @@ my-film-data-vec.json to file
 # Nice to Have
 - [x] change some files to get rid of hyphens, so I don't need an imported library to import them
 
+# Recommendation Algorithm Round 2
+- [x] get rid of countries. having country + language might be diminishing returns
+- [x] do countries instead of languages BECAUSE ALVIN & THE CHIPMUNKS IS BEING RECOMMENDED AS A FOREIGN FILM
+- [x] use user profile for old, obscure, international? results are disappointing despite multiple genres
+- [x] include profileId in row instead of at film-level
+- [x] interpret vector function "e.g. because you liked 2000s American Comedy Films"
+- [x] combine cachedUserRating and cachedDateRated together, multiplication operations are wasted
+- [x] delete obscureProfile? doesn't really work as expected, films aren't so 'obscure'
+- [x] move around the profiles to something better
+- [x] remove clashing, worse results
+- [ ] international: if no other countries than US/GB, return zero vector
+
 ## Testing & Evaluation
 - [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
-- [x] curve genres **better results**
-- [ ] play around with different `*_WEIGHT` values
-- [ ] ~~play around with `NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD`: should it be relative to the total number of films the user watched? e.g. 5%?~~
-- [ ] ~~better results if you fix `imdbRating = 1.0`? **maybe not, reduces novelty, also it's kinda boring**~~
-- [ ] `DATE_RATED_WEIGHT`? is it worth it? should you relax it to e.g. 0.7/8 seeing as we have a recency vector?
+- [x] curve genres & countries **better results**
+- [x] `DATE_RATED_WEIGHT`?
 - [ ] `REC_REVIEW_FEEDBACK_FACTOR` bring up to 0.1/.15/.2?
+- [ ] try without runtime? if no difference, get rid of it
 
 # Code-Related & Functionality
 - [x] double check I didn't remove any necessary `global`s and fuck it up
@@ -193,7 +191,6 @@ my-film-data-vec.json to file
 - [ ] `range(*)` is called once in python, no need to declare for loop limit beforehand
 - [ ] error handling for no recent films
 - [ ] error handling for no favourite films
-- [ ] error handling for no international films
 
 # Frontend
 - [x] do text div 

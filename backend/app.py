@@ -9,7 +9,7 @@ from vectorize import *
 from init_all_film_data import RUNTIME_THRESHOLD, NUM_VOTES_THRESHOLD
 from letterboxd_conversion import *
 
-DATE_RATED_WEIGHT = 0.75
+DATE_RATED_WEIGHT = 0.8
 NUM_RECOMMENDATIONS_PER_ROW = 6
 NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
 NUM_TOP_GENRE_PROFILES = 3
@@ -213,12 +213,13 @@ def initRowsOfRecommendations():
         userRatingWeight = round((userFilmData[imdbFilmId]['userRating'] / 10.0), 1)
         cachedDateRatedAndUserRatingWeights[imdbFilmId] = dateRatedWeight * userRatingWeight
 
-        userFilmDataVectorized[imdbFilmId] = vector * dateRatedWeight * userRatingWeight
+        userFilmDataVectorized[imdbFilmId] = vector * cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
     profileVectorLength = cache['profileVectorLength']
 
     favouriteProfile = initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength,
-                                            cachedDateRatedAndUserRatingWeights, favouriteFilmIds)
+                                            cachedDateRatedAndUserRatingWeights, favouriteFilmIds,
+                                            cache['allGenres'], cache['allCountries'])
 
     recencyProfile = initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, 
                                         profileVectorLength, cachedDateRatedAndUserRatingWeights, cache['allGenres'],
@@ -251,14 +252,14 @@ def generateRecommendations():
     else:
         getFilmRecommendations("Based on your favourite films", allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, 
                                favouriteProfile['profile'], favouriteProfile['profileId'])
-        # printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'], "Favourite")
+        printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'], "Favourite")
 
     if np.array_equal(recencyProfile['profile'], np.zeros(profileVectorLength)):
         print("No recency profile.")
     else:
         getFilmRecommendations("Based on what you watched recently", allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, 
                                recencyProfile['profile'], recencyProfile['profileId'])
-        # printStringifiedVector(recencyProfile['profile'], cache['allGenres'], cache['allCountries'], "Recency")
+        printStringifiedVector(recencyProfile['profile'], cache['allGenres'], cache['allCountries'], "Recency")
 
     genreProfiles = sorted(genreProfiles, key=lambda x: x['weightedMeanRating'], reverse=True)
 
@@ -272,8 +273,8 @@ def generateRecommendations():
             getFilmRecommendations(f"Because you like {countryText} {genreProfiles[i]['profileId']} films", 
                                    allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, genreProfiles[i]['profile'], 
                                    genreProfiles[i]['profileId'])
-            # printStringifiedVector(genreProfiles[i]['profile'], cache['allGenres'], cache['allCountries'], 
-            #                        genreProfiles[i]['profileId'])
+            printStringifiedVector(genreProfiles[i]['profile'], cache['allGenres'], cache['allCountries'], 
+                                   genreProfiles[i]['profileId'])
         
         i += 1
         

@@ -115,7 +115,8 @@ def printStringifiedVector(vector, allGenres, allCountries, text):
 
 
 def initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
-                         cachedDateRatedAndUserRatingWeights, favouriteFilmIds):
+                         cachedDateRatedAndUserRatingWeights, favouriteFilmIds, allGenres,
+                         allCountries):
     favouriteProfile = np.zeros(profileVectorLength)
     sumOfWeights = 0.0
 
@@ -126,6 +127,11 @@ def initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorL
 
     if sumOfWeights > 0.0:
         favouriteProfile = np.divide(favouriteProfile, sumOfWeights)
+        # curve genres
+        curveAccordingToMax(favouriteProfile, allGenres, GENRE_WEIGHT, PROFILE_GENRE_START_INDEX)
+        # curve countries
+        curveAccordingToMax(favouriteProfile, allCountries, COUNTRY_WEIGHT, 
+                            PROFILE_GENRE_START_INDEX + len(allGenres))
         return {'profile': favouriteProfile, 'profileId': 'favourite'}
     else:
         return {'profile': np.zeros(profileVectorLength), 'profileId': 'favourite'}
