@@ -136,7 +136,7 @@ create endpoints for getters/setters
 - [x] all-film-data doesn't filter out films that have been rated
 - [x] init-my-film-data filters out films that have been rated from all-film-data (also rm vector entries)
 - [x] keep title.basics.tsv & title.ratings.tsv
-- [x] add last-download.txt. if downloaded <24 hours, skip the step
+- [x] add last-imdb-download-timestamp.txt. if downloaded <24 hours, skip the step
 - [x] finish init-my-file-data.py to reflect above changes
 - [x] research how/where to store files, run .py scripts etc.
 - [x] upload button calls /verifyUserUploadedFile API
@@ -150,6 +150,8 @@ my-film-data-vec.json to file
 
 # Nice to Have
 - [x] change some files to get rid of hyphens, so I don't need an imported library to import them
+- [ ] create an option for users that don't have their letterboxd/imdb data. Suggest popular, highly-rated, American modern films and rely on RL
+**this also should be the default option for users that upload an empty .csv**
 
 # Recommendation Algorithm Round 2
 - [x] get rid of countries. having country + language might be diminishing returns
@@ -184,13 +186,13 @@ my-film-data-vec.json to file
 - [x] reduce comments in code and make it more readable (after watching code aesthetic's video)
 - [x] load in all files on the home page instead of waiting for the user to upload their files **just need to do for 
 `all-film-data.json`**
+- [x] error handling for no recent films
+- [x] error handling for no favourite films
 - [ ] error handling on all file imports, api requests, etc. try-except
 - [ ] separate code pieces into separate classes/files; modularity wya
 - [ ] you can iterate through keys in a dict **without** the need to call `*.keys()`!!! change this!
 - [ ] error handling for zero vector returns (in case it happens)
 - [ ] `range(*)` is called once in python, no need to declare for loop limit beforehand
-- [ ] error handling for no recent films
-- [ ] error handling for no favourite films
 
 # Frontend
 - [x] do text div 

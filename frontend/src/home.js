@@ -64,7 +64,7 @@ const App = () => {
       <div className="title">
         <h1>FILM REC</h1>
         <h3>A film recommendation app.</h3>
-        <h3>Letterboxd users: Upload the <a
+        <h3>Letterboxd users: Upload your <a
             href="https://letterboxd.com/data/export"><u>ratings.csv</u></a> file.</h3>
         <h3>IMDB Users: Upload your <a href="https://www.wikihow.com/Export-Your-IMDb-Custom-Lists-to-a-CSV-File"><u>exported
           ratings</u></a> csv file.</h3>
