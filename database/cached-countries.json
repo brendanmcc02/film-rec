@@ -1,1006 +1,253 @@
-[
-    {
-        "name": "Andorran",
-        "shorthand": "AD"
-    },
-    {
-        "name": "Emirati",
-        "shorthand": "AE"
-    },
-    {
-        "name": "Afghan",
-        "shorthand": "AF"
-    },
-    {
-        "name": "Antiguan",
-        "shorthand": "AG"
-    },
-    {
-        "name": "Anguillan",
-        "shorthand": "AI"
-    },
-    {
-        "name": "Albanian",
-        "shorthand": "AL"
-    },
-    {
-        "name": "Armenian",
-        "shorthand": "AM"
-    },
-    {
-        "name": "Antilleans",
-        "shorthand": "AN"
-    },
-    {
-        "name": "Angolan",
-        "shorthand": "AO"
-    },
-    {
-        "name": "Antarctic",
-        "shorthand": "AQ"
-    },
-    {
-        "name": "Argentinian",
-        "shorthand": "AR"
-    },
-    {
-        "name": "American Samoan",
-        "shorthand": "AS"
-    },
-    {
-        "name": "Austrian",
-        "shorthand": "AT"
-    },
-    {
-        "name": "Australian",
-        "shorthand": "AU"
-    },
-    {
-        "name": "Aruban",
-        "shorthand": "AW"
-    },
-    {
-        "name": "Azerbaijani",
-        "shorthand": "AZ"
-    },
-    {
-        "name": "Bosnian & Herzegovinian",
-        "shorthand": "BA"
-    },
-    {
-        "name": "Barbadian",
-        "shorthand": "BB"
-    },
-    {
-        "name": "Bangladeshi",
-        "shorthand": "BD"
-    },
-    {
-        "name": "Belgian",
-        "shorthand": "BE"
-    },
-    {
-        "name": "Burkinabe",
-        "shorthand": "BF"
-    },
-    {
-        "name": "Bulgarian",
-        "shorthand": "BG"
-    },
-    {
-        "name": "Bahraini",
-        "shorthand": "BH"
-    },
-    {
-        "name": "Burundian",
-        "shorthand": "BI"
-    },
-    {
-        "name": "Beninese",
-        "shorthand": "BJ"
-    },
-    {
-        "name": "Bermudan",
-        "shorthand": "BM"
-    },
-    {
-        "name": "Bruneian",
-        "shorthand": "BN"
-    },
-    {
-        "name": "Bolivian",
-        "shorthand": "BO"
-    },
-    {
-        "name": "Brazilian",
-        "shorthand": "BR"
-    },
-    {
-        "name": "Bahamian",
-        "shorthand": "BS"
-    },
-    {
-        "name": "Bhutanese",
-        "shorthand": "BT"
-    },
-    {
-        "name": "Burman",
-        "shorthand": "BU"
-    },
-    {
-        "name": "Bouvet Island",
-        "shorthand": "BV"
-    },
-    {
-        "name": "Botswanan",
-        "shorthand": "BW"
-    },
-    {
-        "name": "Belarusian",
-        "shorthand": "BY"
-    },
-    {
-        "name": "Belizean",
-        "shorthand": "BZ"
-    },
-    {
-        "name": "Canadian",
-        "shorthand": "CA"
-    },
-    {
-        "name": "Cocos (Keeling) Island",
-        "shorthand": "CC"
-    },
-    {
-        "name": "Congolese",
-        "shorthand": "CD"
-    },
-    {
-        "name": "Central African",
-        "shorthand": "CF"
-    },
-    {
-        "name": "Congolese",
-        "shorthand": "CG"
-    },
-    {
-        "name": "Swiss",
-        "shorthand": "CH"
-    },
-    {
-        "name": "Ivorian",
-        "shorthand": "CI"
-    },
-    {
-        "name": "Cook Island",
-        "shorthand": "CK"
-    },
-    {
-        "name": "Chilean",
-        "shorthand": "CL"
-    },
-    {
-        "name": "Cameroonian",
-        "shorthand": "CM"
-    },
-    {
-        "name": "Chinese",
-        "shorthand": "CN"
-    },
-    {
-        "name": "Colombian",
-        "shorthand": "CO"
-    },
-    {
-        "name": "Costa Rican",
-        "shorthand": "CR"
-    },
-    {
-        "name": "Serbian and Montenegrin",
-        "shorthand": "CS"
-    },
-    {
-        "name": "Cuban",
-        "shorthand": "CU"
-    },
-    {
-        "name": "Cape Verdean",
-        "shorthand": "CV"
-    },
-    {
-        "name": "Christmas Island",
-        "shorthand": "CX"
-    },
-    {
-        "name": "Cypriot",
-        "shorthand": "CY"
-    },
-    {
-        "name": "Czech",
-        "shorthand": "CZ"
-    },
-    {
-        "name": "German",
-        "shorthand": "DE"
-    },
-    {
-        "name": "Djiboutian",
-        "shorthand": "DJ"
-    },
-    {
-        "name": "Danish",
-        "shorthand": "DK"
-    },
-    {
-        "name": "Dominican",
-        "shorthand": "DM"
-    },
-    {
-        "name": "Dominican",
-        "shorthand": "DO"
-    },
-    {
-        "name": "Algerian",
-        "shorthand": "DZ"
-    },
-    {
-        "name": "Ecuadorian",
-        "shorthand": "EC"
-    },
-    {
-        "name": "Estonian",
-        "shorthand": "EE"
-    },
-    {
-        "name": "Egyptian",
-        "shorthand": "EG"
-    },
-    {
-        "name": "Western Saharan",
-        "shorthand": "EH"
-    },
-    {
-        "name": "Eritrean",
-        "shorthand": "ER"
-    },
-    {
-        "name": "Spanish",
-        "shorthand": "ES"
-    },
-    {
-        "name": "Ethiopian",
-        "shorthand": "ET"
-    },
-    {
-        "name": "Finnish",
-        "shorthand": "FI"
-    },
-    {
-        "name": "Fijian",
-        "shorthand": "FJ"
-    },
-    {
-        "name": "Falkland Island",
-        "shorthand": "FK"
-    },
-    {
-        "name": "Micronesian",
-        "shorthand": "FM"
-    },
-    {
-        "name": "Faroese",
-        "shorthand": "FO"
-    },
-    {
-        "name": "French",
-        "shorthand": "FR"
-    },
-    {
-        "name": "Gabonese",
-        "shorthand": "GA"
-    },
-    {
-        "name": "British",
-        "shorthand": "GB"
-    },
-    {
-        "name": "Grenadian",
-        "shorthand": "GD"
-    },
-    {
-        "name": "Georgian",
-        "shorthand": "GE"
-    },
-    {
-        "name": "French Guianese",
-        "shorthand": "GF"
-    },
-    {
-        "name": "Ghanaian",
-        "shorthand": "GH"
-    },
-    {
-        "name": "Gibraltar",
-        "shorthand": "GI"
-    },
-    {
-        "name": "Greenlandic",
-        "shorthand": "GL"
-    },
-    {
-        "name": "Gambian",
-        "shorthand": "GM"
-    },
-    {
-        "name": "Guinean",
-        "shorthand": "GN"
-    },
-    {
-        "name": "Guadeloupe",
-        "shorthand": "GP"
-    },
-    {
-        "name": "Equatorial Guinean",
-        "shorthand": "GQ"
-    },
-    {
-        "name": "Greek",
-        "shorthand": "GR"
-    },
-    {
-        "name": "South Georgian & South Sandwich Island",
-        "shorthand": "GS"
-    },
-    {
-        "name": "Guatemalan",
-        "shorthand": "GT"
-    },
-    {
-        "name": "Guamanian",
-        "shorthand": "GU"
-    },
-    {
-        "name": "Bissau-Guinean",
-        "shorthand": "GW"
-    },
-    {
-        "name": "Guyanaese",
-        "shorthand": "GY"
-    },
-    {
-        "name": "Cantonese",
-        "shorthand": "HK"
-    },
-    {
-        "name": "Heard & McDonald Island",
-        "shorthand": "HM"
-    },
-    {
-        "name": "Honduran",
-        "shorthand": "HN"
-    },
-    {
-        "name": "Croatian",
-        "shorthand": "HR"
-    },
-    {
-        "name": "Haitian",
-        "shorthand": "HT"
-    },
-    {
-        "name": "Hungarian",
-        "shorthand": "HU"
-    },
-    {
-        "name": "Indonesian",
-        "shorthand": "ID"
-    },
-    {
-        "name": "Irish",
-        "shorthand": "IE"
-    },
-    {
-        "name": "Israeli",
-        "shorthand": "IL"
-    },
-    {
-        "name": "Indian",
-        "shorthand": "IN"
-    },
-    {
-        "name": "British Indian Ocean Territory",
-        "shorthand": "IO"
-    },
-    {
-        "name": "Iraqi",
-        "shorthand": "IQ"
-    },
-    {
-        "name": "Iranian",
-        "shorthand": "IR"
-    },
-    {
-        "name": "Icelandic",
-        "shorthand": "IS"
-    },
-    {
-        "name": "Italian",
-        "shorthand": "IT"
-    },
-    {
-        "name": "Jamaican",
-        "shorthand": "JM"
-    },
-    {
-        "name": "Jordanian",
-        "shorthand": "JO"
-    },
-    {
-        "name": "Japanese",
-        "shorthand": "JP"
-    },
-    {
-        "name": "Kenyan",
-        "shorthand": "KE"
-    },
-    {
-        "name": "Kyrgyzstani",
-        "shorthand": "KG"
-    },
-    {
-        "name": "Cambodian",
-        "shorthand": "KH"
-    },
-    {
-        "name": "Kiribati",
-        "shorthand": "KI"
-    },
-    {
-        "name": "Comoran",
-        "shorthand": "KM"
-    },
-    {
-        "name": "Kittian",
-        "shorthand": "KN"
-    },
-    {
-        "name": "North Korean",
-        "shorthand": "KP"
-    },
-    {
-        "name": "South Korean",
-        "shorthand": "KR"
-    },
-    {
-        "name": "Kuwaiti",
-        "shorthand": "KW"
-    },
-    {
-        "name": "Cayman Island",
-        "shorthand": "KY"
-    },
-    {
-        "name": "Kazakhstani",
-        "shorthand": "KZ"
-    },
-    {
-        "name": "Lao",
-        "shorthand": "LA"
-    },
-    {
-        "name": "Lebanese",
-        "shorthand": "LB"
-    },
-    {
-        "name": "St. Lucian",
-        "shorthand": "LC"
-    },
-    {
-        "name": "Liechtensteiner",
-        "shorthand": "LI"
-    },
-    {
-        "name": "Sri Lankan",
-        "shorthand": "LK"
-    },
-    {
-        "name": "Liberian",
-        "shorthand": "LR"
-    },
-    {
-        "name": "Basotho",
-        "shorthand": "LS"
-    },
-    {
-        "name": "Lithuanian",
-        "shorthand": "LT"
-    },
-    {
-        "name": "Luxembourgish",
-        "shorthand": "LU"
-    },
-    {
-        "name": "Latvian",
-        "shorthand": "LV"
-    },
-    {
-        "name": "Libyan",
-        "shorthand": "LY"
-    },
-    {
-        "name": "Moroccan",
-        "shorthand": "MA"
-    },
-    {
-        "name": "Monacan",
-        "shorthand": "MC"
-    },
-    {
-        "name": "Moldovan",
-        "shorthand": "MD"
-    },
-    {
-        "name": "Montenegrin",
-        "shorthand": "ME"
-    },
-    {
-        "name": "Madagascan",
-        "shorthand": "MG"
-    },
-    {
-        "name": "Marshall Island",
-        "shorthand": "MH"
-    },
-    {
-        "name": "Macedonian",
-        "shorthand": "MK"
-    },
-    {
-        "name": "Malian",
-        "shorthand": "ML"
-    },
-    {
-        "name": "Myanma",
-        "shorthand": "MM"
-    },
-    {
-        "name": "Mongolian",
-        "shorthand": "MN"
-    },
-    {
-        "name": "Macanese",
-        "shorthand": "MO"
-    },
-    {
-        "name": "Northern Mariana Island",
-        "shorthand": "MP"
-    },
-    {
-        "name": "Martinican",
-        "shorthand": "MQ"
-    },
-    {
-        "name": "Mauritanian",
-        "shorthand": "MR"
-    },
-    {
-        "name": "Montserratian",
-        "shorthand": "MS"
-    },
-    {
-        "name": "Maltese",
-        "shorthand": "MT"
-    },
-    {
-        "name": "Mauritian",
-        "shorthand": "MU"
-    },
-    {
-        "name": "Maldivian",
-        "shorthand": "MV"
-    },
-    {
-        "name": "Malawian",
-        "shorthand": "MW"
-    },
-    {
-        "name": "Mexican",
-        "shorthand": "MX"
-    },
-    {
-        "name": "Malaysian",
-        "shorthand": "MY"
-    },
-    {
-        "name": "Mozambican",
-        "shorthand": "MZ"
-    },
-    {
-        "name": "Namibian",
-        "shorthand": "NA"
-    },
-    {
-        "name": "New Caledonian",
-        "shorthand": "NC"
-    },
-    {
-        "name": "Nigerien",
-        "shorthand": "NE"
-    },
-    {
-        "name": "Norfolk Island",
-        "shorthand": "NF"
-    },
-    {
-        "name": "Nigerian",
-        "shorthand": "NG"
-    },
-    {
-        "name": "Nicaraguan",
-        "shorthand": "NI"
-    },
-    {
-        "name": "Dutch",
-        "shorthand": "NL"
-    },
-    {
-        "name": "Norwegian",
-        "shorthand": "NO"
-    },
-    {
-        "name": "Nepalese",
-        "shorthand": "NP"
-    },
-    {
-        "name": "Nauruan",
-        "shorthand": "NR"
-    },
-    {
-        "name": "Niuean",
-        "shorthand": "NU"
-    },
-    {
-        "name": "New Zealand",
-        "shorthand": "NZ"
-    },
-    {
-        "name": "Omani",
-        "shorthand": "OM"
-    },
-    {
-        "name": "Panamanian",
-        "shorthand": "PA"
-    },
-    {
-        "name": "Peruvian",
-        "shorthand": "PE"
-    },
-    {
-        "name": "French Polynesian",
-        "shorthand": "PF"
-    },
-    {
-        "name": "Papua New Guinean",
-        "shorthand": "PG"
-    },
-    {
-        "name": "Filipino",
-        "shorthand": "PH"
-    },
-    {
-        "name": "Pakistani",
-        "shorthand": "PK"
-    },
-    {
-        "name": "Polish",
-        "shorthand": "PL"
-    },
-    {
-        "name": "St. Pierrais & Miquelonnais",
-        "shorthand": "PM"
-    },
-    {
-        "name": "Pitcairn Island",
-        "shorthand": "PN"
-    },
-    {
-        "name": "Puerto Rican",
-        "shorthand": "PR"
-    },
-    {
-        "name": "Palestinian Territories",
-        "shorthand": "PS"
-    },
-    {
-        "name": "Portuguese",
-        "shorthand": "PT"
-    },
-    {
-        "name": "Palauan",
-        "shorthand": "PW"
-    },
-    {
-        "name": "Paraguayan",
-        "shorthand": "PY"
-    },
-    {
-        "name": "Qatari",
-        "shorthand": "QA"
-    },
-    {
-        "name": "R\u00e9unionese",
-        "shorthand": "RE"
-    },
-    {
-        "name": "Romanian",
-        "shorthand": "RO"
-    },
-    {
-        "name": "Serbian",
-        "shorthand": "RS"
-    },
-    {
-        "name": "Russian",
-        "shorthand": "RU"
-    },
-    {
-        "name": "Rwandan",
-        "shorthand": "RW"
-    },
-    {
-        "name": "Saudi",
-        "shorthand": "SA"
-    },
-    {
-        "name": "Solomon Island",
-        "shorthand": "SB"
-    },
-    {
-        "name": "Seychellois",
-        "shorthand": "SC"
-    },
-    {
-        "name": "Sudanese",
-        "shorthand": "SD"
-    },
-    {
-        "name": "Swedish",
-        "shorthand": "SE"
-    },
-    {
-        "name": "Singaporean",
-        "shorthand": "SG"
-    },
-    {
-        "name": "St. Helenian",
-        "shorthand": "SH"
-    },
-    {
-        "name": "Slovenian",
-        "shorthand": "SI"
-    },
-    {
-        "name": "Svalbard & Jan Mayen",
-        "shorthand": "SJ"
-    },
-    {
-        "name": "Slovak",
-        "shorthand": "SK"
-    },
-    {
-        "name": "Sierra Leonean",
-        "shorthand": "SL"
-    },
-    {
-        "name": "Sammarinese",
-        "shorthand": "SM"
-    },
-    {
-        "name": "Senegalese",
-        "shorthand": "SN"
-    },
-    {
-        "name": "Somalian",
-        "shorthand": "SO"
-    },
-    {
-        "name": "Surinamese",
-        "shorthand": "SR"
-    },
-    {
-        "name": "South Sudanese",
-        "shorthand": "SS"
-    },
-    {
-        "name": "S\u00e3o Tom\u00e9an",
-        "shorthand": "ST"
-    },
-    {
-        "name": "Soviet Union",
-        "shorthand": "SU"
-    },
-    {
-        "name": "Salvadoran",
-        "shorthand": "SV"
-    },
-    {
-        "name": "Syrian",
-        "shorthand": "SY"
-    },
-    {
-        "name": "Swazi",
-        "shorthand": "SZ"
-    },
-    {
-        "name": "Turks & Caicos Island",
-        "shorthand": "TC"
-    },
-    {
-        "name": "Chadian",
-        "shorthand": "TD"
-    },
-    {
-        "name": "French Southern Territories",
-        "shorthand": "TF"
-    },
-    {
-        "name": "Togolese",
-        "shorthand": "TG"
-    },
-    {
-        "name": "Thai",
-        "shorthand": "TH"
-    },
-    {
-        "name": "Tajikistani",
-        "shorthand": "TJ"
-    },
-    {
-        "name": "Tokelauan",
-        "shorthand": "TK"
-    },
-    {
-        "name": "Timorese",
-        "shorthand": "TL"
-    },
-    {
-        "name": "Turkmenistani",
-        "shorthand": "TM"
-    },
-    {
-        "name": "Tunisian",
-        "shorthand": "TN"
-    },
-    {
-        "name": "Tongan",
-        "shorthand": "TO"
-    },
-    {
-        "name": "East Timorese",
-        "shorthand": "TP"
-    },
-    {
-        "name": "Turkish",
-        "shorthand": "TR"
-    },
-    {
-        "name": "Trinidadian & Tobagonian",
-        "shorthand": "TT"
-    },
-    {
-        "name": "Tuvaluan",
-        "shorthand": "TV"
-    },
-    {
-        "name": "Taiwanese",
-        "shorthand": "TW"
-    },
-    {
-        "name": "Tanzanian",
-        "shorthand": "TZ"
-    },
-    {
-        "name": "Ukrainian",
-        "shorthand": "UA"
-    },
-    {
-        "name": "Ugandan",
-        "shorthand": "UG"
-    },
-    {
-        "name": "U.S. Outlying Island",
-        "shorthand": "UM"
-    },
-    {
-        "name": "American",
-        "shorthand": "US"
-    },
-    {
-        "name": "Uruguayan",
-        "shorthand": "UY"
-    },
-    {
-        "name": "Uzbekistani",
-        "shorthand": "UZ"
-    },
-    {
-        "name": "Vaticanian",
-        "shorthand": "VA"
-    },
-    {
-        "name": "St. Vincentian",
-        "shorthand": "VC"
-    },
-    {
-        "name": "Venezuelan",
-        "shorthand": "VE"
-    },
-    {
-        "name": "British Virgin Island",
-        "shorthand": "VG"
-    },
-    {
-        "name": "U.S. Virgin Island",
-        "shorthand": "VI"
-    },
-    {
-        "name": "Vietnamese",
-        "shorthand": "VN"
-    },
-    {
-        "name": "Vanuatuan",
-        "shorthand": "VU"
-    },
-    {
-        "name": "Wallisian & Futunan",
-        "shorthand": "WF"
-    },
-    {
-        "name": "Samoan",
-        "shorthand": "WS"
-    },
-    {
-        "name": "Czechoslovakian",
-        "shorthand": "XC"
-    },
-    {
-        "name": "East German",
-        "shorthand": "XG"
-    },
-    {
-        "name": "Northern Irish",
-        "shorthand": "XI"
-    },
-    {
-        "name": "Kosovon",
-        "shorthand": "XK"
-    },
-    {
-        "name": "Yemeni",
-        "shorthand": "YE"
-    },
-    {
-        "name": "Mahoran",
-        "shorthand": "YT"
-    },
-    {
-        "name": "Yugoslavian",
-        "shorthand": "YU"
-    },
-    {
-        "name": "South African",
-        "shorthand": "ZA"
-    },
-    {
-        "name": "Zambian",
-        "shorthand": "ZM"
-    },
-    {
-        "name": "Zairean",
-        "shorthand": "ZR"
-    },
-    {
-        "name": "Zimbabwean",
-        "shorthand": "ZW"
-    }
-]
+{
+    "AD": "Andorran",
+    "AE": "Emirati",
+    "AF": "Afghan",
+    "AG": "Antiguan",
+    "AI": "Anguillan",
+    "AL": "Albanian",
+    "AM": "Armenian",
+    "AN": "Antilleans",
+    "AO": "Angolan",
+    "AQ": "Antarctic",
+    "AR": "Argentinian",
+    "AS": "American Samoan",
+    "AT": "Austrian",
+    "AU": "Australian",
+    "AW": "Aruban",
+    "AZ": "Azerbaijani",
+    "BA": "Bosnian & Herzegovinian",
+    "BB": "Barbadian",
+    "BD": "Bangladeshi",
+    "BE": "Belgian",
+    "BF": "Burkinabe",
+    "BG": "Bulgarian",
+    "BH": "Bahraini",
+    "BI": "Burundian",
+    "BJ": "Beninese",
+    "BM": "Bermudan",
+    "BN": "Bruneian",
+    "BO": "Bolivian",
+    "BR": "Brazilian",
+    "BS": "Bahamian",
+    "BT": "Bhutanese",
+    "BU": "Burman",
+    "BV": "Bouvet Island",
+    "BW": "Botswanan",
+    "BY": "Belarusian",
+    "BZ": "Belizean",
+    "CA": "Canadian",
+    "CC": "Cocos (Keeling) Island",
+    "CD": "Congolese",
+    "CF": "Central African",
+    "CG": "Congolese",
+    "CH": "Swiss",
+    "CI": "Ivorian",
+    "CK": "Cook Island",
+    "CL": "Chilean",
+    "CM": "Cameroonian",
+    "CN": "Chinese",
+    "CO": "Colombian",
+    "CR": "Costa Rican",
+    "CS": "Serbian and Montenegrin",
+    "CU": "Cuban",
+    "CV": "Cape Verdean",
+    "CX": "Christmas Island",
+    "CY": "Cypriot",
+    "CZ": "Czech",
+    "DE": "German",
+    "DJ": "Djiboutian",
+    "DK": "Danish",
+    "DM": "Dominican",
+    "DO": "Dominican",
+    "DZ": "Algerian",
+    "EC": "Ecuadorian",
+    "EE": "Estonian",
+    "EG": "Egyptian",
+    "EH": "Western Saharan",
+    "ER": "Eritrean",
+    "ES": "Spanish",
+    "ET": "Ethiopian",
+    "FI": "Finnish",
+    "FJ": "Fijian",
+    "FK": "Falkland Island",
+    "FM": "Micronesian",
+    "FO": "Faroese",
+    "FR": "French",
+    "GA": "Gabonese",
+    "GB": "British",
+    "GD": "Grenadian",
+    "GE": "Georgian",
+    "GF": "French Guianese",
+    "GH": "Ghanaian",
+    "GI": "Gibraltar",
+    "GL": "Greenlandic",
+    "GM": "Gambian",
+    "GN": "Guinean",
+    "GP": "Guadeloupe",
+    "GQ": "Equatorial Guinean",
+    "GR": "Greek",
+    "GS": "South Georgian & South Sandwich Island",
+    "GT": "Guatemalan",
+    "GU": "Guamanian",
+    "GW": "Bissau-Guinean",
+    "GY": "Guyanaese",
+    "HK": "Cantonese",
+    "HM": "Heard & McDonald Island",
+    "HN": "Honduran",
+    "HR": "Croatian",
+    "HT": "Haitian",
+    "HU": "Hungarian",
+    "ID": "Indonesian",
+    "IE": "Irish",
+    "IL": "Israeli",
+    "IN": "Indian",
+    "IO": "British Indian Ocean Territory",
+    "IQ": "Iraqi",
+    "IR": "Iranian",
+    "IS": "Icelandic",
+    "IT": "Italian",
+    "JM": "Jamaican",
+    "JO": "Jordanian",
+    "JP": "Japanese",
+    "KE": "Kenyan",
+    "KG": "Kyrgyzstani",
+    "KH": "Cambodian",
+    "KI": "Kiribati",
+    "KM": "Comoran",
+    "KN": "Kittian",
+    "KP": "North Korean",
+    "KR": "South Korean",
+    "KW": "Kuwaiti",
+    "KY": "Cayman Island",
+    "KZ": "Kazakhstani",
+    "LA": "Lao",
+    "LB": "Lebanese",
+    "LC": "St. Lucian",
+    "LI": "Liechtensteiner",
+    "LK": "Sri Lankan",
+    "LR": "Liberian",
+    "LS": "Basotho",
+    "LT": "Lithuanian",
+    "LU": "Luxembourgish",
+    "LV": "Latvian",
+    "LY": "Libyan",
+    "MA": "Moroccan",
+    "MC": "Monacan",
+    "MD": "Moldovan",
+    "ME": "Montenegrin",
+    "MG": "Madagascan",
+    "MH": "Marshall Island",
+    "MK": "Macedonian",
+    "ML": "Malian",
+    "MM": "Myanma",
+    "MN": "Mongolian",
+    "MO": "Macanese",
+    "MP": "Northern Mariana Island",
+    "MQ": "Martinican",
+    "MR": "Mauritanian",
+    "MS": "Montserratian",
+    "MT": "Maltese",
+    "MU": "Mauritian",
+    "MV": "Maldivian",
+    "MW": "Malawian",
+    "MX": "Mexican",
+    "MY": "Malaysian",
+    "MZ": "Mozambican",
+    "NA": "Namibian",
+    "NC": "New Caledonian",
+    "NE": "Nigerien",
+    "NF": "Norfolk Island",
+    "NG": "Nigerian",
+    "NI": "Nicaraguan",
+    "NL": "Dutch",
+    "NO": "Norwegian",
+    "NP": "Nepalese",
+    "NR": "Nauruan",
+    "NU": "Niuean",
+    "NZ": "New Zealand",
+    "OM": "Omani",
+    "PA": "Panamanian",
+    "PE": "Peruvian",
+    "PF": "French Polynesian",
+    "PG": "Papua New Guinean",
+    "PH": "Filipino",
+    "PK": "Pakistani",
+    "PL": "Polish",
+    "PM": "St. Pierrais & Miquelonnais",
+    "PN": "Pitcairn Island",
+    "PR": "Puerto Rican",
+    "PS": "Palestinian Territories",
+    "PT": "Portuguese",
+    "PW": "Palauan",
+    "PY": "Paraguayan",
+    "QA": "Qatari",
+    "RE": "R\u00e9unionese",
+    "RO": "Romanian",
+    "RS": "Serbian",
+    "RU": "Russian",
+    "RW": "Rwandan",
+    "SA": "Saudi",
+    "SB": "Solomon Island",
+    "SC": "Seychellois",
+    "SD": "Sudanese",
+    "SE": "Swedish",
+    "SG": "Singaporean",
+    "SH": "St. Helenian",
+    "SI": "Slovenian",
+    "SJ": "Svalbard & Jan Mayen",
+    "SK": "Slovak",
+    "SL": "Sierra Leonean",
+    "SM": "Sammarinese",
+    "SN": "Senegalese",
+    "SO": "Somalian",
+    "SR": "Surinamese",
+    "SS": "South Sudanese",
+    "ST": "S\u00e3o Tom\u00e9an",
+    "SU": "Soviet Union",
+    "SV": "Salvadoran",
+    "SY": "Syrian",
+    "SZ": "Swazi",
+    "TC": "Turks & Caicos Island",
+    "TD": "Chadian",
+    "TF": "French Southern Territories",
+    "TG": "Togolese",
+    "TH": "Thai",
+    "TJ": "Tajikistani",
+    "TK": "Tokelauan",
+    "TL": "Timorese",
+    "TM": "Turkmenistani",
+    "TN": "Tunisian",
+    "TO": "Tongan",
+    "TP": "East Timorese",
+    "TR": "Turkish",
+    "TT": "Trinidadian & Tobagonian",
+    "TV": "Tuvaluan",
+    "TW": "Taiwanese",
+    "TZ": "Tanzanian",
+    "UA": "Ukrainian",
+    "UG": "Ugandan",
+    "UM": "U.S. Outlying Island",
+    "US": "American",
+    "UY": "Uruguayan",
+    "UZ": "Uzbekistani",
+    "VA": "Vaticanian",
+    "VC": "St. Vincentian",
+    "VE": "Venezuelan",
+    "VG": "British Virgin Island",
+    "VI": "U.S. Virgin Island",
+    "VN": "Vietnamese",
+    "VU": "Vanuatuan",
+    "WF": "Wallisian & Futunan",
+    "WS": "Samoan",
+    "XC": "Czechoslovakian",
+    "XG": "East German",
+    "XI": "Northern Irish",
+    "XK": "Kosovon",
+    "YE": "Yemeni",
+    "YT": "Mahoran",
+    "YU": "Yugoslavian",
+    "ZA": "South African",
+    "ZM": "Zambian",
+    "ZR": "Zairean",
+    "ZW": "Zimbabwean"
+}
