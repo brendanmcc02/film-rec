@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 def main():
     try:
-        lastDownload_str = open('../database/last-imdb-download-timestamp.txt', 'r').read()
+        lastDownloadString = open('../database/last-imdb-download-timestamp.txt', 'r').read()
     except FileNotFoundError:
         print("Error. last-imdb-download-timestamp.txt not found.")
         raise FileNotFoundError
@@ -15,7 +15,7 @@ def main():
         print(f"Error: {e}")
         raise e
 
-    lastImdbDownloadTimestamp = datetime.strptime(lastDownload_str, '%Y-%m-%d %H:%M:%S.%f')
+    lastImdbDownloadTimestamp = datetime.strptime(lastDownloadString, '%Y-%m-%d %H:%M:%S.%f')
     currentTimestamp = datetime.now()
 
     differenceInTimestamps = currentTimestamp - lastImdbDownloadTimestamp
