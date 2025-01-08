@@ -145,7 +145,7 @@ def initRowsOfRecommendations():
     userFilmData = {}
     favouriteFilmIds = []
     minDateRated = datetime.now()
-    maxDateRated = datetime.now()
+    maxDateRated = minDateRated
 
     for film in userFilmDataList:
         if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != ""\
@@ -180,10 +180,10 @@ def initRowsOfRecommendations():
                 return ("value error with film: " + film['Const']), 400
 
     diffDateRated = maxDateRated - minDateRated
-
+    isDiffDateRatedZero = False
     if diffDateRated == 0.0:
-        print("Note: diffDateRated = 0.")
-        diffDateRated = 1.0
+        isDiffDateRatedZero = True
+        print("TEMP: diff rated 0")
 
     userFilmDataIds = list(userFilmData.keys())
 
@@ -205,9 +205,12 @@ def initRowsOfRecommendations():
         vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allCountries'],
                                cache['normalizedYears'], cache['normalizedImdbRatings'], cache['minNumberOfVotes'],
                                cache['diffNumberOfVotes'], cache['normalizedRuntimes'])
-        # normalize the dateRatedWeight as a float between DATE_RATED_WEIGHT and 1.0.
-        dateRatedWeight = (((userFilmData[imdbFilmId]['dateRated'] - minDateRated) / diffDateRated) *
-                           (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
+        if isDiffDateRatedZero:
+            dateRatedWeight = 1.0
+        else:
+            # normalize the dateRatedWeight as a float between DATE_RATED_WEIGHT and 1.0.
+            dateRatedWeight = (((userFilmData[imdbFilmId]['dateRated'] - minDateRated) / diffDateRated) *
+                                (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
 
         # imdbRatings run from 1-10, we want values to run from 0.1 - 1.0
         userRatingWeight = round((userFilmData[imdbFilmId]['userRating'] / 10.0), 1)
