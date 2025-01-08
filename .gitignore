@@ -3,6 +3,7 @@
 database/*.csv
 *.pdf
 user-data/
+!user-data/brendan-letterboxd.csv
 access-token.txt
 backup-access-token.txt
 openai-api-key.txt

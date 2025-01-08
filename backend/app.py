@@ -232,7 +232,8 @@ def initRowsOfRecommendations():
     userProfile = initUserProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength,
                                   cachedDateRatedAndUserRatingWeights, cache['allGenres'], cache['allCountries'])
 
-    internationalProfile = initInternationalProfile(userProfile['profile'], cache['allCountries'], allGenresLength)
+    internationalProfile = initInternationalProfile(userProfile['profile'], cache['allCountries'], allGenresLength,
+                                                    profileVectorLength)
 
     oldProfile = initOldProfile(userProfile['profile'])
 

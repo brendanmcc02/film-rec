@@ -161,14 +161,14 @@ my-film-data-vec.json to file
 - [x] delete obscureProfile? doesn't really work as expected, films aren't so 'obscure'
 - [x] move around the profiles to something better
 - [x] remove clashing, worse results
-- [ ] international: if no other countries than US/GB, return zero vector
+- [x] international: if no other countries than US/GB, return zero vector
 
 ## Testing & Evaluation
 - [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
 - [x] curve genres & countries **better results**
 - [x] `DATE_RATED_WEIGHT`?
+- [x] ~~try without runtime? if no difference, get rid of it~~ it does make a slight difference, gonna leave it in
 - [ ] `REC_REVIEW_FEEDBACK_FACTOR` bring up to 0.1/.15/.2?
-- [ ] try without runtime? if no difference, get rid of it
 
 # Code-Related & Functionality
 - [x] double check I didn't remove any necessary `global`s and fuck it up

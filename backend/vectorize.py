@@ -243,17 +243,26 @@ def initOldProfile(userProfile):
     return oldProfile
 
 
-def initInternationalProfile(userProfile, allCountries, allGenresLength):
+def initInternationalProfile(userProfile, allCountries, allGenresLength, profileVectorLength):
     internationalProfile = {'profile': np.copy(userProfile), 'profileId': 'international'}
 
     countryStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
     maxCountryIndex = countryStartIndex
     maxCountryValue = internationalProfile['profile'][countryStartIndex]
 
-    for i in range(countryStartIndex, (countryStartIndex + len(allCountries))):
-            if internationalProfile['profile'][i] > maxCountryValue:
-                maxCountryValue = internationalProfile['profile'][i]
-                maxCountryIndex = i
+    hasUserOnlyWatchedAmericanOrBritishFilms = True
+
+    for index in range(countryStartIndex, (countryStartIndex + len(allCountries))):
+            if internationalProfile['profile'][index] > maxCountryValue:
+                maxCountryValue = internationalProfile['profile'][index]
+                maxCountryIndex = index
+
+            if isNonZeroIndexValueNotAmericanOrBritish(index, allCountries, countryStartIndex, 
+                                                       internationalProfile['profile'][index]):
+                hasUserOnlyWatchedAmericanOrBritishFilms = False
+
+    if hasUserOnlyWatchedAmericanOrBritishFilms:
+        return {'profile': np.zeros(profileVectorLength), 'profileId': 'international'}
 
     americanIndex = allCountries.index("American") + countryStartIndex
     britishIndex = allCountries.index("British") + countryStartIndex
@@ -268,6 +277,12 @@ def initInternationalProfile(userProfile, allCountries, allGenresLength):
                         countryStartIndex)
 
     return internationalProfile
+
+
+def isNonZeroIndexValueNotAmericanOrBritish(index, allCountries, countryStartIndex, valueAtIndex):
+    return (valueAtIndex > 0.0 and allCountries[index - countryStartIndex] != "American" and
+            allCountries[index - countryStartIndex] != "British")
+
 
 
 # used to curve genre/country values according to max genre/country value
