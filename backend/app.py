@@ -262,9 +262,9 @@ def generateRecommendations():
     else:
         getFilmRecommendations("Based on your favourite films", allFilmDataUnseen, NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
                                favouriteProfile['profile'], favouriteProfile['profileId'])
-        printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'], "Favourite",
-                               cachedNormalizedYearsKeys, cachedNormalizedRuntimesKeys, cachedNormalizedImdbRatingsKeys,
-                               cache['minNumberOfVotes'], cache['diffNumberOfVotes'])
+        # printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'], "Favourite",
+        #                        cachedNormalizedYearsKeys, cachedNormalizedRuntimesKeys, cachedNormalizedImdbRatingsKeys,
+        #                        cache['minNumberOfVotes'], cache['diffNumberOfVotes'])
 
     if np.array_equal(recencyProfile['profile'], np.zeros(profileVectorLength)):
         print("No recency profile.")
@@ -335,7 +335,7 @@ def getFilmRecommendations(recommendedRowText, allFilmData, numberOfRecommendati
             film = allFilmDataUnseen[filmId]
             similarityScore = cosineSimilarities[i][1]
             film['id'] = filmId
-            film['similarityScore'] = round(similarityScore * 100.0, 2)
+            film['similarityScore'] = int(similarityScore * 100.0)
             film['wasFilmReviewed'] = False
 
             rowsOfRecommendations[-1]['recommendedFilms'].append(film)

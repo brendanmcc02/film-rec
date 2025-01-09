@@ -134,6 +134,7 @@ input[type="file"] {
     background-color: #f9f9f9; /* Light background for better separation */
     border-radius: 8px; /* Rounded corners for aesthetics */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    overflow-x: auto; /* Horizontal scrolling for smaller screens */
 }
 
 .recommendedRowText {
@@ -148,16 +149,27 @@ input[type="file"] {
   flex-direction: row;
   gap: 15px; /* Space between films */
   overflow-x: auto; /* Horizontal scrolling for smaller screens */
-  width: 100%;
+  /* width: 100%; */
 }
 
 .mainPosterImg {
-    width: 100%;
+    width: 250px;
+    height: auto;
 }
 
-.recommendedFilm {
-    width: 50%;
-    align-items: center;
-    width: 150px;
-    text-align: center;
+.recommendedFilm {  
+    display: flex;
+    gap: 1rem; /* Adjust the gap between poster and details as needed */
+    /* width: 100%; */
+    /* width: 2000px; */
+    display: flex;
+    /* flex-direction: row; */
+    background-color: black;
+    border-radius: 10px;
+    border-color: navy;
+    color: white;
+}
+
+.film-details {
+    flex-grow: 1; /* Allow details to take up remaining space */
 }

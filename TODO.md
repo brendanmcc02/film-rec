@@ -205,5 +205,11 @@ my-film-data-vec.json to file
 - [x] go to results page if verifyUserUploadedFile ok
 - [x] verify api calls for vector change funcs are working
 - [x] /initial_recs api calls more than once?
-- [ ] fix title pos bug on recs page
-- [ ] make results page look presentable/nice
+
+## Recommendations Page
+- [ ] create film div
+
+## Home Page
+- [ ]
+
+

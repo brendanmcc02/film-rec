@@ -95,6 +95,7 @@ def main():
             'imdbRating': film['imdbRating'],
             'numberOfVotes': film['numberOfVotes'],
             'runtime': film['runtime'],
+            'runtimeHoursMinutes': convertRuntimeToHoursMinutes(film['runtime']),
             'genres': film['genres']
         }
 
@@ -402,3 +403,20 @@ def isInvalidResponse(jsonResponse):
 
 if __name__ == "__main__":
     main()
+
+
+def convertRuntimeToHoursMinutes(runtimeInMinutes):
+    hours = int(runtimeInMinutes / 60)
+    minutes = runtimeInMinutes % 60
+
+    if hours > 0:
+        hours = f"{hours}h"
+    else:
+        hours = ""
+
+    if minutes > 0:
+        minutes = f"{minutes}m"
+    else:
+        minutes = ""
+
+    return f"{hours}{minutes}"

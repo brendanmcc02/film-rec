@@ -104,18 +104,26 @@ const App = () => {
 
     function getFilms(recommendedFilms) {
         return recommendedFilms.map((film, i) => (
-            <div className="recommendedFilm" key={i}> 
+            <div className="recommendedFilm" key={i}>
                 <img src={`${film.mainPoster}`} alt={film.title} className="mainPosterImg" />
-                {isFilmButtonVisible(film.id) && 
-                    <div className="buttons">
-                        <button className="up-button" onClick={() => handleUpButton(film.id)}>
-                            Up
-                        </button>
-                        <button className="down-button" onClick={() => handleDownButton(film.id)}>
-                            Down
-                        </button>
-                    </div>
-                }
+                <div className='filmDetails'>
+                    <>
+                        <b>{film.title} </b><i>({film.year})</i>
+                        <p>{film.imdbRating}</p><i>{film.runtimeHoursMinutes}</i><p>{film.similarityScore}%</p>
+                    </>
+                    {/* <p>{film.summary}</p> */}
+
+                    {isFilmButtonVisible(film.id) && 
+                        <div className="buttons">
+                            <button className="up-button" onClick={() => handleUpButton(film.id)}>
+                                Up
+                            </button>
+                            <button className="down-button" onClick={() => handleDownButton(film.id)}>
+                                Down
+                            </button>
+                        </div>
+                    }
+                </div>
             </div>
         ));
     }
