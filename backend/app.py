@@ -21,6 +21,9 @@ allFilmDataVectorized = {}
 allFilmDataVectorizedMagnitudes = {}
 cachedLetterboxdTitles = {}
 cache = {}
+cachedNormalizedYearsKeys = []
+cachedNormalizedImdbRatingsKeys = []
+cachedNormalizedRuntimesKeys = []
 diffDateRated = datetime(1, 1, 1)
 minDateRated = datetime.now()
 favouriteProfile = {'profile': np.zeros(profileVectorLength), 'profileId': 'favourite'}
@@ -254,18 +257,14 @@ def generateRecommendations():
     global genreProfiles
     rowsOfRecommendations = []
 
-    cachedNormalizedYearsKeys = list(cache['normalizedYears'].keys())
-    cachedNormalizedImdbRatingsKeys = list(cache['normalizedImdbRatings'].keys())
-    cachedNormalizedRuntimesKeys = list(cache['normalizedRuntimes'].keys())
-
     if np.array_equal(favouriteProfile['profile'], np.zeros(profileVectorLength)):
         print("No favourite profile.")
     else:
         getFilmRecommendations("Based on your favourite films", allFilmDataUnseen, NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
                                favouriteProfile['profile'], favouriteProfile['profileId'])
-        # printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'], "Favourite",
-        #                        cachedNormalizedYearsKeys, cachedNormalizedRuntimesKeys, cachedNormalizedImdbRatingsKeys,
-        #                        cache['minNumberOfVotes'], cache['diffNumberOfVotes'])
+        printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'], "Favourite",
+                               cachedNormalizedYearsKeys, cachedNormalizedRuntimesKeys, cachedNormalizedImdbRatingsKeys,
+                               cache['minNumberOfVotes'], cache['diffNumberOfVotes'])
 
     if np.array_equal(recencyProfile['profile'], np.zeros(profileVectorLength)):
         print("No recency profile.")
@@ -433,6 +432,9 @@ def loadJsonFiles():
     global allFilmDataVectorizedMagnitudes
     global cachedLetterboxdTitles
     global cache
+    global cachedNormalizedYearsKeys
+    global cachedNormalizedImdbRatingsKeys
+    global cachedNormalizedRuntimesKeys
 
     try:
         allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
@@ -443,6 +445,9 @@ def loadJsonFiles():
         cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
         cacheFile = open('../database/cache.json')
         cache = json.load(cacheFile)
+        cachedNormalizedYearsKeys = list(cache['normalizedYears'].keys())
+        cachedNormalizedImdbRatingsKeys = list(cache['normalizedImdbRatings'].keys())
+        cachedNormalizedRuntimesKeys = list(cache['normalizedRuntimes'].keys())
     except FileNotFoundError:
         return "File Not Found Error", 404
     except Exception as e:
