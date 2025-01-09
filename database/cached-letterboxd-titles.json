@@ -53473,5 +53473,78 @@
                 2024
             ]
         }
+    ],
+    "Night of the Comet": [
+        {
+            "imdbFilmId": "tt0087799",
+            "years": [
+                1984
+            ]
+        }
+    ],
+    "Breakfast on Pluto": [
+        {
+            "imdbFilmId": "tt0411195",
+            "years": [
+                2005
+            ]
+        }
+    ],
+    "London": [
+        {
+            "imdbFilmId": "tt0449061",
+            "years": [
+                2005
+            ]
+        }
+    ],
+    "Caddo Lake": [
+        {
+            "imdbFilmId": "tt15552142",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Lisa Frankenstein": [
+        {
+            "imdbFilmId": "tt21188080",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "The Vaccine War": [
+        {
+            "imdbFilmId": "tt23554840",
+            "years": [
+                2023
+            ]
+        }
+    ],
+    "Don't Move": [
+        {
+            "imdbFilmId": "tt24807110",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Hot Summer Nights": [
+        {
+            "imdbFilmId": "tt3416536",
+            "years": [
+                2017,
+                2018
+            ]
+        }
+    ],
+    "Gladiator II": [
+        {
+            "imdbFilmId": "tt9218128",
+            "years": [
+                2024
+            ]
+        }
     ]
 }
