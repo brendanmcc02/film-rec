@@ -10,6 +10,7 @@ def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cac
     for letterboxdFilm in letterboxdUserFilmData:
         if "Name" in letterboxdFilm:
             letterboxdTitle = letterboxdFilm["Name"]
+            letterboxdTitle = letterboxdTitle.replace("– ", "- ").replace("–", "-").replace("Colours", "Colors")
         else:
             print("Error. 'Name' attribute not in letterboxd film")
             raise KeyError

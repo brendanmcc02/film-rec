@@ -191,6 +191,17 @@ def main():
             for country in allFilmData[imdbFilmId]['countries']:
                 if country not in allCountries:
                     allCountries.append(country)
+
+            imdbYear = allFilmData[imdbFilmId]['year']
+            letterboxdYear = allFilmData[imdbFilmId]['letterboxdYear']
+            uniqueYears = [imdbYear]
+            if letterboxdYear != imdbYear:
+                uniqueYears.append(letterboxdYear)
+
+            letterboxdTitle = allFilmData[imdbFilmId]['letterboxdTitle']
+
+            if letterboxdTitle not in cachedLetterboxdTitles:
+                cachedLetterboxdTitles[letterboxdTitle] = [{"imdbFilmId": imdbFilmId, "years": uniqueYears}]
         else:
             url = f"https://api.themoviedb.org/3/find/{imdbFilmId}?external_source=imdb_id"
             tmdbFilmId = ""

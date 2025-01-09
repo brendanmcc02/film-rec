@@ -48,6 +48,7 @@
 - [x] get the tmdb title (aka letterboxd) when making the api and cache that somewhere instead of fucking around with 
 preprocessing
 - [x] when converting letterboxd to imdb format use the cached-tmdb-film-data.json
+- [x] some letterboxd films are still not being captured by the conversion
 
 # Vectorizing the Data
 - [x] vectorize all-film-data in init-all-film-data.py
@@ -192,7 +193,7 @@ my-film-data-vec.json to file
 - [x] error handling for zero vector returns (in case it happens)
 - [x] separate code pieces into separate classes/files; modularity wya
 - [x] you can iterate through keys in a dict **without** the need to call `*.keys()`!!! change this!
-- [ ] `range(*)` is called once in python, no need to declare for loop limit beforehand
+- [x] `range(*)` is called once in python, no need to declare for loop limit beforehand
 
 # Frontend
 - [x] do text div 
