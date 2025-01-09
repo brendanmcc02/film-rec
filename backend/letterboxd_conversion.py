@@ -39,7 +39,7 @@ def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cac
                         "Runtime (mins)": allFilmData[imdbFilmId]['runtime'],
                         "Genres": allFilmData[imdbFilmId]['genres']
                     })
-        else:
-            print(f"Letterboxd Film not found in cached-letterboxd-titles.json:\n{letterboxdTitle}")
+        # else:
+        #     print(f"Letterboxd Film not found in cached-letterboxd-titles.json:\n{letterboxdTitle}")
 
     return imdbUserFilmData

@@ -2,13 +2,13 @@ import numpy as np
 
 YEAR_WEIGHT = 1.0
 IMDB_RATING_WEIGHT = 1.0
-NUM_OF_VOTES_WEIGHT = 1.0
+NUMBER_OF_VOTES_WEIGHT = 1.0
 RUNTIME_WEIGHT = 0.3
 GENRE_WEIGHT = 1.0
 COUNTRY_WEIGHT = 1.0
 PROFILE_YEAR_INDEX = 0
 PROFILE_IMDB_RATING_INDEX = 1
-PROFILE_NUM_OF_VOTES_INDEX = 2
+PROFILE_NUMBER_OF_VOTES_INDEX = 2
 PROFILE_RUNTIME_INDEX = 3
 PROFILE_GENRE_START_INDEX = 4
 RECENCY_PROFILE_DAYS_THRESHOLD = 30
@@ -39,7 +39,7 @@ def vectorizeFilm(film, allGenres, allCountries, cachedNormalizedYears, cachedNo
         print("diffNumberOfVotes = 0.")
         raise ZeroDivisionError
 
-    numberOfVotesNorm = ((film['numberOfVotes'] - minNumberOfVotes) / diffNumberOfVotes) * NUM_OF_VOTES_WEIGHT
+    numberOfVotesNorm = ((film['numberOfVotes'] - minNumberOfVotes) / diffNumberOfVotes) * NUMBER_OF_VOTES_WEIGHT
     vector.append(numberOfVotesNorm)
 
     if str(film['runtime']) in cachedNormalizedRuntimes:
@@ -96,16 +96,55 @@ def keepVectorBoundary(vector, profileVectorLength):
         raise IndexError
 
 
-def printStringifiedVector(vector, allGenres, allCountries, text):
+def printStringifiedVector(vector, allGenres, allCountries, text, cachedNormalizedYearsKeys,
+                           cachedNormalizedRuntimesKeys, cachedNormalizedImdbRatingsKeys,
+                           minNumberOfVotes, diffNumberOfVotes):
     print("\n" + text)
-    print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUM_OF_VOTES_WEIGHT: {NUM_OF_VOTES_WEIGHT}, IMDB_RATING_WEIGHT: {IMDB_RATING_WEIGHT},\n"
+    print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUMBER_OF_VOTES_WEIGHT: {NUMBER_OF_VOTES_WEIGHT}, "
+          f"IMDB_RATING_WEIGHT: {IMDB_RATING_WEIGHT},\n"
           f"RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, GENRE_WEIGHT: {GENRE_WEIGHT}, COUNTRY_WEIGHT: {COUNTRY_WEIGHT}")
     
+    minYear = int(cachedNormalizedYearsKeys[0])
+    diffYear = int(cachedNormalizedYearsKeys[-1]) - minYear
+    if diffYear > 0:
+        stringifiedYear = int(((vector[PROFILE_YEAR_INDEX] / YEAR_WEIGHT) * diffYear) + minYear)
+    else:
+        print("Error. diffYear = 0.")
+        raise ZeroDivisionError
+
+    minImdbRating = float(cachedNormalizedImdbRatingsKeys[0])
+    diffImdbRating = float(cachedNormalizedImdbRatingsKeys[-1]) - minImdbRating
+    if diffImdbRating > 0:
+        stringifiedImdbRating = float(((vector[PROFILE_IMDB_RATING_INDEX] / IMDB_RATING_WEIGHT)
+                                        * diffImdbRating) + minImdbRating)
+        stringifiedImdbRating = round(stringifiedImdbRating, 1)
+    else:
+        print("Error. diffImdbRating = 0.")
+        raise ZeroDivisionError
+
+    minNumberOfVotes = int(minNumberOfVotes)
+    diffNumberOfVotes = int(diffNumberOfVotes)
+    if diffNumberOfVotes > 0:
+        stringifiedNumberOfVotes = int(((vector[PROFILE_NUMBER_OF_VOTES_INDEX] / NUMBER_OF_VOTES_WEIGHT)
+                                         * diffNumberOfVotes) + minNumberOfVotes)
+    else:
+        print("Error. diffNumberOfVotes = 0.")
+        raise ZeroDivisionError
+
+    minRuntime = int(cachedNormalizedRuntimesKeys[0])
+    diffRuntime = int(cachedNormalizedRuntimesKeys[-1]) - minRuntime
+    if diffRuntime > 0:
+        stringifiedRuntime = int(((vector[PROFILE_RUNTIME_INDEX] / RUNTIME_WEIGHT) * diffRuntime)
+                                  + minRuntime)
+    else:
+        print("Error. diffRuntime = 0.")
+        raise ZeroDivisionError
+
     try:
-        stringifiedVector = (f"Year: {round(vector[PROFILE_YEAR_INDEX], 3)}\n"
-                            f"IMDb Rating: {round(vector[PROFILE_IMDB_RATING_INDEX], 3)}\n"
-                            f"NumOfVotes: {round(vector[PROFILE_NUM_OF_VOTES_INDEX], 3)}\n"
-                            f"Runtime: {round(vector[PROFILE_RUNTIME_INDEX], 3)}\n###############\n")
+        stringifiedVector = (f"Year: {stringifiedYear}\n"
+                            f"IMDb Rating: {stringifiedImdbRating}\n"
+                            f"NumOfVotes: {stringifiedNumberOfVotes}\n"
+                            f"Runtime: {stringifiedRuntime} mins\n###############\n")
 
         i = PROFILE_GENRE_START_INDEX
         for genre in allGenres:

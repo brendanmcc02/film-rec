@@ -171,7 +171,7 @@ my-film-data-vec.json to file
 - [x] curve genres & countries **better results**
 - [x] `DATE_RATED_WEIGHT`?
 - [x] ~~try without runtime? if no difference, get rid of it~~ it does make a slight difference, gonna leave it in
-- [ ] `REC_REVIEW_FEEDBACK_FACTOR` bring up to 0.1/.15/.2?
+- [x] `REC_REVIEW_FEEDBACK_FACTOR`?
 
 # Code-Related & Functionality
 - [x] double check I didn't remove any necessary `global`s and fuck it up

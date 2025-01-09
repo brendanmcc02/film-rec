@@ -7,7 +7,7 @@ import requests
 from vectorize import *
 
 RUNTIME_THRESHOLD = 40
-NUM_VOTES_THRESHOLD = 25000
+NUMBER_OF_VOTES_THRESHOLD = 25000
 
 
 def main():
@@ -46,7 +46,7 @@ def main():
             print("Missing Key Error. title.basics.tsv file format may have changed.")
             raise KeyError
 
-    print("\nMerging with title.ratings.tsv and filtering out films with <" + str(NUM_VOTES_THRESHOLD) + " votes...")
+    print("\nMerging with title.ratings.tsv and filtering out films with <" + str(NUMBER_OF_VOTES_THRESHOLD) + " votes...")
 
     stage_2_allFilmData = []
 
@@ -69,7 +69,7 @@ def main():
     for film in stage_1_allFilmData:
         filmId = film['id']
         try:
-            if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUM_VOTES_THRESHOLD:
+            if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUMBER_OF_VOTES_THRESHOLD:
                 film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
                 film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
                 stage_2_allFilmData.append(film)
