@@ -188,10 +188,10 @@ my-film-data-vec.json to file
 `all-film-data.json`**
 - [x] error handling for no recent films
 - [x] error handling for no favourite films
-- [ ] error handling on all file imports, api requests, etc. try-except
-- [ ] separate code pieces into separate classes/files; modularity wya
-- [ ] you can iterate through keys in a dict **without** the need to call `*.keys()`!!! change this!
-- [ ] error handling for zero vector returns (in case it happens)
+- [x] error handling on all file imports, api requests, etc. try-except
+- [x] error handling for zero vector returns (in case it happens)
+- [x] separate code pieces into separate classes/files; modularity wya
+- [x] you can iterate through keys in a dict **without** the need to call `*.keys()`!!! change this!
 - [ ] `range(*)` is called once in python, no need to declare for loop limit beforehand
 
 # Frontend

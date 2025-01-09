@@ -206,13 +206,13 @@ def getFilmGenres(vectorizedFilm, allGenres):
     return filmGenres
 
 
-def initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, 
+def initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
                        profileVectorLength, cachedDateRatedAndUserRatingWeights, allGenres,
                        allCountries):
     recencyProfile = np.zeros(profileVectorLength)
     sumOfWeights = 0.0
 
-    for imdbFilmId in userFilmDataIds:
+    for imdbFilmId in userFilmData:
         timeDifference = maxDateRated - userFilmData[imdbFilmId]['dateRated']
         if timeDifference.days <= RECENCY_PROFILE_DAYS_THRESHOLD:
             recencyProfile += userFilmDataVectorized[imdbFilmId]

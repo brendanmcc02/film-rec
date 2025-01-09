@@ -145,7 +145,6 @@ def initRowsOfRecommendations():
         print("Check all-film-data.json exists.")
         raise FileNotFoundError
     allFilmData = json.load(allFilmDataFile)
-    allFilmDataIds = list(allFilmData.keys())
 
     if not isImdbFile:
         userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitles)
@@ -191,11 +190,9 @@ def initRowsOfRecommendations():
     isDiffDateRatedZero = False
     if diffDateRated == 0.0:
         isDiffDateRatedZero = True
-        print("TEMP: diff rated 0")
+        print("TEMP: diff rated 0")  # TODO temp
 
-    userFilmDataIds = list(userFilmData.keys())
-
-    for imdbFilmId in allFilmDataIds:
+    for imdbFilmId in allFilmData:
         if imdbFilmId not in userFilmData:
             allFilmDataUnseen[imdbFilmId] = allFilmData[imdbFilmId]
 
@@ -208,7 +205,7 @@ def initRowsOfRecommendations():
     allCountriesLength = len(cache['allCountries'])
 
     # vectorize user-film-data
-    for imdbFilmId in userFilmDataIds:
+    for imdbFilmId in userFilmData:
         vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allCountries'],
                                cache['normalizedYears'], cache['normalizedImdbRatings'], cache['minNumberOfVotes'],
                                cache['diffNumberOfVotes'], cache['normalizedRuntimes'])
@@ -227,19 +224,19 @@ def initRowsOfRecommendations():
 
     profileVectorLength = cache['profileVectorLength']
 
-    favouriteProfile = initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength,
+    favouriteProfile = initFavouriteProfile(userFilmData, userFilmDataVectorized, profileVectorLength,
                                             cachedDateRatedAndUserRatingWeights, favouriteFilmIds,
                                             cache['allGenres'], cache['allCountries'])
 
-    recencyProfile = initRecencyProfile(userFilmData, userFilmDataIds, userFilmDataVectorized, maxDateRated, 
+    recencyProfile = initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
                                         profileVectorLength, cachedDateRatedAndUserRatingWeights, cache['allGenres'],
                                         cache['allCountries'])
 
-    genreProfiles = initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
+    genreProfiles = initGenreProfiles(userFilmData, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
                                       cache['allGenres'], profileVectorLength, NUM_FILMS_WATCHED_IN_GENRE_THRESHOLD, 
                                       cache['allCountries'])
     
-    userProfile = initUserProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength,
+    userProfile = initUserProfile(userFilmData, userFilmDataVectorized, profileVectorLength,
                                   cachedDateRatedAndUserRatingWeights, cache['allGenres'], cache['allCountries'])
 
     internationalProfile = initInternationalProfile(userProfile['profile'], cache['allCountries'], allGenresLength,
@@ -256,19 +253,18 @@ def generateRecommendations():
     global rowsOfRecommendations
     global genreProfiles
     rowsOfRecommendations = []
-    allFilmDataIds = list(allFilmDataUnseen.keys())
 
     if np.array_equal(favouriteProfile['profile'], np.zeros(profileVectorLength)):
         print("No favourite profile.")
     else:
-        getFilmRecommendations("Based on your favourite films", allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, 
+        getFilmRecommendations("Based on your favourite films", allFilmDataUnseen, NUM_RECOMMENDATIONS_PER_ROW, 
                                favouriteProfile['profile'], favouriteProfile['profileId'])
         printStringifiedVector(favouriteProfile['profile'], cache['allGenres'], cache['allCountries'], "Favourite")
 
     if np.array_equal(recencyProfile['profile'], np.zeros(profileVectorLength)):
         print("No recency profile.")
     else:
-        getFilmRecommendations("Based on what you watched recently", allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, 
+        getFilmRecommendations("Based on what you watched recently", allFilmDataUnseen, NUM_RECOMMENDATIONS_PER_ROW, 
                                recencyProfile['profile'], recencyProfile['profileId'])
         printStringifiedVector(recencyProfile['profile'], cache['allGenres'], cache['allCountries'], "Recency")
 
@@ -282,7 +278,7 @@ def generateRecommendations():
         else:
             countryText = getProfileMaxCountry(genreProfiles[i]['profile'], allGenresLength, cache['allCountries'])
             getFilmRecommendations(f"Because you like {countryText} {genreProfiles[i]['profileId']} films", 
-                                   allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, genreProfiles[i]['profile'], 
+                                   allFilmDataUnseen, NUM_RECOMMENDATIONS_PER_ROW, genreProfiles[i]['profile'], 
                                    genreProfiles[i]['profileId'])
             printStringifiedVector(genreProfiles[i]['profile'], cache['allGenres'], cache['allCountries'], 
                                    genreProfiles[i]['profileId'])
@@ -292,7 +288,7 @@ def generateRecommendations():
     if np.array_equal(internationalProfile['profile'], np.zeros(profileVectorLength)):
         print("No international profile.")
     else:
-        getFilmRecommendations("Try out some international films", allFilmDataIds, 
+        getFilmRecommendations("Try out some international films", allFilmDataUnseen, 
                                 NUM_RECOMMENDATIONS_PER_ROW, internationalProfile['profile'], 
                                 internationalProfile['profileId'])
         printStringifiedVector(internationalProfile['profile'], cache['allGenres'], cache['allCountries'], 
@@ -301,12 +297,12 @@ def generateRecommendations():
     if np.array_equal(oldProfile['profile'], np.zeros(profileVectorLength)):
         print("No old profile.")
     else:
-        getFilmRecommendations("Try out some older films", allFilmDataIds, NUM_RECOMMENDATIONS_PER_ROW, 
+        getFilmRecommendations("Try out some older films", allFilmDataUnseen, NUM_RECOMMENDATIONS_PER_ROW, 
                                 oldProfile['profile'], oldProfile['profileId'])
         printStringifiedVector(oldProfile['profile'], cache['allGenres'], cache['allCountries'], "Old")
 
 
-def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommendations, profileVector, 
+def getFilmRecommendations(recommendedRowText, allFilmData, numberOfRecommendations, profileVector, 
                            profileId):
     global rowsOfRecommendations
     global allFilmDataVectorizedMagnitudes
@@ -316,7 +312,7 @@ def getFilmRecommendations(recommendedRowText, allFilmDataIds, numberOfRecommend
     profileVectorMagnitude = np.linalg.norm(profileVector)
     cosineSimilarities = {}
 
-    for filmId in allFilmDataIds:
+    for filmId in allFilmData:
         filmVectorMagnitude = allFilmDataVectorizedMagnitudes[filmId]
         cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVectorized[filmId], profileVector,
                                                       filmVectorMagnitude, profileVectorMagnitude)

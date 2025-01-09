@@ -105,9 +105,9 @@ def main():
     # ###### temp
     # allFilmDataFile = open('../database/all-film-data.json')
     # allFilmData = json.load(allFilmDataFile)
-    # allFilmDataKeys = list(allFilmData.keys())
+    # allFilmDataFilmIds = list(allFilmData.keys())
     # allGenres = []
-    # for filmId in allFilmDataKeys:
+    # for filmId in allFilmDataFilmIds:
     #     for genre in allFilmData[filmId]['genres']:
     #         if genre not in allGenres:
     #             allGenres.append(genre)
@@ -143,16 +143,16 @@ def main():
 
     allCountries = []
 
-    allFilmDataKeys = list(allFilmData.keys())
+    allFilmDataFilmIds = list(allFilmData.keys())
 
-    minImdbRating = allFilmData[allFilmDataKeys[0]]['imdbRating']
-    maxImdbRating = allFilmData[allFilmDataKeys[0]]['imdbRating']
-    minYear = allFilmData[allFilmDataKeys[0]]['year']
-    maxYear = allFilmData[allFilmDataKeys[0]]['year']
-    minNumberOfVotes = allFilmData[allFilmDataKeys[0]]['numberOfVotes']
-    maxNumberOfVotes = allFilmData[allFilmDataKeys[0]]['numberOfVotes']
-    minRuntime = allFilmData[allFilmDataKeys[0]]['runtime']
-    maxRuntime = allFilmData[allFilmDataKeys[0]]['runtime']
+    minImdbRating = allFilmData[allFilmDataFilmIds[0]]['imdbRating']
+    maxImdbRating = allFilmData[allFilmDataFilmIds[0]]['imdbRating']
+    minYear = allFilmData[allFilmDataFilmIds[0]]['year']
+    maxYear = allFilmData[allFilmDataFilmIds[0]]['year']
+    minNumberOfVotes = allFilmData[allFilmDataFilmIds[0]]['numberOfVotes']
+    maxNumberOfVotes = allFilmData[allFilmDataFilmIds[0]]['numberOfVotes']
+    minRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
+    maxRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
 
     try:
         cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
@@ -175,9 +175,9 @@ def main():
         raise e
     
     count = 0
-    invalidAllFilmDataKeys = []
+    invalidAllFilmDataFilmIds = []
 
-    for imdbFilmId in allFilmDataKeys:
+    for imdbFilmId in allFilmDataFilmIds:
         count = count + 1
         print(str(count) + " " + str(imdbFilmId))
         if imdbFilmId in cachedTmbdFilmData:
@@ -204,7 +204,7 @@ def main():
                 else:
                     print(f"IMDB film not found in TMDB: {imdbFilmId}\n")
                     del allFilmData[imdbFilmId]
-                    invalidAllFilmDataKeys.append(imdbFilmId)
+                    invalidAllFilmDataFilmIds.append(imdbFilmId)
                     continue
             elif response.status_code == 429:
                 print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
@@ -223,7 +223,7 @@ def main():
                 if isInvalidResponse(jsonResponse):
                     print(f"Incorrect Response. IMDB Film ID: {imdbFilmId}\n")
                     del allFilmData[imdbFilmId]
-                    invalidAllFilmDataKeys.append(imdbFilmId)
+                    invalidAllFilmDataFilmIds.append(imdbFilmId)
                     continue
 
                 basePosterUrl = "https://image.tmdb.org/t/p/w500"
@@ -279,10 +279,10 @@ def main():
         minRuntime = min(minRuntime, allFilmData[imdbFilmId]['runtime'])
         maxRuntime = max(maxRuntime, allFilmData[imdbFilmId]['runtime'])
 
-    for imdbFilmId in invalidAllFilmDataKeys:
-        allFilmDataKeys.remove(imdbFilmId)
+    for imdbFilmId in invalidAllFilmDataFilmIds:
+        allFilmDataFilmIds.remove(imdbFilmId)
 
-    print(f"\nFinal Dataset size: {len(allFilmData)} films.\n")
+    print(f"\nFinal Dataset size: {len(allFilmDataFilmIds)} films.\n")
 
     try:
         with open('../database/all-film-data.json', 'w') as convert_file:
@@ -338,7 +338,7 @@ def main():
         print("diffNumberOfVotes = 0. Error with minNumberOfVotes & maxNumberOfVotes.")
         raise ZeroDivisionError
 
-    for filmId in allFilmDataKeys:
+    for filmId in allFilmDataFilmIds:
         if filmId not in allFilmData:
             print(f"Film ID not found in allFilmData: {filmId}.")
         else:
