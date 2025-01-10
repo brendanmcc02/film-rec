@@ -401,10 +401,6 @@ def isInvalidResponse(jsonResponse):
         return True
 
 
-if __name__ == "__main__":
-    main()
-
-
 def convertRuntimeToHoursMinutes(runtimeInMinutes):
     hours = int(runtimeInMinutes / 60)
     minutes = runtimeInMinutes % 60
@@ -420,3 +416,7 @@ def convertRuntimeToHoursMinutes(runtimeInMinutes):
         minutes = ""
 
     return f"{hours}{minutes}"
+
+
+if __name__ == "__main__":
+    main()
