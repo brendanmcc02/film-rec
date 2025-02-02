@@ -1,5 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import { IoIosStarOutline } from "react-icons/io";
+import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 
 const App = () => {
     const [rowsOfRecommendations, setRowsOfRecommendations] = useState([]);
@@ -106,21 +108,29 @@ const App = () => {
         return recommendedFilms.map((film, i) => (
             <div className="recommendedFilm" key={i}>
                 <img src={`${film.mainPoster}`} alt={film.title} className="mainPosterImg" />
-                <div className='filmDetails'>
-                    <>
-                        <b>{film.title} </b><i>({film.year})</i>
-                        <p>{film.imdbRating}</p><i>{film.runtimeHoursMinutes}</i><p>{film.similarityScore}%</p>
-                    </>
-                    {/* <p>{film.summary}</p> */}
+                <div className='film-details'>
+                    <div className='film-title-and-year'>
+                        <h2 className='film-title'>{film.title}&nbsp;</h2>
+                        <h2 className='film-year'>({film.year})</h2>
+                    </div>
+                    <div className='film-rating-runtime'>
+                        <h3><IoIosStarOutline className='star' /></h3>
+                        <h3 className='film-rating-runtime-text'>{film.imdbRating} |&nbsp;</h3>
+                        <h3 className='film-rating-runtime-text'>{film.runtimeHoursMinutes}</h3>
+                    </div>
+                    <p className='film-summary'>
+                        {film.summary}
+                    </p>
 
                     {isFilmButtonVisible(film.id) && 
                         <div className="buttons">
                             <button className="up-button" onClick={() => handleUpButton(film.id)}>
-                                Up
+                                <FaRegThumbsUp />
                             </button>
                             <button className="down-button" onClick={() => handleDownButton(film.id)}>
-                                Down
+                                <FaRegThumbsDown />
                             </button>
+                            <p>{film.similarityScore}%</p>
                         </div>
                     }
                 </div>

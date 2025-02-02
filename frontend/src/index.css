@@ -124,6 +124,7 @@ input[type="file"] {
 .rows {
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 .recommendedRow {
@@ -132,9 +133,10 @@ input[type="file"] {
     margin-bottom: 20px; /* Add space between rows */
     padding: 10px;
     background-color: #f9f9f9; /* Light background for better separation */
-    border-radius: 8px; /* Rounded corners for aesthetics */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    overflow-x: auto; /* Horizontal scrolling for smaller screens */
+    align-items: center;
+    justify-content: center;
+    /* overflow-x: auto; Horizontal scrolling for smaller screens */
 }
 
 .recommendedRowText {
@@ -145,31 +147,67 @@ input[type="file"] {
 }
 
 .rowOfFilms {
-  display: flex;
-  flex-direction: row;
-  gap: 15px; /* Space between films */
-  overflow-x: auto; /* Horizontal scrolling for smaller screens */
-  /* width: 100%; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1vw; /* Space between films */
+    overflow-x: auto; /* Horizontal scrolling for smaller screens */
 }
 
 .mainPosterImg {
     width: 250px;
     height: auto;
+    border-radius: inherit;
 }
 
-.recommendedFilm {  
+.recommendedFilm {
+    gap: 1vw; /* Adjust the gap between poster and details as needed */
+    width: 45vw;
     display: flex;
-    gap: 1rem; /* Adjust the gap between poster and details as needed */
-    /* width: 100%; */
-    /* width: 2000px; */
-    display: flex;
-    /* flex-direction: row; */
-    background-color: black;
+    flex-direction: row;
+    background-color: grey;
     border-radius: 10px;
-    border-color: navy;
     color: white;
+    overflow-x: auto; /* Horizontal scrolling for smaller screens */
 }
 
 .film-details {
-    flex-grow: 1; /* Allow details to take up remaining space */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.film-title-and-year {
+    color: white;
+    font-size: 25px;
+    display: flex;
+    flex-direction: row;
+}
+
+.film-title {
+    font-family: lato-black, serif;
+}
+
+.film-year {
+    font-family: lato-italic, serif;
+}
+
+.film-rating-runtime {
+    display: flex;
+    flex-direction: row;
+    font-family: lato-italic, serif;
+}
+
+.film-rating-runtime-text {
+    font-size: 20px;
+}
+
+.star {
+    font-size: 20px;
+    vertical-align: top;
+}
+
+.film-summary {
+    font-family: lato-italic, serif;
+    /* font-size: ; */
 }
