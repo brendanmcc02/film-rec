@@ -161,7 +161,7 @@ input[type="file"] {
 }
 
 .recommendedFilm {
-    gap: 1vw; /* Adjust the gap between poster and details as needed */
+    column-gap: 1vw; /* Adjust the gap between poster and details as needed */
     width: 45vw;
     display: flex;
     flex-direction: row;
@@ -174,7 +174,9 @@ input[type="file"] {
 .film-details {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 0px;
+    column-gap: 0;
+    padding: 0;
 }
 
 .film-title-and-year {

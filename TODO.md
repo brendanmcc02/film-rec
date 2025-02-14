@@ -207,7 +207,8 @@ my-film-data-vec.json to file
 - [x] /initial_recs api calls more than once?
 
 ## Recommendations Page
-- [ ] create film div
+- [ ] reduce vertical gap size between elements
+- [ ] put filmYear on same line as filmTitle
 
 ## Home Page
 - [ ]
