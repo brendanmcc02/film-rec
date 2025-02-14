@@ -152,6 +152,7 @@ input[type="file"] {
     flex-wrap: wrap;
     gap: 1vw; /* Space between films */
     overflow-x: auto; /* Horizontal scrolling for smaller screens */
+    align-items: center;
 }
 
 .recommendedFilm {
@@ -203,7 +204,6 @@ input[type="file"] {
 .film-rating-runtime {
     display: flex;
     align-items: center; /* Vertically align rating and runtime */
-    margin-bottom: 5px;
 }
 
 .star {
@@ -223,7 +223,6 @@ input[type="file"] {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* Show only 3 lines of summary */
     -webkit-box-orient: vertical;
 }
 
