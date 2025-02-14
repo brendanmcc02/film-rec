@@ -107,7 +107,7 @@ const App = () => {
     function getFilms(recommendedFilms) {
         return recommendedFilms.map((film, i) => (
             <div className="recommendedFilm" key={i}>
-                <img src={`${film.mainPoster}`} alt={film.title} className="mainPosterImg" />
+                <img src={`${film.mainPoster}`} alt={film.title} className="mainPosterImg" loading="lazy" /> {/* Added loading="lazy" */}
                 <div className='film-details'>
                     <div className='film-title-and-year'>
                         <h2 className='film-title'>{film.title}&nbsp;</h2>
@@ -130,14 +130,14 @@ const App = () => {
                             <button className="down-button" onClick={() => handleDownButton(film.id)}>
                                 <FaRegThumbsDown />
                             </button>
-                            <p>{film.similarityScore}%</p>
+                            <p className="similarity-score">{film.similarityScore}%</p>
                         </div>
                     }
                 </div>
             </div>
         ));
     }
-    
+
     let rows = rowsOfRecommendations.map((row, i) => (
         <div key={i} className='recommendedRow'>
             <h1 style={{color:'black'}}>{row.recommendedRowText}</h1>
