@@ -45085,6 +45085,12 @@
             "years": [
                 2016
             ]
+        },
+        {
+            "imdbFilmId": "tt0080923",
+            "years": [
+                1980
+            ]
         }
     ],
     "Jackass Presents: Bad Grandpa": [
@@ -53734,6 +53740,110 @@
             "imdbFilmId": "tt9537292",
             "years": [
                 2020
+            ]
+        }
+    ],
+    "Bad Day at Black Rock": [
+        {
+            "imdbFilmId": "tt0047849",
+            "years": [
+                1955
+            ]
+        }
+    ],
+    "Maurice": [
+        {
+            "imdbFilmId": "tt0093512",
+            "years": [
+                1987
+            ]
+        }
+    ],
+    "Flickering Lights": [
+        {
+            "imdbFilmId": "tt0236027",
+            "years": [
+                2000
+            ]
+        }
+    ],
+    "Shiddat": [
+        {
+            "imdbFilmId": "tt11314148",
+            "years": [
+                2021
+            ]
+        }
+    ],
+    "A Complete Unknown": [
+        {
+            "imdbFilmId": "tt11563598",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "I'm Still Here": [
+        {
+            "imdbFilmId": "tt14961016",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "In the Land of Saints and Sinners": [
+        {
+            "imdbFilmId": "tt15782690",
+            "years": [
+                2023
+            ]
+        }
+    ],
+    "Back to Black": [
+        {
+            "imdbFilmId": "tt21261712",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Reality": [
+        {
+            "imdbFilmId": "tt24068064",
+            "years": [
+                2023
+            ]
+        }
+    ],
+    "Life After Beth": [
+        {
+            "imdbFilmId": "tt2581244",
+            "years": [
+                2014
+            ]
+        }
+    ],
+    "The Teachers' Lounge": [
+        {
+            "imdbFilmId": "tt26612950",
+            "years": [
+                2023
+            ]
+        }
+    ],
+    "Babygirl": [
+        {
+            "imdbFilmId": "tt30057084",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "The Brutalist": [
+        {
+            "imdbFilmId": "tt8999762",
+            "years": [
+                2024
             ]
         }
     ]
