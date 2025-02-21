@@ -2,6 +2,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #111111;
 }
 
 @font-face {
@@ -142,18 +143,9 @@ input[type="file"] {
     flex-direction: column;
     margin-bottom: 20px; /* Add space between rows */
     padding: 10px;
-    background-color: #f9f9f9; /* Light background for better separation */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     align-items: center;
     justify-content: center;
-    /* overflow-x: auto; Horizontal scrolling for smaller screens */
-}
-
-.recommendedRowText {
-    font-size: 20px;
-    color: white;
-    font-family: lato-bold, serif;
-    margin-bottom: 10px; /* Space between title and films */
 }
 
 .rowOfFilms {
@@ -166,22 +158,36 @@ input[type="file"] {
     justify-content: center;
 }
 
+.recommendedRowText {
+    font-family: lato-black;
+    color: white;
+    font-size: 2.5rem;
+}
+
 .recommendedFilm {
     display: flex; /* Use flexbox for layout */
     margin: 5px; /* Spacing between film containers */
     border-radius: 8px; /* Rounded corners */
     overflow: hidden; /* Hide overflowing content */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    background-color: #f8f8f8; /* Light background color */
-    transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+    background-color: black;
+    transition: 0.2s ease-in-out; /* Smooth hover effect */
     width: 40vw;
     height: 375px;
 }
 
 .recommendedFilm:hover {
-    transform: scale(1.02); /* Slight scale on hover */
+    transform: scale(1.01); /* Slight scale on hover */
 }
 
+.opacity-fade-in {
+    opacity: 0.85;
+    transition: 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.opacity-fade-in:hover {
+    opacity: 1.0;
+}
 
 .mainPosterImg {
     width: 250px; /* Fixed width for poster */
@@ -200,6 +206,7 @@ input[type="file"] {
 .film-title-and-year-container {
     align-items: center; /* Vertically align title and year */
     font-size: 1.3rem;
+    color: white;
 }
 
 .film-rating-runtime-genres-container {
@@ -214,18 +221,14 @@ input[type="file"] {
     font-size: 1.2rem;
 }
 
-.film-rating-runtime-text {
-    color: black;
-}
-
-.film-genres-text {
-    color: black;
+.film-rating-runtime-genres-text {
+    color: white;
 }
 
 .film-summary {
     font-family: lato-regular, serif;
     font-size: 0.9rem;
-    color: #333;
+    color: white;
     overflow: auto;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -248,10 +251,6 @@ input[type="file"] {
     opacity: 0.7;
 }
 
-.up-down-button:hover {
-    opacity: 1;
-}
-
 .up-button {
     color: green;
 }
@@ -263,13 +262,15 @@ input[type="file"] {
 .similarity-score {
     font-family: lato-regular, serif;
     font-size: 0.9rem;
-    color: #555;
+    color: white;
     margin-left: auto;
 }
 
 .buttons-and-similarity-score-container {
     display: flex;
     flex-direction: row;
+    margin-top: auto;
+
 }
 
 .hidden-scroll-bar::-webkit-scrollbar {

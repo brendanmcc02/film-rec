@@ -110,31 +110,31 @@ const App = () => {
                 <img src={`${film.mainPoster}`} alt={film.title} className="mainPosterImg" loading="lazy" /> {/* Added loading="lazy" */}
                 <div className='film-details'>
                     <div className='film-title-and-year-container'>
-                        <h2 className='film-title-and-year'>{film.title}&nbsp;({film.year})</h2>
+                        <h2 className='film-title-and-year opacity-fade-in'>{film.title}&nbsp;({film.year})</h2>
                     </div>
-                    <div className='film-rating-runtime-genres-container'>
+                    <div className='film-rating-runtime-genres-container opacity-fade-in'>
                         <h3 className='star'><FaRegStar /></h3>
-                        <h3 className='film-rating-runtime-text'>{film.imdbRating} |&nbsp;</h3>
-                        <h3 className='film-rating-runtime-text'>{film.runtimeHoursMinutes} |&nbsp;</h3>
-                        <h3 className='film-genres-text'>{getCommaSeparatedList(film.genres)}</h3>
+                        <h3 className='film-rating-runtime-genres-text'>{film.imdbRating} |&nbsp;</h3>
+                        <h3 className='film-rating-runtime-genres-text'>{film.runtimeHoursMinutes} |&nbsp;</h3>
+                        <h3 className='film-rating-runtime-genres-text'>{getCommaSeparatedList(film.genres)}</h3>
                     </div>
-                    <p className='film-summary hidden-scroll-bar'>
+                    <p className='film-summary hidden-scroll-bar opacity-fade-in'>
                         {film.summary}
                     </p>
 
                     <div className='buttons-and-similarity-score-container'>
                         {isFilmButtonVisible(film.id) && 
                             <div className="buttons-container">
-                                <button className="up-down-button up-button" onClick={() => handleUpButton(film.id)}>
+                                <button className="up-down-button up-button opacity-fade-in" onClick={() => handleUpButton(film.id)}>
                                     <FaRegThumbsUp />
                                 </button>
-                                <button className="up-down-button down-button" onClick={() => handleDownButton(film.id)}>
+                                <button className="up-down-button down-button opacity-fade-in" onClick={() => handleDownButton(film.id)}>
                                     <FaRegThumbsDown />
                                 </button>
                             </div>
                         }
                         
-                        <p className="similarity-score">{film.similarityScore}%&nbsp;Confidence</p>
+                        <p className="similarity-score opacity-fade-in">{film.similarityScore}%&nbsp;Confidence</p>
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@ const App = () => {
 
     let rows = rowsOfRecommendations.map((row, i) => (
         <div key={i} className='recommendedRow'>
-            <h1 style={{color:'black'}}>{row.recommendedRowText}</h1>
+            <h1 className="recommendedRowText">{row.recommendedRowText}</h1>
             <div className="rowOfFilms">{getFilms(row.recommendedFilms)}</div>
         </div>
     ));

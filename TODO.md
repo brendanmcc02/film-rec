@@ -219,6 +219,7 @@ my-film-data-vec.json to file
 - [x] get nice font
 - [x] summary scroll
 - [x] make film div fixed size
+- [x] change colours
 
 ## Home Page
 - [ ]
