@@ -336,7 +336,6 @@ def getFilmRecommendations(recommendedRowText, allFilmData, numberOfRecommendati
             similarityScore = cosineSimilarities[i][1]
             film['id'] = filmId
             film['similarityScore'] = int(similarityScore * 100.0)
-            film['wasFilmReviewed'] = False
 
             rowsOfRecommendations[-1]['recommendedFilms'].append(film)
         else:
@@ -363,7 +362,6 @@ def reviewRecommendation():
         for film in row['recommendedFilms']:
             if film['id'] == filmId:
                 profileId = row['profileId']
-                film['wasFilmReviewed'] = True
 
     profile = getProfile(profileId)
 
@@ -417,9 +415,8 @@ def regenerateRecommendations():
 
     for row in rowsOfRecommendations:
         for film in row['recommendedFilms']:
-            if film['wasFilmReviewed']:
-                filmId = film['id']
-                del allFilmDataUnseen[filmId]
+            filmId = film['id']
+            del allFilmDataUnseen[filmId]
 
     generateRecommendations()
 

@@ -73,36 +73,20 @@ const App = () => {
             console.log('error with reviewRecommendation. filmID: ' + filmId);
         }
     }
-
-    function hasUserReviewedAnyRecommendations() {
-        for (const row of rowsOfRecommendationButtonVisibility) {
-            for (const film of row) {
-              if (film.isFilmButtonVisible === false) {
-                return true;
-              }
-            }
-          }
-  
-          return false;
-    }
-
+    
     async function handleRegenerateRecommendationsButton() {
-        if (hasUserReviewedAnyRecommendations()) {
-            const response = await fetch('/regenerateRecommendations');
-            const jsonData = await response.json();
-            setRowsOfRecommendations(jsonData);
-            const initialButtonVisibility = jsonData.map((row) => 
-                row.recommendedFilms.map((film) => ({ 
-                    filmID: film.id, 
-                    isFilmButtonVisible: true
-                }))
-            );
+        const response = await fetch('/regenerateRecommendations');
+        const jsonData = await response.json();
+        setRowsOfRecommendations(jsonData);
+        const initialButtonVisibility = jsonData.map((row) => 
+            row.recommendedFilms.map((film) => ({ 
+                filmID: film.id, 
+                isFilmButtonVisible: true
+            }))
+        );
 
-            setRowsOfRecommendationButtonVisibility(initialButtonVisibility);
-            console.log("Regenerated film recommendations.")
-        } else {
-            console.log("No film recommendations were reviewed by the user, so films were not regenerated.");
-        }
+        setRowsOfRecommendationButtonVisibility(initialButtonVisibility);
+        console.log("Regenerated film recommendations.")
     }
 
     function getFilms(recommendedFilms) {

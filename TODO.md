@@ -41,9 +41,8 @@
 - [x] convert `cached-letterboxd-title-year.json` to `cached-letterboxd-title.json`
 - [x] solve the letterboxd title year nonsense
 - [x] add baseposterURL to dataset, reduces computation during online phase
-- [ ] check for `\u*` chars in film titles, are they messed up or is it ok?
 - [x] remove `backdropPoster`
-- [ ] rename `mainPoster` to `filmPoster` or `poster`
+- [x] rename `mainPoster` to `filmPoster` or `poster`
 
 # Letterboxd conversion
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
@@ -102,6 +101,7 @@ preprocessing
 - [x] re-implement `regen` after extensive refactoring
 - [x] revise the maths behind reinforcement learning
 - [x] revise genre profile implementation after testing RL
+- [x] regen should take out **all** recommended films, not just films the user has reviewed
 
 # Backend
 - [x] for imdb, only vectorize films in userData that are in allFilmData (otherwise we can't get access to film languages, 
@@ -224,3 +224,6 @@ my-film-data-vec.json to file
 ## Home Page
 - [x] fix background
 - [x] do home text and file upload container
+
+# Deployment
+- [ ] figure out
