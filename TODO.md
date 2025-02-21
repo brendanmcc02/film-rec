@@ -213,9 +213,9 @@ my-film-data-vec.json to file
 - [x] reduce vertical gap size between elements
 - [x] put filmYear on same line as filmTitle
 - [x] center the row
+- [x] add genres to film div
+- [ ] figure out max film summary length and modify it in backend
 - [ ] make film div fixed size
-- [ ] add genres to film div
-- [ ] maybe add countries(?) to film div
 
 ## Home Page
 - [ ]
