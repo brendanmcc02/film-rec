@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
+import { TbRefresh } from "react-icons/tb";
 
 const App = () => {
     const [rowsOfRecommendations, setRowsOfRecommendations] = useState([]);
@@ -143,7 +144,7 @@ const App = () => {
 
     let rows = rowsOfRecommendations.map((row, i) => (
         <div key={i} className='recommendedRow'>
-            <h1 className="recommendedRowText">{row.recommendedRowText}</h1>
+            <h1 className="recommendedRowText opacity-fade-in">{row.recommendedRowText}</h1>
             <div className="rowOfFilms">{getFilms(row.recommendedFilms)}</div>
         </div>
     ));
@@ -167,14 +168,14 @@ const App = () => {
     }
 
     return (
-        <>
-            <button className="regen-button" onClick={() => handleRegenerateRecommendationsButton()}>
-                    Regenerate
+        <div className="button-and-rows-container">
+            <button className="regenerate-button opacity-fade-in" onClick={() => handleRegenerateRecommendationsButton()}>
+                <TbRefresh className='regenerate-icon'/>&nbsp;Regenerate
             </button>
             <div className='rows'>
                 {rows}
             </div>
-        </>
+        </div>
     );
     
 }

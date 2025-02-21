@@ -2,7 +2,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #111111;
+  background-color: #131313;
 }
 
 @font-face {
@@ -127,9 +127,19 @@ input[type="file"] {
     background-color: rgba(255, 0, 0, 0.5);
 }
 
-.regen-button {
-    font-size: 20px;
-    background-color: rgba(0, 0, 255, 0.5);
+.regenerate-button {
+    font-family: lato-regular, serif;
+    font-size: 23px;
+    background-color: white;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin-top: 1vw;
+}
+
+.regenerate-icon {
+    vertical-align: bottom;
 }
 
 .rows {
@@ -143,7 +153,6 @@ input[type="file"] {
     flex-direction: column;
     margin-bottom: 20px; /* Add space between rows */
     padding: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     align-items: center;
     justify-content: center;
 }
@@ -210,8 +219,8 @@ input[type="file"] {
 }
 
 .film-rating-runtime-genres-container {
-    display: flex;
-    vertical-align: bottom;
+    display: inline-flex;
+    align-items: center;
     font-size: 0.9rem;
 }
 
@@ -275,4 +284,11 @@ input[type="file"] {
 
 .hidden-scroll-bar::-webkit-scrollbar {
     display: none;
+}
+
+.button-and-rows-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
