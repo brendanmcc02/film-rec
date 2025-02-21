@@ -41,7 +41,10 @@
 - [x] convert `cached-letterboxd-title-year.json` to `cached-letterboxd-title.json`
 - [x] solve the letterboxd title year nonsense
 - [x] add baseposterURL to dataset, reduces computation during online phase
-- [ ] check for `\u*`, are they messed up or is it ok?
+- [ ] check for `\u*` chars in film titles, are they messed up or is it ok?
+- [ ] remove `backdropPoster`
+- [ ] rename `mainPoster` to `filmPoster` or `poster`
+- [ ] if film summary goes over certain length, add ...
 
 # Letterboxd conversion
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
@@ -207,8 +210,12 @@ my-film-data-vec.json to file
 - [x] /initial_recs api calls more than once?
 
 ## Recommendations Page
-- [ ] reduce vertical gap size between elements
-- [ ] put filmYear on same line as filmTitle
+- [x] reduce vertical gap size between elements
+- [x] put filmYear on same line as filmTitle
+- [x] center the row
+- [ ] make film div fixed size
+- [ ] add genres to film div
+- [ ] maybe add countries(?) to film div
 
 ## Home Page
 - [ ]

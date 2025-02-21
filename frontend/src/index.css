@@ -153,6 +153,7 @@ input[type="file"] {
     gap: 1vw; /* Space between films */
     overflow-x: auto; /* Horizontal scrolling for smaller screens */
     align-items: center;
+    justify-content: center;
 }
 
 .recommendedFilm {
@@ -191,13 +192,13 @@ input[type="file"] {
 }
 
 .film-title {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     margin-right: 0px;
 }
 
 .film-year {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: #777;
 }
 
