@@ -572,6 +572,12 @@
             "years": [
                 1942
             ]
+        },
+        {
+            "imdbFilmId": "tt0083722",
+            "years": [
+                1982
+            ]
         }
     ],
     "The Magnificent Ambersons": [
@@ -15059,6 +15065,12 @@
             "imdbFilmId": "tt0120783",
             "years": [
                 1998
+            ]
+        },
+        {
+            "imdbFilmId": "tt0055277",
+            "years": [
+                1961
             ]
         }
     ],
@@ -53844,6 +53856,62 @@
             "imdbFilmId": "tt8999762",
             "years": [
                 2024
+            ]
+        }
+    ],
+    "Purple Rain": [
+        {
+            "imdbFilmId": "tt0087957",
+            "years": [
+                1984
+            ]
+        }
+    ],
+    "Valiant": [
+        {
+            "imdbFilmId": "tt0361089",
+            "years": [
+                2005
+            ]
+        }
+    ],
+    "The Gorge": [
+        {
+            "imdbFilmId": "tt13654226",
+            "years": [
+                2025
+            ]
+        }
+    ],
+    "Captain America: Brave New World": [
+        {
+            "imdbFilmId": "tt14513804",
+            "years": [
+                2025
+            ]
+        }
+    ],
+    "The Order": [
+        {
+            "imdbFilmId": "tt26625693",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Saturday Night": [
+        {
+            "imdbFilmId": "tt27657135",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "24": [
+        {
+            "imdbFilmId": "tt4981966",
+            "years": [
+                2016
             ]
         }
     ]
