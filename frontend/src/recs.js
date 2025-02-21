@@ -118,7 +118,7 @@ const App = () => {
                         <h3 className='film-rating-runtime-text'>{film.runtimeHoursMinutes} |&nbsp;</h3>
                         <h3 className='film-genres-text'>{getCommaSeparatedList(film.genres)}</h3>
                     </div>
-                    <p className='film-summary'>
+                    <p className='film-summary hidden-scroll-bar'>
                         {film.summary}
                     </p>
 

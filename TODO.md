@@ -44,7 +44,6 @@
 - [ ] check for `\u*` chars in film titles, are they messed up or is it ok?
 - [ ] remove `backdropPoster`
 - [ ] rename `mainPoster` to `filmPoster` or `poster`
-- [ ] if film summary goes over certain length, add ...
 
 # Letterboxd conversion
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
@@ -218,8 +217,8 @@ my-film-data-vec.json to file
 - [x] similarity score
 - [x] change the star
 - [x] get nice font
-- [ ] figure out max film summary length and modify it in backend
-- [ ] make film div fixed size
+- [x] summary scroll
+- [x] make film div fixed size
 
 ## Home Page
 - [ ]

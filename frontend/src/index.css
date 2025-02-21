@@ -175,6 +175,7 @@ input[type="file"] {
     background-color: #f8f8f8; /* Light background color */
     transition: transform 0.2s ease-in-out; /* Smooth hover effect */
     width: 40vw;
+    height: 375px;
 }
 
 .recommendedFilm:hover {
@@ -183,8 +184,8 @@ input[type="file"] {
 
 
 .mainPosterImg {
-    width: 200px; /* Fixed width for poster */
-    height: auto;
+    width: 250px; /* Fixed width for poster */
+    height: 375px;
     object-fit: cover; /* Maintain aspect ratio and cover container */
     display: block; /* Prevents a small gap below the image */
 }
@@ -225,8 +226,7 @@ input[type="file"] {
     font-family: lato-regular, serif;
     font-size: 0.9rem;
     color: #333;
-    flex-grow: 1; /* Allow summary to expand and fill available space */
-    overflow: hidden;
+    overflow: auto;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -270,4 +270,8 @@ input[type="file"] {
 .buttons-and-similarity-score-container {
     display: flex;
     flex-direction: row;
+}
+
+.hidden-scroll-bar::-webkit-scrollbar {
+    display: none;
 }
