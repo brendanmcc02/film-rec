@@ -107,43 +107,65 @@ const App = () => {
     function getFilms(recommendedFilms) {
         return recommendedFilms.map((film, i) => (
             <div className="recommendedFilm" key={i}>
-                <img src={`${film.mainPoster}`} alt={film.title} className="mainPosterImg" />
+                <img src={`${film.mainPoster}`} alt={film.title} className="mainPosterImg" loading="lazy" /> {/* Added loading="lazy" */}
                 <div className='film-details'>
                     <div className='film-title-and-year'>
                         <h2 className='film-title'>{film.title}&nbsp;</h2>
                         <h2 className='film-year'>({film.year})</h2>
                     </div>
-                    <div className='film-rating-runtime'>
+                    <div className='film-rating-runtime-genres'>
                         <h3><IoIosStarOutline className='star' /></h3>
                         <h3 className='film-rating-runtime-text'>{film.imdbRating} |&nbsp;</h3>
-                        <h3 className='film-rating-runtime-text'>{film.runtimeHoursMinutes}</h3>
+                        <h3 className='film-rating-runtime-text'>{film.runtimeHoursMinutes} |&nbsp;</h3>
+                        <h3 className='film-genres-text'>{getCommaSeparatedList(film.genres)}</h3>
                     </div>
                     <p className='film-summary'>
                         {film.summary}
                     </p>
 
-                    {isFilmButtonVisible(film.id) && 
-                        <div className="buttons">
-                            <button className="up-button" onClick={() => handleUpButton(film.id)}>
-                                <FaRegThumbsUp />
-                            </button>
-                            <button className="down-button" onClick={() => handleDownButton(film.id)}>
-                                <FaRegThumbsDown />
-                            </button>
-                            <p>{film.similarityScore}%</p>
-                        </div>
-                    }
+                    <div className='buttons-and-similarity-score-container'>
+                        {isFilmButtonVisible(film.id) && 
+                            <div className="buttons-container">
+                                <button className="up-down-button up-button" onClick={() => handleUpButton(film.id)}>
+                                    <FaRegThumbsUp />
+                                </button>
+                                <button className="up-down-button down-button" onClick={() => handleDownButton(film.id)}>
+                                    <FaRegThumbsDown />
+                                </button>
+                            </div>
+                        }
+                        
+                        <p className="similarity-score">{film.similarityScore}%&nbsp;Confidence</p>
+                    </div>
                 </div>
             </div>
         ));
     }
-    
+
     let rows = rowsOfRecommendations.map((row, i) => (
         <div key={i} className='recommendedRow'>
             <h1 style={{color:'black'}}>{row.recommendedRowText}</h1>
             <div className="rowOfFilms">{getFilms(row.recommendedFilms)}</div>
         </div>
     ));
+
+    function getCommaSeparatedList(originalList) {
+        let commaSeparatedList = "";
+        let isFirstElement = true;
+
+        originalList.forEach(element => {
+            if (isFirstElement) {
+                commaSeparatedList += element;
+            } else {
+                commaSeparatedList += ", " + element;
+            }
+
+            isFirstElement = false;
+            
+        })
+
+        return commaSeparatedList;
+    }
 
     return (
         <>
