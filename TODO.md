@@ -216,6 +216,8 @@ my-film-data-vec.json to file
 - [x] add genres to film div
 - [x] re-do buttons
 - [x] similarity score
+- [x] change the star
+- [x] get nice font
 - [ ] figure out max film summary length and modify it in backend
 - [ ] make film div fixed size
 

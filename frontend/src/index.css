@@ -15,6 +15,11 @@ body {
 }
 
 @font-face {
+    font-family: lato-regular;
+    src: url("../fonts/Lato/Lato-Regular.ttf");
+}
+
+@font-face {
     font-family: lato-italic;
     src: url("../fonts/Lato/Lato-Italic.ttf");
 }
@@ -30,14 +35,19 @@ body {
 
 h1 {
     font-family: lato-black, serif;
-    font-size: 50px;
-    color: azure;
+    /* font-size: 50px;
+    color: azure; */
+}
+
+h2 {
+    font-family: lato-bold, serif;
+    /* font-size: 35px; */
 }
 
 h3 {
-    font-size: 23px;
-    color: floralwhite;
-    font-family: lato-italic, serif;
+    font-family: lato-regular, serif;
+    /* font-size: 23px;
+    color: floralwhite; */
 }
 
 .file-text {
@@ -186,44 +196,33 @@ input[type="file"] {
     flex-direction: column; /* Align details vertically */
 }
 
-.film-title-and-year {
-    display: flex;
+.film-title-and-year-container {
     align-items: center; /* Vertically align title and year */
+    font-size: 1.3rem;
 }
 
-.film-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-right: 0px;
-}
-
-.film-year {
-    font-size: 1.5rem;
-    color: #777;
-}
-
-.film-rating-runtime-genres {
+.film-rating-runtime-genres-container {
     display: flex;
-    align-items: center; /* Vertically align rating and runtime */
+    vertical-align: bottom;
+    font-size: 0.9rem;
 }
 
 .star {
     color: gold;
-    margin-right: 5px;
+    margin-right: 3px;
+    font-size: 1.2rem;
 }
 
 .film-rating-runtime-text {
-    font-size: 1rem;
     color: black;
 }
 
 .film-genres-text {
-    font-size: 1rem;
     color: black;
-    font-style: italic;
 }
 
 .film-summary {
+    font-family: lato-regular, serif;
     font-size: 0.9rem;
     color: #333;
     flex-grow: 1; /* Allow summary to expand and fill available space */
@@ -246,7 +245,7 @@ input[type="file"] {
     cursor: pointer;
     margin-right: 10px;
     transition: 0.2s ease-in-out;
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 .up-down-button:hover {
@@ -262,7 +261,8 @@ input[type="file"] {
 }
 
 .similarity-score {
-    font-size: 1rem;
+    font-family: lato-regular, serif;
+    font-size: 0.9rem;
     color: #555;
     margin-left: auto;
 }

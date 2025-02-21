@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { IoIosStarOutline } from "react-icons/io";
 import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
+import { FaRegStar } from "react-icons/fa";
 
 const App = () => {
     const [rowsOfRecommendations, setRowsOfRecommendations] = useState([]);
@@ -109,12 +109,11 @@ const App = () => {
             <div className="recommendedFilm" key={i}>
                 <img src={`${film.mainPoster}`} alt={film.title} className="mainPosterImg" loading="lazy" /> {/* Added loading="lazy" */}
                 <div className='film-details'>
-                    <div className='film-title-and-year'>
-                        <h2 className='film-title'>{film.title}&nbsp;</h2>
-                        <h2 className='film-year'>({film.year})</h2>
+                    <div className='film-title-and-year-container'>
+                        <h2 className='film-title-and-year'>{film.title}&nbsp;({film.year})</h2>
                     </div>
-                    <div className='film-rating-runtime-genres'>
-                        <h3><IoIosStarOutline className='star' /></h3>
+                    <div className='film-rating-runtime-genres-container'>
+                        <h3 className='star'><FaRegStar /></h3>
                         <h3 className='film-rating-runtime-text'>{film.imdbRating} |&nbsp;</h3>
                         <h3 className='film-rating-runtime-text'>{film.runtimeHoursMinutes} |&nbsp;</h3>
                         <h3 className='film-genres-text'>{getCommaSeparatedList(film.genres)}</h3>
