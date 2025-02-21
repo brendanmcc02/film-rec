@@ -50,10 +50,13 @@ const App = () => {
 
   const backgroundStyle = {
     backgroundImage: `url(${background})`,
-    height: '100vh',
-    backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%'
   }
 
   fetch('/loadJsonFiles');
@@ -61,28 +64,30 @@ const App = () => {
   return (
     <>
       <div style={backgroundStyle}></div>
-      <div className="title">
-        <h1>FILM REC</h1>
-        <h3>A film recommendation app.</h3>
-        <h3>Letterboxd users: Upload your <a
-            href="https://letterboxd.com/data/export"><u>ratings.csv</u></a> file.</h3>
-        <h3>IMDB Users: Upload your <a href="https://www.wikihow.com/Export-Your-IMDb-Custom-Lists-to-a-CSV-File"><u>exported
-          ratings</u></a> csv file.</h3>
-      </div>
+      <div className='text-and-file-upload-container'>
+        <div className="home-text-container">
+          <h1 className="home-title">FILM REC</h1>
+          <h3 className='home-text'>A film recommendation app.</h3>
+          <h3 className='home-text'>Letterboxd users: Upload your <a
+              href="https://letterboxd.com/data/export"><u>ratings.csv</u></a> file.</h3>
+          <h3 className='home-text'>IMDB Users: Upload your <a href="https://www.wikihow.com/Export-Your-IMDb-Custom-Lists-to-a-CSV-File"><u>exported
+            ratings</u></a> csv file.</h3>
+        </div>
 
-      <div className="file-div">
-        <label htmlFor="select-file" className="file-button">
-          <FontAwesomeIcon icon={faFileImport} className="select-file-icon" /> Select
-          <input id="select-file" type="file" onChange={handleFileSelect} />
-        </label>
+        <div className="file-upload-container">
+          <label htmlFor="select-file" className="file-button">
+            <FontAwesomeIcon icon={faFileImport} className="select-file-icon" /> Select
+            <input id="select-file" type="file" onChange={handleFileSelect} />
+          </label>
 
-        <p className="file-text">{fileName}</p>
+          <p className="file-text">{fileName}</p>
 
-        <button className="file-button" onClick={handleFileUpload}>
-          <FontAwesomeIcon icon={faFileUpload} className="select-file-icon" /> Upload
-        </button>
+          <button className="file-button" onClick={handleFileUpload}>
+            <FontAwesomeIcon icon={faFileUpload} className="select-file-icon" /> Upload
+          </button>
 
-        <p className="file-text">{errorText}</p>
+          <p className="file-text">{errorText}</p>
+        </div>
       </div>
     </>
   );

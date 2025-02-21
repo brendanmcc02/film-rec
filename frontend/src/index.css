@@ -36,19 +36,14 @@ body {
 
 h1 {
     font-family: lato-black, serif;
-    /* font-size: 50px;
-    color: azure; */
 }
 
 h2 {
     font-family: lato-bold, serif;
-    /* font-size: 35px; */
 }
 
 h3 {
     font-family: lato-regular, serif;
-    /* font-size: 23px;
-    color: floralwhite; */
 }
 
 .file-text {
@@ -91,20 +86,13 @@ input[type="file"] {
     display: none;
 }
 
-.title {
-  position: absolute;
-  width: 33%;
-  left: 20%;
-  top: 10%;
-  transform: translate(0, -50%);
+.home-text-container {
+    display: flex;
+    flex-direction: column;
+    color: white;
 }
 
-.file-div {
-  position: absolute;
-  width: 20%;
-  right: 20%;
-  top: 50%;
-  transform: translate(0, -50%);
+.file-upload-container {
   opacity: 0.6;
   background-color: floralwhite;
   border: 2px solid rgba(0, 0, 0, 0.3);
@@ -113,7 +101,7 @@ input[type="file"] {
   -webkit-transition: opacity 0.5s;
 }
 
-.file-div:hover {
+.file-upload-container:hover {
     opacity: 0.8;
     transition: 0.1s ease-in;
     -webkit-transition: opacity 0.3s;
@@ -290,5 +278,17 @@ input[type="file"] {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+/* .home-title {
+
+} */
+
+.text-and-file-upload-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
     align-items: center;
 }

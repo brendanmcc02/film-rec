@@ -220,10 +220,9 @@ my-film-data-vec.json to file
 - [x] summary scroll
 - [x] make film div fixed size
 - [x] change colours
-- [ ] regen button
+- [x] regen button
 - [x] align the fucking icons with text
 
 ## Home Page
-- [ ]
-
-
+- [x] fix background
+- [ ] do home text and file upload container
