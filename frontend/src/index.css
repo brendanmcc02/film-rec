@@ -233,31 +233,41 @@ input[type="file"] {
     -webkit-box-orient: vertical;
 }
 
-.up-down-buttons {
+.buttons-container {
     display: flex;
     align-items: center;
     margin-top: 10px;
 }
 
-.up-button, .down-button {
+.up-down-button {
     background: none;
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
     margin-right: 10px;
-    color: #888; /* Initial button color */
-    transition: color 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
+    opacity: 0.5;
 }
 
-.up-button:hover {
+.up-down-button:hover {
+    opacity: 1;
+}
+
+.up-button {
     color: green;
 }
 
-.down-button:hover {
+.down-button {
     color: red;
 }
 
 .similarity-score {
     font-size: 1rem;
     color: #555;
+    margin-left: auto;
+}
+
+.buttons-and-similarity-score-container {
+    display: flex;
+    flex-direction: row;
 }

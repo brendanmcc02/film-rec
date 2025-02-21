@@ -123,17 +123,20 @@ const App = () => {
                         {film.summary}
                     </p>
 
-                    {isFilmButtonVisible(film.id) && 
-                        <div className="up-down-buttons">
-                            <button className="up-button" onClick={() => handleUpButton(film.id)}>
-                                <FaRegThumbsUp />
-                            </button>
-                            <button className="down-button" onClick={() => handleDownButton(film.id)}>
-                                <FaRegThumbsDown />
-                            </button>
-                            <p className="similarity-score">{film.similarityScore}%</p>
-                        </div>
-                    }
+                    <div className='buttons-and-similarity-score-container'>
+                        {isFilmButtonVisible(film.id) && 
+                            <div className="buttons-container">
+                                <button className="up-down-button up-button" onClick={() => handleUpButton(film.id)}>
+                                    <FaRegThumbsUp />
+                                </button>
+                                <button className="up-down-button down-button" onClick={() => handleDownButton(film.id)}>
+                                    <FaRegThumbsDown />
+                                </button>
+                            </div>
+                        }
+                        
+                        <p className="similarity-score">{film.similarityScore}%&nbsp;Confidence</p>
+                    </div>
                 </div>
             </div>
         ));

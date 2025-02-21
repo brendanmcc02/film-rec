@@ -214,6 +214,8 @@ my-film-data-vec.json to file
 - [x] put filmYear on same line as filmTitle
 - [x] center the row
 - [x] add genres to film div
+- [x] re-do buttons
+- [x] similarity score
 - [ ] figure out max film summary length and modify it in backend
 - [ ] make film div fixed size
 
