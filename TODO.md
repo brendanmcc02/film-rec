@@ -225,4 +225,4 @@ my-film-data-vec.json to file
 
 ## Home Page
 - [x] fix background
-- [ ] do home text and file upload container
+- [x] do home text and file upload container

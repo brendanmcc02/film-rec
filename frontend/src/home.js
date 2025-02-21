@@ -64,26 +64,26 @@ const App = () => {
   return (
     <>
       <div style={backgroundStyle}></div>
-      <div className='text-and-file-upload-container'>
+      <div className='text-and-file-select-upload-container'>
         <div className="home-text-container">
           <h1 className="home-title">FILM REC</h1>
-          <h3 className='home-text'>A film recommendation app.</h3>
+          <h3 className='home-text-italic'>A film recommendation app.</h3>
           <h3 className='home-text'>Letterboxd users: Upload your <a
               href="https://letterboxd.com/data/export"><u>ratings.csv</u></a> file.</h3>
-          <h3 className='home-text'>IMDB Users: Upload your <a href="https://www.wikihow.com/Export-Your-IMDb-Custom-Lists-to-a-CSV-File"><u>exported
+          <h3 className='home-text'>IMDB Users: Upload your <a href="https://www.imdb.com/exports/?ref_=rt"><u>exported
             ratings</u></a> csv file.</h3>
         </div>
 
-        <div className="file-upload-container">
-          <label htmlFor="select-file" className="file-button">
-            <FontAwesomeIcon icon={faFileImport} className="select-file-icon" /> Select
+        <div className="file-select-upload-container">
+          <label htmlFor="select-file" className="base-button file-select-upload-button opacity-fade-in">
+            <FontAwesomeIcon icon={faFileImport} className="select-file-icon" />&nbsp; Select
             <input id="select-file" type="file" onChange={handleFileSelect} />
           </label>
 
           <p className="file-text">{fileName}</p>
 
-          <button className="file-button" onClick={handleFileUpload}>
-            <FontAwesomeIcon icon={faFileUpload} className="select-file-icon" /> Upload
+          <button className="base-button file-select-upload-button opacity-fade-in" onClick={handleFileUpload}>
+            <FontAwesomeIcon icon={faFileUpload} className="select-file-icon" />&nbsp; Upload
           </button>
 
           <p className="file-text">{errorText}</p>

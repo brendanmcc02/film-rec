@@ -58,53 +58,30 @@ a {
     color: inherit;
 }
 
-.file-button {
-    border: 2px solid rgba(173, 216, 230, 0.9);
-    padding: 6px 12px;
-    cursor: pointer;
-    background-color: rgba(173, 216, 230, 0.5);
-    text-align: center;
-    font-family: lato-bold, serif;
-    font-size: 18px;
-    position: relative;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    display: inline-block;
-    border-radius: 10px;
-    width: 50%;
-    -webkit-transition: background-color 0.3s;
-}
-
-.file-button:hover {
-    border: 2px solid rgba(173, 216, 230, 1);
-    background-color: rgba(173, 216, 230, 0.6);
-    transition: 0.1s ease-in;
-    -webkit-transition: background-color 0.3s;
-}
-
 input[type="file"] {
     display: none;
 }
 
 .home-text-container {
+    width: 20vw;
     display: flex;
     flex-direction: column;
     color: white;
 }
 
-.file-upload-container {
-  opacity: 0.6;
-  background-color: floralwhite;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  padding: 13px;
-  border-radius: 20px;
-  -webkit-transition: opacity 0.5s;
+.file-select-upload-container {
+    display: flex;
+    flex-direction: column;
+    width: 10vw;
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 13px;
+    border-radius: 20px;
+    transition: 0.3s ease-in-out; /* Smooth hover effect */
 }
 
-.file-upload-container:hover {
-    opacity: 0.8;
-    transition: 0.1s ease-in;
-    -webkit-transition: opacity 0.3s;
+.file-select-upload-container:hover {
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .up-button {
@@ -115,19 +92,28 @@ input[type="file"] {
     background-color: rgba(255, 0, 0, 0.5);
 }
 
-.regenerate-button {
+.base-button {
     font-family: lato-regular, serif;
     font-size: 23px;
-    background-color: white;
     border-radius: 50px;
     display: inline-flex;
+    justify-content: center;
     align-items: center;
     padding: 10px 20px;
+}
+
+.regenerate-button {
     margin-top: 1vw;
+    background-color: white;
 }
 
 .regenerate-icon {
     vertical-align: bottom;
+}
+
+.file-select-upload-button {
+    background-color: black;
+    color: white;
 }
 
 .rows {
@@ -168,7 +154,7 @@ input[type="file"] {
     overflow: hidden; /* Hide overflowing content */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     background-color: black;
-    transition: 0.2s ease-in-out; /* Smooth hover effect */
+    transition: 0.3s ease-in-out; /* Smooth hover effect */
     width: 40vw;
     height: 375px;
 }
@@ -179,7 +165,7 @@ input[type="file"] {
 
 .opacity-fade-in {
     opacity: 0.85;
-    transition: 0.2s ease-in-out; /* Smooth hover effect */
+    transition: 0.3s ease-in-out; /* Smooth hover effect */
 }
 
 .opacity-fade-in:hover {
@@ -244,7 +230,7 @@ input[type="file"] {
     font-size: 1.2rem;
     cursor: pointer;
     margin-right: 10px;
-    transition: 0.2s ease-in-out;
+    transition: 0.3s ease-in-out;
     opacity: 0.7;
 }
 
@@ -281,14 +267,25 @@ input[type="file"] {
     align-items: center;
 }
 
-/* .home-title {
+.home-title {
+    font-family: lato-black;
+}
 
-} */
+.home-text {
+    font-family: lato-regular;
+}
 
-.text-and-file-upload-container {
+.home-text-italic {
+    font-family: lato-italic;
+}
+
+.text-and-file-select-upload-container {
     position: relative;
     z-index: 1;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-}
+    flex-direction: row; /* Change from row to column */
+    align-items: center; /* Centers horizontally */
+    justify-content: center; /* Centers vertically */
+    height: 100vh; /* Full viewport height for proper centering */
+  }
+  

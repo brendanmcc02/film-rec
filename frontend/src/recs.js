@@ -169,7 +169,7 @@ const App = () => {
 
     return (
         <div className="button-and-rows-container">
-            <button className="regenerate-button opacity-fade-in" onClick={() => handleRegenerateRecommendationsButton()}>
+            <button className="base-button regenerate-button opacity-fade-in" onClick={() => handleRegenerateRecommendationsButton()}>
                 <TbRefresh className='regenerate-icon'/>&nbsp;Regenerate
             </button>
             <div className='rows'>
