@@ -172,7 +172,7 @@ input[type="file"] {
     opacity: 1.0;
 }
 
-.mainPosterImg {
+.posterImg {
     width: 250px; /* Fixed width for poster */
     height: 375px;
     object-fit: cover; /* Maintain aspect ratio and cover container */

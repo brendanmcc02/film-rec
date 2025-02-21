@@ -19,7 +19,8 @@ def main():
     cachedTmdb = json.load(file)
 
     for filmID in cachedTmdb:
-        del cachedTmdb[filmID]['backdropPoster']
+        cachedTmdb[filmID]['poster'] = cachedTmdb[filmID]['mainPoster']
+        del cachedTmdb[filmID]['mainPoster']
 
     with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
             convert_file.write(json.dumps(cachedTmdb, indent=4, separators=(',', ': ')))

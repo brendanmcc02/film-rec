@@ -185,7 +185,7 @@ def main():
             allFilmData[imdbFilmId]['letterboxdTitle'] = cachedTmbdFilmData[imdbFilmId]['letterboxdTitle']
             allFilmData[imdbFilmId]['letterboxdYear'] = cachedTmbdFilmData[imdbFilmId]['letterboxdYear']
             allFilmData[imdbFilmId]['countries'] = cachedTmbdFilmData[imdbFilmId]['countries']
-            allFilmData[imdbFilmId]['mainPoster'] = cachedTmbdFilmData[imdbFilmId]['mainPoster']
+            allFilmData[imdbFilmId]['poster'] = cachedTmbdFilmData[imdbFilmId]['poster']
             allFilmData[imdbFilmId]['summary'] = cachedTmbdFilmData[imdbFilmId]['summary']
 
             for country in allFilmData[imdbFilmId]['countries']:
@@ -241,7 +241,7 @@ def main():
 
                 letterboxdTitle = str(jsonResponse['title'])
                 letterboxdYear = int(jsonResponse['release_date'].split('-')[0])
-                mainPoster = basePosterUrl + str(jsonResponse['poster_path'])
+                poster = basePosterUrl + str(jsonResponse['poster_path'])
                 filmSummary = str(jsonResponse['overview'])
 
                 filmCountries = []
@@ -255,13 +255,13 @@ def main():
                         print(f"Unrecognised Country: {countryShorthand}")
 
                 cachedTmbdFilmData[imdbFilmId] = {"letterboxdTitle": letterboxdTitle, "letterboxdYear": letterboxdYear,
-                                                  "countries": filmCountries, "mainPoster": mainPoster, 
+                                                  "countries": filmCountries, "poster": poster, 
                                                   "summary": filmSummary}
 
                 allFilmData[imdbFilmId]['letterboxdTitle'] = letterboxdTitle
                 allFilmData[imdbFilmId]['letterboxdYear'] = letterboxdYear
                 allFilmData[imdbFilmId]['countries'] = filmCountries
-                allFilmData[imdbFilmId]['mainPoster'] = mainPoster
+                allFilmData[imdbFilmId]['poster'] = poster
                 allFilmData[imdbFilmId]['summary'] = filmSummary
 
                 imdbYear = allFilmData[imdbFilmId]['year']
