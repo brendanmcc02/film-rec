@@ -186,7 +186,6 @@ def main():
             allFilmData[imdbFilmId]['letterboxdYear'] = cachedTmbdFilmData[imdbFilmId]['letterboxdYear']
             allFilmData[imdbFilmId]['countries'] = cachedTmbdFilmData[imdbFilmId]['countries']
             allFilmData[imdbFilmId]['mainPoster'] = cachedTmbdFilmData[imdbFilmId]['mainPoster']
-            allFilmData[imdbFilmId]['backdropPoster'] = cachedTmbdFilmData[imdbFilmId]['backdropPoster']
             allFilmData[imdbFilmId]['summary'] = cachedTmbdFilmData[imdbFilmId]['summary']
 
             for country in allFilmData[imdbFilmId]['countries']:
@@ -243,7 +242,6 @@ def main():
                 letterboxdTitle = str(jsonResponse['title'])
                 letterboxdYear = int(jsonResponse['release_date'].split('-')[0])
                 mainPoster = basePosterUrl + str(jsonResponse['poster_path'])
-                backdropPoster = basePosterUrl + str(jsonResponse['backdrop_path'])
                 filmSummary = str(jsonResponse['overview'])
 
                 filmCountries = []
@@ -258,13 +256,12 @@ def main():
 
                 cachedTmbdFilmData[imdbFilmId] = {"letterboxdTitle": letterboxdTitle, "letterboxdYear": letterboxdYear,
                                                   "countries": filmCountries, "mainPoster": mainPoster, 
-                                                  "backdropPoster": backdropPoster, "summary": filmSummary}
+                                                  "summary": filmSummary}
 
                 allFilmData[imdbFilmId]['letterboxdTitle'] = letterboxdTitle
                 allFilmData[imdbFilmId]['letterboxdYear'] = letterboxdYear
                 allFilmData[imdbFilmId]['countries'] = filmCountries
                 allFilmData[imdbFilmId]['mainPoster'] = mainPoster
-                allFilmData[imdbFilmId]['backdropPoster'] = backdropPoster
                 allFilmData[imdbFilmId]['summary'] = filmSummary
 
                 imdbYear = allFilmData[imdbFilmId]['year']

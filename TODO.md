@@ -42,7 +42,7 @@
 - [x] solve the letterboxd title year nonsense
 - [x] add baseposterURL to dataset, reduces computation during online phase
 - [ ] check for `\u*` chars in film titles, are they messed up or is it ok?
-- [ ] remove `backdropPoster`
+- [x] remove `backdropPoster`
 - [ ] rename `mainPoster` to `filmPoster` or `poster`
 
 # Letterboxd conversion
@@ -153,8 +153,6 @@ my-film-data-vec.json to file
 
 # Nice to Have
 - [x] change some files to get rid of hyphens, so I don't need an imported library to import them
-- [ ] create an option for users that don't have their letterboxd/imdb data. Suggest popular, highly-rated, American modern films and rely on RL
-**this also should be the default option for users that upload an empty .csv**
 
 # Recommendation Algorithm Round 2
 - [x] get rid of countries. having country + language might be diminishing returns
