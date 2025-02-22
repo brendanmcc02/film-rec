@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from datetime import datetime
 import json
 import csv
@@ -38,6 +39,7 @@ allGenresLength = 0
 allCountriesLength = 0
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "https://film-rec-frontend.onrender.com"}})
 
 
 def resetGlobalVariables():
