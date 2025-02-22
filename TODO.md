@@ -227,7 +227,7 @@ my-film-data-vec.json to file
 
 # Finishing Touches
 - [x] play around with `YEAR_WEIGHT`
-- [ ] play around with `GENRE_WEIGHT`
+- [x] play around with `GENRE_WEIGHT`
 - [x] try fixing imdbRating to 1.0?
 
 # Deployment
