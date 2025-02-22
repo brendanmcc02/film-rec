@@ -53,6 +53,7 @@ const App = () => {
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     position: 'absolute',
+    zIndex: 0,
     top: 0,
     left: 0,
     width: '100%',
@@ -73,7 +74,8 @@ const App = () => {
           <h3 className='home-text'>IMDB Users: Upload your <a href="https://www.imdb.com/exports/?ref_=rt"><u>exported
             ratings .csv</u></a> file.</h3>
             <h3 className='home-text'>Don't have a Letterboxd/IMDB account? Use 
-              <a href="https://www.imdb.com/exports/?ref_=rt"><u> this</u></a> sample dataset.</h3>
+              <a href="https://github.com/brendanmcc02/film-rec/blob/main/database/sample-letterboxd-data.csv">
+              <u> this</u></a> sample dataset.</h3>
         </div>
 
         <div className="file-select-upload-container">
@@ -90,6 +92,17 @@ const App = () => {
 
           <p className="file-text">{errorText}</p>
         </div>
+      </div>
+      <div className='created-by-container'>
+        <h3 className='additional-italic-text'>
+          Created by <a href="https://github.com/brendanmcc02/"><u>Brendan McCann</u></a>
+        </h3>
+      </div>
+      <div className='behind-the-scenes-container'>
+        <h3 className='additional-italic-text'>
+          Interested in how it works? 
+          See <a href="https://github.com/brendanmcc02/film-rec/blob/main/README.md"><u>here</u></a>
+        </h3>
       </div>
     </>
   );

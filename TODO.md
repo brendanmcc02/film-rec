@@ -236,3 +236,7 @@ my-film-data-vec.json to file
 
 # README
 - [ ] do `README.md`
+
+# Other
+- [ ] linkedin projects section
+- [ ] update on resume

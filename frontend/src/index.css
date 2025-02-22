@@ -63,7 +63,7 @@ input[type="file"] {
 }
 
 .home-text-container {
-    width: 20vw;
+    width: 30vw;
     display: flex;
     flex-direction: column;
     color: white;
@@ -78,7 +78,7 @@ input[type="file"] {
     padding: 13px;
     border-radius: 20px;
     transition: 0.3s ease-in-out; /* Smooth hover effect */
-    margin-left: 10vw;
+    margin-left: 5vw;
 }
 
 .file-select-upload-container:hover {
@@ -289,4 +289,24 @@ input[type="file"] {
     justify-content: center; /* Centers vertically */
     height: 100vh; /* Full viewport height for proper centering */
   }
-  
+
+.created-by-container {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    padding-left: 1vw;
+}
+
+.behind-the-scenes-container {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    right: 0;
+    padding-right: 1vw;
+}
+
+.additional-italic-text {
+    font-family: lato-italic, serif;
+    color: white;
+}
