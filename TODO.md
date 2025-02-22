@@ -226,7 +226,7 @@ my-film-data-vec.json to file
 - [x] do home text and file upload container
 
 # Finishing Touches
-- [ ] try fixing imdbRating to 1.0?
+- [x] try fixing imdbRating to 1.0?
 - [ ] play around with `YEAR_WEIGHT`
 - [ ] play around with `GENRE_WEIGHT`
 

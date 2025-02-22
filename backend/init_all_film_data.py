@@ -11,91 +11,91 @@ NUMBER_OF_VOTES_THRESHOLD = 25000
 
 
 def main():
-    print("\nImporting title.basics.tsv...")
-    title_basics_raw = []
-    
-    with open("../database/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
-        reader = csv.DictReader(title_basics_file, delimiter='\t')
-        for row in reader:
-            title_basics_raw.append(dict(row))
+    runScript = False
+
+    if runScript:
+        print("\nImporting title.basics.tsv...")
+        title_basics_raw = []
+        
+        with open("../database/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
+            reader = csv.DictReader(title_basics_file, delimiter='\t')
+            for row in reader:
+                title_basics_raw.append(dict(row))
 
 
-    print("Imported title.basics.tsv.")
-    print("\nFiltering out films:\n1. that are not movies\n2. with no genres\n3. <"
-          + str(RUNTIME_THRESHOLD) + " min runtime")
+        print("Imported title.basics.tsv.")
+        print("\nFiltering out films:\n1. that are not movies\n2. with no genres\n3. <"
+            + str(RUNTIME_THRESHOLD) + " min runtime")
 
-    stage_1_allFilmData = []
+        stage_1_allFilmData = []
 
-    for film in title_basics_raw:
-        try:
-            if (film["titleType"] == 'movie' and film['genres'] != r"\N"
-                    and int(film['runtimeMinutes']) >= RUNTIME_THRESHOLD):
-                newFilm = {'id': film['tconst'], 'title': film['primaryTitle'], 'year': int(film['startYear']),
-                           'runtime': int(film['runtimeMinutes']), 'genres': film['genres'].split(',')}
+        for film in title_basics_raw:
+            try:
+                if (film["titleType"] == 'movie' and film['genres'] != r"\N"
+                        and int(film['runtimeMinutes']) >= RUNTIME_THRESHOLD):
+                    newFilm = {'id': film['tconst'], 'title': film['primaryTitle'], 'year': int(film['startYear']),
+                            'runtime': int(film['runtimeMinutes']), 'genres': film['genres'].split(',')}
 
-                stage_1_allFilmData.append(newFilm)
-        except ValueError:
-            pass
+                    stage_1_allFilmData.append(newFilm)
+            except ValueError:
+                pass
 
-    print("\nMerging with title.ratings.tsv and filtering out films with <" + str(NUMBER_OF_VOTES_THRESHOLD) + " votes...")
+        print("\nMerging with title.ratings.tsv and filtering out films with <" + str(NUMBER_OF_VOTES_THRESHOLD) + " votes...")
 
-    stage_2_allFilmData = []
+        stage_2_allFilmData = []
 
-    # the key is the film id, and the value is a dictionary of the attributes (averageRating & numVotes) of the film
-    title_ratings = {}
-    with open("../database/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
-        reader = csv.DictReader(title_ratings_file, delimiter='\t')
-        for row in reader:
-            rowDict = dict(row)
-            filmId = rowDict['tconst']
-            title_ratings[filmId] = rowDict
+        # the key is the film id, and the value is a dictionary of the attributes (averageRating & numVotes) of the film
+        title_ratings = {}
+        with open("../database/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
+            reader = csv.DictReader(title_ratings_file, delimiter='\t')
+            for row in reader:
+                rowDict = dict(row)
+                filmId = rowDict['tconst']
+                title_ratings[filmId] = rowDict
 
-    for film in stage_1_allFilmData:
-        filmId = film['id']
-        try:
-            if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUMBER_OF_VOTES_THRESHOLD:
-                film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
-                film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
-                stage_2_allFilmData.append(film)
-        except ValueError:
-            pass
+        for film in stage_1_allFilmData:
+            filmId = film['id']
+            try:
+                if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUMBER_OF_VOTES_THRESHOLD:
+                    film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
+                    film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
+                    stage_2_allFilmData.append(film)
+            except ValueError:
+                pass
 
-    print("\nChanging the order of json attributes...")
+        print("\nChanging the order of json attributes...")
 
-    allFilmData = {}
-    allGenres = []
+        allFilmData = {}
+        allGenres = []
 
-    for film in stage_2_allFilmData:
-        allFilmData[film['id']] = {
-            'title': film['title'],
-            'letterboxdTitle': "",
-            'year': film['year'],
-            'letterboxdYear': 0,
-            'imdbRating': film['imdbRating'],
-            'numberOfVotes': film['numberOfVotes'],
-            'runtime': film['runtime'],
-            'runtimeHoursMinutes': convertRuntimeToHoursMinutes(film['runtime']),
-            'genres': film['genres']
-        }
+        for film in stage_2_allFilmData:
+            allFilmData[film['id']] = {
+                'title': film['title'],
+                'letterboxdTitle': "",
+                'year': film['year'],
+                'letterboxdYear': 0,
+                'imdbRating': film['imdbRating'],
+                'numberOfVotes': film['numberOfVotes'],
+                'runtime': film['runtime'],
+                'runtimeHoursMinutes': convertRuntimeToHoursMinutes(film['runtime']),
+                'genres': film['genres']
+            }
 
-        for genre in film['genres']:
-            if genre not in allGenres:
-                allGenres.append(genre)
-
-    # ###### temp
-    # allFilmDataFile = open('../database/all-film-data.json')
-    # allFilmData = json.load(allFilmDataFile)
-    # allFilmDataFilmIds = list(allFilmData.keys())
-    # allGenres = []
-    # for filmId in allFilmDataFilmIds:
-    #     for genre in allFilmData[filmId]['genres']:
-    #         if genre not in allGenres:
-    #             allGenres.append(genre)
-    # ######
+            for genre in film['genres']:
+                if genre not in allGenres:
+                    allGenres.append(genre)
+    else:
+        allFilmDataFile = open('../database/all-film-data.json')
+        allFilmData = json.load(allFilmDataFile)
+        allFilmDataFilmIds = list(allFilmData.keys())
+        allGenres = []
+        for filmId in allFilmDataFilmIds:
+            for genre in allFilmData[filmId]['genres']:
+                if genre not in allGenres:
+                    allGenres.append(genre)
 
     allGenres = sorted(allGenres)
 
-    # ########
     print("\nMaking API calls to get Letterboxd Title, Letterboxd Year, Countries, Posters, Summary...\n")
 
     accessToken = str(open('../access-token.txt').read())
