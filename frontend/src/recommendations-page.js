@@ -26,7 +26,6 @@ const App = () => {
                 setRowsOfRecommendationButtonVisibility(initialButtonVisibility);
             })
             .catch((error) => {
-                console.log('Response:', response);
                 console.error('Error fetching initial rows of recommendations:', error);
             });
     }, []); // Empty dependency array ensures this effect runs once on component mount
