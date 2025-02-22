@@ -40,5 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://film-rec.onrender.com/"
+  "proxy": "http://localhost:60000/"
 }
