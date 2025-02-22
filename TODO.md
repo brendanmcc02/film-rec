@@ -226,9 +226,9 @@ my-film-data-vec.json to file
 - [x] do home text and file upload container
 
 # Finishing Touches
-- [x] try fixing imdbRating to 1.0?
-- [ ] play around with `YEAR_WEIGHT`
+- [x] play around with `YEAR_WEIGHT`
 - [ ] play around with `GENRE_WEIGHT`
+- [x] try fixing imdbRating to 1.0?
 
 # Deployment
 - [ ] figure out where to host flask app
