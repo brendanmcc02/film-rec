@@ -374,7 +374,7 @@ def reviewRecommendation():
 
     keepVectorBoundary(profile['profile'], profileVectorLength)
 
-    return f"changed {profileId} profile due to {("liking" if isThumbsUp else "disliking")} of {filmId}", 200
+    return f"changed {profileId} profile due to {"liking" if isThumbsUp else "disliking"} of {filmId}", 200
 
 
 def getProfile(profileId):
