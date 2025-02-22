@@ -231,7 +231,7 @@ my-film-data-vec.json to file
 - [x] try fixing imdbRating to 1.0?
 
 # Deployment
-- [ ] figure out where to host flask app
+- [x] deploy flask app
 - [ ] figure out react deployment
 
 # README
