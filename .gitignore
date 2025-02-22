@@ -1,6 +1,5 @@
 .idea/
-*.csv
-database/*.csv
+database/*.tsv
 *.pdf
 user-data/
 access-token.txt
