@@ -217,28 +217,22 @@ def initRowsOfRecommendations():
     favouriteProfile = initFavouriteProfile(userFilmData, userFilmDataVectorized, profileVectorLength,
                                             cachedDateRatedAndUserRatingWeights, favouriteFilmIds,
                                             cache['allGenres'], cache['allCountries'])
-    favouriteProfile = setImdbRatingValueToImdbRatingWeight(favouriteProfile)
 
     recencyProfile = initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
                                         profileVectorLength, cachedDateRatedAndUserRatingWeights, cache['allGenres'],
                                         cache['allCountries'])
-    recencyProfile = setImdbRatingValueToImdbRatingWeight(recencyProfile)
 
     genreProfiles = initGenreProfiles(userFilmData, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
                                       cache['allGenres'], profileVectorLength, NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD, 
                                       cache['allCountries'])
-    for genreProfile in genreProfiles:
-        genreProfile = setImdbRatingValueToImdbRatingWeight(genreProfile)
 
     userProfile = initUserProfile(userFilmData, userFilmDataVectorized, profileVectorLength,
                                   cachedDateRatedAndUserRatingWeights, cache['allGenres'], cache['allCountries'])
 
     internationalProfile = initInternationalProfile(userProfile['profile'], cache['allCountries'], allGenresLength,
                                                     profileVectorLength)
-    internationalProfile = setImdbRatingValueToImdbRatingWeight(internationalProfile)
 
     oldProfile = initOldProfile(userProfile['profile'])
-    oldProfile = setImdbRatingValueToImdbRatingWeight(oldProfile)
 
     generateRecommendations()
 
@@ -444,11 +438,6 @@ def loadJsonFiles():
 def deleteCsvFiles():
     for file in glob.glob("../database/*.csv"):
         os.remove(file)
-
-
-def setImdbRatingValueToImdbRatingWeight(profileVector):
-    profileVector['profile'][PROFILE_IMDB_RATING_INDEX] = IMDB_RATING_WEIGHT
-    return profileVector
 
 
 if __name__ == "__main__":
