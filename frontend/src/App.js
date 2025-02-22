@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './home.js';
-import Recs from './recs.js';
+import HomePage from './home-page.js';
+import RecommendationsPage from './recommendations-page.js';
 
 const App = () => {
   return (
     <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/recs" element={<Recs />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/recommendations-page" element={<RecommendationsPage />} />
         </Routes>
     </BrowserRouter>
   );

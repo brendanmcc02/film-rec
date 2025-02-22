@@ -33,7 +33,7 @@ const App = () => {
           });
 
           if (response.ok) {
-            navigate('/recs');  // go to next page
+            navigate('/recommendations-page');  // go to next page
           } else {
             setErrorText(await response.text()); // Update errorText state
           }
