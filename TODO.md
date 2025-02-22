@@ -123,7 +123,6 @@ create endpoints for getters/setters
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
 - [x] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
 - [x] bug: imdb recency doesn't work
-- [ ] consider edge case if diffDateRated == 0
 
 # Windows OS
 - [x] config frontend: npm, etc.
@@ -226,8 +225,14 @@ my-film-data-vec.json to file
 - [x] fix background
 - [x] do home text and file upload container
 
+# Finishing Touches
+- [ ] try fixing imdbRating to 1.0?
+- [ ] play around with `YEAR_WEIGHT`
+- [ ] play around with `GENRE_WEIGHT`
+
 # Deployment
-- [ ] figure out
+- [ ] figure out where to host flask app
+- [ ] figure out react deployment
 
 # README
 - [ ] do `README.md`

@@ -10,7 +10,7 @@ from init_all_film_data import RUNTIME_THRESHOLD, NUMBER_OF_VOTES_THRESHOLD
 from letterboxd_conversion import *
 
 DATE_RATED_WEIGHT = 0.8
-NUMBER_OF_RECOMMENDATIONS_PER_ROW = 4
+NUMBER_OF_RECOMMENDATIONS_PER_ROW = 6
 NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
 NUMBER_OF_TOP_GENRE_PROFILES = 3
 RECOMMENDATION_REVIEW_FACTOR = 0.2
@@ -181,7 +181,6 @@ def initRowsOfRecommendations():
     isDiffDateRatedZero = False
     if diffDateRated == 0.0:
         isDiffDateRatedZero = True
-        print("TEMP: diff rated 0")  # TODO temp
 
     for imdbFilmId in allFilmData:
         if imdbFilmId not in userFilmData:

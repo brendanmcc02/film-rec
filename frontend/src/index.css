@@ -78,6 +78,7 @@ input[type="file"] {
     padding: 13px;
     border-radius: 20px;
     transition: 0.3s ease-in-out; /* Smooth hover effect */
+    margin-left: 10vw;
 }
 
 .file-select-upload-container:hover {

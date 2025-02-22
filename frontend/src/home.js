@@ -67,11 +67,11 @@ const App = () => {
       <div className='text-and-file-select-upload-container'>
         <div className="home-text-container">
           <h1 className="home-title">FILM REC</h1>
-          <h3 className='home-text-italic'>A film recommendation app.</h3>
+          <h3 className='home-text-italic'>A film recommendation web app.</h3>
           <h3 className='home-text'>Letterboxd users: Upload your <a
               href="https://letterboxd.com/data/export"><u>ratings.csv</u></a> file.</h3>
           <h3 className='home-text'>IMDB Users: Upload your <a href="https://www.imdb.com/exports/?ref_=rt"><u>exported
-            ratings</u></a> csv file.</h3>
+            ratings .csv</u></a> file.</h3>
         </div>
 
         <div className="file-select-upload-container">
