@@ -1,4 +1,3 @@
-import './App.css';
 import React, { useState, useEffect } from 'react';
 import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";

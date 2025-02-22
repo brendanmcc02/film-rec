@@ -1,7 +1,6 @@
-import './App.css';
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import background from "./social-network-1.jpg"
+import background from "./social-network-background.jpg"
 // import '@fortawesome/fontawesome-free/css/all.css'; // works on windows if this is commented out
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileImport } from '@fortawesome/free-solid-svg-icons';
@@ -95,13 +94,13 @@ const App = () => {
       </div>
       <div className='created-by-container'>
         <h3 className='additional-italic-text'>
-          Created by <a href="https://github.com/brendanmcc02/"><u>Brendan McCann</u></a>
+          Created by <a href="https://github.com/brendanmcc02/"><u>Brendan McCann.</u></a>
         </h3>
       </div>
       <div className='behind-the-scenes-container'>
         <h3 className='additional-italic-text'>
           Interested in how it works? 
-          See <a href="https://github.com/brendanmcc02/film-rec/blob/main/README.md"><u>here</u></a>
+          See <a href="https://github.com/brendanmcc02/film-rec/blob/main/README.md"><u>here.</u></a>
         </h3>
       </div>
     </>
