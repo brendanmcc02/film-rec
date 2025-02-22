@@ -13,17 +13,11 @@ NUMBER_OF_VOTES_THRESHOLD = 25000
 def main():
     print("\nImporting title.basics.tsv...")
     title_basics_raw = []
-    try:
-        with open("../database/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
-            reader = csv.DictReader(title_basics_file, delimiter='\t')
-            for row in reader:
-                title_basics_raw.append(dict(row))
-    except FileNotFoundError:
-        print("File Not found. Check directory is correct.")
-        raise FileNotFoundError
-    except Exception as e:
-        print("Error: {e}")
-        raise e
+    
+    with open("../database/title.basics.tsv", 'r', encoding='utf-8', newline='') as title_basics_file:
+        reader = csv.DictReader(title_basics_file, delimiter='\t')
+        for row in reader:
+            title_basics_raw.append(dict(row))
 
 
     print("Imported title.basics.tsv.")
@@ -42,9 +36,6 @@ def main():
                 stage_1_allFilmData.append(newFilm)
         except ValueError:
             pass
-        except KeyError:
-            print("Missing Key Error. title.basics.tsv file format may have changed.")
-            raise KeyError
 
     print("\nMerging with title.ratings.tsv and filtering out films with <" + str(NUMBER_OF_VOTES_THRESHOLD) + " votes...")
 
@@ -52,19 +43,12 @@ def main():
 
     # the key is the film id, and the value is a dictionary of the attributes (averageRating & numVotes) of the film
     title_ratings = {}
-    try:
-        with open("../database/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
-            reader = csv.DictReader(title_ratings_file, delimiter='\t')
-            for row in reader:
-                rowDict = dict(row)
-                filmId = rowDict['tconst']
-                title_ratings[filmId] = rowDict
-    except FileNotFoundError:
-        print("File Not found. Check directory is correct.")
-        raise FileNotFoundError
-    except Exception as e:
-        print("Error: {e}")
-        raise e
+    with open("../database/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
+        reader = csv.DictReader(title_ratings_file, delimiter='\t')
+        for row in reader:
+            rowDict = dict(row)
+            filmId = rowDict['tconst']
+            title_ratings[filmId] = rowDict
 
     for film in stage_1_allFilmData:
         filmId = film['id']
@@ -75,11 +59,6 @@ def main():
                 stage_2_allFilmData.append(film)
         except ValueError:
             pass
-        except KeyError:
-            print("Missing Key Error.")
-            raise KeyError
-        except Exception as e:
-            print("Error occurred with processing title.ratings.tsv " + str(e))
 
     print("\nChanging the order of json attributes...")
 
@@ -119,28 +98,15 @@ def main():
     # ########
     print("\nMaking API calls to get Letterboxd Title, Letterboxd Year, Countries, Posters, Summary...\n")
 
-    accessToken = ""
-    try:
-        accessToken = str(open('../access-token.txt').read())
-    except FileNotFoundError:
-        print("Access Token File Not Found")
-    except Exception as e:
-        print("Error occurred while trying to read Access Token File " + str(e))
+    accessToken = str(open('../access-token.txt').read())
 
     headers = {
         "accept": "application/json",
         "Authorization": f"Bearer {accessToken}"
     }
 
-    try:
-        cachedTmbdFilmDataFile = open('../database/cached-tmdb-film-data.json')
-        cachedTmbdFilmData = json.load(cachedTmbdFilmDataFile)
-    except FileNotFoundError:
-        print("cached-tmdb-film-data.json not found.")
-        raise FileNotFoundError
-    except Exception as e:
-        print("Error: {e}")
-        raise e
+    cachedTmbdFilmDataFile = open('../database/cached-tmdb-film-data.json')
+    cachedTmbdFilmData = json.load(cachedTmbdFilmDataFile)
 
     allCountries = []
 
@@ -155,25 +121,10 @@ def main():
     minRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
     maxRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
 
-    try:
-        cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
-        cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
-    except FileNotFoundError:
-        print("cached-letterboxd-titles.json not found.")
-        raise FileNotFoundError
-    except Exception as e:
-        print("Error: {e}")
-        raise e
-    
-    try:
-        cachedCountriesFile = open('../database/cached-countries.json')
-        cachedCountries = json.load(cachedCountriesFile)
-    except FileNotFoundError:
-        print("cached-countries.json not found.")
-        raise FileNotFoundError
-    except Exception as e:
-        print("Error: {e}")
-        raise e
+    cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
+    cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+    cachedCountriesFile = open('../database/cached-countries.json')
+    cachedCountries = json.load(cachedCountriesFile)
     
     count = 0
     invalidAllFilmDataFilmIds = []
@@ -293,18 +244,14 @@ def main():
 
     print(f"\nFinal Dataset size: {len(allFilmDataFilmIds)} films.\n")
 
-    try:
-        with open('../database/all-film-data.json', 'w') as convert_file:
-            convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
+    with open('../database/all-film-data.json', 'w') as convert_file:
+        convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
 
-        with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
-            convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
+    with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
+        convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
 
-        with open('../database/cached-letterboxd-titles.json', 'w') as convert_file:
-            convert_file.write(json.dumps(cachedLetterboxdTitles, indent=4, separators=(',', ': ')))
-    except FileNotFoundError:
-        print("File Not Found Error. Check Save directory is ok.")
-        raise FileNotFoundError
+    with open('../database/cached-letterboxd-titles.json', 'w') as convert_file:
+        convert_file.write(json.dumps(cachedLetterboxdTitles, indent=4, separators=(',', ': ')))
 
     print(f"\nVectorizing all-film-data.json\n")
 
@@ -365,22 +312,15 @@ def main():
              'minNumberOfVotes': minNumberOfVotes, 'diffNumberOfVotes': diffNumberOfVotes, 
              'profileVectorLength': profileVectorLength}
 
-    try:
-        with open('../database/all-film-data-vectorized.json', 'w') as convert_file:
-            convert_file.write(json.dumps(allFilmDataVectorized, indent=4, separators=(',', ': '))
-                                .replace(",\n        ", ", ").replace("],", "],"))
+    with open('../database/all-film-data-vectorized.json', 'w') as convert_file:
+        convert_file.write(json.dumps(allFilmDataVectorized, indent=4, separators=(',', ': '))
+                            .replace(",\n        ", ", ").replace("],", "],"))
 
-        with open('../database/cache.json', 'w') as convert_file:
-            convert_file.write(json.dumps(cache, indent=4, separators=(',', ': ')))
+    with open('../database/cache.json', 'w') as convert_file:
+        convert_file.write(json.dumps(cache, indent=4, separators=(',', ': ')))
 
-        with open('../database/all-film-data-vectorized-magnitudes.json', 'w') as convert_file:
-            convert_file.write(json.dumps(allFilmDataVectorizedMagnitudes, indent=4, separators=(',', ': ')))
-    except FileNotFoundError:
-        print("File Not Found Error. Check save directory is ok.")
-        raise FileNotFoundError
-    except Exception as e:
-        print("Error: {e}")
-        raise e
+    with open('../database/all-film-data-vectorized-magnitudes.json', 'w') as convert_file:
+        convert_file.write(json.dumps(allFilmDataVectorizedMagnitudes, indent=4, separators=(',', ': ')))
 
 
 def isInvalidResponse(jsonResponse):

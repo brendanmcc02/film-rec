@@ -85,15 +85,11 @@ def cosineSimilarity(a, b, aMagnitude, bMagnitude):
 
 
 def keepVectorBoundary(vector, profileVectorLength):
-    try:
-        for i in range(0, profileVectorLength):
-            if vector[i] < 0.0:
-                vector[i] = 0.0
-            elif vector[i] > 1.0:
-                vector[i] = 1.0
-    except IndexError:
-        print("Index out of bounds. Check vector length or PROFILE_*_INDEX values.")
-        raise IndexError
+    for i in range(0, profileVectorLength):
+        if vector[i] < 0.0:
+            vector[i] = 0.0
+        elif vector[i] > 1.0:
+            vector[i] = 1.0
 
 
 def printStringifiedVector(vector, allGenres, allCountries, text, cachedNormalizedYearsKeys,
@@ -140,26 +136,22 @@ def printStringifiedVector(vector, allGenres, allCountries, text, cachedNormaliz
         print("Error. diffRuntime = 0.")
         raise ZeroDivisionError
 
-    try:
-        stringifiedVector = (f"Year: {stringifiedYear}\n"
-                            f"IMDb Rating: {stringifiedImdbRating}\n"
-                            f"NumOfVotes: {stringifiedNumberOfVotes}\n"
-                            f"Runtime: {stringifiedRuntime} mins\n###############\n")
+    stringifiedVector = (f"Year: {stringifiedYear}\n"
+                        f"IMDb Rating: {stringifiedImdbRating}\n"
+                        f"NumOfVotes: {stringifiedNumberOfVotes}\n"
+                        f"Runtime: {stringifiedRuntime} mins\n###############\n")
 
-        i = PROFILE_GENRE_START_INDEX
-        for genre in allGenres:
-            stringifiedVector += f"{genre}: {round(vector[i], 3)}\n"
-            i = i + 1
+    i = PROFILE_GENRE_START_INDEX
+    for genre in allGenres:
+        stringifiedVector += f"{genre}: {round(vector[i], 3)}\n"
+        i = i + 1
 
-        stringifiedVector += "###############\n"
-        for country in allCountries:
-            stringifiedVector += f"{country}: {round(vector[i], 3)}\n"
-            i = i + 1
+    stringifiedVector += "###############\n"
+    for country in allCountries:
+        stringifiedVector += f"{country}: {round(vector[i], 3)}\n"
+        i = i + 1
 
-        print(f"\n{stringifiedVector}\n")
-    except IndexError:
-        print("Index out of bounds. Check vector length or PROFILE_*_INDEX values.")
-        raise IndexError
+    print(f"\n{stringifiedVector}\n")
 
 
 def initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
@@ -229,18 +221,14 @@ def getFilmGenres(vectorizedFilm, allGenres):
     filmGenreIndexes = []
     profileGenreEndIndex = PROFILE_GENRE_START_INDEX + len(allGenres)
 
-    try:
-        for i in range(PROFILE_GENRE_START_INDEX, profileGenreEndIndex):
-            if vectorizedFilm[i] > 0.0:
-                filmGenreIndexes.append(i - PROFILE_GENRE_START_INDEX)
+    for i in range(PROFILE_GENRE_START_INDEX, profileGenreEndIndex):
+        if vectorizedFilm[i] > 0.0:
+            filmGenreIndexes.append(i - PROFILE_GENRE_START_INDEX)
 
-        filmGenres = []
+    filmGenres = []
 
-        for genreIndex in filmGenreIndexes:
-            filmGenres.append(allGenres[genreIndex])
-    except IndexError:
-        print("Index out of bounds. Check vector length or PROFILE_*_INDEX values.")
-        raise IndexError
+    for genreIndex in filmGenreIndexes:
+        filmGenres.append(allGenres[genreIndex])
 
     return filmGenres
 
@@ -295,12 +283,7 @@ def initUserProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength
 def initOldProfile(userProfile):
     # note: userProfile already has curved genres and countries
     oldProfile = {'profile': np.copy(userProfile), 'profileId': 'old'}
-    
-    try:
-        oldProfile['profile'][PROFILE_YEAR_INDEX] = 0.0
-    except IndexError:
-        print("Check PROFILE_YEAR_INDEX is correct.")
-        raise IndexError
+    oldProfile['profile'][PROFILE_YEAR_INDEX] = 0.0
     
     return oldProfile
 
@@ -342,12 +325,8 @@ def initInternationalProfile(userProfile, allCountries, allGenresLength, profile
 
 
 def isNonZeroIndexValueNotAmericanOrBritish(index, allCountries, countryStartIndex, valueAtIndex):
-    try:
-        return (valueAtIndex > 0.0 and allCountries[index - countryStartIndex] != "American" and
-                allCountries[index - countryStartIndex] != "British")
-    except IndexError:
-        print("allCountries index error.")
-        raise IndexError
+    return (valueAtIndex > 0.0 and allCountries[index - countryStartIndex] != "American" and
+            allCountries[index - countryStartIndex] != "British")
 
 
 

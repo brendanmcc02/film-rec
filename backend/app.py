@@ -79,11 +79,7 @@ def verifyUserUploadedFile():
 
     file = request.files['file']
     userFilmDataFilename = file.filename
-    try:
-        file.save("../database/" + file.filename)
-    except FileNotFoundError:
-        print("Check directory name is ok")
-        raise FileNotFoundError
+    file.save("../database/" + file.filename)
     expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
                                       "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
                                       "Release Date", "Directors"]
@@ -105,8 +101,6 @@ def verifyUserUploadedFile():
                                     f"does not conform to expected format.\n", 400)
 
         return "Upload Success.", 200
-    except FileNotFoundError:
-        return "Error: file not found.", 404
     except Exception as e:
         deleteCsvFiles()
         return f"Error occurred with reading {userFilmDataFilename}.\n{e}", 400
@@ -135,18 +129,12 @@ def initRowsOfRecommendations():
 
             for row in reader:
                 userFilmDataList.append(row)
-    except FileNotFoundError:
-        return f"Error: {userFilmDataFilename} not found, check file name & file type.", 404
     except Exception as e:
         deleteCsvFiles()
         return f"Error occurred with reading {userFilmDataFilename}.\n" + str(e), 400
 
     deleteCsvFiles()
-    try:
-        allFilmDataFile = open('../database/all-film-data.json')
-    except FileNotFoundError:
-        print("Check all-film-data.json exists.")
-        raise FileNotFoundError
+    allFilmDataFile = open('../database/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
 
     if not isImdbFile:
@@ -433,22 +421,17 @@ def loadJsonFiles():
     global cachedNormalizedImdbRatingsKeys
     global cachedNormalizedRuntimesKeys
 
-    try:
-        allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
-        allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
-        allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
-        allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
-        cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
-        cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
-        cacheFile = open('../database/cache.json')
-        cache = json.load(cacheFile)
-        cachedNormalizedYearsKeys = list(cache['normalizedYears'].keys())
-        cachedNormalizedImdbRatingsKeys = list(cache['normalizedImdbRatings'].keys())
-        cachedNormalizedRuntimesKeys = list(cache['normalizedRuntimes'].keys())
-    except FileNotFoundError:
-        return "File Not Found Error", 404
-    except Exception as e:
-        return f"Error: {e}", 400
+    allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
+    allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+    allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
+    allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
+    cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
+    cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+    cacheFile = open('../database/cache.json')
+    cache = json.load(cacheFile)
+    cachedNormalizedYearsKeys = list(cache['normalizedYears'].keys())
+    cachedNormalizedImdbRatingsKeys = list(cache['normalizedImdbRatings'].keys())
+    cachedNormalizedRuntimesKeys = list(cache['normalizedRuntimes'].keys())
 
     return "Files read successfully", 200
 
