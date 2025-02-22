@@ -232,7 +232,7 @@ my-film-data-vec.json to file
 
 # Deployment
 - [x] deploy flask app
-- [ ] figure out react deployment
+- [x] figure out react deployment
 
 # README
 - [ ] do `README.md`
