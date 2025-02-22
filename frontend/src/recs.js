@@ -119,7 +119,7 @@ const App = () => {
                             </div>
                         }
                         
-                        <p className="similarity-score opacity-fade-in">{film.similarityScore}%&nbsp;Confidence</p>
+                        <p className="similarity-score opacity-fade-in">{film.similarityScore}%&nbsp;Match</p>
                     </div>
                 </div>
             </div>

@@ -123,6 +123,7 @@ create endpoints for getters/setters
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
 - [x] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
 - [x] bug: imdb recency doesn't work
+- [ ] consider edge case if diffDateRated == 0
 
 # Windows OS
 - [x] config frontend: npm, etc.
