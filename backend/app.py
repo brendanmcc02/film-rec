@@ -39,7 +39,7 @@ allGenresLength = 0
 allCountriesLength = 0
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://film-rec-frontend.onrender.com"}})
+CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
 
 
 def resetGlobalVariables():
