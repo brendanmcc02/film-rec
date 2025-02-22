@@ -1,3 +1,5 @@
+# contains all methods related to vectorizing films
+
 import numpy as np
 
 YEAR_WEIGHT = 0.5

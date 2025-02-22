@@ -1,3 +1,5 @@
+# after downloading the public imdb datasets, clean & filter the dataset to produce
+# multiple cached datasets.
 # this is intended to be run using `init-all-film-data.sh`, not as a standalone file
 
 import json
