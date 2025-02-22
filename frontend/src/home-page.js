@@ -15,7 +15,7 @@ const App = () => {
 
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
-    setFileName("Selected File: " + event.target.files[0].name); // Update fileName state
+    setFileName("Selected File: " + event.target.files[0].name);
     setErrorText(""); // Reset error text when a new file is selected
   };
 
@@ -33,18 +33,18 @@ const App = () => {
           });
 
           if (response.ok) {
-            navigate('/recommendations-page');  // go to next page
+            navigate('/recommendations-page');
           } else {
-            setErrorText(await response.text()); // Update errorText state
+            setErrorText(await response.text());
           }
         } catch (error) {
-          setErrorText(error.message); // Update errorText state
+          setErrorText(error.message);
         }
       } else {
-        setErrorText("File must be .csv"); // Update errorText state
+        setErrorText("File must be .csv");
       }
     } else {
-      setErrorText("You must select a file first"); // Update errorText state
+      setErrorText("You must select a file first");
     }
   };
 

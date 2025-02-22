@@ -10,7 +10,10 @@ const App = () => {
 
     useEffect(() => {
         fetch('/initRowsOfRecommendations')
-            .then((response) => response.json())
+            .then((response) => {
+                console.log("Response:\n", response);
+                response.json();
+            })
             .then((jsonData) => {
                 setRowsOfRecommendations(jsonData);
                 const initialButtonVisibility = jsonData.map((row) => 
@@ -93,7 +96,7 @@ const App = () => {
     function getFilms(recommendedFilms) {
         return recommendedFilms.map((film, i) => (
             <div className="recommendedFilm" key={i}>
-                <img src={`${film.poster}`} alt={film.title} className="posterImg" loading="lazy" /> {/* Added loading="lazy" */}
+                <img src={`${film.poster}`} alt={film.title} className="posterImg" loading="lazy" />
                 <div className='film-details'>
                     <div className='film-title-and-year-container'>
                         <h2 className='film-title-and-year opacity-fade-in'>{film.title}&nbsp;({film.year})</h2>
