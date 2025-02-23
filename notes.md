@@ -1,26 +1,3 @@
-# Clustering userFilmData
-
-*worry about cold start problem later*
-
-## Improving cosine sim calculations by Clustering allFilmDataVec
-An idea to improve cosine sim calculations: instead of performing user profile dot products with **every film**, you 
-cluster the films and only perform cosine sim comparisons on individual films within clusters with relatively high 
-cosine similarity.
-
-### How to concretely implement this
-
-1. Cluster allFilmDataVec
-2. When you want to start doing cosine sim between profile vectors and films, instead
-do cosine sim between the profile vector and the clusters
-3. Pick the top-matched cluster, and only perform cosine sim comparisons to films 
-**within** the chosen cluster
-   * I was thinking about choosing top-3 clusters instead of just 1, but I'm not sure this will
-   yield a big difference as the user profile will already have been clustered
-
-# Random thoughts
-
-* rebrand as boxd-recs: augmentation to letterboxd? marketing
-
 # Main Takeaways from the Recommender Systems textbook
 * Recall the aspects of a good recommender system - think about novelty, diversity and serendipity
   * **Diversity** - I'm thinking of implementing clustering as opposed to just one user profile
