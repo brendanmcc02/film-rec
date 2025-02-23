@@ -6,6 +6,12 @@ Before starting the project, I was interested in ML and Data Science, so I wante
 
 # The Recommendation Algorithm
 
+## Recommender Systems
+
+I read the book *Recommender Systems: The Textbook by Charu C. Aggarwal* to learn about the many types of recommendation algorithms. One of which is **Content-based filtering**: recommendations are made for a user **based solely on what they watched.** For example, if a user liked *La La Land*, then they will be recommended romantic musical films in the 2010s. Another type is **Collaborative filtering**: recommendations are made based on **what other users with similar taste also liked.** For example, the user will be recommended films that were also liked by people who enjoyed *La La Land*.
+
+Each approach has their unique advantages and disadvantages, so the most sophisticated recommendation algorithms employ both techniques. My algorithm uses only content-based filtering.
+
 ## Theory
 
 ### Mathematical Representation
@@ -20,7 +26,29 @@ The year value is normalised - so the oldest film in the dataset will have a yea
 
 The next 23 dimensions in the vector are reserved for genres, and the 73 dimensions after that are reserved for countries. The countries and genres of a film were converted using **one-hot encoding.** For example, *The Godfather* has crime and drama as it's genres, so the vector indexes associated with crime and drama will be set to `1.0`, while the other genres in the vector will stay at `0.0`. It is an American film, so the vector index associated with America will be set to `1.0`, and all other countries will stay at `0.0`.
 
-We can now represent films as mathematical objects, which is crucial for machine learning.
+Below you will find a concrete example of *12 Angry Men* being vectorized:
+
+```txt
+[
+    0.38, // year: 1957
+    0.96, // imdbRating: 9.0
+    0.99, // numberOfVotes: 913,000
+    0.13, // runtime: 96m
+    0.0,  // Action
+    0.0,  // Adventure
+    ...
+    1.0,  // Crime
+    1.0,  // Drama
+    ...
+    0.0,  // Algerian
+    1.0,  // American
+    0.0,  // Angolan
+    ...
+    0.0   // Yugoslavian
+]
+```
+
+> :info: In reality, the attributes of the film are weighted differently according to their significance. Year is a value between `0.0` and `0.5`, imdbRating, numberOfVotes & countries between `0.0` and `1.0`, runtime between `0.0` and `0.3` and genres between `0.0` and `0.7`. I omitted this to keep things simple as an example, but it's worth noting.
 
 ### Positive Preference Weighting
 
@@ -30,11 +58,7 @@ On IMDB and Letterboxd, users rate films on a scale of 1-10. We want our recomme
 
 User preferences change over time. A good recommendation algorithm places more value on **recent** ratings over **older** ones. For example, let's say you gave *Whiplash* a 9/10 three years ago (the oldest rating in your dataset), and yesterday you gave *Parasite* a 9/10. The films in the user dataset are scalar multiplied by a value between `0.8` and `1.0`. So, the vector that represents *Whiplash* will be scalar multiplied by `0.8`, whereas the vector that represents *Parasite* will be scalar multiplied by `1.0`.
 
-## Recommender Systems
-
-I read the book *Recommender Systems: The Textbook by Charu C. Aggarwal* to learn about the many types of recommendation algorithms. One of which is **Content-based filtering**: recommendations are made for a user **based solely on what they watched.** For example, if a user liked *La La Land*, then they will be recommended romantic musical films in the 2010s. Another type is **Collaborative filtering**: recommendations are made based on **what other users with similar taste also liked.** For example, the user will be recommended films that were also liked by people who enjoyed *La La Land*.
-
-Each approach has their unique advantages and disadvantages, so the most sophisticated recommendation algorithms employ both techniques. My algorithm uses only content-based filtering.
+### 
 
 # Project Architecture
 
