@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import background from "./social-network-background.jpg"
 // import '@fortawesome/fontawesome-free/css/all.css'; // works on windows if this is commented out
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileImport } from '@fortawesome/free-solid-svg-icons';
@@ -47,32 +46,21 @@ const App = () => {
     }
   };
 
-  const backgroundStyle = {
-    backgroundImage: `url(${background})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    position: 'absolute',
-    zIndex: 0,
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%'
-  }
-
   fetch('https://film-rec-backend.onrender.com/loadJsonFiles');
 
   return (
     <>
-      <div style={backgroundStyle}></div>
+      <div className='title-and-subtitle-container'>
+        <h1 className="home-title">FILM REC</h1>
+        <h3 className='home-subtitle'>A film recommendation web app.</h3>
+      </div>
       <div className='text-and-file-select-upload-container'>
         <div className="home-text-container">
-          <h1 className="home-title">FILM REC</h1>
-          <h3 className='home-text-italic'>A film recommendation web app.</h3>
           <h3 className='home-text'>Letterboxd users: Upload your <a
               href="https://letterboxd.com/data/export"><u>ratings.csv</u></a> file.</h3>
           <h3 className='home-text'>IMDB Users: Upload your <a href="https://www.imdb.com/exports/?ref_=rt"><u>exported
             ratings .csv</u></a> file.</h3>
-            <h3 className='home-text'>Don't have a Letterboxd/IMDB account? Use 
+            <h3 className='home-text'>Don't have a Letterboxd or IMDB account? Use 
               <a href="https://github.com/brendanmcc02/film-rec/blob/main/database/sample-letterboxd-data.csv">
               <u> this</u></a> sample dataset.</h3>
         </div>
@@ -91,6 +79,14 @@ const App = () => {
 
           <p className="file-text">{errorText}</p>
         </div>
+      </div>
+      <div className="patience-container">
+        <h3 className="home-text">
+          If the upload button is not responding, it's because the service goes down after inactivity.
+        </h3>
+        <h3 className="home-text">
+          Please wait around 60 seconds, and then refresh the page and try again.
+        </h3>
       </div>
       <div className='created-by-container'>
         <h3 className='additional-italic-text'>

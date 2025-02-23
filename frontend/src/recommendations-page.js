@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
 import { TbRefresh } from "react-icons/tb";
+import { FaInfoCircle } from "react-icons/fa";
 
 const App = () => {
     const [rowsOfRecommendations, setRowsOfRecommendations] = useState([]);
@@ -94,14 +95,13 @@ const App = () => {
             <div className="recommendedFilm" key={i}>
                 <img src={`${film.poster}`} alt={film.title} className="posterImg" loading="lazy" />
                 <div className='film-details'>
-                    <div className='film-title-and-year-container'>
-                        <h2 className='film-title-and-year opacity-fade-in'>{film.title}&nbsp;({film.year})</h2>
-                    </div>
+                <div className='film-title-and-year-container'>
+                    <h2 className='film-title-and-year opacity-fade-in'>{film.title}&nbsp;({film.year})</h2>
+                    <h2 className='film-info'><a href={film.imdbUrl}><FaInfoCircle /></a></h2>
+                </div>
                     <div className='film-rating-runtime-genres-container opacity-fade-in'>
                         <h3 className='star'><FaRegStar /></h3>
-                        <h3 className='film-rating-runtime-genres-text'>{film.imdbRating} |&nbsp;</h3>
-                        <h3 className='film-rating-runtime-genres-text'>{film.runtimeHoursMinutes} |&nbsp;</h3>
-                        <h3 className='film-rating-runtime-genres-text'>{getCommaSeparatedList(film.genres)}</h3>
+                        <h3 className='film-rating-runtime-genres-text'>{film.imdbRating} | {film.runtimeHoursMinutes} | {getCommaSeparatedList(film.genres)}</h3>
                     </div>
                     <p className='film-summary hidden-scroll-bar opacity-fade-in'>
                         {film.summary}
