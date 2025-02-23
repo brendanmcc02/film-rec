@@ -233,6 +233,9 @@ my-film-data-vec.json to file
 # Deployment
 - [x] deploy flask app
 - [x] figure out react deployment
+- [ ] horizontal overflow on rating-runtime-genre
+- [ ] move text around on home screen
+- [ ] add note about patience
 
 # README
 - [ ] do `README.md`

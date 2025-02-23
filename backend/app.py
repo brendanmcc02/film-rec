@@ -41,7 +41,7 @@ allGenresLength = 0
 allCountriesLength = 0
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost"}})
 
 
 def resetGlobalVariables():
@@ -445,4 +445,4 @@ def deleteCsvFiles():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='localhost', port=60000)
