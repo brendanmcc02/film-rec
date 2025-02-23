@@ -26,7 +26,7 @@ const App = () => {
         formData.append('file', selectedFile);
 
         try {
-          const response = await fetch('https://film-rec-backend.onrender.com/verifyUserUploadedFile', {
+          const response = await fetch('/verifyUserUploadedFile', {
             method: 'POST',
             body: formData
           });
@@ -59,7 +59,7 @@ const App = () => {
     height: '100%'
   }
 
-  fetch('https://film-rec-backend.onrender.com/loadJsonFiles');
+  fetch('/loadJsonFiles');
 
   return (
     <>
