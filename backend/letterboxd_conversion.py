@@ -1,5 +1,3 @@
-# contains all methods relating to letterboxd conversion
-
 expectedLetterboxdFileFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating"]
 
 
