@@ -154,7 +154,7 @@ input[type="file"] {
     border-radius: 8px; /* Rounded corners */
     overflow: hidden; /* Hide overflowing content */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    background-color: black;
+    background-color: #0f0f0f;
     transition: 0.3s ease-in-out; /* Smooth hover effect */
     width: 40vw;
     height: 375px;
@@ -191,12 +191,15 @@ input[type="file"] {
     align-items: center; /* Vertically align title and year */
     font-size: 1.3rem;
     color: white;
+    display: flex;
+    flex-direction: row;
 }
 
 .film-rating-runtime-genres-container {
     display: inline-flex;
     align-items: center;
     font-size: 0.9rem;
+    overflow: hidden;
 }
 
 .star {
@@ -214,7 +217,6 @@ input[type="file"] {
     font-size: 0.9rem;
     color: white;
     overflow: auto;
-    text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
 }
@@ -332,4 +334,9 @@ input[type="file"] {
 .additional-italic-text {
     font-family: lato-italic, serif;
     color: white;
+}
+
+.film-info {
+    font-size: 1.5rem;
+    margin-left: auto;
 }
