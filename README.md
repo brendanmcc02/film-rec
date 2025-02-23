@@ -28,7 +28,7 @@ The next 23 dimensions in the vector are reserved for genres, and the 73 dimensi
 
 Below you will find a concrete example of *12 Angry Men* being vectorized:
 
-```txt
+```json
 [
     0.38, // year: 1957
     0.96, // imdbRating: 9.0
@@ -40,6 +40,7 @@ Below you will find a concrete example of *12 Angry Men* being vectorized:
     1.0,  // Crime
     1.0,  // Drama
     ...
+    0.0,  // Western
     0.0,  // Algerian
     1.0,  // American
     0.0,  // Angolan
@@ -48,7 +49,7 @@ Below you will find a concrete example of *12 Angry Men* being vectorized:
 ]
 ```
 
-> :info: In reality, the attributes of the film are weighted differently according to their significance. Year is a value between `0.0` and `0.5`, imdbRating, numberOfVotes & countries between `0.0` and `1.0`, runtime between `0.0` and `0.3` and genres between `0.0` and `0.7`. I omitted this to keep things simple as an example, but it's worth noting.
+> In reality, the attributes of the film are weighted differently according to their significance. Year is a value between `0.0` and `0.5`, imdbRating, numberOfVotes & countries between `0.0` and `1.0`, runtime between `0.0` and `0.3` and genres between `0.0` and `0.7`. I omitted this from the example to keep things simple, but it's worth noting.
 
 ### Positive Preference Weighting
 
@@ -58,7 +59,25 @@ On IMDB and Letterboxd, users rate films on a scale of 1-10. We want our recomme
 
 User preferences change over time. A good recommendation algorithm places more value on **recent** ratings over **older** ones. For example, let's say you gave *Whiplash* a 9/10 three years ago (the oldest rating in your dataset), and yesterday you gave *Parasite* a 9/10. The films in the user dataset are scalar multiplied by a value between `0.8` and `1.0`. So, the vector that represents *Whiplash* will be scalar multiplied by `0.8`, whereas the vector that represents *Parasite* will be scalar multiplied by `1.0`.
 
-### 
+### Profiles
+
+Now, a user's films have been vectorized and weighted according to their liking of the film and how recent they rated it. We need some way to aggregate their preferences into a **profile**, and then recommend films similar to that profile. In our case, the profile will also be a 100-dimensional vector with the same features: year, imdbRating, numberOfVotes, runtime, genres and countries.
+
+Mathematically, this can be achieved by taking a **weighted average** of all the vectors in the user dataset, and aggregating the results into one vector. This is known as a **user profile**: one vector to rule them all. Theoretically, this sounds ideal, but in reality, the recommendations were not diverse, and in my testing I found that only one type of film was being recommended to the user. With my user data, only Drama films were being recommended.
+
+### Diverse Recommendations
+
+Rather than just relying on one profile, I utilised multiple profiles to provide diverse and novel recommendations:
+
+* **Favourites:** Aggregate only films that the user has rated a 9/10 or 10/10.
+* **Recents:** Aggregate only films that the user has rated in the last 30 days.
+* **Genres:** Aggregate 23 profiles: 1 for each genre, and then choose the top 3 with the highest mean rating.
+* **International:** Use the user profile, but set the American and British vector values to `0.0` and scale up the other countries.
+* **Oldies:** Use the user profile, but set the year vector value to `0.0`.
+
+### Similarity Measure
+
+We know have multiple profiles, but to actually get to recommending films, we need a similarity measure. Since the films are represented using vectors, **cosine similarity** was the clear choice.
 
 # Project Architecture
 
