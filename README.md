@@ -4,13 +4,13 @@ A film recommendation web app. Films are recommended based on user-submitted IMD
 
 Before starting the project, I was interested in ML and Data Science, so I wanted to work on a project related to this. I love films, so when it came to thinking about what kind of project to do, a recommendation web app was the clear answer.
 
-# Recommendation Algorithm
+## Recommendation Algorithm
 
 I read the book *Recommender Systems: The Textbook by Charu C. Aggarwal* to learn about recommendation algorithms and what to consider. Collaborative filtering is...
 
-# Project Architecture
+## Project Architecture
 
-# How to test locally
+## How to test locally
 
 * Clone the repository and checkout to the `local-deployment` branch.
 * Open 2 instances of the terminal. We will download dependencies and run both the frontend and the backend.
@@ -29,6 +29,6 @@ I read the book *Recommender Systems: The Textbook by Charu C. Aggarwal* to lear
     $ npm start
     ```
 * npm should open the front page in localhost
-    * If not, try go to [localhost:3000](localhost:3000)
+    * If not, try go to [localhost:3000](http://localhost:3000)
 
-# Acknowledgements
+## Acknowledgements
