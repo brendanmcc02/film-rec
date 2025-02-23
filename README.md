@@ -39,7 +39,7 @@ Below you will find a concrete example of *12 Angry Men* being vectorized:
 [
     0.38, // year: 1957
     0.96, // imdbRating: 9.0
-    0.99, // numberOfVotes: 913,000
+    0.29, // numberOfVotes: 913,000
     0.13, // runtime: 96m
     0.0,  // Action
     0.0,  // Adventure
