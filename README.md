@@ -6,11 +6,18 @@ Before starting the project, I was interested in ML and Data Science, so I wante
 
 # The Recommendation Algorithm
 
-## Recommender Systems
+## Background to Recommender Systems
 
-I read the book *Recommender Systems: The Textbook by Charu C. Aggarwal* to learn about the many types of recommendation algorithms. One of which is **Content-based filtering**: recommendations are made for a user **based solely on what they watched.** For example, if a user liked *La La Land*, then they will be recommended romantic musical films in the 2010s. Another type is **Collaborative filtering**: recommendations are made based on **what other users with similar taste also liked.** For example, the user will be recommended films that were also liked by people who enjoyed *La La Land*.
+I read the book *Recommender Systems: The Textbook by Charu C. Aggarwal* to learn about the many types of recommendation algorithms. One of which is **Content-based filtering**: recommendations are made based **solely on what the user watched.** For example, if a user liked *La La Land*, then they will be recommended romantic musical films in the 2010s. Another type of algorithm is **Collaborative filtering**: recommendations are made based on **what other users with similar taste also liked.** For example, the user will be recommended films that were also liked by people who enjoyed *La La Land*.
 
-Each approach has their unique advantages and disadvantages, so the most sophisticated recommendation algorithms employ both techniques. My algorithm uses only content-based filtering.
+Each approach has their unique advantages and disadvantages, so the most sophisticated recommendation algorithms employ both techniques. Due to limitations in the data I could gather, my algorithm uses only content-based filtering.
+
+According to Aggarwal, the most important aspects of a good recommendation system is:
+
+* **Diversity:** Recommending many types of films, not just one.
+* **Novelty:**  Recommending films the user is not aware of.
+* **Serendipity:** Similar, but slightly different to novelty. Recommending genuinely unexpected, yet good films. It made a connection that you never realised yourself.
+* **Trust through interpretation:** Explaining to the user why the film was recommended. For example: *"Because you liked American Romance Films"*.
 
 ## Theory
 
@@ -69,15 +76,27 @@ Mathematically, this can be achieved by taking a **weighted average** of all the
 
 Rather than just relying on one profile, I utilised multiple profiles to provide diverse and novel recommendations:
 
-* **Favourites:** Aggregate only films that the user has rated a 9/10 or 10/10.
-* **Recents:** Aggregate only films that the user has rated in the last 30 days.
-* **Genres:** Aggregate 23 profiles: 1 for each genre, and then choose the top 3 with the highest mean rating.
-* **International:** Use the user profile, but set the American and British vector values to `0.0` and scale up the other countries.
-* **Oldies:** Use the user profile, but set the year vector value to `0.0`.
+* **Favourites Profile:** Aggregate only films that the user has rated a 9/10 or 10/10.
+* **Recents Profile:** Aggregate only films that the user has rated in the last 30 days.
+* **Genre Profiles:** Aggregate 23 profiles: 1 for each genre, and then choose the top 3 with the highest mean rating.
+* **Internationals Profile:** Use the user profile, but set the American and British vector values to `0.0` and scale up the other countries.
+* **Oldies Profile:** Use the user profile, but set the year vector value to `0.0`.
 
 ### Similarity Measure
 
-We know have multiple profiles, but to actually get to recommending films, we need a similarity measure. Since the films are represented using vectors, **cosine similarity** was the clear choice.
+We know have multiple profiles, but to actually recommend films, we need a similarity measure. Since the films are represented using vectors, **cosine similarity** was the clear choice.
+
+Let's take the **favourites profile** as an example: this vector is compared (using a cosine similarity calculation) with every unseen film in the dataset, the films are ranked by similarity and the top 6 films are chosen as recommendations. This process is repeated for all the other profiles: recents, international, etc.
+
+### Reinforcement Learning
+
+Users can react to a given recommendation through a thumbs up/down feature. What we want is that when a user gives a thumbs up, it strengthens the qualities that recommended the film, and likewise weakens the qualities with a thumbs down.
+
+To give an example: let's suppose the year value of a profile is `0.4`: this translates to the year 2003. Based on this profile, we recommend *The Dark Knight*, released in 2008 with a year value of `0.42`. If the user gives a thumbs up to this recommendation, the year value of the profile will move 20% towards the year value of the recommendation. In this example, the year value of the profile will move from `0.4` to `0.404`.
+
+### Regeneration
+
+After a user has responded to some of their recommendations, they have the ability to completely regenerate recommendations. The new recommendations will factor in their positive and negative feedback of the previous recommendations.
 
 # Project Architecture
 
