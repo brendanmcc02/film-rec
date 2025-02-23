@@ -66,7 +66,7 @@ const App = () => {
       <div style={backgroundStyle}></div>
       <div className='title-and-subtitle-container'>
         <h1 className="home-title">FILM REC</h1>
-        <h3 className='home-text-italic'>A film recommendation web app.</h3>
+        <h3 className='home-subtitle'>A film recommendation web app.</h3>
       </div>
       <div className='text-and-file-select-upload-container'>
         <div className="home-text-container">
