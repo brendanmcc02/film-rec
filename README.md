@@ -4,13 +4,41 @@ A film recommendation web app. Films are recommended based on user-submitted IMD
 
 Before starting the project, I was interested in ML and Data Science, so I wanted to work on a project related to this. I love films, so when it came to thinking about what kind of project to do, a recommendation web app was the clear answer.
 
-## Recommendation Algorithm
+# The Recommendation Algorithm
 
-I read the book *Recommender Systems: The Textbook by Charu C. Aggarwal* to learn about recommendation algorithms and what to consider. Collaborative filtering is...
+## Theory
 
-## Project Architecture
+### Mathematical Representation
 
-## How to test locally
+Every film is represented as a vector, where values range from `0` to `1.0`. The vectors have 100 dimensions: 
+
+* 1 each for year, imdbRating, numberOfVotes and runtime
+* 23 for each genre
+* 73 for each country
+
+The year value is normalised - so the oldest film in the dataset will have a year value of `0.0`, whereas the newest film in the dataset will have a year value of `1.0`. The same is true for imdbRating, numberOfVotes and runtime. For example, *Shawshank Redemption* will have an imdbRating value of `1.0` because it has the highest imdbRating in the dataset, and *Sherlock Jr.* will have a runtime value of `0.0` because it has the shortest runtime in the dataset.
+
+The next 23 dimensions in the vector are reserved for genres, and the 73 dimensions after that are reserved for countries. The countries and genres of a film were converted using **one-hot encoding.** For example, *The Godfather* has crime and drama as it's genres, so the vector indexes associated with crime and drama will be set to `1.0`, while the other genres in the vector will stay at `0.0`. It is an American film, so the vector index associated with America will be set to `1.0`, and all other countries will stay at `0.0`.
+
+We can now represent films as mathematical objects, which is crucial for machine learning.
+
+### Positive Preference Weighting
+
+On IMDB and Letterboxd, users rate films on a scale of 1-10. We want our recommendation system to be strongly influenced by films that the user liked most, and less influenced by films that the user did not like. Let's suppose you rated *The Dark Knight* 8/10, and *Iron Man* 4/10. In the user dataset, the vector that represents *The Dark Knight* will be scalar multiplied by `0.8`, whereas the vector that represents *Iron Man* will be scalar multiplied by `0.4`. This ensures that the qualities of *The Dark Knight* will have more influence on the recommendation algorithm than the qualities of *Iron Man*.
+
+### Time Weighting
+
+User preferences change over time. A good recommendation algorithm places more value on **recent** ratings over **older** ones. For example, let's say you gave *Whiplash* a 9/10 three years ago (the oldest rating in your dataset), and yesterday you gave *Parasite* a 9/10. The films in the user dataset are scalar multiplied by a value between `0.8` and `1.0`. So, the vector that represents *Whiplash* will be scalar multiplied by `0.8`, whereas the vector that represents *Parasite* will be scalar multiplied by `1.0`.
+
+## Recommender Systems
+
+I read the book *Recommender Systems: The Textbook by Charu C. Aggarwal* to learn about the many types of recommendation algorithms. One of which is **Content-based filtering**: recommendations are made for a user **based solely on what they watched.** For example, if a user liked *La La Land*, then they will be recommended romantic musical films in the 2010s. Another type is **Collaborative filtering**: recommendations are made based on **what other users with similar taste also liked.** For example, the user will be recommended films that were also liked by people who enjoyed *La La Land*.
+
+Each approach has their unique advantages and disadvantages, so the most sophisticated recommendation algorithms employ both techniques. My algorithm uses only content-based filtering.
+
+# Project Architecture
+
+# How to test locally
 
 * Clone the repository and checkout to the `local-deployment` branch.
 * Open 2 instances of the terminal. We will download dependencies and run both the frontend and the backend.
@@ -31,4 +59,4 @@ I read the book *Recommender Systems: The Textbook by Charu C. Aggarwal* to lear
 * npm should open the front page in localhost
     * If not, try go to [localhost:3000](http://localhost:3000)
 
-## Acknowledgements
+# Acknowledgements
