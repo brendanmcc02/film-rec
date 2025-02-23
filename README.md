@@ -2,7 +2,7 @@
 
 A film recommendation web app. Films are recommended based on user-submitted IMDB or Letterboxd data. I built the recommendation algorithm from scratch - no external ML libraries were used. This took me one year, and I was working on it as a side project, both for fun and learning.
 
-Before starting the project, I was interested in ML and Data Science, so I wanted to work on a project related to this. I love films, so when it came to thinking about what kind of project to do, a recommendation web app was the clear answer.
+Before starting the project, I was interested in ML and Data Science. I love films, so when it came to thinking about what kind of project to do, a recommendation web app was a clear intersection between these passions.
 
 # The Recommendation Algorithm
 
@@ -15,7 +15,7 @@ Each approach has their unique advantages and disadvantages, so the most sophist
 According to Aggarwal, the most important aspects of a good recommendation system is:
 
 * **Diversity:** Recommending many types of films, not just one.
-* **Novelty:**  Recommending films the user is not aware of.
+* **Novelty:**  Recommending films the user is not aware of. Not just recommending obvious hits.
 * **Serendipity:** Similar, but slightly different to novelty. Recommending genuinely unexpected, yet good films. It made a connection that you never realised yourself.
 * **Trust through interpretation:** Explaining to the user why the film was recommended. For example: *"Because you liked American Romance Films"*.
 
@@ -25,9 +25,9 @@ According to Aggarwal, the most important aspects of a good recommendation syste
 
 Every film is represented as a vector, where values range from `0` to `1.0`. The vectors have 100 dimensions: 
 
-* 1 each for year, imdbRating, numberOfVotes and runtime
-* 23 for each genre
-* 73 for each country
+* 1 dimension each for year, imdbRating, numberOfVotes and runtime
+* 23 dimensions for each genre
+* 73 dimensions for each country
 
 The year value is normalised - so the oldest film in the dataset will have a year value of `0.0`, whereas the newest film in the dataset will have a year value of `1.0`. The same is true for imdbRating, numberOfVotes and runtime. For example, *Shawshank Redemption* will have an imdbRating value of `1.0` because it has the highest imdbRating in the dataset, and *Sherlock Jr.* will have a runtime value of `0.0` because it has the shortest runtime in the dataset.
 
@@ -35,7 +35,7 @@ The next 23 dimensions in the vector are reserved for genres, and the 73 dimensi
 
 Below you will find a concrete example of *12 Angry Men* being vectorized:
 
-```json
+```java
 [
     0.38, // year: 1957
     0.96, // imdbRating: 9.0
@@ -56,11 +56,11 @@ Below you will find a concrete example of *12 Angry Men* being vectorized:
 ]
 ```
 
-> In reality, the attributes of the film are weighted differently according to their significance. Year is a value between `0.0` and `0.5`, imdbRating, numberOfVotes & countries between `0.0` and `1.0`, runtime between `0.0` and `0.3` and genres between `0.0` and `0.7`. I omitted this from the example to keep things simple, but it's worth noting.
+> In reality, the attributes of the film are weighted differently according to their significance. Year is a value between `0.0` and `0.5`, imdbRating, numberOfVotes and countries between `0.0` and `1.0`, runtime between `0.0` and `0.3` and genres between `0.0` and `0.7`. I omitted this from the example to keep things simple, but it's worth noting.
 
 ### Positive Preference Weighting
 
-On IMDB and Letterboxd, users rate films on a scale of 1-10. We want our recommendation system to be strongly influenced by films that the user liked most, and less influenced by films that the user did not like. Let's suppose you rated *The Dark Knight* 8/10, and *Iron Man* 4/10. In the user dataset, the vector that represents *The Dark Knight* will be scalar multiplied by `0.8`, whereas the vector that represents *Iron Man* will be scalar multiplied by `0.4`. This ensures that the qualities of *The Dark Knight* will have more influence on the recommendation algorithm than the qualities of *Iron Man*.
+On IMDB and Letterboxd, users rate films on a scale of 1-10. We want our recommendation system to be **strongly influenced** by films that the user **liked most,** and **less influenced** by films that the user **did not like**. Let's suppose you rated *The Dark Knight* 8/10, and *Iron Man* 4/10. In the user dataset, the vector that represents *The Dark Knight* will be scalar multiplied by `0.8`, whereas the vector that represents *Iron Man* will be scalar multiplied by `0.4`. This ensures that the qualities of *The Dark Knight* will have more influence on the recommendation algorithm than the qualities of *Iron Man*.
 
 ### Time Weighting
 
@@ -70,7 +70,7 @@ User preferences change over time. A good recommendation algorithm places more v
 
 Now, a user's films have been vectorized and weighted according to their liking of the film and how recent they rated it. We need some way to aggregate their preferences into a **profile**, and then recommend films similar to that profile. In our case, the profile will also be a 100-dimensional vector with the same features: year, imdbRating, numberOfVotes, runtime, genres and countries.
 
-Mathematically, this can be achieved by taking a **weighted average** of all the vectors in the user dataset, and aggregating the results into one vector. This is known as a **user profile**: one vector to rule them all. Theoretically, this sounds ideal, but in reality, the recommendations were not diverse, and in my testing I found that only one type of film was being recommended to the user. With my user data, only Drama films were being recommended.
+Mathematically, this can be achieved by taking a **weighted average** of all the vectors in the user dataset, and aggregating the results into one vector. This is known as a **user profile**: one vector to rule them all. Theoretically, this sounds ideal, but in reality, the recommendations were not diverse, and in my testing I found that only one type of film was being recommended to the user. For example, with my user data, only Drama films were being recommended.
 
 ### Diverse Recommendations
 
@@ -90,7 +90,7 @@ Let's take the **favourites profile** as an example: this vector is compared (us
 
 ### Reinforcement Learning
 
-Users can react to a given recommendation through a thumbs up/down feature. What we want is that when a user gives a thumbs up, it strengthens the qualities that recommended the film, and likewise weakens the qualities with a thumbs down.
+Users can react to a given recommendation through a thumbs up/down feature. What we want is that when a user gives a **thumbs up**, it **strengthens** the qualities that recommended the film, and likewise **weakens** the qualities with a **thumbs down.**
 
 To give an example: let's suppose the year value of a profile is `0.4`: this translates to the year 2003. Based on this profile, we recommend *The Dark Knight*, released in 2008 with a year value of `0.42`. If the user gives a thumbs up to this recommendation, the year value of the profile will move 20% towards the year value of the recommendation. In this example, the year value of the profile will move from `0.4` to `0.404`.
 
