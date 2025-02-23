@@ -13,7 +13,8 @@ NUMBER_OF_VOTES_THRESHOLD = 25000
 
 
 def main():
-    runScript = False
+    baseImdbUrl = 'https://www.imdb.com/title/'
+    runScript = True
 
     if runScript:
         print("\nImporting title.basics.tsv...")
@@ -80,7 +81,8 @@ def main():
                 'numberOfVotes': film['numberOfVotes'],
                 'runtime': film['runtime'],
                 'runtimeHoursMinutes': convertRuntimeToHoursMinutes(film['runtime']),
-                'genres': film['genres']
+                'genres': film['genres'],
+                'imdbUrl': baseImdbUrl + film['id']
             }
 
             for genre in film['genres']:

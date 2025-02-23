@@ -236,7 +236,7 @@ my-film-data-vec.json to file
 - [x] horizontal overflow on rating-runtime-genre
 - [x] move text around on home screen
 - [x] add note about patience
-- [ ] add film imdb url
+- [x] add film imdb url
 
 # README
 - [ ] do `README.md`

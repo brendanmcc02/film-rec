@@ -97,7 +97,7 @@ const App = () => {
                 <div className='film-details'>
                 <div className='film-title-and-year-container'>
                     <h2 className='film-title-and-year opacity-fade-in'>{film.title}&nbsp;({film.year})</h2>
-                    <h2 className='film-info'><a href={`https://www.imdb.com/title/${film.id}`}><FaInfoCircle /></a></h2>
+                    <h2 className='film-info'><a href={film.imdbUrl}><FaInfoCircle /></a></h2>
                 </div>
                     <div className='film-rating-runtime-genres-container opacity-fade-in'>
                         <h3 className='star'><FaRegStar /></h3>
