@@ -281,14 +281,26 @@ input[type="file"] {
 }
 
 .text-and-file-select-upload-container {
-    position: relative;
+    position: absolute;
     z-index: 1;
     display: flex;
     flex-direction: row; /* Change from row to column */
     align-items: center; /* Centers horizontally */
     justify-content: center; /* Centers vertically */
     height: 100vh; /* Full viewport height for proper centering */
+    width: 100vw;
   }
+
+.title-and-subtitle-container {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers horizontally */
+    width: 100vw;
+    color: white;
+    margin-top: 15vh;
+}
 
 .created-by-container {
     position: absolute;

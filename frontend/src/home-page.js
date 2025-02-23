@@ -64,10 +64,12 @@ const App = () => {
   return (
     <>
       <div style={backgroundStyle}></div>
+      <div className='title-and-subtitle-container'>
+        <h1 className="home-title">FILM REC</h1>
+        <h3 className='home-text-italic'>A film recommendation web app.</h3>
+      </div>
       <div className='text-and-file-select-upload-container'>
         <div className="home-text-container">
-          <h1 className="home-title">FILM REC</h1>
-          <h3 className='home-text-italic'>A film recommendation web app.</h3>
           <h3 className='home-text'>Letterboxd users: Upload your <a
               href="https://letterboxd.com/data/export"><u>ratings.csv</u></a> file.</h3>
           <h3 className='home-text'>IMDB Users: Upload your <a href="https://www.imdb.com/exports/?ref_=rt"><u>exported
