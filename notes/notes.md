@@ -1,3 +1,5 @@
+*My digital scribbles and ideas.*
+
 # Main Takeaways from the Recommender Systems textbook
 * Recall the aspects of a good recommender system - think about novelty, diversity and serendipity
   * **Diversity** - I'm thinking of implementing clustering as opposed to just one user profile

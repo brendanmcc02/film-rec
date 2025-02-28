@@ -1,5 +1,7 @@
 # Recommender Systems Notes
 
+*Notes I made while reading the **Recommender Systems: The Textbook by Charu C. Aggarwal**.*
+
 # Chapter 1 - Introduction
 
 ## A Good Recommender System:

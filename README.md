@@ -205,6 +205,7 @@ The frontend was designed using React JS. I wanted a sleek and minimalist design
 # How to test locally
 
 * Clone the repository and checkout to the `local-deployment` branch.
+* If you want to run the shell script to fetch and produce the datasets, you will need a TMDb API key. Store this in a file called `access-token.txt` at the repository level.
 * Open 2 instances of the terminal. We will download dependencies and run both the frontend and the backend.
 * In one terminal, run the following commands for the backend.
     ```sh

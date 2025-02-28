@@ -1,4 +1,4 @@
-# downloads, filters, and produces all-film-data.json
+# downloads, filters, and produces multiple .json files.
 
 clear
 cd ..
@@ -40,4 +40,3 @@ if test -f title.basics.tsv; then
 else
   printf "\n all-film-data.json was initialised >1 days ago, so the script was not run.\n"
 fi
-
