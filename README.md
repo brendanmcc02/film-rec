@@ -146,6 +146,10 @@ To give an example: let's suppose the year value of the favourites profile is `0
 
 After a user has responded to some of their recommendations, they have the ability to completely regenerate recommendations. The new recommendations will factor in their positive and negative feedback of the previous recommendations.
 
+### The Final Result
+
+![recommendations-page](images/recommendations-page.png "Recommendations Page")
+
 # Project Architecture
 
 # How to test locally
