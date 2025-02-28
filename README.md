@@ -177,12 +177,30 @@ We know have a dataset of films stored in a `.json` file. Below, you'll find an 
         "American"
     ],
     "poster": "https://image.tmdb.org/t/p/w500/ow3wq89wM8qd5X7hWKxiRfsFf9C.jpg",
-    "summary": "The defense and the prosecution have rested and the 
-        jury is filing into the jury room..."
+    "summary": "The defense and the prosecution have rested and the jury is filing into the jury room..."
 },
 ```
 
 > In order to make my web app compatible with IMDb and Letterboxd, I had to additionally store the Letterboxd `title` and Letterboxd `year` of the films, because in some rare cases they differ between the platforms - and yes, this was a headache.
+
+## Backend
+
+The backend was powered by Python Flask, allowing API endpoints to be exposed to the frontend. The service was deployed using [render](https://render.com/).
+
+In recommender systems, there is an immense amount of computation involved in generating recommendations. As a result, the computation can be divided into two phases:
+
+* **Online Phase:** Any computation that **must** be done on the fly. This generally occurs as the user is interacting with the system in real time.
+    * For example: when a user uploads their film data, their data is processed in real-time. It's not possible to do this computation at another time.
+    * You want as little computation as possible in this phase, in order to make the experience seamless and efficient for the end-user.
+* **Offline Phase:** Any computation that can happen when the user isn't interacting with the system.
+    * For example: the film dataset can be generated once every 24 hours. It doesn't **need** to be regenerated everytime a user queries their recommendations.
+    * You want as much of your computation as possible in this phase, in order to lighten the load of the online phase.
+
+## Frontend
+
+The frontend was designed using React JS. I wanted a sleek and minimalist design. Below is the home page:
+
+![home-page](images/home-page.png "Home Page")
 
 # How to test locally
 
@@ -206,3 +224,7 @@ We know have a dataset of films stored in a `.json` file. Below, you'll find an 
     * If not, try go to [localhost:3000](http://localhost:3000)
 
 # Acknowledgements
+
+I want to thank my older brother for his guidance and advice, particularly in the early stages of development. He gave me many insightful ideas regarding the recommendation algorithm.
+
+I would also like to thank my friends for sending me their Letterboxd data. This was a great help when testing the results of my recommendations, and allowed me to make the recommendations as good as I could.

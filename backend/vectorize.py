@@ -329,7 +329,6 @@ def isNonZeroIndexValueNotAmericanOrBritish(index, allCountries, countryStartInd
             allCountries[index - countryStartIndex] != "British")
 
 
-
 # used to curve genre/country values according to max genre/country value
 def curveAccordingToMax(profileVector, list, weight, startIndex):
     endIndex = startIndex + len(list)
