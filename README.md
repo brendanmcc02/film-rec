@@ -152,6 +152,38 @@ After a user has responded to some of their recommendations, they have the abili
 
 # Project Architecture
 
+## Data Retrieval
+
+IMDb provides a public dataset of every movie, TV show, episode, short-film - you name it. I configured a shell script that downloads these datasets, filters out only films with >=25,000 votes and >=40 minute runtime. However, these datasets only contain basic information about a film: `title`, `year`, `imdbRating`, `numberOfVotes`, `runtime` and `genres`. In order to obtain more information about the film, I call the TMDb API service to find the relevant films in the dataset, and augment them with `countries`, `summary` and `poster`. Since the free TMDb service is rate limited, the responses are cached so no redundant calls are made.
+
+We know have a dataset of films stored in a `.json` file. Below, you'll find an example of how the film is stored:
+
+```json
+"tt0050083": {
+    "title": "12 Angry Men",
+    "letterboxdTitle": "12 Angry Men",
+    "year": 1957,
+    "letterboxdYear": 1957,
+    "imdbRating": 9.0,
+    "numberOfVotes": 913170,
+    "runtime": 96,
+    "runtimeHoursMinutes": "1h36m",
+    "genres": [
+        "Crime",
+        "Drama"
+    ],
+    "imdbUrl": "https://www.imdb.com/title/tt0050083",
+    "countries": [
+        "American"
+    ],
+    "poster": "https://image.tmdb.org/t/p/w500/ow3wq89wM8qd5X7hWKxiRfsFf9C.jpg",
+    "summary": "The defense and the prosecution have rested and the 
+        jury is filing into the jury room..."
+},
+```
+
+> In order to make my web app compatible with IMDb and Letterboxd, I had to additionally store the Letterboxd `title` and Letterboxd `year` of the films, because in some rare cases they differ between the platforms - and yes, this was a headache.
+
 # How to test locally
 
 * Clone the repository and checkout to the `local-deployment` branch.
