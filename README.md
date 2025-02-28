@@ -185,7 +185,7 @@ We know have a dataset of films stored in a `.json` file. Below, you'll find an 
 
 ## Backend
 
-The backend was powered by Python Flask, allowing API endpoints to be exposed to the frontend. The service was deployed using [render](https://render.com/).
+The backend was powered by Python Flask, allowing API endpoints to be exposed to the frontend. The service is deployed [here](https://film-rec-backend.onrender.com)
 
 In recommender systems, there is an immense amount of computation involved in generating recommendations. As a result, the computation can be divided into two phases:
 
@@ -198,7 +198,7 @@ In recommender systems, there is an immense amount of computation involved in ge
 
 ## Frontend
 
-The frontend was designed using React JS. I wanted a sleek and minimalist design. Below is the home page:
+The frontend was designed using React JS. It is being hosted [here](https://film-rec.onrender.com). I wanted a sleek and minimalist design Below is the home page:
 
 ![home-page](images/home-page.png "Home Page")
 
