@@ -239,14 +239,14 @@ my-film-data-vec.json to file
 - [x] add film imdb url
 
 # README
-- [ ] do `README.md`
+- [x] do `README.md`
 
 # Other
-- [ ] linkedin projects section
-- [ ] update on resume
+- [ ] record demo
 - [ ] create `local-deployment` branch with changes:
     * `app.run(host="localhost", port=60000)`
     * fetch URLS: `(https://film-rec-backend.onrender.com/verifyUserUploadedFile)` 
         -> `(/verifyUserUploadedFile)`
     * get rid of CORS stuff
-- [ ] record demo
+- [ ] linkedin projects section
+- [ ] update on resume
