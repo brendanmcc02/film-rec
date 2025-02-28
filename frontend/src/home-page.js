@@ -58,10 +58,10 @@ const App = () => {
         <div className="home-text-container">
           <h3 className='home-text'>Letterboxd users: Upload your <a
               href="https://letterboxd.com/data/export"><u>ratings.csv</u></a> file.</h3>
-          <h3 className='home-text'>IMDB Users: Upload your <a href="https://www.imdb.com/exports/?ref_=rt"><u>exported
+          <h3 className='home-text'>IMDB Users: Upload your <a href="https://www.imdb.com/exports/?ref_=rt" target="_blank"><u>exported
             ratings .csv</u></a> file.</h3>
             <h3 className='home-text'>Don't have a Letterboxd or IMDB account? Use 
-              <a href="https://github.com/brendanmcc02/film-rec/blob/main/database/sample-letterboxd-data.csv">
+              <a href="https://github.com/brendanmcc02/film-rec/blob/main/database/sample-letterboxd-data.csv" target="_blank">
               <u> this</u></a> sample dataset.</h3>
         </div>
 
@@ -90,13 +90,13 @@ const App = () => {
       </div>
       <div className='created-by-container'>
         <h3 className='additional-italic-text'>
-          Created by <a href="https://github.com/brendanmcc02/"><u>Brendan McCann.</u></a>
+          Created by <a href="https://github.com/brendanmcc02/" target="_blank"><u>Brendan McCann.</u></a>
         </h3>
       </div>
       <div className='behind-the-scenes-container'>
         <h3 className='additional-italic-text'>
           Interested in how it works? 
-          See <a href="https://github.com/brendanmcc02/film-rec/blob/main/README.md"><u>here.</u></a>
+          See <a href="https://github.com/brendanmcc02/film-rec/blob/main/README.md" target="_blank"><u>here.</u></a>
         </h3>
       </div>
     </>
