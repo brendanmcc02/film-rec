@@ -1,3 +1,5 @@
+# the python flask backend service. contains methods that expose API endpoints and other utility methods.
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime

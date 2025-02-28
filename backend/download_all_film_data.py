@@ -1,4 +1,5 @@
-# this is intended to be run using `init-all-film-data.sh`, not as a standalone file
+# downloads the publicly available imdb datasets.
+# this is intended to be run using `init-all-film-data.sh`, not as a standalone file.
 
 import urllib.request
 from datetime import datetime, timedelta

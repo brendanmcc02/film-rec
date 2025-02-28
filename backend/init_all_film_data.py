@@ -1,4 +1,7 @@
-# this is intended to be run using `init-all-film-data.sh`, not as a standalone file
+# after the raw imdb datasets have been downloaded, import and filter the datasets, 
+# then call the TMDb API service to augment additional data. this produces many .json
+# files to be used by the backend service.
+# this is intended to be run using `init-all-film-data.sh`, not as a standalone file.
 
 import json
 import csv

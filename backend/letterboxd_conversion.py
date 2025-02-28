@@ -1,3 +1,5 @@
+# contains utilities to allow letterboxd files to be converted to the imdb format.
+
 expectedLetterboxdFileFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating"]
 
 
