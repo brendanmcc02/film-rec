@@ -242,6 +242,7 @@ my-film-data-vec.json to file
 - [x] do `README.md`
 
 # Other
+- [ ] upload zip file instead of ratings.csv
 - [ ] record demo
 - [x] create `local-deployment` branch with changes:
     * `app.run(host="localhost", port=60000)`
