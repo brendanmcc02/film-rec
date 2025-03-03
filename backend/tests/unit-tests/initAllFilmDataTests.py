@@ -1,12 +1,19 @@
 import pytest
 import json
+import os
+import sys
 
-allFilmDataFileLocation = "../../database/all-film-data.json"
-cachedTmdbFilmDataLocation = "../../database/cached-tmdb-film-data.json"
-cachedLetterboxdTitlesLocation = "../../database/cached-letterboxd-titles.json"
-allFilmDataVectorizedLocation = "../../database/all-film-data-vectorized.json"
-allFilmDataVectorizedMagnitudesLocation = "../../database/all-film-data-vectorized-magnitudes.json"
-cacheLocation = "../../database/cache.json"
+absolutePath = os.path.dirname(os.path.abspath(__file__))
+parentDirectoryOfAbsolutePath = os.path.dirname(os.path.dirname(absolutePath))
+sys.path.append(parentDirectoryOfAbsolutePath)
+import initAllFilmData
+
+allFilmDataFileLocation = "../../../database/all-film-data.json"
+cachedTmdbFilmDataLocation = "../../../database/cached-tmdb-film-data.json"
+cachedLetterboxdTitlesLocation = "../../../database/cached-letterboxd-titles.json"
+allFilmDataVectorizedLocation = "../../../database/all-film-data-vectorized.json"
+allFilmDataVectorizedMagnitudesLocation = "../../../database/all-film-data-vectorized-magnitudes.json"
+cacheLocation = "../../../database/cache.json"
 
 def test_allFilmDataFileExists():
     try:
@@ -170,3 +177,10 @@ def test_cache():
     assert 'profileVectorLength' in cache
     assert cache['profileVectorLength'] != None
     assert cache['profileVectorLength'] > 0
+
+def test_convertRuntimeToHoursMinutes():
+    assert initAllFilmData.convertRuntimeToHoursMinutes(60) == "1h"
+    assert initAllFilmData.convertRuntimeToHoursMinutes(120) == "2h"
+    
+    assert initAllFilmData.convertRuntimeToHoursMinutes(40) == "40m"
+    assert initAllFilmData.convertRuntimeToHoursMinutes(100) == "1h40m"
