@@ -61,7 +61,7 @@ const App = () => {
           <h3 className='home-text'>IMDB Users: Upload your <a href="https://www.imdb.com/exports/?ref_=rt" target="_blank"><u>exported
             ratings .csv</u></a> file.</h3>
             <h3 className='home-text'>Don't have a Letterboxd or IMDB account? Use 
-              <a href="https://github.com/brendanmcc02/film-rec/blob/main/database/sample-letterboxd-data.csv" target="_blank">
+              <a href="https://github.com/brendanmcc02/film-rec/blob/main/sample-letterboxd-data.csv" target="_blank">
               <u> this</u></a> sample dataset.</h3>
         </div>
 
