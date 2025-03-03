@@ -106,7 +106,7 @@ def verifyUserUploadedFile():
 
         return "Upload Success.", 200
     except Exception as e:
-        deleteCsvFiles()
+        deleteCsvFilesFromDatabase()
         return f"Error occurred with reading {userFilmDataFilename}.\n{e}", 400
 
 
@@ -134,10 +134,10 @@ def initRowsOfRecommendations():
             for row in reader:
                 userFilmDataList.append(row)
     except Exception as e:
-        deleteCsvFiles()
+        deleteCsvFilesFromDatabase()
         return f"Error occurred with reading {userFilmDataFilename}.\n" + str(e), 400
 
-    deleteCsvFiles()
+    deleteCsvFilesFromDatabase()
     allFilmDataFile = open('../database/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
 
@@ -439,7 +439,7 @@ def loadJsonFiles():
     return "Files read successfully", 200
 
 
-def deleteCsvFiles():
+def deleteCsvFilesFromDatabase():
     for file in glob.glob("../database/*.csv"):
         os.remove(file)
 

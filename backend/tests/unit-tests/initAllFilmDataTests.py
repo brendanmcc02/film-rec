@@ -151,20 +151,20 @@ def test_cache():
     assert 'normalizedYears' in cache
 
     for normalizedYear in cache['normalizedYears']:
-        assert (cache['normalizedYears'][normalizedYear] >= 0.0  
-                and cache['normalizedYears'][normalizedYear] <= 1.0)
+        assert cache['normalizedYears'][normalizedYear] >= 0.0  
+        assert cache['normalizedYears'][normalizedYear] <= 1.0
 
     assert 'normalizedImdbRatings' in cache
 
     for normalizedImdbRating in cache['normalizedImdbRatings']:
-        assert (cache['normalizedImdbRatings'][normalizedImdbRating] >= 0.0 
-                and cache['normalizedImdbRatings'][normalizedImdbRating] <= 1.0)
+        assert cache['normalizedImdbRatings'][normalizedImdbRating] >= 0.0 
+        assert cache['normalizedImdbRatings'][normalizedImdbRating] <= 1.0
 
     assert 'normalizedRuntimes' in cache
 
     for normalizedRuntime in cache['normalizedRuntimes']:
-        assert (cache['normalizedRuntimes'][normalizedRuntime] >= 0.0 
-                and cache['normalizedRuntimes'][normalizedRuntime] <= 1.0)
+        assert cache['normalizedRuntimes'][normalizedRuntime] >= 0.0 
+        assert cache['normalizedRuntimes'][normalizedRuntime] <= 1.0
 
     assert 'minNumberOfVotes' in cache
     assert cache['minNumberOfVotes'] != None

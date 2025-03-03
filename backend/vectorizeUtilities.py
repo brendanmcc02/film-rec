@@ -306,7 +306,7 @@ def initInternationalProfile(userProfile, allCountries, allGenresLength, profile
                 maxCountryIndex = index
 
             if isNonZeroIndexValueNotAmericanOrBritish(index, allCountries, countryStartIndex, 
-                                                    internationalProfile['profile'][index]):
+                                                       internationalProfile['profile'][index]):
                 hasUserOnlyWatchedAmericanOrBritishFilms = False
 
     if hasUserOnlyWatchedAmericanOrBritishFilms:
