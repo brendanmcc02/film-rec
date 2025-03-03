@@ -4,6 +4,9 @@ import json
 allFilmDataFileLocation = "../../database/all-film-data.json"
 cachedTmdbFilmDataLocation = "../../database/cached-tmdb-film-data.json"
 cachedLetterboxdTitlesLocation = "../../database/cached-letterboxd-titles.json"
+allFilmDataVectorizedLocation = "../../database/all-film-data-vectorized.json"
+allFilmDataVectorizedMagnitudesLocation = "../../database/all-film-data-vectorized-magnitudes.json"
+cacheLocation = "../../database/cache.json"
 
 def test_allFilmDataFileExists():
     try:
@@ -186,3 +189,64 @@ def test_cachedLetterboxdTitles():
             for year in film['years']:
                 assert year != None
                 assert year > 0
+
+def test_allFilmDataVectorized():
+    allFilmDataVectorizedFile = open(allFilmDataVectorizedLocation)
+    allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+
+    for filmId in allFilmDataVectorized:
+        assert len(allFilmDataVectorized[filmId]) > 0
+        
+        for dimension in allFilmDataVectorized[filmId]:
+            assert dimension >= 0.0 and dimension <= 1.0
+
+def test_allFilmDataVectorizedMagnitudes():
+    allFilmDataVectorizedMagnitudesFile = open(allFilmDataVectorizedMagnitudesLocation)
+    allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
+
+    for filmId in allFilmDataVectorizedMagnitudes:
+        assert allFilmDataVectorizedMagnitudes[filmId] != None
+
+def test_cache():
+    cacheFile = open(cacheLocation)
+    cache = json.load(cacheFile)
+
+    assert 'allGenres' in cache
+
+    for genre in cache['allGenres']:
+        assert genre != ""
+
+    assert 'allCountries' in cache
+
+    for country in cache['allCountries']:
+        assert country != ""
+
+    assert 'normalizedYears' in cache
+
+    for normalizedYear in cache['normalizedYears']:
+        assert (cache['normalizedYears'][normalizedYear] >= 0.0 
+                and cache['normalizedYears'][normalizedYear] <= 1.0)
+
+    assert 'normalizedImdbRatings' in cache
+
+    for normalizedImdbRating in cache['normalizedImdbRatings']:
+        assert (cache['normalizedImdbRatings'][normalizedImdbRating] >= 0.0 
+                and cache['normalizedImdbRatings'][normalizedImdbRating] <= 1.0)
+
+    assert 'normalizedRuntimes' in cache
+
+    for normalizedRuntime in cache['normalizedRuntimes']:
+        assert (cache['normalizedRuntimes'][normalizedRuntime] >= 0.0 
+                and cache['normalizedRuntimes'][normalizedRuntime] <= 1.0)
+
+    assert 'minNumberOfVotes' in cache
+    assert cache['minNumberOfVotes'] != None
+    assert cache['minNumberOfVotes'] > 0
+
+    assert 'diffNumberOfVotes' in cache
+    assert cache['diffNumberOfVotes'] != None
+    assert cache['diffNumberOfVotes'] >= 0
+
+    assert 'profileVectorLength' in cache
+    assert cache['profileVectorLength'] != None
+    assert cache['profileVectorLength'] > 0
