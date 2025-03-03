@@ -2,6 +2,7 @@ import pytest
 import json
 
 allFilmDataFileLocation = "../../database/all-film-data.json"
+cachedTmdbFilmDataLocation = "../../database/cached-tmdb-film-data.json"
 
 def test_allFilmDataFileExists():
     try:
@@ -128,3 +129,44 @@ def test_allFilmsHaveValidSummaries():
         assert 'summary' in allFilmData[filmId]
         assert allFilmData[filmId]['summary'] != ""
 
+def test_allCachedTmdbFilmsHaveValidLetterboxdTitles():
+    cachedTmdbFilmDataFile = open(cachedTmdbFilmDataLocation)
+    cachedTmdbFilmData = json.load(cachedTmdbFilmDataFile)
+
+    for filmId in cachedTmdbFilmData:
+        assert 'letterboxdTitle' in cachedTmdbFilmData[filmId]
+        assert cachedTmdbFilmData[filmId]['letterboxdTitle'] != ""
+
+def test_allCachedTmdbFilmsHaveValidLetterboxdYears():
+    cachedTmdbFilmDataFile = open(cachedTmdbFilmDataLocation)
+    cachedTmdbFilmData = json.load(cachedTmdbFilmDataFile)
+
+    for filmId in cachedTmdbFilmData:
+        assert 'letterboxdYear' in cachedTmdbFilmData[filmId]
+        assert cachedTmdbFilmData[filmId]['letterboxdYear'] != None
+
+def test_allCachedTmdbFilmsHaveValidCountries():
+    cachedTmdbFilmDataFile = open(cachedTmdbFilmDataLocation)
+    cachedTmdbFilmData = json.load(cachedTmdbFilmDataFile)
+
+    for filmId in cachedTmdbFilmData:
+        assert 'countries' in cachedTmdbFilmData[filmId]
+
+        for country in cachedTmdbFilmData[filmId]['countries']:
+            assert country != ""
+
+def test_allCachedTmdbFilmsHaveValidLetterboxdPosters():
+    cachedTmdbFilmDataFile = open(cachedTmdbFilmDataLocation)
+    cachedTmdbFilmData = json.load(cachedTmdbFilmDataFile)
+
+    for filmId in cachedTmdbFilmData:
+        assert 'poster' in cachedTmdbFilmData[filmId]
+        assert cachedTmdbFilmData[filmId]['poster'] != ""
+
+def test_allCachedTmdbFilmsHaveValidLetterboxdSummaries():
+    cachedTmdbFilmDataFile = open(cachedTmdbFilmDataLocation)
+    cachedTmdbFilmData = json.load(cachedTmdbFilmDataFile)
+
+    for filmId in cachedTmdbFilmData:
+        assert 'summary' in cachedTmdbFilmData[filmId]
+        assert cachedTmdbFilmData[filmId]['summary'] != ""
