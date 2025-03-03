@@ -8,9 +8,9 @@ import csv
 import numpy as np
 import os
 import glob
-from vectorize import *
-from init_all_film_data import RUNTIME_THRESHOLD, NUMBER_OF_VOTES_THRESHOLD
-from letterboxd_conversion import *
+from vectorizeUtilities import *
+from initAllFilmData import RUNTIME_THRESHOLD, NUMBER_OF_VOTES_THRESHOLD
+from letterboxdConversionUtilities import *
 
 DATE_RATED_WEIGHT = 0.8
 NUMBER_OF_RECOMMENDATIONS_PER_ROW = 6

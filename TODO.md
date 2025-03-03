@@ -242,6 +242,7 @@ my-film-data-vec.json to file
 - [x] do `README.md`
 
 # Other
+- [x] rename files to lowerCamelCase
 - [ ] record demo
 - [x] create `local-deployment` branch with changes:
     * `app.run(host="localhost", port=60000)`
@@ -250,3 +251,7 @@ my-film-data-vec.json to file
     * get rid of CORS stuff
 - [ ] linkedin projects section
 - [ ] update on resume
+
+# Tests
+
+## Unit Tests

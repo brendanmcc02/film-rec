@@ -7,7 +7,7 @@ import json
 import csv
 import time
 import requests
-from vectorize import *
+from vectorizeUtilities import *
 
 RUNTIME_THRESHOLD = 40
 NUMBER_OF_VOTES_THRESHOLD = 25000
