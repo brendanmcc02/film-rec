@@ -86,7 +86,8 @@ def cosineSimilarity(a, b, aMagnitude, bMagnitude):
     return np.dot(a, b) / (aMagnitude * bMagnitude)
 
 
-def keepVectorBoundary(vector, profileVectorLength):
+def keepVectorBoundary(vector):
+    profileVectorLength = len(vector)
     for i in range(0, profileVectorLength):
         if vector[i] < 0.0:
             vector[i] = 0.0

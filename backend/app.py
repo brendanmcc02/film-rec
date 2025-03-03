@@ -376,7 +376,7 @@ def reviewRecommendation():
     else:
         profile['profile'] -= adjustment
 
-    keepVectorBoundary(profile['profile'], profileVectorLength)
+    keepVectorBoundary(profile['profile'])
 
     return f"changed {profileId} profile due to after reviewing {filmId}", 200
 
