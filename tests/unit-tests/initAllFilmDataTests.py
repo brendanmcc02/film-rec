@@ -3,6 +3,7 @@ import json
 
 allFilmDataFileLocation = "../../database/all-film-data.json"
 cachedTmdbFilmDataLocation = "../../database/cached-tmdb-film-data.json"
+cachedLetterboxdTitlesLocation = "../../database/cached-letterboxd-titles.json"
 
 def test_allFilmDataFileExists():
     try:
@@ -170,3 +171,18 @@ def test_allCachedTmdbFilmsHaveValidLetterboxdSummaries():
     for filmId in cachedTmdbFilmData:
         assert 'summary' in cachedTmdbFilmData[filmId]
         assert cachedTmdbFilmData[filmId]['summary'] != ""
+
+def test_cachedLetterboxdTitles():
+    cachedLetterboxdTitlesFile = open(cachedLetterboxdTitlesLocation)
+    cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+
+    for letterboxdTitle in cachedLetterboxdTitles:
+        assert len(cachedLetterboxdTitles[letterboxdTitle]) > 0
+
+        for film in cachedLetterboxdTitles[letterboxdTitle]:
+            assert 'imdbFilmId' in film
+            assert film['imdbFilmId'] != ""
+            
+            for year in film['years']:
+                assert year != None
+                assert year > 0
