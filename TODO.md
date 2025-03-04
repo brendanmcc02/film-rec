@@ -247,11 +247,12 @@ my-film-data-vec.json to file
 - [x] genre edge cases
 - [x] `/regenerateRecommendations`
 - [x] [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses)
+- [ ] add more int tests for letterboxd zip
 
 # CI/CD
 - [ ] run unit tests
 - [ ] figure out how to deploy local instance of backend
-- [ ] run int tests
+- [ ] run int tests against local deployment
 - [ ] run int tests against prod deployment **figure out some generic way to change backendUrl and execute same INT tests**
 
 # Software Design & Architecture
