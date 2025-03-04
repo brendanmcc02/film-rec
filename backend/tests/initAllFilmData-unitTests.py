@@ -186,8 +186,12 @@ def test_cachedLetterboxdTitles():
                 assert year > 0
 
 def test_allFilmDataVectorized():
+    allFilmDataFile = open(allFilmDataFileLocation)
+    allFilmData = json.load(allFilmDataFile)
     allFilmDataVectorizedFile = open(allFilmDataVectorizedFileLocation)
     allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+
+    assert len(allFilmData) == len(allFilmDataVectorized)
 
     for filmId in allFilmDataVectorized:
         assert len(allFilmDataVectorized[filmId]) == filmVectorLength
@@ -211,10 +215,14 @@ def test_allFilmDataVectorized():
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
 def test_allFilmDataVectorizedMagnitudes():
+    allFilmDataFile = open(allFilmDataFileLocation)
+    allFilmData = json.load(allFilmDataFile)
     allFilmDataVectorizedMagnitudesFile = open(allFilmDataVectorizedMagnitudesFileLocation)
     allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
     allFilmDataVectorizedFile = open(allFilmDataVectorizedFileLocation)
     allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+
+    assert len(allFilmData) == len(allFilmDataVectorized)
 
     for filmId in allFilmDataVectorizedMagnitudes:
         assert allFilmDataVectorizedMagnitudes[filmId] != None
@@ -274,4 +282,36 @@ def test_convertRuntimeToHoursMinutes():
     assert initAllFilmData.convertRuntimeToHoursMinutes(40) == "40m"
     assert initAllFilmData.convertRuntimeToHoursMinutes(100) == "1h40m"
 
-# TODO test that files correspond with eachother, e.g. every id in allFIlmData has entry in cache-*
+def test_allFilmData_correspondsWith_cachedTmdbFilmData():
+    allFilmDataFile = open(allFilmDataFileLocation)
+    allFilmData = json.load(allFilmDataFile)
+    cachedTmdbFilmDataFile = open(cachedTmdbFilmDataFileLocation)
+    cachedTmdbFilmData = json.load(cachedTmdbFilmDataFile)
+
+    assert len(allFilmData) == len(cachedTmdbFilmData)
+
+    for filmId in allFilmData:
+        assert filmId in cachedTmdbFilmData
+        assert allFilmData[filmId]['letterboxdTitle'] == cachedTmdbFilmData[filmId]['letterboxdTitle']
+        assert allFilmData[filmId]['letterboxdYear'] == cachedTmdbFilmData[filmId]['letterboxdYear']
+        assert allFilmData[filmId]['poster'] == cachedTmdbFilmData[filmId]['poster']
+        assert allFilmData[filmId]['summary'] == cachedTmdbFilmData[filmId]['summary']
+
+        for country in allFilmData[filmId]['countries']:
+            assert country in cachedTmdbFilmData[filmId]['countries']
+
+def test_allFilmData_correspondsWith_cachedLetterboxdTitles():
+    allFilmDataFile = open(allFilmDataFileLocation)
+    allFilmData = json.load(allFilmDataFile)
+    cachedLetterboxdTitlesFile = open(cachedLetterboxdTitlesFileLocation)
+    cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+
+    for letterboxdTitle in cachedLetterboxdTitles:
+        for film in cachedLetterboxdTitles[letterboxdTitle]:
+            filmId = film['imdbFilmId']
+            assert filmId in allFilmData
+            assert allFilmData[filmId]['letterboxdTitle'] == letterboxdTitle
+
+            for year in film['years']:
+                assert year == allFilmData[filmId]['year'] or year == allFilmData[filmId]['letterboxdYear']
+
