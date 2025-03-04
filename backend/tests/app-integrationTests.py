@@ -103,7 +103,7 @@ def test_verifyUserUploadedFile_letterboxdincorrectZip():
     assert response.content.decode(encoding='utf-8') == app.INVALID_ZIP_FILE_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_letterboxdCorrectZip():
-    fileName = "letterboxd-correct.zip"
+    fileName = "letterboxd-no-recent.zip"
     file = open(testUploadFilesDirectory + fileName, 'rb')
     filesToSend = {'file': (fileName, file)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
@@ -446,6 +446,33 @@ def test_initRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilm
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
         assert row['profileId'] != "international"
+
+def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms():
+    fileName = "letterboxd-no-recent.zip"
+    file = open(testUploadFilesDirectory + fileName, 'rb')
+    filesToSend = {'file': (fileName, file)}
+    verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert verifyUserUploadedFileResponse.status_code == 200
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+
+    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert initRowsOfRecommendationsResponse.status_code == 200
+
+    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+
+    numberOfFavouriteRows = 1
+    numberOfRecentRows = 0
+    numberOfGenreRows = app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    numberOfInternationalRows = 1
+    numberOfOldRows = 1
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+
+    for row in rowsOfRecommendations:
+        assert row['profileId'] != "recency"
 
 def test_regenerateRowsOfRecommendations_imdb():
     fileName = "imdb-no-recent-films.csv"

@@ -4,7 +4,7 @@ import shutil
 from zipfile import ZipFile
 
 expectedLetterboxdFileFilmAttributes = ["Date", "Name", "Year", "Letterboxd URI", "Rating"]
-expectedLetterboxdExtractedFilesOrDirectories = ["deleted", "likes", "lists", "orphaned", "comments.csv", "diary.csv", "profile.csv", "ratings.csv", "reviews.csv", "watched.csv", "watchlist.csv"]
+expectedLetterboxdExtractedFilesOrDirectories = ["deleted", "likes", "lists", "orphaned", "comments.csv", "diary.csv", "profile.csv", "ratings.csv", "reviews.csv", "watched.csv", "watchlist.csv", ".gitignore"]
 
 
 def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cachedLetterboxdTitles):
