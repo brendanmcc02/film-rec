@@ -18,10 +18,15 @@ NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
 NUMBER_OF_TOP_GENRE_PROFILES = 3
 RECOMMENDATION_REVIEW_FACTOR = 0.2
 USER_UPLOADED_DATA_DIRECTORY_NAME = "user-uploaded-data/"
-IS_NOT_CSV_ERROR_MESSAGE = "File must be .csv"
+IS_NOT_CSV_ERROR_MESSAGE = "File must be .csv."
 NO_FILE_IN_REQUEST_ERROR_MESSAGE = "No file found in the request"
 FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE = "File has more data than row headers."
 FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE = "Row headers do not conform to expected format."
+FILE_UPLOAD_SUCCESS_MESSAGE = "Upload Success."
+JSON_FILES_LOAD_SUCCESS_MESSAGE = "JSON files loaded successfully."
+JSON_FILES_ALREADY_LOADED_MESSAGE = "JSON files have already been loaded."
+JSON_FILES_NOT_FOUND_ERROR_MESSAGE = "JSON files not found."
+JSON_FILES_DECODE_ERROR_MESSAGE = "JSON files decode error."
 
 profileVectorLength = 0
 allFilmDataUnseen = {}
@@ -44,6 +49,7 @@ isImdbFile = True
 userFilmDataFilename = ""
 allGenresLength = 0
 allCountriesLength = 0
+haveJsonFilesAlreadyBeenLoaded = False
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
@@ -92,7 +98,7 @@ def verifyUserUploadedFile():
     userFilmDataFilename = file.filename
 
     if isNotCsvFile(userFilmDataFilename):
-        return IS_NOT_CSV_ERROR_MESSAGE, 400
+        return IS_NOT_CSV_ERROR_MESSAGE, 415
 
     try:
         userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
@@ -114,9 +120,9 @@ def verifyUserUploadedFile():
                     if k not in expectedImdbFileFilmAttributes:
                         isImdbFile = False
                         if k not in expectedLetterboxdFileFilmAttributes:
-                            return (, 400)
+                            return FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, 400
 
-        return "Upload Success.", 200
+        return FILE_UPLOAD_SUCCESS_MESSAGE, 200
     except Exception as e:
         deleteUserUploadedData()
         return f"Error occurred with reading {userFilmDataFilename}.\n{e}", 400
@@ -430,6 +436,11 @@ def regenerateRecommendations():
 
 @app.route('/loadJsonFiles')
 def loadJsonFiles():
+    global haveJsonFilesAlreadyBeenLoaded
+    
+    if (haveJsonFilesAlreadyBeenLoaded):
+        return JSON_FILES_ALREADY_LOADED_MESSAGE, 304
+    
     global allFilmDataVectorized
     global allFilmDataVectorizedMagnitudes
     global cachedLetterboxdTitles
@@ -438,19 +449,26 @@ def loadJsonFiles():
     global cachedNormalizedImdbRatingsKeys
     global cachedNormalizedRuntimesKeys
 
-    allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
-    allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
-    allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
-    allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
-    cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
-    cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
-    cacheFile = open('../database/cache.json')
-    cache = json.load(cacheFile)
-    cachedNormalizedYearsKeys = list(cache['normalizedYears'].keys())
-    cachedNormalizedImdbRatingsKeys = list(cache['normalizedImdbRatings'].keys())
-    cachedNormalizedRuntimesKeys = list(cache['normalizedRuntimes'].keys())
+    try:
+        allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
+        allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+        allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
+        allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
+        cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
+        cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+        cacheFile = open('../database/cache.json')
+        cache = json.load(cacheFile)
+        cachedNormalizedYearsKeys = list(cache['normalizedYears'].keys())
+        cachedNormalizedImdbRatingsKeys = list(cache['normalizedImdbRatings'].keys())
+        cachedNormalizedRuntimesKeys = list(cache['normalizedRuntimes'].keys())
 
-    return "Files read successfully", 200
+        haveJsonFilesAlreadyBeenLoaded = True
+
+        return JSON_FILES_LOAD_SUCCESS_MESSAGE, 200
+    except FileNotFoundError:
+        return JSON_FILES_NOT_FOUND_ERROR_MESSAGE, 404
+    except json.JSONDecodeError:
+        return JSON_FILES_DECODE_ERROR_MESSAGE, 400
 
 
 def deleteUserUploadedData():

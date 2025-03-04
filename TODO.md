@@ -265,6 +265,7 @@ my-film-data-vec.json to file
 
 ## Int Tests
 - [ ] app
+- [ ] [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses)
 
 # CI/CD
 - [ ] run unit tests

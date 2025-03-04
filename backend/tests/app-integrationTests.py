@@ -10,6 +10,17 @@ import app
 backendUrl = "http://127.0.0.1:5000"
 testUploadFilesDirectory = "test-upload-files/"
 
+def test_loadJsonFiles():
+    response = requests.get(backendUrl + "/loadJsonFiles")
+
+    assert response.status_code == 200
+    assert response.content.decode(encoding='utf-8') == app.JSON_FILES_LOAD_SUCCESS_MESSAGE
+
+    response = requests.get(backendUrl + "/loadJsonFiles")
+
+    assert response.status_code == 304
+    # 304 responses typically do not have content, so do not assert for response content
+
 def test_verifyUserUploadedFile_noFile():
     filesToSend = {'file': ("", None)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
@@ -18,62 +29,72 @@ def test_verifyUserUploadedFile_noFile():
     assert response.content.decode(encoding='utf-8') == app.NO_FILE_IN_REQUEST_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_txtFile():
-    file = open(testUploadFilesDirectory + "test.txt")
-    filesToSend = {'file': ("imdb-correct.csv", file)}
+    fileName = "test.txt"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert response.content.decode(encoding='utf-8') == app.IS_NOT_CSV_ERROR_MESSAGE 
 
 def test_verifyUserUploadedFile_imdbCorrect():
-    file = open(testUploadFilesDirectory + "imdb-correct.csv")
-    filesToSend = {'file': ("imdb-correct.csv", file)}
+    fileName = "imdb-correct.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 200
+    assert response.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
 
 def test_verifyUserUploadedFile_imdbIncorrectHeader():
-    file = open(testUploadFilesDirectory + "imdb-incorrect-header.csv")
-    filesToSend = {'file': ("imdb-incorrect-header.csv", file)}
+    fileName = "imdb-incorrect-header.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_imdbMissingHeader():
-    file = open(testUploadFilesDirectory + "imdb-missing-header.csv")
-    filesToSend = {'file': ("imdb-missing-header.csv", file)}
+    fileName = "imdb-missing-header.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_letterboxdCorrect():
-    file = open(testUploadFilesDirectory + "letterboxd-correct.csv")
-    filesToSend = {'file': ("letterboxd-correct.csv", file)}
+    fileName = "letterboxd-correct.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 200
+    assert response.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
 
 def test_verifyUserUploadedFile_letterboxdIncorrectHeader():
-    file = open(testUploadFilesDirectory + "letterboxd-incorrect-header.csv")
-    filesToSend = {'file': ("letterboxd-incorrect-header.csv", file)}
+    fileName = "letterboxd-incorrect-header.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_letterboxdMissingHeader():
-    file = open(testUploadFilesDirectory + "letterboxd-missing-header.csv")
-    filesToSend = {'file': ("letterboxd-missing-header.csv", file)}
+    fileName = "letterboxd-missing-header.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
 # def test_initRowsOfRecommendations_imdbNoRecentFilms():
-#     file = open(testUploadFilesDirectory + "imdb-no-recent.csv")
-#     filesToSend = {'file': ("imdb-correct.csv", file)}
+#     fileName = "imdb-no-recent.csv"
+#     file = open(testUploadFilesDirectory + fileName)
+#     filesToSend = {'file': (fileName, file)}
 #     postResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
 #     assert postResponse.status_code == 200
@@ -106,3 +127,4 @@ def test_verifyUserUploadedFile_letterboxdMissingHeader():
 #             assert film['similarityScore'] >= 0.0
 #             assert film['similarityScore'] <= 100.0
 
+test_loadJsonFiles()
