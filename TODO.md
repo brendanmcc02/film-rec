@@ -225,11 +225,6 @@ my-film-data-vec.json to file
 - [x] fix background
 - [x] do home text and file upload container
 
-# Finishing Touches
-- [x] play around with `YEAR_WEIGHT`
-- [x] play around with `GENRE_WEIGHT`
-- [x] try fixing imdbRating to 1.0?
-
 # Deployment
 - [x] deploy flask app
 - [x] figure out react deployment
@@ -241,22 +236,6 @@ my-film-data-vec.json to file
 # README
 - [x] do `README.md`
 
-# Other
-- [x] rename files to lowerCamelCase
-- [x] user upload data should go to its own folder
-- [x] `deleteCsvFiles` should be to delete user-upload folder
-- [ ] `loadJsonFiles` should only run once
-- [ ] upload zip file instead of ratings.csv (letterboxd)
-- [ ] record demo
-- [x] create `local-deployment` branch with changes:
-    * `app.run(host="localhost", port=60000)`
-    * fetch URLS: `(https://film-rec-backend.onrender.com/verifyUserUploadedFile)` 
-        -> `(/verifyUserUploadedFile)`
-    * get rid of CORS stuff
-    * proxy in `package.json`
-- [ ] linkedin projects section
-- [ ] update on resume
-
 # Tests
 
 ## Unit Tests
@@ -265,9 +244,29 @@ my-film-data-vec.json to file
 
 ## Int Tests
 - [ ] app
-- [ ] [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses)
+- [x] [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses)
 
 # CI/CD
 - [ ] run unit tests
 - [ ] figure out how to deploy local instance of backend
 - [ ] run int tests
+
+# Finishing Touches
+- [x] play around with `YEAR_WEIGHT`
+- [x] play around with `GENRE_WEIGHT`
+- [x] try fixing imdbRating to 1.0?
+- [x] rename files to lowerCamelCase
+- [x] user upload data should go to its own folder
+- [x] `deleteCsvFiles` should be to delete user-upload folder
+- [x] `loadJsonFiles` should only run once
+- [ ] upload zip file instead of ratings.csv (letterboxd)
+- [ ] write int tests for zip file addition
+- [ ] record demo
+- [ ] create `local-deployment` branch with changes:
+    * `app.run(host="localhost", port=60000)`
+    * fetch URLS: `(https://film-rec-backend.onrender.com/verifyUserUploadedFile)` 
+        -> `(/verifyUserUploadedFile)`
+    * get rid of CORS stuff
+    * proxy in `package.json`
+- [ ] linkedin projects section
+- [ ] update on resume
