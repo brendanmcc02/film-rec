@@ -1,6 +1,7 @@
-import pytest
 import json
+import numpy as np
 import os
+import pytest
 import sys
 
 absolutePath = os.path.dirname(os.path.abspath(__file__))
@@ -212,9 +213,12 @@ def test_allFilmDataVectorized():
 def test_allFilmDataVectorizedMagnitudes():
     allFilmDataVectorizedMagnitudesFile = open(allFilmDataVectorizedMagnitudesFileLocation)
     allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
+    allFilmDataVectorizedFile = open(allFilmDataVectorizedFileLocation)
+    allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
 
     for filmId in allFilmDataVectorizedMagnitudes:
         assert allFilmDataVectorizedMagnitudes[filmId] != None
+        assert allFilmDataVectorizedMagnitudes[filmId] == np.linalg.norm(allFilmDataVectorized[filmId])
 
 def test_cache():
     cacheFile = open(cacheFileLocation)
