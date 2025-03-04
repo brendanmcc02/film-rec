@@ -181,6 +181,9 @@ def test_cachedLetterboxdTitles():
             assert 'imdbFilmId' in film
             assert film['imdbFilmId'] != ""
             
+            # should only be 1 year (if the years match between IMDb & Letterboxd),
+            # or 2 years (one for IMDb, one for Letterboxd). No more.
+            assert len(film['years']) == 1 or len(film['years']) == 2
             for year in film['years']:
                 assert year != None
                 assert year > 0
