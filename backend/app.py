@@ -78,12 +78,21 @@ def verifyUserUploadedFile():
     global userFilmDataFilename
     resetGlobalVariables()
 
+    userUploadedDataDirectoryName = "user-uploaded-data/"
+
     if 'file' not in request.files:
         return 'No file found in the request', 400
 
+    if not os.path.exists(userUploadedDataDirectoryName):
+        os.mkdir(userUploadedDataDirectoryName)
+
     file = request.files['file']
     userFilmDataFilename = file.filename
-    file.save("../database/" + file.filename)
+
+    if isNotCsvFile(file.filename):
+        return 'File must be .csv', 400
+
+    file.save(userUploadedDataDirectoryName + file.filename)
     expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
                                       "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
                                       "Release Date", "Directors"]
@@ -442,6 +451,10 @@ def loadJsonFiles():
 def deleteCsvFilesFromDatabase():
     for file in glob.glob("../database/*.csv"):
         os.remove(file)
+
+
+def isNotCsvFile(filename):
+    return not filename.lower().endswith(".csv")
 
 
 if __name__ == "__main__":
