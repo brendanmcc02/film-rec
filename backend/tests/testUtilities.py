@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 # import the needed file from backend directory
@@ -5,6 +6,7 @@ import sys
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 parentDirectoryOfCurrentFile = os.path.dirname(absolutePathOfCurrentFile)
 sys.path.append(parentDirectoryOfCurrentFile)
+import app
 import initAllFilmData
 
 cacheFileLocation = "../../database/cache.json"
@@ -59,3 +61,29 @@ def verifyFilm(film, filmId, allGenres, allCountries):
 
     assert 'summary' in film
     assert film['summary'] != ""
+
+def verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows):
+    cacheFile = open(cacheFileLocation)
+    cache = json.load(cacheFile)
+
+    assert len(rowsOfRecommendations) == totalNumberOfRows
+
+    for row in rowsOfRecommendations:
+        assert 'recommendedRowText' in row
+        assert row['recommendedRowText'] != ""
+        
+        assert 'profileId' in row
+        assert row['profileId'] != ""
+
+        assert 'recommendedFilms' in row
+        assert len(row['recommendedFilms']) == app.NUMBER_OF_RECOMMENDATIONS_PER_ROW
+
+        for film in row['recommendedFilms']:
+            assert 'id' in film
+            assert film['id'] != ""
+            verifyFilm(film, film['id'], cache['allGenres'], cache['allCountries'])
+            assert 'similarityScore' in film
+            assert film['similarityScore'] != None
+            assert film['similarityScore'] >= 0.0
+            assert film['similarityScore'] <= 100.0
+

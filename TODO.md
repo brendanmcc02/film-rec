@@ -243,7 +243,7 @@ my-film-data-vec.json to file
 - [x] vectorizeUtilities
 
 ## Int Tests
-- [ ] app
+- [x] `/initRowsOfRecommendations`
 - [x] [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses)
 
 # CI/CD
@@ -259,6 +259,7 @@ my-film-data-vec.json to file
 - [x] user upload data should go to its own folder
 - [x] `deleteCsvFiles` should be to delete user-upload folder
 - [x] `loadJsonFiles` should only run once
+- [ ] imdb url is user .csv file, is it in the public imdb dataset? can we take it from there instead of making it ourself?
 - [ ] upload zip file instead of ratings.csv (letterboxd)
 - [ ] write int tests for zip file addition
 - [ ] record demo

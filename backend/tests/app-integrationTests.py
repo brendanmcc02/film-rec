@@ -40,7 +40,7 @@ def test_verifyUserUploadedFile_txtFile():
     assert response.content.decode(encoding='utf-8') == app.IS_NOT_CSV_ERROR_MESSAGE 
 
 def test_verifyUserUploadedFile_imdbCorrect():
-    fileName = "imdb-correct.csv"
+    fileName = "imdb-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
@@ -67,7 +67,7 @@ def test_verifyUserUploadedFile_imdbMissingHeader():
     assert response.content.decode(encoding='utf-8') == app.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_letterboxdCorrect():
-    fileName = "letterboxd-correct.csv"
+    fileName = "letterboxd-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
@@ -93,10 +93,8 @@ def test_verifyUserUploadedFile_letterboxdMissingHeader():
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
-def test_initRowsOfRecommendations_imdbNormalScenario():
-    cacheFile = open(testUtilities.cacheFileLocation)
-    cache = json.load(cacheFile)
-    fileName = "imdb-correct.csv"
+def test_initRowsOfRecommendations_imdbNoRecentFilms():
+    fileName = "imdb-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
     postResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
@@ -110,34 +108,19 @@ def test_initRowsOfRecommendations_imdbNormalScenario():
     rowsOfRecommendations = getResponse.json()
 
     numberOfFavouriteRows = 1
+    numberOfRecentRows = 0
     numberOfInternationalRows = 1
     numberOfOldRows = 1
-    totalNumberOfRows = numberOfFavouriteRows + app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS + numberOfInternationalRows + numberOfOldRows
-    assert len(rowsOfRecommendations) == totalNumberOfRows
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
-        assert 'recommendedRowText' in row
-        assert row['recommendedRowText'] != ""
-        
-        assert 'profileId' in row
-        assert row['profileId'] != ""
+        assert row['profileId'] != "recency"
 
-        assert 'recommendedFilms' in row
-        assert len(row['recommendedFilms']) == app.NUMBER_OF_RECOMMENDATIONS_PER_ROW
-
-        for film in row['recommendedFilms']:
-            assert 'id' in film
-            assert film['id'] != ""
-            testUtilities.verifyFilm(film, film['id'], cache['allGenres'], cache['allCountries'])
-            assert 'similarityScore' in film
-            assert film['similarityScore'] != None
-            assert film['similarityScore'] >= 0.0
-            assert film['similarityScore'] <= 100.0
-
-def test_initRowsOfRecommendations_letterboxdNormalScenario():
-    cacheFile = open(testUtilities.cacheFileLocation)
-    cache = json.load(cacheFile)
-    fileName = "letterboxd-correct.csv"
+def test_initRowsOfRecommendations_letterboxdNoRecentFilms():
+    fileName = "letterboxd-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
     postResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
@@ -151,27 +134,121 @@ def test_initRowsOfRecommendations_letterboxdNormalScenario():
     rowsOfRecommendations = getResponse.json()
 
     numberOfFavouriteRows = 1
+    numberOfRecentRows = 0
     numberOfInternationalRows = 1
     numberOfOldRows = 1
-    totalNumberOfRows = numberOfFavouriteRows + app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS + numberOfInternationalRows + numberOfOldRows
-    assert len(rowsOfRecommendations) == totalNumberOfRows
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
-        assert 'recommendedRowText' in row
-        assert row['recommendedRowText'] != ""
-        
-        assert 'profileId' in row
-        assert row['profileId'] != ""
+        assert row['profileId'] != "recency"
 
-        assert 'recommendedFilms' in row
-        assert len(row['recommendedFilms']) == app.NUMBER_OF_RECOMMENDATIONS_PER_ROW
+def test_initRowsOfRecommendations_imdbNoRecentAndFavouriteFilms():
+    fileName = "imdb-no-recent-and-favourite-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    postResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
-        for film in row['recommendedFilms']:
-            assert 'id' in film
-            assert film['id'] != ""
-            testUtilities.verifyFilm(film, film['id'], cache['allGenres'], cache['allCountries'])
-            assert 'similarityScore' in film
-            assert film['similarityScore'] != None
-            assert film['similarityScore'] >= 0.0
-            assert film['similarityScore'] <= 100.0
+    assert postResponse.status_code == 200
+    assert postResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
 
+    getResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert getResponse.status_code == 200
+
+    rowsOfRecommendations = getResponse.json()
+
+    numberOfFavouriteRows = 0
+    numberOfRecentRows = 0
+    numberOfInternationalRows = 1
+    numberOfOldRows = 1
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+
+    for row in rowsOfRecommendations:
+        assert row['profileId'] != "recency"
+        assert row['profileId'] != "favourite"
+
+def test_initRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms():
+    fileName = "letterboxd-no-recent-and-favourite-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    postResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert postResponse.status_code == 200
+    assert postResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+
+    getResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert getResponse.status_code == 200
+
+    rowsOfRecommendations = getResponse.json()
+
+    numberOfFavouriteRows = 0
+    numberOfRecentRows = 0
+    numberOfInternationalRows = 1
+    numberOfOldRows = 1
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+
+    for row in rowsOfRecommendations:
+        assert row['profileId'] != "recency"
+        assert row['profileId'] != "favourite"
+
+def test_initRowsOfRecommendations_imdbNoRecentAndInternationalFilms():
+    fileName = "imdb-no-recent-and-international-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    postResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert postResponse.status_code == 200
+    assert postResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+
+    getResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert getResponse.status_code == 200
+
+    rowsOfRecommendations = getResponse.json()
+
+    numberOfFavouriteRows = 1
+    numberOfRecentRows = 0
+    numberOfInternationalRows = 0
+    numberOfOldRows = 1
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+
+    for row in rowsOfRecommendations:
+        assert row['profileId'] != "recency"
+        assert row['profileId'] != "international"
+
+def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms():
+    fileName = "letterboxd-no-recent-and-international-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    postResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert postResponse.status_code == 200
+    assert postResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+
+    getResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert getResponse.status_code == 200
+
+    rowsOfRecommendations = getResponse.json()
+
+    numberOfFavouriteRows = 1
+    numberOfRecentRows = 0
+    numberOfInternationalRows = 0
+    numberOfOldRows = 1
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+
+    for row in rowsOfRecommendations:
+        assert row['profileId'] != "recency"
+        assert row['profileId'] != "international"
