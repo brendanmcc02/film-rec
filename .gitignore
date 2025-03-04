@@ -1,9 +1,5 @@
 .idea/
-database/*.tsv
 *.pdf
 user-data/
 access-token.txt
 backup-access-token.txt
-backend/__pycache__/
-backend/.pytest_cache/
-backend/user-uploaded-data
