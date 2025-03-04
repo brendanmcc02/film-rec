@@ -18,7 +18,7 @@ NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
 NUMBER_OF_GENRE_RECOMMENDATION_ROWS = 3
 RECOMMENDATION_REVIEW_FACTOR = 0.2
 USER_UPLOADED_DATA_DIRECTORY_NAME = "user-uploaded-data/"
-IS_NOT_CSV_ERROR_MESSAGE = "File must be .csv."
+UNACCEPTABLE_MEDIA_TYPE_ERROR_MESSAGE = "File must be .csv or .zip."
 NO_FILE_IN_REQUEST_ERROR_MESSAGE = "No file found in the request"
 FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE = "File has more data than row headers."
 FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE = "Row headers do not conform to expected format."
@@ -27,6 +27,7 @@ JSON_FILES_LOAD_SUCCESS_MESSAGE = "JSON files loaded successfully."
 JSON_FILES_ALREADY_LOADED_MESSAGE = "JSON files have already been loaded."
 JSON_FILES_NOT_FOUND_ERROR_MESSAGE = "JSON files not found."
 JSON_FILES_DECODE_ERROR_MESSAGE = "JSON files decode error."
+INVALID_ZIP_FILE_ERROR_MESSAGE = "Zip file is invalid."
 
 profileVectorLength = 0
 allFilmDataUnseen = {}
@@ -97,17 +98,24 @@ def verifyUserUploadedFile():
     file = request.files['file']
     userFilmDataFilename = file.filename
 
-    if isNotCsvFile(userFilmDataFilename):
-        return IS_NOT_CSV_ERROR_MESSAGE, 415
+    if isUnacceptableMediaType(userFilmDataFilename):
+        return UNACCEPTABLE_MEDIA_TYPE_ERROR_MESSAGE, 415
 
     try:
         userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
         file.save(userUploadedFileLocation)
+
+
+        if userUploadedFileLocation.endswith(".zip"):
+            if isLetterboxdZipFileInvalid(USER_UPLOADED_DATA_DIRECTORY_NAME, userFilmDataFilename):
+                return INVALID_ZIP_FILE_ERROR_MESSAGE, 400
+            else:
+                userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + "ratings.csv"
+
         expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
                                         "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
                                         "Release Date", "Directors"]
 
-    
         with open(userUploadedFileLocation, encoding='utf-8') as userFilmDataFile:
             reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
 
@@ -472,12 +480,16 @@ def loadJsonFiles():
 
 
 def deleteUserUploadedData():
-    for file in glob.glob(USER_UPLOADED_DATA_DIRECTORY_NAME + "*"):
-        os.remove(file)
+    for fileOrDirectory in os.listdir(USER_UPLOADED_DATA_DIRECTORY_NAME):
+        fileOrDirectoryPath = os.path.join(USER_UPLOADED_DATA_DIRECTORY_NAME, fileOrDirectory)
+        if os.path.isdir(fileOrDirectoryPath):
+            shutil.rmtree(fileOrDirectoryPath)
+        else:
+            os.remove(fileOrDirectoryPath)
 
 
-def isNotCsvFile(filename):
-    return not filename.lower().endswith(".csv")
+def isUnacceptableMediaType(filename):
+    return not (filename.lower().endswith(".csv") or filename.lower().endswith(".zip"))
 
 
 if __name__ == "__main__":
