@@ -105,12 +105,12 @@ def verifyUserUploadedFile():
         userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
         file.save(userUploadedFileLocation)
 
-
         if userUploadedFileLocation.endswith(".zip"):
             if isLetterboxdZipFileInvalid(USER_UPLOADED_DATA_DIRECTORY_NAME, userFilmDataFilename):
                 return INVALID_ZIP_FILE_ERROR_MESSAGE, 400
             else:
-                userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + "ratings.csv"
+                userFilmDataFilename = "ratings.csv"
+                userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
 
         expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
                                         "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
