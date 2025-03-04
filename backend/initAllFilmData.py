@@ -11,10 +11,10 @@ from vectorizeUtilities import *
 
 RUNTIME_THRESHOLD = 40
 NUMBER_OF_VOTES_THRESHOLD = 25000
+BASE_IMDB_URL = 'https://www.imdb.com/title/'
 
 
 def main():
-    baseImdbUrl = 'https://www.imdb.com/title/'
     runScript = True
 
     if runScript:
@@ -83,7 +83,7 @@ def main():
                 'runtime': film['runtime'],
                 'runtimeHoursMinutes': convertRuntimeToHoursMinutes(film['runtime']),
                 'genres': film['genres'],
-                'imdbUrl': baseImdbUrl + film['id']
+                'imdbUrl': BASE_IMDB_URL + film['id']
             }
 
             for genre in film['genres']:

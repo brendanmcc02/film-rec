@@ -2,7 +2,7 @@ import os
 import requests
 import sys
 absolutePath = os.path.dirname(os.path.abspath(__file__))
-parentDirectoryOfAbsolutePath = os.path.dirname(os.path.dirname(absolutePath))
+parentDirectoryOfAbsolutePath = os.path.dirname(absolutePath)
 sys.path.append(parentDirectoryOfAbsolutePath)
 import app
 backendUrl = "http://127.0.0.1:5000"

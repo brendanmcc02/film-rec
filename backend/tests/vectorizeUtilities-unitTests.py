@@ -2,7 +2,7 @@ import os
 import sys
 import json
 absolutePath = os.path.dirname(os.path.abspath(__file__))
-parentDirectoryOfAbsolutePath = os.path.dirname(os.path.dirname(absolutePath))
+parentDirectoryOfAbsolutePath = os.path.dirname(absolutePath)
 sys.path.append(parentDirectoryOfAbsolutePath)
 import vectorizeUtilities
 
