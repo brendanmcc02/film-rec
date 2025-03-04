@@ -18,26 +18,22 @@ const App = () => {
   };
 
   const handleFileUpload = async () => {
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append('file', selectedFile);
+    const formData = new FormData();
+    formData.append('file', selectedFile);
 
-      try {
-        const response = await fetch('https://film-rec-backend.onrender.com/verifyUserUploadedFile', {
-          method: 'POST',
-          body: formData
-        });
+    try {
+      const response = await fetch('https://film-rec-backend.onrender.com/verifyUserUploadedFile', {
+        method: 'POST',
+        body: formData
+      });
 
-        if (response.ok) {
-          navigate('/recommendations-page');
-        } else {
-          setErrorText(await response.text());
-        }
-      } catch (error) {
-        setErrorText(error.message);
+      if (response.ok) {
+        navigate('/recommendations-page');
+      } else {
+        setErrorText(await response.text());
       }
-    } else {
-      setErrorText("You must select a file first");
+    } catch (error) {
+      setErrorText(error.message);
     }
   };
 
