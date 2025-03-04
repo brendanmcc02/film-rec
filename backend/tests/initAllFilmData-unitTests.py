@@ -31,8 +31,8 @@ def test_allFilmDataFileExists():
 
 def test_cachedTmdbFilmDataFileExists():
     try:
-        with open(cachedTmdbFilmDataFileLocation, encoding='utf-8') as cachedTmdbDataFile:
-            json.load(cachedTmdbDataFile)
+        with open(cachedTmdbFilmDataFileLocation, encoding='utf-8') as cachedTmdbFilmDataFile:
+            json.load(cachedTmdbFilmDataFile)
 
     except FileNotFoundError:
         pytest.fail("File not found.")
@@ -43,8 +43,8 @@ def test_cachedTmdbFilmDataFileExists():
 
 def test_cachedLetterboxdTitlesFileExists():
     try:
-        with open(cachedTmdbFilmDataFileLocation, encoding='utf-8') as cachedTmdbDataFile:
-            json.load(cachedTmdbDataFile)
+        with open(cachedLetterboxdTitlesFileLocation, encoding='utf-8') as cachedLetterboxdTitlesFile:
+            json.load(cachedLetterboxdTitlesFile)
 
     except FileNotFoundError:
         pytest.fail("File not found.")
@@ -57,6 +57,30 @@ def test_allFilmDataVectorizedFileExists():
     try:
         with open(allFilmDataVectorizedFileLocation, encoding='utf-8') as allFilmDataVectorizedFile:
             json.load(allFilmDataVectorizedFile)
+
+    except FileNotFoundError:
+        pytest.fail("File not found.")
+    except json.JSONDecodeError:
+        pytest.fail("JSON decode error.")
+    except Exception as e:
+        pytest.fail("File open error.")
+
+def test_allFilmDataVectorizedMagnitudesFileExists():
+    try:
+        with open(allFilmDataVectorizedMagnitudesFileLocation, encoding='utf-8') as allFilmDataVectorizedMagnitudesFile:
+            json.load(allFilmDataVectorizedMagnitudesFile)
+
+    except FileNotFoundError:
+        pytest.fail("File not found.")
+    except json.JSONDecodeError:
+        pytest.fail("JSON decode error.")
+    except Exception as e:
+        pytest.fail("File open error.")
+
+def test_cacheFileExists():
+    try:
+        with open(cacheFileLocation, encoding='utf-8') as cacheFile:
+            json.load(cacheFile)
 
     except FileNotFoundError:
         pytest.fail("File not found.")
