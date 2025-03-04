@@ -18,6 +18,10 @@ NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
 NUMBER_OF_TOP_GENRE_PROFILES = 3
 RECOMMENDATION_REVIEW_FACTOR = 0.2
 USER_UPLOADED_DATA_DIRECTORY_NAME = "user-uploaded-data/"
+IS_NOT_CSV_ERROR_MESSAGE = "File must be .csv"
+NO_FILE_IN_REQUEST_ERROR_MESSAGE = "No file found in the request"
+FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE = "File has more data than row headers."
+FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE = "Row headers do not conform to expected format."
 
 profileVectorLength = 0
 allFilmDataUnseen = {}
@@ -82,13 +86,13 @@ def verifyUserUploadedFile():
     deleteUserUploadedData()
 
     if 'file' not in request.files:
-        return 'No file found in the request', 400
+        return NO_FILE_IN_REQUEST_ERROR_MESSAGE, 400
 
     file = request.files['file']
     userFilmDataFilename = file.filename
 
     if isNotCsvFile(userFilmDataFilename):
-        return 'File must be .csv', 400
+        return IS_NOT_CSV_ERROR_MESSAGE, 400
 
     try:
         userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
@@ -103,15 +107,14 @@ def verifyUserUploadedFile():
 
             for row in reader:
                 if 'unexpectedData' in row:
-                    return f"Error: {userFilmDataFilename} has more data than row headers.\n", 400
+                    return FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE, 400
 
                 keys = list(row.keys())
                 for k in keys:
                     if k not in expectedImdbFileFilmAttributes:
                         isImdbFile = False
                         if k not in expectedLetterboxdFileFilmAttributes:
-                            return (f"Error: Row headers in {userFilmDataFilename} "
-                                    f"does not conform to expected format.\n", 400)
+                            return (, 400)
 
         return "Upload Success.", 200
     except Exception as e:
