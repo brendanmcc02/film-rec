@@ -253,6 +253,10 @@ my-film-data-vec.json to file
 - [ ] figure out how to deploy local instance of backend
 - [ ] run int tests
 
+# Software Design & Architecture
+- [ ] think about decoupling, e.g. start with database
+- [ ] make things into classes you animal
+
 # Finishing Touches
 - [x] play around with `YEAR_WEIGHT`
 - [x] play around with `GENRE_WEIGHT`
@@ -261,7 +265,6 @@ my-film-data-vec.json to file
 - [x] user upload data should go to its own folder
 - [x] `deleteCsvFiles` should be to delete user-upload folder
 - [x] `loadJsonFiles` should only run once
-- [ ] make things into classes you animal
 - [ ] imdb url is user .csv file, is it in the public imdb dataset? can we take it from there instead of making it ourself?
 - [ ] upload zip file instead of ratings.csv (letterboxd)
 - [ ] write int tests for zip file addition
