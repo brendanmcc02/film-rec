@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 import testUtilities
@@ -13,13 +14,15 @@ def test_keepVectorBoundary():
     vectorizeUtilities.keepVectorBoundary(vector)
 
     for dimension in vector:
-        assert dimension >= 0.0 and dimension <= 1.0
+        assert dimension >= 0.0
+        assert dimension <= 1.0
 
     vector = [0.9, 0.1, 0.0]
     vectorizeUtilities.keepVectorBoundary(vector)
 
     for dimension in vector:
-        assert dimension >= 0.0 and dimension <= 1.0
+        assert dimension >= 0.0
+        assert dimension <= 1.0
 
 def test_getFilmGenres():
     cacheFile = open(testUtilities.cacheFileLocation)
