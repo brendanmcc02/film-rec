@@ -14,8 +14,8 @@ cachedLetterboxdTitlesFileLocation = "../../database/cached-letterboxd-titles.js
 allFilmDataVectorizedFileLocation = "../../database/all-film-data-vectorized.json"
 allFilmDataVectorizedMagnitudesFileLocation = "../../database/all-film-data-vectorized-magnitudes.json"
 cacheFileLocation = "../../database/cache.json"
-allGenres = ["Action","Adventure","Animation","Biography","Comedy","Crime","Documentary","Drama","Family","Fantasy","Film-Noir","History","Horror","Music","Musical","Mystery","News","Romance","Sci-Fi","Sport","Thriller","War","Western"]
-allCountries = ["Algerian","American","Angolan","Argentinian","Australian","Austrian","Azerbaijani","Bangladeshi","Belgian","Bosnian & Herzegovinian","Botswanan","Brazilian","British","Bulgarian","Canadian","Cantonese","Chilean","Chinese","Colombian","Cypriot","Czech","Danish","Dominican","Dutch","Egyptian","Emirati","Estonian","Filipino","Finnish","French","German","Greek","Hungarian","Icelandic","Indian","Indonesian","Iranian","Irish","Israeli","Italian","Japanese","Jordanian","Kazakhstani","Latvian","Lebanese","Lithuanian","Luxembourgish","Malawian","Malian","Mexican","Myanma","New Zealand","Norwegian","Peruvian","Polish","Romanian","Russian","Saudi","Serbian","Serbian and Montenegrin","Singaporean","Slovenian","South African","South Korean","Soviet Union","Spanish","Swedish","Swiss","Taiwanese","Thai","Turkish","Venezuelan","Yugoslavian"]
+mockGenres = ["Action","Adventure","Animation","Biography","Comedy","Crime","Documentary","Drama","Family","Fantasy","Film-Noir","History","Horror","Music","Musical","Mystery","News","Romance","Sci-Fi","Sport","Thriller","War","Western"]
+mockCountries = ["Algerian","American","Angolan","Argentinian","Australian","Austrian","Azerbaijani","Bangladeshi","Belgian","Bosnian & Herzegovinian","Botswanan","Brazilian","British","Bulgarian","Canadian","Cantonese","Chilean","Chinese","Colombian","Cypriot","Czech","Danish","Dominican","Dutch","Egyptian","Emirati","Estonian","Filipino","Finnish","French","German","Greek","Hungarian","Icelandic","Indian","Indonesian","Iranian","Irish","Israeli","Italian","Japanese","Jordanian","Kazakhstani","Latvian","Lebanese","Lithuanian","Luxembourgish","Malawian","Malian","Mexican","Myanma","New Zealand","Norwegian","Peruvian","Polish","Romanian","Russian","Saudi","Serbian","Serbian and Montenegrin","Singaporean","Slovenian","South African","South Korean","Soviet Union","Spanish","Swedish","Swiss","Taiwanese","Thai","Turkish","Venezuelan","Yugoslavian"]
 
 def test_allFilmDataFileExists():
     try:
@@ -129,7 +129,7 @@ def test_allFilmData():
         assert len(allFilmData[filmId]['genres']) > 0
 
         for genre in allFilmData[filmId]['genres']:
-            assert genre in allGenres
+            assert genre in mockGenres
     
         assert 'imdbUrl' in allFilmData[filmId]
         assert allFilmData[filmId]['imdbUrl'] == initAllFilmData.BASE_IMDB_URL + filmId
@@ -137,7 +137,7 @@ def test_allFilmData():
         assert 'countries' in allFilmData[filmId]
 
         for country in allFilmData[filmId]['countries']:
-            assert country in allCountries
+            assert country in mockCountries
 
         assert 'poster' in allFilmData[filmId]
         assert allFilmData[filmId]['poster'] != ""
@@ -159,7 +159,7 @@ def test_cachedTmdbFilmData():
         assert 'countries' in cachedTmdbFilmData[filmId]
 
         for country in cachedTmdbFilmData[filmId]['countries']:
-            assert country in allCountries
+            assert country in mockCountries
 
         assert 'poster' in cachedTmdbFilmData[filmId]
         assert cachedTmdbFilmData[filmId]['poster'] != ""
@@ -172,6 +172,7 @@ def test_cachedLetterboxdTitles():
     cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
 
     for letterboxdTitle in cachedLetterboxdTitles:
+        assert letterboxdTitle != ""
         assert len(cachedLetterboxdTitles[letterboxdTitle]) > 0
 
         for film in cachedLetterboxdTitles[letterboxdTitle]:
@@ -185,12 +186,28 @@ def test_cachedLetterboxdTitles():
 def test_allFilmDataVectorized():
     allFilmDataVectorizedFile = open(allFilmDataVectorizedFileLocation)
     allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+    filmVectorLength = 100
 
     for filmId in allFilmDataVectorized:
-        assert len(allFilmDataVectorized[filmId]) > 0
+        assert len(allFilmDataVectorized[filmId]) == filmVectorLength
+
+        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_YEAR_INDEX] <= initAllFilmData.YEAR_WEIGHT
+        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_YEAR_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_NUMBER_OF_VOTES_INDEX] <= initAllFilmData.NUMBER_OF_VOTES_WEIGHT
+        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_NUMBER_OF_VOTES_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_IMDB_RATING_INDEX] <= initAllFilmData.IMDB_RATING_WEIGHT
+        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_IMDB_RATING_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_RUNTIME_INDEX] <= initAllFilmData.RUNTIME_WEIGHT
+        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_RUNTIME_INDEX] >= 0.0
         
-        for dimension in allFilmDataVectorized[filmId]:
-            assert dimension >= 0.0 and dimension <= 1.0
+        profileCountryStartIndex = initAllFilmData.PROFILE_GENRE_START_INDEX + len(mockGenres)
+        for i in range(initAllFilmData.PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
+            assert allFilmDataVectorized[filmId][i] <= initAllFilmData.GENRE_WEIGHT
+            assert allFilmDataVectorized[filmId][i] >= 0.0
+
+        for i in range(profileCountryStartIndex, filmVectorLength):
+            assert allFilmDataVectorized[filmId][i] <= initAllFilmData.COUNTRY_WEIGHT
+            assert allFilmDataVectorized[filmId][i] >= 0.0
 
 def test_allFilmDataVectorizedMagnitudes():
     allFilmDataVectorizedMagnitudesFile = open(allFilmDataVectorizedMagnitudesFileLocation)
