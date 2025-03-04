@@ -96,55 +96,7 @@ def test_allFilmData():
     cache = json.load(cacheFile)
 
     for filmId in allFilmData:
-        assert 'title' in allFilmData[filmId]
-        assert allFilmData[filmId]['title'] != ""
-
-        assert 'letterboxdTitle' in allFilmData[filmId]
-        assert allFilmData[filmId]['letterboxdTitle'] != ""
-
-        assert 'year' in allFilmData[filmId]
-        assert allFilmData[filmId]['year'] != None
-        assert allFilmData[filmId]['year'] != 0
-
-        assert 'letterboxdYear' in allFilmData[filmId]
-        assert allFilmData[filmId]['letterboxdYear'] != None
-        assert allFilmData[filmId]['letterboxdYear'] != 0
-
-        assert 'imdbRating' in allFilmData[filmId]
-        assert allFilmData[filmId]['imdbRating'] != None
-        assert allFilmData[filmId]['imdbRating'] >= 1.0
-        assert allFilmData[filmId]['imdbRating'] <= 10.0
-
-        assert 'numberOfVotes' in allFilmData[filmId]
-        assert allFilmData[filmId]['numberOfVotes'] != None
-        assert allFilmData[filmId]['numberOfVotes'] >= initAllFilmData.NUMBER_OF_VOTES_THRESHOLD
-
-        assert 'runtime' in allFilmData[filmId]
-        assert allFilmData[filmId]['runtime'] != None
-        assert allFilmData[filmId]['runtime'] >= initAllFilmData.RUNTIME_THRESHOLD
-
-        assert 'runtimeHoursMinutes' in allFilmData[filmId]
-        assert allFilmData[filmId]['runtime'] != ""
-
-        assert 'genres' in allFilmData[filmId]
-        assert len(allFilmData[filmId]['genres']) > 0
-
-        for genre in allFilmData[filmId]['genres']:
-            assert genre in cache['allGenres']
-    
-        assert 'imdbUrl' in allFilmData[filmId]
-        assert allFilmData[filmId]['imdbUrl'] == initAllFilmData.BASE_IMDB_URL + filmId
-
-        assert 'countries' in allFilmData[filmId]
-
-        for country in allFilmData[filmId]['countries']:
-            assert country in cache['allCountries']
-
-        assert 'poster' in allFilmData[filmId]
-        assert allFilmData[filmId]['poster'] != ""
-
-        assert 'summary' in allFilmData[filmId]
-        assert allFilmData[filmId]['summary'] != ""
+        testUtilities.verifyFilm(allFilmData[filmId], filmId, cache['allGenres'], cache['allCountries'])
 
 def test_cachedTmdbFilmData():
     cachedTmdbFilmDataFile = open(cachedTmdbFilmDataFileLocation)

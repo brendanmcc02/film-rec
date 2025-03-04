@@ -1,6 +1,8 @@
+import json
 import os
 import requests
 import sys
+import testUtilities
 # import the needed file from backend directory
 # (this is ugly as hell, there's probably an easier way but it gets the job done)
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
@@ -91,40 +93,43 @@ def test_verifyUserUploadedFile_letterboxdMissingHeader():
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
-# def test_initRowsOfRecommendations_imdbNoRecentFilms():
-#     fileName = "imdb-no-recent.csv"
-#     file = open(testUploadFilesDirectory + fileName)
-#     filesToSend = {'file': (fileName, file)}
-#     postResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+def test_initRowsOfRecommendations_imdbNormalScenario():
+    cacheFile = open(testUtilities.cacheFileLocation)
+    cache = json.load(cacheFile)
+    fileName = "imdb-correct.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    postResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
-#     assert postResponse.status_code == 200
-#     assert os.path.exists("../../../database/imdb-correct.csv")
+    assert postResponse.status_code == 200
+    assert postResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
 
-#     getResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-#     assert getResponse.status_code == 200
+    getResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert getResponse.status_code == 200
 
-#     rowsOfRecommendations = getResponse.json()
+    rowsOfRecommendations = getResponse.json()
 
-#     numberOfFavouriteRows = 1
-#     numberOfInternationalRows = 1
-#     numberOfOldRows = 1
-#     total = numberOfFavouriteRows + app.NUMBER_OF_TOP_GENRE_PROFILES + numberOfInternationalRows + numberOfOldRows
-#     assert len(rowsOfRecommendations) == total
+    numberOfFavouriteRows = 1
+    numberOfInternationalRows = 1
+    numberOfOldRows = 1
+    totalNumberOfRows = numberOfFavouriteRows + app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS + numberOfInternationalRows + numberOfOldRows
+    assert len(rowsOfRecommendations) == totalNumberOfRows
 
-#     for row in rowsOfRecommendations:
-#         assert 'recommendedRowText' in row
-#         assert row['recommendedRowsText'] != ""
+    for row in rowsOfRecommendations:
+        assert 'recommendedRowText' in row
+        assert row['recommendedRowText'] != ""
         
-#         assert 'profileId' in row
-#         assert row['profileId'] != ""
+        assert 'profileId' in row
+        assert row['profileId'] != ""
 
-#         assert 'recommendedFilms' in row
-#         assert len(row['recommendedFilms']) == app.NUMBER_OF_RECOMMENDATIONS_PER_ROW
+        assert 'recommendedFilms' in row
+        assert len(row['recommendedFilms']) == app.NUMBER_OF_RECOMMENDATIONS_PER_ROW
 
-#         for film in row['recommendedFilms']:
-#             assert 'similarityScore' in film
-#             assert film['similarityScore'] != None
-#             assert film['similarityScore'] >= 0.0
-#             assert film['similarityScore'] <= 100.0
-
-test_loadJsonFiles()
+        for film in row['recommendedFilms']:
+            assert 'id' in film
+            assert film['id'] != ""
+            testUtilities.verifyFilm(film, film['id'], cache['allGenres'], cache['allCountries'])
+            assert 'similarityScore' in film
+            assert film['similarityScore'] != None
+            assert film['similarityScore'] >= 0.0
+            assert film['similarityScore'] <= 100.0

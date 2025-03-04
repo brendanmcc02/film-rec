@@ -15,7 +15,7 @@ from letterboxdConversionUtilities import *
 DATE_RATED_WEIGHT = 0.8
 NUMBER_OF_RECOMMENDATIONS_PER_ROW = 6
 NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
-NUMBER_OF_TOP_GENRE_PROFILES = 3
+NUMBER_OF_GENRE_RECOMMENDATION_ROWS = 3
 RECOMMENDATION_REVIEW_FACTOR = 0.2
 USER_UPLOADED_DATA_DIRECTORY_NAME = "user-uploaded-data/"
 IS_NOT_CSV_ERROR_MESSAGE = "File must be .csv."
@@ -288,7 +288,7 @@ def generateRecommendations():
 
     genreProfiles = sorted(genreProfiles, key=lambda x: x['weightedMeanRating'], reverse=True)
 
-    for i in range(NUMBER_OF_TOP_GENRE_PROFILES):
+    for i in range(NUMBER_OF_GENRE_RECOMMENDATION_ROWS):
         if genreProfiles[i]['weightedMeanRating'] == 0.0:
             print("No genre profile.")
         else:
@@ -437,7 +437,7 @@ def regenerateRecommendations():
 @app.route('/loadJsonFiles')
 def loadJsonFiles():
     global haveJsonFilesAlreadyBeenLoaded
-    
+
     if (haveJsonFilesAlreadyBeenLoaded):
         return JSON_FILES_ALREADY_LOADED_MESSAGE, 304
     
