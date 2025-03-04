@@ -252,6 +252,7 @@ my-film-data-vec.json to file
 - [ ] run unit tests
 - [ ] figure out how to deploy local instance of backend
 - [ ] run int tests
+- [ ] run int tests against prod deployment **figure out some generic way to change backendUrl and execute same INT tests**
 
 # Software Design & Architecture
 - [ ] think about decoupling, e.g. start with database
