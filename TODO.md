@@ -265,8 +265,8 @@ my-film-data-vec.json to file
 - [x] user upload data should go to its own folder
 - [x] `deleteCsvFiles` should be to delete user-upload folder
 - [x] `loadJsonFiles` should only run once
-- [ ] upload zip file instead of ratings.csv (letterboxd)
-- [ ] write int tests for zip file addition
+- [x] upload zip file instead of ratings.csv (letterboxd)
+- [x] write int tests for zip file addition
 - [ ] record demo
 - [ ] create `local-deployment` branch with changes:
     * `app.run(host="localhost", port=60000)`
