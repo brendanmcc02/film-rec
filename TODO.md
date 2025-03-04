@@ -243,8 +243,9 @@ my-film-data-vec.json to file
 
 # Other
 - [x] rename files to lowerCamelCase
-- [ ] user upload data should go to its own folder
-- [ ] `deleteCsvFiles` should be to delete user-upload folder
+- [x] user upload data should go to its own folder
+- [x] `deleteCsvFiles` should be to delete user-upload folder
+- [ ] `loadJsonFiles` should only run once
 - [ ] upload zip file instead of ratings.csv (letterboxd)
 - [ ] record demo
 - [x] create `local-deployment` branch with changes:
@@ -252,6 +253,7 @@ my-film-data-vec.json to file
     * fetch URLS: `(https://film-rec-backend.onrender.com/verifyUserUploadedFile)` 
         -> `(/verifyUserUploadedFile)`
     * get rid of CORS stuff
+    * proxy in `package.json`
 - [ ] linkedin projects section
 - [ ] update on resume
 

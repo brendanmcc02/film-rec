@@ -42,7 +42,7 @@ allGenresLength = 0
 allCountriesLength = 0
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost"}})
 
 
 def resetGlobalVariables():
@@ -79,23 +79,26 @@ def verifyUserUploadedFile():
     global userFilmDataFilename
     resetGlobalVariables()
 
+    deleteUserUploadedData()
+
     if 'file' not in request.files:
         return 'No file found in the request', 400
 
     file = request.files['file']
     userFilmDataFilename = file.filename
 
-    if isNotCsvFile(file.filename):
+    if isNotCsvFile(userFilmDataFilename):
         return 'File must be .csv', 400
 
     try:
-        file.save(USER_UPLOADED_DATA_DIRECTORY_NAME + file.filename)
+        userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
+        file.save(userUploadedFileLocation)
         expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
                                         "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
                                         "Release Date", "Directors"]
 
     
-        with open("../database/" + userFilmDataFilename, encoding='utf-8') as userFilmDataFile:
+        with open(userUploadedFileLocation, encoding='utf-8') as userFilmDataFile:
             reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
@@ -134,7 +137,8 @@ def initRowsOfRecommendations():
 
     try:
         userFilmDataList = []
-        with open("../database/" + userFilmDataFilename, encoding='utf8') as userFilmDataFile:
+        userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
+        with open(userUploadedFileLocation, encoding='utf8') as userFilmDataFile:
             reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
@@ -447,7 +451,7 @@ def loadJsonFiles():
 
 
 def deleteUserUploadedData():
-    for file in glob.glob(USER_UPLOADED_DATA_DIRECTORY_NAME):
+    for file in glob.glob(USER_UPLOADED_DATA_DIRECTORY_NAME + "*"):
         os.remove(file)
 
 
@@ -456,4 +460,4 @@ def isNotCsvFile(filename):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='localhost', port=60000)
