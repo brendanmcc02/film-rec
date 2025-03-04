@@ -244,6 +244,8 @@ my-film-data-vec.json to file
 
 ## Int Tests
 - [x] `/initRowsOfRecommendations`
+- [x] genre edge cases
+- [x] `/regenerateRecommendations`
 - [x] [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses)
 
 # CI/CD

@@ -259,6 +259,118 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms():
         assert row['profileId'] != "recency"
         assert row['profileId'] != "international"
 
+# tests for cases when the user has rated films with only two genres
+def test_initRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows():
+    fileName = "imdb-no-recent-films-and-two-genres.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert verifyUserUploadedFileResponse.status_code == 200
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+
+    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert initRowsOfRecommendationsResponse.status_code == 200
+
+    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+
+    numberOfFavouriteRows = 1
+    numberOfRecentRows = 0
+    numberOfGenreRows = 2
+    numberOfInternationalRows = 1
+    numberOfOldRows = 1
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+
+    for row in rowsOfRecommendations:
+        assert row['profileId'] != "recency"
+
+# tests for cases when the user has rated films with only two genres
+def test_initRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenreRows():
+    fileName = "letterboxd-no-recent-films-and-two-genres.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert verifyUserUploadedFileResponse.status_code == 200
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+
+    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert initRowsOfRecommendationsResponse.status_code == 200
+
+    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+
+    numberOfFavouriteRows = 1
+    numberOfRecentRows = 0
+    numberOfGenreRows = 2
+    numberOfInternationalRows = 1
+    numberOfOldRows = 1
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+
+    for row in rowsOfRecommendations:
+        assert row['profileId'] != "recency"
+
+# tests for cases when the user has rated films with only one genre
+def test_initRowsOfRecommendations_imdbNoRecentAndOneGenres_ensuresOneGenreRows():
+    fileName = "imdb-no-recent-films-and-one-genre.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert verifyUserUploadedFileResponse.status_code == 200
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+
+    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert initRowsOfRecommendationsResponse.status_code == 200
+
+    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+
+    numberOfFavouriteRows = 1
+    numberOfRecentRows = 0
+    numberOfGenreRows = 1
+    numberOfInternationalRows = 1
+    numberOfOldRows = 1
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+
+    for row in rowsOfRecommendations:
+        assert row['profileId'] != "recency"
+
+# tests for cases when the user has rated films with only one genre
+def test_initRowsOfRecommendations_letterboxdNoRecentAndOneGenres_ensuresOneGenreRows():
+    fileName = "letterboxd-no-recent-films-and-one-genre.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert verifyUserUploadedFileResponse.status_code == 200
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+
+    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert initRowsOfRecommendationsResponse.status_code == 200
+
+    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+
+    numberOfFavouriteRows = 1
+    numberOfRecentRows = 0
+    numberOfGenreRows = 1
+    numberOfInternationalRows = 1
+    numberOfOldRows = 1
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+
+    for row in rowsOfRecommendations:
+        assert row['profileId'] != "recency"
+
 def test_regenerateRowsOfRecommendations_imdb():
     fileName = "imdb-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
