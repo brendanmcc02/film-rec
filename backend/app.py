@@ -17,6 +17,7 @@ NUMBER_OF_RECOMMENDATIONS_PER_ROW = 6
 NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
 NUMBER_OF_TOP_GENRE_PROFILES = 3
 RECOMMENDATION_REVIEW_FACTOR = 0.2
+USER_UPLOADED_DATA_DIRECTORY_NAME = "user-uploaded-data/"
 
 profileVectorLength = 0
 allFilmDataUnseen = {}
@@ -78,18 +79,26 @@ def verifyUserUploadedFile():
     global userFilmDataFilename
     resetGlobalVariables()
 
+    deleteUserUploadedData()
+
     if 'file' not in request.files:
         return 'No file found in the request', 400
 
     file = request.files['file']
     userFilmDataFilename = file.filename
-    file.save("../database/" + file.filename)
-    expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
-                                      "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
-                                      "Release Date", "Directors"]
+
+    if isNotCsvFile(userFilmDataFilename):
+        return 'File must be .csv', 400
 
     try:
-        with open("../database/" + userFilmDataFilename, encoding='utf-8') as userFilmDataFile:
+        userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
+        file.save(userUploadedFileLocation)
+        expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
+                                        "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
+                                        "Release Date", "Directors"]
+
+    
+        with open(userUploadedFileLocation, encoding='utf-8') as userFilmDataFile:
             reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
@@ -106,7 +115,7 @@ def verifyUserUploadedFile():
 
         return "Upload Success.", 200
     except Exception as e:
-        deleteCsvFilesFromDatabase()
+        deleteUserUploadedData()
         return f"Error occurred with reading {userFilmDataFilename}.\n{e}", 400
 
 
@@ -128,16 +137,17 @@ def initRowsOfRecommendations():
 
     try:
         userFilmDataList = []
-        with open("../database/" + userFilmDataFilename, encoding='utf8') as userFilmDataFile:
+        userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
+        with open(userUploadedFileLocation, encoding='utf8') as userFilmDataFile:
             reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
 
             for row in reader:
                 userFilmDataList.append(row)
     except Exception as e:
-        deleteCsvFilesFromDatabase()
+        deleteUserUploadedData()
         return f"Error occurred with reading {userFilmDataFilename}.\n" + str(e), 400
 
-    deleteCsvFilesFromDatabase()
+    deleteUserUploadedData()
     allFilmDataFile = open('../database/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
 
@@ -179,6 +189,7 @@ def initRowsOfRecommendations():
                 else:
                     print(f"Film in userFilmData not found in allFilmData, {filmId}\n")
             except ValueError:
+                deleteUserUploadedData()
                 return f"value error with film: {film['Const']}", 400
 
     diffDateRated = maxDateRated - minDateRated
@@ -439,9 +450,13 @@ def loadJsonFiles():
     return "Files read successfully", 200
 
 
-def deleteCsvFilesFromDatabase():
-    for file in glob.glob("../database/*.csv"):
+def deleteUserUploadedData():
+    for file in glob.glob(USER_UPLOADED_DATA_DIRECTORY_NAME + "*"):
         os.remove(file)
+
+
+def isNotCsvFile(filename):
+    return not filename.lower().endswith(".csv")
 
 
 if __name__ == "__main__":
