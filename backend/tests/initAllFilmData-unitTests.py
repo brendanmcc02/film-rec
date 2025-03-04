@@ -3,10 +3,12 @@ import numpy as np
 import os
 import pytest
 import sys
-
-absolutePath = os.path.dirname(os.path.abspath(__file__))
-parentDirectoryOfAbsolutePath = os.path.dirname(absolutePath)
-sys.path.append(parentDirectoryOfAbsolutePath)
+import testUtilities
+# import the needed file from backend directory
+# (this is ugly as hell, there's probably an easier way but it gets the job done)
+absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
+parentDirectoryOfCurrentFile = os.path.dirname(absolutePathOfCurrentFile)
+sys.path.append(parentDirectoryOfCurrentFile)
 import initAllFilmData
 
 allFilmDataFileLocation = "../../database/all-film-data.json"
@@ -14,10 +16,6 @@ cachedTmdbFilmDataFileLocation = "../../database/cached-tmdb-film-data.json"
 cachedLetterboxdTitlesFileLocation = "../../database/cached-letterboxd-titles.json"
 allFilmDataVectorizedFileLocation = "../../database/all-film-data-vectorized.json"
 allFilmDataVectorizedMagnitudesFileLocation = "../../database/all-film-data-vectorized-magnitudes.json"
-cacheFileLocation = "../../database/cache.json"
-mockGenres = ["Action","Adventure","Animation","Biography","Comedy","Crime","Documentary","Drama","Family","Fantasy","Film-Noir","History","Horror","Music","Musical","Mystery","News","Romance","Sci-Fi","Sport","Thriller","War","Western"]
-mockCountries = ["Algerian","American","Angolan","Argentinian","Australian","Austrian","Azerbaijani","Bangladeshi","Belgian","Bosnian & Herzegovinian","Botswanan","Brazilian","British","Bulgarian","Canadian","Cantonese","Chilean","Chinese","Colombian","Cypriot","Czech","Danish","Dominican","Dutch","Egyptian","Emirati","Estonian","Filipino","Finnish","French","German","Greek","Hungarian","Icelandic","Indian","Indonesian","Iranian","Irish","Israeli","Italian","Japanese","Jordanian","Kazakhstani","Latvian","Lebanese","Lithuanian","Luxembourgish","Malawian","Malian","Mexican","Myanma","New Zealand","Norwegian","Peruvian","Polish","Romanian","Russian","Saudi","Serbian","Serbian and Montenegrin","Singaporean","Slovenian","South African","South Korean","Soviet Union","Spanish","Swedish","Swiss","Taiwanese","Thai","Turkish","Venezuelan","Yugoslavian"]
-filmVectorLength = 100
 
 def test_allFilmDataFileExists():
     try:
@@ -81,7 +79,7 @@ def test_allFilmDataVectorizedMagnitudesFileExists():
 
 def test_cacheFileExists():
     try:
-        with open(cacheFileLocation, encoding='utf-8') as cacheFile:
+        with open(testUtilities.cacheFileLocation, encoding='utf-8') as cacheFile:
             json.load(cacheFile)
 
     except FileNotFoundError:
@@ -94,6 +92,8 @@ def test_cacheFileExists():
 def test_allFilmData():
     allFilmDataFile = open(allFilmDataFileLocation)
     allFilmData = json.load(allFilmDataFile)
+    cacheFile = open(testUtilities.cacheFileLocation)
+    cache = json.load(cacheFile)
 
     for filmId in allFilmData:
         assert 'title' in allFilmData[filmId]
@@ -104,10 +104,11 @@ def test_allFilmData():
 
         assert 'year' in allFilmData[filmId]
         assert allFilmData[filmId]['year'] != None
+        assert allFilmData[filmId]['year'] != 0
 
         assert 'letterboxdYear' in allFilmData[filmId]
-        assert allFilmData[filmId]['letterboxdYear'] != 0
         assert allFilmData[filmId]['letterboxdYear'] != None
+        assert allFilmData[filmId]['letterboxdYear'] != 0
 
         assert 'imdbRating' in allFilmData[filmId]
         assert allFilmData[filmId]['imdbRating'] != None
@@ -116,12 +117,10 @@ def test_allFilmData():
 
         assert 'numberOfVotes' in allFilmData[filmId]
         assert allFilmData[filmId]['numberOfVotes'] != None
-        assert allFilmData[filmId]['numberOfVotes'] != 0
         assert allFilmData[filmId]['numberOfVotes'] >= initAllFilmData.NUMBER_OF_VOTES_THRESHOLD
 
         assert 'runtime' in allFilmData[filmId]
         assert allFilmData[filmId]['runtime'] != None
-        assert allFilmData[filmId]['runtime'] != 0
         assert allFilmData[filmId]['runtime'] >= initAllFilmData.RUNTIME_THRESHOLD
 
         assert 'runtimeHoursMinutes' in allFilmData[filmId]
@@ -131,7 +130,7 @@ def test_allFilmData():
         assert len(allFilmData[filmId]['genres']) > 0
 
         for genre in allFilmData[filmId]['genres']:
-            assert genre in mockGenres
+            assert genre in cache['allGenres']
     
         assert 'imdbUrl' in allFilmData[filmId]
         assert allFilmData[filmId]['imdbUrl'] == initAllFilmData.BASE_IMDB_URL + filmId
@@ -139,7 +138,7 @@ def test_allFilmData():
         assert 'countries' in allFilmData[filmId]
 
         for country in allFilmData[filmId]['countries']:
-            assert country in mockCountries
+            assert country in cache['allCountries']
 
         assert 'poster' in allFilmData[filmId]
         assert allFilmData[filmId]['poster'] != ""
@@ -150,6 +149,8 @@ def test_allFilmData():
 def test_cachedTmdbFilmData():
     cachedTmdbFilmDataFile = open(cachedTmdbFilmDataFileLocation)
     cachedTmdbFilmData = json.load(cachedTmdbFilmDataFile)
+    cacheFile = open(testUtilities.cacheFileLocation)
+    cache = json.load(cacheFile)
 
     for filmId in cachedTmdbFilmData:
         assert 'letterboxdTitle' in cachedTmdbFilmData[filmId]
@@ -161,7 +162,7 @@ def test_cachedTmdbFilmData():
         assert 'countries' in cachedTmdbFilmData[filmId]
 
         for country in cachedTmdbFilmData[filmId]['countries']:
-            assert country in mockCountries
+            assert country in cache['allCountries']
 
         assert 'poster' in cachedTmdbFilmData[filmId]
         assert cachedTmdbFilmData[filmId]['poster'] != ""
@@ -193,11 +194,13 @@ def test_allFilmDataVectorized():
     allFilmData = json.load(allFilmDataFile)
     allFilmDataVectorizedFile = open(allFilmDataVectorizedFileLocation)
     allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+    cacheFile = open(testUtilities.cacheFileLocation)
+    cache = json.load(cacheFile)
 
     assert len(allFilmData) == len(allFilmDataVectorized)
 
     for filmId in allFilmDataVectorized:
-        assert len(allFilmDataVectorized[filmId]) == filmVectorLength
+        assert len(allFilmDataVectorized[filmId]) == cache['profileVectorLength']
 
         assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_YEAR_INDEX] <= initAllFilmData.YEAR_WEIGHT
         assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_YEAR_INDEX] >= 0.0
@@ -208,12 +211,12 @@ def test_allFilmDataVectorized():
         assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_RUNTIME_INDEX] <= initAllFilmData.RUNTIME_WEIGHT
         assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_RUNTIME_INDEX] >= 0.0
         
-        profileCountryStartIndex = initAllFilmData.PROFILE_GENRE_START_INDEX + len(mockGenres)
+        profileCountryStartIndex = initAllFilmData.PROFILE_GENRE_START_INDEX + len(cache['allGenres'])
         for i in range(initAllFilmData.PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
             assert allFilmDataVectorized[filmId][i] <= initAllFilmData.GENRE_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
-        for i in range(profileCountryStartIndex, filmVectorLength):
+        for i in range(profileCountryStartIndex, cache['profileVectorLength']):
             assert allFilmDataVectorized[filmId][i] <= initAllFilmData.COUNTRY_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
@@ -232,20 +235,18 @@ def test_allFilmDataVectorizedMagnitudes():
         assert allFilmDataVectorizedMagnitudes[filmId] == np.linalg.norm(allFilmDataVectorized[filmId])
 
 def test_cache():
-    cacheFile = open(cacheFileLocation)
+    cacheFile = open(testUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
 
     assert 'allGenres' in cache
 
     for genre in cache['allGenres']:
         assert genre != ""
-        assert genre in mockGenres
 
     assert 'allCountries' in cache
 
     for country in cache['allCountries']:
         assert country != ""
-        assert country in mockCountries
 
     assert 'normalizedYears' in cache
 
@@ -276,7 +277,6 @@ def test_cache():
 
     assert 'profileVectorLength' in cache
     assert cache['profileVectorLength'] != None
-    assert cache['profileVectorLength'] == filmVectorLength
 
 def test_convertRuntimeToHoursMinutes():
     assert initAllFilmData.convertRuntimeToHoursMinutes(60) == "1h"

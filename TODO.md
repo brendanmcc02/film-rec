@@ -258,3 +258,5 @@ my-film-data-vec.json to file
 # Tests
 
 ## Unit Tests
+- [x] initAllFilmData
+- [ ] vectorizeUtilities

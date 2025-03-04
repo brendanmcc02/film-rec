@@ -1,9 +1,11 @@
 import os
 import requests
 import sys
-absolutePath = os.path.dirname(os.path.abspath(__file__))
-parentDirectoryOfAbsolutePath = os.path.dirname(absolutePath)
-sys.path.append(parentDirectoryOfAbsolutePath)
+# import the needed file from backend directory
+# (this is ugly as hell, there's probably an easier way but it gets the job done)
+absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
+parentDirectoryOfCurrentFile = os.path.dirname(absolutePathOfCurrentFile)
+sys.path.append(parentDirectoryOfCurrentFile)
 import app
 backendUrl = "http://127.0.0.1:5000"
 
