@@ -133,3 +133,45 @@ def test_initRowsOfRecommendations_imdbNormalScenario():
             assert film['similarityScore'] != None
             assert film['similarityScore'] >= 0.0
             assert film['similarityScore'] <= 100.0
+
+def test_initRowsOfRecommendations_letterboxdNormalScenario():
+    cacheFile = open(testUtilities.cacheFileLocation)
+    cache = json.load(cacheFile)
+    fileName = "letterboxd-correct.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    postResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert postResponse.status_code == 200
+    assert postResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+
+    getResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert getResponse.status_code == 200
+
+    rowsOfRecommendations = getResponse.json()
+
+    numberOfFavouriteRows = 1
+    numberOfInternationalRows = 1
+    numberOfOldRows = 1
+    totalNumberOfRows = numberOfFavouriteRows + app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS + numberOfInternationalRows + numberOfOldRows
+    assert len(rowsOfRecommendations) == totalNumberOfRows
+
+    for row in rowsOfRecommendations:
+        assert 'recommendedRowText' in row
+        assert row['recommendedRowText'] != ""
+        
+        assert 'profileId' in row
+        assert row['profileId'] != ""
+
+        assert 'recommendedFilms' in row
+        assert len(row['recommendedFilms']) == app.NUMBER_OF_RECOMMENDATIONS_PER_ROW
+
+        for film in row['recommendedFilms']:
+            assert 'id' in film
+            assert film['id'] != ""
+            testUtilities.verifyFilm(film, film['id'], cache['allGenres'], cache['allCountries'])
+            assert 'similarityScore' in film
+            assert film['similarityScore'] != None
+            assert film['similarityScore'] >= 0.0
+            assert film['similarityScore'] <= 100.0
+
