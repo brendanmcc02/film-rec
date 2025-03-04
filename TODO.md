@@ -247,7 +247,7 @@ my-film-data-vec.json to file
 - [x] genre edge cases
 - [x] `/regenerateRecommendations`
 - [x] [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses)
-- [ ] add more int tests for letterboxd zip
+- [x] add more int tests for letterboxd zip
 
 # CI/CD
 - [ ] run unit tests
