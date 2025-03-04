@@ -67,7 +67,8 @@ def isLetterboxdZipFileInvalid(userUploadedDataDirectory, zipFileName):
 
         if os.path.isdir(fileOrDirectoryPath):
             shutil.rmtree(fileOrDirectoryPath)
-        elif os.path.basename(fileOrDirectoryPath) != "ratings.csv":
+        elif (os.path.basename(fileOrDirectoryPath) != "ratings.csv" and
+              os.path.basename(fileOrDirectoryPath) != ".gitignore"):
             os.remove(fileOrDirectoryPath)
 
     return False
