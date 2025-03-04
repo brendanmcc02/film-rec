@@ -263,3 +263,8 @@ my-film-data-vec.json to file
 
 ## Int Tests
 - [ ] app
+
+# CI/CD
+- [ ] run unit tests
+- [ ] figure out how to deploy local instance of backend
+- [ ] run int tests
