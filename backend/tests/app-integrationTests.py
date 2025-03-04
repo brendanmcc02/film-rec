@@ -30,14 +30,14 @@ def test_verifyUserUploadedFile_noFile():
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.NO_FILE_IN_REQUEST_ERROR_MESSAGE
 
-def test_verifyUserUploadedFile_txtFile():
+def test_verifyUserUploadedFile_unacceptedFileType():
     fileName = "test.txt"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 415
-    assert response.content.decode(encoding='utf-8') == app.IS_NOT_CSV_ERROR_MESSAGE 
+    assert response.content.decode(encoding='utf-8') == app.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_imdbCorrect():
     fileName = "imdb-no-recent-films.csv"
@@ -66,7 +66,7 @@ def test_verifyUserUploadedFile_imdbMissingHeader():
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
-def test_verifyUserUploadedFile_letterboxdCorrect():
+def test_verifyUserUploadedFile_letterboxdCorrectCsv():
     fileName = "letterboxd-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -75,7 +75,7 @@ def test_verifyUserUploadedFile_letterboxdCorrect():
     assert response.status_code == 200
     assert response.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
 
-def test_verifyUserUploadedFile_letterboxdIncorrectHeader():
+def test_verifyUserUploadedFile_letterboxdIncorrectHeaderCsv():
     fileName = "letterboxd-incorrect-header.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -84,7 +84,7 @@ def test_verifyUserUploadedFile_letterboxdIncorrectHeader():
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
 
-def test_verifyUserUploadedFile_letterboxdMissingHeader():
+def test_verifyUserUploadedFile_letterboxdMissingHeaderCsv():
     fileName = "letterboxd-missing-header.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -92,6 +92,24 @@ def test_verifyUserUploadedFile_letterboxdMissingHeader():
 
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
+
+def test_verifyUserUploadedFile_letterboxdincorrectZip():
+    fileName = "letterboxd-incorrect.zip"
+    file = open(testUploadFilesDirectory + fileName, 'rb')
+    filesToSend = {'file': (fileName, file)}
+    response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert response.status_code == 400
+    assert response.content.decode(encoding='utf-8') == app.INVALID_ZIP_FILE_ERROR_MESSAGE
+
+def test_verifyUserUploadedFile_letterboxdCorrectZip():
+    fileName = "letterboxd-correct.zip"
+    file = open(testUploadFilesDirectory + fileName, 'rb')
+    filesToSend = {'file': (fileName, file)}
+    response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert response.status_code == 200
+    assert response.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
 
 def test_initRowsOfRecommendations_imdbNoRecentFilms():
     fileName = "imdb-no-recent-films.csv"

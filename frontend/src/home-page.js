@@ -48,7 +48,7 @@ const App = () => {
       <div className='text-and-file-select-upload-container'>
         <div className="home-text-container">
           <h3 className='home-text'>Letterboxd users: Upload your <a
-              href="https://letterboxd.com/data/export"><u>ratings.csv</u></a> file.</h3>
+              href="https://letterboxd.com/data/export"><u>zip</u></a> file.</h3>
           <h3 className='home-text'>IMDB Users: Upload your <a href="https://www.imdb.com/exports/?ref_=rt" target="_blank"><u>exported
             ratings .csv</u></a> file.</h3>
             <h3 className='home-text'>Don't have a Letterboxd or IMDB account? Use 
