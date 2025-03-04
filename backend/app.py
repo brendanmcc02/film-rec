@@ -484,7 +484,7 @@ def deleteUserUploadedData():
         fileOrDirectoryPath = os.path.join(USER_UPLOADED_DATA_DIRECTORY_NAME, fileOrDirectory)
         if os.path.isdir(fileOrDirectoryPath):
             shutil.rmtree(fileOrDirectoryPath)
-        else:
+        elif fileOrDirectoryPath != ".gitignore":
             os.remove(fileOrDirectoryPath)
 
 
