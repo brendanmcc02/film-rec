@@ -18,7 +18,7 @@ NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
 NUMBER_OF_GENRE_RECOMMENDATION_ROWS = 3
 RECOMMENDATION_REVIEW_FACTOR = 0.2
 USER_UPLOADED_DATA_DIRECTORY_NAME = "user-uploaded-data/"
-UNACCEPTABLE_MEDIA_TYPE_ERROR_MESSAGE = "File must be .csv or .zip."
+UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE = "File must be .csv or .zip."
 NO_FILE_IN_REQUEST_ERROR_MESSAGE = "No file found in the request"
 FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE = "File has more data than row headers."
 FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE = "Row headers do not conform to expected format."
@@ -99,7 +99,7 @@ def verifyUserUploadedFile():
     userFilmDataFilename = file.filename
 
     if isUnacceptableMediaType(userFilmDataFilename):
-        return UNACCEPTABLE_MEDIA_TYPE_ERROR_MESSAGE, 415
+        return UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE, 415
 
     try:
         userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
