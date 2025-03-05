@@ -263,8 +263,9 @@ my-film-data-vec.json to file
 - [x] config a pipeline that is triggered on pushes to main
 - [x] run unit tests
 - [x] configure the pipeline to run on PRs to main (pre-merge)
-- [ ] run int tests against local deployment
-- [ ] run int tests against prod deployment **figure out some generic way to change backendUrl and execute same INT tests**
+- [x] run int tests against local deployment
+- [ ] figure out some generic way to change backendUrl and execute same INT tests
+- [ ] run int tests against prod deployment
 - [ ] don't allow pushes to main?
 
 # Software Design & Architecture

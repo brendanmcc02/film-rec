@@ -1,9 +1,6 @@
-name: main pipeline
+name: pull request pipeline
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -42,5 +39,5 @@ jobs:
           pytest *integrationTests.py
 
       - name: Remove local backend deployment
-        run: pkill -f "python3 app.py" || true
+        run: pkill -f "python3 app.py &" || true
         if: always()
