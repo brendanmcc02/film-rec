@@ -265,7 +265,7 @@ my-film-data-vec.json to file
 - [x] configure the pipeline to run on PRs to main (pre-merge)
 - [x] run int tests against local deployment
 - [x] figure out some generic way to change backendUrl and execute same INT tests
-- [ ] create `main.yaml` that runs int tests against prod
+- [x] create `main.yaml` that runs int tests against prod
 - [ ] don't allow pushes to main?
 
 # Software Design & Architecture
