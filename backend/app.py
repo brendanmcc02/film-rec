@@ -24,7 +24,6 @@ FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE = "File has more data than row hea
 FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE = "Row headers do not conform to expected format."
 FILE_UPLOAD_SUCCESS_MESSAGE = "Upload Success."
 JSON_FILES_LOAD_SUCCESS_MESSAGE = "JSON files loaded successfully."
-JSON_FILES_ALREADY_LOADED_MESSAGE = "JSON files have already been loaded."
 JSON_FILES_NOT_FOUND_ERROR_MESSAGE = "JSON files not found."
 JSON_FILES_DECODE_ERROR_MESSAGE = "JSON files decode error."
 INVALID_ZIP_FILE_ERROR_MESSAGE = "Zip file is invalid."
@@ -447,7 +446,7 @@ def loadJsonFiles():
     global haveJsonFilesAlreadyBeenLoaded
 
     if (haveJsonFilesAlreadyBeenLoaded):
-        return JSON_FILES_ALREADY_LOADED_MESSAGE, 304
+        return JSON_FILES_LOAD_SUCCESS_MESSAGE, 200
     
     global allFilmDataVectorized
     global allFilmDataVectorizedMagnitudes

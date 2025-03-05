@@ -17,11 +17,6 @@ def test_loadJsonFiles(backendUrl):
     assert response.status_code == 200
     assert response.content.decode(encoding='utf-8') == app.JSON_FILES_LOAD_SUCCESS_MESSAGE
 
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 304
-    # 304 responses typically do not have content, so do not assert for response content
-
 def test_verifyUserUploadedFile_noFile(backendUrl):
     filesToSend = {'file': ("", None)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
