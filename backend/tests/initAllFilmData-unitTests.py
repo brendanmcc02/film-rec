@@ -184,7 +184,8 @@ def test_allFilmDataVectorizedMagnitudes():
 
     for filmId in allFilmDataVectorizedMagnitudes:
         assert allFilmDataVectorizedMagnitudes[filmId] != None
-        assert allFilmDataVectorizedMagnitudes[filmId] == np.linalg.norm(allFilmDataVectorized[filmId]).item()
+        expectedMagnitude = np.linalg.norm(allFilmDataVectorized[filmId])
+        assert allFilmDataVectorizedMagnitudes[filmId] == expectedMagnitude.item()
 
 def test_cache():
     cacheFile = open(testUtilities.cacheFileLocation)
