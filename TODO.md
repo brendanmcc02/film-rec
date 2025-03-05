@@ -259,8 +259,9 @@ my-film-data-vec.json to file
 - [x] write int tests for zip file addition
 
 # CI/CD
-- [ ] config a pipeline that is triggered on pushes to main
-- [ ] run unit tests
+- [x] config a pipeline that is triggered on pushes to main
+- [x] run unit tests
+- [ ] configure the pipeline to run on PRs to main (pre-merge)
 - [ ] figure out how to deploy local instance of backend
 - [ ] run int tests against local deployment
 - [ ] run int tests against prod deployment **figure out some generic way to change backendUrl and execute same INT tests**
