@@ -1,4 +1,3 @@
-import json
 import os
 import requests
 import sys
@@ -9,7 +8,12 @@ absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 parentDirectoryOfCurrentFile = os.path.dirname(absolutePathOfCurrentFile)
 sys.path.append(parentDirectoryOfCurrentFile)
 import app
-backendUrl = "http://localhost:60000"
+
+if sys.argv[1] == "local":
+    backendUrl = open("local-deployment-url.txt").read()
+elif sys.argv[1] == "prod":
+    backendUrl = open("prod-deployment-url.txt").read()
+
 testUploadFilesDirectory = "test-upload-files/"
 
 def test_loadJsonFiles():
