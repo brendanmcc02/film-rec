@@ -24,4 +24,4 @@ jobs:
           pip install -r backend/requirements.txt
 
       - name: Run tests
-        run: pytest *-unitTests.py
+        run: pytest backend/tests/*-unitTests.py
