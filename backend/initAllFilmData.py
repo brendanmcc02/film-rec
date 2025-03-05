@@ -12,6 +12,7 @@ from vectorizeUtilities import *
 RUNTIME_THRESHOLD = 40
 NUMBER_OF_VOTES_THRESHOLD = 25000
 BASE_IMDB_URL = 'https://www.imdb.com/title/'
+VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS = 5
 
 
 def main():
@@ -310,7 +311,8 @@ def main():
             if profileVectorLength == 0:
                 profileVectorLength = len(allFilmDataVectorized[filmId])
 
-            allFilmDataVectorizedMagnitudes[filmId] = np.linalg.norm(allFilmDataVectorized[filmId])
+            allFilmDataVectorizedMagnitudes[filmId] = round(np.linalg.norm(allFilmDataVectorized[filmId]), 
+                                                            VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
     cache = {'allGenres': allGenres, 'allCountries': allCountries, 'normalizedYears': cachedNormalizedYears, 
              'normalizedImdbRatings': cachedNormalizedImdbRatings, 'normalizedRuntimes': cachedNormalizedRuntimes, 

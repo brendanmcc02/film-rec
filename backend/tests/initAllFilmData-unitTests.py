@@ -185,7 +185,9 @@ def test_allFilmDataVectorizedMagnitudes():
     for filmId in allFilmDataVectorizedMagnitudes:
         assert allFilmDataVectorizedMagnitudes[filmId] != None
         expectedMagnitude = np.linalg.norm(allFilmDataVectorized[filmId])
-        assert allFilmDataVectorizedMagnitudes[filmId] == expectedMagnitude.item()
+        expectedMagnitudeFloat = expectedMagnitude.item()
+        assert allFilmDataVectorizedMagnitudes[filmId] == round(expectedMagnitudeFloat,
+                                                                initAllFilmData.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
 def test_cache():
     cacheFile = open(testUtilities.cacheFileLocation)
