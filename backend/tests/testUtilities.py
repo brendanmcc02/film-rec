@@ -10,6 +10,8 @@ import app
 import initAllFilmData
 
 cacheFileLocation = "../../database/cache.json"
+LOCAL_DEPLOYMENT_URL = "http://localhost:60000"
+PROD_DEPLOYMENT_URL = "https://film-rec-backend.onrender.com"
 
 def verifyFilm(film, filmId, allGenres, allCountries):
     assert 'title' in film
