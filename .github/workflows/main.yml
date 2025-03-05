@@ -26,7 +26,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
 
-      - name: Run tests
+      - name: Run unit tests
         run: |
           cd backend/tests
-          pytest *-unitTests.py
+          pytest *unitTests.py
+      
+      - name: Start local backend deployment
+        run: |
+          python3 app.py
+
+      - name: Run integration tests (local)
+        run: |
+          pytest *integrationTests.py
+
+      - name: Remove local backend deployment
+        run: pkill -f "python3 app.py"
+        if: always()

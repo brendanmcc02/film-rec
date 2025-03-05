@@ -137,6 +137,7 @@ create endpoints for getters/setters
 - [x] reduce run.sh to startup.sh
 - [x] change run.sh to reflect various changes
 - [x] for .sh files change paths to be relative to device
+- [ ] generate a PR instead of just pushing straight to main
 
 # Recommendation Algorithm Round 1
 - [x] all-film-data doesn't filter out films that have been rated
@@ -261,10 +262,10 @@ my-film-data-vec.json to file
 # CI/CD
 - [x] config a pipeline that is triggered on pushes to main
 - [x] run unit tests
-- [ ] configure the pipeline to run on PRs to main (pre-merge)
-- [ ] figure out how to deploy local instance of backend
+- [x] configure the pipeline to run on PRs to main (pre-merge)
 - [ ] run int tests against local deployment
 - [ ] run int tests against prod deployment **figure out some generic way to change backendUrl and execute same INT tests**
+- [ ] don't allow pushes to main?
 
 # Software Design & Architecture
 - [ ] think about decoupling, e.g. start with database
