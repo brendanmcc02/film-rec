@@ -9,7 +9,7 @@ absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 parentDirectoryOfCurrentFile = os.path.dirname(absolutePathOfCurrentFile)
 sys.path.append(parentDirectoryOfCurrentFile)
 import app
-backendUrl = "http://127.0.0.1:5000"
+backendUrl = "http://localhost:60000"
 testUploadFilesDirectory = "test-upload-files/"
 
 def test_loadJsonFiles():
