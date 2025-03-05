@@ -3,13 +3,15 @@ import numpy as np
 import os
 import pytest
 import sys
-import unitTestUtilities
 # import the needed file from backend directory
 # (this is ugly as hell, there's probably an easier way but it gets the job done)
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
-parentDirectoryOfCurrentFile = os.path.dirname(absolutePathOfCurrentFile)
-sys.path.append(parentDirectoryOfCurrentFile)
+testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
+backendRootDirectory = os.path.dirname(testRootDirectory)
+sys.path.append(testRootDirectory)
+sys.path.append(backendRootDirectory)
 import initAllFilmData
+import testUtilities
 
 allFilmDataFileLocation = "../../../database/all-film-data.json"
 cachedTmdbFilmDataFileLocation = "../../../database/cached-tmdb-film-data.json"
@@ -79,7 +81,7 @@ def test_allFilmDataVectorizedMagnitudesFileExists():
 
 def test_cacheFileExists():
     try:
-        with open(unitTestUtilities.cacheFileLocation, encoding='utf-8') as cacheFile:
+        with open(testUtilities.cacheFileLocation, encoding='utf-8') as cacheFile:
             json.load(cacheFile)
 
     except FileNotFoundError:
@@ -92,16 +94,16 @@ def test_cacheFileExists():
 def test_allFilmData():
     allFilmDataFile = open(allFilmDataFileLocation)
     allFilmData = json.load(allFilmDataFile)
-    cacheFile = open(unitTestUtilities.cacheFileLocation)
+    cacheFile = open(testUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
 
     for filmId in allFilmData:
-        unitTestUtilities.verifyFilm(allFilmData[filmId], filmId, cache['allGenres'], cache['allCountries'])
+        testUtilities.verifyFilm(allFilmData[filmId], filmId, cache['allGenres'], cache['allCountries'])
 
 def test_cachedTmdbFilmData():
     cachedTmdbFilmDataFile = open(cachedTmdbFilmDataFileLocation)
     cachedTmdbFilmData = json.load(cachedTmdbFilmDataFile)
-    cacheFile = open(unitTestUtilities.cacheFileLocation)
+    cacheFile = open(testUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
 
     for filmId in cachedTmdbFilmData:
@@ -146,7 +148,7 @@ def test_allFilmDataVectorized():
     allFilmData = json.load(allFilmDataFile)
     allFilmDataVectorizedFile = open(allFilmDataVectorizedFileLocation)
     allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
-    cacheFile = open(unitTestUtilities.cacheFileLocation)
+    cacheFile = open(testUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
 
     assert len(allFilmData) == len(allFilmDataVectorized)
@@ -190,7 +192,7 @@ def test_allFilmDataVectorizedMagnitudes():
                                                                 initAllFilmData.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
 def test_cache():
-    cacheFile = open(unitTestUtilities.cacheFileLocation)
+    cacheFile = open(testUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
 
     assert 'allGenres' in cache

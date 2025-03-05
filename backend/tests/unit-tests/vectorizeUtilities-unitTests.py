@@ -1,13 +1,15 @@
 import json
 import os
 import sys
-import unitTestUtilities
 # import the needed file from backend directory
 # (this is ugly as hell, there's probably an easier way but it gets the job done)
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
-parentDirectoryofParentDirectoryOfCurrentFile = os.path.dirname(os.path.dirname(absolutePathOfCurrentFile))
-sys.path.append(parentDirectoryofParentDirectoryOfCurrentFile)
+testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
+backendRootDirectory = os.path.dirname(testRootDirectory)
+sys.path.append(testRootDirectory)
+sys.path.append(backendRootDirectory)
 import vectorizeUtilities
+import testUtilities
 
 def test_keepVectorBoundary():
     vector = [1.1, -0.1, 0.0]
@@ -25,7 +27,7 @@ def test_keepVectorBoundary():
         assert dimension <= 1.0
 
 def test_getFilmGenres():
-    cacheFile = open(unitTestUtilities.cacheFileLocation)
+    cacheFile = open(testUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
     filmVectorWithActionComedyRomance = [0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     assert (vectorizeUtilities.getFilmGenres(filmVectorWithActionComedyRomance, cache['allGenres']) == 
@@ -90,7 +92,7 @@ def test_curveAccordingToMax_multiVariableVector():
     assert multiVariableTestVector == [1.0, 0.5, 0.0]
 
 def test_getProfileMaxCountry_filmHasOnlyOneMaxCountry():
-    cacheFile = open(unitTestUtilities.cacheFileLocation)
+    cacheFile = open(testUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
     allGenresLength = len(cache['allGenres'])
 
@@ -100,7 +102,7 @@ def test_getProfileMaxCountry_filmHasOnlyOneMaxCountry():
             == "American")
 
 def test_getProfileMaxCountry_filmHasMultipleMaxCountries_EnsuresOnlyOneIsReturned():
-    cacheFile = open(unitTestUtilities.cacheFileLocation)
+    cacheFile = open(testUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
     allGenresLength = len(cache['allGenres'])
 
