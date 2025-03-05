@@ -108,6 +108,9 @@ preprocessing
 countries, poster)
 - [x] I think it's done for letterboxd already but double check functionality
 - [x] check functionality of backend works after offline phase additions
+- [x] user upload data should go to its own folder
+- [x] `deleteCsvFiles` should be to delete user-upload folder
+- [x] upload zip file instead of ratings.csv (letterboxd)
 
 # Misc
 - [x] switch from my-film-data.json to ratings.csv
@@ -165,6 +168,9 @@ my-film-data-vec.json to file
 - [x] move around the profiles to something better
 - [x] remove clashing, worse results
 - [x] international: if no other countries than US/GB, return zero vector
+- [x] play around with `YEAR_WEIGHT`
+- [x] play around with `GENRE_WEIGHT`
+- [x] try fixing imdbRating to 1.0?
 
 ## Testing & Evaluation
 - [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
@@ -194,6 +200,8 @@ my-film-data-vec.json to file
 - [x] separate code pieces into separate classes/files; modularity wya
 - [x] you can iterate through keys in a dict **without** the need to call `*.keys()`!!! change this!
 - [x] `range(*)` is called once in python, no need to declare for loop limit beforehand
+- [x] rename files to lowerCamelCase
+- [x] `loadJsonFiles` should only run once
 
 # Frontend
 - [x] do text div 
@@ -248,8 +256,10 @@ my-film-data-vec.json to file
 - [x] `/regenerateRecommendations`
 - [x] [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses)
 - [x] add more int tests for letterboxd zip
+- [x] write int tests for zip file addition
 
 # CI/CD
+- [ ] config a pipeline that is triggered on pushes to main
 - [ ] run unit tests
 - [ ] figure out how to deploy local instance of backend
 - [ ] run int tests against local deployment
@@ -260,15 +270,6 @@ my-film-data-vec.json to file
 - [ ] make things into classes you animal
 
 # Finishing Touches
-- [x] play around with `YEAR_WEIGHT`
-- [x] play around with `GENRE_WEIGHT`
-- [x] try fixing imdbRating to 1.0?
-- [x] rename files to lowerCamelCase
-- [x] user upload data should go to its own folder
-- [x] `deleteCsvFiles` should be to delete user-upload folder
-- [x] `loadJsonFiles` should only run once
-- [x] upload zip file instead of ratings.csv (letterboxd)
-- [x] write int tests for zip file addition
 - [ ] record demo
 - [ ] create `local-deployment` branch with changes:
     * `app.run(host="localhost", port=60000)`
