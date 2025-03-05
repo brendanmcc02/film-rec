@@ -1,22 +1,17 @@
 import os
 import requests
 import sys
-import testUtilities
-# import the needed file from backend directory
-# (this is ugly as hell, there's probably an easier way but it gets the job done)
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
-parentDirectoryOfCurrentFile = os.path.dirname(absolutePathOfCurrentFile)
-sys.path.append(parentDirectoryOfCurrentFile)
+testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
+backendRootDirectory = os.path.dirname(testRootDirectory)
+sys.path.append(testRootDirectory)
+sys.path.append(backendRootDirectory)
 import app
-
-if sys.argv[1] == "local":
-    backendUrl = open("local-deployment-url.txt").read()
-elif sys.argv[1] == "prod":
-    backendUrl = open("prod-deployment-url.txt").read()
+import testUtilities
 
 testUploadFilesDirectory = "test-upload-files/"
 
-def test_loadJsonFiles():
+def test_loadJsonFiles(backendUrl):
     response = requests.get(backendUrl + "/loadJsonFiles")
 
     assert response.status_code == 200
@@ -27,14 +22,14 @@ def test_loadJsonFiles():
     assert response.status_code == 304
     # 304 responses typically do not have content, so do not assert for response content
 
-def test_verifyUserUploadedFile_noFile():
+def test_verifyUserUploadedFile_noFile(backendUrl):
     filesToSend = {'file': ("", None)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.NO_FILE_IN_REQUEST_ERROR_MESSAGE
 
-def test_verifyUserUploadedFile_unacceptedFileType():
+def test_verifyUserUploadedFile_unacceptedFileType(backendUrl):
     fileName = "test.txt"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -43,7 +38,7 @@ def test_verifyUserUploadedFile_unacceptedFileType():
     assert response.status_code == 415
     assert response.content.decode(encoding='utf-8') == app.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE
 
-def test_verifyUserUploadedFile_imdbCorrect():
+def test_verifyUserUploadedFile_imdbCorrect(backendUrl):
     fileName = "imdb-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -52,7 +47,7 @@ def test_verifyUserUploadedFile_imdbCorrect():
     assert response.status_code == 200
     assert response.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
 
-def test_verifyUserUploadedFile_imdbIncorrectHeader():
+def test_verifyUserUploadedFile_imdbIncorrectHeader(backendUrl):
     fileName = "imdb-incorrect-header.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -61,7 +56,7 @@ def test_verifyUserUploadedFile_imdbIncorrectHeader():
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
 
-def test_verifyUserUploadedFile_imdbMissingHeader():
+def test_verifyUserUploadedFile_imdbMissingHeader(backendUrl):
     fileName = "imdb-missing-header.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -70,7 +65,7 @@ def test_verifyUserUploadedFile_imdbMissingHeader():
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
-def test_verifyUserUploadedFile_letterboxdCorrectCsv():
+def test_verifyUserUploadedFile_letterboxdCorrectCsv(backendUrl):
     fileName = "letterboxd-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -79,7 +74,7 @@ def test_verifyUserUploadedFile_letterboxdCorrectCsv():
     assert response.status_code == 200
     assert response.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
 
-def test_verifyUserUploadedFile_letterboxdIncorrectHeaderCsv():
+def test_verifyUserUploadedFile_letterboxdIncorrectHeaderCsv(backendUrl):
     fileName = "letterboxd-incorrect-header.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -88,7 +83,7 @@ def test_verifyUserUploadedFile_letterboxdIncorrectHeaderCsv():
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
 
-def test_verifyUserUploadedFile_letterboxdMissingHeaderCsv():
+def test_verifyUserUploadedFile_letterboxdMissingHeaderCsv(backendUrl):
     fileName = "letterboxd-missing-header.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -97,7 +92,7 @@ def test_verifyUserUploadedFile_letterboxdMissingHeaderCsv():
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
-def test_verifyUserUploadedFile_letterboxdincorrectZip():
+def test_verifyUserUploadedFile_letterboxdincorrectZip(backendUrl):
     fileName = "letterboxd-incorrect.zip"
     file = open(testUploadFilesDirectory + fileName, 'rb')
     filesToSend = {'file': (fileName, file)}
@@ -106,7 +101,7 @@ def test_verifyUserUploadedFile_letterboxdincorrectZip():
     assert response.status_code == 400
     assert response.content.decode(encoding='utf-8') == app.INVALID_ZIP_FILE_ERROR_MESSAGE
 
-def test_verifyUserUploadedFile_letterboxdCorrectZip():
+def test_verifyUserUploadedFile_letterboxdCorrectZip(backendUrl):
     fileName = "letterboxd-no-recent.zip"
     file = open(testUploadFilesDirectory + fileName, 'rb')
     filesToSend = {'file': (fileName, file)}
@@ -115,7 +110,7 @@ def test_verifyUserUploadedFile_letterboxdCorrectZip():
     assert response.status_code == 200
     assert response.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
 
-def test_initRowsOfRecommendations_imdbNoRecentFilms():
+def test_initRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     fileName = "imdb-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -142,7 +137,7 @@ def test_initRowsOfRecommendations_imdbNoRecentFilms():
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
 
-def test_initRowsOfRecommendations_letterboxdNoRecentFilms():
+def test_initRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     fileName = "letterboxd-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -169,7 +164,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentFilms():
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
 
-def test_initRowsOfRecommendations_imdbNoRecentAndFavouriteFilms():
+def test_initRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
     fileName = "imdb-no-recent-and-favourite-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -197,7 +192,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndFavouriteFilms():
         assert row['profileId'] != "recency"
         assert row['profileId'] != "favourite"
 
-def test_initRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms():
+def test_initRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUrl):
     fileName = "letterboxd-no-recent-and-favourite-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -225,7 +220,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms():
         assert row['profileId'] != "recency"
         assert row['profileId'] != "favourite"
 
-def test_initRowsOfRecommendations_imdbNoRecentAndInternationalFilms():
+def test_initRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl):
     fileName = "imdb-no-recent-and-international-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -253,7 +248,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndInternationalFilms():
         assert row['profileId'] != "recency"
         assert row['profileId'] != "international"
 
-def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms():
+def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backendUrl):
     fileName = "letterboxd-no-recent-and-international-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -282,7 +277,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms():
         assert row['profileId'] != "international"
 
 # tests for cases when the user has rated films with only two genres
-def test_initRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows():
+def test_initRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
     fileName = "imdb-no-recent-films-and-two-genres.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -310,7 +305,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(
         assert row['profileId'] != "recency"
 
 # tests for cases when the user has rated films with only two genres
-def test_initRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenreRows():
+def test_initRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
     fileName = "letterboxd-no-recent-films-and-two-genres.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -338,7 +333,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenr
         assert row['profileId'] != "recency"
 
 # tests for cases when the user has rated films with only one genre
-def test_initRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows():
+def test_initRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     fileName = "imdb-international-film-no-recent-films-and-one-genre.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -366,7 +361,7 @@ def test_initRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGe
         assert row['profileId'] != "recency"
 
 # tests for cases when the user has rated films with only one genre
-def test_initRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows():
+def test_initRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     fileName = "letterboxd-international-film-no-recent-films-and-one-genre.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -394,7 +389,7 @@ def test_initRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAn
         assert row['profileId'] != "recency"
 
 # tests for cases when the user has rated films with only one genre
-def test_initRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows():
+def test_initRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     fileName = "imdb-american-film-no-recent-films-and-one-genre.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -423,7 +418,7 @@ def test_initRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOn
         assert row['profileId'] != "international"
 
 # tests for cases when the user has rated films with only one genre
-def test_initRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows():
+def test_initRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     fileName = "letterboxd-american-film-no-recent-films-and-one-genre.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -451,7 +446,7 @@ def test_initRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilm
         assert row['profileId'] != "recency"
         assert row['profileId'] != "international"
 
-def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms():
+def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     fileName = "letterboxd-no-recent.zip"
     file = open(testUploadFilesDirectory + fileName, 'rb')
     filesToSend = {'file': (fileName, file)}
@@ -478,7 +473,7 @@ def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms():
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
 
-def test_regenerateRowsOfRecommendations_imdb():
+def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     fileName = "imdb-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -515,7 +510,7 @@ def test_regenerateRowsOfRecommendations_imdb():
         for film in row['recommendedFilms']:
             assert film['id'] not in initialRecommendationFilmIds
 
-def test_regenerateRowsOfRecommendations_letterboxd():
+def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     fileName = "letterboxd-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}

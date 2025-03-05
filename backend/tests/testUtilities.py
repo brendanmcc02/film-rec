@@ -1,15 +1,13 @@
 import json
 import os
 import sys
-# import the needed file from backend directory
-# (this is ugly as hell, there's probably an easier way but it gets the job done)
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
-parentDirectoryOfCurrentFile = os.path.dirname(absolutePathOfCurrentFile)
-sys.path.append(parentDirectoryOfCurrentFile)
+backendDirectory = os.path.dirname(absolutePathOfCurrentFile)
+sys.path.append(backendDirectory)
 import app
 import initAllFilmData
 
-cacheFileLocation = "../../database/cache.json"
+cacheFileLocation = "../../../database/cache.json"
 LOCAL_DEPLOYMENT_URL = "http://localhost:60000"
 PROD_DEPLOYMENT_URL = "https://film-rec-backend.onrender.com"
 
@@ -88,4 +86,3 @@ def verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows):
             assert film['similarityScore'] != None
             assert film['similarityScore'] >= 0.0
             assert film['similarityScore'] <= 100.0
-

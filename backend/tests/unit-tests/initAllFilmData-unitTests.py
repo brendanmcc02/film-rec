@@ -3,8 +3,6 @@ import numpy as np
 import os
 import pytest
 import sys
-# import the needed file from backend directory
-# (this is ugly as hell, there's probably an easier way but it gets the job done)
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
 backendRootDirectory = os.path.dirname(testRootDirectory)
