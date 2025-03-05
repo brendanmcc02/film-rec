@@ -25,7 +25,7 @@ jobs:
 
       - name: Run unit tests
         run: |
-          cd backend/tests/
+          cd backend/tests/unit-tests/
           pytest *unitTests.py
       
       - name: Start local backend deployment
@@ -35,8 +35,8 @@ jobs:
 
       - name: Run integration tests (local)
         run: |
-          cd backend/tests/
-          pytest *integrationTests.py "local"
+          cd backend/tests/integration-tests/
+          pytest *integrationTests.py --deploymentType "local"
 
       - name: Remove local backend deployment
         run: pkill -f "python3 app.py &" || true
