@@ -320,7 +320,7 @@ class initDocumentDatabase:
             convert_file.write(json.dumps(allFilmDataVectorizedMagnitudes, indent=4, separators=(',', ': ')))
 
 
-    def isInvalidResponse(jsonResponse):
+    def isInvalidResponse(self, jsonResponse):
         try:
             if ('title' in jsonResponse and jsonResponse['title'] != '' and 'poster_path' in jsonResponse
                     and jsonResponse['poster_path'] != '' and 'release_date' in jsonResponse and
@@ -335,7 +335,7 @@ class initDocumentDatabase:
             return True
 
 
-    def convertRuntimeToHoursMinutes(runtimeInMinutes):
+    def convertRuntimeToHoursMinutes(self, runtimeInMinutes):
         hours = int(runtimeInMinutes / 60)
         minutes = runtimeInMinutes % 60
 
