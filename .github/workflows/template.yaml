@@ -1,4 +1,4 @@
-name: template pipeline
+name: Template pipeline
 
 on:
   workflow_call:

@@ -1,4 +1,4 @@
-name: main pipeline
+name: Main pipeline
 
 on:
   push:
@@ -6,12 +6,12 @@ on:
       - main
 
 jobs:
-  test:
+  template:
     uses: ./.github/workflows/template.yaml
 
   prod-tests:
     runs-on: ubuntu-latest
-    needs: test # Ensure template completes first.
+    needs: template
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
