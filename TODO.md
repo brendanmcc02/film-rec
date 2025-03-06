@@ -270,9 +270,18 @@ my-film-data-vec.json to file
 - [x] config PR pipeline that runs on pre-merge PRs (local int tests)
 - [x] config main pipeline that runs on changes to main (prod int tests)
 
+# Database abstraction
+- [ ] abstract the database behind an interface
+- [ ] backend should reference the abstracted database
+- [ ] create a documentDatabase that implements this abstraction
+- [ ] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
+
 # Software Design & Architecture
-- [ ] turn python files into classes, think in a more OOP way
-- [ ] think about decoupling, e.g. start with database
+- [x] turn python files into classes, think in a more OOP way
+- [x] rename `appUtilities` to `service`
+- [ ] make service an interface/abstraction, app.py should then implement the service abstraction
+- [ ] think about decoupling
+- [ ] make class for vector profiles
 
 # Finishing Touches
 - [ ] record demo
