@@ -245,7 +245,7 @@ my-film-data-vec.json to file
 # README
 - [x] do `README.md`
 
-# Tests
+# CI/CD
 
 ## Unit Tests
 - [x] initAllFilmData
@@ -259,14 +259,13 @@ my-film-data-vec.json to file
 - [x] add more int tests for letterboxd zip
 - [x] write int tests for zip file addition
 
-# CI/CD
+## Pipelines
 - [x] config a pipeline that is triggered on pushes to main
 - [x] run unit tests
 - [x] configure the pipeline to run on PRs to main (pre-merge)
 - [x] run int tests against local deployment
 - [x] figure out some generic way to change backendUrl and execute same INT tests
 - [x] create `main.yaml` that runs int tests against prod
-- [ ] don't allow pushes to main?
 
 # Software Design & Architecture
 - [ ] think about decoupling, e.g. start with database
