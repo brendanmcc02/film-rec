@@ -126,7 +126,7 @@ def verifyUserUploadedFile():
                 for k in keys:
                     if k not in expectedImdbFileFilmAttributes:
                         isImdbFile = False
-                        if k not in expectedLetterboxdFileFilmAttributes:
+                        if k not in EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
                             return FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, 400
 
         return FILE_UPLOAD_SUCCESS_MESSAGE, 200
