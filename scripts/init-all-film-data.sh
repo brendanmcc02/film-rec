@@ -3,6 +3,7 @@
 clear
 cd ..
 git pull
+git checkout -b updateDatabase
 
 # download title.basics.tsv.gz & title.ratings.tsv.gz (only if it's been >1 days)
 cd backend/ || exit
@@ -34,8 +35,11 @@ if test -f title.basics.tsv; then
     rm ../database/title.ratings.tsv
 
     git add ../database/
-    git commit -m "downloaded and filtered all-film-data.json"
+    git commit -m "updated database"
+    git config --add --bool push.autoSetupRemote true
     git push
+    # the echo | is necessary to simulate an enter keypress and submit the pr
+    echo | gh pr create --title "Updating Database" --body "PR generated automatically"
   fi
 else
   printf "\n all-film-data.json was initialised >1 days ago, so the script was not run.\n"
