@@ -1,0 +1,10 @@
+name: pr pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  template:
+    uses: .github/workflows/template.yaml
