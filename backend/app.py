@@ -8,7 +8,7 @@ import csv
 import numpy as np
 import os
 from vectorizeUtilities import *
-from initDocumentDatabase import RUNTIME_THRESHOLD, NUMBER_OF_VOTES_THRESHOLD
+from initDocumentDatabase import *
 from letterboxdConversionUtilities import *
 
 DATE_RATED_WEIGHT = 0.8
@@ -179,9 +179,12 @@ def initRowsOfRecommendations():
     minDateRated = datetime.now()
     maxDateRated = minDateRated
 
+    _initDocumentDatabase = initDocumentDatabase()
+
     for film in userFilmDataList:
-        if film['Title Type'] == "Movie" and int(film['Runtime (mins)']) >= RUNTIME_THRESHOLD and film['Genres'] != ""\
-                and int(film['Num Votes']) >= NUMBER_OF_VOTES_THRESHOLD:
+        if (film['Title Type'] == "Movie" and 
+                int(film['Runtime (mins)']) >= _initDocumentDatabase.RUNTIME_THRESHOLD and film['Genres'] != ""\
+                and int(film['Num Votes']) >= _initDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD):
             if isImdbFile:
                 genres = film['Genres'].replace("\"", "").split(", ")
             else:

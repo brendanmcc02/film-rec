@@ -8,7 +8,7 @@ testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
 backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
-import initDocumentDatabase
+from initDocumentDatabase import *
 import testUtilities
 from vectorizeUtilities import *
 
@@ -235,11 +235,12 @@ def test_cache():
     assert cache['profileVectorLength'] != None
 
 def test_convertRuntimeToHoursMinutes():
-    assert initDocumentDatabase.convertRuntimeToHoursMinutes(60) == "1h"
-    assert initDocumentDatabase.convertRuntimeToHoursMinutes(120) == "2h"
+    _initDocumentDatabase = initDocumentDatabase()
+    assert _initDocumentDatabase.convertRuntimeToHoursMinutes(60) == "1h"
+    assert _initDocumentDatabase.convertRuntimeToHoursMinutes(120) == "2h"
     
-    assert initDocumentDatabase.convertRuntimeToHoursMinutes(40) == "40m"
-    assert initDocumentDatabase.convertRuntimeToHoursMinutes(100) == "1h40m"
+    assert _initDocumentDatabase.convertRuntimeToHoursMinutes(40) == "40m"
+    assert _initDocumentDatabase.convertRuntimeToHoursMinutes(100) == "1h40m"
 
 def test_allFilmData_correspondsWith_cachedTmdbFilmData():
     allFilmDataFile = open(allFilmDataFileLocation)
