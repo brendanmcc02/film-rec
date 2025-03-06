@@ -7,4 +7,4 @@ on:
 
 jobs:
   template:
-    uses: .github/workflows/template.yaml
+    uses: ./.github/workflows/template.yaml
