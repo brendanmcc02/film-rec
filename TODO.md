@@ -277,10 +277,7 @@ my-film-data-vec.json to file
 # Finishing Touches
 - [ ] record demo
 - [ ] create `local-deployment` branch with changes:
-    * `app.run(host="localhost", port=60000)`
     * fetch URLS: `(https://film-rec-backend.onrender.com/verifyUserUploadedFile)` 
-        -> `(/verifyUserUploadedFile)`
-    * get rid of CORS stuff
-    * proxy in `package.json`
+        -> `(http://localhost:60000/verifyUserUploadedFile)`
 - [ ] linkedin projects section
 - [ ] update on resume
