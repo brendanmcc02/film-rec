@@ -9,7 +9,7 @@ class letterboxdConversionUtilities:
     EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES = ["Date", "Name", "Year", "Letterboxd URI", "Rating"]
     EXPECTED_LETTERBOXD_EXTRACTED_FILES_OR_DIRECTORIES = ["deleted", "likes", "lists", "orphaned", "comments.csv", "diary.csv", "profile.csv", "ratings.csv", "reviews.csv", "watched.csv", "watchlist.csv", ".gitignore"]
 
-    def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cachedLetterboxdTitles):
+    def convertLetterboxdFormatToImdbFormat(self, letterboxdUserFilmData, allFilmData, cachedLetterboxdTitles):
         imdbUserFilmData = []
 
         # work with latest entries first

@@ -300,11 +300,13 @@ def main():
         print("diffNumberOfVotes = 0. Error with minNumberOfVotes & maxNumberOfVotes.")
         raise ZeroDivisionError
 
+    _vectorizeUtilities = vectorizeUtilities()
+
     for filmId in allFilmDataFilmIds:
         if filmId not in allFilmData:
             print(f"Film ID not found in allFilmData: {filmId}.")
         else:
-            allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allCountries,
+            allFilmDataVectorized[filmId] = list(_vectorizeUtilities.vectorizeFilm(allFilmData[filmId], allGenres, allCountries,
                                                                cachedNormalizedYears, cachedNormalizedImdbRatings, 
                                                                minNumberOfVotes, diffNumberOfVotes, 
                                                                cachedNormalizedRuntimes))
