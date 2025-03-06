@@ -113,8 +113,8 @@ def verifyUserUploadedFile():
                 userUploadedFileLocation = USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
 
         expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
-                                        "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
-                                        "Release Date", "Directors"]
+                                          "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
+                                          "Release Date", "Directors"]
 
         with open(userUploadedFileLocation, encoding='utf-8') as userFilmDataFile:
             reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
@@ -124,10 +124,10 @@ def verifyUserUploadedFile():
                     return FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE, 400
 
                 keys = list(row.keys())
-                for k in keys:
-                    if k not in expectedImdbFileFilmAttributes:
+                for key in keys:
+                    if key not in expectedImdbFileFilmAttributes:
                         isImdbFile = False
-                        if k not in _letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
+                        if key not in _letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
                             return FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, 400
 
         return FILE_UPLOAD_SUCCESS_MESSAGE, 200
