@@ -270,27 +270,15 @@ class initDocumentDatabase:
         diffRuntime = maxRuntime - minRuntime
         diffYear = maxYear - minYear
 
-        if diffYear == 0:
-            print("diffYear = 0. Error with minYear & maxYear.")
-            raise ZeroDivisionError
-
         cachedNormalizedYears = {}
         for year in range(minYear, maxYear + 1):
             cachedNormalizedYears[str(year)] = ((year - minYear) / diffYear) * _vectorizeUtilities.YEAR_WEIGHT
-
-        if diffImdbRating == 0.0:
-            print("diffImdbRating = 0.0, Error with minImdbRating & maxImdbRating.")
-            raise ZeroDivisionError
 
         cachedNormalizedImdbRatings = {}
         for imdbRating in np.arange(minImdbRating, maxImdbRating + 0.1, 0.1):
             imdbRating = round(imdbRating, 1)
             cachedNormalizedImdbRatings[str(imdbRating)] = (((imdbRating - minImdbRating) / diffImdbRating) 
                                                             * _vectorizeUtilities.IMDB_RATING_WEIGHT)
-
-        if diffRuntime == 0:
-            print("diffRuntime = 0. Error with minRuntime & maxRuntime.")
-            raise ZeroDivisionError
 
         cachedNormalizedRuntimes = {}
         for runtime in range(minRuntime, maxRuntime + 1):
@@ -301,10 +289,6 @@ class initDocumentDatabase:
         allFilmDataVectorizedMagnitudes = {}
         profileVectorLength = 0
         allCountries = sorted(allCountries)
-
-        if diffNumberOfVotes == 0:
-            print("diffNumberOfVotes = 0. Error with minNumberOfVotes & maxNumberOfVotes.")
-            raise ZeroDivisionError
 
         for filmId in allFilmDataFilmIds:
             if filmId not in allFilmData:
