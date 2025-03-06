@@ -5,7 +5,7 @@ absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 backendDirectory = os.path.dirname(absolutePathOfCurrentFile)
 sys.path.append(backendDirectory)
 import app
-import initAllFilmData
+import initDocumentDatabase
 
 cacheFileLocation = "../../../database/cache.json"
 LOCAL_DEPLOYMENT_URL = "http://localhost:60000"
@@ -33,11 +33,11 @@ def verifyFilm(film, filmId, allGenres, allCountries):
 
     assert 'numberOfVotes' in film
     assert film['numberOfVotes'] != None
-    assert film['numberOfVotes'] >= initAllFilmData.NUMBER_OF_VOTES_THRESHOLD
+    assert film['numberOfVotes'] >= initDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD
 
     assert 'runtime' in film
     assert film['runtime'] != None
-    assert film['runtime'] >= initAllFilmData.RUNTIME_THRESHOLD
+    assert film['runtime'] >= initDocumentDatabase.RUNTIME_THRESHOLD
 
     assert 'runtimeHoursMinutes' in film
     assert film['runtime'] != ""
@@ -49,7 +49,7 @@ def verifyFilm(film, filmId, allGenres, allCountries):
         assert genre in allGenres
 
     assert 'imdbUrl' in film
-    assert film['imdbUrl'] == initAllFilmData.BASE_IMDB_URL + filmId
+    assert film['imdbUrl'] == initDocumentDatabase.BASE_IMDB_URL + filmId
 
     assert 'countries' in film
 

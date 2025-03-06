@@ -137,7 +137,7 @@ create endpoints for getters/setters
 - [x] reduce run.sh to startup.sh
 - [x] change run.sh to reflect various changes
 - [x] for .sh files change paths to be relative to device
-- [ ] generate a PR instead of just pushing straight to main
+- [x] generate a PR instead of just pushing straight to main
 
 # Recommendation Algorithm Round 1
 - [x] all-film-data doesn't filter out films that have been rated
@@ -248,7 +248,7 @@ my-film-data-vec.json to file
 # CI
 
 ## Unit Tests
-- [x] initAllFilmData
+- [x] initDocumentDatabase
 - [x] vectorizeUtilities
 
 ## Int Tests

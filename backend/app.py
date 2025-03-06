@@ -7,9 +7,8 @@ import json
 import csv
 import numpy as np
 import os
-import glob
 from vectorizeUtilities import *
-from initAllFilmData import RUNTIME_THRESHOLD, NUMBER_OF_VOTES_THRESHOLD
+from initDocumentDatabase import RUNTIME_THRESHOLD, NUMBER_OF_VOTES_THRESHOLD
 from letterboxdConversionUtilities import *
 
 DATE_RATED_WEIGHT = 0.8
@@ -89,6 +88,8 @@ def verifyUserUploadedFile():
     global userFilmDataFilename
     resetGlobalVariables()
 
+    _letterboxdConversionUtilities = letterboxdConversionUtilities()
+
     deleteUserUploadedData()
 
     if 'file' not in request.files:
@@ -105,7 +106,7 @@ def verifyUserUploadedFile():
         file.save(userUploadedFileLocation)
 
         if userUploadedFileLocation.endswith(".zip"):
-            if isLetterboxdZipFileInvalid(USER_UPLOADED_DATA_DIRECTORY_NAME, userFilmDataFilename):
+            if _letterboxdConversionUtilities.isLetterboxdZipFileInvalid(USER_UPLOADED_DATA_DIRECTORY_NAME, userFilmDataFilename):
                 return INVALID_ZIP_FILE_ERROR_MESSAGE, 400
             else:
                 userFilmDataFilename = "ratings.csv"
@@ -126,7 +127,7 @@ def verifyUserUploadedFile():
                 for k in keys:
                     if k not in expectedImdbFileFilmAttributes:
                         isImdbFile = False
-                        if k not in expectedLetterboxdFileFilmAttributes:
+                        if k not in _letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
                             return FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, 400
 
         return FILE_UPLOAD_SUCCESS_MESSAGE, 200
@@ -167,8 +168,11 @@ def initRowsOfRecommendations():
     allFilmDataFile = open('../database/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
 
+    _letterboxdConversionUtilities = letterboxdConversionUtilities()
+
     if not isImdbFile:
-        userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitles)
+        userFilmDataList = (_letterboxdConversionUtilities
+                            .convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitles))
 
     userFilmData = {}
     favouriteFilmIds = []
@@ -225,9 +229,11 @@ def initRowsOfRecommendations():
     allGenresLength = len(cache['allGenres'])
     allCountriesLength = len(cache['allCountries'])
 
+    _vectorizeUtilities = vectorizeUtilities()
+
     # vectorize user-film-data
     for imdbFilmId in userFilmData:
-        vector = vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allCountries'],
+        vector = _vectorizeUtilities.vectorizeFilm(userFilmData[imdbFilmId], cache['allGenres'], cache['allCountries'],
                                cache['normalizedYears'], cache['normalizedImdbRatings'], cache['minNumberOfVotes'],
                                cache['diffNumberOfVotes'], cache['normalizedRuntimes'])
         if isDiffDateRatedZero:
@@ -245,25 +251,25 @@ def initRowsOfRecommendations():
 
     profileVectorLength = cache['profileVectorLength']
 
-    favouriteProfile = initFavouriteProfile(userFilmData, userFilmDataVectorized, profileVectorLength,
+    favouriteProfile = _vectorizeUtilities.initFavouriteProfile(userFilmData, userFilmDataVectorized, profileVectorLength,
                                             cachedDateRatedAndUserRatingWeights, favouriteFilmIds,
                                             cache['allGenres'], cache['allCountries'])
 
-    recencyProfile = initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
+    recencyProfile = _vectorizeUtilities.initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
                                         profileVectorLength, cachedDateRatedAndUserRatingWeights, cache['allGenres'],
                                         cache['allCountries'])
 
-    genreProfiles = initGenreProfiles(userFilmData, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
+    genreProfiles = _vectorizeUtilities.initGenreProfiles(userFilmData, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
                                       cache['allGenres'], profileVectorLength, NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD, 
                                       cache['allCountries'])
 
-    userProfile = initUserProfile(userFilmData, userFilmDataVectorized, profileVectorLength,
+    userProfile = _vectorizeUtilities.initUserProfile(userFilmData, userFilmDataVectorized, profileVectorLength,
                                   cachedDateRatedAndUserRatingWeights, cache['allGenres'], cache['allCountries'])
 
-    internationalProfile = initInternationalProfile(userProfile['profile'], cache['allCountries'], allGenresLength,
+    internationalProfile = _vectorizeUtilities.initInternationalProfile(userProfile['profile'], cache['allCountries'], allGenresLength,
                                                     profileVectorLength)
 
-    oldProfile = initOldProfile(userProfile['profile'])
+    oldProfile = _vectorizeUtilities.initOldProfile(userProfile['profile'])
 
     generateRecommendations()
 
@@ -295,11 +301,13 @@ def generateRecommendations():
 
     genreProfiles = sorted(genreProfiles, key=lambda x: x['weightedMeanRating'], reverse=True)
 
+    _vectorizeUtilities = vectorizeUtilities()
+
     for i in range(NUMBER_OF_GENRE_RECOMMENDATION_ROWS):
         if genreProfiles[i]['weightedMeanRating'] == 0.0:
             print("No genre profile.")
         else:
-            countryText = getProfileMaxCountry(genreProfiles[i]['profile'], allGenresLength, cache['allCountries'])
+            countryText = _vectorizeUtilities.getProfileMaxCountry(genreProfiles[i]['profile'], allGenresLength, cache['allCountries'])
             getFilmRecommendations(f"Because you like {countryText} {genreProfiles[i]['profileId']} films", 
                                    allFilmDataUnseen, NUMBER_OF_RECOMMENDATIONS_PER_ROW, genreProfiles[i]['profile'], 
                                    genreProfiles[i]['profileId'])
@@ -338,9 +346,11 @@ def getFilmRecommendations(recommendedRowText, allFilmData, numberOfRecommendati
     profileVectorMagnitude = np.linalg.norm(profileVector)
     cosineSimilarities = {}
 
+    _vectorizeUtilities = vectorizeUtilities()
+
     for filmId in allFilmData:
         filmVectorMagnitude = allFilmDataVectorizedMagnitudes[filmId]
-        cosineSimilarities[filmId] = cosineSimilarity(allFilmDataVectorized[filmId], profileVector,
+        cosineSimilarities[filmId] = _vectorizeUtilities.cosineSimilarity(allFilmDataVectorized[filmId], profileVector,
                                                       filmVectorMagnitude, profileVectorMagnitude)
 
     cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
@@ -376,6 +386,8 @@ def reviewRecommendation():
     filmId = request.args.get('filmId')
     isThumbsUp = request.args.get('isThumbsUp').lower() == 'true'
 
+    _vectorizeUtilities = vectorizeUtilities()
+
     for row in rowsOfRecommendations:
         for film in row['recommendedFilms']:
             if film['id'] == filmId:
@@ -403,7 +415,7 @@ def reviewRecommendation():
     else:
         profile['profile'] -= adjustment
 
-    keepVectorBoundary(profile['profile'])
+    _vectorizeUtilities.keepVectorBoundary(profile['profile'])
 
     return f"changed {profileId} profile due to after reviewing {filmId}", 200
 
