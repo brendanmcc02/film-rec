@@ -18,9 +18,9 @@ class initDocumentDatabase:
 
 
     def main(self):
-        runScript = True
+        shouldRunScript = True
 
-        if runScript:
+        if shouldRunScript:
             print("\nImporting title.basics.tsv...")
             title_basics_raw = []
             
