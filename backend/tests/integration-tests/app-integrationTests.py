@@ -7,6 +7,7 @@ backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
 import app
+from service import *
 import testUtilities
 
 testUploadFilesDirectory = "test-upload-files/"
@@ -15,14 +16,14 @@ def test_loadJsonFiles(backendUrl):
     response = requests.get(backendUrl + "/loadJsonFiles")
 
     assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == app.JSON_FILES_LOAD_SUCCESS_MESSAGE
+    assert response.content.decode(encoding='utf-8') == service.JSON_FILES_LOAD_SUCCESS_MESSAGE
 
 def test_verifyUserUploadedFile_noFile(backendUrl):
     filesToSend = {'file': ("", None)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == app.NO_FILE_IN_REQUEST_ERROR_MESSAGE
+    assert response.content.decode(encoding='utf-8') == service.NO_FILE_IN_REQUEST_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_unacceptedFileType(backendUrl):
     fileName = "test.txt"
@@ -31,7 +32,7 @@ def test_verifyUserUploadedFile_unacceptedFileType(backendUrl):
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 415
-    assert response.content.decode(encoding='utf-8') == app.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE
+    assert response.content.decode(encoding='utf-8') == service.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_imdbCorrect(backendUrl):
     fileName = "imdb-no-recent-films.csv"
@@ -40,7 +41,7 @@ def test_verifyUserUploadedFile_imdbCorrect(backendUrl):
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert response.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
 def test_verifyUserUploadedFile_imdbIncorrectHeader(backendUrl):
     fileName = "imdb-incorrect-header.csv"
@@ -49,7 +50,7 @@ def test_verifyUserUploadedFile_imdbIncorrectHeader(backendUrl):
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == app.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
+    assert response.content.decode(encoding='utf-8') == service.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_imdbMissingHeader(backendUrl):
     fileName = "imdb-missing-header.csv"
@@ -58,7 +59,7 @@ def test_verifyUserUploadedFile_imdbMissingHeader(backendUrl):
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == app.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
+    assert response.content.decode(encoding='utf-8') == service.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_letterboxdCorrectCsv(backendUrl):
     fileName = "letterboxd-no-recent-films.csv"
@@ -67,7 +68,7 @@ def test_verifyUserUploadedFile_letterboxdCorrectCsv(backendUrl):
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert response.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
 def test_verifyUserUploadedFile_letterboxdIncorrectHeaderCsv(backendUrl):
     fileName = "letterboxd-incorrect-header.csv"
@@ -76,7 +77,7 @@ def test_verifyUserUploadedFile_letterboxdIncorrectHeaderCsv(backendUrl):
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == app.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
+    assert response.content.decode(encoding='utf-8') == service.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_letterboxdMissingHeaderCsv(backendUrl):
     fileName = "letterboxd-missing-header.csv"
@@ -85,7 +86,7 @@ def test_verifyUserUploadedFile_letterboxdMissingHeaderCsv(backendUrl):
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == app.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
+    assert response.content.decode(encoding='utf-8') == service.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_letterboxdincorrectZip(backendUrl):
     fileName = "letterboxd-incorrect.zip"
@@ -94,7 +95,7 @@ def test_verifyUserUploadedFile_letterboxdincorrectZip(backendUrl):
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == app.INVALID_ZIP_FILE_ERROR_MESSAGE
+    assert response.content.decode(encoding='utf-8') == service.INVALID_ZIP_FILE_ERROR_MESSAGE
 
 def test_verifyUserUploadedFile_letterboxdCorrectZip(backendUrl):
     fileName = "letterboxd-no-recent.zip"
@@ -103,7 +104,7 @@ def test_verifyUserUploadedFile_letterboxdCorrectZip(backendUrl):
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert response.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
 def test_initRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     fileName = "imdb-no-recent-films.csv"
@@ -112,7 +113,7 @@ def test_initRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -121,7 +122,7 @@ def test_initRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
-    numberOfGenreRows = app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    numberOfGenreRows = service.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     numberOfInternationalRows = 1
     numberOfOldRows = 1
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
@@ -139,7 +140,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -148,7 +149,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
-    numberOfGenreRows = app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    numberOfGenreRows = service.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     numberOfInternationalRows = 1
     numberOfOldRows = 1
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
@@ -166,7 +167,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -175,7 +176,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
 
     numberOfFavouriteRows = 0
     numberOfRecentRows = 0
-    numberOfGenreRows = app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    numberOfGenreRows = service.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     numberOfInternationalRows = 1
     numberOfOldRows = 1
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
@@ -194,7 +195,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUr
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -203,7 +204,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUr
 
     numberOfFavouriteRows = 0
     numberOfRecentRows = 0
-    numberOfGenreRows = app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    numberOfGenreRows = service.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     numberOfInternationalRows = 1
     numberOfOldRows = 1
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
@@ -222,7 +223,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl)
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -231,7 +232,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl)
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
-    numberOfGenreRows = app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    numberOfGenreRows = service.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     numberOfInternationalRows = 0
     numberOfOldRows = 1
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
@@ -250,7 +251,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backe
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -259,7 +260,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backe
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
-    numberOfGenreRows = app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    numberOfGenreRows = service.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     numberOfInternationalRows = 0
     numberOfOldRows = 1
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
@@ -279,7 +280,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -307,7 +308,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenr
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -335,7 +336,7 @@ def test_initRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGe
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -363,7 +364,7 @@ def test_initRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAn
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -391,7 +392,7 @@ def test_initRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOn
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -420,7 +421,7 @@ def test_initRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilm
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -448,7 +449,7 @@ def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -457,7 +458,7 @@ def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
-    numberOfGenreRows = app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    numberOfGenreRows = service.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     numberOfInternationalRows = 1
     numberOfOldRows = 1
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
@@ -475,7 +476,7 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -486,7 +487,7 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     # verify the newly recommended films are valid
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
-    numberOfGenreRows = app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    numberOfGenreRows = service.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     numberOfInternationalRows = 1
     numberOfOldRows = 1
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
@@ -512,7 +513,7 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
 
     assert verifyUserUploadedFileResponse.status_code == 200
-    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == app.FILE_UPLOAD_SUCCESS_MESSAGE
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == service.FILE_UPLOAD_SUCCESS_MESSAGE
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -523,7 +524,7 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     # verify the newly recommended films are valid
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
-    numberOfGenreRows = app.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    numberOfGenreRows = service.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     numberOfInternationalRows = 1
     numberOfOldRows = 1
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
