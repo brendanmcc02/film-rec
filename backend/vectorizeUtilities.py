@@ -1,5 +1,3 @@
-# contains utilities for vectorizing films.
-
 import numpy as np
 
 
@@ -17,6 +15,7 @@ class vectorizeUtilities:
     PROFILE_RUNTIME_INDEX = 3
     PROFILE_GENRE_START_INDEX = 4
     RECENCY_PROFILE_DAYS_THRESHOLD = 30
+
 
     def vectorizeFilm(self, film, allGenres, allCountries, cachedNormalizedYears, cachedNormalizedImdbRatings,
                     minNumberOfVotes, diffNumberOfVotes, cachedNormalizedRuntimes):
