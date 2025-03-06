@@ -6,38 +6,5 @@ on:
       - main
 
 jobs:
-  setup-and-test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r backend/requirements.txt
-
-      - name: Run unit tests
-        run: |
-          cd backend/tests/unit-tests/
-          pytest *unitTests.py
-      
-      - name: Start local backend deployment
-        run: |
-          cd backend/
-          python3 app.py &
-
-      - name: Run integration tests (local)
-        run: |
-          cd backend/tests/integration-tests/
-          pytest *integrationTests.py --deploymentType "local"
-
-      - name: Remove local backend deployment
-        run: pkill -f "python3 app.py &" || true
-        if: always()
+  template:
+    uses: .github/workflows/template.yaml

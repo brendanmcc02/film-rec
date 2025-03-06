@@ -1,0 +1,19 @@
+name: main pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  template:
+    uses: .github/workflows/template.yaml
+
+  prod-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run integration tests (prod)
+        run: |
+          cd backend/tests/integration-tests/
+          pytest *integrationTests.py --deploymentType "prod"
