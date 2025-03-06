@@ -5,7 +5,7 @@ cd ..
 git pull
 git checkout -b updateDatabase
 
-# download title.basics.tsv.gz & title.ratings.tsv.gz (only if it's been >1 days)
+# download title.basics.tsv.gz & title.ratings.tsv.gz (only if it's been >12 hours)
 cd backend/ || exit
 python3 downloadAllFilmData.py
 cd ../database || exit
