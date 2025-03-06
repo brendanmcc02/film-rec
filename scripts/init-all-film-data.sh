@@ -3,6 +3,7 @@
 clear
 cd ..
 git pull
+git branch -D updateDatabase
 git checkout -b updateDatabase
 
 # download title.basics.tsv.gz & title.ratings.tsv.gz (only if it's been >12 hours)

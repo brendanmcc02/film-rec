@@ -5,7 +5,7 @@ absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 backendDirectory = os.path.dirname(absolutePathOfCurrentFile)
 sys.path.append(backendDirectory)
 import app
-import initDocumentDatabase
+from initDocumentDatabase import *
 
 cacheFileLocation = "../../../database/cache.json"
 LOCAL_DEPLOYMENT_URL = "http://localhost:60000"
