@@ -6,7 +6,7 @@ testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
 backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
-from vectorizeUtilities import vectorizeUtilities
+from vectorizeUtilities import *
 import testUtilities
 
 def test_keepVectorBoundary():
