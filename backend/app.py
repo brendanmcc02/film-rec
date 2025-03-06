@@ -7,7 +7,6 @@ import json
 import csv
 import numpy as np
 import os
-import glob
 from vectorizeUtilities import *
 from initDocumentDatabase import RUNTIME_THRESHOLD, NUMBER_OF_VOTES_THRESHOLD
 from letterboxdConversionUtilities import *
@@ -89,6 +88,8 @@ def verifyUserUploadedFile():
     global userFilmDataFilename
     resetGlobalVariables()
 
+    _letterboxdConversionUtilities = letterboxdConversionUtilities()
+
     deleteUserUploadedData()
 
     if 'file' not in request.files:
@@ -105,7 +106,7 @@ def verifyUserUploadedFile():
         file.save(userUploadedFileLocation)
 
         if userUploadedFileLocation.endswith(".zip"):
-            if isLetterboxdZipFileInvalid(USER_UPLOADED_DATA_DIRECTORY_NAME, userFilmDataFilename):
+            if _letterboxdConversionUtilities.isLetterboxdZipFileInvalid(USER_UPLOADED_DATA_DIRECTORY_NAME, userFilmDataFilename):
                 return INVALID_ZIP_FILE_ERROR_MESSAGE, 400
             else:
                 userFilmDataFilename = "ratings.csv"
@@ -126,7 +127,7 @@ def verifyUserUploadedFile():
                 for k in keys:
                     if k not in expectedImdbFileFilmAttributes:
                         isImdbFile = False
-                        if k not in EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
+                        if k not in _letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
                             return FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, 400
 
         return FILE_UPLOAD_SUCCESS_MESSAGE, 200
@@ -168,7 +169,8 @@ def initRowsOfRecommendations():
     allFilmData = json.load(allFilmDataFile)
 
     if not isImdbFile:
-        userFilmDataList = convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitles)
+        userFilmDataList = (letterboxdConversionUtilities
+                            .convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitles))
 
     userFilmData = {}
     favouriteFilmIds = []
