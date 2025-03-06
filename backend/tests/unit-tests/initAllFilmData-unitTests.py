@@ -10,6 +10,7 @@ sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
 import initDocumentDatabase
 import testUtilities
+from vectorizeUtilities import *
 
 allFilmDataFileLocation = "../../../database/all-film-data.json"
 cachedTmdbFilmDataFileLocation = "../../../database/cached-tmdb-film-data.json"
@@ -154,22 +155,22 @@ def test_allFilmDataVectorized():
     for filmId in allFilmDataVectorized:
         assert len(allFilmDataVectorized[filmId]) == cache['profileVectorLength']
 
-        assert allFilmDataVectorized[filmId][initDocumentDatabase.PROFILE_YEAR_INDEX] <= initDocumentDatabase.YEAR_WEIGHT
-        assert allFilmDataVectorized[filmId][initDocumentDatabase.PROFILE_YEAR_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][initDocumentDatabase.PROFILE_NUMBER_OF_VOTES_INDEX] <= initDocumentDatabase.NUMBER_OF_VOTES_WEIGHT
-        assert allFilmDataVectorized[filmId][initDocumentDatabase.PROFILE_NUMBER_OF_VOTES_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][initDocumentDatabase.PROFILE_IMDB_RATING_INDEX] <= initDocumentDatabase.IMDB_RATING_WEIGHT
-        assert allFilmDataVectorized[filmId][initDocumentDatabase.PROFILE_IMDB_RATING_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][initDocumentDatabase.PROFILE_RUNTIME_INDEX] <= initDocumentDatabase.RUNTIME_WEIGHT
-        assert allFilmDataVectorized[filmId][initDocumentDatabase.PROFILE_RUNTIME_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_YEAR_INDEX] <= vectorizeUtilities.YEAR_WEIGHT
+        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_YEAR_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_NUMBER_OF_VOTES_INDEX] <= vectorizeUtilities.NUMBER_OF_VOTES_WEIGHT
+        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_NUMBER_OF_VOTES_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_IMDB_RATING_INDEX] <= vectorizeUtilities.IMDB_RATING_WEIGHT
+        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_IMDB_RATING_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_RUNTIME_INDEX] <= vectorizeUtilities.RUNTIME_WEIGHT
+        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_RUNTIME_INDEX] >= 0.0
         
-        profileCountryStartIndex = initDocumentDatabase.PROFILE_GENRE_START_INDEX + len(cache['allGenres'])
-        for i in range(initDocumentDatabase.PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
-            assert allFilmDataVectorized[filmId][i] <= initDocumentDatabase.GENRE_WEIGHT
+        profileCountryStartIndex = vectorizeUtilities.PROFILE_GENRE_START_INDEX + len(cache['allGenres'])
+        for i in range(vectorizeUtilities.PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
+            assert allFilmDataVectorized[filmId][i] <= vectorizeUtilities.GENRE_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
         for i in range(profileCountryStartIndex, cache['profileVectorLength']):
-            assert allFilmDataVectorized[filmId][i] <= initDocumentDatabase.COUNTRY_WEIGHT
+            assert allFilmDataVectorized[filmId][i] <= vectorizeUtilities.COUNTRY_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
 def test_allFilmDataVectorizedMagnitudes():
@@ -207,20 +208,20 @@ def test_cache():
 
     for normalizedYear in cache['normalizedYears']:
         assert cache['normalizedYears'][normalizedYear] >= 0.0  
-        assert cache['normalizedYears'][normalizedYear] <= initDocumentDatabase.YEAR_WEIGHT
+        assert cache['normalizedYears'][normalizedYear] <= vectorizeUtilities.YEAR_WEIGHT
 
     assert 'normalizedImdbRatings' in cache
 
     for normalizedImdbRating in cache['normalizedImdbRatings']:
         assert cache['normalizedImdbRatings'][normalizedImdbRating] >= 0.0 
-        assert cache['normalizedImdbRatings'][normalizedImdbRating] <= initDocumentDatabase.IMDB_RATING_WEIGHT
+        assert cache['normalizedImdbRatings'][normalizedImdbRating] <= vectorizeUtilities.IMDB_RATING_WEIGHT
 
     assert 'normalizedRuntimes' in cache
 
     for normalizedRuntime in cache['normalizedRuntimes']:
         assert int(normalizedRuntime) >= initDocumentDatabase.RUNTIME_THRESHOLD
         assert cache['normalizedRuntimes'][normalizedRuntime] >= 0.0 
-        assert cache['normalizedRuntimes'][normalizedRuntime] <= initDocumentDatabase.RUNTIME_WEIGHT
+        assert cache['normalizedRuntimes'][normalizedRuntime] <= vectorizeUtilities.RUNTIME_WEIGHT
 
     assert 'minNumberOfVotes' in cache
     assert cache['minNumberOfVotes'] != None

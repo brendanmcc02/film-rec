@@ -168,8 +168,10 @@ def initRowsOfRecommendations():
     allFilmDataFile = open('../database/all-film-data.json')
     allFilmData = json.load(allFilmDataFile)
 
+    _letterboxdConversionUtilities = letterboxdConversionUtilities()
+
     if not isImdbFile:
-        userFilmDataList = (letterboxdConversionUtilities
+        userFilmDataList = (_letterboxdConversionUtilities
                             .convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, cachedLetterboxdTitles))
 
     userFilmData = {}

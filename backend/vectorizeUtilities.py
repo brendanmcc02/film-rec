@@ -2,21 +2,21 @@
 
 import numpy as np
 
-YEAR_WEIGHT = 0.5
-IMDB_RATING_WEIGHT = 1.0
-NUMBER_OF_VOTES_WEIGHT = 1.0
-RUNTIME_WEIGHT = 0.3
-GENRE_WEIGHT = 0.7
-COUNTRY_WEIGHT = 1.0
-PROFILE_YEAR_INDEX = 0
-PROFILE_IMDB_RATING_INDEX = 1
-PROFILE_NUMBER_OF_VOTES_INDEX = 2
-PROFILE_RUNTIME_INDEX = 3
-PROFILE_GENRE_START_INDEX = 4
-RECENCY_PROFILE_DAYS_THRESHOLD = 30
-
 
 class vectorizeUtilities:
+
+    YEAR_WEIGHT = 0.5
+    IMDB_RATING_WEIGHT = 1.0
+    NUMBER_OF_VOTES_WEIGHT = 1.0
+    RUNTIME_WEIGHT = 0.3
+    GENRE_WEIGHT = 0.7
+    COUNTRY_WEIGHT = 1.0
+    PROFILE_YEAR_INDEX = 0
+    PROFILE_IMDB_RATING_INDEX = 1
+    PROFILE_NUMBER_OF_VOTES_INDEX = 2
+    PROFILE_RUNTIME_INDEX = 3
+    PROFILE_GENRE_START_INDEX = 4
+    RECENCY_PROFILE_DAYS_THRESHOLD = 30
 
     def vectorizeFilm(self, film, allGenres, allCountries, cachedNormalizedYears, cachedNormalizedImdbRatings,
                     minNumberOfVotes, diffNumberOfVotes, cachedNormalizedRuntimes):
@@ -43,7 +43,7 @@ class vectorizeUtilities:
             print("diffNumberOfVotes = 0.")
             raise ZeroDivisionError
 
-        numberOfVotesNorm = ((film['numberOfVotes'] - minNumberOfVotes) / diffNumberOfVotes) * NUMBER_OF_VOTES_WEIGHT
+        numberOfVotesNorm = ((film['numberOfVotes'] - minNumberOfVotes) / diffNumberOfVotes) * self.NUMBER_OF_VOTES_WEIGHT
         vector.append(numberOfVotesNorm)
 
         if str(film['runtime']) in cachedNormalizedRuntimes:
@@ -53,8 +53,8 @@ class vectorizeUtilities:
             print(f"Error. Film runtime not in cached normalized runtimes. {str(film['runtime'])}")
             raise KeyError
 
-        self.oneHotEncode(vector, film['genres'], allGenres, GENRE_WEIGHT)
-        self.oneHotEncode(vector, film['countries'], allCountries, COUNTRY_WEIGHT)
+        self.oneHotEncode(vector, film['genres'], allGenres, self.GENRE_WEIGHT)
+        self.oneHotEncode(vector, film['countries'], allCountries, self.COUNTRY_WEIGHT)
 
         return np.array(vector)
 
@@ -101,14 +101,14 @@ class vectorizeUtilities:
                                cachedNormalizedRuntimesKeys, cachedNormalizedImdbRatingsKeys,
                                minNumberOfVotes, diffNumberOfVotes):
         print("\n" + text)
-        print(f"YEAR_WEIGHT: {YEAR_WEIGHT}, NUMBER_OF_VOTES_WEIGHT: {NUMBER_OF_VOTES_WEIGHT}, "
-            f"IMDB_RATING_WEIGHT: {IMDB_RATING_WEIGHT},\n"
-            f"RUNTIME_WEIGHT: {RUNTIME_WEIGHT}, GENRE_WEIGHT: {GENRE_WEIGHT}, COUNTRY_WEIGHT: {COUNTRY_WEIGHT}")
+        print(f"YEAR_WEIGHT: {self.YEAR_WEIGHT}, NUMBER_OF_VOTES_WEIGHT: {self.NUMBER_OF_VOTES_WEIGHT}, "
+            f"IMDB_RATING_WEIGHT: {self.IMDB_RATING_WEIGHT},\n"
+            f"RUNTIME_WEIGHT: {self.RUNTIME_WEIGHT}, GENRE_WEIGHT: {self.GENRE_WEIGHT}, COUNTRY_WEIGHT: {self.COUNTRY_WEIGHT}")
         
         minYear = int(cachedNormalizedYearsKeys[0])
         diffYear = int(cachedNormalizedYearsKeys[-1]) - minYear
         if diffYear > 0:
-            stringifiedYear = int(((vector[PROFILE_YEAR_INDEX] / YEAR_WEIGHT) * diffYear) + minYear)
+            stringifiedYear = int(((vector[self.PROFILE_YEAR_INDEX] / self.YEAR_WEIGHT) * diffYear) + minYear)
         else:
             print("Error. diffYear = 0.")
             raise ZeroDivisionError
@@ -116,7 +116,7 @@ class vectorizeUtilities:
         minImdbRating = float(cachedNormalizedImdbRatingsKeys[0])
         diffImdbRating = float(cachedNormalizedImdbRatingsKeys[-1]) - minImdbRating
         if diffImdbRating > 0:
-            stringifiedImdbRating = float(((vector[PROFILE_IMDB_RATING_INDEX] / IMDB_RATING_WEIGHT)
+            stringifiedImdbRating = float(((vector[self.PROFILE_IMDB_RATING_INDEX] / self.IMDB_RATING_WEIGHT)
                                             * diffImdbRating) + minImdbRating)
             stringifiedImdbRating = round(stringifiedImdbRating, 1)
         else:
@@ -126,7 +126,7 @@ class vectorizeUtilities:
         minNumberOfVotes = int(minNumberOfVotes)
         diffNumberOfVotes = int(diffNumberOfVotes)
         if diffNumberOfVotes > 0:
-            stringifiedNumberOfVotes = int(((vector[PROFILE_NUMBER_OF_VOTES_INDEX] / NUMBER_OF_VOTES_WEIGHT)
+            stringifiedNumberOfVotes = int(((vector[self.PROFILE_NUMBER_OF_VOTES_INDEX] / self.NUMBER_OF_VOTES_WEIGHT)
                                             * diffNumberOfVotes) + minNumberOfVotes)
         else:
             print("Error. diffNumberOfVotes = 0.")
@@ -135,7 +135,7 @@ class vectorizeUtilities:
         minRuntime = int(cachedNormalizedRuntimesKeys[0])
         diffRuntime = int(cachedNormalizedRuntimesKeys[-1]) - minRuntime
         if diffRuntime > 0:
-            stringifiedRuntime = int(((vector[PROFILE_RUNTIME_INDEX] / RUNTIME_WEIGHT) * diffRuntime)
+            stringifiedRuntime = int(((vector[self.PROFILE_RUNTIME_INDEX] / self.RUNTIME_WEIGHT) * diffRuntime)
                                     + minRuntime)
         else:
             print("Error. diffRuntime = 0.")
@@ -146,7 +146,7 @@ class vectorizeUtilities:
                             f"NumOfVotes: {stringifiedNumberOfVotes}\n"
                             f"Runtime: {stringifiedRuntime} mins\n###############\n")
 
-        i = PROFILE_GENRE_START_INDEX
+        i = self.PROFILE_GENRE_START_INDEX
         for genre in allGenres:
             stringifiedVector += f"{genre}: {round(vector[i], 3)}\n"
             i = i + 1
@@ -173,10 +173,10 @@ class vectorizeUtilities:
         if sumOfWeights > 0.0:
             favouriteProfile = np.divide(favouriteProfile, sumOfWeights)
             # curve genres
-            self.curveAccordingToMax(favouriteProfile, allGenres, GENRE_WEIGHT, PROFILE_GENRE_START_INDEX)
+            self.curveAccordingToMax(favouriteProfile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
             # curve countries
-            self.curveAccordingToMax(favouriteProfile, allCountries, COUNTRY_WEIGHT, 
-                                PROFILE_GENRE_START_INDEX + len(allGenres))
+            self.curveAccordingToMax(favouriteProfile, allCountries, self.COUNTRY_WEIGHT, 
+                                     self.PROFILE_GENRE_START_INDEX + len(allGenres))
             return {'profile': favouriteProfile, 'profileId': 'favourite'}
         else:
             return {'profile': np.zeros(profileVectorLength), 'profileId': 'favourite'}
@@ -205,8 +205,8 @@ class vectorizeUtilities:
             genreProfiles[genre]['profile'] = np.divide(genreProfiles[genre]['profile'], 
                                                         genreProfiles[genre]['sumOfWeights'])
             # curve countries
-            self.curveAccordingToMax(genreProfiles[genre]['profile'], allCountries, COUNTRY_WEIGHT, 
-                                PROFILE_GENRE_START_INDEX + len(allGenres))
+            self.curveAccordingToMax(genreProfiles[genre]['profile'], allCountries, self.COUNTRY_WEIGHT, 
+                                self.PROFILE_GENRE_START_INDEX + len(allGenres))
             genreProfiles[genre]['weightedMeanRating'] = (genreProfiles[genre]['sumOfWeights'] / 
                                                         genreProfiles[genre]['quantityFilmsWatched'])
             if numFilmsWatchedInGenreThreshold > 0:
@@ -224,11 +224,11 @@ class vectorizeUtilities:
 
     def getFilmGenres(self, vectorizedFilm, allGenres):
         filmGenreIndexes = []
-        profileGenreEndIndex = PROFILE_GENRE_START_INDEX + len(allGenres)
+        profileGenreEndIndex = self.PROFILE_GENRE_START_INDEX + len(allGenres)
 
-        for i in range(PROFILE_GENRE_START_INDEX, profileGenreEndIndex):
+        for i in range(self.PROFILE_GENRE_START_INDEX, profileGenreEndIndex):
             if vectorizedFilm[i] > 0.0:
-                filmGenreIndexes.append(i - PROFILE_GENRE_START_INDEX)
+                filmGenreIndexes.append(i - self.PROFILE_GENRE_START_INDEX)
 
         filmGenres = []
 
@@ -246,7 +246,7 @@ class vectorizeUtilities:
 
         for imdbFilmId in userFilmData:
             timeDifference = maxDateRated - userFilmData[imdbFilmId]['dateRated']
-            if timeDifference.days <= RECENCY_PROFILE_DAYS_THRESHOLD:
+            if timeDifference.days <= self.RECENCY_PROFILE_DAYS_THRESHOLD:
                 recencyProfile += userFilmDataVectorized[imdbFilmId]
                 sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
             else:
@@ -256,10 +256,10 @@ class vectorizeUtilities:
         if sumOfWeights > 0.0:
             recencyProfile = np.divide(recencyProfile, sumOfWeights)
             # curve genres
-            self.curveAccordingToMax(recencyProfile, allGenres, GENRE_WEIGHT, PROFILE_GENRE_START_INDEX)
+            self.curveAccordingToMax(recencyProfile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
             # curve countries
-            self.curveAccordingToMax(recencyProfile, allCountries, COUNTRY_WEIGHT, 
-                                PROFILE_GENRE_START_INDEX + len(allGenres))
+            self.curveAccordingToMax(recencyProfile, allCountries, self.COUNTRY_WEIGHT, 
+                                self.PROFILE_GENRE_START_INDEX + len(allGenres))
             return {'profile': recencyProfile, 'profileId': 'recency'}
         else:
             return {'profile': np.zeros(profileVectorLength), 'profileId': 'recency'}
@@ -277,10 +277,10 @@ class vectorizeUtilities:
         if sumOfWeights > 0.0:
             userProfile = np.divide(userProfile, sumOfWeights)
             # curve genres
-            self.curveAccordingToMax(userProfile, allGenres, GENRE_WEIGHT, PROFILE_GENRE_START_INDEX)
+            self.curveAccordingToMax(userProfile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
             # curve countries
-            self.curveAccordingToMax(userProfile, allCountries, COUNTRY_WEIGHT, 
-                                PROFILE_GENRE_START_INDEX + len(allGenres))
+            self.curveAccordingToMax(userProfile, allCountries, self.COUNTRY_WEIGHT, 
+                                     self.PROFILE_GENRE_START_INDEX + len(allGenres))
             
         return {'profile': userProfile, 'profileId': 'user'}
 
@@ -288,7 +288,7 @@ class vectorizeUtilities:
     def initOldProfile(self, userProfile):
         # note: userProfile already has curved genres and countries
         oldProfile = {'profile': np.copy(userProfile), 'profileId': 'old'}
-        oldProfile['profile'][PROFILE_YEAR_INDEX] = 0.0
+        oldProfile['profile'][self.PROFILE_YEAR_INDEX] = 0.0
         
         return oldProfile
 
@@ -296,7 +296,7 @@ class vectorizeUtilities:
     def initInternationalProfile(self, userProfile, allCountries, allGenresLength, profileVectorLength):
         internationalProfile = {'profile': np.copy(userProfile), 'profileId': 'international'}
 
-        countryStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
+        countryStartIndex = self.PROFILE_GENRE_START_INDEX + allGenresLength
         maxCountryIndex = countryStartIndex
         maxCountryValue = internationalProfile['profile'][countryStartIndex]
 
@@ -323,7 +323,7 @@ class vectorizeUtilities:
             internationalProfile['profile'][maxCountryIndex] = 0.0
 
         # curve countries
-        self.curveAccordingToMax(internationalProfile['profile'], allCountries, COUNTRY_WEIGHT, 
+        self.curveAccordingToMax(internationalProfile['profile'], allCountries, self.COUNTRY_WEIGHT, 
                             countryStartIndex)
 
         return internationalProfile
@@ -356,7 +356,7 @@ class vectorizeUtilities:
 
 
     def getProfileMaxCountry(self, profile, allGenresLength, allCountries):
-        countryStartIndex = PROFILE_GENRE_START_INDEX + allGenresLength
+        countryStartIndex = self.PROFILE_GENRE_START_INDEX + allGenresLength
         maxCountryIndex = countryStartIndex
         maxCountryValue = profile[countryStartIndex]
 
