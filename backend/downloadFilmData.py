@@ -4,24 +4,26 @@
 import urllib.request
 from datetime import datetime, timedelta
 
+class downloadFilmData:
 
-def main():
-    lastDownloadString = open('../database/last-imdb-download-timestamp.txt', 'r').read()
-    lastImdbDownloadTimestamp = datetime.strptime(lastDownloadString, '%Y-%m-%d %H:%M:%S.%f')
-    currentTimestamp = datetime.now()
+    def run(self):
+        lastDownloadString = open('../database/last-imdb-download-timestamp.txt', 'r').read()
+        lastImdbDownloadTimestamp = datetime.strptime(lastDownloadString, '%Y-%m-%d %H:%M:%S.%f')
+        currentTimestamp = datetime.now()
 
-    differenceInTimestamps = currentTimestamp - lastImdbDownloadTimestamp
+        differenceInTimestamps = currentTimestamp - lastImdbDownloadTimestamp
 
-    # if the file was downloaded >= 12 hours ago: (I really don't want to get blacklisted)
-    if differenceInTimestamps >= timedelta(hours=12):
-        urllib.request.urlretrieve("https://datasets.imdbws.com/title.basics.tsv.gz", 
-                                   "../database/title.basics.tsv.gz")
-        urllib.request.urlretrieve("https://datasets.imdbws.com/title.ratings.tsv.gz", 
-                                   "../database/title.ratings.tsv.gz")
+        # if the file was downloaded >= 12 hours ago: (I really don't want to get blacklisted)
+        if differenceInTimestamps >= timedelta(hours=12):
+            urllib.request.urlretrieve("https://datasets.imdbws.com/title.basics.tsv.gz", 
+                                    "../database/title.basics.tsv.gz")
+            urllib.request.urlretrieve("https://datasets.imdbws.com/title.ratings.tsv.gz", 
+                                    "../database/title.ratings.tsv.gz")
 
-        with open('../database/last-imdb-download-timestamp.txt', 'w') as file:
-            file.write(str(datetime.now()))
+            with open('../database/last-imdb-download-timestamp.txt', 'w') as file:
+                file.write(str(datetime.now()))
 
 
 if __name__ == "__main__":
-    main()
+    _downloadFilmData = downloadFilmData()
+    _downloadFilmData.run()
