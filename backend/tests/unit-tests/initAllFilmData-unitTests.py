@@ -8,7 +8,7 @@ testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
 backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
-import initAllFilmData
+import initDatabase
 import testUtilities
 
 allFilmDataFileLocation = "../../../database/all-film-data.json"
@@ -154,22 +154,22 @@ def test_allFilmDataVectorized():
     for filmId in allFilmDataVectorized:
         assert len(allFilmDataVectorized[filmId]) == cache['profileVectorLength']
 
-        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_YEAR_INDEX] <= initAllFilmData.YEAR_WEIGHT
-        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_YEAR_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_NUMBER_OF_VOTES_INDEX] <= initAllFilmData.NUMBER_OF_VOTES_WEIGHT
-        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_NUMBER_OF_VOTES_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_IMDB_RATING_INDEX] <= initAllFilmData.IMDB_RATING_WEIGHT
-        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_IMDB_RATING_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_RUNTIME_INDEX] <= initAllFilmData.RUNTIME_WEIGHT
-        assert allFilmDataVectorized[filmId][initAllFilmData.PROFILE_RUNTIME_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][initDatabase.PROFILE_YEAR_INDEX] <= initDatabase.YEAR_WEIGHT
+        assert allFilmDataVectorized[filmId][initDatabase.PROFILE_YEAR_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][initDatabase.PROFILE_NUMBER_OF_VOTES_INDEX] <= initDatabase.NUMBER_OF_VOTES_WEIGHT
+        assert allFilmDataVectorized[filmId][initDatabase.PROFILE_NUMBER_OF_VOTES_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][initDatabase.PROFILE_IMDB_RATING_INDEX] <= initDatabase.IMDB_RATING_WEIGHT
+        assert allFilmDataVectorized[filmId][initDatabase.PROFILE_IMDB_RATING_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][initDatabase.PROFILE_RUNTIME_INDEX] <= initDatabase.RUNTIME_WEIGHT
+        assert allFilmDataVectorized[filmId][initDatabase.PROFILE_RUNTIME_INDEX] >= 0.0
         
-        profileCountryStartIndex = initAllFilmData.PROFILE_GENRE_START_INDEX + len(cache['allGenres'])
-        for i in range(initAllFilmData.PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
-            assert allFilmDataVectorized[filmId][i] <= initAllFilmData.GENRE_WEIGHT
+        profileCountryStartIndex = initDatabase.PROFILE_GENRE_START_INDEX + len(cache['allGenres'])
+        for i in range(initDatabase.PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
+            assert allFilmDataVectorized[filmId][i] <= initDatabase.GENRE_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
         for i in range(profileCountryStartIndex, cache['profileVectorLength']):
-            assert allFilmDataVectorized[filmId][i] <= initAllFilmData.COUNTRY_WEIGHT
+            assert allFilmDataVectorized[filmId][i] <= initDatabase.COUNTRY_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
 def test_allFilmDataVectorizedMagnitudes():
@@ -187,7 +187,7 @@ def test_allFilmDataVectorizedMagnitudes():
         expectedMagnitude = np.linalg.norm(allFilmDataVectorized[filmId])
         expectedMagnitudeFloat = expectedMagnitude.item()
         assert allFilmDataVectorizedMagnitudes[filmId] == round(expectedMagnitudeFloat,
-                                                                initAllFilmData.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
+                                                                initDatabase.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
 def test_cache():
     cacheFile = open(testUtilities.cacheFileLocation)
@@ -207,24 +207,24 @@ def test_cache():
 
     for normalizedYear in cache['normalizedYears']:
         assert cache['normalizedYears'][normalizedYear] >= 0.0  
-        assert cache['normalizedYears'][normalizedYear] <= initAllFilmData.YEAR_WEIGHT
+        assert cache['normalizedYears'][normalizedYear] <= initDatabase.YEAR_WEIGHT
 
     assert 'normalizedImdbRatings' in cache
 
     for normalizedImdbRating in cache['normalizedImdbRatings']:
         assert cache['normalizedImdbRatings'][normalizedImdbRating] >= 0.0 
-        assert cache['normalizedImdbRatings'][normalizedImdbRating] <= initAllFilmData.IMDB_RATING_WEIGHT
+        assert cache['normalizedImdbRatings'][normalizedImdbRating] <= initDatabase.IMDB_RATING_WEIGHT
 
     assert 'normalizedRuntimes' in cache
 
     for normalizedRuntime in cache['normalizedRuntimes']:
-        assert int(normalizedRuntime) >= initAllFilmData.RUNTIME_THRESHOLD
+        assert int(normalizedRuntime) >= initDatabase.RUNTIME_THRESHOLD
         assert cache['normalizedRuntimes'][normalizedRuntime] >= 0.0 
-        assert cache['normalizedRuntimes'][normalizedRuntime] <= initAllFilmData.RUNTIME_WEIGHT
+        assert cache['normalizedRuntimes'][normalizedRuntime] <= initDatabase.RUNTIME_WEIGHT
 
     assert 'minNumberOfVotes' in cache
     assert cache['minNumberOfVotes'] != None
-    assert cache['minNumberOfVotes'] >= initAllFilmData.NUMBER_OF_VOTES_THRESHOLD
+    assert cache['minNumberOfVotes'] >= initDatabase.NUMBER_OF_VOTES_THRESHOLD
 
     assert 'diffNumberOfVotes' in cache
     assert cache['diffNumberOfVotes'] != None
@@ -234,11 +234,11 @@ def test_cache():
     assert cache['profileVectorLength'] != None
 
 def test_convertRuntimeToHoursMinutes():
-    assert initAllFilmData.convertRuntimeToHoursMinutes(60) == "1h"
-    assert initAllFilmData.convertRuntimeToHoursMinutes(120) == "2h"
+    assert initDatabase.convertRuntimeToHoursMinutes(60) == "1h"
+    assert initDatabase.convertRuntimeToHoursMinutes(120) == "2h"
     
-    assert initAllFilmData.convertRuntimeToHoursMinutes(40) == "40m"
-    assert initAllFilmData.convertRuntimeToHoursMinutes(100) == "1h40m"
+    assert initDatabase.convertRuntimeToHoursMinutes(40) == "40m"
+    assert initDatabase.convertRuntimeToHoursMinutes(100) == "1h40m"
 
 def test_allFilmData_correspondsWith_cachedTmdbFilmData():
     allFilmDataFile = open(allFilmDataFileLocation)
