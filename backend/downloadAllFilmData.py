@@ -12,8 +12,8 @@ def main():
 
     differenceInTimestamps = currentTimestamp - lastImdbDownloadTimestamp
 
-    # if the file was downloaded >= 1 days ago: (I really don't want to get blacklisted)
-    if differenceInTimestamps >= timedelta(days=1):
+    # if the file was downloaded >= 12 hours ago: (I really don't want to get blacklisted)
+    if differenceInTimestamps >= timedelta(hours=12):
         urllib.request.urlretrieve("https://datasets.imdbws.com/title.basics.tsv.gz", 
                                    "../database/title.basics.tsv.gz")
         urllib.request.urlretrieve("https://datasets.imdbws.com/title.ratings.tsv.gz", 
