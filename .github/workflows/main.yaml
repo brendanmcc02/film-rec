@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    uses: .github/workflows/template.yaml
+    uses: ./.github/workflows/template.yaml
 
   prod-tests:
     runs-on: ubuntu-latest
