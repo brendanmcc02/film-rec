@@ -248,7 +248,7 @@ my-film-data-vec.json to file
 # CI
 
 ## Unit Tests
-- [x] initDatabase
+- [x] initDocumentDatabase
 - [x] vectorizeUtilities
 
 ## Int Tests

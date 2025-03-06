@@ -9,7 +9,7 @@ import numpy as np
 import os
 import glob
 from vectorizeUtilities import *
-from initDatabase import RUNTIME_THRESHOLD, NUMBER_OF_VOTES_THRESHOLD
+from initDocumentDatabase import RUNTIME_THRESHOLD, NUMBER_OF_VOTES_THRESHOLD
 from letterboxdConversionUtilities import *
 
 DATE_RATED_WEIGHT = 0.8
