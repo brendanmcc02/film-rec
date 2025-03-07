@@ -36,9 +36,11 @@ class Service:
         self.profileVectorLength = _database.getAsync("profileVectorLength")
         self.minNumberOfVotes = _database.getAsync("minNumberOfVotes")
         self.diffNumberOfVotes = _database.getAsync("diffNumberOfVotes")
-        self.cachedNormalizedYears = _database.getAsync("cachedNormalizedYears")
-        self.cachedNormalizedImdbRatings = _database.getAsync("cachedNormalizedImdbRatings")
-        self.cachedNormalizedRuntimes = _database.getAsync("cachedNormalizedRuntimes")
+        ### TODO kinda retarded implementation
+        self.cachedNormalizedYearsKeys = list(_database.getAsync("cachedNormalizedYears").keys())
+        self.cachedNormalizedImdbRatingsKeys = list(_database.getAsync("cachedNormalizedImdbRatings").keys())
+        self.cachedNormalizedRuntimesKeys = list(_database.getAsync("cachedNormalizedRuntimes").keys())
+        ###
         self.diffDateRated = datetime(1, 1, 1)
         self.minDateRated = datetime.now()
         self.favouriteProfile = {'profile': np.zeros(0), 'profileId': 'favourite'}
@@ -236,7 +238,7 @@ class Service:
             self.getFilmRecommendations("Based on your favourite films", self.allFilmDataUnseen, self.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
                                         self.favouriteProfile['profile'], self.favouriteProfile['profileId'])
             # printStringifiedVector(favouriteProfile['profile'], self.allGenres, self.allCountries, "Favourite",
-            #                        cachedNormalizedYears, cachedNormalizedRuntimes, cachedNormalizedImdbRatings,
+            #                        self.cachedNormalizedYearsKeys, self.cachedNormalizedRuntimesKeys, self.cachedNormalizedImdbRatingsKeys,
             #                        self.minNumberOfVotes, self.diffNumberOfVotes)
 
         if np.array_equal(self.recencyProfile['profile'], np.zeros(self.profileVectorLength)):
@@ -245,7 +247,7 @@ class Service:
             self.getFilmRecommendations("Based on what you watched recently", self.allFilmDataUnseen, self.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
                                         self.recencyProfile['profile'], self.recencyProfile['profileId'])
             # printStringifiedVector(recencyProfile['profile'], self.allGenres, self.allCountries, "Recency",
-            #                        cachedNormalizedYears, cachedNormalizedRuntimes, cachedNormalizedImdbRatings,
+            #                        self.cachedNormalizedYearsKeys, self.cachedNormalizedRuntimesKeys, self.cachedNormalizedImdbRatingsKeys,
             #                        self.minNumberOfVotes, self.diffNumberOfVotes)
 
         self.genreProfiles = sorted(self.genreProfiles, key=lambda x: x['weightedMeanRating'], reverse=True)
@@ -261,8 +263,8 @@ class Service:
                                             self.allFilmDataUnseen, self.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.genreProfiles[i]['profile'], 
                                             self.genreProfiles[i]['profileId'])
                 # printStringifiedVector(genreProfiles[i]['profile'], self.allGenres, self.allCountries, 
-                #                        genreProfiles[i]['profileId'], cachedNormalizedYears, 
-                #                        cachedNormalizedRuntimes, cachedNormalizedImdbRatings, 
+                #                        genreProfiles[i]['profileId'], self.cachedNormalizedYearsKeys, 
+                #                        self.cachedNormalizedRuntimesKeys, self.cachedNormalizedImdbRatingsKeys, 
                 #                        self.minNumberOfVotes, self.diffNumberOfVotes)
             
         if np.array_equal(self.internationalProfile['profile'], np.zeros(self.profileVectorLength)):
@@ -272,8 +274,8 @@ class Service:
                                     self.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.internationalProfile['profile'], 
                                     self.internationalProfile['profileId'])
             # printStringifiedVector(internationalProfile['profile'], self.allGenres, self.allCountries, 
-            #                        "International", cachedNormalizedYears, cachedNormalizedRuntimes,
-            #                        cachedNormalizedImdbRatings, self.minNumberOfVotes, self.diffNumberOfVotes)
+            #                        "International", self.cachedNormalizedYearsKeys, self.cachedNormalizedRuntimesKeys,
+            #                        self.cachedNormalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
 
         if np.array_equal(self.oldProfile['profile'], np.zeros(self.profileVectorLength)):
             print("No old profile.")
@@ -281,8 +283,8 @@ class Service:
             self.getFilmRecommendations("Try out some older films", self.allFilmDataUnseen, self.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
                                     self.oldProfile['profile'], self.oldProfile['profileId'])
             # printStringifiedVector(oldProfile['profile'], self.allGenres, self.allCountries, "Old",
-            #                        cachedNormalizedYears, cachedNormalizedRuntimes,
-            #                        cachedNormalizedImdbRatings, self.minNumberOfVotes, self.diffNumberOfVotes)
+            #                        self.cachedNormalizedYearsKeys, self.cachedNormalizedRuntimesKeys,
+            #                        self.cachedNormalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
 
 
     def getFilmRecommendations(self, recommendedRowText, allFilmData, numberOfRecommendations, profileVector, 
