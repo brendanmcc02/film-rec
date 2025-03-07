@@ -8,105 +8,82 @@ testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
 backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
+from DocumentDatabase import *
 from InitDocumentDatabase import *
 from TestUtilities import *
 from VectorizeUtilities import *
 
-allFilmDataFileLocation = "../../../database/allFilmData.json"
-cachedTmdbFilmDataFileLocation = "../../../database/cachedTmdbFilmData.json"
-cachedLetterboxdTitlesFileLocation = "../../../database/cachedLetterboxdTitles.json"
-allFilmDataVectorizedFileLocation = "../../../database/allFilmDataVectorized.json"
-allFilmDataVectorizedMagnitudesFileLocation = "../../../database/allFilmDataVectorizedMagnitudes.json"
+def test_allFilmDataExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("allFilmData") != None
 
-def test_allFilmDataFileExists():
-    try:
-        with open(allFilmDataFileLocation, encoding='utf-8') as allFilmDataFile:
-            json.load(allFilmDataFile)
+def test_cachedTmdbFilmDataExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("cachedTmdbFilmData") != None
 
-    except FileNotFoundError:
-        pytest.fail("File not found.")
-    except json.JSONDecodeError:
-        pytest.fail("JSON decode error.")
-    except Exception as e:
-        pytest.fail("File open error.")
+def test_cachedLetterboxdTitlesExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("cachedLetterboxdTitles") != None
 
-def test_cachedTmdbFilmDataFileExists():
-    try:
-        with open(cachedTmdbFilmDataFileLocation, encoding='utf-8') as cachedTmdbFilmDataFile:
-            json.load(cachedTmdbFilmDataFile)
+def test_allFilmDataVectorizedExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("allFilmDataVectorized") != None
 
-    except FileNotFoundError:
-        pytest.fail("File not found.")
-    except json.JSONDecodeError:
-        pytest.fail("JSON decode error.")
-    except Exception as e:
-        pytest.fail("File open error.")
+def test_allFilmDataVectorizedMagnitudesExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("allFilmDataVectorizedMagnitudes") != None
 
-def test_cachedLetterboxdTitlesFileExists():
-    try:
-        with open(cachedLetterboxdTitlesFileLocation, encoding='utf-8') as cachedLetterboxdTitlesFile:
-            json.load(cachedLetterboxdTitlesFile)
+def test_allCountriesExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("allCountries") != None
 
-    except FileNotFoundError:
-        pytest.fail("File not found.")
-    except json.JSONDecodeError:
-        pytest.fail("JSON decode error.")
-    except Exception as e:
-        pytest.fail("File open error.")
+def test_allGenresExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("allGenres") != None
 
-def test_allFilmDataVectorizedFileExists():
-    try:
-        with open(allFilmDataVectorizedFileLocation, encoding='utf-8') as allFilmDataVectorizedFile:
-            json.load(allFilmDataVectorizedFile)
+def test_cachedCountriesExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("cachedCountries") != None
 
-    except FileNotFoundError:
-        pytest.fail("File not found.")
-    except json.JSONDecodeError:
-        pytest.fail("JSON decode error.")
-    except Exception as e:
-        pytest.fail("File open error.")
+def test_diffNumberOfVotesExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("diffNumberOfVotes") != None
 
-def test_allFilmDataVectorizedMagnitudesFileExists():
-    try:
-        with open(allFilmDataVectorizedMagnitudesFileLocation, encoding='utf-8') as allFilmDataVectorizedMagnitudesFile:
-            json.load(allFilmDataVectorizedMagnitudesFile)
+def test_minNumberOfVotesExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("minNumberOfVotes") != None
 
-    except FileNotFoundError:
-        pytest.fail("File not found.")
-    except json.JSONDecodeError:
-        pytest.fail("JSON decode error.")
-    except Exception as e:
-        pytest.fail("File open error.")
+def test_normalizedImdbRatingsExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("normalizedImdbRatings") != None
 
-# TODO remove
-def test_cacheFileExists():
-    try:
-        with open(TestUtilities.cacheFileLocation, encoding='utf-8') as cacheFile:
-            json.load(cacheFile)
+def test_normalizedRuntimesExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("normalizedRuntimes") != None
 
-    except FileNotFoundError:
-        pytest.fail("File not found.")
-    except json.JSONDecodeError:
-        pytest.fail("JSON decode error.")
-    except Exception as e:
-        pytest.fail("File open error.")
+def test_normalizedYearsExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("normalizedYears") != None
+
+def test_profileVectorLengthExists():
+    documentDatabase = DocumentDatabase()
+    assert documentDatabase.get("profileVectorLength") != None
 
 def test_allFilmData():
-    allFilmDataFile = open(allFilmDataFileLocation)
-    allFilmData = json.load(allFilmDataFile)
-    cacheFile = open(TestUtilities.cacheFileLocation)
-    cache = json.load(cacheFile)
+    documentDatabase = DocumentDatabase()
+    allFilmData = documentDatabase.get("allFilmData")
+    allGenres = documentDatabase.get("allGenres")
+    allCountries = documentDatabase.get("allCountries")
 
     testUtilities = TestUtilities()
 
     for filmId in allFilmData:
-        testUtilities.verifyFilm(allFilmData[filmId], filmId, cache['allGenres'], cache['allCountries'])
+        testUtilities.verifyFilm(allFilmData[filmId], filmId, allGenres, allCountries)
 
 def test_cachedTmdbFilmData():
-    cachedTmdbFilmDataFile = open(cachedTmdbFilmDataFileLocation)
-    cachedTmdbFilmData = json.load(cachedTmdbFilmDataFile)
-    cacheFile = open(TestUtilities.cacheFileLocation)
-    cache = json.load(cacheFile)
+    documentDatabase = DocumentDatabase()
+    cachedTmdbFilmData = documentDatabase.get("cachedTmdbFilmData")
+    allCountries = documentDatabase.get("allCountries")
 
     for filmId in cachedTmdbFilmData:
         assert 'letterboxdTitle' in cachedTmdbFilmData[filmId]
@@ -118,7 +95,7 @@ def test_cachedTmdbFilmData():
         assert 'countries' in cachedTmdbFilmData[filmId]
 
         for country in cachedTmdbFilmData[filmId]['countries']:
-            assert country in cache['allCountries']
+            assert country in allCountries
 
         assert 'poster' in cachedTmdbFilmData[filmId]
         assert cachedTmdbFilmData[filmId]['poster'] != ""
@@ -127,8 +104,8 @@ def test_cachedTmdbFilmData():
         assert cachedTmdbFilmData[filmId]['summary'] != ""
 
 def test_cachedLetterboxdTitles():
-    cachedLetterboxdTitlesFile = open(cachedLetterboxdTitlesFileLocation)
-    cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+    documentDatabase = DocumentDatabase()
+    cachedLetterboxdTitles = documentDatabase.get("cachedLetterboxdTitles")
 
     for letterboxdTitle in cachedLetterboxdTitles:
         assert letterboxdTitle != ""
@@ -146,17 +123,16 @@ def test_cachedLetterboxdTitles():
                 assert year > 0
 
 def test_allFilmDataVectorized():
-    allFilmDataFile = open(allFilmDataFileLocation)
-    allFilmData = json.load(allFilmDataFile)
-    allFilmDataVectorizedFile = open(allFilmDataVectorizedFileLocation)
-    allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
-    cacheFile = open(TestUtilities.cacheFileLocation)
-    cache = json.load(cacheFile)
+    documentDatabase = DocumentDatabase()
+    allFilmData = documentDatabase.get("allFilmData")
+    allFilmDataVectorized = documentDatabase.get("allFilmDataVectorized")
+    profileVectorLength = documentDatabase.get("profileVectorLength")
+    allGenres = documentDatabase.get("allGenres")
 
     assert len(allFilmData) == len(allFilmDataVectorized)
 
     for filmId in allFilmDataVectorized:
-        assert len(allFilmDataVectorized[filmId]) == cache['profileVectorLength']
+        assert len(allFilmDataVectorized[filmId]) == profileVectorLength
 
         assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_YEAR_INDEX] <= VectorizeUtilities.YEAR_WEIGHT
         assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_YEAR_INDEX] >= 0.0
@@ -167,22 +143,20 @@ def test_allFilmDataVectorized():
         assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_RUNTIME_INDEX] <= VectorizeUtilities.RUNTIME_WEIGHT
         assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_RUNTIME_INDEX] >= 0.0
         
-        profileCountryStartIndex = VectorizeUtilities.PROFILE_GENRE_START_INDEX + len(cache['allGenres'])
+        profileCountryStartIndex = VectorizeUtilities.PROFILE_GENRE_START_INDEX + len(allGenres)
         for i in range(VectorizeUtilities.PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
             assert allFilmDataVectorized[filmId][i] <= VectorizeUtilities.GENRE_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
-        for i in range(profileCountryStartIndex, cache['profileVectorLength']):
+        for i in range(profileCountryStartIndex, profileVectorLength):
             assert allFilmDataVectorized[filmId][i] <= VectorizeUtilities.COUNTRY_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
 def test_allFilmDataVectorizedMagnitudes():
-    allFilmDataFile = open(allFilmDataFileLocation)
-    allFilmData = json.load(allFilmDataFile)
-    allFilmDataVectorizedMagnitudesFile = open(allFilmDataVectorizedMagnitudesFileLocation)
-    allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
-    allFilmDataVectorizedFile = open(allFilmDataVectorizedFileLocation)
-    allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+    documentDatabase = DocumentDatabase()
+    allFilmData = documentDatabase.get("allFilmData")
+    allFilmDataVectorizedMagnitudes = documentDatabase.get("allFilmDataVectorizedMagnitudes")
+    allFilmDataVectorized = documentDatabase.get("allFilmDataVectorized")
 
     assert len(allFilmData) == len(allFilmDataVectorized)
 
@@ -193,49 +167,65 @@ def test_allFilmDataVectorizedMagnitudes():
         assert allFilmDataVectorizedMagnitudes[filmId] == round(expectedMagnitudeFloat,
                                                                 InitDocumentDatabase.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
-def test_cache():
-    cacheFile = open(TestUtilities.cacheFileLocation)
-    cache = json.load(cacheFile)
+def test_allGenres():
+    documentDatabase = DocumentDatabase()
+    allGenres = documentDatabase.get("allGenres")
 
-    assert 'allGenres' in cache
-
-    for genre in cache['allGenres']:
+    for genre in allGenres:
         assert genre != ""
 
-    assert 'allCountries' in cache
+def test_allCountries():
+    documentDatabase = DocumentDatabase()
+    allCountries = documentDatabase.get("allGenres")
 
-    for country in cache['allCountries']:
+    for country in allCountries:
         assert country != ""
 
-    assert 'normalizedYears' in cache
+def test_normalizedYears():
+    documentDatabase = DocumentDatabase()
+    normalizedYears = documentDatabase.get("normalizedYears")
 
-    for normalizedYear in cache['normalizedYears']:
-        assert cache['normalizedYears'][normalizedYear] >= 0.0  
-        assert cache['normalizedYears'][normalizedYear] <= VectorizeUtilities.YEAR_WEIGHT
+    for normalizedYear in normalizedYears:
+        assert normalizedYears[normalizedYear] >= 0.0  
+        assert normalizedYears[normalizedYear] <= VectorizeUtilities.YEAR_WEIGHT
 
-    assert 'normalizedImdbRatings' in cache
+def test_normalizedImdbRatings():
+    documentDatabase = DocumentDatabase()
+    normalizedImdbRatings = documentDatabase.get("normalizedImdbRatings")
 
-    for normalizedImdbRating in cache['normalizedImdbRatings']:
-        assert cache['normalizedImdbRatings'][normalizedImdbRating] >= 0.0 
-        assert cache['normalizedImdbRatings'][normalizedImdbRating] <= VectorizeUtilities.IMDB_RATING_WEIGHT
+    for normalizedImdbRating in normalizedImdbRatings:
+        assert normalizedImdbRatings[normalizedImdbRating] >= 0.0 
+        assert normalizedImdbRatings[normalizedImdbRating] <= VectorizeUtilities.IMDB_RATING_WEIGHT
 
-    assert 'normalizedRuntimes' in cache
+def test_normalizedRuntimes():
+    documentDatabase = DocumentDatabase()
+    normalizedRuntimes = documentDatabase.get("normalizedRuntimes")
 
-    for normalizedRuntime in cache['normalizedRuntimes']:
+    for normalizedRuntime in normalizedRuntimes:
         assert int(normalizedRuntime) >= InitDocumentDatabase.RUNTIME_THRESHOLD
-        assert cache['normalizedRuntimes'][normalizedRuntime] >= 0.0 
-        assert cache['normalizedRuntimes'][normalizedRuntime] <= VectorizeUtilities.RUNTIME_WEIGHT
+        assert normalizedRuntimes[normalizedRuntime] >= 0.0 
+        assert normalizedRuntimes[normalizedRuntime] <= VectorizeUtilities.RUNTIME_WEIGHT
 
-    assert 'minNumberOfVotes' in cache
-    assert cache['minNumberOfVotes'] != None
-    assert cache['minNumberOfVotes'] >= InitDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD
+def test_minNumberOfVotes():
+    documentDatabase = DocumentDatabase()
+    minNumberOfVotes = documentDatabase.get("minNumberOfVotes")
 
-    assert 'diffNumberOfVotes' in cache
-    assert cache['diffNumberOfVotes'] != None
-    assert cache['diffNumberOfVotes'] > 0
+    assert minNumberOfVotes != None
+    assert minNumberOfVotes >= InitDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD
 
-    assert 'profileVectorLength' in cache
-    assert cache['profileVectorLength'] != None
+def test_diffNumberOfVotes():
+    documentDatabase = DocumentDatabase()
+    diffNumberOfVotes = documentDatabase.get("diffNumberOfVotes")
+
+    assert diffNumberOfVotes != None
+    assert diffNumberOfVotes > 0
+
+def test_profileVectorLength():
+    documentDatabase = DocumentDatabase()
+    profileVectorLength = documentDatabase.get("profileVectorLength")
+    
+    assert profileVectorLength != None
+    assert profileVectorLength > 0
 
 def test_convertRuntimeToHoursMinutes():
     initDocumentDatabase = InitDocumentDatabase()
@@ -246,10 +236,9 @@ def test_convertRuntimeToHoursMinutes():
     assert initDocumentDatabase.convertRuntimeToHoursMinutes(100) == "1h40m"
 
 def test_allFilmData_correspondsWith_cachedTmdbFilmData():
-    allFilmDataFile = open(allFilmDataFileLocation)
-    allFilmData = json.load(allFilmDataFile)
-    cachedTmdbFilmDataFile = open(cachedTmdbFilmDataFileLocation)
-    cachedTmdbFilmData = json.load(cachedTmdbFilmDataFile)
+    documentDatabase = DocumentDatabase()
+    allFilmData = documentDatabase.get("allFilmData")
+    cachedTmdbFilmData = documentDatabase.get("cachedTmdbFilmData")
 
     assert len(allFilmData) == len(cachedTmdbFilmData)
 
@@ -264,10 +253,9 @@ def test_allFilmData_correspondsWith_cachedTmdbFilmData():
             assert country in cachedTmdbFilmData[filmId]['countries']
 
 def test_allFilmData_correspondsWith_cachedLetterboxdTitles():
-    allFilmDataFile = open(allFilmDataFileLocation)
-    allFilmData = json.load(allFilmDataFile)
-    cachedLetterboxdTitlesFile = open(cachedLetterboxdTitlesFileLocation)
-    cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+    documentDatabase = DocumentDatabase()
+    allFilmData = documentDatabase.get("allFilmData")
+    cachedLetterboxdTitles = documentDatabase.get("cachedLetterboxdTitles")
 
     for letterboxdTitle in cachedLetterboxdTitles:
         for film in cachedLetterboxdTitles[letterboxdTitle]:
