@@ -285,8 +285,8 @@ my-film-data-vec.json to file
 - [x] address TODOs
 - [x] get rid of `cache` member in Service, variables should access exactly what they want
 - [ ] create `ServiceUtilities` class?
-- [ ] make service an interface/abstraction, app.py should then implement the service abstraction
 - [ ] make class for vector profiles
+- [ ] make service an interface/abstraction, app.py should then implement the service abstraction
 
 # Finishing Touches
 - [ ] record demo
