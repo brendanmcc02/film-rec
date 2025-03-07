@@ -294,21 +294,22 @@ class VectorizeUtilities:
 
 
     def initInternationalProfile(self, userProfile, allCountries, allGenresLength, profileVectorLength):
-        internationalProfile = {'profile': np.copy(userProfile), 'profileId': 'international'}
+        internationalProfile = VectorProfile('international')
+        internationalProfile.profile = np.copy(userProfile)
 
         countryStartIndex = self.PROFILE_GENRE_START_INDEX + allGenresLength
         maxCountryIndex = countryStartIndex
-        maxCountryValue = internationalProfile['profile'][countryStartIndex]
+        maxCountryValue = internationalProfile.profile[countryStartIndex]
 
         hasUserOnlyWatchedAmericanOrBritishFilms = True
 
         for index in range(countryStartIndex, (countryStartIndex + len(allCountries))):
-                if internationalProfile['profile'][index] > maxCountryValue:
-                    maxCountryValue = internationalProfile['profile'][index]
+                if internationalProfile.profile[index] > maxCountryValue:
+                    maxCountryValue = internationalProfile.profile[index]
                     maxCountryIndex = index
 
                 if self.isNonZeroIndexValueNotAmericanOrBritish(index, allCountries, countryStartIndex, 
-                                                        internationalProfile['profile'][index]):
+                                                                internationalProfile.profile[index]):
                     hasUserOnlyWatchedAmericanOrBritishFilms = False
 
         if hasUserOnlyWatchedAmericanOrBritishFilms:
@@ -316,15 +317,16 @@ class VectorizeUtilities:
 
         americanIndex = allCountries.index("American") + countryStartIndex
         britishIndex = allCountries.index("British") + countryStartIndex
+        
         if maxCountryIndex == americanIndex or maxCountryIndex == britishIndex:
-            internationalProfile['profile'][americanIndex] = 0.0
-            internationalProfile['profile'][britishIndex] = 0.0
+            internationalProfile.profile[americanIndex] = 0.0
+            internationalProfile.profile[britishIndex] = 0.0
         else:        
-            internationalProfile['profile'][maxCountryIndex] = 0.0
+            internationalProfile.profile[maxCountryIndex] = 0.0
 
         # curve countries
-        self.curveAccordingToMax(internationalProfile['profile'], allCountries, self.COUNTRY_WEIGHT, 
-                            countryStartIndex)
+        self.curveAccordingToMax(internationalProfile.profile, allCountries, self.COUNTRY_WEIGHT, 
+                                 countryStartIndex)
 
         return internationalProfile
 
