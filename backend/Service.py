@@ -243,7 +243,7 @@ class Service:
         vectorizeUtilities = VectorizeUtilities()
 
         for i in range(serviceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS):
-            if self.genreProfiles[i]['weightedMeanRating'] == 0.0:
+            if self.genreProfiles[i].weightedMeanRating == 0.0:
                 print("No genre profile.")
             else:
                 countryText = vectorizeUtilities.getProfileMaxCountry(self.genreProfiles[i].profile, self.allGenresLength, self.allCountries)
