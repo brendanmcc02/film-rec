@@ -276,7 +276,7 @@ my-film-data-vec.json to file
 - [x] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
 - [ ] abstract the database behind an interface
 - [ ] backend should reference the abstracted database
-- [ ] create a documentDatabase that implements this abstraction
+- [x] create a documentDatabase that implements this abstraction
 - [x] remove `normalizedYears`, `normalizedImdbRatings` and `normalizedRuntimes` from `cache.json` into it's own json file?
 
 # Software Design & Architecture
@@ -284,7 +284,7 @@ my-film-data-vec.json to file
 - [x] rename `appUtilities` to `service`
 - [x] address TODOs
 - [x] get rid of `cache` member in Service, variables should access exactly what they want
-- [ ] create `ServiceUtilities` class?
+- [x] create `ServiceUtilities` class?
 - [ ] make class for vector profiles
 - [ ] make service an interface/abstraction, app.py should then implement the service abstraction
 

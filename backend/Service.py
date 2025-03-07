@@ -7,6 +7,7 @@ from LetterboxdConversionUtilities import *
 from InitDocumentDatabase import *
 from ServiceUtilities import *
 from VectorizeUtilities import *
+from VectorProfile import *
 
 class Service:
 
@@ -28,11 +29,11 @@ class Service:
         self.normalizedRuntimes = _database.get("normalizedRuntimes")
         self.diffDateRated = datetime(1, 1, 1)
         self.minDateRated = datetime.now()
-        self.favouriteProfile = {'profile': np.zeros(0), 'profileId': 'favourite'}
+        self.favouriteProfile = VectorProfile('favourite')
         self.genreProfiles = []
-        self.recencyProfile = {'profile': np.zeros(0), 'profileId': 'recency'}
-        self.internationalProfile = {'profile': np.zeros(0), 'profileId': 'international'}
-        self.oldProfile = {'profile': np.zeros(0), 'profileId': 'old'}
+        self.recencyProfile = VectorProfile('recency')
+        self.internationalProfile = VectorProfile('international')
+        self.oldProfile = VectorProfile('old')
         self.rowsOfRecommendations = []
         self.isImdbFile = True
         self.userFilmDataFilename = ""
@@ -205,10 +206,10 @@ class Service:
         userProfile = vectorizeUtilities.initUserProfile(userFilmData, userFilmDataVectorized, self.profileVectorLength,
                                     cachedDateRatedAndUserRatingWeights, self.allGenres, self.allCountries)
 
-        self.internationalProfile = vectorizeUtilities.initInternationalProfile(userProfile['profile'], self.allCountries, self.allGenresLength,
+        self.internationalProfile = vectorizeUtilities.initInternationalProfile(userProfile.profile, self.allCountries, self.allGenresLength,
                                                                                  self.profileVectorLength)
 
-        self.oldProfile = vectorizeUtilities.initOldProfile(userProfile['profile'])
+        self.oldProfile = vectorizeUtilities.initOldProfile(userProfile.profile)
 
         self.generateRecommendations()
 
@@ -218,22 +219,22 @@ class Service:
         serviceUtilities = ServiceUtilities()
         self.rowsOfRecommendations = []
 
-        if np.array_equal(self.favouriteProfile['profile'], np.zeros(self.profileVectorLength)):
+        if np.array_equal(self.favouriteProfile.profile, np.zeros(self.profileVectorLength)):
             print("No favourite profile.")
         else:
             self.getFilmRecommendations("Based on your favourite films", self.allFilmDataUnseen, 
                                         serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
-                                        self.favouriteProfile['profile'], self.favouriteProfile['profileId'])
-            # printStringifiedVector(favouriteProfile['profile'], self.allGenres, self.allCountries, "Favourite",
+                                        self.favouriteProfile.profile, self.favouriteProfile.profileId)
+            # printStringifiedVector(favouriteProfile.profile, self.allGenres, self.allCountries, "Favourite",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
             #                        self.minNumberOfVotes, self.diffNumberOfVotes)
 
-        if np.array_equal(self.recencyProfile['profile'], np.zeros(self.profileVectorLength)):
+        if np.array_equal(self.recencyProfile.profile, np.zeros(self.profileVectorLength)):
             print("No recency profile.")
         else:
             self.getFilmRecommendations("Based on what you watched recently", self.allFilmDataUnseen, serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
-                                        self.recencyProfile['profile'], self.recencyProfile['profileId'])
-            # printStringifiedVector(recencyProfile['profile'], self.allGenres, self.allCountries, "Recency",
+                                        self.recencyProfile.profile, self.recencyProfile.profileId)
+            # printStringifiedVector(recencyProfile.profile, self.allGenres, self.allCountries, "Recency",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
             #                        self.minNumberOfVotes, self.diffNumberOfVotes)
 
@@ -245,31 +246,31 @@ class Service:
             if self.genreProfiles[i]['weightedMeanRating'] == 0.0:
                 print("No genre profile.")
             else:
-                countryText = vectorizeUtilities.getProfileMaxCountry(self.genreProfiles[i]['profile'], self.allGenresLength, self.allCountries)
-                self.getFilmRecommendations(f"Because you like {countryText} {self.genreProfiles[i]['profileId']} films", 
-                                            self.allFilmDataUnseen, serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.genreProfiles[i]['profile'], 
-                                            self.genreProfiles[i]['profileId'])
-                # printStringifiedVector(genreProfiles[i]['profile'], self.allGenres, self.allCountries, 
-                #                        genreProfiles[i]['profileId'], self.normalizedYearsKeys, 
+                countryText = vectorizeUtilities.getProfileMaxCountry(self.genreProfiles[i].profile, self.allGenresLength, self.allCountries)
+                self.getFilmRecommendations(f"Because you like {countryText} {self.genreProfiles[i].profileId} films", 
+                                            self.allFilmDataUnseen, serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.genreProfiles[i].profile, 
+                                            self.genreProfiles[i].profileId)
+                # printStringifiedVector(genreProfiles[i].profile, self.allGenres, self.allCountries, 
+                #                        genreProfiles[i].profileId, self.normalizedYearsKeys, 
                 #                        self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys, 
                 #                        self.minNumberOfVotes, self.diffNumberOfVotes)
             
-        if np.array_equal(self.internationalProfile['profile'], np.zeros(self.profileVectorLength)):
+        if np.array_equal(self.internationalProfile.profile, np.zeros(self.profileVectorLength)):
             print("No international profile.")
         else:
             self.getFilmRecommendations("Try out some international films", self.allFilmDataUnseen, 
-                                        serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.internationalProfile['profile'], 
-                                        self.internationalProfile['profileId'])
-            # printStringifiedVector(internationalProfile['profile'], self.allGenres, self.allCountries, 
+                                        serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.internationalProfile.profile, 
+                                        self.internationalProfile.profileId)
+            # printStringifiedVector(internationalProfile.profile, self.allGenres, self.allCountries, 
             #                        "International", self.normalizedYearsKeys, self.normalizedRuntimesKeys,
             #                        self.normalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
 
-        if np.array_equal(self.oldProfile['profile'], np.zeros(self.profileVectorLength)):
+        if np.array_equal(self.oldProfile.profile, np.zeros(self.profileVectorLength)):
             print("No old profile.")
         else:
             self.getFilmRecommendations("Try out some older films", self.allFilmDataUnseen, serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
-                                        self.oldProfile['profile'], self.oldProfile['profileId'])
-            # printStringifiedVector(oldProfile['profile'], self.allGenres, self.allCountries, "Old",
+                                        self.oldProfile.profile, self.oldProfile.profileId)
+            # printStringifiedVector(oldProfile.profile, self.allGenres, self.allCountries, "Old",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys,
             #                        self.normalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
 
@@ -318,7 +319,7 @@ class Service:
         for row in self.rowsOfRecommendations:
             for film in row['recommendedFilms']:
                 if film['id'] == filmId:
-                    profileId = row['profileId']
+                    profileId = row.profileId
 
         profile = self.getProfile(profileId)
 
@@ -331,18 +332,18 @@ class Service:
                 profile['weightedMeanRating'] -= adjustment
 
         filmVector = self.allFilmDataVectorized[filmId]
-        adjustment = (filmVector - profile['profile']) * serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
+        adjustment = (filmVector - profile.profile) * serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
 
         for i in range(len(adjustment)):
             if adjustment[i] == 0.0:
                 adjustment[i] = serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
 
         if isThumbsUp:
-            profile['profile'] += adjustment
+            profile.profile += adjustment
         else:
-            profile['profile'] -= adjustment
+            profile.profile -= adjustment
 
-        vectorizeUtilities.keepVectorBoundary(profile['profile'])
+        vectorizeUtilities.keepVectorBoundary(profile.profile)
 
         return f"changed {profileId} profile due to after reviewing {filmId}", 200
     
@@ -358,7 +359,7 @@ class Service:
             return self.internationalProfile
         else:
             for profile in self.genreProfiles:
-                if profile['profileId'] == profileId:
+                if profile.profileId == profileId:
                     return profile
 
         print(f"Error: profile {profileId} not found. Returning zero vector.")

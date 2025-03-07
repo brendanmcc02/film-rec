@@ -1,4 +1,5 @@
 import numpy as np
+from VectorProfile import *
 
 class VectorizeUtilities:
 
@@ -160,24 +161,25 @@ class VectorizeUtilities:
     def initFavouriteProfile(self, userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
                             cachedDateRatedAndUserRatingWeights, favouriteFilmIds, allGenres,
                             allCountries):
-        favouriteProfile = np.zeros(profileVectorLength)
+        favouriteProfile = VectorProfile('favourite', profileVectorLength)
         sumOfWeights = 0.0
 
         for imdbFilmId in userFilmDataIds:
             if imdbFilmId in favouriteFilmIds:
-                favouriteProfile += userFilmDataVectorized[imdbFilmId]
+                favouriteProfile.profile += userFilmDataVectorized[imdbFilmId]
                 sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
         if sumOfWeights > 0.0:
-            favouriteProfile = np.divide(favouriteProfile, sumOfWeights)
+            favouriteProfile.profile = np.divide(favouriteProfile.profile, sumOfWeights)
             # curve genres
-            self.curveAccordingToMax(favouriteProfile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
+            self.curveAccordingToMax(favouriteProfile.profile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
             # curve countries
-            self.curveAccordingToMax(favouriteProfile, allCountries, self.COUNTRY_WEIGHT, 
+            self.curveAccordingToMax(favouriteProfile.profile, allCountries, self.COUNTRY_WEIGHT, 
                                      self.PROFILE_GENRE_START_INDEX + len(allGenres))
-            return {'profile': favouriteProfile, 'profileId': 'favourite'}
+            return favouriteProfile
         else:
-            return {'profile': np.zeros(profileVectorLength), 'profileId': 'favourite'}
+            favouriteProfile.profile = np.zeros(profileVectorLength)
+            return favouriteProfile
 
 
     def initGenreProfiles(self, userFilmDataIds, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights, 
