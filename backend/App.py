@@ -4,7 +4,7 @@ from flask_cors import CORS
 from Service import *
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 database = DocumentDatabase("../")
 service = Service(database)
 
