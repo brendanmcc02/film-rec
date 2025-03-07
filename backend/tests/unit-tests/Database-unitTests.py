@@ -78,6 +78,7 @@ def test_allFilmDataVectorizedMagnitudesFileExists():
     except Exception as e:
         pytest.fail("File open error.")
 
+# TODO remove
 def test_cacheFileExists():
     try:
         with open(TestUtilities.cacheFileLocation, encoding='utf-8') as cacheFile:
