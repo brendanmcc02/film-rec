@@ -203,7 +203,7 @@ my-film-data-vec.json to file
 - [x] `range(*)` is called once in python, no need to declare for loop limit beforehand
 - [x] rename files to lowerCamelCase
 - [x] `loadJsonFiles` should only run once
-- [ ] classes should be UpperCamelCase
+- [x] classes should be UpperCamelCase
 
 # Frontend
 - [x] do text div 
