@@ -41,6 +41,7 @@ if test -f title.basics.tsv; then
     git push
     # the echo | is necessary to simulate an enter keypress and submit the pr
     echo | gh pr create --title "Updating Database" --body "PR generated automatically"
+    git checkout main
   fi
 else
   printf "\n all-film-data.json was initialised >1 days ago, so the script was not run.\n"
