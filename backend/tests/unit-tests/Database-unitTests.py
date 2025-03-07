@@ -75,7 +75,7 @@ def test_allFilmData():
     allGenres = documentDatabase.get("allGenres")
     allCountries = documentDatabase.get("allCountries")
 
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
 
     for filmId in allFilmData:
         testUtilities.verifyFilm(allFilmData[filmId], filmId, allGenres, allCountries)

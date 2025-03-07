@@ -7,7 +7,6 @@ sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
 from DocumentDatabase import *
 from VectorizeUtilities import *
-from TestUtilities import *
 
 REPOSITORY_ROOT = "../../../"
 

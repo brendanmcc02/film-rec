@@ -37,9 +37,9 @@ class Service:
         self.minNumberOfVotes = _database.get("minNumberOfVotes")
         self.diffNumberOfVotes = _database.get("diffNumberOfVotes")
         ### TODO kinda retarded implementation
-        self.normalizedYearsKeys = list(_database.get("normalizedYears").keys())
-        self.normalizedImdbRatingsKeys = list(_database.get("normalizedImdbRatings").keys())
-        self.normalizedRuntimesKeys = list(_database.get("normalizedRuntimes").keys())
+        self.normalizedYears = _database.get("normalizedYears")
+        self.normalizedImdbRatings = _database.get("normalizedImdbRatings")
+        self.normalizedRuntimes = _database.get("normalizedRuntimes")
         ###
         self.diffDateRated = datetime(1, 1, 1)
         self.minDateRated = datetime.now()
@@ -177,18 +177,14 @@ class Service:
 
         # init a dict with pre-computed scalar values
         cachedDateRatedAndUserRatingWeights = {}
-        
-        # todo this might be unnecessary???
-        self.allGenresLength = len(self.allGenres)
-        self.allCountriesLength = len(self.allCountries)
 
         vectorizeUtilities = VectorizeUtilities()
 
         # vectorize user-film-data
         for imdbFilmId in userFilmData:
             vector = vectorizeUtilities.vectorizeFilm(userFilmData[imdbFilmId], self.allGenres, self.allCountries,
-                                                       self.normalizedYearsKeys, self.normalizedImdbRatingsKeys, self.minNumberOfVotes,
-                                                       self.diffNumberOfVotes, self.normalizedRuntimesKeys)
+                                                      self.normalizedYears, self.normalizedImdbRatings, self.minNumberOfVotes,
+                                                      self.diffNumberOfVotes, self.normalizedRuntimes)
             if isDiffDateRatedZero:
                 dateRatedWeight = 1.0
             else:
