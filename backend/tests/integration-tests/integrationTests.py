@@ -11,6 +11,7 @@ from TestUtilities import *
 
 testUploadFilesDirectory = "test-upload-files/"
 
+### TODO get rid of this when reworking database architecture
 def test_loadJsonFiles(backendUrl):
     response = requests.get(backendUrl + "/loadJsonFiles")
 
@@ -603,6 +604,7 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     regeneratedRecommendations = regenerateRecommendationsResponse.json()
+    testUtilities = TestUtilities()
     testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
 
     # ensure all newly recommended films are unique
@@ -647,6 +649,7 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     regeneratedRecommendations = regenerateRecommendationsResponse.json()
+    testUtilities = TestUtilities()
     testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
 
     # ensure all newly recommended films are unique
