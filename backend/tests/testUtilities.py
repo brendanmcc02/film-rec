@@ -4,7 +4,7 @@ import sys
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 backendDirectory = os.path.dirname(absolutePathOfCurrentFile)
 sys.path.append(backendDirectory)
-import app
+from service import *
 from initDocumentDatabase import *
 
 cacheFileLocation = "../../../database/cache.json"
@@ -76,7 +76,7 @@ def verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows):
         assert row['profileId'] != ""
 
         assert 'recommendedFilms' in row
-        assert len(row['recommendedFilms']) == app.NUMBER_OF_RECOMMENDATIONS_PER_ROW
+        assert len(row['recommendedFilms']) == service.NUMBER_OF_RECOMMENDATIONS_PER_ROW
 
         for film in row['recommendedFilms']:
             assert 'id' in film
