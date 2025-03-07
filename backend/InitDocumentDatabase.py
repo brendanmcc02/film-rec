@@ -270,19 +270,19 @@ class InitDocumentDatabase:
         diffRuntime = maxRuntime - minRuntime
         diffYear = maxYear - minYear
 
-        cachedNormalizedYears = {}
+        normalizedYears = {}
         for year in range(minYear, maxYear + 1):
-            cachedNormalizedYears[str(year)] = ((year - minYear) / diffYear) * vectorizeUtilities.YEAR_WEIGHT
+            normalizedYears[str(year)] = ((year - minYear) / diffYear) * vectorizeUtilities.YEAR_WEIGHT
 
-        cachedNormalizedImdbRatings = {}
+        normalizedImdbRatings = {}
         for imdbRating in np.arange(minImdbRating, maxImdbRating + 0.1, 0.1):
             imdbRating = round(imdbRating, 1)
-            cachedNormalizedImdbRatings[str(imdbRating)] = (((imdbRating - minImdbRating) / diffImdbRating) 
+            normalizedImdbRatings[str(imdbRating)] = (((imdbRating - minImdbRating) / diffImdbRating) 
                                                             * vectorizeUtilities.IMDB_RATING_WEIGHT)
 
-        cachedNormalizedRuntimes = {}
+        normalizedRuntimes = {}
         for runtime in range(minRuntime, maxRuntime + 1):
-            cachedNormalizedRuntimes[str(runtime)] = (((runtime - minRuntime) / diffRuntime) 
+            normalizedRuntimes[str(runtime)] = (((runtime - minRuntime) / diffRuntime) 
                                                     * vectorizeUtilities.RUNTIME_WEIGHT)
 
         allFilmDataVectorized = {}
@@ -295,26 +295,42 @@ class InitDocumentDatabase:
                 print(f"Film ID not found in allFilmData: {filmId}.")
             else:
                 allFilmDataVectorized[filmId] = list(vectorizeUtilities.vectorizeFilm(allFilmData[filmId], allGenres, allCountries,
-                                                                cachedNormalizedYears, cachedNormalizedImdbRatings, 
+                                                                normalizedYears, normalizedImdbRatings, 
                                                                 minNumberOfVotes, diffNumberOfVotes, 
-                                                                cachedNormalizedRuntimes))
+                                                                normalizedRuntimes))
                 if profileVectorLength == 0:
                     profileVectorLength = len(allFilmDataVectorized[filmId])
 
                 allFilmDataVectorizedMagnitudes[filmId] = round(np.linalg.norm(allFilmDataVectorized[filmId]), 
                                                                 self.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
-        cache = {'allGenres': allGenres, 'allCountries': allCountries, 'normalizedYears': cachedNormalizedYears, 
-                'normalizedImdbRatings': cachedNormalizedImdbRatings, 'normalizedRuntimes': cachedNormalizedRuntimes, 
-                'minNumberOfVotes': minNumberOfVotes, 'diffNumberOfVotes': diffNumberOfVotes, 
-                'profileVectorLength': profileVectorLength}
-
         with open('../database/allFilmDataVectorized.json', 'w') as convert_file:
             convert_file.write(json.dumps(allFilmDataVectorized, indent=4, separators=(',', ': '))
                                 .replace(",\n        ", ", ").replace("],", "],"))
 
-        with open('../database/cache.json', 'w') as convert_file:
-            convert_file.write(json.dumps(cache, indent=4, separators=(',', ': ')))
+        with open('../database/allGenres.json', 'w') as convert_file:
+            convert_file.write(json.dumps(allGenres, indent=4, separators=(',', ': ')))
+
+        with open('../database/allCountries.json', 'w') as convert_file:
+            convert_file.write(json.dumps(allCountries, indent=4, separators=(',', ': ')))
+
+        with open('../database/normalizedYears.json', 'w') as convert_file:
+            convert_file.write(json.dumps(normalizedYears, indent=4, separators=(',', ': ')))
+
+        with open('../database/normalizedImdbRatings.json', 'w') as convert_file:
+            convert_file.write(json.dumps(normalizedImdbRatings, indent=4, separators=(',', ': ')))
+
+        with open('../database/normalizedRuntimes.json', 'w') as convert_file:
+            convert_file.write(json.dumps(normalizedRuntimes, indent=4, separators=(',', ': ')))
+
+        with open('../database/minNumberOfVotes.json', 'w') as convert_file:
+            convert_file.write(json.dumps(minNumberOfVotes, indent=4, separators=(',', ': ')))
+
+        with open('../database/diffNumberOfVotes.json', 'w') as convert_file:
+            convert_file.write(json.dumps(diffNumberOfVotes, indent=4, separators=(',', ': ')))
+
+        with open('../database/profileVectorLength.json', 'w') as convert_file:
+            convert_file.write(json.dumps(profileVectorLength, indent=4, separators=(',', ': ')))
 
         with open('../database/allFilmDataVectorizedMagnitudes.json', 'w') as convert_file:
             convert_file.write(json.dumps(allFilmDataVectorizedMagnitudes, indent=4, separators=(',', ': ')))
