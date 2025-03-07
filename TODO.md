@@ -203,6 +203,7 @@ my-film-data-vec.json to file
 - [x] `range(*)` is called once in python, no need to declare for loop limit beforehand
 - [x] rename files to lowerCamelCase
 - [x] `loadJsonFiles` should only run once
+- [ ] classes should be UpperCamelCase
 
 # Frontend
 - [x] do text div 
@@ -241,6 +242,7 @@ my-film-data-vec.json to file
 - [x] move text around on home screen
 - [x] add note about patience
 - [x] add film imdb url
+- [ ] change `app.py` to `App.py` on render backend
 
 # README
 - [x] do `README.md`

@@ -24,5 +24,5 @@ class DownloadFilmData:
 
 
 if __name__ == "__main__":
-    _downloadFilmData = DownloadFilmData()
-    _downloadFilmData.main()
+    downloadFilmData = DownloadFilmData()
+    downloadFilmData.main()

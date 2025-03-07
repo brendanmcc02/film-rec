@@ -57,7 +57,7 @@ class Service:
         self.allCountriesLength = 0
 
     def verifyUserUploadedFile(self):
-        _letterboxdConversionUtilities = LetterboxdConversionUtilities()
+        letterboxdConversionUtilities = LetterboxdConversionUtilities()
 
         self.deleteUserUploadedData()
 
@@ -75,7 +75,7 @@ class Service:
             file.save(userUploadedFileLocation)
 
             if userUploadedFileLocation.endswith(".zip"):
-                if _letterboxdConversionUtilities.isLetterboxdZipFileInvalid(self.USER_UPLOADED_DATA_DIRECTORY_NAME, self.userFilmDataFilename):
+                if letterboxdConversionUtilities.isLetterboxdZipFileInvalid(self.USER_UPLOADED_DATA_DIRECTORY_NAME, self.userFilmDataFilename):
                     return self.INVALID_ZIP_FILE_ERROR_MESSAGE, 400
                 else:
                     self.userFilmDataFilename = "ratings.csv"
@@ -96,7 +96,7 @@ class Service:
                     for key in keys:
                         if key not in expectedImdbFileFilmAttributes:
                             self.isImdbFile = False
-                            if key not in _letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
+                            if key not in letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
                                 return self.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, 400
 
             return self.FILE_UPLOAD_SUCCESS_MESSAGE, 200
@@ -121,10 +121,10 @@ class Service:
         allFilmDataFile = open('../database/all-film-data.json')
         allFilmData = json.load(allFilmDataFile)
 
-        _letterboxdConversionUtilities = LetterboxdConversionUtilities()
+        letterboxdConversionUtilities = LetterboxdConversionUtilities()
 
         if not self.isImdbFile:
-            userFilmDataList = (_letterboxdConversionUtilities
+            userFilmDataList = (letterboxdConversionUtilities
                                 .convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, self.cachedLetterboxdTitles))
 
         userFilmData = {}
@@ -132,12 +132,12 @@ class Service:
         self.minDateRated = datetime.now()
         maxDateRated = self.minDateRated
 
-        _initDocumentDatabase = InitDocumentDatabase()
+        initDocumentDatabase = InitDocumentDatabase()
 
         for film in userFilmDataList:
             if (film['Title Type'] == "Movie" and 
-                    int(film['Runtime (mins)']) >= _initDocumentDatabase.RUNTIME_THRESHOLD and film['Genres'] != ""\
-                    and int(film['Num Votes']) >= _initDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD):
+                    int(film['Runtime (mins)']) >= initDocumentDatabase.RUNTIME_THRESHOLD and film['Genres'] != ""\
+                    and int(film['Num Votes']) >= initDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD):
                 if self.isImdbFile:
                     genres = film['Genres'].replace("\"", "").split(", ")
                 else:
@@ -185,11 +185,11 @@ class Service:
         self.allGenresLength = len(self.cache['allGenres'])
         self.allCountriesLength = len(self.cache['allCountries'])
 
-        _vectorizeUtilities = VectorizeUtilities()
+        vectorizeUtilities = VectorizeUtilities()
 
         # vectorize user-film-data
         for imdbFilmId in userFilmData:
-            vector = _vectorizeUtilities.vectorizeFilm(userFilmData[imdbFilmId], self.cache['allGenres'], self.cache['allCountries'],
+            vector = vectorizeUtilities.vectorizeFilm(userFilmData[imdbFilmId], self.cache['allGenres'], self.cache['allCountries'],
                                                        self.cache['normalizedYears'], self.cache['normalizedImdbRatings'], self.cache['minNumberOfVotes'],
                                                        self.cache['diffNumberOfVotes'], self.cache['normalizedRuntimes'])
             if isDiffDateRatedZero:
@@ -207,26 +207,26 @@ class Service:
 
         self.profileVectorLength = self.cache['profileVectorLength']
 
-        self.favouriteProfile = _vectorizeUtilities.initFavouriteProfile(userFilmData, userFilmDataVectorized, 
+        self.favouriteProfile = vectorizeUtilities.initFavouriteProfile(userFilmData, userFilmDataVectorized, 
                                                                          self.profileVectorLength,
                                                                          cachedDateRatedAndUserRatingWeights, favouriteFilmIds,
                                                                          self.cache['allGenres'], self.cache['allCountries'])
 
-        self.recencyProfile = _vectorizeUtilities.initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
+        self.recencyProfile = vectorizeUtilities.initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
                                             self.profileVectorLength, cachedDateRatedAndUserRatingWeights, self.cache['allGenres'],
                                             self.cache['allCountries'])
 
-        self.genreProfiles = _vectorizeUtilities.initGenreProfiles(userFilmData, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
+        self.genreProfiles = vectorizeUtilities.initGenreProfiles(userFilmData, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
                                                                    self.cache['allGenres'], self.profileVectorLength, self.NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD, 
                                                                    self.cache['allCountries'])
 
-        userProfile = _vectorizeUtilities.initUserProfile(userFilmData, userFilmDataVectorized, self.profileVectorLength,
+        userProfile = vectorizeUtilities.initUserProfile(userFilmData, userFilmDataVectorized, self.profileVectorLength,
                                     cachedDateRatedAndUserRatingWeights, self.cache['allGenres'], self.cache['allCountries'])
 
-        self.internationalProfile = _vectorizeUtilities.initInternationalProfile(userProfile['profile'], self.cache['allCountries'], self.allGenresLength,
+        self.internationalProfile = vectorizeUtilities.initInternationalProfile(userProfile['profile'], self.cache['allCountries'], self.allGenresLength,
                                                                                  self.profileVectorLength)
 
-        self.oldProfile = _vectorizeUtilities.initOldProfile(userProfile['profile'])
+        self.oldProfile = vectorizeUtilities.initOldProfile(userProfile['profile'])
 
         self.generateRecommendations()
 
@@ -255,13 +255,13 @@ class Service:
 
         self.genreProfiles = sorted(self.genreProfiles, key=lambda x: x['weightedMeanRating'], reverse=True)
 
-        _vectorizeUtilities = VectorizeUtilities()
+        vectorizeUtilities = VectorizeUtilities()
 
         for i in range(self.NUMBER_OF_GENRE_RECOMMENDATION_ROWS):
             if self.genreProfiles[i]['weightedMeanRating'] == 0.0:
                 print("No genre profile.")
             else:
-                countryText = _vectorizeUtilities.getProfileMaxCountry(self.genreProfiles[i]['profile'], self.allGenresLength, self.cache['allCountries'])
+                countryText = vectorizeUtilities.getProfileMaxCountry(self.genreProfiles[i]['profile'], self.allGenresLength, self.cache['allCountries'])
                 self.getFilmRecommendations(f"Because you like {countryText} {self.genreProfiles[i]['profileId']} films", 
                                             self.allFilmDataUnseen, self.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.genreProfiles[i]['profile'], 
                                             self.genreProfiles[i]['profileId'])
@@ -297,11 +297,11 @@ class Service:
         profileVectorMagnitude = np.linalg.norm(profileVector)
         cosineSimilarities = {}
 
-        _vectorizeUtilities = VectorizeUtilities()
+        vectorizeUtilities = VectorizeUtilities()
 
         for filmId in allFilmData:
             filmVectorMagnitude = self.allFilmDataVectorizedMagnitudes[filmId]
-            cosineSimilarities[filmId] = _vectorizeUtilities.cosineSimilarity(self.allFilmDataVectorized[filmId], profileVector,
+            cosineSimilarities[filmId] = vectorizeUtilities.cosineSimilarity(self.allFilmDataVectorized[filmId], profileVector,
                                                         filmVectorMagnitude, profileVectorMagnitude)
 
         cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
@@ -336,7 +336,7 @@ class Service:
         filmId = request.args.get('filmId')
         isThumbsUp = request.args.get('isThumbsUp').lower() == 'true'
 
-        _vectorizeUtilities = VectorizeUtilities()
+        vectorizeUtilities = VectorizeUtilities()
 
         for row in self.rowsOfRecommendations:
             for film in row['recommendedFilms']:
@@ -365,7 +365,7 @@ class Service:
         else:
             profile['profile'] -= adjustment
 
-        _vectorizeUtilities.keepVectorBoundary(profile['profile'])
+        vectorizeUtilities.keepVectorBoundary(profile['profile'])
 
         return f"changed {profileId} profile due to after reviewing {filmId}", 200
 

@@ -6,35 +6,35 @@ from Service import *
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
-_service = Service()
+service = Service()
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])
 def verifyUserUploadedFile():
-    global _service
-    del _service
-    _service = Service()
-    return _service.verifyUserUploadedFile()
+    global service
+    del service
+    service = Service()
+    return service.verifyUserUploadedFile()
 
 
 @app.route('/initRowsOfRecommendations')
 def initRowsOfRecommendations():
-    return _service.initRowsOfRecommendations()
+    return service.initRowsOfRecommendations()
 
 
 @app.route('/reviewRecommendation')
 def reviewRecommendation():
-    return _service.reviewRecommendation()
+    return service.reviewRecommendation()
 
 
 @app.route('/regenerateRecommendations')
 def regenerateRecommendations():
-    return _service.regenerateRecommendations()
+    return service.regenerateRecommendations()
 
 
 @app.route('/loadJsonFiles')
 def loadJsonFiles():
-    return _service.loadJsonFiles()
+    return service.loadJsonFiles()
 
 
 if __name__ == "__main__":
