@@ -1,5 +1,3 @@
-# the python flask backend service. contains methods that expose API endpoints and other utility methods.
-
 from DocumentDatabase import *
 from flask import Flask
 from flask_cors import CORS
@@ -7,7 +5,7 @@ from Service import *
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
-database = DocumentDatabase()
+database = DocumentDatabase("../")
 service = Service(database)
 
 
