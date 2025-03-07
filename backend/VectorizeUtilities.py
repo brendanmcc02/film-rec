@@ -239,28 +239,29 @@ class VectorizeUtilities:
     def initRecencyProfile(self, userFilmData, userFilmDataVectorized, maxDateRated, 
                            profileVectorLength, cachedDateRatedAndUserRatingWeights, allGenres,
                            allCountries):
-        recencyProfile = np.zeros(profileVectorLength)
+        recencyProfile = VectorProfile('recency')
         sumOfWeights = 0.0
 
         for imdbFilmId in userFilmData:
             timeDifference = maxDateRated - userFilmData[imdbFilmId]['dateRated']
             if timeDifference.days <= self.RECENCY_PROFILE_DAYS_THRESHOLD:
-                recencyProfile += userFilmDataVectorized[imdbFilmId]
+                recencyProfile.profile += userFilmDataVectorized[imdbFilmId]
                 sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
             else:
                 # file is sorted by date, no need to look further
                 break
 
         if sumOfWeights > 0.0:
-            recencyProfile = np.divide(recencyProfile, sumOfWeights)
+            recencyProfile.profile = np.divide(recencyProfile.profile, sumOfWeights)
             # curve genres
-            self.curveAccordingToMax(recencyProfile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
+            self.curveAccordingToMax(recencyProfile.profile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
             # curve countries
-            self.curveAccordingToMax(recencyProfile, allCountries, self.COUNTRY_WEIGHT, 
+            self.curveAccordingToMax(recencyProfile.profile, allCountries, self.COUNTRY_WEIGHT, 
                                 self.PROFILE_GENRE_START_INDEX + len(allGenres))
-            return {'profile': recencyProfile, 'profileId': 'recency'}
+            return recencyProfile
         else:
-            return {'profile': np.zeros(profileVectorLength), 'profileId': 'recency'}
+            recencyProfile = VectorProfile('recency')
+            return recencyProfile
 
 
     def initUserProfile(self, userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
