@@ -21,40 +21,45 @@ class Service:
     FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE = "File has more data than row headers."
     FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE = "Row headers do not conform to expected format."
     FILE_UPLOAD_SUCCESS_MESSAGE = "Upload Success."
-    JSON_FILES_LOAD_SUCCESS_MESSAGE = "JSON files loaded successfully."
-    JSON_FILES_NOT_FOUND_ERROR_MESSAGE = "JSON files not found."
-    JSON_FILES_DECODE_ERROR_MESSAGE = "JSON files decode error."
     INVALID_ZIP_FILE_ERROR_MESSAGE = "Zip file is invalid."
 
-    def __init__(self, profileVectorLength=0, allFilmDataUnseen={}, allFilmDataVectorized={}, allFilmDataVectorizedMagnitudes={},
-                 cachedLetterboxdTitles={}, cache={}, cachedNormalizedYearsKeys=[], cachedNormalizedImdbRatingsKeys=[],
-                 cachedNormalizedRuntimesKeys = [], diffDateRated=datetime(1, 1, 1), minDateRated = datetime.now(), 
-                 favouriteProfile = {'profile': np.zeros(0), 'profileId': 'favourite'},
-                 genreProfiles = [], recencyProfile = {'profile': np.zeros(0), 'profileId': 'recency'}, 
-                 internationalProfile = {'profile': np.zeros(0), 'profileId': 'international'}, 
-                 oldProfile = {'profile': np.zeros(0), 'profileId': 'old'}, 
-                 rowsOfRecommendations = [], isImdbFile = True, userFilmDataFilename = "", allGenresLength = 0, allCountriesLength = 0):
-        self.profileVectorLength = 0
-        self.allFilmDataUnseen = {}
-        self.allFilmDataVectorized = {}
-        self.allFilmDataVectorizedMagnitudes = {}
-        self.cachedLetterboxdTitles = {}
-        self.cache = {}
-        self.cachedNormalizedYearsKeys = []
-        self.cachedNormalizedImdbRatingsKeys = []
-        self.cachedNormalizedRuntimesKeys = []
+    def __init__(self, _database):
+        self.database = _database
+        self.allFilmDataUnseen = _database.getAsync("allFilmData")
+        self.allFilmDataVectorized = _database.getAsync("allFilmDataVectorized")
+        self.allFilmDataVectorizedMagnitudes = _database.getAsync("allFilmDataVectorizedMagnitudes")
+        self.cachedLetterboxdTitles = _database.getAsync("cachedLetterboxdTitles")
+        self.cache = _database.getAsync("cache")
+        self.allGenresLength = _database.getAsync("allGenresLength")
+        self.allCountriesLength = _database.getAsync("allCountriesLength")
+        self.profileVectorLength = _database.getAsync("profileVectorLength")
+        self.cachedNormalizedYearsKeys = _database.getAsync("cachedNormalizedYearsKeys")
+        self.cachedNormalizedImdbRatingsKeys = _database.getAsync("cachedNormalizedImdbRatingsKeys")
+        self.cachedNormalizedRuntimesKeys = _database.getAsync("cachedNormalizedRuntimesKeys")
         self.diffDateRated = datetime(1, 1, 1)
         self.minDateRated = datetime.now()
-        self.favouriteProfile = {'profile': np.zeros(self.profileVectorLength), 'profileId': 'favourite'}
+        self.favouriteProfile = {'profile': np.zeros(0), 'profileId': 'favourite'}
         self.genreProfiles = []
-        self.recencyProfile = {'profile': np.zeros(self.profileVectorLength), 'profileId': 'recency'}
-        self.internationalProfile = {'profile': np.zeros(self.profileVectorLength), 'profileId': 'international'}
-        self.oldProfile = {'profile': np.zeros(self.profileVectorLength), 'profileId': 'old'}
+        self.recencyProfile = {'profile': np.zeros(0), 'profileId': 'recency'}
+        self.internationalProfile = {'profile': np.zeros(0), 'profileId': 'international'}
+        self.oldProfile = {'profile': np.zeros(0), 'profileId': 'old'}
         self.rowsOfRecommendations = []
         self.isImdbFile = True
         self.userFilmDataFilename = ""
-        self.allGenresLength = 0
-        self.allCountriesLength = 0
+
+        ####
+        # allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
+        # self.allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
+        # allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
+        # self.allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
+        # cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
+        # self.cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
+        # cacheFile = open('../database/cache.json')
+        # self.cache = json.load(cacheFile)
+        # self.cachedNormalizedYearsKeys = list(self.cache['normalizedYears'].keys())
+        # self.cachedNormalizedImdbRatingsKeys = list(self.cache['normalizedImdbRatings'].keys())
+        # self.cachedNormalizedRuntimesKeys = list(self.cache['normalizedRuntimes'].keys())
+        ###
 
     def verifyUserUploadedFile(self):
         letterboxdConversionUtilities = LetterboxdConversionUtilities()
@@ -408,23 +413,3 @@ class Service:
         self.generateRecommendations()
 
         return jsonify(self.rowsOfRecommendations), 200
-    
-    def loadJsonFiles(self):
-        try:
-            allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
-            self.allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
-            allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
-            self.allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
-            cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
-            self.cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
-            cacheFile = open('../database/cache.json')
-            self.cache = json.load(cacheFile)
-            self.cachedNormalizedYearsKeys = list(self.cache['normalizedYears'].keys())
-            self.cachedNormalizedImdbRatingsKeys = list(self.cache['normalizedImdbRatings'].keys())
-            self.cachedNormalizedRuntimesKeys = list(self.cache['normalizedRuntimes'].keys())
-
-            return self.JSON_FILES_LOAD_SUCCESS_MESSAGE, 200
-        except FileNotFoundError:
-            return self.JSON_FILES_NOT_FOUND_ERROR_MESSAGE, 404
-        except json.JSONDecodeError:
-            return self.JSON_FILES_DECODE_ERROR_MESSAGE, 400

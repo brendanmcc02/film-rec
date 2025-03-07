@@ -242,7 +242,7 @@ my-film-data-vec.json to file
 - [x] move text around on home screen
 - [x] add note about patience
 - [x] add film imdb url
-- [ ] change `app.py` to `App.py` on render backend
+- [x] change `app.py` to `App.py` on render backend
 
 # README
 - [x] do `README.md`
@@ -273,14 +273,16 @@ my-film-data-vec.json to file
 - [x] config main pipeline that runs on changes to main (prod int tests)
 
 # Database abstraction
+- [ ] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
 - [ ] abstract the database behind an interface
 - [ ] backend should reference the abstracted database
 - [ ] create a documentDatabase that implements this abstraction
-- [ ] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
+- [ ] remove `normalizedYears`, `normalizedImdbRatings` and `normalizedRuntimes` from `cache.json` into it's own json file?
 
 # Software Design & Architecture
 - [x] turn python files into classes, think in a more OOP way
 - [x] rename `appUtilities` to `service`
+- [ ] create `ServiceUtilities` class?
 - [ ] make service an interface/abstraction, app.py should then implement the service abstraction
 - [ ] think about decoupling
 - [ ] make class for vector profiles

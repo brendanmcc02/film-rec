@@ -11,9 +11,6 @@ service = Service()
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])
 def verifyUserUploadedFile():
-    global service
-    del service
-    service = Service()
     return service.verifyUserUploadedFile()
 
 
@@ -30,11 +27,6 @@ def reviewRecommendation():
 @app.route('/regenerateRecommendations')
 def regenerateRecommendations():
     return service.regenerateRecommendations()
-
-
-@app.route('/loadJsonFiles')
-def loadJsonFiles():
-    return service.loadJsonFiles()
 
 
 if __name__ == "__main__":

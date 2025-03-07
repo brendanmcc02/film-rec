@@ -11,13 +11,6 @@ from TestUtilities import *
 
 testUploadFilesDirectory = "test-upload-files/"
 
-### TODO get rid of this when reworking database architecture
-def test_loadJsonFiles(backendUrl):
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-
 def test_verifyUserUploadedFile_noFile(backendUrl):
     filesToSend = {'file': ("", None)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
