@@ -6,12 +6,12 @@ testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
 backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
-from vectorizeUtilities import *
+from VectorizeUtilities import *
 import testUtilities
 
 def test_keepVectorBoundary():
     vector = [1.1, -0.1, 0.0]
-    _vectorizeUtilities = vectorizeUtilities()
+    _vectorizeUtilities = VectorizeUtilities()
     _vectorizeUtilities.keepVectorBoundary(vector)
 
     for dimension in vector:
@@ -29,7 +29,7 @@ def test_getFilmGenres():
     cacheFile = open(testUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
 
-    _vectorizeUtilities = vectorizeUtilities()
+    _vectorizeUtilities = VectorizeUtilities()
 
     filmVectorWithActionComedyRomance = [0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     assert (_vectorizeUtilities.getFilmGenres(filmVectorWithActionComedyRomance, cache['allGenres']) == 
@@ -44,7 +44,7 @@ def test_getFilmGenres():
             ["Drama"])
 
 def test_curveAccordingToMax_ZeroVector():
-    _vectorizeUtilities = vectorizeUtilities()
+    _vectorizeUtilities = VectorizeUtilities()
 
     allZeroTestVector = [0.0, 0.0, 0.0]
     testWeight = 0.5
@@ -59,7 +59,7 @@ def test_curveAccordingToMax_ZeroVector():
     assert allZeroTestVector == [0.0, 0.0, 0.0]
 
 def test_curveAccordingToMax_SingleOneVector():
-    _vectorizeUtilities = vectorizeUtilities()
+    _vectorizeUtilities = VectorizeUtilities()
 
     containsSingleOneTestVector = [1.0, 0.0, 0.0]
     testWeight = 1.0
@@ -76,7 +76,7 @@ def test_curveAccordingToMax_SingleOneVector():
     assert containsSingleOneTestVector == [0.5, 0.0, 0.0]
 
 def test_curveAccordingToMax_multiVariableVector():
-    _vectorizeUtilities = vectorizeUtilities()
+    _vectorizeUtilities = VectorizeUtilities()
     
     multiVariableTestVector = [1.0, 0.5, 0.0]
     testWeight = 0.5
@@ -100,7 +100,7 @@ def test_curveAccordingToMax_multiVariableVector():
     assert multiVariableTestVector == [1.0, 0.5, 0.0]
 
 def test_getProfileMaxCountry_filmHasOnlyOneMaxCountry():
-    _vectorizeUtilities = vectorizeUtilities()
+    _vectorizeUtilities = VectorizeUtilities()
     
     cacheFile = open(testUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
@@ -112,7 +112,7 @@ def test_getProfileMaxCountry_filmHasOnlyOneMaxCountry():
             == "American")
 
 def test_getProfileMaxCountry_filmHasMultipleMaxCountries_EnsuresOnlyOneIsReturned():
-    _vectorizeUtilities = vectorizeUtilities()
+    _vectorizeUtilities = VectorizeUtilities()
     
     cacheFile = open(testUtilities.cacheFileLocation)
     cache = json.load(cacheFile)

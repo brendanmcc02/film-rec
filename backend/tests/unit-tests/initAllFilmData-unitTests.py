@@ -8,9 +8,9 @@ testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
 backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
-from initDocumentDatabase import *
+from InitDocumentDatabase import *
 import testUtilities
-from vectorizeUtilities import *
+from VectorizeUtilities import *
 
 allFilmDataFileLocation = "../../../database/all-film-data.json"
 cachedTmdbFilmDataFileLocation = "../../../database/cached-tmdb-film-data.json"
@@ -155,22 +155,22 @@ def test_allFilmDataVectorized():
     for filmId in allFilmDataVectorized:
         assert len(allFilmDataVectorized[filmId]) == cache['profileVectorLength']
 
-        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_YEAR_INDEX] <= vectorizeUtilities.YEAR_WEIGHT
-        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_YEAR_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_NUMBER_OF_VOTES_INDEX] <= vectorizeUtilities.NUMBER_OF_VOTES_WEIGHT
-        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_NUMBER_OF_VOTES_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_IMDB_RATING_INDEX] <= vectorizeUtilities.IMDB_RATING_WEIGHT
-        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_IMDB_RATING_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_RUNTIME_INDEX] <= vectorizeUtilities.RUNTIME_WEIGHT
-        assert allFilmDataVectorized[filmId][vectorizeUtilities.PROFILE_RUNTIME_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_YEAR_INDEX] <= VectorizeUtilities.YEAR_WEIGHT
+        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_YEAR_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_NUMBER_OF_VOTES_INDEX] <= VectorizeUtilities.NUMBER_OF_VOTES_WEIGHT
+        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_NUMBER_OF_VOTES_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_IMDB_RATING_INDEX] <= VectorizeUtilities.IMDB_RATING_WEIGHT
+        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_IMDB_RATING_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_RUNTIME_INDEX] <= VectorizeUtilities.RUNTIME_WEIGHT
+        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_RUNTIME_INDEX] >= 0.0
         
-        profileCountryStartIndex = vectorizeUtilities.PROFILE_GENRE_START_INDEX + len(cache['allGenres'])
-        for i in range(vectorizeUtilities.PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
-            assert allFilmDataVectorized[filmId][i] <= vectorizeUtilities.GENRE_WEIGHT
+        profileCountryStartIndex = VectorizeUtilities.PROFILE_GENRE_START_INDEX + len(cache['allGenres'])
+        for i in range(VectorizeUtilities.PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
+            assert allFilmDataVectorized[filmId][i] <= VectorizeUtilities.GENRE_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
         for i in range(profileCountryStartIndex, cache['profileVectorLength']):
-            assert allFilmDataVectorized[filmId][i] <= vectorizeUtilities.COUNTRY_WEIGHT
+            assert allFilmDataVectorized[filmId][i] <= VectorizeUtilities.COUNTRY_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
 def test_allFilmDataVectorizedMagnitudes():
@@ -188,7 +188,7 @@ def test_allFilmDataVectorizedMagnitudes():
         expectedMagnitude = np.linalg.norm(allFilmDataVectorized[filmId])
         expectedMagnitudeFloat = expectedMagnitude.item()
         assert allFilmDataVectorizedMagnitudes[filmId] == round(expectedMagnitudeFloat,
-                                                                initDocumentDatabase.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
+                                                                InitDocumentDatabase.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
 def test_cache():
     cacheFile = open(testUtilities.cacheFileLocation)
@@ -208,24 +208,24 @@ def test_cache():
 
     for normalizedYear in cache['normalizedYears']:
         assert cache['normalizedYears'][normalizedYear] >= 0.0  
-        assert cache['normalizedYears'][normalizedYear] <= vectorizeUtilities.YEAR_WEIGHT
+        assert cache['normalizedYears'][normalizedYear] <= VectorizeUtilities.YEAR_WEIGHT
 
     assert 'normalizedImdbRatings' in cache
 
     for normalizedImdbRating in cache['normalizedImdbRatings']:
         assert cache['normalizedImdbRatings'][normalizedImdbRating] >= 0.0 
-        assert cache['normalizedImdbRatings'][normalizedImdbRating] <= vectorizeUtilities.IMDB_RATING_WEIGHT
+        assert cache['normalizedImdbRatings'][normalizedImdbRating] <= VectorizeUtilities.IMDB_RATING_WEIGHT
 
     assert 'normalizedRuntimes' in cache
 
     for normalizedRuntime in cache['normalizedRuntimes']:
-        assert int(normalizedRuntime) >= initDocumentDatabase.RUNTIME_THRESHOLD
+        assert int(normalizedRuntime) >= InitDocumentDatabase.RUNTIME_THRESHOLD
         assert cache['normalizedRuntimes'][normalizedRuntime] >= 0.0 
-        assert cache['normalizedRuntimes'][normalizedRuntime] <= vectorizeUtilities.RUNTIME_WEIGHT
+        assert cache['normalizedRuntimes'][normalizedRuntime] <= VectorizeUtilities.RUNTIME_WEIGHT
 
     assert 'minNumberOfVotes' in cache
     assert cache['minNumberOfVotes'] != None
-    assert cache['minNumberOfVotes'] >= initDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD
+    assert cache['minNumberOfVotes'] >= InitDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD
 
     assert 'diffNumberOfVotes' in cache
     assert cache['diffNumberOfVotes'] != None
@@ -235,7 +235,7 @@ def test_cache():
     assert cache['profileVectorLength'] != None
 
 def test_convertRuntimeToHoursMinutes():
-    _initDocumentDatabase = initDocumentDatabase()
+    _initDocumentDatabase = InitDocumentDatabase()
     assert _initDocumentDatabase.convertRuntimeToHoursMinutes(60) == "1h"
     assert _initDocumentDatabase.convertRuntimeToHoursMinutes(120) == "2h"
     

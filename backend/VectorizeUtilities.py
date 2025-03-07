@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class VectorizeUtilities:
 
     YEAR_WEIGHT = 0.5

@@ -4,12 +4,11 @@ from flask import request, jsonify
 import numpy as np
 import json
 import os
-from letterboxdConversionUtilities import *
-from initDocumentDatabase import *
-from vectorizeUtilities import *
+from LetterboxdConversionUtilities import *
+from InitDocumentDatabase import *
+from VectorizeUtilities import *
 
-
-class service:
+class Service:
 
     DATE_RATED_WEIGHT = 0.8
     NUMBER_OF_RECOMMENDATIONS_PER_ROW = 6
@@ -58,7 +57,7 @@ class service:
         self.allCountriesLength = 0
 
     def verifyUserUploadedFile(self):
-        _letterboxdConversionUtilities = letterboxdConversionUtilities()
+        _letterboxdConversionUtilities = LetterboxdConversionUtilities()
 
         self.deleteUserUploadedData()
 
@@ -122,7 +121,7 @@ class service:
         allFilmDataFile = open('../database/all-film-data.json')
         allFilmData = json.load(allFilmDataFile)
 
-        _letterboxdConversionUtilities = letterboxdConversionUtilities()
+        _letterboxdConversionUtilities = LetterboxdConversionUtilities()
 
         if not self.isImdbFile:
             userFilmDataList = (_letterboxdConversionUtilities
@@ -133,7 +132,7 @@ class service:
         self.minDateRated = datetime.now()
         maxDateRated = self.minDateRated
 
-        _initDocumentDatabase = initDocumentDatabase()
+        _initDocumentDatabase = InitDocumentDatabase()
 
         for film in userFilmDataList:
             if (film['Title Type'] == "Movie" and 
@@ -186,7 +185,7 @@ class service:
         self.allGenresLength = len(self.cache['allGenres'])
         self.allCountriesLength = len(self.cache['allCountries'])
 
-        _vectorizeUtilities = vectorizeUtilities()
+        _vectorizeUtilities = VectorizeUtilities()
 
         # vectorize user-film-data
         for imdbFilmId in userFilmData:
@@ -256,7 +255,7 @@ class service:
 
         self.genreProfiles = sorted(self.genreProfiles, key=lambda x: x['weightedMeanRating'], reverse=True)
 
-        _vectorizeUtilities = vectorizeUtilities()
+        _vectorizeUtilities = VectorizeUtilities()
 
         for i in range(self.NUMBER_OF_GENRE_RECOMMENDATION_ROWS):
             if self.genreProfiles[i]['weightedMeanRating'] == 0.0:
@@ -298,7 +297,7 @@ class service:
         profileVectorMagnitude = np.linalg.norm(profileVector)
         cosineSimilarities = {}
 
-        _vectorizeUtilities = vectorizeUtilities()
+        _vectorizeUtilities = VectorizeUtilities()
 
         for filmId in allFilmData:
             filmVectorMagnitude = self.allFilmDataVectorizedMagnitudes[filmId]
@@ -337,7 +336,7 @@ class service:
         filmId = request.args.get('filmId')
         isThumbsUp = request.args.get('isThumbsUp').lower() == 'true'
 
-        _vectorizeUtilities = vectorizeUtilities()
+        _vectorizeUtilities = VectorizeUtilities()
 
         for row in self.rowsOfRecommendations:
             for film in row['recommendedFilms']:

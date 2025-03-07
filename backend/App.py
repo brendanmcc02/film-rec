@@ -2,18 +2,18 @@
 
 from flask import Flask
 from flask_cors import CORS
-from service import *
+from Service import *
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
-_service = service()
+_service = Service()
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])
 def verifyUserUploadedFile():
     global _service
     del _service
-    _service = service()
+    _service = Service()
     return _service.verifyUserUploadedFile()
 
 

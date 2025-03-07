@@ -4,7 +4,7 @@
 import urllib.request
 from datetime import datetime, timedelta
 
-class downloadFilmData:
+class DownloadFilmData:
 
     def main(self):
         lastImdbDownloadString = open('../database/last-imdb-download-timestamp.txt', 'r').read()
@@ -24,5 +24,5 @@ class downloadFilmData:
 
 
 if __name__ == "__main__":
-    _downloadFilmData = downloadFilmData()
+    _downloadFilmData = DownloadFilmData()
     _downloadFilmData.main()

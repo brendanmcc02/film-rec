@@ -6,7 +6,7 @@ testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
 backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
-from service import *
+from Service import *
 import testUtilities
 
 testUploadFilesDirectory = "test-upload-files/"

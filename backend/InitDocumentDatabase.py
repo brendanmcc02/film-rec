@@ -7,9 +7,9 @@ import json
 import csv
 import time
 import requests
-from vectorizeUtilities import *
+from VectorizeUtilities import *
 
-class initDocumentDatabase:
+class InitDocumentDatabase:
     
     RUNTIME_THRESHOLD = 40
     NUMBER_OF_VOTES_THRESHOLD = 25000
@@ -353,5 +353,5 @@ class initDocumentDatabase:
 
 
 if __name__ == "__main__":
-    _initDocumentDatabase = initDocumentDatabase()
+    _initDocumentDatabase = InitDocumentDatabase()
     _initDocumentDatabase.main()
