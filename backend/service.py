@@ -34,8 +34,7 @@ class service:
                  genreProfiles = [], recencyProfile = {'profile': np.zeros(0), 'profileId': 'recency'}, 
                  internationalProfile = {'profile': np.zeros(0), 'profileId': 'international'}, 
                  oldProfile = {'profile': np.zeros(0), 'profileId': 'old'}, 
-                 rowsOfRecommendations = [], isImdbFile = True, userFilmDataFilename = "", allGenresLength = 0, allCountriesLength = 0, 
-                 haveJsonFilesAlreadyBeenLoaded = False):
+                 rowsOfRecommendations = [], isImdbFile = True, userFilmDataFilename = "", allGenresLength = 0, allCountriesLength = 0):
         self.profileVectorLength = 0
         self.allFilmDataUnseen = {}
         self.allFilmDataVectorized = {}
@@ -57,7 +56,6 @@ class service:
         self.userFilmDataFilename = ""
         self.allGenresLength = 0
         self.allCountriesLength = 0
-        self.haveJsonFilesAlreadyBeenLoaded = False
 
     def verifyUserUploadedFile(self):
         _letterboxdConversionUtilities = letterboxdConversionUtilities()
@@ -413,9 +411,6 @@ class service:
         return jsonify(self.rowsOfRecommendations), 200
     
     def loadJsonFiles(self):
-        if (self.haveJsonFilesAlreadyBeenLoaded):
-            return self.JSON_FILES_LOAD_SUCCESS_MESSAGE, 200
-        
         try:
             allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
             self.allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
@@ -424,12 +419,10 @@ class service:
             cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
             self.cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
             cacheFile = open('../database/cache.json')
-            cache = json.load(cacheFile)
-            self.cachedNormalizedYearsKeys = list(cache['normalizedYears'].keys())
-            self.cachedNormalizedImdbRatingsKeys = list(cache['normalizedImdbRatings'].keys())
-            self.cachedNormalizedRuntimesKeys = list(cache['normalizedRuntimes'].keys())
-
-            self.haveJsonFilesAlreadyBeenLoaded = True
+            self.cache = json.load(cacheFile)
+            self.cachedNormalizedYearsKeys = list(self.cache['normalizedYears'].keys())
+            self.cachedNormalizedImdbRatingsKeys = list(self.cache['normalizedImdbRatings'].keys())
+            self.cachedNormalizedRuntimesKeys = list(self.cache['normalizedRuntimes'].keys())
 
             return self.JSON_FILES_LOAD_SUCCESS_MESSAGE, 200
         except FileNotFoundError:
