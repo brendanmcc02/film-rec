@@ -9,7 +9,7 @@ const App = () => {
     const [rowsOfRecommendationButtonVisibility, setRowsOfRecommendationButtonVisibility] = useState([]);
 
     useEffect(() => {
-        fetch('https://film-rec-backend.onrender.com/initRowsOfRecommendations')
+        fetch('http://localhost:60000/initRowsOfRecommendations')
             .then((response) => response.json())
             .then((jsonData) => {
                 setRowsOfRecommendations(jsonData);
@@ -61,7 +61,7 @@ const App = () => {
 
     async function reviewRecommendation(filmId, isThumbsUp) {
         try {
-            const fetchUrl = ("https://film-rec-backend.onrender.com/reviewRecommendation?filmId=" 
+            const fetchUrl = ("http://localhost:60000/reviewRecommendation?filmId=" 
                                 + filmId.toString() + "&isThumbsUp=" + isThumbsUp)
             const response = await fetch(fetchUrl);
 
@@ -76,7 +76,7 @@ const App = () => {
     }
     
     async function handleRegenerateRecommendationsButton() {
-        const response = await fetch('https://film-rec-backend.onrender.com/regenerateRecommendations');
+        const response = await fetch('http://localhost:60000/regenerateRecommendations');
         const jsonData = await response.json();
         setRowsOfRecommendations(jsonData);
         const initialButtonVisibility = jsonData.map((row) => 

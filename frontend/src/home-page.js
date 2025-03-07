@@ -22,7 +22,7 @@ const App = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch('https://film-rec-backend.onrender.com/verifyUserUploadedFile', {
+      const response = await fetch('http://localhost:60000/verifyUserUploadedFile', {
         method: 'POST',
         body: formData
       });
