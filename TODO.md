@@ -282,6 +282,7 @@ my-film-data-vec.json to file
 # Software Design & Architecture
 - [x] turn python files into classes, think in a more OOP way
 - [x] rename `appUtilities` to `service`
+- [ ] get rid of `cache` member in Service, variables should access exactly what they want
 - [ ] create `ServiceUtilities` class?
 - [ ] make service an interface/abstraction, app.py should then implement the service abstraction
 - [ ] think about decoupling
