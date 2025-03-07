@@ -238,7 +238,7 @@ class Service:
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
             #                        self.minNumberOfVotes, self.diffNumberOfVotes)
 
-        self.genreProfiles = sorted(self.genreProfiles, key=lambda x: x['weightedMeanRating'], reverse=True)
+        self.genreProfiles = sorted(self.genreProfiles, key=lambda x: x.weightedMeanRating, reverse=True)
 
         vectorizeUtilities = VectorizeUtilities()
 

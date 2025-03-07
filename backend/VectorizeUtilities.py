@@ -239,7 +239,7 @@ class VectorizeUtilities:
     def initRecencyProfile(self, userFilmData, userFilmDataVectorized, maxDateRated, 
                            profileVectorLength, cachedDateRatedAndUserRatingWeights, allGenres,
                            allCountries):
-        recencyProfile = VectorProfile('recency')
+        recencyProfile = VectorProfile('recency', profileVectorLength)
         sumOfWeights = 0.0
 
         for imdbFilmId in userFilmData:
@@ -266,7 +266,7 @@ class VectorizeUtilities:
 
     def initUserProfile(self, userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
                         cachedDateRatedAndUserRatingWeights, allGenres, allCountries):
-        userProfile = VectorProfile('user')
+        userProfile = VectorProfile('user', profileVectorLength)
         sumOfWeights = 0.0
 
         for imdbFilmId in userFilmDataIds:
@@ -313,7 +313,8 @@ class VectorizeUtilities:
                     hasUserOnlyWatchedAmericanOrBritishFilms = False
 
         if hasUserOnlyWatchedAmericanOrBritishFilms:
-            return {'profile': np.zeros(profileVectorLength), 'profileId': 'international'}
+            internationalProfile.profile = np.zeros(profileVectorLength)
+            return internationalProfile
 
         americanIndex = allCountries.index("American") + countryStartIndex
         britishIndex = allCountries.index("British") + countryStartIndex
