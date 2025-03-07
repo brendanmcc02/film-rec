@@ -20,7 +20,7 @@
 - [x] bug with `tt4330758`, make more bulletproof + better error handling
 - [x] `tt4330758` ~~NOT SOLVED HOMIE~~
 - [x] some key error with `cacheNormalisedYears`? see below
-- [x] `cached-letterboxd-titles.json` does not work, file has been reduced drastically
+- [x] `cachedLetterboxdTitles.json` does not work, file has been reduced drastically
 
 # Data Cleaning
 - [x] normalise years
@@ -34,7 +34,7 @@
 - [x] calculate user profile using weighted averages
 - [x] mess around with weights of year and genres
 - [x] don't store whole poster image url, just the unique part (can prepend later)
-- [x] delete poster attribute in all-film-data.json
+- [x] delete poster attribute in allFilmData.json
 - [x] manually create `cached-letterboxd-title-year.json` 
 - [x] integrate `cached-letterboxd-title-year.json` func into script
 - [x] get rid of `letterboxdYear` attribute
@@ -48,7 +48,7 @@
 - [x] letterboxd: ask user to upload `ratings.csv` instead of `diary.csv` and make changes accordingly
 - [x] get the tmdb title (aka letterboxd) when making the api and cache that somewhere instead of fucking around with 
 preprocessing
-- [x] when converting letterboxd to imdb format use the cached-tmdb-film-data.json
+- [x] when converting letterboxd to imdb format use the cachedTmdbFilmData.json
 - [x] some letterboxd films are still not being captured by the conversion
 
 # Vectorizing the Data
@@ -117,7 +117,7 @@ countries, poster)
 - [x] add numVotes & runtime to human data
 - [x] vectorize numberOfVotes & runtime
 - [x] error handling for imported ratings.csv
-- [x] delete title.x.tsv files after getting all-film-data.json
+- [x] delete title.x.tsv files after getting allFilmData.json
 - [x] don't normalise myRating
 - [x] don't fix imdbRating to 1.0
 - [x] instead of writing all-film-data-vec, my-film-data, etc. to file, create global variables in app.py, and then 
@@ -143,13 +143,13 @@ create endpoints for getters/setters
 - [x] all-film-data doesn't filter out films that have been rated
 - [x] init-my-film-data filters out films that have been rated from all-film-data (also rm vector entries)
 - [x] keep title.basics.tsv & title.ratings.tsv
-- [x] add last-imdb-download-timestamp.txt. if downloaded <24 hours, skip the step
+- [x] add lastImdbDownloadTimestamp.txt. if downloaded <24 hours, skip the step
 - [x] finish init-my-file-data.py to reflect above changes
 - [x] research how/where to store files, run .py scripts etc.
 - [x] upload button calls /verifyUserUploadedFile API
 - [x] upload error handling
 - [x] change return type of recs function
-- [x] init_rec writes all-film-data.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, 
+- [x] init_rec writes allFilmData.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, 
 my-film-data-vec.json to file
 - [x] call init_rec endpoint once when new page is loaded
 - [x] thumbs up/down state logic
@@ -193,7 +193,7 @@ my-film-data-vec.json to file
 - [x] error handling on potential div by 0 errors
 - [x] reduce comments in code and make it more readable (after watching code aesthetic's video)
 - [x] load in all files on the home page instead of waiting for the user to upload their files **just need to do for 
-`all-film-data.json`**
+`allFilmData.json`**
 - [x] error handling for no recent films
 - [x] error handling for no favourite films
 - [x] error handling on all file imports, api requests, etc. try-except
@@ -242,7 +242,7 @@ my-film-data-vec.json to file
 - [x] move text around on home screen
 - [x] add note about patience
 - [x] add film imdb url
-- [ ] change `app.py` to `App.py` on render backend
+- [x] change `app.py` to `App.py` on render backend
 
 # README
 - [x] do `README.md`
@@ -273,16 +273,19 @@ my-film-data-vec.json to file
 - [x] config main pipeline that runs on changes to main (prod int tests)
 
 # Database abstraction
+- [x] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
 - [ ] abstract the database behind an interface
 - [ ] backend should reference the abstracted database
 - [ ] create a documentDatabase that implements this abstraction
-- [ ] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
+- [x] remove `normalizedYears`, `normalizedImdbRatings` and `normalizedRuntimes` from `cache.json` into it's own json file?
 
 # Software Design & Architecture
 - [x] turn python files into classes, think in a more OOP way
 - [x] rename `appUtilities` to `service`
+- [x] address TODOs
+- [x] get rid of `cache` member in Service, variables should access exactly what they want
+- [ ] create `ServiceUtilities` class?
 - [ ] make service an interface/abstraction, app.py should then implement the service abstraction
-- [ ] think about decoupling
 - [ ] make class for vector profiles
 
 # Finishing Touches

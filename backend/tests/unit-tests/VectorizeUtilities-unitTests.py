@@ -1,4 +1,3 @@
-import json
 import os
 import sys
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
@@ -6,8 +5,10 @@ testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
 backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
+from DocumentDatabase import *
 from VectorizeUtilities import *
-from TestUtilities import *
+
+REPOSITORY_ROOT = "../../../"
 
 def test_keepVectorBoundary():
     vector = [1.1, -0.1, 0.0]
@@ -26,21 +27,21 @@ def test_keepVectorBoundary():
         assert dimension <= 1.0
 
 def test_getFilmGenres():
-    cacheFile = open(TestUtilities.cacheFileLocation)
-    cache = json.load(cacheFile)
+    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
+    allGenres = documentDatabase.get("allGenres")
 
     vectorizeUtilities = VectorizeUtilities()
 
     filmVectorWithActionComedyRomance = [0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    assert (vectorizeUtilities.getFilmGenres(filmVectorWithActionComedyRomance, cache['allGenres']) == 
+    assert (vectorizeUtilities.getFilmGenres(filmVectorWithActionComedyRomance, allGenres) == 
             ["Action", "Comedy", "Romance"])
 
     filmVectorWithAdventureDramaWestern = [0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    assert (vectorizeUtilities.getFilmGenres(filmVectorWithAdventureDramaWestern, cache['allGenres']) == 
+    assert (vectorizeUtilities.getFilmGenres(filmVectorWithAdventureDramaWestern, allGenres) == 
             ["Adventure", "Drama", "Western"])
 
     filmVectorWithDrama = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    assert (vectorizeUtilities.getFilmGenres(filmVectorWithDrama, cache['allGenres']) == 
+    assert (vectorizeUtilities.getFilmGenres(filmVectorWithDrama, allGenres) == 
             ["Drama"])
 
 def test_curveAccordingToMax_ZeroVector():
@@ -101,25 +102,25 @@ def test_curveAccordingToMax_multiVariableVector():
 
 def test_getProfileMaxCountry_filmHasOnlyOneMaxCountry():
     vectorizeUtilities = VectorizeUtilities()
-    
-    cacheFile = open(TestUtilities.cacheFileLocation)
-    cache = json.load(cacheFile)
-    allGenresLength = len(cache['allGenres'])
+    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
+    allGenres = documentDatabase.get("allGenres")
+    allCountries = documentDatabase.get("allCountries")
+    allGenresLength = len(allGenres)
 
     filmVectorWithAmerican = [0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
-    assert (vectorizeUtilities.getProfileMaxCountry(filmVectorWithAmerican, allGenresLength, cache['allCountries']) 
+    assert (vectorizeUtilities.getProfileMaxCountry(filmVectorWithAmerican, allGenresLength, allCountries) 
             == "American")
 
 def test_getProfileMaxCountry_filmHasMultipleMaxCountries_EnsuresOnlyOneIsReturned():
     vectorizeUtilities = VectorizeUtilities()
-    
-    cacheFile = open(TestUtilities.cacheFileLocation)
-    cache = json.load(cacheFile)
-    allGenresLength = len(cache['allGenres'])
+    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
+    allGenres = documentDatabase.get("allGenres")
+    allCountries = documentDatabase.get("allCountries")
+    allGenresLength = len(allGenres)
 
     filmVectorWithAmericanAndBritish = [0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
-    assert (vectorizeUtilities.getProfileMaxCountry(filmVectorWithAmericanAndBritish, allGenresLength, cache['allCountries']) 
+    assert (vectorizeUtilities.getProfileMaxCountry(filmVectorWithAmericanAndBritish, allGenresLength, allCountries) 
             == "American")
 

@@ -17,7 +17,7 @@ class VectorizeUtilities:
 
 
     def vectorizeFilm(self, film, allGenres, allCountries, cachedNormalizedYears, cachedNormalizedImdbRatings,
-                    minNumberOfVotes, diffNumberOfVotes, cachedNormalizedRuntimes):
+                      minNumberOfVotes, diffNumberOfVotes, cachedNormalizedRuntimes):
         vector = []
 
         if self.isFilmInvalid(film):

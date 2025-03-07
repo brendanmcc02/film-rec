@@ -1,17 +1,20 @@
-import json
 import os
 import sys
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 backendDirectory = os.path.dirname(absolutePathOfCurrentFile)
 sys.path.append(backendDirectory)
+from DocumentDatabase import *
 from Service import *
 from InitDocumentDatabase import *
 
 class TestUtilities:
 
-    cacheFileLocation = "../../../database/cache.json"
     LOCAL_DEPLOYMENT_URL = "http://localhost:60000"
     PROD_DEPLOYMENT_URL = "https://film-rec-backend.onrender.com"
+
+    def __init__(self, _repositoryRoot):
+        self.repositoryRoot = _repositoryRoot
+
 
     def verifyFilm(self, film, filmId, allGenres, allCountries):
         assert 'title' in film
@@ -65,8 +68,9 @@ class TestUtilities:
         assert film['summary'] != ""
 
     def verifyRowsOfRecommendations(self, rowsOfRecommendations, totalNumberOfRows):
-        cacheFile = open(self.cacheFileLocation)
-        cache = json.load(cacheFile)
+        documentDatabase = DocumentDatabase(self.repositoryRoot)
+        allGenres = documentDatabase.get("allGenres")
+        allCountries = documentDatabase.get("allCountries")
 
         assert len(rowsOfRecommendations) == totalNumberOfRows
 
@@ -83,7 +87,7 @@ class TestUtilities:
             for film in row['recommendedFilms']:
                 assert 'id' in film
                 assert film['id'] != ""
-                self.verifyFilm(film, film['id'], cache['allGenres'], cache['allCountries'])
+                self.verifyFilm(film, film['id'], allGenres, allCountries)
                 assert 'similarityScore' in film
                 assert film['similarityScore'] != None
                 assert film['similarityScore'] >= 0.0

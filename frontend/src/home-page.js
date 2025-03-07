@@ -37,8 +37,6 @@ const App = () => {
     }
   };
 
-  fetch('https://film-rec-backend.onrender.com/loadJsonFiles');
-
   return (
     <>
       <div className='title-and-subtitle-container'>

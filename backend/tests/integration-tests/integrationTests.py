@@ -11,13 +11,6 @@ from TestUtilities import *
 
 testUploadFilesDirectory = "test-upload-files/"
 
-### TODO get rid of this when reworking database architecture
-def test_loadJsonFiles(backendUrl):
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-
 def test_verifyUserUploadedFile_noFile(backendUrl):
     filesToSend = {'file': ("", None)}
     response = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
@@ -115,13 +108,6 @@ def test_initRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -135,7 +121,7 @@ def test_initRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -150,13 +136,6 @@ def test_initRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -170,7 +149,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -185,13 +164,6 @@ def test_initRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -205,7 +177,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -221,13 +193,6 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUr
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -241,7 +206,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUr
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -257,13 +222,6 @@ def test_initRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl)
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -277,7 +235,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl)
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -293,13 +251,6 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backe
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -313,7 +264,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backe
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -330,13 +281,6 @@ def test_initRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -350,7 +294,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -366,13 +310,6 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenr
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -386,7 +323,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenr
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -402,13 +339,6 @@ def test_initRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGe
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -422,7 +352,7 @@ def test_initRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGe
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -438,13 +368,6 @@ def test_initRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAn
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -458,7 +381,7 @@ def test_initRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAn
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -474,13 +397,6 @@ def test_initRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOn
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -494,7 +410,7 @@ def test_initRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOn
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -511,13 +427,6 @@ def test_initRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilm
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -531,7 +440,7 @@ def test_initRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilm
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -547,13 +456,6 @@ def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -567,7 +469,7 @@ def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -581,13 +483,6 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
 
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
-
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
 
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
@@ -604,7 +499,7 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     regeneratedRecommendations = regenerateRecommendationsResponse.json()
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
 
     # ensure all newly recommended films are unique
@@ -627,13 +522,6 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == Service.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    ### TODO get rid of this when reworking database architecture
-    response = requests.get(backendUrl + "/loadJsonFiles")
-
-    assert response.status_code == 200
-    assert response.content.decode(encoding='utf-8') == Service.JSON_FILES_LOAD_SUCCESS_MESSAGE
-    ###
-
     initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
     assert initRowsOfRecommendationsResponse.status_code == 200
 
@@ -649,7 +537,7 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     regeneratedRecommendations = regenerateRecommendationsResponse.json()
-    testUtilities = TestUtilities()
+    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
 
     # ensure all newly recommended films are unique
