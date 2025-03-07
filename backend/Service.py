@@ -10,6 +10,7 @@ from VectorizeUtilities import *
 
 class Service:
 
+    # TODO - could go into a ServiceUtils class
     DATE_RATED_WEIGHT = 0.8
     NUMBER_OF_RECOMMENDATIONS_PER_ROW = 6
     NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD = 30
@@ -36,11 +37,9 @@ class Service:
         self.profileVectorLength = _database.get("profileVectorLength")
         self.minNumberOfVotes = _database.get("minNumberOfVotes")
         self.diffNumberOfVotes = _database.get("diffNumberOfVotes")
-        ### TODO kinda retarded implementation
         self.normalizedYears = _database.get("normalizedYears")
         self.normalizedImdbRatings = _database.get("normalizedImdbRatings")
         self.normalizedRuntimes = _database.get("normalizedRuntimes")
-        ###
         self.diffDateRated = datetime(1, 1, 1)
         self.minDateRated = datetime.now()
         self.favouriteProfile = {'profile': np.zeros(0), 'profileId': 'favourite'}
@@ -52,8 +51,11 @@ class Service:
         self.isImdbFile = True
         self.userFilmDataFilename = ""
 
+
     def verifyUserUploadedFile(self):
         letterboxdConversionUtilities = LetterboxdConversionUtilities()
+
+        self.isImdbFile = True
 
         self.deleteUserUploadedData()
 
@@ -314,6 +316,7 @@ class Service:
             i += 1
 
 
+    # TODO - could go into a ServiceUtils class
     def isFilmRecommendationUnique(self, filmId):
         for rowOfRecommendations in self.rowsOfRecommendations:
             for recommendedFilm in rowOfRecommendations['recommendedFilms']:
@@ -361,6 +364,7 @@ class Service:
         return f"changed {profileId} profile due to after reviewing {filmId}", 200
 
 
+    # TODO - could go into a ServiceUtils class
     def deleteUserUploadedData(self):
         for fileOrDirectory in os.listdir(self.USER_UPLOADED_DATA_DIRECTORY_NAME):
             fileOrDirectoryPath = os.path.join(self.USER_UPLOADED_DATA_DIRECTORY_NAME, fileOrDirectory)
@@ -370,9 +374,11 @@ class Service:
                 os.remove(fileOrDirectoryPath)
 
 
+    # TODO - could go into a ServiceUtils class
     def isUnacceptableMediaType(self, filename):
         return not (filename.lower().endswith(".csv") or filename.lower().endswith(".zip"))
     
+
     def getProfile(self, profileId):
         if profileId == "favourite":
             return self.favouriteProfile
@@ -389,6 +395,7 @@ class Service:
 
         print(f"Error: profile {profileId} not found. Returning zero vector.")
         return {'profile': np.zeros(self.profileVectorLength), 'profileId': profileId}
+
 
     def regenerateRecommendations(self):
         for row in self.rowsOfRecommendations:
