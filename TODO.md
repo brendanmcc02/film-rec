@@ -273,19 +273,19 @@ my-film-data-vec.json to file
 - [x] config main pipeline that runs on changes to main (prod int tests)
 
 # Database abstraction
-- [ ] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
+- [x] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
 - [ ] abstract the database behind an interface
 - [ ] backend should reference the abstracted database
 - [ ] create a documentDatabase that implements this abstraction
-- [ ] remove `normalizedYears`, `normalizedImdbRatings` and `normalizedRuntimes` from `cache.json` into it's own json file?
+- [x] remove `normalizedYears`, `normalizedImdbRatings` and `normalizedRuntimes` from `cache.json` into it's own json file?
 
 # Software Design & Architecture
 - [x] turn python files into classes, think in a more OOP way
 - [x] rename `appUtilities` to `service`
-- [ ] get rid of `cache` member in Service, variables should access exactly what they want
+- [ ] address TODOs
+- [x] get rid of `cache` member in Service, variables should access exactly what they want
 - [ ] create `ServiceUtilities` class?
 - [ ] make service an interface/abstraction, app.py should then implement the service abstraction
-- [ ] think about decoupling
 - [ ] make class for vector profiles
 
 # Finishing Touches
