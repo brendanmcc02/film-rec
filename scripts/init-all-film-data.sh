@@ -28,7 +28,7 @@ fi
 
 if test -f title.basics.tsv; then
   if test -f title.ratings.tsv; then
-    printf "\n[2/2] Initialising all-film-data.json..."
+    printf "\n[2/2] Initialising allFilmData.json..."
     cd ../backend/ || exit
     python3 InitDocumentDatabase.py
 
@@ -43,5 +43,5 @@ if test -f title.basics.tsv; then
     echo | gh pr create --title "Updating Database" --body "PR generated automatically"
   fi
 else
-  printf "\n all-film-data.json was initialised >1 days ago, so the script was not run.\n"
+  printf "\n allFilmData.json was initialised >1 days ago, so the script was not run.\n"
 fi

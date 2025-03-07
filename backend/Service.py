@@ -29,7 +29,6 @@ class Service:
         self.allFilmDataVectorized = _database.getAsync("allFilmDataVectorized")
         self.allFilmDataVectorizedMagnitudes = _database.getAsync("allFilmDataVectorizedMagnitudes")
         self.cachedLetterboxdTitles = _database.getAsync("cachedLetterboxdTitles")
-        self.cache = _database.getAsync("cache")  # TODO get rid of this
         self.allGenres = _database.getAsync("allGenres")
         self.allGenresLength = _database.getAsync("allGenresLength")
         self.allCountries = _database.getAsync("allCountries")
@@ -37,9 +36,9 @@ class Service:
         self.profileVectorLength = _database.getAsync("profileVectorLength")
         self.minNumberOfVotes = _database.getAsync("minNumberOfVotes")
         self.diffNumberOfVotes = _database.getAsync("diffNumberOfVotes")
-        self.cachedNormalizedYearsKeys = _database.getAsync("cachedNormalizedYearsKeys")
-        self.cachedNormalizedImdbRatingsKeys = _database.getAsync("cachedNormalizedImdbRatingsKeys")
-        self.cachedNormalizedRuntimesKeys = _database.getAsync("cachedNormalizedRuntimesKeys")
+        self.cachedNormalizedYears = _database.getAsync("cachedNormalizedYears")
+        self.cachedNormalizedImdbRatings = _database.getAsync("cachedNormalizedImdbRatings")
+        self.cachedNormalizedRuntimes = _database.getAsync("cachedNormalizedRuntimes")
         self.diffDateRated = datetime(1, 1, 1)
         self.minDateRated = datetime.now()
         self.favouriteProfile = {'profile': np.zeros(0), 'profileId': 'favourite'}
@@ -50,20 +49,6 @@ class Service:
         self.rowsOfRecommendations = []
         self.isImdbFile = True
         self.userFilmDataFilename = ""
-
-        ####
-        # allFilmDataVectorizedFile = open('../database/all-film-data-vectorized.json')
-        # self.allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
-        # allFilmDataVectorizedMagnitudesFile = open('../database/all-film-data-vectorized-magnitudes.json')
-        # self.allFilmDataVectorizedMagnitudes = json.load(allFilmDataVectorizedMagnitudesFile)
-        # cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
-        # self.cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
-        # cacheFile = open('../database/cache.json')
-        # self.cache = json.load(cacheFile)
-        # self.cachedNormalizedYearsKeys = list(self.cache['normalizedYears'].keys())
-        # self.cachedNormalizedImdbRatingsKeys = list(self.cache['normalizedImdbRatings'].keys())
-        # self.cachedNormalizedRuntimesKeys = list(self.cache['normalizedRuntimes'].keys())
-        ###
 
     def verifyUserUploadedFile(self):
         letterboxdConversionUtilities = LetterboxdConversionUtilities()
@@ -127,7 +112,7 @@ class Service:
             return f"Error occurred with reading {self.userFilmDataFilename}.\n" + str(e), 400
 
         self.deleteUserUploadedData()
-        allFilmDataFile = open('../database/all-film-data.json')
+        allFilmDataFile = open('../database/allFilmData.json')
         allFilmData = json.load(allFilmDataFile)
 
         letterboxdConversionUtilities = LetterboxdConversionUtilities()
@@ -200,8 +185,8 @@ class Service:
         # vectorize user-film-data
         for imdbFilmId in userFilmData:
             vector = vectorizeUtilities.vectorizeFilm(userFilmData[imdbFilmId], self.allGenres, self.allCountries,
-                                                       self.cache['normalizedYears'], self.cache['normalizedImdbRatings'], self.minNumberOfVotes,
-                                                       self.diffNumberOfVotes, self.cache['normalizedRuntimes'])
+                                                       self.normalizedYears, self.normalizedImdbRatings, self.minNumberOfVotes,
+                                                       self.diffNumberOfVotes, self.normalizedRuntimes)
             if isDiffDateRatedZero:
                 dateRatedWeight = 1.0
             else:
@@ -215,7 +200,7 @@ class Service:
 
             userFilmDataVectorized[imdbFilmId] = vector * cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
-        self.profileVectorLength = self.cache['profileVectorLength']  # TODO unnecessary ???
+        # self.profileVectorLength = self.cache['profileVectorLength']  # TODO unnecessary ???
 
         self.favouriteProfile = vectorizeUtilities.initFavouriteProfile(userFilmData, userFilmDataVectorized, 
                                                                          self.profileVectorLength,
@@ -251,7 +236,7 @@ class Service:
             self.getFilmRecommendations("Based on your favourite films", self.allFilmDataUnseen, self.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
                                         self.favouriteProfile['profile'], self.favouriteProfile['profileId'])
             # printStringifiedVector(favouriteProfile['profile'], self.allGenres, self.allCountries, "Favourite",
-            #                        cachedNormalizedYearsKeys, cachedNormalizedRuntimesKeys, cachedNormalizedImdbRatingsKeys,
+            #                        cachedNormalizedYears, cachedNormalizedRuntimes, cachedNormalizedImdbRatings,
             #                        self.minNumberOfVotes, self.diffNumberOfVotes)
 
         if np.array_equal(self.recencyProfile['profile'], np.zeros(self.profileVectorLength)):
@@ -260,7 +245,7 @@ class Service:
             self.getFilmRecommendations("Based on what you watched recently", self.allFilmDataUnseen, self.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
                                         self.recencyProfile['profile'], self.recencyProfile['profileId'])
             # printStringifiedVector(recencyProfile['profile'], self.allGenres, self.allCountries, "Recency",
-            #                        cachedNormalizedYearsKeys, cachedNormalizedRuntimesKeys, cachedNormalizedImdbRatingsKeys,
+            #                        cachedNormalizedYears, cachedNormalizedRuntimes, cachedNormalizedImdbRatings,
             #                        self.minNumberOfVotes, self.diffNumberOfVotes)
 
         self.genreProfiles = sorted(self.genreProfiles, key=lambda x: x['weightedMeanRating'], reverse=True)
@@ -276,8 +261,8 @@ class Service:
                                             self.allFilmDataUnseen, self.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.genreProfiles[i]['profile'], 
                                             self.genreProfiles[i]['profileId'])
                 # printStringifiedVector(genreProfiles[i]['profile'], self.allGenres, self.allCountries, 
-                #                        genreProfiles[i]['profileId'], cachedNormalizedYearsKeys, 
-                #                        cachedNormalizedRuntimesKeys, cachedNormalizedImdbRatingsKeys, 
+                #                        genreProfiles[i]['profileId'], cachedNormalizedYears, 
+                #                        cachedNormalizedRuntimes, cachedNormalizedImdbRatings, 
                 #                        self.minNumberOfVotes, self.diffNumberOfVotes)
             
         if np.array_equal(self.internationalProfile['profile'], np.zeros(self.profileVectorLength)):
@@ -287,8 +272,8 @@ class Service:
                                     self.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.internationalProfile['profile'], 
                                     self.internationalProfile['profileId'])
             # printStringifiedVector(internationalProfile['profile'], self.allGenres, self.allCountries, 
-            #                        "International", cachedNormalizedYearsKeys, cachedNormalizedRuntimesKeys,
-            #                        cachedNormalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
+            #                        "International", cachedNormalizedYears, cachedNormalizedRuntimes,
+            #                        cachedNormalizedImdbRatings, self.minNumberOfVotes, self.diffNumberOfVotes)
 
         if np.array_equal(self.oldProfile['profile'], np.zeros(self.profileVectorLength)):
             print("No old profile.")
@@ -296,8 +281,8 @@ class Service:
             self.getFilmRecommendations("Try out some older films", self.allFilmDataUnseen, self.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
                                     self.oldProfile['profile'], self.oldProfile['profileId'])
             # printStringifiedVector(oldProfile['profile'], self.allGenres, self.allCountries, "Old",
-            #                        cachedNormalizedYearsKeys, cachedNormalizedRuntimesKeys,
-            #                        cachedNormalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
+            #                        cachedNormalizedYears, cachedNormalizedRuntimes,
+            #                        cachedNormalizedImdbRatings, self.minNumberOfVotes, self.diffNumberOfVotes)
 
 
     def getFilmRecommendations(self, recommendedRowText, allFilmData, numberOfRecommendations, profileVector, 

@@ -47,7 +47,7 @@ class LetterboxdConversionUtilities:
                             "Genres": allFilmData[imdbFilmId]['genres']
                         })
             # else:
-            #     print(f"Letterboxd Film not found in cached-letterboxd-titles.json:\n{letterboxdTitle}")
+            #     print(f"Letterboxd Film not found in cachedLetterboxdTitles.json:\n{letterboxdTitle}")
 
         return imdbUserFilmData
 

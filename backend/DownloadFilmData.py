@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 class DownloadFilmData:
 
     def main(self):
-        lastImdbDownloadString = open('../database/last-imdb-download-timestamp.txt', 'r').read()
+        lastImdbDownloadString = open('../database/lastImdbDownloadTimestamp.txt', 'r').read()
         lastImdbDownloadTimestamp = datetime.strptime(lastImdbDownloadString, '%Y-%m-%d %H:%M:%S.%f')
         currentTimestamp = datetime.now()
 
@@ -19,7 +19,7 @@ class DownloadFilmData:
             urllib.request.urlretrieve("https://datasets.imdbws.com/title.ratings.tsv.gz", 
                                     "../database/title.ratings.tsv.gz")
 
-            with open('../database/last-imdb-download-timestamp.txt', 'w') as file:
+            with open('../database/lastImdbDownloadTimestamp.txt', 'w') as file:
                 file.write(str(datetime.now()))
 
 

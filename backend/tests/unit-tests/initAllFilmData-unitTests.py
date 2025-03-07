@@ -12,11 +12,11 @@ from InitDocumentDatabase import *
 from TestUtilities import *
 from VectorizeUtilities import *
 
-allFilmDataFileLocation = "../../../database/all-film-data.json"
-cachedTmdbFilmDataFileLocation = "../../../database/cached-tmdb-film-data.json"
-cachedLetterboxdTitlesFileLocation = "../../../database/cached-letterboxd-titles.json"
-allFilmDataVectorizedFileLocation = "../../../database/all-film-data-vectorized.json"
-allFilmDataVectorizedMagnitudesFileLocation = "../../../database/all-film-data-vectorized-magnitudes.json"
+allFilmDataFileLocation = "../../../database/allFilmData.json"
+cachedTmdbFilmDataFileLocation = "../../../database/cachedTmdbFilmData.json"
+cachedLetterboxdTitlesFileLocation = "../../../database/cachedLetterboxdTitles.json"
+allFilmDataVectorizedFileLocation = "../../../database/allFilmDataVectorized.json"
+allFilmDataVectorizedMagnitudesFileLocation = "../../../database/allFilmDataVectorizedMagnitudes.json"
 
 def test_allFilmDataFileExists():
     try:

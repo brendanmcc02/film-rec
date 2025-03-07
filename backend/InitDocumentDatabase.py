@@ -93,7 +93,7 @@ class InitDocumentDatabase:
                     if genre not in allGenres:
                         allGenres.append(genre)
         else:
-            allFilmDataFile = open('../database/all-film-data.json')
+            allFilmDataFile = open('../database/allFilmData.json')
             allFilmData = json.load(allFilmDataFile)
             allFilmDataFilmIds = list(allFilmData.keys())
             allGenres = []
@@ -113,7 +113,7 @@ class InitDocumentDatabase:
             "Authorization": f"Bearer {accessToken}"
         }
 
-        cachedTmbdFilmDataFile = open('../database/cached-tmdb-film-data.json')
+        cachedTmbdFilmDataFile = open('../database/cachedTmdbFilmData.json')
         cachedTmbdFilmData = json.load(cachedTmbdFilmDataFile)
 
         allCountries = []
@@ -129,9 +129,9 @@ class InitDocumentDatabase:
         minRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
         maxRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
 
-        cachedLetterboxdTitlesFile = open('../database/cached-letterboxd-titles.json')
+        cachedLetterboxdTitlesFile = open('../database/cachedLetterboxdTitles.json')
         cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
-        cachedCountriesFile = open('../database/cached-countries.json')
+        cachedCountriesFile = open('../database/cachedCountries.json')
         cachedCountries = json.load(cachedCountriesFile)
         
         count = 0
@@ -252,16 +252,16 @@ class InitDocumentDatabase:
 
         print(f"\nFinal Dataset size: {len(allFilmDataFilmIds)} films.\n")
 
-        with open('../database/all-film-data.json', 'w') as convert_file:
+        with open('../database/allFilmData.json', 'w') as convert_file:
             convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
 
-        with open('../database/cached-tmdb-film-data.json', 'w') as convert_file:
+        with open('../database/cachedTmdbFilmData.json', 'w') as convert_file:
             convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
 
-        with open('../database/cached-letterboxd-titles.json', 'w') as convert_file:
+        with open('../database/cachedLetterboxdTitles.json', 'w') as convert_file:
             convert_file.write(json.dumps(cachedLetterboxdTitles, indent=4, separators=(',', ': ')))
 
-        print(f"\nVectorizing all-film-data.json\n")
+        print(f"\nVectorizing allFilmData.json\n")
 
         vectorizeUtilities = VectorizeUtilities()
 
@@ -309,14 +309,14 @@ class InitDocumentDatabase:
                 'minNumberOfVotes': minNumberOfVotes, 'diffNumberOfVotes': diffNumberOfVotes, 
                 'profileVectorLength': profileVectorLength}
 
-        with open('../database/all-film-data-vectorized.json', 'w') as convert_file:
+        with open('../database/allFilmDataVectorized.json', 'w') as convert_file:
             convert_file.write(json.dumps(allFilmDataVectorized, indent=4, separators=(',', ': '))
                                 .replace(",\n        ", ", ").replace("],", "],"))
 
         with open('../database/cache.json', 'w') as convert_file:
             convert_file.write(json.dumps(cache, indent=4, separators=(',', ': ')))
 
-        with open('../database/all-film-data-vectorized-magnitudes.json', 'w') as convert_file:
+        with open('../database/allFilmDataVectorizedMagnitudes.json', 'w') as convert_file:
             convert_file.write(json.dumps(allFilmDataVectorizedMagnitudes, indent=4, separators=(',', ': ')))
 
 
