@@ -29,7 +29,7 @@ jobs:
       - name: Start local backend deployment
         run: |
           cd backend/
-          python3 app.py &
+          python3 App.py &
 
       - name: Run integration tests (local)
         run: |
@@ -37,5 +37,5 @@ jobs:
           pytest *integrationTests.py --deploymentType "local"
 
       - name: Remove local backend deployment
-        run: pkill -f "python3 app.py &" || true
+        run: pkill -f "python3 App.py &" || true
         if: always()

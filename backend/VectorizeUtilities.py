@@ -1,7 +1,6 @@
 import numpy as np
 
-
-class vectorizeUtilities:
+class VectorizeUtilities:
 
     YEAR_WEIGHT = 0.5
     IMDB_RATING_WEIGHT = 1.0

@@ -203,6 +203,7 @@ my-film-data-vec.json to file
 - [x] `range(*)` is called once in python, no need to declare for loop limit beforehand
 - [x] rename files to lowerCamelCase
 - [x] `loadJsonFiles` should only run once
+- [x] classes should be UpperCamelCase
 
 # Frontend
 - [x] do text div 
@@ -241,6 +242,7 @@ my-film-data-vec.json to file
 - [x] move text around on home screen
 - [x] add note about patience
 - [x] add film imdb url
+- [ ] change `app.py` to `App.py` on render backend
 
 # README
 - [x] do `README.md`
@@ -270,9 +272,18 @@ my-film-data-vec.json to file
 - [x] config PR pipeline that runs on pre-merge PRs (local int tests)
 - [x] config main pipeline that runs on changes to main (prod int tests)
 
+# Database abstraction
+- [ ] abstract the database behind an interface
+- [ ] backend should reference the abstracted database
+- [ ] create a documentDatabase that implements this abstraction
+- [ ] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
+
 # Software Design & Architecture
-- [ ] turn python files into classes, think in a more OOP way
-- [ ] think about decoupling, e.g. start with database
+- [x] turn python files into classes, think in a more OOP way
+- [x] rename `appUtilities` to `service`
+- [ ] make service an interface/abstraction, app.py should then implement the service abstraction
+- [ ] think about decoupling
+- [ ] make class for vector profiles
 
 # Finishing Touches
 - [ ] record demo

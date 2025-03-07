@@ -7,9 +7,9 @@ import json
 import csv
 import time
 import requests
-from vectorizeUtilities import *
+from VectorizeUtilities import *
 
-class initDocumentDatabase:
+class InitDocumentDatabase:
     
     RUNTIME_THRESHOLD = 40
     NUMBER_OF_VOTES_THRESHOLD = 25000
@@ -263,7 +263,7 @@ class initDocumentDatabase:
 
         print(f"\nVectorizing all-film-data.json\n")
 
-        _vectorizeUtilities = vectorizeUtilities()
+        vectorizeUtilities = VectorizeUtilities()
 
         diffImdbRating = maxImdbRating - minImdbRating
         diffNumberOfVotes = maxNumberOfVotes - minNumberOfVotes
@@ -272,18 +272,18 @@ class initDocumentDatabase:
 
         cachedNormalizedYears = {}
         for year in range(minYear, maxYear + 1):
-            cachedNormalizedYears[str(year)] = ((year - minYear) / diffYear) * _vectorizeUtilities.YEAR_WEIGHT
+            cachedNormalizedYears[str(year)] = ((year - minYear) / diffYear) * vectorizeUtilities.YEAR_WEIGHT
 
         cachedNormalizedImdbRatings = {}
         for imdbRating in np.arange(minImdbRating, maxImdbRating + 0.1, 0.1):
             imdbRating = round(imdbRating, 1)
             cachedNormalizedImdbRatings[str(imdbRating)] = (((imdbRating - minImdbRating) / diffImdbRating) 
-                                                            * _vectorizeUtilities.IMDB_RATING_WEIGHT)
+                                                            * vectorizeUtilities.IMDB_RATING_WEIGHT)
 
         cachedNormalizedRuntimes = {}
         for runtime in range(minRuntime, maxRuntime + 1):
             cachedNormalizedRuntimes[str(runtime)] = (((runtime - minRuntime) / diffRuntime) 
-                                                    * _vectorizeUtilities.RUNTIME_WEIGHT)
+                                                    * vectorizeUtilities.RUNTIME_WEIGHT)
 
         allFilmDataVectorized = {}
         allFilmDataVectorizedMagnitudes = {}
@@ -294,7 +294,7 @@ class initDocumentDatabase:
             if filmId not in allFilmData:
                 print(f"Film ID not found in allFilmData: {filmId}.")
             else:
-                allFilmDataVectorized[filmId] = list(_vectorizeUtilities.vectorizeFilm(allFilmData[filmId], allGenres, allCountries,
+                allFilmDataVectorized[filmId] = list(vectorizeUtilities.vectorizeFilm(allFilmData[filmId], allGenres, allCountries,
                                                                 cachedNormalizedYears, cachedNormalizedImdbRatings, 
                                                                 minNumberOfVotes, diffNumberOfVotes, 
                                                                 cachedNormalizedRuntimes))
@@ -353,5 +353,5 @@ class initDocumentDatabase:
 
 
 if __name__ == "__main__":
-    _initDocumentDatabase = initDocumentDatabase()
-    _initDocumentDatabase.main()
+    initDocumentDatabase = InitDocumentDatabase()
+    initDocumentDatabase.main()

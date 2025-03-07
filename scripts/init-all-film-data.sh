@@ -8,7 +8,7 @@ git checkout -b updateDatabase
 
 # download title.basics.tsv.gz & title.ratings.tsv.gz (only if it's been >12 hours)
 cd backend/ || exit
-python3 downloadFilmData.py
+python3 DownloadFilmData.py
 cd ../database || exit
 
 printf "\n[1/2] Downloading title.basics.tsv & title.ratings.tsv..."
@@ -30,7 +30,7 @@ if test -f title.basics.tsv; then
   if test -f title.ratings.tsv; then
     printf "\n[2/2] Initialising all-film-data.json..."
     cd ../backend/ || exit
-    python3 initDocumentDatabase.py
+    python3 InitDocumentDatabase.py
 
     rm ../database/title.basics.tsv
     rm ../database/title.ratings.tsv
