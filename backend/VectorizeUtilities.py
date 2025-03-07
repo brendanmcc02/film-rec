@@ -286,8 +286,9 @@ class VectorizeUtilities:
 
     def initOldProfile(self, userProfile):
         # note: userProfile already has curved genres and countries
-        oldProfile = {'profile': np.copy(userProfile), 'profileId': 'old'}
-        oldProfile['profile'][self.PROFILE_YEAR_INDEX] = 0.0
+        oldProfile = VectorProfile('old')
+        oldProfile.profile = userProfile
+        oldProfile.profile[self.PROFILE_YEAR_INDEX] = 0.0
         
         return oldProfile
 
