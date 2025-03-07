@@ -266,22 +266,22 @@ class VectorizeUtilities:
 
     def initUserProfile(self, userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
                         cachedDateRatedAndUserRatingWeights, allGenres, allCountries):
-        userProfile = np.zeros(profileVectorLength)
+        userProfile = VectorProfile('user')
         sumOfWeights = 0.0
 
         for imdbFilmId in userFilmDataIds:
-            userProfile += userFilmDataVectorized[imdbFilmId]
+            userProfile.profile += userFilmDataVectorized[imdbFilmId]
             sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
         if sumOfWeights > 0.0:
-            userProfile = np.divide(userProfile, sumOfWeights)
+            userProfile.profile = np.divide(userProfile.profile, sumOfWeights)
             # curve genres
-            self.curveAccordingToMax(userProfile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
+            self.curveAccordingToMax(userProfile.profile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
             # curve countries
-            self.curveAccordingToMax(userProfile, allCountries, self.COUNTRY_WEIGHT, 
+            self.curveAccordingToMax(userProfile.profile, allCountries, self.COUNTRY_WEIGHT, 
                                      self.PROFILE_GENRE_START_INDEX + len(allGenres))
             
-        return {'profile': userProfile, 'profileId': 'user'}
+        return userProfile
 
 
     def initOldProfile(self, userProfile):
