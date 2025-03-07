@@ -171,12 +171,16 @@ def test_allGenres():
     documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
     allGenres = documentDatabase.get("allGenres")
 
+    assert len(allGenres) > 0
+
     for genre in allGenres:
         assert genre != ""
 
 def test_allCountries():
     documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
     allCountries = documentDatabase.get("allGenres")
+
+    assert len(allCountries) > 0
 
     for country in allCountries:
         assert country != ""
