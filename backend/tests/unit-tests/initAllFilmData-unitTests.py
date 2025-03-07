@@ -9,7 +9,7 @@ backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
 from InitDocumentDatabase import *
-import testUtilities
+from TestUtilities import *
 from VectorizeUtilities import *
 
 allFilmDataFileLocation = "../../../database/all-film-data.json"
@@ -80,7 +80,7 @@ def test_allFilmDataVectorizedMagnitudesFileExists():
 
 def test_cacheFileExists():
     try:
-        with open(testUtilities.cacheFileLocation, encoding='utf-8') as cacheFile:
+        with open(TestUtilities.cacheFileLocation, encoding='utf-8') as cacheFile:
             json.load(cacheFile)
 
     except FileNotFoundError:
@@ -93,8 +93,10 @@ def test_cacheFileExists():
 def test_allFilmData():
     allFilmDataFile = open(allFilmDataFileLocation)
     allFilmData = json.load(allFilmDataFile)
-    cacheFile = open(testUtilities.cacheFileLocation)
+    cacheFile = open(TestUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
+
+    testUtilities = TestUtilities()
 
     for filmId in allFilmData:
         testUtilities.verifyFilm(allFilmData[filmId], filmId, cache['allGenres'], cache['allCountries'])
@@ -102,7 +104,7 @@ def test_allFilmData():
 def test_cachedTmdbFilmData():
     cachedTmdbFilmDataFile = open(cachedTmdbFilmDataFileLocation)
     cachedTmdbFilmData = json.load(cachedTmdbFilmDataFile)
-    cacheFile = open(testUtilities.cacheFileLocation)
+    cacheFile = open(TestUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
 
     for filmId in cachedTmdbFilmData:
@@ -147,7 +149,7 @@ def test_allFilmDataVectorized():
     allFilmData = json.load(allFilmDataFile)
     allFilmDataVectorizedFile = open(allFilmDataVectorizedFileLocation)
     allFilmDataVectorized = json.load(allFilmDataVectorizedFile)
-    cacheFile = open(testUtilities.cacheFileLocation)
+    cacheFile = open(TestUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
 
     assert len(allFilmData) == len(allFilmDataVectorized)
@@ -191,7 +193,7 @@ def test_allFilmDataVectorizedMagnitudes():
                                                                 InitDocumentDatabase.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
 def test_cache():
-    cacheFile = open(testUtilities.cacheFileLocation)
+    cacheFile = open(TestUtilities.cacheFileLocation)
     cache = json.load(cacheFile)
 
     assert 'allGenres' in cache
