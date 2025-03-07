@@ -1,4 +1,5 @@
 import numpy as np
+from GenreVectorProfile import *
 from VectorProfile import *
 
 class VectorizeUtilities:
@@ -187,38 +188,35 @@ class VectorizeUtilities:
         genreProfiles = {}
 
         for genre in allGenres:
-            genreProfiles[genre] = {"profileId": genre, "profile": np.zeros(profileVectorLength),
-                                    "sumOfWeights": 0.0, "quantityFilmsWatched": 0,
-                                    "weightedMeanRating": 0.0}
+            genreProfiles[genre] = GenreVectorProfile(genre, profileVectorLength)
 
         for imdbFilmId in userFilmDataIds:
             filmGenres = self.getFilmGenres(userFilmDataVectorized[imdbFilmId], allGenres)
             for genre in filmGenres:
-                genreProfiles[genre]['profile'] += userFilmDataVectorized[imdbFilmId]
-                genreProfiles[genre]['sumOfWeights'] += cachedDateRatedAndUserRatingWeights[imdbFilmId]
-                genreProfiles[genre]['quantityFilmsWatched'] += 1
+                genreProfiles[genre].profile += userFilmDataVectorized[imdbFilmId]
+                genreProfiles[genre].sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
+                genreProfiles[genre].quantityFilmsWatched += 1
 
         for genre in allGenres:
-            if genreProfiles[genre]['quantityFilmsWatched'] == 0:
+            if genreProfiles[genre].quantityFilmsWatched == 0:
                 continue
             
-            genreProfiles[genre]['profile'] = np.divide(genreProfiles[genre]['profile'], 
-                                                        genreProfiles[genre]['sumOfWeights'])
+            genreProfiles[genre].profile = np.divide(genreProfiles[genre].profile, 
+                                                     genreProfiles[genre].sumOfWeights)
             # curve countries
-            self.curveAccordingToMax(genreProfiles[genre]['profile'], allCountries, self.COUNTRY_WEIGHT, 
+            self.curveAccordingToMax(genreProfiles[genre].profile, allCountries, self.COUNTRY_WEIGHT, 
                                 self.PROFILE_GENRE_START_INDEX + len(allGenres))
-            genreProfiles[genre]['weightedMeanRating'] = (genreProfiles[genre]['sumOfWeights'] / 
-                                                        genreProfiles[genre]['quantityFilmsWatched'])
+            genreProfiles[genre].weightedMeanRating = (genreProfiles[genre].sumOfWeights / 
+                                                       genreProfiles[genre].quantityFilmsWatched)
             if numFilmsWatchedInGenreThreshold > 0:
-                numFilmsWatchedInGenreFactor = min(1.0, (genreProfiles[genre]['quantityFilmsWatched'] /
+                numFilmsWatchedInGenreFactor = min(1.0, (genreProfiles[genre].quantityFilmsWatched /
                                                         numFilmsWatchedInGenreThreshold))
             else:
                 numFilmsWatchedInGenreFactor = 1.0
 
-            genreProfiles[genre]['weightedMeanRating'] *= numFilmsWatchedInGenreFactor
+            genreProfiles[genre].weightedMeanRating *= numFilmsWatchedInGenreFactor
 
-        # return as a list of tuples, where each tuple has the values (genre, profile, weightedMeanRating, 
-        # sumOfWeights, quantityFilmsWatched)
+        # return as a list of GenreProfileVector objects
         return [value for _, value in genreProfiles.items()]
 
 
