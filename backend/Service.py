@@ -184,19 +184,19 @@ class Service:
                                                                          self.allGenres, self.allCountries)
 
         self.recencyProfile = self.vectorizeUtilities.initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
-                                                                    self.profileVectorLength, cachedDateRatedAndUserRatingWeights, 
-                                                                    self.allGenres, self.allCountries)
+                                                                         self.profileVectorLength, cachedDateRatedAndUserRatingWeights, 
+                                                                         self.allGenres, self.allCountries)
 
         self.genreProfiles = self.vectorizeUtilities.initGenreProfiles(userFilmData, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
-                                                                   self.allGenres, self.profileVectorLength, 
-                                                                   self.serviceUtilities.NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD, 
-                                                                   self.allCountries)
+                                                                       self.allGenres, self.profileVectorLength, 
+                                                                       self.serviceUtilities.NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD, 
+                                                                       self.allCountries)
 
         userProfile = self.vectorizeUtilities.initUserProfile(userFilmData, userFilmDataVectorized, self.profileVectorLength,
-                                                         cachedDateRatedAndUserRatingWeights, self.allGenres, self.allCountries)
+                                                              cachedDateRatedAndUserRatingWeights, self.allGenres, self.allCountries)
 
         self.internationalProfile = self.vectorizeUtilities.initInternationalProfile(userProfile.profile, self.allCountries, self.allGenresLength,
-                                                                                self.profileVectorLength)
+                                                                                     self.profileVectorLength)
 
         self.oldProfile = self.vectorizeUtilities.initOldProfile(userProfile.profile)
 
@@ -220,9 +220,9 @@ class Service:
             print("No recency profile.")
         else:
             self.getFilmRecommendations("Based on what you watched recently", self.recencyProfile.profile, self.recencyProfile.profileId)
-            self.vectorizeUtilities.printStringifiedVector(self.recencyProfile.profile, self.allGenres, self.allCountries, "Recency",
-                                                           self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
-                                                           self.minNumberOfVotes, self.diffNumberOfVotes)
+            # self.vectorizeUtilities.printStringifiedVector(self.recencyProfile.profile, self.allGenres, self.allCountries, "Recency",
+            #                                                self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
+            #                                                self.minNumberOfVotes, self.diffNumberOfVotes)
 
         self.genreProfiles = sorted(self.genreProfiles, key=lambda x: x.weightedMeanRating, reverse=True)
 
