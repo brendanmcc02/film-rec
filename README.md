@@ -196,6 +196,12 @@ In recommender systems, there is an immense amount of computation involved in ge
     * For example: the film dataset can be generated once every 24 hours. It doesn't **need** to be regenerated everytime a user queries their recommendations.
     * You want as much of your computation as possible in this phase, in order to lighten the load of the online phase.
 
+## Continuous Integration
+
+When pull requests are opened, a pipeline builds and runs unit tests. Additionally, integration tests are fired against a local deployment of the backend.
+
+When pull requests are merged to main, integration tests are then fired against the production environment.
+
 ## Frontend
 
 The frontend was designed using React JS. It is being hosted [here](https://film-rec.onrender.com). I wanted a sleek and minimalist design Below is the home page:
