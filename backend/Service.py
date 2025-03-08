@@ -32,11 +32,11 @@ class Service:
         self.normalizedRuntimesKeys = list(self.normalizedRuntimes.keys())
         self.diffDateRated = datetime(1, 1, 1)
         self.minDateRated = datetime.now()
-        self.favouriteProfile = VectorProfile('favourite')
+        self.favouriteProfile = VectorProfile('favourite', self.profileVectorLength)
         self.genreProfiles = []
-        self.recencyProfile = VectorProfile('recency')
-        self.internationalProfile = VectorProfile('international')
-        self.oldProfile = VectorProfile('old')
+        self.recencyProfile = VectorProfile('recency', self.profileVectorLength)
+        self.internationalProfile = VectorProfile('international', self.profileVectorLength)
+        self.oldProfile = VectorProfile('old', self.profileVectorLength)
         self.rowsOfRecommendations = []
         self.isImdbFile = True
         self.userFilmDataFilename = ""
@@ -154,8 +154,8 @@ class Service:
         # vectorize user-film-data
         for imdbFilmId in userFilmData:
             vector = self.vectorizeUtilities.vectorizeFilm(userFilmData[imdbFilmId], self.allGenres, self.allCountries,
-                                                      self.normalizedYears, self.normalizedImdbRatings, self.minNumberOfVotes,
-                                                      self.diffNumberOfVotes, self.normalizedRuntimes)
+                                                           self.normalizedYears, self.normalizedImdbRatings, self.minNumberOfVotes,
+                                                           self.diffNumberOfVotes, self.normalizedRuntimes)
             if isDiffDateRatedZero:
                 dateRatedWeight = 1.0
             else:
