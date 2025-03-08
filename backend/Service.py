@@ -209,7 +209,7 @@ class Service:
             print("No favourite profile.")
         else:
             self.getFilmRecommendations("Based on your favourite films", self.favouriteProfile.profile, self.favouriteProfile.profileId)
-            # printStringifiedVector(favouriteProfile.profile, self.allGenres, self.allCountries, "Favourite",
+            # self.vectorizeUtilities.printStringifiedVector(self.favouriteProfile.profile, self.allGenres, self.allCountries, "Favourite",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
             #                        self.minNumberOfVotes, self.diffNumberOfVotes)
 
@@ -217,7 +217,7 @@ class Service:
             print("No recency profile.")
         else:
             self.getFilmRecommendations("Based on what you watched recently", self.recencyProfile.profile, self.recencyProfile.profileId)
-            # printStringifiedVector(recencyProfile.profile, self.allGenres, self.allCountries, "Recency",
+            # self.vectorizeUtilities.printStringifiedVector(self.recencyProfile.profile, self.allGenres, self.allCountries, "Recency",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
             #                        self.minNumberOfVotes, self.diffNumberOfVotes)
 
@@ -230,8 +230,8 @@ class Service:
                 countryText = self.vectorizeUtilities.getProfileMaxCountry(self.genreProfiles[i].profile, self.allGenresLength, self.allCountries)
                 self.getFilmRecommendations(f"Because you like {countryText} {self.genreProfiles[i].profileId} films", self.genreProfiles[i].profile, 
                                             self.genreProfiles[i].profileId)
-                # printStringifiedVector(genreProfiles[i].profile, self.allGenres, self.allCountries, 
-                #                        genreProfiles[i].profileId, self.normalizedYearsKeys, 
+                # self.vectorizeUtilities.printStringifiedVector(self.genreProfiles[i].profile, self.allGenres, self.allCountries, 
+                #                        self.genreProfiles[i].profileId, self.normalizedYearsKeys, 
                 #                        self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys, 
                 #                        self.minNumberOfVotes, self.diffNumberOfVotes)
             
@@ -239,7 +239,7 @@ class Service:
             print("No international profile.")
         else:
             self.getFilmRecommendations("Try out some international films", self.internationalProfile.profile, self.internationalProfile.profileId)
-            # printStringifiedVector(internationalProfile.profile, self.allGenres, self.allCountries, 
+            # self.vectorizeUtilities.printStringifiedVector(self.internationalProfile.profile, self.allGenres, self.allCountries, 
             #                        "International", self.normalizedYearsKeys, self.normalizedRuntimesKeys,
             #                        self.normalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
 
@@ -247,7 +247,7 @@ class Service:
             print("No old profile.")
         else:
             self.getFilmRecommendations("Try out some older films", self.oldProfile.profile, self.oldProfile.profileId)
-            # printStringifiedVector(oldProfile.profile, self.allGenres, self.allCountries, "Old",
+            # self.vectorizeUtilities.printStringifiedVector(self.oldProfile.profile, self.allGenres, self.allCountries, "Old",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys,
             #                        self.normalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
 
