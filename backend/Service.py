@@ -25,8 +25,11 @@ class Service:
         self.minNumberOfVotes = _database.get("minNumberOfVotes")
         self.diffNumberOfVotes = _database.get("diffNumberOfVotes")
         self.normalizedYears = _database.get("normalizedYears")
+        self.normalizedYearsKeys = list(self.normalizedYears.keys())
         self.normalizedImdbRatings = _database.get("normalizedImdbRatings")
+        self.normalizedImdbRatingsKeys = list(self.normalizedImdbRatings.keys())
         self.normalizedRuntimes = _database.get("normalizedRuntimes")
+        self.normalizedRuntimesKeys = list(self.normalizedRuntimes.keys())
         self.diffDateRated = datetime(1, 1, 1)
         self.minDateRated = datetime.now()
         self.favouriteProfile = VectorProfile('favourite')
@@ -217,9 +220,9 @@ class Service:
             print("No recency profile.")
         else:
             self.getFilmRecommendations("Based on what you watched recently", self.recencyProfile.profile, self.recencyProfile.profileId)
-            # self.vectorizeUtilities.printStringifiedVector(self.recencyProfile.profile, self.allGenres, self.allCountries, "Recency",
-            #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
-            #                        self.minNumberOfVotes, self.diffNumberOfVotes)
+            self.vectorizeUtilities.printStringifiedVector(self.recencyProfile.profile, self.allGenres, self.allCountries, "Recency",
+                                                           self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
+                                                           self.minNumberOfVotes, self.diffNumberOfVotes)
 
         self.genreProfiles = sorted(self.genreProfiles, key=lambda x: x.weightedMeanRating, reverse=True)
 

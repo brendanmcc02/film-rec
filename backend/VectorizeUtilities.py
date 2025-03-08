@@ -260,7 +260,7 @@ class VectorizeUtilities:
                                 self.PROFILE_GENRE_START_INDEX + len(allGenres))
             return recencyProfile
         else:
-            recencyProfile = VectorProfile('recency')
+            recencyProfile.profile = np.zeros(profileVectorLength)
             return recencyProfile
 
 
