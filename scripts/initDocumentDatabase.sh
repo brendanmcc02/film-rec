@@ -1,5 +1,3 @@
-# downloads, filters, and produces multiple .json files.
-
 clear
 cd ..
 git pull
@@ -36,10 +34,10 @@ if test -f title.basics.tsv; then
     rm ../database/title.ratings.tsv
 
     git add ../database/
-    git commit -m "updated database"
+    git commit -m "Updating Database"
     git config --add --bool push.autoSetupRemote true
     git push
-    # the echo | is necessary to simulate an enter keypress and submit the pr
+    # the echo | is necessary to simulate an enter keypress and submit the PR
     echo | gh pr create --title "Updating Database" --body "PR generated automatically"
     git checkout main
   fi
