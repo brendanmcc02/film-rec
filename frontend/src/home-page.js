@@ -51,7 +51,7 @@ const App = () => {
             ratings .csv</u></a> file.</h3>
             <h3 className='home-text'>Don't have a Letterboxd or IMDB account? Use 
               <a href="https://github.com/brendanmcc02/film-rec/blob/main/sample-letterboxd-data.csv" target="_blank">
-              <u> this</u></a> sample dataset.</h3>
+              &nbsp;<u>this</u></a> sample dataset.</h3>
         </div>
 
         <div className="file-select-upload-container">
@@ -74,7 +74,10 @@ const App = () => {
           If the upload button is not responding, it's because the service goes down after inactivity.
         </h3>
         <h3 className="home-text">
-          Please wait around 60 seconds, and then refresh the page and try again.
+          Please wait around 1-2 minutes, and then refresh the page and try again.
+        </h3>
+        <h3 className="home-text">
+          Your patience is appreciated - this isn't Netflix!
         </h3>
       </div>
       <div className='created-by-container'>
