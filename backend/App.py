@@ -1,12 +1,20 @@
 from DocumentDatabase import *
 from flask import Flask
 from flask_cors import CORS
+from InitDocumentDatabase import *
+from LetterboxdConversionUtilities import *
 from Service import *
+from ServiceUtilities import *
+from VectorizeUtilities import *
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
 database = DocumentDatabase("../")
-service = Service(database)
+letterboxdConversionUtilities = LetterboxdConversionUtilities()
+initDocumentDatabase = InitDocumentDatabase()
+serviceUtilities = ServiceUtilities()
+vectorizeUtilities = VectorizeUtilities()
+service = Service(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDocumentDatabase)
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])

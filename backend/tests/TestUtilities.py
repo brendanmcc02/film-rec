@@ -4,7 +4,7 @@ absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 backendDirectory = os.path.dirname(absolutePathOfCurrentFile)
 sys.path.append(backendDirectory)
 from DocumentDatabase import *
-from Service import *
+from ServiceUtilities import *
 from InitDocumentDatabase import *
 
 class TestUtilities:
@@ -82,7 +82,7 @@ class TestUtilities:
             assert row['profileId'] != ""
 
             assert 'recommendedFilms' in row
-            assert len(row['recommendedFilms']) == Service.NUMBER_OF_RECOMMENDATIONS_PER_ROW
+            assert len(row['recommendedFilms']) == ServiceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW
 
             for film in row['recommendedFilms']:
                 assert 'id' in film
