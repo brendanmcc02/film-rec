@@ -32,14 +32,15 @@ class Service:
         self.normalizedRuntimesKeys = list(self.normalizedRuntimes.keys())
         self.diffDateRated = datetime(1, 1, 1)
         self.minDateRated = datetime.now()
-        self.favouriteProfile = VectorProfile('favourite')
+        self.favouriteProfile = VectorProfile('favourite', self.profileVectorLength)
         self.genreProfiles = []
-        self.recencyProfile = VectorProfile('recency')
-        self.internationalProfile = VectorProfile('international')
-        self.oldProfile = VectorProfile('old')
+        self.recencyProfile = VectorProfile('recency', self.profileVectorLength)
+        self.internationalProfile = VectorProfile('international', self.profileVectorLength)
+        self.oldProfile = VectorProfile('old', self.profileVectorLength)
         self.rowsOfRecommendations = []
         self.isImdbFile = True
         self.userFilmDataFilename = ""
+        self.userFilmDataOriginal = []
 
 
     def verifyUserUploadedFile(self):
@@ -57,6 +58,7 @@ class Service:
             return self.serviceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE, 415
 
         try:
+            self.userFilmDataOriginal = []
             userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + self.userFilmDataFilename
             file.save(userUploadedFileLocation)
 
@@ -81,38 +83,27 @@ class Service:
                             if key not in self.letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
                                 return self.serviceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, 400
 
+                    self.userFilmDataOriginal.append(row)
+
+            self.serviceUtilities.deleteUserUploadedData()
             return self.serviceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE, 200
         except Exception as e:
             self.serviceUtilities.deleteUserUploadedData()
             return f"Error occurred with reading {self.userFilmDataFilename}.\n{e}", 400
 
     def initRowsOfRecommendations(self):
-        
-        try:
-            userFilmDataList = []
-            userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + self.userFilmDataFilename
-            with open(userUploadedFileLocation, encoding='utf8') as userFilmDataFile:
-                reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
-
-                for row in reader:
-                    userFilmDataList.append(row)
-        except Exception as e:
-            self.serviceUtilities.deleteUserUploadedData()
-            return f"Error occurred with reading {self.userFilmDataFilename}.\n" + str(e), 400
-
-        self.serviceUtilities.deleteUserUploadedData()
         allFilmData = self.database.get("allFilmData")
 
         if not self.isImdbFile:
-            userFilmDataList = (self.letterboxdConversionUtilities
-                                .convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, self.cachedLetterboxdTitles))
+            self.userFilmDataOriginal = (self.letterboxdConversionUtilities.convertLetterboxdFormatToImdbFormat(self.userFilmDataOriginal,
+                                                                                                                allFilmData, self.cachedLetterboxdTitles))
 
         userFilmData = {}
         favouriteFilmIds = []
         self.minDateRated = datetime.now()
         maxDateRated = self.minDateRated
 
-        for film in userFilmDataList:
+        for film in self.userFilmDataOriginal:
             if (film['Title Type'] == "Movie" and 
                     int(film['Runtime (mins)']) >= self.initDocumentDatabase.RUNTIME_THRESHOLD and film['Genres'] != ""\
                     and int(film['Num Votes']) >= self.initDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD):
@@ -163,8 +154,8 @@ class Service:
         # vectorize user-film-data
         for imdbFilmId in userFilmData:
             vector = self.vectorizeUtilities.vectorizeFilm(userFilmData[imdbFilmId], self.allGenres, self.allCountries,
-                                                      self.normalizedYears, self.normalizedImdbRatings, self.minNumberOfVotes,
-                                                      self.diffNumberOfVotes, self.normalizedRuntimes)
+                                                           self.normalizedYears, self.normalizedImdbRatings, self.minNumberOfVotes,
+                                                           self.diffNumberOfVotes, self.normalizedRuntimes)
             if isDiffDateRatedZero:
                 dateRatedWeight = 1.0
             else:
@@ -257,14 +248,14 @@ class Service:
 
     def getFilmRecommendations(self, recommendedRowText, profileVector, profileId):
         self.rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, "recommendedFilms": [], 
-                                    "profileId": profileId})
+                                           "profileId": profileId})
         profileVectorMagnitude = np.linalg.norm(profileVector)
         cosineSimilarities = {}
 
         for filmId in self.allFilmDataUnseen:
             filmVectorMagnitude = self.allFilmDataVectorizedMagnitudes[filmId]
             cosineSimilarities[filmId] = self.vectorizeUtilities.cosineSimilarity(self.allFilmDataVectorized[filmId], profileVector,
-                                                        filmVectorMagnitude, profileVectorMagnitude)
+                                                                                  filmVectorMagnitude, profileVectorMagnitude)
 
         cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
 
@@ -299,11 +290,11 @@ class Service:
 
         # if the profile is a genre profile
         if profileId in self.allGenres:
-            adjustment = profile['weightedMeanRating'] * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
+            adjustment = profile.weightedMeanRating * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
             if isThumbsUp:
-                profile['weightedMeanRating'] += adjustment
+                profile.weightedMeanRating += adjustment
             else:
-                profile['weightedMeanRating'] -= adjustment
+                profile.weightedMeanRating -= adjustment
 
         filmVector = self.allFilmDataVectorized[filmId]
         adjustment = (filmVector - profile.profile) * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
@@ -337,7 +328,7 @@ class Service:
                     return profile
 
         print(f"Error: profile {profileId} not found. Returning zero vector.")
-        return {'profile': np.zeros(self.profileVectorLength), 'profileId': profileId}
+        return VectorProfile(profileId, self.profileVectorLength)
 
 
     def regenerateRecommendations(self):

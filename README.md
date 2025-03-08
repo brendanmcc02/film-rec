@@ -204,14 +204,16 @@ The frontend was designed using React JS. It is being hosted [here](https://film
 
 # Usage
 
-* Clone the repository and checkout to the `local-deployment` branch.
+* Clone the repository.
+* Replace **all** instances of `https://film-rec-backend.onrender.com` with `http://localhost:60000`
+* Replace **all** instances of `https://film-rec.onrender.com` with `http://localhost:3000`
 * If you want to run the shell script to fetch and produce the datasets, you will need a TMDb API key. Store this in a file called `access-token.txt` at the repository level.
 * Open 2 instances of the terminal. We will download dependencies and run both the frontend and the backend.
 * In one terminal, run the following commands for the backend.
     ```sh
     $ cd backend/
     $ pip3 install -r requirements.txt
-    $ python3 app.py
+    $ python3 App.py
     ```
     * note: `pip` instead of `pip3` may work
     * or also `python` instead of `python3`
