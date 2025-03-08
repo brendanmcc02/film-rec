@@ -91,7 +91,7 @@ class Service:
         try:
             userFilmDataList = []
             userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + self.userFilmDataFilename
-            with open(userUploadedFileLocation, encoding='utf8') as userFilmDataFile:
+            with open(userUploadedFileLocation, encoding='utf-8') as userFilmDataFile:
                 reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
 
                 for row in reader:
