@@ -2,16 +2,17 @@ import csv
 from datetime import datetime
 from flask import request, jsonify
 import numpy as np
-from InitDocumentDatabase import *
 from VectorProfile import *
 
 class Service:
 
-    def __init__(self, _database, _serviceUtilities, _vectorizeUtilities, _letterboxdConversionUtilities):
+    def __init__(self, _database, _serviceUtilities, _vectorizeUtilities, _letterboxdConversionUtilities,
+                 _initDocumentDatabase):
         self.database = _database
         self.serviceUtilities = _serviceUtilities
         self.vectorizeUtilities = _vectorizeUtilities
         self.letterboxdConversionUtilities = _letterboxdConversionUtilities
+        self.initDocumentDatabase = _initDocumentDatabase
         self.allFilmDataUnseen = {}
         self.allFilmDataVectorized = _database.get("allFilmDataVectorized")
         self.allFilmDataVectorizedMagnitudes = _database.get("allFilmDataVectorizedMagnitudes")
@@ -108,12 +109,10 @@ class Service:
         self.minDateRated = datetime.now()
         maxDateRated = self.minDateRated
 
-        initDocumentDatabase = InitDocumentDatabase()
-
         for film in userFilmDataList:
             if (film['Title Type'] == "Movie" and 
-                    int(film['Runtime (mins)']) >= initDocumentDatabase.RUNTIME_THRESHOLD and film['Genres'] != ""\
-                    and int(film['Num Votes']) >= initDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD):
+                    int(film['Runtime (mins)']) >= self.initDocumentDatabase.RUNTIME_THRESHOLD and film['Genres'] != ""\
+                    and int(film['Num Votes']) >= self.initDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD):
                 if self.isImdbFile:
                     genres = film['Genres'].replace("\"", "").split(", ")
                 else:
