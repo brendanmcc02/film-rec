@@ -2,16 +2,16 @@ import csv
 from datetime import datetime
 from flask import request, jsonify
 import numpy as np
-from LetterboxdConversionUtilities import *
 from InitDocumentDatabase import *
 from VectorProfile import *
 
 class Service:
 
-    def __init__(self, _database, _serviceUtilities, _vectorizeUtilities):
+    def __init__(self, _database, _serviceUtilities, _vectorizeUtilities, _letterboxdConversionUtilities):
         self.database = _database
         self.serviceUtilities = _serviceUtilities
         self.vectorizeUtilities = _vectorizeUtilities
+        self.letterboxdConversionUtilities = _letterboxdConversionUtilities
         self.allFilmDataUnseen = {}
         self.allFilmDataVectorized = _database.get("allFilmDataVectorized")
         self.allFilmDataVectorizedMagnitudes = _database.get("allFilmDataVectorizedMagnitudes")
@@ -39,8 +39,6 @@ class Service:
 
 
     def verifyUserUploadedFile(self):
-        letterboxdConversionUtilities = LetterboxdConversionUtilities()
-
         self.isImdbFile = True
 
         self.serviceUtilities.deleteUserUploadedData()
@@ -59,15 +57,11 @@ class Service:
             file.save(userUploadedFileLocation)
 
             if userUploadedFileLocation.endswith(".zip"):
-                if letterboxdConversionUtilities.isLetterboxdZipFileInvalid(self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME, self.userFilmDataFilename):
+                if self.letterboxdConversionUtilities.isLetterboxdZipFileInvalid(self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME, self.userFilmDataFilename):
                     return self.serviceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE, 400
                 else:
                     self.userFilmDataFilename = "ratings.csv"
                     userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + self.userFilmDataFilename
-
-            expectedImdbFileFilmAttributes = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
-                                            "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
-                                            "Release Date", "Directors"]
 
             with open(userUploadedFileLocation, encoding='utf-8') as userFilmDataFile:
                 reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
@@ -78,9 +72,9 @@ class Service:
 
                     keys = list(row.keys())
                     for key in keys:
-                        if key not in expectedImdbFileFilmAttributes:
+                        if key not in self.serviceUtilities.EXPECTED_IMDB_FILM_ATTRIBUTES:
                             self.isImdbFile = False
-                            if key not in letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
+                            if key not in self.letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
                                 return self.serviceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, 400
 
             return self.serviceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE, 200
@@ -105,10 +99,8 @@ class Service:
         self.serviceUtilities.deleteUserUploadedData()
         allFilmData = self.database.get("allFilmData")
 
-        letterboxdConversionUtilities = LetterboxdConversionUtilities()
-
         if not self.isImdbFile:
-            userFilmDataList = (letterboxdConversionUtilities
+            userFilmDataList = (self.letterboxdConversionUtilities
                                 .convertLetterboxdFormatToImdbFormat(userFilmDataList, allFilmData, self.cachedLetterboxdTitles))
 
         userFilmData = {}
@@ -232,8 +224,6 @@ class Service:
 
         self.genreProfiles = sorted(self.genreProfiles, key=lambda x: x.weightedMeanRating, reverse=True)
 
-        
-
         for i in range(self.serviceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS):
             if self.genreProfiles[i].weightedMeanRating == 0.0:
                 print("No genre profile.")
@@ -269,8 +259,6 @@ class Service:
         profileVectorMagnitude = np.linalg.norm(profileVector)
         cosineSimilarities = {}
 
-        
-
         for filmId in self.allFilmDataUnseen:
             filmVectorMagnitude = self.allFilmDataVectorizedMagnitudes[filmId]
             cosineSimilarities[filmId] = self.vectorizeUtilities.cosineSimilarity(self.allFilmDataVectorized[filmId], profileVector,
@@ -299,9 +287,6 @@ class Service:
     def reviewRecommendation(self):
         filmId = request.args.get('filmId')
         isThumbsUp = request.args.get('isThumbsUp').lower() == 'true'
-
-        
-        
 
         for row in self.rowsOfRecommendations:
             for film in row['recommendedFilms']:

@@ -1,6 +1,7 @@
 from DocumentDatabase import *
 from flask import Flask
 from flask_cors import CORS
+from LetterboxdConversionUtilities import *
 from Service import *
 from ServiceUtilities import *
 from VectorizeUtilities import *
@@ -8,9 +9,10 @@ from VectorizeUtilities import *
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 database = DocumentDatabase("../")
+letterboxdConversionUtilities = LetterboxdConversionUtilities()
 serviceUtilities = ServiceUtilities()
 vectorizeUtilities = VectorizeUtilities()
-service = Service(database, serviceUtilities, vectorizeUtilities)
+service = Service(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities)
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])

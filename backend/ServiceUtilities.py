@@ -15,6 +15,9 @@ class ServiceUtilities:
     FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE = "Row headers do not conform to expected format."
     FILE_UPLOAD_SUCCESS_MESSAGE = "Upload Success."
     INVALID_ZIP_FILE_ERROR_MESSAGE = "Zip file is invalid."
+    EXPECTED_IMDB_FILM_ATTRIBUTES = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
+                                     "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
+                                     "Release Date", "Directors"]
 
     def isFilmRecommendationUnique(self, filmId, rowsOfRecommendations):
         for rowOfRecommendations in rowsOfRecommendations:
