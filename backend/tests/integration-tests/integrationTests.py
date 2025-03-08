@@ -475,6 +475,56 @@ def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
 
+def test_initRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
+    fileName = "imdb-no-recognised-films.csv"
+    file = open(testUploadFilesDirectory + fileName, 'rb')
+    filesToSend = {'file': (fileName, file)}
+    verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert verifyUserUploadedFileResponse.status_code == 200
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
+
+    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert initRowsOfRecommendationsResponse.status_code == 200
+
+    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+
+    numberOfFavouriteRows = 0
+    numberOfRecentRows = 0
+    numberOfGenreRows = 0
+    numberOfInternationalRows = 0
+    numberOfOldRows = 0
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities = TestUtilities("../../../")
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+
+def test_initRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl):
+    fileName = "letterboxd-no-recognised-films.csv"
+    file = open(testUploadFilesDirectory + fileName, 'rb')
+    filesToSend = {'file': (fileName, file)}
+    verifyUserUploadedFileResponse = requests.post(backendUrl + "/verifyUserUploadedFile", files=filesToSend)
+
+    assert verifyUserUploadedFileResponse.status_code == 200
+    assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
+
+    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
+    assert initRowsOfRecommendationsResponse.status_code == 200
+
+    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+
+    numberOfFavouriteRows = 0
+    numberOfRecentRows = 0
+    numberOfGenreRows = 0
+    numberOfInternationalRows = 0
+    numberOfOldRows = 0
+    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
+                         numberOfInternationalRows + numberOfOldRows)
+    
+    testUtilities = TestUtilities("../../../")
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+
 def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     fileName = "imdb-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
