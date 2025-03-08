@@ -248,14 +248,14 @@ class Service:
 
     def getFilmRecommendations(self, recommendedRowText, profileVector, profileId):
         self.rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, "recommendedFilms": [], 
-                                    "profileId": profileId})
+                                           "profileId": profileId})
         profileVectorMagnitude = np.linalg.norm(profileVector)
         cosineSimilarities = {}
 
         for filmId in self.allFilmDataUnseen:
             filmVectorMagnitude = self.allFilmDataVectorizedMagnitudes[filmId]
             cosineSimilarities[filmId] = self.vectorizeUtilities.cosineSimilarity(self.allFilmDataVectorized[filmId], profileVector,
-                                                        filmVectorMagnitude, profileVectorMagnitude)
+                                                                                  filmVectorMagnitude, profileVectorMagnitude)
 
         cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
 
@@ -290,11 +290,11 @@ class Service:
 
         # if the profile is a genre profile
         if profileId in self.allGenres:
-            adjustment = profile['weightedMeanRating'] * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
+            adjustment = profile.weightedMeanRating * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
             if isThumbsUp:
-                profile['weightedMeanRating'] += adjustment
+                profile.weightedMeanRating += adjustment
             else:
-                profile['weightedMeanRating'] -= adjustment
+                profile.weightedMeanRating -= adjustment
 
         filmVector = self.allFilmDataVectorized[filmId]
         adjustment = (filmVector - profile.profile) * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
@@ -328,7 +328,7 @@ class Service:
                     return profile
 
         print(f"Error: profile {profileId} not found. Returning zero vector.")
-        return {'profile': np.zeros(self.profileVectorLength), 'profileId': profileId}
+        return VectorProfile(profileId, self.profileVectorLength)
 
 
     def regenerateRecommendations(self):
