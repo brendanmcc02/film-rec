@@ -2,7 +2,6 @@ import csv
 from datetime import datetime
 from flask import request, jsonify
 import numpy as np
-import json
 from LetterboxdConversionUtilities import *
 from InitDocumentDatabase import *
 from ServiceUtilities import *
@@ -11,9 +10,10 @@ from VectorProfile import *
 
 class Service:
 
+    # TODO DI for serviceUtils
     def __init__(self, _database):
         self.database = _database
-        self.allFilmDataUnseen = _database.get("allFilmData")
+        self.allFilmDataUnseen = {}
         self.allFilmDataVectorized = _database.get("allFilmDataVectorized")
         self.allFilmDataVectorizedMagnitudes = _database.get("allFilmDataVectorizedMagnitudes")
         self.cachedLetterboxdTitles = _database.get("cachedLetterboxdTitles")
@@ -105,8 +105,7 @@ class Service:
             return f"Error occurred with reading {self.userFilmDataFilename}.\n" + str(e), 400
 
         serviceUtilities.deleteUserUploadedData()
-        allFilmDataFile = open('../database/allFilmData.json')
-        allFilmData = json.load(allFilmDataFile)
+        allFilmData = self.database.get("allFilmData")
 
         letterboxdConversionUtilities = LetterboxdConversionUtilities()
 
@@ -222,8 +221,7 @@ class Service:
         if np.array_equal(self.favouriteProfile.profile, np.zeros(self.profileVectorLength)):
             print("No favourite profile.")
         else:
-            self.getFilmRecommendations("Based on your favourite films", self.allFilmDataUnseen, 
-                                        serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
+            self.getFilmRecommendations("Based on your favourite films", serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
                                         self.favouriteProfile.profile, self.favouriteProfile.profileId)
             # printStringifiedVector(favouriteProfile.profile, self.allGenres, self.allCountries, "Favourite",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
@@ -232,7 +230,7 @@ class Service:
         if np.array_equal(self.recencyProfile.profile, np.zeros(self.profileVectorLength)):
             print("No recency profile.")
         else:
-            self.getFilmRecommendations("Based on what you watched recently", self.allFilmDataUnseen, serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
+            self.getFilmRecommendations("Based on what you watched recently", serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
                                         self.recencyProfile.profile, self.recencyProfile.profileId)
             # printStringifiedVector(recencyProfile.profile, self.allGenres, self.allCountries, "Recency",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
@@ -248,7 +246,7 @@ class Service:
             else:
                 countryText = vectorizeUtilities.getProfileMaxCountry(self.genreProfiles[i].profile, self.allGenresLength, self.allCountries)
                 self.getFilmRecommendations(f"Because you like {countryText} {self.genreProfiles[i].profileId} films", 
-                                            self.allFilmDataUnseen, serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.genreProfiles[i].profile, 
+                                            serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.genreProfiles[i].profile, 
                                             self.genreProfiles[i].profileId)
                 # printStringifiedVector(genreProfiles[i].profile, self.allGenres, self.allCountries, 
                 #                        genreProfiles[i].profileId, self.normalizedYearsKeys, 
@@ -258,9 +256,8 @@ class Service:
         if np.array_equal(self.internationalProfile.profile, np.zeros(self.profileVectorLength)):
             print("No international profile.")
         else:
-            self.getFilmRecommendations("Try out some international films", self.allFilmDataUnseen, 
-                                        serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.internationalProfile.profile, 
-                                        self.internationalProfile.profileId)
+            self.getFilmRecommendations("Try out some international films", serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
+                                        self.internationalProfile.profile, self.internationalProfile.profileId)
             # printStringifiedVector(internationalProfile.profile, self.allGenres, self.allCountries, 
             #                        "International", self.normalizedYearsKeys, self.normalizedRuntimesKeys,
             #                        self.normalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
@@ -268,14 +265,14 @@ class Service:
         if np.array_equal(self.oldProfile.profile, np.zeros(self.profileVectorLength)):
             print("No old profile.")
         else:
-            self.getFilmRecommendations("Try out some older films", self.allFilmDataUnseen, serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
+            self.getFilmRecommendations("Try out some older films", serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
                                         self.oldProfile.profile, self.oldProfile.profileId)
             # printStringifiedVector(oldProfile.profile, self.allGenres, self.allCountries, "Old",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys,
             #                        self.normalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
 
 
-    def getFilmRecommendations(self, recommendedRowText, allFilmData, numberOfRecommendations, profileVector, 
+    def getFilmRecommendations(self, recommendedRowText, numberOfRecommendations, profileVector, 
                                profileId):
         self.rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, "recommendedFilms": [], 
                                     "profileId": profileId})
@@ -285,7 +282,7 @@ class Service:
         serviceUtilities = ServiceUtilities()
         vectorizeUtilities = VectorizeUtilities()
 
-        for filmId in allFilmData:
+        for filmId in self.allFilmDataUnseen:
             filmVectorMagnitude = self.allFilmDataVectorizedMagnitudes[filmId]
             cosineSimilarities[filmId] = vectorizeUtilities.cosineSimilarity(self.allFilmDataVectorized[filmId], profileVector,
                                                         filmVectorMagnitude, profileVectorMagnitude)
