@@ -2,11 +2,13 @@ from DocumentDatabase import *
 from flask import Flask
 from flask_cors import CORS
 from Service import *
+from ServiceUtilities import *
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 database = DocumentDatabase("../")
-service = Service(database)
+serviceUtilities = ServiceUtilities()
+service = Service(database, serviceUtilities)
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])

@@ -16,9 +16,6 @@ class ServiceUtilities:
     FILE_UPLOAD_SUCCESS_MESSAGE = "Upload Success."
     INVALID_ZIP_FILE_ERROR_MESSAGE = "Zip file is invalid."
 
-    def __init__(self):
-        pass
-
     def isFilmRecommendationUnique(self, filmId, rowsOfRecommendations):
         for rowOfRecommendations in rowsOfRecommendations:
             for recommendedFilm in rowOfRecommendations['recommendedFilms']:
