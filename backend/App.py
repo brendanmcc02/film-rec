@@ -3,12 +3,14 @@ from flask import Flask
 from flask_cors import CORS
 from Service import *
 from ServiceUtilities import *
+from VectorizeUtilities import *
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 database = DocumentDatabase("../")
 serviceUtilities = ServiceUtilities()
-service = Service(database, serviceUtilities)
+vectorizeUtilities = VectorizeUtilities()
+service = Service(database, serviceUtilities, vectorizeUtilities)
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])

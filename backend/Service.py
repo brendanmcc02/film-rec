@@ -4,14 +4,14 @@ from flask import request, jsonify
 import numpy as np
 from LetterboxdConversionUtilities import *
 from InitDocumentDatabase import *
-from VectorizeUtilities import *
 from VectorProfile import *
 
 class Service:
 
-    def __init__(self, _database, _serviceUtilities):
+    def __init__(self, _database, _serviceUtilities, _vectorizeUtilities):
         self.database = _database
         self.serviceUtilities = _serviceUtilities
+        self.vectorizeUtilities = _vectorizeUtilities
         self.allFilmDataUnseen = {}
         self.allFilmDataVectorized = _database.get("allFilmDataVectorized")
         self.allFilmDataVectorizedMagnitudes = _database.get("allFilmDataVectorizedMagnitudes")
@@ -164,13 +164,11 @@ class Service:
         userFilmDataVectorized = {}
 
         # init a dict with pre-computed scalar values
-        cachedDateRatedAndUserRatingWeights = {}
-
-        vectorizeUtilities = VectorizeUtilities()
+        cachedDateRatedAndUserRatingWeights = {}        
 
         # vectorize user-film-data
         for imdbFilmId in userFilmData:
-            vector = vectorizeUtilities.vectorizeFilm(userFilmData[imdbFilmId], self.allGenres, self.allCountries,
+            vector = self.vectorizeUtilities.vectorizeFilm(userFilmData[imdbFilmId], self.allGenres, self.allCountries,
                                                       self.normalizedYears, self.normalizedImdbRatings, self.minNumberOfVotes,
                                                       self.diffNumberOfVotes, self.normalizedRuntimes)
             if isDiffDateRatedZero:
@@ -186,27 +184,27 @@ class Service:
 
             userFilmDataVectorized[imdbFilmId] = vector * cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
-        self.favouriteProfile = vectorizeUtilities.initFavouriteProfile(userFilmData, userFilmDataVectorized, 
+        self.favouriteProfile = self.vectorizeUtilities.initFavouriteProfile(userFilmData, userFilmDataVectorized, 
                                                                          self.profileVectorLength,
                                                                          cachedDateRatedAndUserRatingWeights, favouriteFilmIds,
                                                                          self.allGenres, self.allCountries)
 
-        self.recencyProfile = vectorizeUtilities.initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
+        self.recencyProfile = self.vectorizeUtilities.initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
                                                                     self.profileVectorLength, cachedDateRatedAndUserRatingWeights, 
                                                                     self.allGenres, self.allCountries)
 
-        self.genreProfiles = vectorizeUtilities.initGenreProfiles(userFilmData, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
+        self.genreProfiles = self.vectorizeUtilities.initGenreProfiles(userFilmData, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
                                                                    self.allGenres, self.profileVectorLength, 
                                                                    self.serviceUtilities.NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD, 
                                                                    self.allCountries)
 
-        userProfile = vectorizeUtilities.initUserProfile(userFilmData, userFilmDataVectorized, self.profileVectorLength,
+        userProfile = self.vectorizeUtilities.initUserProfile(userFilmData, userFilmDataVectorized, self.profileVectorLength,
                                                          cachedDateRatedAndUserRatingWeights, self.allGenres, self.allCountries)
 
-        self.internationalProfile = vectorizeUtilities.initInternationalProfile(userProfile.profile, self.allCountries, self.allGenresLength,
+        self.internationalProfile = self.vectorizeUtilities.initInternationalProfile(userProfile.profile, self.allCountries, self.allGenresLength,
                                                                                 self.profileVectorLength)
 
-        self.oldProfile = vectorizeUtilities.initOldProfile(userProfile.profile)
+        self.oldProfile = self.vectorizeUtilities.initOldProfile(userProfile.profile)
 
         self.generateRecommendations()
 
@@ -219,8 +217,7 @@ class Service:
         if np.array_equal(self.favouriteProfile.profile, np.zeros(self.profileVectorLength)):
             print("No favourite profile.")
         else:
-            self.getFilmRecommendations("Based on your favourite films", self.serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
-                                        self.favouriteProfile.profile, self.favouriteProfile.profileId)
+            self.getFilmRecommendations("Based on your favourite films", self.favouriteProfile.profile, self.favouriteProfile.profileId)
             # printStringifiedVector(favouriteProfile.profile, self.allGenres, self.allCountries, "Favourite",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
             #                        self.minNumberOfVotes, self.diffNumberOfVotes)
@@ -228,23 +225,21 @@ class Service:
         if np.array_equal(self.recencyProfile.profile, np.zeros(self.profileVectorLength)):
             print("No recency profile.")
         else:
-            self.getFilmRecommendations("Based on what you watched recently", self.serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
-                                        self.recencyProfile.profile, self.recencyProfile.profileId)
+            self.getFilmRecommendations("Based on what you watched recently", self.recencyProfile.profile, self.recencyProfile.profileId)
             # printStringifiedVector(recencyProfile.profile, self.allGenres, self.allCountries, "Recency",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys, self.normalizedImdbRatingsKeys,
             #                        self.minNumberOfVotes, self.diffNumberOfVotes)
 
         self.genreProfiles = sorted(self.genreProfiles, key=lambda x: x.weightedMeanRating, reverse=True)
 
-        vectorizeUtilities = VectorizeUtilities()
+        
 
         for i in range(self.serviceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS):
             if self.genreProfiles[i].weightedMeanRating == 0.0:
                 print("No genre profile.")
             else:
-                countryText = vectorizeUtilities.getProfileMaxCountry(self.genreProfiles[i].profile, self.allGenresLength, self.allCountries)
-                self.getFilmRecommendations(f"Because you like {countryText} {self.genreProfiles[i].profileId} films", 
-                                            self.serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, self.genreProfiles[i].profile, 
+                countryText = self.vectorizeUtilities.getProfileMaxCountry(self.genreProfiles[i].profile, self.allGenresLength, self.allCountries)
+                self.getFilmRecommendations(f"Because you like {countryText} {self.genreProfiles[i].profileId} films", self.genreProfiles[i].profile, 
                                             self.genreProfiles[i].profileId)
                 # printStringifiedVector(genreProfiles[i].profile, self.allGenres, self.allCountries, 
                 #                        genreProfiles[i].profileId, self.normalizedYearsKeys, 
@@ -254,8 +249,7 @@ class Service:
         if np.array_equal(self.internationalProfile.profile, np.zeros(self.profileVectorLength)):
             print("No international profile.")
         else:
-            self.getFilmRecommendations("Try out some international films", self.serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
-                                        self.internationalProfile.profile, self.internationalProfile.profileId)
+            self.getFilmRecommendations("Try out some international films", self.internationalProfile.profile, self.internationalProfile.profileId)
             # printStringifiedVector(internationalProfile.profile, self.allGenres, self.allCountries, 
             #                        "International", self.normalizedYearsKeys, self.normalizedRuntimesKeys,
             #                        self.normalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
@@ -263,30 +257,28 @@ class Service:
         if np.array_equal(self.oldProfile.profile, np.zeros(self.profileVectorLength)):
             print("No old profile.")
         else:
-            self.getFilmRecommendations("Try out some older films", self.serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW, 
-                                        self.oldProfile.profile, self.oldProfile.profileId)
+            self.getFilmRecommendations("Try out some older films", self.oldProfile.profile, self.oldProfile.profileId)
             # printStringifiedVector(oldProfile.profile, self.allGenres, self.allCountries, "Old",
             #                        self.normalizedYearsKeys, self.normalizedRuntimesKeys,
             #                        self.normalizedImdbRatingsKeys, self.minNumberOfVotes, self.diffNumberOfVotes)
 
 
-    def getFilmRecommendations(self, recommendedRowText, numberOfRecommendations, profileVector, 
-                               profileId):
+    def getFilmRecommendations(self, recommendedRowText, profileVector, profileId):
         self.rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, "recommendedFilms": [], 
                                     "profileId": profileId})
         profileVectorMagnitude = np.linalg.norm(profileVector)
         cosineSimilarities = {}
 
         
-        vectorizeUtilities = VectorizeUtilities()
 
         for filmId in self.allFilmDataUnseen:
             filmVectorMagnitude = self.allFilmDataVectorizedMagnitudes[filmId]
-            cosineSimilarities[filmId] = vectorizeUtilities.cosineSimilarity(self.allFilmDataVectorized[filmId], profileVector,
+            cosineSimilarities[filmId] = self.vectorizeUtilities.cosineSimilarity(self.allFilmDataVectorized[filmId], profileVector,
                                                         filmVectorMagnitude, profileVectorMagnitude)
 
         cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
 
+        numberOfRecommendations = self.serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW
         i = 0
         while i < numberOfRecommendations:
             filmId = cosineSimilarities[i][0]
@@ -309,7 +301,7 @@ class Service:
         isThumbsUp = request.args.get('isThumbsUp').lower() == 'true'
 
         
-        vectorizeUtilities = VectorizeUtilities()
+        
 
         for row in self.rowsOfRecommendations:
             for film in row['recommendedFilms']:
@@ -338,7 +330,7 @@ class Service:
         else:
             profile.profile -= adjustment
 
-        vectorizeUtilities.keepVectorBoundary(profile.profile)
+        self.vectorizeUtilities.keepVectorBoundary(profile.profile)
 
         return f"changed {profileId} profile due to after reviewing {filmId}", 200
     
