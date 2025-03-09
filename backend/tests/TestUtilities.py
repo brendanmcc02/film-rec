@@ -69,8 +69,8 @@ class TestUtilities:
 
     def verifyRowsOfRecommendations(self, rowsOfRecommendations, totalNumberOfRows):
         documentDatabase = DocumentDatabase(self.repositoryRoot)
-        allGenres = documentDatabase.get("allGenres")
-        allCountries = documentDatabase.get("allCountries")
+        allGenres = documentDatabase.read("allGenres")
+        allCountries = documentDatabase.read("allCountries")
 
         assert len(rowsOfRecommendations) == totalNumberOfRows
 

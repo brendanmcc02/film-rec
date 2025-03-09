@@ -9,12 +9,12 @@ from VectorizeUtilities import *
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
-database = DocumentDatabase("../")
+documentDatabase = DocumentDatabase("../")
 letterboxdConversionUtilities = LetterboxdConversionUtilities()
-initDocumentDatabase = InitDocumentDatabase()
+initDocumentDatabase = InitDocumentDatabase(documentDatabase)
 serviceUtilities = ServiceUtilities()
 vectorizeUtilities = VectorizeUtilities()
-service = Service(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDocumentDatabase)
+service = Service(documentDatabase, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDocumentDatabase)
 
 
 @app.route('/verifyUserUploadedFile', methods=['POST'])
