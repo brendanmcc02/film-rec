@@ -1,12 +1,12 @@
 # after the raw imdb datasets have been downloaded, import and filter the datasets, 
 # then call the TMDb API service to augment additional data. this produces many .json
 # files to be used by the backend service.
-# this is intended to be run using `init-all-film-data.sh`, not as a standalone file.
+# this is intended to be run using `initDocumentDatabase.sh`, not as a standalone file.
 
-import json
 import csv
 import time
 import requests
+from DocumentDatabase import *
 from VectorizeUtilities import *
 
 class InitDocumentDatabase:
@@ -15,6 +15,9 @@ class InitDocumentDatabase:
     NUMBER_OF_VOTES_THRESHOLD = 25000
     BASE_IMDB_URL = 'https://www.imdb.com/title/'
     VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS = 5
+
+    def __init__(self, _documentDatabase):
+        self.documentDatabase = _documentDatabase
 
 
     def main(self):
@@ -93,8 +96,7 @@ class InitDocumentDatabase:
                     if genre not in allGenres:
                         allGenres.append(genre)
         else:
-            allFilmDataFile = open('../database/allFilmData.json')
-            allFilmData = json.load(allFilmDataFile)
+            allFilmData = self.documentDatabase.read("allFilmData")
             allFilmDataFilmIds = list(allFilmData.keys())
             allGenres = []
             for filmId in allFilmDataFilmIds:
@@ -113,8 +115,7 @@ class InitDocumentDatabase:
             "Authorization": f"Bearer {accessToken}"
         }
 
-        cachedTmbdFilmDataFile = open('../database/cachedTmdbFilmData.json')
-        cachedTmbdFilmData = json.load(cachedTmbdFilmDataFile)
+        cachedTmdbFilmData = self.documentDatabase.read("cachedTmdbFilmData")
 
         allCountries = []
 
@@ -129,10 +130,8 @@ class InitDocumentDatabase:
         minRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
         maxRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
 
-        cachedLetterboxdTitlesFile = open('../database/cachedLetterboxdTitles.json')
-        cachedLetterboxdTitles = json.load(cachedLetterboxdTitlesFile)
-        cachedCountriesFile = open('../database/cachedCountries.json')
-        cachedCountries = json.load(cachedCountriesFile)
+        cachedLetterboxdTitles = self.documentDatabase.read("cachedLetterboxdTitles")
+        cachedCountries = self.documentDatabase.read("cachedCountries")
         
         count = 0
         invalidAllFilmDataFilmIds = []
@@ -140,12 +139,12 @@ class InitDocumentDatabase:
         for imdbFilmId in allFilmDataFilmIds:
             count = count + 1
             print(str(count) + " " + str(imdbFilmId))
-            if imdbFilmId in cachedTmbdFilmData:
-                allFilmData[imdbFilmId]['letterboxdTitle'] = cachedTmbdFilmData[imdbFilmId]['letterboxdTitle']
-                allFilmData[imdbFilmId]['letterboxdYear'] = cachedTmbdFilmData[imdbFilmId]['letterboxdYear']
-                allFilmData[imdbFilmId]['countries'] = cachedTmbdFilmData[imdbFilmId]['countries']
-                allFilmData[imdbFilmId]['poster'] = cachedTmbdFilmData[imdbFilmId]['poster']
-                allFilmData[imdbFilmId]['summary'] = cachedTmbdFilmData[imdbFilmId]['summary']
+            if imdbFilmId in cachedTmdbFilmData:
+                allFilmData[imdbFilmId]['letterboxdTitle'] = cachedTmdbFilmData[imdbFilmId]['letterboxdTitle']
+                allFilmData[imdbFilmId]['letterboxdYear'] = cachedTmdbFilmData[imdbFilmId]['letterboxdYear']
+                allFilmData[imdbFilmId]['countries'] = cachedTmdbFilmData[imdbFilmId]['countries']
+                allFilmData[imdbFilmId]['poster'] = cachedTmdbFilmData[imdbFilmId]['poster']
+                allFilmData[imdbFilmId]['summary'] = cachedTmdbFilmData[imdbFilmId]['summary']
 
                 for country in allFilmData[imdbFilmId]['countries']:
                     if country not in allCountries:
@@ -213,7 +212,7 @@ class InitDocumentDatabase:
                         else:
                             print(f"Unrecognised Country: {countryShorthand}")
 
-                    cachedTmbdFilmData[imdbFilmId] = {"letterboxdTitle": letterboxdTitle, "letterboxdYear": letterboxdYear,
+                    cachedTmdbFilmData[imdbFilmId] = {"letterboxdTitle": letterboxdTitle, "letterboxdYear": letterboxdYear,
                                                     "countries": filmCountries, "poster": poster, 
                                                     "summary": filmSummary}
 
@@ -252,14 +251,9 @@ class InitDocumentDatabase:
 
         print(f"\nFinal Dataset size: {len(allFilmDataFilmIds)} films.\n")
 
-        with open('../database/allFilmData.json', 'w') as convert_file:
-            convert_file.write(json.dumps(allFilmData, indent=4, separators=(',', ': ')))
-
-        with open('../database/cachedTmdbFilmData.json', 'w') as convert_file:
-            convert_file.write(json.dumps(cachedTmbdFilmData, indent=4, separators=(',', ': ')))
-
-        with open('../database/cachedLetterboxdTitles.json', 'w') as convert_file:
-            convert_file.write(json.dumps(cachedLetterboxdTitles, indent=4, separators=(',', ': ')))
+        self.documentDatabase.write("allFilmData", allFilmData)
+        self.documentDatabase.write("cachedTmdbFilmData", cachedTmdbFilmData)
+        self.documentDatabase.write("cachedLetterboxdTitles", cachedLetterboxdTitles)
 
         print(f"\nVectorizing allFilmData.json\n")
 
@@ -304,37 +298,16 @@ class InitDocumentDatabase:
                 allFilmDataVectorizedMagnitudes[filmId] = round(np.linalg.norm(allFilmDataVectorized[filmId]), 
                                                                 self.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
-        with open('../database/allFilmDataVectorized.json', 'w') as convert_file:
-            convert_file.write(json.dumps(allFilmDataVectorized, indent=4, separators=(',', ': '))
-                                .replace(",\n        ", ", ").replace("],", "],"))
-
-        with open('../database/allGenres.json', 'w') as convert_file:
-            convert_file.write(json.dumps(allGenres, indent=4, separators=(',', ': ')))
-
-        with open('../database/allCountries.json', 'w') as convert_file:
-            convert_file.write(json.dumps(allCountries, indent=4, separators=(',', ': ')))
-
-        with open('../database/normalizedYears.json', 'w') as convert_file:
-            convert_file.write(json.dumps(normalizedYears, indent=4, separators=(',', ': ')))
-
-        with open('../database/normalizedImdbRatings.json', 'w') as convert_file:
-            convert_file.write(json.dumps(normalizedImdbRatings, indent=4, separators=(',', ': ')))
-
-        with open('../database/normalizedRuntimes.json', 'w') as convert_file:
-            convert_file.write(json.dumps(normalizedRuntimes, indent=4, separators=(',', ': ')))
-
-        with open('../database/minNumberOfVotes.json', 'w') as convert_file:
-            convert_file.write(json.dumps(minNumberOfVotes, indent=4, separators=(',', ': ')))
-
-        with open('../database/diffNumberOfVotes.json', 'w') as convert_file:
-            convert_file.write(json.dumps(diffNumberOfVotes, indent=4, separators=(',', ': ')))
-
-        with open('../database/profileVectorLength.json', 'w') as convert_file:
-            convert_file.write(json.dumps(profileVectorLength, indent=4, separators=(',', ': ')))
-
-        with open('../database/allFilmDataVectorizedMagnitudes.json', 'w') as convert_file:
-            convert_file.write(json.dumps(allFilmDataVectorizedMagnitudes, indent=4, separators=(',', ': ')))
-
+        self.documentDatabase.write("allFilmDataVectorized", allFilmDataVectorized, [[",\n        ", ", "]])
+        self.documentDatabase.write("allGenres", allGenres)
+        self.documentDatabase.write("allCountries", allCountries)
+        self.documentDatabase.write("normalizedYears", normalizedYears)
+        self.documentDatabase.write("normalizedImdbRatings", normalizedImdbRatings)
+        self.documentDatabase.write("normalizedRuntimes", normalizedRuntimes)
+        self.documentDatabase.write("minNumberOfVotes", minNumberOfVotes)
+        self.documentDatabase.write("diffNumberOfVotes", diffNumberOfVotes)
+        self.documentDatabase.write("profileVectorLength", profileVectorLength)
+        self.documentDatabase.write("allFilmDataVectorizedMagnitudes", allFilmDataVectorizedMagnitudes)
 
     def isInvalidResponse(self, jsonResponse):
         try:
@@ -369,5 +342,6 @@ class InitDocumentDatabase:
 
 
 if __name__ == "__main__":
-    initDocumentDatabase = InitDocumentDatabase()
+    documentDatbase = DocumentDatabase("../")
+    initDocumentDatabase = InitDocumentDatabase(documentDatbase)
     initDocumentDatabase.main()
