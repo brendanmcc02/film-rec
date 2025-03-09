@@ -342,6 +342,6 @@ class InitDocumentDatabase:
 
 
 if __name__ == "__main__":
-    documentDatbase = DocumentDatabase("../")
-    initDocumentDatabase = InitDocumentDatabase(documentDatbase)
+    documentDatabase = DocumentDatabase("../")
+    initDocumentDatabase = InitDocumentDatabase(documentDatabase)
     initDocumentDatabase.main()

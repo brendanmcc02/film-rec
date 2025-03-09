@@ -232,8 +232,8 @@ def test_profileVectorLength():
     assert profileVectorLength > 0
 
 def test_convertRuntimeToHoursMinutes():
-    documentDatbase = DocumentDatabase(REPOSITORY_ROOT)
-    initDocumentDatabase = InitDocumentDatabase(documentDatbase)
+    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
+    initDocumentDatabase = InitDocumentDatabase(documentDatabase)
     assert initDocumentDatabase.convertRuntimeToHoursMinutes(60) == "1h"
     assert initDocumentDatabase.convertRuntimeToHoursMinutes(120) == "2h"
     
