@@ -92,7 +92,7 @@ class Service:
             return f"Error occurred with reading {self.userFilmDataFilename}.\n{e}", 400
 
     def initRowsOfRecommendations(self):
-        allFilmData = self.database.get("allFilmData")
+        allFilmData = self.database.read("allFilmData")
 
         if not self.isImdbFile:
             self.userFilmDataOriginal = (self.letterboxdConversionUtilities.convertLetterboxdFormatToImdbFormat(self.userFilmDataOriginal,
