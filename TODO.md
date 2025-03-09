@@ -286,6 +286,6 @@ my-film-data-vec.json to file
 - [x] make class for vector profiles
 
 # Finishing Touches
-- [ ] record demo
-- [ ] linkedin projects section
-- [ ] update on resume
+- [x] record demo
+- [x] linkedin projects section
+- [x] update on resume
