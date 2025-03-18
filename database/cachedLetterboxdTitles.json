@@ -30726,6 +30726,12 @@
             "years": [
                 2019
             ]
+        },
+        {
+            "imdbFilmId": "tt2659414",
+            "years": [
+                2013
+            ]
         }
     ],
     "The Legend of Hercules": [
@@ -54038,6 +54044,47 @@
             "imdbFilmId": "tt24082438",
             "years": [
                 2023
+            ]
+        }
+    ],
+    "Mickey 17": [
+        {
+            "imdbFilmId": "tt12299608",
+            "years": [
+                2025
+            ]
+        }
+    ],
+    "Knox Goes Away": [
+        {
+            "imdbFilmId": "tt20115766",
+            "years": [
+                2023,
+                2024
+            ]
+        }
+    ],
+    "The Six Triple Eight": [
+        {
+            "imdbFilmId": "tt24458622",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Munjya": [
+        {
+            "imdbFilmId": "tt27995594",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Oficina do Diabo": [
+        {
+            "imdbFilmId": "tt28459771",
+            "years": [
+                2025
             ]
         }
     ]
