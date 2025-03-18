@@ -7,7 +7,7 @@ backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
 from DocumentDatabase import *
-from InitDocumentDatabase import *
+from InitDatabase import *
 from TestUtilities import *
 from VectorizeUtilities import *
 
@@ -165,7 +165,7 @@ def test_allFilmDataVectorizedMagnitudes():
         expectedMagnitude = np.linalg.norm(allFilmDataVectorized[filmId])
         expectedMagnitudeFloat = expectedMagnitude.item()
         assert allFilmDataVectorizedMagnitudes[filmId] == round(expectedMagnitudeFloat,
-                                                                InitDocumentDatabase.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
+                                                                InitDatabase.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
 def test_allGenres():
     documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
@@ -206,7 +206,7 @@ def test_normalizedRuntimes():
     normalizedRuntimes = documentDatabase.read("normalizedRuntimes")
 
     for normalizedRuntime in normalizedRuntimes:
-        assert int(normalizedRuntime) >= InitDocumentDatabase.RUNTIME_THRESHOLD
+        assert int(normalizedRuntime) >= InitDatabase.RUNTIME_THRESHOLD
         assert normalizedRuntimes[normalizedRuntime] >= 0.0 
         assert normalizedRuntimes[normalizedRuntime] <= VectorizeUtilities.RUNTIME_WEIGHT
 
@@ -215,7 +215,7 @@ def test_minNumberOfVotes():
     minNumberOfVotes = documentDatabase.read("minNumberOfVotes")
 
     assert minNumberOfVotes != None
-    assert minNumberOfVotes >= InitDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD
+    assert minNumberOfVotes >= InitDatabase.NUMBER_OF_VOTES_THRESHOLD
 
 def test_diffNumberOfVotes():
     documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
@@ -233,7 +233,7 @@ def test_profileVectorLength():
 
 def test_convertRuntimeToHoursMinutes():
     documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    initDocumentDatabase = InitDocumentDatabase(documentDatabase)
+    initDocumentDatabase = InitDatabase(documentDatabase)
     assert initDocumentDatabase.convertRuntimeToHoursMinutes(60) == "1h"
     assert initDocumentDatabase.convertRuntimeToHoursMinutes(120) == "2h"
     

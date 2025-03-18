@@ -28,7 +28,7 @@ if test -f title.basics.tsv; then
   if test -f title.ratings.tsv; then
     printf "\n[2/2] Initialising allFilmData.json..."
     cd ../backend/ || exit
-    python3 InitDocumentDatabase.py
+    python3 InitDatabase.py
 
     rm ../database/title.basics.tsv
     rm ../database/title.ratings.tsv
