@@ -7,12 +7,12 @@ from VectorProfile import *
 class Service:
 
     def __init__(self, _database, _serviceUtilities, _vectorizeUtilities, _letterboxdConversionUtilities,
-                 _initDocumentDatabase):
+                 _initDatabase):
         self.database = _database
         self.serviceUtilities = _serviceUtilities
         self.vectorizeUtilities = _vectorizeUtilities
         self.letterboxdConversionUtilities = _letterboxdConversionUtilities
-        self.initDocumentDatabase = _initDocumentDatabase
+        self.initDatabase = _initDatabase
         self.allFilmDataUnseen = {}
         self.allFilmDataVectorized = _database.read("allFilmDataVectorized")
         self.allFilmDataVectorizedMagnitudes = _database.read("allFilmDataVectorizedMagnitudes")
@@ -105,8 +105,8 @@ class Service:
 
         for film in self.userFilmDataOriginal:
             if (film['Title Type'] == "Movie" and 
-                    int(film['Runtime (mins)']) >= self.initDocumentDatabase.RUNTIME_THRESHOLD and film['Genres'] != ""\
-                    and int(film['Num Votes']) >= self.initDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD):
+                    int(film['Runtime (mins)']) >= self.initDatabase.RUNTIME_THRESHOLD and film['Genres'] != ""\
+                    and int(film['Num Votes']) >= self.initDatabase.NUMBER_OF_VOTES_THRESHOLD):
                 if self.isImdbFile:
                     genres = film['Genres'].replace("\"", "").split(", ")
                 else:

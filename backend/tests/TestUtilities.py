@@ -5,7 +5,7 @@ backendDirectory = os.path.dirname(absolutePathOfCurrentFile)
 sys.path.append(backendDirectory)
 from DocumentDatabase import *
 from ServiceUtilities import *
-from InitDocumentDatabase import *
+from InitDatabase import *
 
 class TestUtilities:
 
@@ -38,11 +38,11 @@ class TestUtilities:
 
         assert 'numberOfVotes' in film
         assert film['numberOfVotes'] != None
-        assert film['numberOfVotes'] >= InitDocumentDatabase.NUMBER_OF_VOTES_THRESHOLD
+        assert film['numberOfVotes'] >= InitDatabase.NUMBER_OF_VOTES_THRESHOLD
 
         assert 'runtime' in film
         assert film['runtime'] != None
-        assert film['runtime'] >= InitDocumentDatabase.RUNTIME_THRESHOLD
+        assert film['runtime'] >= InitDatabase.RUNTIME_THRESHOLD
 
         assert 'runtimeHoursMinutes' in film
         assert film['runtime'] != ""
@@ -54,7 +54,7 @@ class TestUtilities:
             assert genre in allGenres
 
         assert 'imdbUrl' in film
-        assert film['imdbUrl'] == InitDocumentDatabase.BASE_IMDB_URL + filmId
+        assert film['imdbUrl'] == InitDatabase.BASE_IMDB_URL + filmId
 
         assert 'countries' in film
 
@@ -68,9 +68,9 @@ class TestUtilities:
         assert film['summary'] != ""
 
     def verifyRowsOfRecommendations(self, rowsOfRecommendations, totalNumberOfRows):
-        documentDatabase = DocumentDatabase(self.repositoryRoot)
-        allGenres = documentDatabase.read("allGenres")
-        allCountries = documentDatabase.read("allCountries")
+        database = DocumentDatabase(self.repositoryRoot)
+        allGenres = database.read("allGenres")
+        allCountries = database.read("allCountries")
 
         assert len(rowsOfRecommendations) == totalNumberOfRows
 

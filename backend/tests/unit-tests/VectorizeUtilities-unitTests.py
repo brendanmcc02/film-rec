@@ -27,8 +27,8 @@ def test_keepVectorBoundary():
         assert dimension <= 1.0
 
 def test_getFilmGenres():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    allGenres = documentDatabase.read("allGenres")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    allGenres = database.read("allGenres")
 
     vectorizeUtilities = VectorizeUtilities()
 
@@ -102,9 +102,9 @@ def test_curveAccordingToMax_multiVariableVector():
 
 def test_getProfileMaxCountry_filmHasOnlyOneMaxCountry():
     vectorizeUtilities = VectorizeUtilities()
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    allGenres = documentDatabase.read("allGenres")
-    allCountries = documentDatabase.read("allCountries")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    allGenres = database.read("allGenres")
+    allCountries = database.read("allCountries")
     allGenresLength = len(allGenres)
 
     filmVectorWithAmerican = [0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
@@ -114,9 +114,9 @@ def test_getProfileMaxCountry_filmHasOnlyOneMaxCountry():
 
 def test_getProfileMaxCountry_filmHasMultipleMaxCountries_EnsuresOnlyOneIsReturned():
     vectorizeUtilities = VectorizeUtilities()
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    allGenres = documentDatabase.read("allGenres")
-    allCountries = documentDatabase.read("allCountries")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    allGenres = database.read("allGenres")
+    allCountries = database.read("allCountries")
     allGenresLength = len(allGenres)
 
     filmVectorWithAmericanAndBritish = [0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]

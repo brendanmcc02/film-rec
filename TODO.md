@@ -126,6 +126,7 @@ create endpoints for getters/setters
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
 - [x] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
 - [x] bug: imdb recency doesn't work
+- [ ] .env file?
 
 # Windows OS
 - [x] config frontend: npm, etc.
@@ -243,6 +244,8 @@ my-film-data-vec.json to file
 - [x] add note about patience
 - [x] add film imdb url
 - [x] change `app.py` to `App.py` on render backend
+- [ ] make website work for multiple concurrent users
+- [ ] merge `\verifyUserUploadedFile` and `\initRowsOfRecommendations` into one
 
 # README
 - [x] do `README.md`
@@ -250,7 +253,7 @@ my-film-data-vec.json to file
 # CI
 
 ## Unit Tests
-- [x] initDocumentDatabase
+- [x] initDatabase
 - [x] vectorizeUtilities
 
 ## Int Tests
@@ -274,8 +277,9 @@ my-film-data-vec.json to file
 
 # Database abstraction
 - [x] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
-- [x] create a documentDatabase that implements this abstraction
+- [x] create a database that implements this abstraction
 - [x] remove `normalizedYears`, `normalizedImdbRatings` and `normalizedRuntimes` from `cache.json` into it's own json file?
+- [ ] `deleteUserUpoadedFiles` should be behind db abstraction
 
 # Software Design & Architecture
 - [x] turn python files into classes, think in a more OOP way
@@ -289,3 +293,6 @@ my-film-data-vec.json to file
 - [x] record demo
 - [x] linkedin projects section
 - [x] update on resume
+
+# Mongo DB
+- [ ] implement 
