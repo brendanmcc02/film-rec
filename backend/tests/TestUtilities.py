@@ -68,9 +68,9 @@ class TestUtilities:
         assert film['summary'] != ""
 
     def verifyRowsOfRecommendations(self, rowsOfRecommendations, totalNumberOfRows):
-        documentDatabase = DocumentDatabase(self.repositoryRoot)
-        allGenres = documentDatabase.read("allGenres")
-        allCountries = documentDatabase.read("allCountries")
+        database = DocumentDatabase(self.repositoryRoot)
+        allGenres = database.read("allGenres")
+        allCountries = database.read("allCountries")
 
         assert len(rowsOfRecommendations) == totalNumberOfRows
 

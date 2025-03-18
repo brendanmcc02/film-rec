@@ -253,7 +253,7 @@ my-film-data-vec.json to file
 # CI
 
 ## Unit Tests
-- [x] initDocumentDatabase
+- [x] initDatabase
 - [x] vectorizeUtilities
 
 ## Int Tests
@@ -277,7 +277,7 @@ my-film-data-vec.json to file
 
 # Database abstraction
 - [x] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
-- [x] create a documentDatabase that implements this abstraction
+- [x] create a database that implements this abstraction
 - [x] remove `normalizedYears`, `normalizedImdbRatings` and `normalizedRuntimes` from `cache.json` into it's own json file?
 - [ ] `deleteUserUpoadedFiles` should be behind db abstraction
 

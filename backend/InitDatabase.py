@@ -1,7 +1,7 @@
 # after the raw imdb datasets have been downloaded, import and filter the datasets, 
 # then call the TMDb API service to augment additional data. this produces many .json
 # files to be used by the backend service.
-# this is intended to be run using `initDocumentDatabase.sh`, not as a standalone file.
+# this is intended to be run using `initDatabase.sh`, not as a standalone file.
 
 import csv
 import time
@@ -343,5 +343,5 @@ class InitDatabase:
 
 if __name__ == "__main__":
     database = DocumentDatabase("../")
-    initDocumentDatabase = InitDatabase(database)
-    initDocumentDatabase.main()
+    initDatabase = InitDatabase(database)
+    initDatabase.main()

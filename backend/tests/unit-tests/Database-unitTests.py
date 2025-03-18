@@ -14,66 +14,66 @@ from VectorizeUtilities import *
 REPOSITORY_ROOT = "../../../"
 
 def test_allFilmDataExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("allFilmData") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("allFilmData") != None
 
 def test_cachedTmdbFilmDataExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("cachedTmdbFilmData") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("cachedTmdbFilmData") != None
 
 def test_cachedLetterboxdTitlesExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("cachedLetterboxdTitles") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("cachedLetterboxdTitles") != None
 
 def test_allFilmDataVectorizedExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("allFilmDataVectorized") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("allFilmDataVectorized") != None
 
 def test_allFilmDataVectorizedMagnitudesExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("allFilmDataVectorizedMagnitudes") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("allFilmDataVectorizedMagnitudes") != None
 
 def test_allCountriesExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("allCountries") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("allCountries") != None
 
 def test_allGenresExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("allGenres") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("allGenres") != None
 
 def test_cachedCountriesExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("cachedCountries") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("cachedCountries") != None
 
 def test_diffNumberOfVotesExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("diffNumberOfVotes") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("diffNumberOfVotes") != None
 
 def test_minNumberOfVotesExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("minNumberOfVotes") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("minNumberOfVotes") != None
 
 def test_normalizedImdbRatingsExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("normalizedImdbRatings") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("normalizedImdbRatings") != None
 
 def test_normalizedRuntimesExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("normalizedRuntimes") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("normalizedRuntimes") != None
 
 def test_normalizedYearsExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("normalizedYears") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("normalizedYears") != None
 
 def test_profileVectorLengthExists():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    assert documentDatabase.read("profileVectorLength") != None
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    assert database.read("profileVectorLength") != None
 
 def test_allFilmData():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    allFilmData = documentDatabase.read("allFilmData")
-    allGenres = documentDatabase.read("allGenres")
-    allCountries = documentDatabase.read("allCountries")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    allFilmData = database.read("allFilmData")
+    allGenres = database.read("allGenres")
+    allCountries = database.read("allCountries")
 
     testUtilities = TestUtilities("../../../")
 
@@ -81,9 +81,9 @@ def test_allFilmData():
         testUtilities.verifyFilm(allFilmData[filmId], filmId, allGenres, allCountries)
 
 def test_cachedTmdbFilmData():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    cachedTmdbFilmData = documentDatabase.read("cachedTmdbFilmData")
-    allCountries = documentDatabase.read("allCountries")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    cachedTmdbFilmData = database.read("cachedTmdbFilmData")
+    allCountries = database.read("allCountries")
 
     for filmId in cachedTmdbFilmData:
         assert 'letterboxdTitle' in cachedTmdbFilmData[filmId]
@@ -104,8 +104,8 @@ def test_cachedTmdbFilmData():
         assert cachedTmdbFilmData[filmId]['summary'] != ""
 
 def test_cachedLetterboxdTitles():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    cachedLetterboxdTitles = documentDatabase.read("cachedLetterboxdTitles")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    cachedLetterboxdTitles = database.read("cachedLetterboxdTitles")
 
     for letterboxdTitle in cachedLetterboxdTitles:
         assert letterboxdTitle != ""
@@ -123,11 +123,11 @@ def test_cachedLetterboxdTitles():
                 assert year > 0
 
 def test_allFilmDataVectorized():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    allFilmData = documentDatabase.read("allFilmData")
-    allFilmDataVectorized = documentDatabase.read("allFilmDataVectorized")
-    profileVectorLength = documentDatabase.read("profileVectorLength")
-    allGenres = documentDatabase.read("allGenres")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    allFilmData = database.read("allFilmData")
+    allFilmDataVectorized = database.read("allFilmDataVectorized")
+    profileVectorLength = database.read("profileVectorLength")
+    allGenres = database.read("allGenres")
 
     assert len(allFilmData) == len(allFilmDataVectorized)
 
@@ -153,10 +153,10 @@ def test_allFilmDataVectorized():
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
 def test_allFilmDataVectorizedMagnitudes():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    allFilmData = documentDatabase.read("allFilmData")
-    allFilmDataVectorizedMagnitudes = documentDatabase.read("allFilmDataVectorizedMagnitudes")
-    allFilmDataVectorized = documentDatabase.read("allFilmDataVectorized")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    allFilmData = database.read("allFilmData")
+    allFilmDataVectorizedMagnitudes = database.read("allFilmDataVectorizedMagnitudes")
+    allFilmDataVectorized = database.read("allFilmDataVectorized")
 
     assert len(allFilmData) == len(allFilmDataVectorized)
 
@@ -168,8 +168,8 @@ def test_allFilmDataVectorizedMagnitudes():
                                                                 InitDatabase.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
 def test_allGenres():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    allGenres = documentDatabase.read("allGenres")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    allGenres = database.read("allGenres")
 
     assert len(allGenres) > 0
 
@@ -177,8 +177,8 @@ def test_allGenres():
         assert genre != ""
 
 def test_allCountries():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    allCountries = documentDatabase.read("allGenres")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    allCountries = database.read("allGenres")
 
     assert len(allCountries) > 0
 
@@ -186,24 +186,24 @@ def test_allCountries():
         assert country != ""
 
 def test_normalizedYears():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    normalizedYears = documentDatabase.read("normalizedYears")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    normalizedYears = database.read("normalizedYears")
 
     for normalizedYear in normalizedYears:
         assert normalizedYears[normalizedYear] >= 0.0  
         assert normalizedYears[normalizedYear] <= VectorizeUtilities.YEAR_WEIGHT
 
 def test_normalizedImdbRatings():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    normalizedImdbRatings = documentDatabase.read("normalizedImdbRatings")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    normalizedImdbRatings = database.read("normalizedImdbRatings")
 
     for normalizedImdbRating in normalizedImdbRatings:
         assert normalizedImdbRatings[normalizedImdbRating] >= 0.0 
         assert normalizedImdbRatings[normalizedImdbRating] <= VectorizeUtilities.IMDB_RATING_WEIGHT
 
 def test_normalizedRuntimes():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    normalizedRuntimes = documentDatabase.read("normalizedRuntimes")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    normalizedRuntimes = database.read("normalizedRuntimes")
 
     for normalizedRuntime in normalizedRuntimes:
         assert int(normalizedRuntime) >= InitDatabase.RUNTIME_THRESHOLD
@@ -211,39 +211,39 @@ def test_normalizedRuntimes():
         assert normalizedRuntimes[normalizedRuntime] <= VectorizeUtilities.RUNTIME_WEIGHT
 
 def test_minNumberOfVotes():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    minNumberOfVotes = documentDatabase.read("minNumberOfVotes")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    minNumberOfVotes = database.read("minNumberOfVotes")
 
     assert minNumberOfVotes != None
     assert minNumberOfVotes >= InitDatabase.NUMBER_OF_VOTES_THRESHOLD
 
 def test_diffNumberOfVotes():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    diffNumberOfVotes = documentDatabase.read("diffNumberOfVotes")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    diffNumberOfVotes = database.read("diffNumberOfVotes")
 
     assert diffNumberOfVotes != None
     assert diffNumberOfVotes > 0
 
 def test_profileVectorLength():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    profileVectorLength = documentDatabase.read("profileVectorLength")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    profileVectorLength = database.read("profileVectorLength")
     
     assert profileVectorLength != None
     assert profileVectorLength > 0
 
 def test_convertRuntimeToHoursMinutes():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    initDocumentDatabase = InitDatabase(documentDatabase)
-    assert initDocumentDatabase.convertRuntimeToHoursMinutes(60) == "1h"
-    assert initDocumentDatabase.convertRuntimeToHoursMinutes(120) == "2h"
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    initDatabase = InitDatabase(database)
+    assert initDatabase.convertRuntimeToHoursMinutes(60) == "1h"
+    assert initDatabase.convertRuntimeToHoursMinutes(120) == "2h"
     
-    assert initDocumentDatabase.convertRuntimeToHoursMinutes(40) == "40m"
-    assert initDocumentDatabase.convertRuntimeToHoursMinutes(100) == "1h40m"
+    assert initDatabase.convertRuntimeToHoursMinutes(40) == "40m"
+    assert initDatabase.convertRuntimeToHoursMinutes(100) == "1h40m"
 
 def test_allFilmData_correspondsWith_cachedTmdbFilmData():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    allFilmData = documentDatabase.read("allFilmData")
-    cachedTmdbFilmData = documentDatabase.read("cachedTmdbFilmData")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    allFilmData = database.read("allFilmData")
+    cachedTmdbFilmData = database.read("cachedTmdbFilmData")
 
     assert len(allFilmData) == len(cachedTmdbFilmData)
 
@@ -258,9 +258,9 @@ def test_allFilmData_correspondsWith_cachedTmdbFilmData():
             assert country in cachedTmdbFilmData[filmId]['countries']
 
 def test_allFilmData_correspondsWith_cachedLetterboxdTitles():
-    documentDatabase = DocumentDatabase(REPOSITORY_ROOT)
-    allFilmData = documentDatabase.read("allFilmData")
-    cachedLetterboxdTitles = documentDatabase.read("cachedLetterboxdTitles")
+    database = DocumentDatabase(REPOSITORY_ROOT)
+    allFilmData = database.read("allFilmData")
+    cachedLetterboxdTitles = database.read("cachedLetterboxdTitles")
 
     for letterboxdTitle in cachedLetterboxdTitles:
         for film in cachedLetterboxdTitles[letterboxdTitle]:
