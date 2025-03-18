@@ -4,6 +4,8 @@ A film recommendation web app. Films are recommended based on user-submitted IMD
 
 Before starting the project, I was interested in ML and Data Science. I love films, so when it came to thinking about what kind of project to do, a recommendation web app was a clear intersection between these passions.
 
+[Video Demo.](https://youtu.be/NGZIVMRAZtI)
+
 # The Recommendation Algorithm
 
 ## Background to Recommender Systems
