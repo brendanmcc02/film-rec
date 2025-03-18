@@ -13,7 +13,6 @@ class ServiceUtilities:
     NO_FILE_IN_REQUEST_ERROR_MESSAGE = "No file found in the request"
     FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE = "File has more data than row headers."
     FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE = "Row headers do not conform to expected format."
-    FILE_UPLOAD_SUCCESS_MESSAGE = "Upload Success."
     INVALID_ZIP_FILE_ERROR_MESSAGE = "Zip file is invalid."
     EXPECTED_IMDB_FILM_ATTRIBUTES = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
                                      "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",

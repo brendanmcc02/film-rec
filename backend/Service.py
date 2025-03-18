@@ -38,13 +38,11 @@ class Service:
         self.internationalProfile = VectorProfile('international', self.profileVectorLength)
         self.oldProfile = VectorProfile('old', self.profileVectorLength)
         self.rowsOfRecommendations = []
-        self.isImdbFile = True
-        self.userFilmDataFilename = ""
         self.userFilmDataOriginal = []
 
 
-    def verifyUserUploadedFile(self):
-        self.isImdbFile = True
+    def initRowsOfRecommendations(self):
+        isImdbFile = True
 
         self.serviceUtilities.deleteUserUploadedData()
 
@@ -52,22 +50,22 @@ class Service:
             return self.serviceUtilities.NO_FILE_IN_REQUEST_ERROR_MESSAGE, 400
 
         file = request.files['file']
-        self.userFilmDataFilename = file.filename
+        userFilmDataFilename = file.filename
 
-        if self.serviceUtilities.isUnacceptableMediaType(self.userFilmDataFilename):
+        if self.serviceUtilities.isUnacceptableMediaType(userFilmDataFilename):
             return self.serviceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE, 415
 
         try:
             self.userFilmDataOriginal = []
-            userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + self.userFilmDataFilename
+            userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
             file.save(userUploadedFileLocation)
 
             if userUploadedFileLocation.endswith(".zip"):
-                if self.letterboxdConversionUtilities.isLetterboxdZipFileInvalid(self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME, self.userFilmDataFilename):
+                if self.letterboxdConversionUtilities.isLetterboxdZipFileInvalid(self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME, userFilmDataFilename):
                     return self.serviceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE, 400
                 else:
-                    self.userFilmDataFilename = "ratings.csv"
-                    userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + self.userFilmDataFilename
+                    userFilmDataFilename = "ratings.csv"
+                    userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
 
             with open(userUploadedFileLocation, encoding='utf-8') as userFilmDataFile:
                 reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
@@ -79,22 +77,20 @@ class Service:
                     keys = list(row.keys())
                     for key in keys:
                         if key not in self.serviceUtilities.EXPECTED_IMDB_FILM_ATTRIBUTES:
-                            self.isImdbFile = False
+                            isImdbFile = False
                             if key not in self.letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
                                 return self.serviceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, 400
 
                     self.userFilmDataOriginal.append(row)
 
             self.serviceUtilities.deleteUserUploadedData()
-            return self.serviceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE, 200
         except Exception as e:
             self.serviceUtilities.deleteUserUploadedData()
-            return f"Error occurred with reading {self.userFilmDataFilename}.\n{e}", 400
-
-    def initRowsOfRecommendations(self):
+            return f"Error occurred with reading {userFilmDataFilename}.\n{e}", 400
+        
         allFilmData = self.database.read("allFilmData")
 
-        if not self.isImdbFile:
+        if not isImdbFile:
             self.userFilmDataOriginal = (self.letterboxdConversionUtilities.convertLetterboxdFormatToImdbFormat(self.userFilmDataOriginal,
                                                                                                                 allFilmData, self.cachedLetterboxdTitles))
 
@@ -107,7 +103,7 @@ class Service:
             if (film['Title Type'] == "Movie" and 
                     int(film['Runtime (mins)']) >= self.initDatabase.RUNTIME_THRESHOLD and film['Genres'] != ""\
                     and int(film['Num Votes']) >= self.initDatabase.NUMBER_OF_VOTES_THRESHOLD):
-                if self.isImdbFile:
+                if isImdbFile:
                     genres = film['Genres'].replace("\"", "").split(", ")
                 else:
                     genres = film['Genres']

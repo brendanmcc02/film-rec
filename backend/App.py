@@ -17,12 +17,7 @@ vectorizeUtilities = VectorizeUtilities()
 service = Service(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase)
 
 
-@app.route('/verifyUserUploadedFile', methods=['POST'])
-def verifyUserUploadedFile():
-    return service.verifyUserUploadedFile()
-
-
-@app.route('/initRowsOfRecommendations')
+@app.route('/initRowsOfRecommendations', methods=['POST'])
 def initRowsOfRecommendations():
     return service.initRowsOfRecommendations()
 

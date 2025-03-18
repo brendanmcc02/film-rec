@@ -22,12 +22,14 @@ const App = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch('https://film-rec-backend.onrender.com/verifyUserUploadedFile', {
+      const response = await fetch('https://film-rec-backend.onrender.com/initRowsOfRecommendations', {
         method: 'POST',
         body: formData
       });
 
       if (response.ok) {
+        const responseContent = response.json();
+        // TODO bring responseContent when navigating page
         navigate('/recommendations-page');
       } else {
         setErrorText(await response.text());
