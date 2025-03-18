@@ -279,7 +279,6 @@ my-film-data-vec.json to file
 - [x] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
 - [x] create a database that implements this abstraction
 - [x] remove `normalizedYears`, `normalizedImdbRatings` and `normalizedRuntimes` from `cache.json` into it's own json file?
-- [ ] `deleteUserUpoadedFiles` should be behind db abstraction
 
 # Software Design & Architecture
 - [x] turn python files into classes, think in a more OOP way
