@@ -541,6 +541,7 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     assert regenerateRecommendationsResponse.status_code == 200
 
     # verify the newly recommended films are valid
+    # TODO move this to a method to make more readable?
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
     numberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
@@ -553,6 +554,7 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
 
     # ensure all newly recommended films are unique
+    # TODO move this to a method to make more readable?
     initialRecommendationFilmIds = []
     initialRecommendations = getInitialRowsOfRecommendationsResponse.json()
     for row in initialRecommendations:
