@@ -9,7 +9,7 @@ const App = () => {
     const [rowsOfRecommendationButtonVisibility, setRowsOfRecommendationButtonVisibility] = useState([]);
 
     useEffect(() => {
-        fetch('https://film-rec-backend.onrender.com/initRowsOfRecommendations')
+        fetch('https://film-rec-backend.onrender.com/getInitialRowsOfRecommendations')
             .then((response) => response.json())
             .then((jsonData) => {
                 setRowsOfRecommendations(jsonData);

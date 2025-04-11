@@ -22,9 +22,9 @@ def verifyUserUploadedFile():
     return service.verifyUserUploadedFile()
 
 
-@app.route('/initRowsOfRecommendations')
-def initRowsOfRecommendations():
-    return service.initRowsOfRecommendations()
+@app.route('/getInitialRowsOfRecommendations')
+def getInitialRowsOfRecommendations():
+    return service.getInitialRowsOfRecommendations()
 
 
 @app.route('/reviewRecommendation')

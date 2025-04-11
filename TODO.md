@@ -245,7 +245,7 @@ my-film-data-vec.json to file
 - [x] add film imdb url
 - [x] change `app.py` to `App.py` on render backend
 - [ ] make website work for multiple concurrent users
-- [ ] merge `\verifyUserUploadedFile` and `\initRowsOfRecommendations` into one
+- [ ] merge `\verifyUserUploadedFile` and `\getInitialRowsOfRecommendations` into one
 
 # README
 - [x] do `README.md`
@@ -257,7 +257,7 @@ my-film-data-vec.json to file
 - [x] vectorizeUtilities
 
 ## Int Tests
-- [x] `/initRowsOfRecommendations`
+- [x] `/getInitialRowsOfRecommendations`
 - [x] genre edge cases
 - [x] `/regenerateRecommendations`
 - [x] [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses)

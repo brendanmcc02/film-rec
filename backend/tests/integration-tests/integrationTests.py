@@ -99,7 +99,7 @@ def test_verifyUserUploadedFile_letterboxdCorrectZip(backendUrl):
     assert response.status_code == 200
     assert response.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-def test_initRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
+def test_getInitialRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     fileName = "imdb-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -108,10 +108,10 @@ def test_initRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -127,7 +127,7 @@ def test_initRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
 
-def test_initRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
+def test_getInitialRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     fileName = "letterboxd-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -136,10 +136,10 @@ def test_initRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -155,7 +155,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
 
-def test_initRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
+def test_getInitialRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
     fileName = "imdb-no-recent-and-favourite-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -164,10 +164,10 @@ def test_initRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 0
     numberOfRecentRows = 0
@@ -184,7 +184,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
         assert row['profileId'] != "recency"
         assert row['profileId'] != "favourite"
 
-def test_initRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUrl):
+def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUrl):
     fileName = "letterboxd-no-recent-and-favourite-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -193,10 +193,10 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUr
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 0
     numberOfRecentRows = 0
@@ -213,7 +213,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUr
         assert row['profileId'] != "recency"
         assert row['profileId'] != "favourite"
 
-def test_initRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl):
+def test_getInitialRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl):
     fileName = "imdb-no-recent-and-international-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -222,10 +222,10 @@ def test_initRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl)
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -242,7 +242,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl)
         assert row['profileId'] != "recency"
         assert row['profileId'] != "international"
 
-def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backendUrl):
+def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backendUrl):
     fileName = "letterboxd-no-recent-and-international-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -251,10 +251,10 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backe
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -272,7 +272,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backe
         assert row['profileId'] != "international"
 
 # tests for cases when the user has rated films with only two genres
-def test_initRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
+def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
     fileName = "imdb-no-recent-films-and-two-genres.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -281,10 +281,10 @@ def test_initRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -301,7 +301,7 @@ def test_initRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(
         assert row['profileId'] != "recency"
 
 # tests for cases when the user has rated films with only two genres
-def test_initRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
+def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
     fileName = "letterboxd-no-recent-films-and-two-genres.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -310,10 +310,10 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenr
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -330,7 +330,7 @@ def test_initRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenr
         assert row['profileId'] != "recency"
 
 # tests for cases when the user has rated films with only one genre
-def test_initRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
+def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     fileName = "imdb-international-film-no-recent-films-and-one-genre.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -339,10 +339,10 @@ def test_initRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGe
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -359,7 +359,7 @@ def test_initRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGe
         assert row['profileId'] != "recency"
 
 # tests for cases when the user has rated films with only one genre
-def test_initRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
+def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     fileName = "letterboxd-international-film-no-recent-films-and-one-genre.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -368,10 +368,10 @@ def test_initRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAn
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -388,7 +388,7 @@ def test_initRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAn
         assert row['profileId'] != "recency"
 
 # tests for cases when the user has rated films with only one genre
-def test_initRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
+def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     fileName = "imdb-american-film-no-recent-films-and-one-genre.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -397,10 +397,10 @@ def test_initRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOn
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -418,7 +418,7 @@ def test_initRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOn
         assert row['profileId'] != "international"
 
 # tests for cases when the user has rated films with only one genre
-def test_initRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
+def test_getInitialRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     fileName = "letterboxd-american-film-no-recent-films-and-one-genre.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -427,10 +427,10 @@ def test_initRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilm
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -447,7 +447,7 @@ def test_initRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilm
         assert row['profileId'] != "recency"
         assert row['profileId'] != "international"
 
-def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
+def test_getInitialRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     fileName = "letterboxd-no-recent.zip"
     file = open(testUploadFilesDirectory + fileName, 'rb')
     filesToSend = {'file': (fileName, file)}
@@ -456,10 +456,10 @@ def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -475,7 +475,7 @@ def test_initRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
 
-def test_initRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
+def test_getInitialRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
     fileName = "imdb-no-recognised-films.csv"
     file = open(testUploadFilesDirectory + fileName, 'rb')
     filesToSend = {'file': (fileName, file)}
@@ -484,10 +484,10 @@ def test_initRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 0
     numberOfRecentRows = 0
@@ -500,7 +500,7 @@ def test_initRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
     testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
-def test_initRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl):
+def test_getInitialRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl):
     fileName = "letterboxd-no-recognised-films.csv"
     file = open(testUploadFilesDirectory + fileName, 'rb')
     filesToSend = {'file': (fileName, file)}
@@ -509,10 +509,10 @@ def test_initRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = initRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
 
     numberOfFavouriteRows = 0
     numberOfRecentRows = 0
@@ -534,8 +534,8 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations")
     assert regenerateRecommendationsResponse.status_code == 200
@@ -554,7 +554,7 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
 
     # ensure all newly recommended films are unique
     initialRecommendationFilmIds = []
-    initialRecommendations = initRowsOfRecommendationsResponse.json()
+    initialRecommendations = getInitialRowsOfRecommendationsResponse.json()
     for row in initialRecommendations:
         for film in row['recommendedFilms']:
             initialRecommendationFilmIds.append(film['id'])
@@ -572,8 +572,8 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     assert verifyUserUploadedFileResponse.status_code == 200
     assert verifyUserUploadedFileResponse.content.decode(encoding='utf-8') == ServiceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE
 
-    initRowsOfRecommendationsResponse = requests.get(backendUrl + "/initRowsOfRecommendations")
-    assert initRowsOfRecommendationsResponse.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.get(backendUrl + "/getInitialRowsOfRecommendations")
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations")
     assert regenerateRecommendationsResponse.status_code == 200
@@ -592,7 +592,7 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
 
     # ensure all newly recommended films are unique
     initialRecommendationFilmIds = []
-    initialRecommendations = initRowsOfRecommendationsResponse.json()
+    initialRecommendations = getInitialRowsOfRecommendationsResponse.json()
     for row in initialRecommendations:
         for film in row['recommendedFilms']:
             initialRecommendationFilmIds.append(film['id'])

@@ -91,7 +91,7 @@ class Service:
             self.serviceUtilities.deleteUserUploadedData()
             return f"Error occurred with reading {self.userFilmDataFilename}.\n{e}", 400
 
-    def initRowsOfRecommendations(self):
+    def getInitialRowsOfRecommendations(self):
         allFilmData = self.database.read("allFilmData")
 
         if not self.isImdbFile:
