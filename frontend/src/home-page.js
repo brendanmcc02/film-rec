@@ -14,7 +14,7 @@ const App = () => {
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
     setFileName("Selected File: " + event.target.files[0].name);
-    setErrorText(""); // Reset error text when a new file is selected
+    setErrorText("");
   };
 
   const handleFileUpload = async () => {
