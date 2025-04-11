@@ -205,6 +205,7 @@ my-film-data-vec.json to file
 - [x] rename files to lowerCamelCase
 - [x] `loadJsonFiles` should only run once
 - [x] classes should be UpperCamelCase
+- [ ] improve readability by making **a lot** more functions with descriptive names
 
 # Frontend
 - [x] do text div 
