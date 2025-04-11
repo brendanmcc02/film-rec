@@ -147,7 +147,7 @@ create endpoints for getters/setters
 - [x] add lastImdbDownloadTimestamp.txt. if downloaded <24 hours, skip the step
 - [x] finish init-my-file-data.py to reflect above changes
 - [x] research how/where to store files, run .py scripts etc.
-- [x] upload button calls /verifyUserUploadedFile API
+- [x] upload button calls /verifyAndLoadUserUploadedFile API
 - [x] upload error handling
 - [x] change return type of recs function
 - [x] init_rec writes allFilmData.json (w/o user rated films), my-film-data.json, all-film-data-vec.json, 
@@ -213,7 +213,7 @@ my-film-data-vec.json to file
 - [x] finish home page (visuals only, file upload func later)
 - [x] re-do text element showing selected files, errors, etc. (lost changes rip)
 - [x] manage multiple pages (check sweng project)
-- [x] go to results page if verifyUserUploadedFile ok
+- [x] go to results page if verifyAndLoadUserUploadedFile ok
 - [x] verify api calls for vector change funcs are working
 - [x] /initial_recs api calls more than once?
 
@@ -245,7 +245,7 @@ my-film-data-vec.json to file
 - [x] add film imdb url
 - [x] change `app.py` to `App.py` on render backend
 - [ ] make website work for multiple concurrent users
-- [ ] merge `\verifyUserUploadedFile` and `\getInitialRowsOfRecommendations` into one
+- [ ] merge `\verifyAndLoadUserUploadedFile` and `\getInitialRowsOfRecommendations` into one
 
 # README
 - [x] do `README.md`

@@ -43,7 +43,7 @@ class Service:
         self.userFilmDataOriginal = []
 
 
-    def verifyUserUploadedFile(self):
+    def verifyAndLoadUserUploadedFile(self):
         self.isImdbFile = True
 
         self.serviceUtilities.deleteUserUploadedData()
