@@ -18950,6 +18950,12 @@
             "years": [
                 2001
             ]
+        },
+        {
+            "imdbFilmId": "tt4330758",
+            "years": [
+                1997
+            ]
         }
     ],
     "Black Knight": [
@@ -52914,14 +52920,6 @@
             ]
         }
     ],
-    "Leaving Neverland: ProSieben Spezial": [
-        {
-            "imdbFilmId": "tt9573980",
-            "years": [
-                2019
-            ]
-        }
-    ],
     "Mission: Impossible - Dead Reckoning Part One": [
         {
             "imdbFilmId": "tt9603212",
@@ -54083,6 +54081,94 @@
     "Oficina do Diabo": [
         {
             "imdbFilmId": "tt28459771",
+            "years": [
+                2025
+            ]
+        }
+    ],
+    "Crossing Over": [
+        {
+            "imdbFilmId": "tt0924129",
+            "years": [
+                2009
+            ]
+        }
+    ],
+    "Cuckoo": [
+        {
+            "imdbFilmId": "tt12349832",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Better Man": [
+        {
+            "imdbFilmId": "tt14260836",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Sector 36": [
+        {
+            "imdbFilmId": "tt21626774",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "The Monkey": [
+        {
+            "imdbFilmId": "tt27714946",
+            "years": [
+                2025
+            ]
+        }
+    ],
+    "Chhaava": [
+        {
+            "imdbFilmId": "tt27922706",
+            "years": [
+                2025
+            ]
+        }
+    ],
+    "In a Violent Nature": [
+        {
+            "imdbFilmId": "tt30321146",
+            "years": [
+                2024
+            ]
+        }
+    ],
+    "Sikandar": [
+        {
+            "imdbFilmId": "tt31712434",
+            "years": [
+                2025
+            ]
+        }
+    ],
+    "A Minecraft Movie": [
+        {
+            "imdbFilmId": "tt3566834",
+            "years": [
+                2025
+            ]
+        }
+    ],
+    "Snow White": [
+        {
+            "imdbFilmId": "tt6208148",
+            "years": [
+                2025
+            ]
+        }
+    ],
+    "The Electric State": [
+        {
+            "imdbFilmId": "tt7766378",
             "years": [
                 2025
             ]
