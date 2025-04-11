@@ -117,11 +117,12 @@ class InitDatabase:
 
         cachedTmdbFilmData = self.database.read("cachedTmdbFilmData")
         cachedLetterboxdTitles = self.database.read("cachedLetterboxdTitles")
-        allFilmDataFilmIds = list(allFilmData.keys())
-        removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(allFilmDataFilmIds, cachedTmdbFilmData, cachedLetterboxdTitles)
+        
+        removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles)
 
         allCountries = []
 
+        allFilmDataFilmIds = list(allFilmData.keys())
         minImdbRating = allFilmData[allFilmDataFilmIds[0]]['imdbRating']
         maxImdbRating = allFilmData[allFilmDataFilmIds[0]]['imdbRating']
         minYear = allFilmData[allFilmDataFilmIds[0]]['year']
