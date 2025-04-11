@@ -245,7 +245,6 @@ my-film-data-vec.json to file
 - [x] add film imdb url
 - [x] change `app.py` to `App.py` on render backend
 - [ ] make website work for multiple concurrent users
-- [ ] merge `\verifyAndLoadUserUploadedFile` and `\getInitialRowsOfRecommendations` into one
 
 # README
 - [x] do `README.md`
