@@ -39,11 +39,10 @@ class Service:
         self.oldProfile = VectorProfile('old', self.profileVectorLength)
         self.rowsOfRecommendations = []
         self.isImdbFile = True
-        self.userFilmDataFilename = ""
         self.userFilmDataOriginal = []
 
 
-    def verifyUserUploadedFile(self):
+    def verifyAndLoadUserUploadedFile(self):
         self.isImdbFile = True
 
         self.serviceUtilities.deleteUserUploadedData()
@@ -52,22 +51,22 @@ class Service:
             return self.serviceUtilities.NO_FILE_IN_REQUEST_ERROR_MESSAGE, 400
 
         file = request.files['file']
-        self.userFilmDataFilename = file.filename
+        userFilmDataFilename = file.filename
 
-        if self.serviceUtilities.isUnacceptableMediaType(self.userFilmDataFilename):
+        if self.serviceUtilities.isUnacceptableMediaType(userFilmDataFilename):
             return self.serviceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE, 415
 
         try:
             self.userFilmDataOriginal = []
-            userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + self.userFilmDataFilename
+            userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
             file.save(userUploadedFileLocation)
 
             if userUploadedFileLocation.endswith(".zip"):
-                if self.letterboxdConversionUtilities.isLetterboxdZipFileInvalid(self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME, self.userFilmDataFilename):
+                if self.letterboxdConversionUtilities.isLetterboxdZipFileInvalid(self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME, userFilmDataFilename):
                     return self.serviceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE, 400
                 else:
-                    self.userFilmDataFilename = "ratings.csv"
-                    userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + self.userFilmDataFilename
+                    userFilmDataFilename = "ratings.csv"
+                    userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
 
             with open(userUploadedFileLocation, encoding='utf-8') as userFilmDataFile:
                 reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
@@ -89,9 +88,9 @@ class Service:
             return self.serviceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE, 200
         except Exception as e:
             self.serviceUtilities.deleteUserUploadedData()
-            return f"Error occurred with reading {self.userFilmDataFilename}.\n{e}", 400
+            return f"Error occurred with reading {userFilmDataFilename}.\n{e}", 400
 
-    def initRowsOfRecommendations(self):
+    def getInitialRowsOfRecommendations(self):
         allFilmData = self.database.read("allFilmData")
 
         if not self.isImdbFile:
