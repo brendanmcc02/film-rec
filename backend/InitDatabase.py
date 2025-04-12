@@ -96,7 +96,7 @@ class InitDatabase:
                     if genre not in allGenres:
                         allGenres.append(genre)
         else:
-            allFilmData = self.database.read("allFilmData")
+            allFilmData = self.database.read("AllFilmData")
             allFilmDataFilmIds = list(allFilmData.keys())
             allGenres = []
             for filmId in allFilmDataFilmIds:
@@ -115,8 +115,8 @@ class InitDatabase:
             "Authorization": f"Bearer {accessToken}"
         }
 
-        cachedTmdbFilmData = self.database.read("cachedTmdbFilmData")
-        cachedLetterboxdTitles = self.database.read("cachedLetterboxdTitles")
+        cachedTmdbFilmData = self.database.read("CachedTmdbFilmData")
+        cachedLetterboxdTitles = self.database.read("CachedLetterboxdTitles")
         
         removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles)
 
@@ -132,7 +132,7 @@ class InitDatabase:
         minRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
         maxRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
 
-        cachedCountries = self.database.read("cachedCountries")
+        cachedCountries = self.database.read("CachedCountries")
         
         count = 0
         invalidAllFilmDataFilmIds = []
@@ -252,9 +252,9 @@ class InitDatabase:
 
         print(f"\nFinal Dataset size: {len(allFilmDataFilmIds)} films.\n")
 
-        self.database.write("allFilmData", allFilmData)
-        self.database.write("cachedTmdbFilmData", cachedTmdbFilmData)
-        self.database.write("cachedLetterboxdTitles", cachedLetterboxdTitles)
+        self.database.write("AllFilmData", allFilmData)
+        self.database.write("CachedTmdbFilmData", cachedTmdbFilmData)
+        self.database.write("CachedLetterboxdTitles", cachedLetterboxdTitles)
 
         print(f"\nVectorizing allFilmData.json\n")
 
@@ -299,16 +299,16 @@ class InitDatabase:
                 allFilmDataVectorizedMagnitudes[filmId] = round(np.linalg.norm(allFilmDataVectorized[filmId]), 
                                                                 self.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
-        self.database.write("allFilmDataVectorized", allFilmDataVectorized, [[",\n        ", ", "]])
-        self.database.write("allGenres", allGenres)
-        self.database.write("allCountries", allCountries)
-        self.database.write("normalizedYears", normalizedYears)
-        self.database.write("normalizedImdbRatings", normalizedImdbRatings)
-        self.database.write("normalizedRuntimes", normalizedRuntimes)
-        self.database.write("minNumberOfVotes", minNumberOfVotes)
-        self.database.write("diffNumberOfVotes", diffNumberOfVotes)
-        self.database.write("profileVectorLength", profileVectorLength)
-        self.database.write("allFilmDataVectorizedMagnitudes", allFilmDataVectorizedMagnitudes)
+        self.database.write("AllFilmDataVectorized", allFilmDataVectorized, [[",\n        ", ", "]])
+        self.database.write("AllGenres", allGenres)
+        self.database.write("AllCountries", allCountries)
+        self.database.write("NormalizedYears", normalizedYears)
+        self.database.write("NormalizedImdbRatings", normalizedImdbRatings)
+        self.database.write("NormalizedRuntimes", normalizedRuntimes)
+        self.database.write("MinNumberOfVotes", minNumberOfVotes)
+        self.database.write("DiffNumberOfVotes", diffNumberOfVotes)
+        self.database.write("ProfileVectorLength", profileVectorLength)
+        self.database.write("AllFilmDataVectorizedMagnitudes", allFilmDataVectorizedMagnitudes)
 
     def isInvalidResponse(self, jsonResponse):
         try:

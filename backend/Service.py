@@ -14,21 +14,21 @@ class Service:
         self.letterboxdConversionUtilities = _letterboxdConversionUtilities
         self.initDatabase = _initDatabase
         self.allFilmDataUnseen = {}
-        self.allFilmDataVectorized = _database.read("allFilmDataVectorized")
-        self.allFilmDataVectorizedMagnitudes = _database.read("allFilmDataVectorizedMagnitudes")
-        self.cachedLetterboxdTitles = _database.read("cachedLetterboxdTitles")
-        self.allGenres = _database.read("allGenres")
+        self.allFilmDataVectorized = _database.read("AllFilmDataVectorized")
+        self.allFilmDataVectorizedMagnitudes = _database.read("AllFilmDataVectorizedMagnitudes")
+        self.cachedLetterboxdTitles = _database.read("CachedLetterboxdTitles")
+        self.allGenres = _database.read("AllGenres")
         self.allGenresLength = len(self.allGenres)
-        self.allCountries = _database.read("allCountries")
+        self.allCountries = _database.read("AllCountries")
         self.allCountriesLength = len(self.allCountries)
-        self.profileVectorLength = _database.read("profileVectorLength")
-        self.minNumberOfVotes = _database.read("minNumberOfVotes")
-        self.diffNumberOfVotes = _database.read("diffNumberOfVotes")
-        self.normalizedYears = _database.read("normalizedYears")
+        self.profileVectorLength = _database.read("ProfileVectorLength")
+        self.minNumberOfVotes = _database.read("MinNumberOfVotes")
+        self.diffNumberOfVotes = _database.read("DiffNumberOfVotes")
+        self.normalizedYears = _database.read("NormalizedYears")
         self.normalizedYearsKeys = list(self.normalizedYears.keys())
-        self.normalizedImdbRatings = _database.read("normalizedImdbRatings")
+        self.normalizedImdbRatings = _database.read("NormalizedImdbRatings")
         self.normalizedImdbRatingsKeys = list(self.normalizedImdbRatings.keys())
-        self.normalizedRuntimes = _database.read("normalizedRuntimes")
+        self.normalizedRuntimes = _database.read("NormalizedRuntimes")
         self.normalizedRuntimesKeys = list(self.normalizedRuntimes.keys())
         self.diffDateRated = datetime(1, 1, 1)
         self.minDateRated = datetime.now()
@@ -91,7 +91,7 @@ class Service:
             return f"Error occurred with reading {userFilmDataFilename}.\n{e}", 400
 
     def getInitialRowsOfRecommendations(self):
-        allFilmData = self.database.read("allFilmData")
+        allFilmData = self.database.read("AllFilmData")
 
         if not self.isImdbFile:
             self.userFilmDataOriginal = (self.letterboxdConversionUtilities.convertLetterboxdFormatToImdbFormat(self.userFilmDataOriginal,
