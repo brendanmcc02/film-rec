@@ -4,7 +4,7 @@ from flask import request, jsonify
 import numpy as np
 from VectorProfile import *
 
-class Service:
+class ServiceInstance:
 
     def __init__(self, _database, _serviceUtilities, _vectorizeUtilities, _letterboxdConversionUtilities,
                  _initDatabase):
