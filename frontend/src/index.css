@@ -1,8 +1,28 @@
 body {
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #131313;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #131313;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.home-container {
+    width: 100vw; /* 100% of viewport width */
+    height: 100vh; /* 100% of viewport height */
+    overflow: hidden; /* Prevent scrolling within this container */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+}
+
+.recommendations-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
 }
 
 @font-face {
@@ -261,13 +281,6 @@ input[type="file"] {
 
 .hidden-scroll-bar::-webkit-scrollbar {
     display: none;
-}
-
-.button-and-rows-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .home-title {
