@@ -3,7 +3,7 @@ from flask import Flask
 from flask_cors import CORS
 from InitDatabase import *
 from LetterboxdConversionUtilities import *
-from Service import *
+from ServiceInstance import *
 from ServiceUtilities import *
 from VectorizeUtilities import *
 
@@ -14,22 +14,22 @@ letterboxdConversionUtilities = LetterboxdConversionUtilities()
 initDatabase = InitDatabase(database)
 serviceUtilities = ServiceUtilities()
 vectorizeUtilities = VectorizeUtilities()
-service = Service(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase)
+serviceInstance = ServiceInstance(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase)
 
 
 @app.route('/getInitialRowsOfRecommendations', methods=['POST'])
 def getInitialRowsOfRecommendations():
-    return service.getInitialRowsOfRecommendations()
+    return serviceInstance.getInitialRowsOfRecommendations()
 
 
 @app.route('/reviewRecommendation')
 def reviewRecommendation():
-    return service.reviewRecommendation()
+    return serviceInstance.reviewRecommendation()
 
 
 @app.route('/regenerateRecommendations')
 def regenerateRecommendations():
-    return service.regenerateRecommendations()
+    return serviceInstance.regenerateRecommendations()
 
 
 if __name__ == "__main__":
