@@ -247,7 +247,7 @@ my-film-data-vec.json to file
 - [x] add note about patience
 - [x] add film imdb url
 - [x] change `app.py` to `App.py` on render backend
-- [ ] make website work for multiple concurrent users: service orchestrator + guids
+- [x] make website work for multiple concurrent users: service orchestrator + guids
 
 # README
 - [x] do `README.md`
@@ -297,3 +297,6 @@ my-film-data-vec.json to file
 
 # Mongo DB
 - [ ] implement 
+
+# Bugs
+- [ ] reviewRec doesn't work (has it been not working for a long time???+)
