@@ -13,6 +13,7 @@ const App = () => {
   const [fileName, setFileName] = useState("");
   const [rowsOfRecommendations, setRowsOfRecommendations] = useState([]);
   const [rowsOfRecommendationButtonVisibility, setRowsOfRecommendationButtonVisibility] = useState([]);
+  const [overflowY, setOverflowY] = useState('hidden');
 
   const FILE_UPLOADED_SUCCESSFULLY_TEXT = "File upload successful.";
 
@@ -34,6 +35,7 @@ const App = () => {
 
       if (response.ok) {
         setErrorText(FILE_UPLOADED_SUCCESSFULLY_TEXT);
+        setOverflowY('auto');
         const jsonData = await response.json();
         setRowsOfRecommendations(jsonData);
         const initialButtonVisibility = jsonData.map((row) => 
@@ -214,7 +216,7 @@ const App = () => {
             If the upload button is not responding, it's because the service goes down after inactivity.
           </h3>
           <h3 className="home-text">
-            Please wait around 1-2 minutes, after uploading your file.
+            Please wait around 1-2 minutes after uploading your file.
           </h3>
           <h3 className="home-text">
             Your patience is appreciated - this isn't Netflix!
@@ -240,6 +242,13 @@ const App = () => {
             {rows}
         </div>
       </div>
+      <style>
+        {`
+          body {
+            overflow-y: ${overflowY};
+          }
+        `}
+      </style>
     </>
   );
 }
