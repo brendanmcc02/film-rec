@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileImport } from '@fortawesome/free-solid-svg-icons';
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
@@ -13,8 +13,28 @@ const App = () => {
   const [fileName, setFileName] = useState("");
   const [rowsOfRecommendations, setRowsOfRecommendations] = useState([]);
   const [rowsOfRecommendationButtonVisibility, setRowsOfRecommendationButtonVisibility] = useState([]);
+  const [overflowY, setOverflowY] = useState('hidden');
+  const homeScrollTargetReference = useRef(null);
+  const recommendationsScrollTargetReference = useRef(null);
 
   const FILE_UPLOADED_SUCCESSFULLY_TEXT = "File upload successful.";
+
+  useEffect(() => {
+    if (rowsOfRecommendations.length > 0 && recommendationsScrollTargetReference.current) {
+      recommendationsScrollTargetReference.current.scrollIntoView({
+        behavior: 'smooth',
+      });
+    }
+  }, [rowsOfRecommendations]);
+
+  useEffect(() => {
+    if (homeScrollTargetReference.current) {
+      homeScrollTargetReference.current.scrollIntoView({
+        behavior: 'smooth',
+      });
+      setOverflowY('hidden');
+    }
+  }, [selectedFile]);
 
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -33,9 +53,10 @@ const App = () => {
       });
 
       if (response.ok) {
-        // navigate('/recommendations-page'); // scrollToNextPage();
         setErrorText(FILE_UPLOADED_SUCCESSFULLY_TEXT);
-        let jsonData = response.json();
+        setOverflowY('auto');
+        
+        const jsonData = await response.json();
         setRowsOfRecommendations(jsonData);
         const initialButtonVisibility = jsonData.map((row) => 
           row.recommendedFilms.map((film) => ({ 
@@ -47,6 +68,8 @@ const App = () => {
         setRowsOfRecommendationButtonVisibility(initialButtonVisibility);
       } else {
         setErrorText(await response.text());
+        setRowsOfRecommendations([]);
+        setRowsOfRecommendationButtonVisibility([]);
       }
     } catch (error) {
       setErrorText(error.message);
@@ -179,7 +202,7 @@ const App = () => {
 
   return (
     <>
-      <div className='home-container'>
+      <div className='home-container' ref={homeScrollTargetReference}>
         <div className='title-and-subtitle-container'>
           <h1 className="home-title">FILM REC</h1>
           <h3 className='home-subtitle'>A film recommendation web app.</h3>
@@ -215,7 +238,7 @@ const App = () => {
             If the upload button is not responding, it's because the service goes down after inactivity.
           </h3>
           <h3 className="home-text">
-            Please wait around 1-2 minutes, and then refresh the page and try again.
+            Please wait around 1-2 minutes after uploading your file.
           </h3>
           <h3 className="home-text">
             Your patience is appreciated - this isn't Netflix!
@@ -233,7 +256,7 @@ const App = () => {
           </h3>
         </div>
       </div>
-      <div id='recommendations-container' className="recommendations-container">
+      <div className="recommendations-container" ref={recommendationsScrollTargetReference}>
         <button className="base-button regenerate-button opacity-fade-in" onClick={() => handleRegenerateRecommendationsButton()}>
             <TbRefresh className='regenerate-icon'/>&nbsp;Regenerate
         </button>
@@ -241,6 +264,13 @@ const App = () => {
             {rows}
         </div>
       </div>
+      <style>
+        {`
+          body {
+            overflow-y: ${overflowY};
+          }
+        `}
+      </style>
     </>
   );
 }
