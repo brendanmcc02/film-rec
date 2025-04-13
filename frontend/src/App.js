@@ -27,6 +27,15 @@ const App = () => {
     }
   }, [rowsOfRecommendations]);
 
+  useEffect(() => {
+    if (homeScrollTargetReference.current) {
+      homeScrollTargetReference.current.scrollIntoView({
+        behavior: 'smooth',
+      });
+      setOverflowY('hidden');
+    }
+  }, [selectedFile]);
+
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
     setFileName("Selected File: " + event.target.files[0].name);
@@ -38,7 +47,7 @@ const App = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch('http://localhost:3000/getInitialRowsOfRecommendations', {
+      const response = await fetch('https://film-rec-backend.onrender.com/getInitialRowsOfRecommendations', {
         method: 'POST',
         body: formData
       });
