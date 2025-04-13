@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileImport, faL } from '@fortawesome/free-solid-svg-icons';
+import { faFileImport } from '@fortawesome/free-solid-svg-icons';
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
@@ -14,12 +14,12 @@ const App = () => {
   const [rowsOfRecommendations, setRowsOfRecommendations] = useState([]);
   const [rowsOfRecommendationButtonVisibility, setRowsOfRecommendationButtonVisibility] = useState([]);
   const [overflowY, setOverflowY] = useState('hidden');
+
   const homeScrollTargetReference = useRef(null);
   const recommendationsScrollTargetReference = useRef(null);
+  const guidRef = useRef("");
 
   const FILE_UPLOADED_SUCCESSFULLY_TEXT = "File upload successful.";
-
-  let guid = "";
 
   useEffect(() => {
     if (rowsOfRecommendations.length > 0 && recommendationsScrollTargetReference.current) {
@@ -49,7 +49,7 @@ const App = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch('http://localhost:60000/getInitialRowsOfRecommendations', {
+      const response = await fetch('https://film-rec-backend.onrender.com/getInitialRowsOfRecommendations', {
         method: 'POST',
         body: formData
       });
@@ -59,10 +59,11 @@ const App = () => {
         setOverflowY('auto');
         
         const responseJson = await response.json();
-        guid = responseJson.guid;
-        console.log("GUID: " + guid);
+        guidRef.current = responseJson.guid;
         const responseRowsOfRecommendations = responseJson.rowsOfRecommendations;
+
         setRowsOfRecommendations(responseRowsOfRecommendations);
+
         const initialButtonVisibility = responseRowsOfRecommendations.map((row) => 
           row.recommendedFilms.map((film) => ({ 
               filmID: film.id, 
@@ -110,8 +111,8 @@ const App = () => {
 
   async function reviewRecommendation(filmId, isThumbsUp) {
       try {
-          const fetchUrl = ("http://localhost:60000/reviewRecommendation" +
-                            "?filmId=" + filmId.toString() + "&isThumbsUp=" + isThumbsUp + "&guid=" + guid.toString());
+          const fetchUrl = ("https://film-rec-backend.onrender.com/reviewRecommendation" +
+                            "?filmId=" + filmId.toString() + "&isThumbsUp=" + isThumbsUp + "&guid=" + guidRef.current.toString());
           const response = await fetch(fetchUrl);
 
           if (!response.ok) {
@@ -125,11 +126,14 @@ const App = () => {
   }
   
   async function handleRegenerateRecommendationsButton() {
-      const fetchUrl = ("http://localhost:60000/regenerateRecommendations" + "?guid=" + guid.toString());
+      const fetchUrl = ("https://film-rec-backend.onrender.com/regenerateRecommendations" + "?guid=" + guidRef.current.toString());
       const response = await fetch(fetchUrl);
-      const jsonData = await response.json();
-      setRowsOfRecommendations(jsonData);
-      const initialButtonVisibility = jsonData.map((row) => 
+
+      const responseJson = await response.json();
+      const responseRowsOfRecommendations = responseJson.rowsOfRecommendations;
+      
+      setRowsOfRecommendations(responseRowsOfRecommendations);
+      const initialButtonVisibility = responseRowsOfRecommendations.map((row) => 
           row.recommendedFilms.map((film) => ({ 
               filmID: film.id, 
               isFilmButtonVisible: true
