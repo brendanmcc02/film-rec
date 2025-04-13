@@ -8,7 +8,7 @@ from ServiceUtilities import *
 from VectorizeUtilities import *
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
+CORS(app, resources={r"/*": {"origins": "https://localhost:3000"}})
 database = DocumentDatabase("../")
 letterboxdConversionUtilities = LetterboxdConversionUtilities()
 initDatabase = InitDatabase(database)
@@ -17,12 +17,7 @@ vectorizeUtilities = VectorizeUtilities()
 service = Service(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase)
 
 
-@app.route('/verifyAndLoadUserUploadedFile', methods=['POST'])
-def verifyAndLoadUserUploadedFile():
-    return service.verifyAndLoadUserUploadedFile()
-
-
-@app.route('/getInitialRowsOfRecommendations')
+@app.route('/getInitialRowsOfRecommendations', methods=['POST'])
 def getInitialRowsOfRecommendations():
     return service.getInitialRowsOfRecommendations()
 
