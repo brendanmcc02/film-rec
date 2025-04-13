@@ -215,7 +215,7 @@ const App = () => {
             If the upload button is not responding, it's because the service goes down after inactivity.
           </h3>
           <h3 className="home-text">
-            Please wait around 1-2 minutes, and then refresh the page and try again.
+            Please wait around 1-2 minutes, after uploading your file.
           </h3>
           <h3 className="home-text">
             Your patience is appreciated - this isn't Netflix!
