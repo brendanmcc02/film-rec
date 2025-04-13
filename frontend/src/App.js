@@ -27,7 +27,7 @@ const App = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch('https://film-rec-backend.onrender.com/getInitialRowsOfRecommendations', {
+      const response = await fetch('http://localhost:3000/getInitialRowsOfRecommendations', {
         method: 'POST',
         body: formData
       });
