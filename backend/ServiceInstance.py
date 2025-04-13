@@ -15,6 +15,8 @@ class ServiceInstance:
         self.initDatabase = _initDatabase
         self.allFilmDataUnseen = {}
         # TODO merge all db stuff into one object?
+        # NOTE: this is all read from database, so don't even need to inject db
+        # TODO all this stuff can be parameterized to avoid duplication with multiple service instances
         self.allFilmDataVectorized = _database.read("AllFilmDataVectorized")
         self.allFilmDataVectorizedMagnitudes = _database.read("AllFilmDataVectorizedMagnitudes")
         self.cachedLetterboxdTitles = _database.read("CachedLetterboxdTitles")
@@ -25,6 +27,7 @@ class ServiceInstance:
         self.profileVectorLength = _database.read("ProfileVectorLength")
         self.minNumberOfVotes = _database.read("MinNumberOfVotes")
         self.diffNumberOfVotes = _database.read("DiffNumberOfVotes")
+        # TODO all this stuff can be parameterized to avoid duplication with multiple service instances
         # TODO merge all normalized stuff into one object?
         self.normalizedYears = _database.read("NormalizedYears")
         self.normalizedYearsKeys = list(self.normalizedYears.keys())
