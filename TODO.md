@@ -111,6 +111,7 @@ countries, poster)
 - [x] user upload data should go to its own folder
 - [x] `deleteCsvFiles` should be to delete user-upload folder
 - [x] upload zip file instead of ratings.csv (letterboxd)
+- [ ] merge `/verify...` and `/initRows...` into one call
 
 # Misc
 - [x] switch from my-film-data.json to ratings.csv
@@ -217,6 +218,7 @@ my-film-data-vec.json to file
 - [x] go to results page if verifyAndLoadUserUploadedFile ok
 - [x] verify api calls for vector change funcs are working
 - [x] /initial_recs api calls more than once?
+- [ ] merge home page + recs page into one page + js file
 
 ## Recommendations Page
 - [x] reduce vertical gap size between elements
@@ -245,7 +247,7 @@ my-film-data-vec.json to file
 - [x] add note about patience
 - [x] add film imdb url
 - [x] change `app.py` to `App.py` on render backend
-- [ ] make website work for multiple concurrent users
+- [ ] make website work for multiple concurrent users: service orchestrator + guids
 
 # README
 - [x] do `README.md`
