@@ -14,6 +14,7 @@ class Service:
         self.letterboxdConversionUtilities = _letterboxdConversionUtilities
         self.initDatabase = _initDatabase
         self.allFilmDataUnseen = {}
+        # TODO merge all db stuff into one object?
         self.allFilmDataVectorized = _database.read("AllFilmDataVectorized")
         self.allFilmDataVectorizedMagnitudes = _database.read("AllFilmDataVectorizedMagnitudes")
         self.cachedLetterboxdTitles = _database.read("CachedLetterboxdTitles")
@@ -24,6 +25,7 @@ class Service:
         self.profileVectorLength = _database.read("ProfileVectorLength")
         self.minNumberOfVotes = _database.read("MinNumberOfVotes")
         self.diffNumberOfVotes = _database.read("DiffNumberOfVotes")
+        # TODO merge all normalized stuff into one object?
         self.normalizedYears = _database.read("NormalizedYears")
         self.normalizedYearsKeys = list(self.normalizedYears.keys())
         self.normalizedImdbRatings = _database.read("NormalizedImdbRatings")
@@ -32,18 +34,17 @@ class Service:
         self.normalizedRuntimesKeys = list(self.normalizedRuntimes.keys())
         self.diffDateRated = datetime(1, 1, 1)
         self.minDateRated = datetime.now()
+        # TODO merge profiles into one object?
         self.favouriteProfile = VectorProfile('favourite', self.profileVectorLength)
         self.genreProfiles = []
         self.recencyProfile = VectorProfile('recency', self.profileVectorLength)
         self.internationalProfile = VectorProfile('international', self.profileVectorLength)
         self.oldProfile = VectorProfile('old', self.profileVectorLength)
         self.rowsOfRecommendations = []
-        self.isImdbFile = True
-        self.userFilmDataOriginal = []
 
 
-    def verifyAndLoadUserUploadedFile(self):
-        self.isImdbFile = True
+    def getInitialRowsOfRecommendations(self):
+        isImdbFile = True
 
         self.serviceUtilities.deleteUserUploadedData()
 
@@ -57,7 +58,7 @@ class Service:
             return self.serviceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE, 415
 
         try:
-            self.userFilmDataOriginal = []
+            userFilmDataOriginal = []
             userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
             file.save(userUploadedFileLocation)
 
@@ -78,23 +79,20 @@ class Service:
                     keys = list(row.keys())
                     for key in keys:
                         if key not in self.serviceUtilities.EXPECTED_IMDB_FILM_ATTRIBUTES:
-                            self.isImdbFile = False
+                            isImdbFile = False
                             if key not in self.letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
                                 return self.serviceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, 400
 
-                    self.userFilmDataOriginal.append(row)
-
-            self.serviceUtilities.deleteUserUploadedData()
-            return self.serviceUtilities.FILE_UPLOAD_SUCCESS_MESSAGE, 200
+                    userFilmDataOriginal.append(row)
         except Exception as e:
-            self.serviceUtilities.deleteUserUploadedData()
             return f"Error occurred with reading {userFilmDataFilename}.\n{e}", 400
-
-    def getInitialRowsOfRecommendations(self):
+        finally:
+            self.serviceUtilities.deleteUserUploadedData()
+        
         allFilmData = self.database.read("AllFilmData")
 
-        if not self.isImdbFile:
-            self.userFilmDataOriginal = (self.letterboxdConversionUtilities.convertLetterboxdFormatToImdbFormat(self.userFilmDataOriginal,
+        if not isImdbFile:
+            userFilmDataOriginal = (self.letterboxdConversionUtilities.convertLetterboxdFormatToImdbFormat(userFilmDataOriginal,
                                                                                                                 allFilmData, self.cachedLetterboxdTitles))
 
         userFilmData = {}
@@ -102,11 +100,11 @@ class Service:
         self.minDateRated = datetime.now()
         maxDateRated = self.minDateRated
 
-        for film in self.userFilmDataOriginal:
+        for film in userFilmDataOriginal:
             if (film['Title Type'] == "Movie" and 
                     int(film['Runtime (mins)']) >= self.initDatabase.RUNTIME_THRESHOLD and film['Genres'] != ""\
                     and int(film['Num Votes']) >= self.initDatabase.NUMBER_OF_VOTES_THRESHOLD):
-                if self.isImdbFile:
+                if isImdbFile:
                     genres = film['Genres'].replace("\"", "").split(", ")
                 else:
                     genres = film['Genres']
