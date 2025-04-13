@@ -33,9 +33,8 @@ const App = () => {
       });
 
       if (response.ok) {
-        // navigate('/recommendations-page'); // scrollToNextPage();
         setErrorText(FILE_UPLOADED_SUCCESSFULLY_TEXT);
-        let jsonData = response.json();
+        const jsonData = await response.json();
         setRowsOfRecommendations(jsonData);
         const initialButtonVisibility = jsonData.map((row) => 
           row.recommendedFilms.map((film) => ({ 
