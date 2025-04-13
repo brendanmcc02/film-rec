@@ -8,7 +8,7 @@ from ServiceUtilities import *
 from VectorizeUtilities import *
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": "https://film-rec.onrender.com"}})
 database = DocumentDatabase("../")
 letterboxdConversionUtilities = LetterboxdConversionUtilities()
 initDatabase = InitDatabase(database)
