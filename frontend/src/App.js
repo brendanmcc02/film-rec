@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileImport } from '@fortawesome/free-solid-svg-icons';
+import { faFileImport, faL } from '@fortawesome/free-solid-svg-icons';
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
@@ -18,6 +18,8 @@ const App = () => {
   const recommendationsScrollTargetReference = useRef(null);
 
   const FILE_UPLOADED_SUCCESSFULLY_TEXT = "File upload successful.";
+
+  let guid = "";
 
   useEffect(() => {
     if (rowsOfRecommendations.length > 0 && recommendationsScrollTargetReference.current) {
@@ -47,7 +49,7 @@ const App = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch('https://film-rec-backend.onrender.com/getInitialRowsOfRecommendations', {
+      const response = await fetch('http://localhost:60000/getInitialRowsOfRecommendations', {
         method: 'POST',
         body: formData
       });
@@ -56,9 +58,12 @@ const App = () => {
         setErrorText(FILE_UPLOADED_SUCCESSFULLY_TEXT);
         setOverflowY('auto');
         
-        const jsonData = await response.json();
-        setRowsOfRecommendations(jsonData);
-        const initialButtonVisibility = jsonData.map((row) => 
+        const responseJson = await response.json();
+        guid = responseJson.guid;
+        console.log("GUID: " + guid);
+        const responseRowsOfRecommendations = responseJson.rowsOfRecommendations;
+        setRowsOfRecommendations(responseRowsOfRecommendations);
+        const initialButtonVisibility = responseRowsOfRecommendations.map((row) => 
           row.recommendedFilms.map((film) => ({ 
               filmID: film.id, 
               isFilmButtonVisible: true
@@ -98,20 +103,15 @@ const App = () => {
       );
     }
 
-  async function handleUpButton(filmId) {
-      await reviewRecommendation(filmId, true);
-      setFilmButtonInvisible(filmId);
-  }
-
-  async function handleDownButton(filmId) {
-      await reviewRecommendation(filmId, false);
+  async function handleThumbsUpOrDownButton(filmId, isThumbsUp) {
+      await reviewRecommendation(filmId, isThumbsUp);
       setFilmButtonInvisible(filmId);
   }
 
   async function reviewRecommendation(filmId, isThumbsUp) {
       try {
-          const fetchUrl = ("https://film-rec-backend.onrender.com/reviewRecommendation?filmId=" 
-                              + filmId.toString() + "&isThumbsUp=" + isThumbsUp)
+          const fetchUrl = ("http://localhost:60000/reviewRecommendation" +
+                            "?filmId=" + filmId.toString() + "&isThumbsUp=" + isThumbsUp + "&guid=" + guid.toString());
           const response = await fetch(fetchUrl);
 
           if (!response.ok) {
@@ -125,7 +125,8 @@ const App = () => {
   }
   
   async function handleRegenerateRecommendationsButton() {
-      const response = await fetch('https://film-rec-backend.onrender.com/regenerateRecommendations');
+      const fetchUrl = ("http://localhost:60000/regenerateRecommendations" + "?guid=" + guid.toString());
+      const response = await fetch(fetchUrl);
       const jsonData = await response.json();
       setRowsOfRecommendations(jsonData);
       const initialButtonVisibility = jsonData.map((row) => 
@@ -159,10 +160,10 @@ const App = () => {
                   <div className='buttons-and-similarity-score-container'>
                       {isFilmButtonVisible(film.id) && 
                           <div className="buttons-container">
-                              <button className="up-down-button up-button opacity-fade-in" onClick={() => handleUpButton(film.id)}>
+                              <button className="up-down-button up-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.id, true)}>
                                   <FaRegThumbsUp />
                               </button>
-                              <button className="up-down-button down-button opacity-fade-in" onClick={() => handleDownButton(film.id)}>
+                              <button className="up-down-button down-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.id, false)}>
                                   <FaRegThumbsDown />
                               </button>
                           </div>
