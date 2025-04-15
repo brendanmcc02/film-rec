@@ -16,11 +16,11 @@ def test_getInitialRowsOfRecommendations_guidExists(backendUrl):
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
     
-    response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
-    assert response.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = response.json()
-    assert 'guid' in responseContent
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    assert 'guid' in getInitialRowsOfRecommendationsResponseContent
 
 def test_regenerateRowsOfRecommendations_guidExists(backendUrl):
     fileName = "imdb-no-recent-films.csv"
@@ -44,12 +44,11 @@ def test_getInitialRowsOfRecommendations_errorMessageExists(backendUrl):
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
     
-    response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
-    assert response.status_code == 200
-    # todo for 200 codes assert empty errorMessage
+    getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = response.json()
-    assert 'errorMessage' in responseContent
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    assert 'errorMessage' in getInitialRowsOfRecommendationsResponseContent
 
 def test_regenerateRowsOfRecommendations_errorMessageExists(backendUrl):
     fileName = "imdb-no-recent-films.csv"
@@ -73,11 +72,11 @@ def test_getInitialRowsOfRecommendations_bodyExists(backendUrl):
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
     
-    response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
-    assert response.status_code == 200
+    getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = response.json()
-    assert 'body' in responseContent
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    assert 'body' in getInitialRowsOfRecommendationsResponseContent
 
 def test_regenerateRowsOfRecommendations_bodyExists(backendUrl):
     fileName = "imdb-no-recent-films.csv"
@@ -93,8 +92,8 @@ def test_regenerateRowsOfRecommendations_bodyExists(backendUrl):
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
-    responseContent = regenerateRecommendationsResponse.json()
-    assert 'body' in responseContent
+    regenerateRecommendationsResponseContent = regenerateRecommendationsResponse.json()
+    assert 'body' in regenerateRecommendationsResponseContent
 
 def test_getInitialRowsOfRecommendations_noFile(backendUrl):
     filesToSend = {'file': ("", None)}
@@ -590,6 +589,7 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
             assert film['id'] not in initialRecommendationFilmIds
 
 def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
+    # TODO the 3 below lines can be wrapped in a function; DRY
     fileName = "letterboxd-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
     filesToSend = {'file': (fileName, file)}
@@ -629,3 +629,33 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     for row in regeneratedRecommendations:
         for film in row['recommendedFilms']:
             assert film['id'] not in initialRecommendationFilmIds
+
+def test_getInitialRowsOfRecommendations_successfulResponse_shouldHaveEmptyErrorMessage(backendUrl):
+    fileName = "letterboxd-no-recent-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+
+    getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
+
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+
+    assert getInitialRowsOfRecommendationsResponseContent["errorMessage"] == ""
+
+def test_regenerateRecommendations_successfulResponse_shouldHaveEmptyErrorMessage(backendUrl):
+    fileName = "letterboxd-no-recent-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+
+    getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
+
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
+    assert regenerateRecommendationsResponse.status_code == 200
+
+    regenerateRecommendationsResponseContent = regenerateRecommendationsResponse.json()
+
+    assert regenerateRecommendationsResponseContent["errorMessage"] == ""
