@@ -11,6 +11,7 @@ class TestUtilities:
 
     LOCAL_DEPLOYMENT_URL = "http://localhost:60000"
     PROD_DEPLOYMENT_URL = "https://film-rec-backend.onrender.com"
+    TEST_UPLOAD_FILES_DIRECTORY = "test-upload-files/"
 
     def __init__(self, _repositoryRoot):
         self.repositoryRoot = _repositoryRoot
@@ -92,3 +93,7 @@ class TestUtilities:
                 assert film['similarityScore'] != None
                 assert film['similarityScore'] >= 0.0
                 assert film['similarityScore'] <= 100.0
+
+    def getFilesToSend(self, fileName):
+        file = open(self.TEST_UPLOAD_FILES_DIRECTORY + fileName, 'rb')
+        return {'file': (fileName, file)}

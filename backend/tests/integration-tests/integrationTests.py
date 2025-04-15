@@ -11,10 +11,10 @@ from TestUtilities import *
 
 testUploadFilesDirectory = "test-upload-files/"
 
+testUtilities = TestUtilities("../../../")
+
 def test_getInitialRowsOfRecommendations_guidExists(backendUrl):
-    fileName = "imdb-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -23,9 +23,7 @@ def test_getInitialRowsOfRecommendations_guidExists(backendUrl):
     assert 'guid' in getInitialRowsOfRecommendationsResponseContent
 
 def test_regenerateRowsOfRecommendations_guidExists(backendUrl):
-    fileName = "imdb-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -40,9 +38,7 @@ def test_regenerateRowsOfRecommendations_guidExists(backendUrl):
     assert 'guid' in responseContent
 
 def test_getInitialRowsOfRecommendations_errorMessageExists(backendUrl):
-    fileName = "imdb-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -51,9 +47,7 @@ def test_getInitialRowsOfRecommendations_errorMessageExists(backendUrl):
     assert 'errorMessage' in getInitialRowsOfRecommendationsResponseContent
 
 def test_regenerateRowsOfRecommendations_errorMessageExists(backendUrl):
-    fileName = "imdb-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -68,9 +62,7 @@ def test_regenerateRowsOfRecommendations_errorMessageExists(backendUrl):
     assert 'errorMessage' in responseContent
 
 def test_getInitialRowsOfRecommendations_bodyExists(backendUrl):
-    fileName = "imdb-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -79,9 +71,7 @@ def test_getInitialRowsOfRecommendations_bodyExists(backendUrl):
     assert 'body' in getInitialRowsOfRecommendationsResponseContent
 
 def test_regenerateRowsOfRecommendations_bodyExists(backendUrl):
-    fileName = "imdb-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -104,9 +94,7 @@ def test_getInitialRowsOfRecommendations_noFile(backendUrl):
     assert responseContent["errorMessage"] == ServiceUtilities.NO_FILE_IN_REQUEST_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_unacceptedFileType(backendUrl):
-    fileName = "test.txt"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("test.txt")
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 415
@@ -114,9 +102,7 @@ def test_getInitialRowsOfRecommendations_unacceptedFileType(backendUrl):
     assert responseContent["errorMessage"] == ServiceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_imdbIncorrectHeader(backendUrl):
-    fileName = "imdb-incorrect-header.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-incorrect-header.csv")
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
@@ -124,9 +110,7 @@ def test_getInitialRowsOfRecommendations_imdbIncorrectHeader(backendUrl):
     assert responseContent["errorMessage"] == ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_imdbMissingHeader(backendUrl):
-    fileName = "imdb-missing-header.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-missing-header.csv")
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
@@ -134,9 +118,7 @@ def test_getInitialRowsOfRecommendations_imdbMissingHeader(backendUrl):
     assert responseContent["errorMessage"] == ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_letterboxdIncorrectHeaderCsv(backendUrl):
-    fileName = "letterboxd-incorrect-header.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-incorrect-header.csv")
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
@@ -144,19 +126,16 @@ def test_getInitialRowsOfRecommendations_letterboxdIncorrectHeaderCsv(backendUrl
     assert responseContent["errorMessage"] == ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_letterboxdMissingHeaderCsv(backendUrl):
-    fileName = "letterboxd-missing-header.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-missing-header.csv")
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
     responseContent = response.json()
     assert responseContent["errorMessage"] == ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
-def test_getInitialRowsOfRecommendations_letterboxdincorrectZip(backendUrl):
-    fileName = "letterboxd-incorrect.zip"
-    file = open(testUploadFilesDirectory + fileName, 'rb')
-    filesToSend = {'file': (fileName, file)}
+def test_getInitialRowsOfRecommendations_letterboxdIncorrectZip(backendUrl):
+    filesToSend = testUtilities.getFilesToSend("letterboxd-incorrect.zip")
+    
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
@@ -164,9 +143,7 @@ def test_getInitialRowsOfRecommendations_letterboxdincorrectZip(backendUrl):
     assert responseContent["errorMessage"] == ServiceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
-    fileName = "imdb-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -183,16 +160,13 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
 
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
-    fileName = "letterboxd-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -208,16 +182,13 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
 
 def test_getInitialRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
-    fileName = "imdb-no-recent-and-favourite-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recent-and-favourite-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -233,7 +204,6 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUr
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -241,9 +211,7 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUr
         assert row['profileId'] != "favourite"
 
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUrl):
-    fileName = "letterboxd-no-recent-and-favourite-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-and-favourite-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -259,7 +227,6 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(bac
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -267,9 +234,7 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(bac
         assert row['profileId'] != "favourite"
 
 def test_getInitialRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl):
-    fileName = "imdb-no-recent-and-international-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recent-and-international-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -285,7 +250,6 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backe
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -293,9 +257,7 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backe
         assert row['profileId'] != "international"
 
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backendUrl):
-    fileName = "letterboxd-no-recent-and-international-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-and-international-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -311,7 +273,6 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -320,9 +281,7 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms
 
 # tests for cases when the user has rated films with only two genres
 def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
-    fileName = "imdb-no-recent-films-and-two-genres.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films-and-two-genres.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -338,7 +297,6 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenr
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -346,9 +304,7 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenr
 
 # tests for cases when the user has rated films with only two genres
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
-    fileName = "letterboxd-no-recent-films-and-two-genres.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films-and-two-genres.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -364,7 +320,6 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresT
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -372,9 +327,7 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresT
 
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
-    fileName = "imdb-international-film-no-recent-films-and-one-genre.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-international-film-no-recent-films-and-one-genre.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -390,7 +343,6 @@ def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAn
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -398,9 +350,7 @@ def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAn
 
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
-    fileName = "letterboxd-international-film-no-recent-films-and-one-genre.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-international-film-no-recent-films-and-one-genre.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -416,7 +366,6 @@ def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentF
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -424,9 +373,7 @@ def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentF
 
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
-    fileName = "imdb-american-film-no-recent-films-and-one-genre.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-american-film-no-recent-films-and-one-genre.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -442,7 +389,6 @@ def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilm
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -451,9 +397,7 @@ def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilm
 
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
-    fileName = "letterboxd-american-film-no-recent-films-and-one-genre.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-american-film-no-recent-films-and-one-genre.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -469,7 +413,6 @@ def test_getInitialRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRece
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
@@ -477,9 +420,7 @@ def test_getInitialRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRece
         assert row['profileId'] != "international"
 
 def test_getInitialRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
-    fileName = "letterboxd-no-recent.zip"
-    file = open(testUploadFilesDirectory + fileName, 'rb')
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent.zip")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -495,16 +436,13 @@ def test_getInitialRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
 
 def test_getInitialRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
-    fileName = "imdb-no-recognised-films.csv"
-    file = open(testUploadFilesDirectory + fileName, 'rb')
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recognised-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -520,14 +458,11 @@ def test_getInitialRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
 def test_getInitialRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl):
-    fileName = "letterboxd-no-recognised-films.csv"
-    file = open(testUploadFilesDirectory + fileName, 'rb')
-    filesToSend = {'file': (fileName, file)}
-    
+    filesToSend = testUtilities.getFilesToSend("letterboxd-no-recognised-films.csv")
+
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
@@ -542,14 +477,10 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl)
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
     
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
-# TODO this test is unreadable as fuuuuuck wrap it in a function!!!!
 def test_regenerateRowsOfRecommendations_imdb(backendUrl):
-    fileName = "imdb-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -572,7 +503,6 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     
     responseContent = regenerateRecommendationsResponse.json()
     regeneratedRecommendations = responseContent["body"]
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
 
     # ensure all newly recommended films are unique
@@ -589,10 +519,7 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
             assert film['id'] not in initialRecommendationFilmIds
 
 def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
-    # TODO the 3 below lines can be wrapped in a function; DRY
-    fileName = "letterboxd-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
     
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -614,7 +541,6 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     
     responseContent = regenerateRecommendationsResponse.json()
     regeneratedRecommendations = responseContent["body"]
-    testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
 
     # ensure all newly recommended films are unique
@@ -631,9 +557,7 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
             assert film['id'] not in initialRecommendationFilmIds
 
 def test_getInitialRowsOfRecommendations_successfulResponse_shouldHaveEmptyErrorMessage(backendUrl):
-    fileName = "letterboxd-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
 
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
@@ -643,9 +567,7 @@ def test_getInitialRowsOfRecommendations_successfulResponse_shouldHaveEmptyError
     assert getInitialRowsOfRecommendationsResponseContent["errorMessage"] == ""
 
 def test_regenerateRecommendations_successfulResponse_shouldHaveEmptyErrorMessage(backendUrl):
-    fileName = "letterboxd-no-recent-films.csv"
-    file = open(testUploadFilesDirectory + fileName)
-    filesToSend = {'file': (fileName, file)}
+    filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
 
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
