@@ -1,3 +1,4 @@
+from flask import jsonify
 import os
 import shutil
 
@@ -37,3 +38,9 @@ class ServiceUtilities:
 
     def isUnacceptableMediaType(self, filename):
         return not (filename.lower().endswith(".csv") or filename.lower().endswith(".zip"))
+
+
+    def getFormattedResponse(self, body, errorMessage, guid, statusCode):
+        return jsonify({"body": body,
+                        "errorMessage": errorMessage, 
+                        "guid": guid}), statusCode
