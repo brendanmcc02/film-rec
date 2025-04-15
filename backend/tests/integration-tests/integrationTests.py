@@ -546,6 +546,7 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl)
     testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
+# TODO this test is unreadable as fuuuuuck wrap it in a function!!!!
 def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     fileName = "imdb-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
@@ -578,7 +579,8 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     # ensure all newly recommended films are unique
     # TODO move this to a method to make more readable?
     initialRecommendationFilmIds = []
-    initialRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    initialRecommendations = getInitialRowsOfRecommendationsResponseContent["body"]
     for row in initialRecommendations:
         for film in row['recommendedFilms']:
             initialRecommendationFilmIds.append(film['id'])
@@ -616,8 +618,10 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
 
     # ensure all newly recommended films are unique
+    # TODO move this to a method to make more readable?
     initialRecommendationFilmIds = []
-    initialRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    initialRecommendations = getInitialRowsOfRecommendationsResponseContent["body"]
     for row in initialRecommendations:
         for film in row['recommendedFilms']:
             initialRecommendationFilmIds.append(film['id'])
