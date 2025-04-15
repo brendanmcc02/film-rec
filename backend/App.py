@@ -6,30 +6,36 @@ from LetterboxdConversionUtilities import *
 from ServiceInstance import *
 from ServiceUtilities import *
 from VectorizeUtilities import *
+import uuid
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": ["https://film-rec.onrender.com", "http://localhost:3000"]}})
+
 database = DocumentDatabase("../")
-letterboxdConversionUtilities = LetterboxdConversionUtilities()
-initDatabase = InitDatabase(database)
 serviceUtilities = ServiceUtilities()
 vectorizeUtilities = VectorizeUtilities()
-serviceInstance = ServiceInstance(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase)
+letterboxdConversionUtilities = LetterboxdConversionUtilities()
+initDatabase = InitDatabase(database)
 
+serviceInstances = {}
 
 @app.route('/getInitialRowsOfRecommendations', methods=['POST'])
 def getInitialRowsOfRecommendations():
-    return serviceInstance.getInitialRowsOfRecommendations()
+    guid = str(uuid.uuid4())
+    serviceInstance = ServiceInstance(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase, guid)
+    serviceInstances[guid] = serviceInstance
 
+    return serviceInstances[guid].getInitialRowsOfRecommendations()
 
 @app.route('/reviewRecommendation')
 def reviewRecommendation():
-    return serviceInstance.reviewRecommendation()
-
+    guid = request.args.get('guid')
+    return serviceInstances[guid].reviewRecommendation()
 
 @app.route('/regenerateRecommendations')
 def regenerateRecommendations():
-    return serviceInstance.regenerateRecommendations()
+    guid = request.args.get('guid')
+    return serviceInstances[guid].regenerateRecommendations()
 
 
 if __name__ == "__main__":

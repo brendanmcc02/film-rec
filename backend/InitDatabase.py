@@ -118,7 +118,7 @@ class InitDatabase:
         cachedTmdbFilmData = self.database.read("CachedTmdbFilmData")
         cachedLetterboxdTitles = self.database.read("CachedLetterboxdTitles")
         
-        removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles)
+        self.removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles)
 
         allCountries = []
 
@@ -342,27 +342,27 @@ class InitDatabase:
         return f"{hours}{minutes}"
 
 
-def removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles):
-    invalidFilms = []
-    allFilmDataFilmIds = list(allFilmData.keys())
-    
-    for cachedTmdbFilmId in list(cachedTmdbFilmData):
-            if cachedTmdbFilmId not in allFilmDataFilmIds:
-                invalidFilms.append({"imdbFilmId": cachedTmdbFilmId, 
-                                     "letterboxdTitle": cachedTmdbFilmData[cachedTmdbFilmId]['letterboxdTitle']})
-                del cachedTmdbFilmData[cachedTmdbFilmId]
+    def removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles):
+        invalidFilms = []
+        allFilmDataFilmIds = list(allFilmData.keys())
+        
+        for cachedTmdbFilmId in list(cachedTmdbFilmData):
+                if cachedTmdbFilmId not in allFilmDataFilmIds:
+                    invalidFilms.append({"imdbFilmId": cachedTmdbFilmId, 
+                                        "letterboxdTitle": cachedTmdbFilmData[cachedTmdbFilmId]['letterboxdTitle']})
+                    del cachedTmdbFilmData[cachedTmdbFilmId]
 
-    for invalidFilm in invalidFilms:
-        i = 0
-        while i < len(cachedLetterboxdTitles[invalidFilm['letterboxdTitle']]):
-            if cachedLetterboxdTitles[invalidFilm['letterboxdTitle']][i]['imdbFilmId'] == invalidFilm['imdbFilmId']:
-                del cachedLetterboxdTitles[invalidFilm['letterboxdTitle']][i]
-                i = i - 1
-            
-            i = i + 1
-            
-        if len(cachedLetterboxdTitles[invalidFilm['letterboxdTitle']]) == 0:
-            del cachedLetterboxdTitles[invalidFilm['letterboxdTitle']]
+        for invalidFilm in invalidFilms:
+            i = 0
+            while i < len(cachedLetterboxdTitles[invalidFilm['letterboxdTitle']]):
+                if cachedLetterboxdTitles[invalidFilm['letterboxdTitle']][i]['imdbFilmId'] == invalidFilm['imdbFilmId']:
+                    del cachedLetterboxdTitles[invalidFilm['letterboxdTitle']][i]
+                    i = i - 1
+                
+                i = i + 1
+                
+            if len(cachedLetterboxdTitles[invalidFilm['letterboxdTitle']]) == 0:
+                del cachedLetterboxdTitles[invalidFilm['letterboxdTitle']]
 
 
 if __name__ == "__main__":

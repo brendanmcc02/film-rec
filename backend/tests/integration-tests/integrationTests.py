@@ -11,12 +11,98 @@ from TestUtilities import *
 
 testUploadFilesDirectory = "test-upload-files/"
 
+def test_getInitialRowsOfRecommendations_guidExists(backendUrl):
+    fileName = "imdb-no-recent-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    
+    response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert response.status_code == 200
+
+    responseContent = response.json()
+    assert 'guid' in responseContent
+
+def test_regenerateRowsOfRecommendations_guidExists(backendUrl):
+    fileName = "imdb-no-recent-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    
+    getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
+
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
+    assert regenerateRecommendationsResponse.status_code == 200
+
+    responseContent = regenerateRecommendationsResponse.json()
+    assert 'guid' in responseContent
+
+def test_getInitialRowsOfRecommendations_errorMessageExists(backendUrl):
+    fileName = "imdb-no-recent-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    
+    response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert response.status_code == 200
+    # todo for 200 codes assert empty errorMessage
+
+    responseContent = response.json()
+    assert 'errorMessage' in responseContent
+
+def test_regenerateRowsOfRecommendations_errorMessageExists(backendUrl):
+    fileName = "imdb-no-recent-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    
+    getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
+
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
+    assert regenerateRecommendationsResponse.status_code == 200
+
+    responseContent = regenerateRecommendationsResponse.json()
+    assert 'errorMessage' in responseContent
+
+def test_getInitialRowsOfRecommendations_bodyExists(backendUrl):
+    fileName = "imdb-no-recent-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    
+    response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert response.status_code == 200
+
+    responseContent = response.json()
+    assert 'body' in responseContent
+
+def test_regenerateRowsOfRecommendations_bodyExists(backendUrl):
+    fileName = "imdb-no-recent-films.csv"
+    file = open(testUploadFilesDirectory + fileName)
+    filesToSend = {'file': (fileName, file)}
+    
+    getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
+
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
+    assert regenerateRecommendationsResponse.status_code == 200
+
+    responseContent = regenerateRecommendationsResponse.json()
+    assert 'body' in responseContent
+
 def test_getInitialRowsOfRecommendations_noFile(backendUrl):
     filesToSend = {'file': ("", None)}
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == ServiceUtilities.NO_FILE_IN_REQUEST_ERROR_MESSAGE
+    responseContent = response.json()
+    assert responseContent["errorMessage"] == ServiceUtilities.NO_FILE_IN_REQUEST_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_unacceptedFileType(backendUrl):
     fileName = "test.txt"
@@ -25,7 +111,8 @@ def test_getInitialRowsOfRecommendations_unacceptedFileType(backendUrl):
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 415
-    assert response.content.decode(encoding='utf-8') == ServiceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE
+    responseContent = response.json()
+    assert responseContent["errorMessage"] == ServiceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_imdbIncorrectHeader(backendUrl):
     fileName = "imdb-incorrect-header.csv"
@@ -34,7 +121,8 @@ def test_getInitialRowsOfRecommendations_imdbIncorrectHeader(backendUrl):
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
+    responseContent = response.json()
+    assert responseContent["errorMessage"] == ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_imdbMissingHeader(backendUrl):
     fileName = "imdb-missing-header.csv"
@@ -43,7 +131,8 @@ def test_getInitialRowsOfRecommendations_imdbMissingHeader(backendUrl):
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
+    responseContent = response.json()
+    assert responseContent["errorMessage"] == ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_letterboxdIncorrectHeaderCsv(backendUrl):
     fileName = "letterboxd-incorrect-header.csv"
@@ -52,7 +141,8 @@ def test_getInitialRowsOfRecommendations_letterboxdIncorrectHeaderCsv(backendUrl
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
+    responseContent = response.json()
+    assert responseContent["errorMessage"] == ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_letterboxdMissingHeaderCsv(backendUrl):
     fileName = "letterboxd-missing-header.csv"
@@ -61,7 +151,8 @@ def test_getInitialRowsOfRecommendations_letterboxdMissingHeaderCsv(backendUrl):
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
+    responseContent = response.json()
+    assert responseContent["errorMessage"] == ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_letterboxdincorrectZip(backendUrl):
     fileName = "letterboxd-incorrect.zip"
@@ -70,7 +161,8 @@ def test_getInitialRowsOfRecommendations_letterboxdincorrectZip(backendUrl):
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    assert response.content.decode(encoding='utf-8') == ServiceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE
+    responseContent = response.json()
+    assert responseContent["errorMessage"] == ServiceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE
 
 def test_getInitialRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     fileName = "imdb-no-recent-films.csv"
@@ -81,7 +173,8 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
     ## wrap this in a function?
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -105,7 +198,8 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -129,7 +223,8 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUr
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 0
     numberOfRecentRows = 0
@@ -154,7 +249,8 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(bac
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 0
     numberOfRecentRows = 0
@@ -179,7 +275,8 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backe
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -204,7 +301,8 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -230,7 +328,8 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenr
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -255,7 +354,8 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresT
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -280,7 +380,8 @@ def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAn
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -305,7 +406,8 @@ def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentF
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -330,7 +432,8 @@ def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilm
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -356,7 +459,8 @@ def test_getInitialRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRece
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -381,7 +485,8 @@ def test_getInitialRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 1
     numberOfRecentRows = 0
@@ -405,7 +510,8 @@ def test_getInitialRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 0
     numberOfRecentRows = 0
@@ -426,7 +532,8 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl)
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    rowsOfRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    responseContent = getInitialRowsOfRecommendationsResponse.json()
+    rowsOfRecommendations = responseContent["body"]
 
     numberOfFavouriteRows = 0
     numberOfRecentRows = 0
@@ -439,6 +546,7 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl)
     testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
 
+# TODO this test is unreadable as fuuuuuck wrap it in a function!!!!
 def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     fileName = "imdb-no-recent-films.csv"
     file = open(testUploadFilesDirectory + fileName)
@@ -447,7 +555,10 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations")
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
     # verify the newly recommended films are valid
@@ -459,14 +570,17 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     numberOfOldRows = 1
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
-    regeneratedRecommendations = regenerateRecommendationsResponse.json()
+    
+    responseContent = regenerateRecommendationsResponse.json()
+    regeneratedRecommendations = responseContent["body"]
     testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
 
     # ensure all newly recommended films are unique
     # TODO move this to a method to make more readable?
     initialRecommendationFilmIds = []
-    initialRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    initialRecommendations = getInitialRowsOfRecommendationsResponseContent["body"]
     for row in initialRecommendations:
         for film in row['recommendedFilms']:
             initialRecommendationFilmIds.append(film['id'])
@@ -483,7 +597,10 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations")
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
     # verify the newly recommended films are valid
@@ -494,13 +611,17 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     numberOfOldRows = 1
     totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
                          numberOfInternationalRows + numberOfOldRows)
-    regeneratedRecommendations = regenerateRecommendationsResponse.json()
+    
+    responseContent = regenerateRecommendationsResponse.json()
+    regeneratedRecommendations = responseContent["body"]
     testUtilities = TestUtilities("../../../")
     testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
 
     # ensure all newly recommended films are unique
+    # TODO move this to a method to make more readable?
     initialRecommendationFilmIds = []
-    initialRecommendations = getInitialRowsOfRecommendationsResponse.json()
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    initialRecommendations = getInitialRowsOfRecommendationsResponseContent["body"]
     for row in initialRecommendations:
         for film in row['recommendedFilms']:
             initialRecommendationFilmIds.append(film['id'])

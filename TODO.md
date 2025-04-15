@@ -247,7 +247,7 @@ my-film-data-vec.json to file
 - [x] add note about patience
 - [x] add film imdb url
 - [x] change `app.py` to `App.py` on render backend
-- [ ] make website work for multiple concurrent users: service orchestrator + guids
+- [x] make website work for multiple concurrent users: service orchestrator + guids
 
 # README
 - [x] do `README.md`
@@ -257,6 +257,7 @@ my-film-data-vec.json to file
 ## Unit Tests
 - [x] initDatabase
 - [x] vectorizeUtilities
+- [ ] improve readability
 
 ## Int Tests
 - [x] `/getInitialRowsOfRecommendations`
@@ -265,6 +266,8 @@ my-film-data-vec.json to file
 - [x] [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses)
 - [x] add more int tests for letterboxd zip
 - [x] write int tests for zip file addition
+- [ ] make them muuuuuuch more readable and abstract the DRY shit out
+- [ ] make test for empty errorMessage on 200
 
 ## Pipelines
 - [x] config a pipeline that is triggered on pushes to main
@@ -289,6 +292,10 @@ my-film-data-vec.json to file
 - [x] get rid of `cache` member in Service, variables should access exactly what they want
 - [x] create `ServiceUtilities` class?
 - [x] make class for vector profiles
+- [ ] merge all db stuff of `ServiceInstance` into one object to make ctor params look cleaner
+- [ ] merge all normalized stuff of `ServiceInstance` into one object to make ctor params look cleaner
+- [ ] merge all profiles `ServiceInstance` into one object to make ctor params look cleaner
+- [ ] with multiple serviceinstances, refactor out the common stuff and re-use it for each serviceinstance
 
 # Finishing Touches
 - [x] record demo
@@ -297,3 +304,6 @@ my-film-data-vec.json to file
 
 # Mongo DB
 - [ ] implement 
+
+# Bugs
+- [ ] reviewRec doesn't work (has it been not working for a long time???+)

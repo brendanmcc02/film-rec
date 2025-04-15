@@ -14,8 +14,10 @@ const App = () => {
   const [rowsOfRecommendations, setRowsOfRecommendations] = useState([]);
   const [rowsOfRecommendationButtonVisibility, setRowsOfRecommendationButtonVisibility] = useState([]);
   const [overflowY, setOverflowY] = useState('hidden');
+
   const homeScrollTargetReference = useRef(null);
   const recommendationsScrollTargetReference = useRef(null);
+  const guidRef = useRef("");
 
   const FILE_UPLOADED_SUCCESSFULLY_TEXT = "File upload successful.";
 
@@ -52,13 +54,18 @@ const App = () => {
         body: formData
       });
 
+      const responseContent = await response.json();
+
       if (response.ok) {
         setErrorText(FILE_UPLOADED_SUCCESSFULLY_TEXT);
         setOverflowY('auto');
         
-        const jsonData = await response.json();
-        setRowsOfRecommendations(jsonData);
-        const initialButtonVisibility = jsonData.map((row) => 
+        guidRef.current = responseContent.guid;
+        const responseRowsOfRecommendations = responseContent.body;
+
+        setRowsOfRecommendations(responseRowsOfRecommendations);
+
+        const initialButtonVisibility = responseRowsOfRecommendations.map((row) => 
           row.recommendedFilms.map((film) => ({ 
               filmID: film.id, 
               isFilmButtonVisible: true
@@ -67,12 +74,17 @@ const App = () => {
 
         setRowsOfRecommendationButtonVisibility(initialButtonVisibility);
       } else {
-        setErrorText(await response.text());
+        const errorMessage = responseContent.errorMessage;
+        setErrorText(errorMessage);
         setRowsOfRecommendations([]);
         setRowsOfRecommendationButtonVisibility([]);
+        setOverflowY('hidden');
       }
     } catch (error) {
       setErrorText(error.message);
+      setRowsOfRecommendations([]);
+      setRowsOfRecommendationButtonVisibility([]);
+      setOverflowY('hidden');
     }
   };
 
@@ -98,37 +110,37 @@ const App = () => {
       );
     }
 
-  async function handleUpButton(filmId) {
-      await reviewRecommendation(filmId, true);
-      setFilmButtonInvisible(filmId);
-  }
-
-  async function handleDownButton(filmId) {
-      await reviewRecommendation(filmId, false);
+  async function handleThumbsUpOrDownButton(filmId, isThumbsUp) {
+      await reviewRecommendation(filmId, isThumbsUp);
       setFilmButtonInvisible(filmId);
   }
 
   async function reviewRecommendation(filmId, isThumbsUp) {
       try {
-          const fetchUrl = ("https://film-rec-backend.onrender.com/reviewRecommendation?filmId=" 
-                              + filmId.toString() + "&isThumbsUp=" + isThumbsUp)
+          const fetchUrl = ("https://film-rec-backend.onrender.com/reviewRecommendation" +
+                            "?filmId=" + filmId.toString() + "&isThumbsUp=" + isThumbsUp + "&guid=" + guidRef.current.toString());
           const response = await fetch(fetchUrl);
+          const responseContent = await response.json();
 
-          if (!response.ok) {
-              console.log('reviewRecommendation response not ok. filmID: ' + filmId);
+          if (response.ok) {
+            console.log(responseContent.body);
           } else {
-              console.log(await response.text());
+            console.log('error with /reviewRecommendation. filmID: ' + filmId);
           }
       } catch (error) {
-          console.log('error with reviewRecommendation. filmID: ' + filmId);
+          console.log('error with /reviewRecommendation. filmID: ' + filmId);
       }
   }
   
   async function handleRegenerateRecommendationsButton() {
-      const response = await fetch('https://film-rec-backend.onrender.com/regenerateRecommendations');
-      const jsonData = await response.json();
-      setRowsOfRecommendations(jsonData);
-      const initialButtonVisibility = jsonData.map((row) => 
+      const fetchUrl = ("https://film-rec-backend.onrender.com/regenerateRecommendations" + "?guid=" + guidRef.current.toString());
+      const response = await fetch(fetchUrl);
+
+      const responseContent = await response.json();
+      const responseRowsOfRecommendations = responseContent.body;
+      
+      setRowsOfRecommendations(responseRowsOfRecommendations);
+      const initialButtonVisibility = responseRowsOfRecommendations.map((row) => 
           row.recommendedFilms.map((film) => ({ 
               filmID: film.id, 
               isFilmButtonVisible: true
@@ -159,10 +171,10 @@ const App = () => {
                   <div className='buttons-and-similarity-score-container'>
                       {isFilmButtonVisible(film.id) && 
                           <div className="buttons-container">
-                              <button className="up-down-button up-button opacity-fade-in" onClick={() => handleUpButton(film.id)}>
+                              <button className="up-down-button up-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.id, true)}>
                                   <FaRegThumbsUp />
                               </button>
-                              <button className="up-down-button down-button opacity-fade-in" onClick={() => handleDownButton(film.id)}>
+                              <button className="up-down-button down-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.id, false)}>
                                   <FaRegThumbsDown />
                               </button>
                           </div>

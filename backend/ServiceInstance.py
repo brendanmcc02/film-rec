@@ -1,13 +1,13 @@
 import csv
 from datetime import datetime
-from flask import request, jsonify
+from flask import request
 import numpy as np
 from VectorProfile import *
 
 class ServiceInstance:
 
     def __init__(self, _database, _serviceUtilities, _vectorizeUtilities, _letterboxdConversionUtilities,
-                 _initDatabase):
+                 _initDatabase, guid):
         self.database = _database
         self.serviceUtilities = _serviceUtilities
         self.vectorizeUtilities = _vectorizeUtilities
@@ -15,6 +15,8 @@ class ServiceInstance:
         self.initDatabase = _initDatabase
         self.allFilmDataUnseen = {}
         # TODO merge all db stuff into one object?
+        # NOTE: this is all read from database, so don't even need to inject db
+        # TODO all this stuff can be parameterized to avoid duplication with multiple service instances
         self.allFilmDataVectorized = _database.read("AllFilmDataVectorized")
         self.allFilmDataVectorizedMagnitudes = _database.read("AllFilmDataVectorizedMagnitudes")
         self.cachedLetterboxdTitles = _database.read("CachedLetterboxdTitles")
@@ -25,6 +27,7 @@ class ServiceInstance:
         self.profileVectorLength = _database.read("ProfileVectorLength")
         self.minNumberOfVotes = _database.read("MinNumberOfVotes")
         self.diffNumberOfVotes = _database.read("DiffNumberOfVotes")
+        # TODO all this stuff can be parameterized to avoid duplication with multiple service instances
         # TODO merge all normalized stuff into one object?
         self.normalizedYears = _database.read("NormalizedYears")
         self.normalizedYearsKeys = list(self.normalizedYears.keys())
@@ -41,6 +44,7 @@ class ServiceInstance:
         self.internationalProfile = VectorProfile('international', self.profileVectorLength)
         self.oldProfile = VectorProfile('old', self.profileVectorLength)
         self.rowsOfRecommendations = []
+        self.guid = guid
 
 
     def getInitialRowsOfRecommendations(self):
@@ -49,13 +53,13 @@ class ServiceInstance:
         self.serviceUtilities.deleteUserUploadedData()
 
         if 'file' not in request.files:
-            return self.serviceUtilities.NO_FILE_IN_REQUEST_ERROR_MESSAGE, 400
+            return self.serviceUtilities.getFormattedResponse({}, self.serviceUtilities.NO_FILE_IN_REQUEST_ERROR_MESSAGE, self.guid, 400)
 
         file = request.files['file']
         userFilmDataFilename = file.filename
 
         if self.serviceUtilities.isUnacceptableMediaType(userFilmDataFilename):
-            return self.serviceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE, 415
+            return self.serviceUtilities.getFormattedResponse({}, self.serviceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE, self.guid, 415)
 
         try:
             userFilmDataOriginal = []
@@ -64,7 +68,7 @@ class ServiceInstance:
 
             if userUploadedFileLocation.endswith(".zip"):
                 if self.letterboxdConversionUtilities.isLetterboxdZipFileInvalid(self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME, userFilmDataFilename):
-                    return self.serviceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE, 400
+                    return self.serviceUtilities.getFormattedResponse({}, self.serviceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE, self.guid, 400)
                 else:
                     userFilmDataFilename = "ratings.csv"
                     userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
@@ -74,18 +78,18 @@ class ServiceInstance:
 
                 for row in reader:
                     if 'unexpectedData' in row:
-                        return self.serviceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE, 400
+                        return self.serviceUtilities.getFormattedResponse({}, self.serviceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE, self.guid, 400)
 
                     keys = list(row.keys())
                     for key in keys:
                         if key not in self.serviceUtilities.EXPECTED_IMDB_FILM_ATTRIBUTES:
                             isImdbFile = False
                             if key not in self.letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
-                                return self.serviceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, 400
+                                return self.serviceUtilities.getFormattedResponse({}, self.serviceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, self.guid, 400)
 
                     userFilmDataOriginal.append(row)
         except Exception as e:
-            return f"Error occurred with reading {userFilmDataFilename}.\n{e}", 400
+            return self.serviceUtilities.getFormattedResponse({}, f"Error occurred with reading {userFilmDataFilename}.\n{e}", self.guid, 400)
         finally:
             self.serviceUtilities.deleteUserUploadedData()
         
@@ -132,7 +136,7 @@ class ServiceInstance:
                         print(f"Film in userFilmData not found in allFilmData, {filmId}\n")
                 except ValueError:
                     self.serviceUtilities.deleteUserUploadedData()
-                    return f"value error with film: {film['Const']}", 400
+                    return self.serviceUtilities.getFormattedResponse({}, f"value error with film: {film['Const']}", self.guid, 400)
 
         self.diffDateRated = maxDateRated - self.minDateRated
         isDiffDateRatedZero = False
@@ -190,7 +194,7 @@ class ServiceInstance:
 
         self.generateRecommendations()
 
-        return jsonify(self.rowsOfRecommendations), 200
+        return self.serviceUtilities.getFormattedResponse(self.rowsOfRecommendations, "", self.guid, 200)
 
     def generateRecommendations(self):
         
@@ -307,7 +311,7 @@ class ServiceInstance:
 
         self.vectorizeUtilities.keepVectorBoundary(profile.profile)
 
-        return f"changed {profileId} profile due to after reviewing {filmId}", 200
+        return self.serviceUtilities.getFormattedResponse(f"changed {profileId} profile due to after reviewing {filmId}", "", self.guid, 200)
     
 
     def getProfile(self, profileId):
@@ -336,4 +340,4 @@ class ServiceInstance:
 
         self.generateRecommendations()
 
-        return jsonify(self.rowsOfRecommendations), 200
+        return self.serviceUtilities.getFormattedResponse(self.rowsOfRecommendations, "", self.guid, 200)
