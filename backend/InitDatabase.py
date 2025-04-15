@@ -118,7 +118,7 @@ class InitDatabase:
         cachedTmdbFilmData = self.database.read("CachedTmdbFilmData")
         cachedLetterboxdTitles = self.database.read("CachedLetterboxdTitles")
         
-        removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles)
+        self.removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles)
 
         allCountries = []
 
