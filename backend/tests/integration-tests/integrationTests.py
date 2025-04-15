@@ -1,5 +1,3 @@
-# response_content: {"body", "errorMessage", "guid"}, status_code: int
-
 import os
 import requests
 import sys

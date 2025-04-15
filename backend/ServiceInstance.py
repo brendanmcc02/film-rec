@@ -194,7 +194,9 @@ class ServiceInstance:
 
         self.generateRecommendations()
 
-        return jsonify(self.rowsOfRecommendations), 200
+        return {"body": jsonify(self.rowsOfRecommendations), 
+                "errorMessage": "", 
+                "guid": self.guid}, 200
 
     def generateRecommendations(self):
         
@@ -311,7 +313,9 @@ class ServiceInstance:
 
         self.vectorizeUtilities.keepVectorBoundary(profile.profile)
 
-        return f"changed {profileId} profile due to after reviewing {filmId}", 200
+        return {"body": jsonify(f"changed {profileId} profile due to after reviewing {filmId}"), 
+                "errorMessage": "", 
+                "guid": self.guid}, 200
     
 
     def getProfile(self, profileId):
@@ -340,4 +344,6 @@ class ServiceInstance:
 
         self.generateRecommendations()
 
-        return jsonify(self.rowsOfRecommendations), 200
+        return {"body": jsonify(self.rowsOfRecommendations), 
+                "errorMessage": "", 
+                "guid": self.guid}, 200

@@ -54,13 +54,14 @@ const App = () => {
         body: formData
       });
 
+      const responseContent = await response.json();
+
       if (response.ok) {
         setErrorText(FILE_UPLOADED_SUCCESSFULLY_TEXT);
         setOverflowY('auto');
         
-        const responseJson = await response.json();
-        guidRef.current = responseJson.guid;
-        const responseRowsOfRecommendations = responseJson.rowsOfRecommendations;
+        guidRef.current = responseContent.guid;
+        const responseRowsOfRecommendations = responseContent.body;
 
         setRowsOfRecommendations(responseRowsOfRecommendations);
 
@@ -73,12 +74,17 @@ const App = () => {
 
         setRowsOfRecommendationButtonVisibility(initialButtonVisibility);
       } else {
-        setErrorText(await response.text());
+        const errorMessage = responseContent.errorMessage;
+        setErrorText(errorMessage);
         setRowsOfRecommendations([]);
         setRowsOfRecommendationButtonVisibility([]);
+        setOverflowY('hidden');
       }
     } catch (error) {
       setErrorText(error.message);
+      setRowsOfRecommendations([]);
+      setRowsOfRecommendationButtonVisibility([]);
+      setOverflowY('hidden');
     }
   };
 
@@ -114,14 +120,15 @@ const App = () => {
           const fetchUrl = ("https://film-rec-backend.onrender.com/reviewRecommendation" +
                             "?filmId=" + filmId.toString() + "&isThumbsUp=" + isThumbsUp + "&guid=" + guidRef.current.toString());
           const response = await fetch(fetchUrl);
+          const responseContent = await response.json();
 
-          if (!response.ok) {
-              console.log('reviewRecommendation response not ok. filmID: ' + filmId);
+          if (response.ok) {
+            console.log(responseContent.body);
           } else {
-              console.log(await response.text());
+            console.log('error with /reviewRecommendation. filmID: ' + filmId);
           }
       } catch (error) {
-          console.log('error with reviewRecommendation. filmID: ' + filmId);
+          console.log('error with /reviewRecommendation. filmID: ' + filmId);
       }
   }
   
@@ -129,8 +136,8 @@ const App = () => {
       const fetchUrl = ("https://film-rec-backend.onrender.com/regenerateRecommendations" + "?guid=" + guidRef.current.toString());
       const response = await fetch(fetchUrl);
 
-      const responseJson = await response.json();
-      const responseRowsOfRecommendations = responseJson.rowsOfRecommendations;
+      const responseContent = await response.json();
+      const responseRowsOfRecommendations = responseContent.body;
       
       setRowsOfRecommendations(responseRowsOfRecommendations);
       const initialButtonVisibility = responseRowsOfRecommendations.map((row) => 
