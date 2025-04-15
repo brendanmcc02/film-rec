@@ -7,7 +7,7 @@ from VectorProfile import *
 class ServiceInstance:
 
     def __init__(self, _database, _serviceUtilities, _vectorizeUtilities, _letterboxdConversionUtilities,
-                 _initDatabase):
+                 _initDatabase, guid):
         self.database = _database
         self.serviceUtilities = _serviceUtilities
         self.vectorizeUtilities = _vectorizeUtilities
@@ -44,6 +44,7 @@ class ServiceInstance:
         self.internationalProfile = VectorProfile('international', self.profileVectorLength)
         self.oldProfile = VectorProfile('old', self.profileVectorLength)
         self.rowsOfRecommendations = []
+        self.guid = guid
 
 
     def getInitialRowsOfRecommendations(self):

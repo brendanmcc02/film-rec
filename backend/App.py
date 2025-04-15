@@ -21,8 +21,8 @@ serviceInstances = {}
 
 @app.route('/getInitialRowsOfRecommendations', methods=['POST'])
 def getInitialRowsOfRecommendations():
-    serviceInstance = ServiceInstance(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase)
     guid = str(uuid.uuid4())
+    serviceInstance = ServiceInstance(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase, guid)
     serviceInstances[guid] = serviceInstance
 
     return serviceInstances[guid].getInitialRowsOfRecommendations()
