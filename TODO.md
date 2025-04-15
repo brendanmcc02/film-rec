@@ -268,6 +268,7 @@ my-film-data-vec.json to file
 - [x] write int tests for zip file addition
 - [ ] make them muuuuuuch more readable and abstract the DRY shit out
 - [ ] make test for empty errorMessage on 200
+- [ ] add reviewRec int tests
 
 ## Pipelines
 - [x] config a pipeline that is triggered on pushes to main
@@ -306,4 +307,4 @@ my-film-data-vec.json to file
 - [ ] implement 
 
 # Bugs
-- [ ] reviewRec doesn't work (has it been not working for a long time???+)
+- [ ] reviewRec doesn't work (has it been not working for a long time???)
