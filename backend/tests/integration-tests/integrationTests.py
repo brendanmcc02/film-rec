@@ -30,7 +30,10 @@ def test_regenerateRowsOfRecommendations_guidExists(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations")
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
     responseContent = regenerateRecommendationsResponse.json()
@@ -43,6 +46,7 @@ def test_getInitialRowsOfRecommendations_errorMessageExists(backendUrl):
     
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert response.status_code == 200
+    # todo for 200 codes assert empty errorMessage
 
     responseContent = response.json()
     assert 'errorMessage' in responseContent
@@ -55,7 +59,10 @@ def test_regenerateRowsOfRecommendations_errorMessageExists(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations")
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
     responseContent = regenerateRecommendationsResponse.json()
@@ -80,7 +87,10 @@ def test_regenerateRowsOfRecommendations_bodyExists(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations")
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
     responseContent = regenerateRecommendationsResponse.json()
@@ -544,7 +554,10 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations")
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
     # verify the newly recommended films are valid
@@ -582,7 +595,10 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations")
+    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
     # verify the newly recommended films are valid
