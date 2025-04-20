@@ -112,6 +112,7 @@ countries, poster)
 - [x] `deleteCsvFiles` should be to delete user-upload folder
 - [x] upload zip file instead of ratings.csv (letterboxd)
 - [x] merge `/verify...` and `/initRows...` into one call
+- [ ] either write files as guid.csv, or write to folder with guid as folder name
 
 # Misc
 - [x] switch from my-film-data.json to ratings.csv
@@ -175,14 +176,14 @@ my-film-data-vec.json to file
 - [x] play around with `GENRE_WEIGHT`
 - [x] try fixing imdbRating to 1.0?
 
-## Testing & Evaluation
+## Evaluation
 - [x] ~~test if specialized vector magnitude makes a better difference~~ results are ass so went back to normal vector magnitude
 - [x] curve genres & countries **better results**
 - [x] `DATE_RATED_WEIGHT`?
 - [x] ~~try without runtime? if no difference, get rid of it~~ it does make a slight difference, gonna leave it in
 - [x] `REC_REVIEW_FEEDBACK_FACTOR`?
 
-# Code-Related & Functionality
+# Code-Related
 - [x] double check I didn't remove any necessary `global`s and fuck it up
 - [x] tidy up code, make things as efficient as possible
 - [x] work with np vector instead of list? is it more efficient? 
