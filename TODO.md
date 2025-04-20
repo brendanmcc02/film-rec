@@ -268,7 +268,7 @@ my-film-data-vec.json to file
 - [x] add more int tests for letterboxd zip
 - [x] write int tests for zip file addition
 - [ ] make them muuuuuuch more readable and abstract the DRY shit out
-- [ ] make test for empty errorMessage on 200
+- [x] make test for empty errorMessage on 200
 - [ ] add reviewRec int tests
 
 ## Pipelines
