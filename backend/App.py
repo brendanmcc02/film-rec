@@ -11,8 +11,9 @@ import uuid
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": ["https://film-rec.onrender.com", "http://localhost:3000"]}})
 
-database = DocumentDatabase("../")
 serviceUtilities = ServiceUtilities()
+database = DocumentDatabase("../")
+cachedDatabase = serviceUtilities.initCachedDatabase(database)
 vectorizeUtilities = VectorizeUtilities()
 letterboxdConversionUtilities = LetterboxdConversionUtilities()
 initDatabase = InitDatabase(database)
@@ -22,7 +23,7 @@ serviceInstances = {}
 @app.route('/getInitialRowsOfRecommendations', methods=['POST'])
 def getInitialRowsOfRecommendations():
     guid = str(uuid.uuid4())
-    serviceInstance = ServiceInstance(database, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase, guid)
+    serviceInstance = ServiceInstance(cachedDatabase, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase, guid)
     serviceInstances[guid] = serviceInstance
 
     return serviceInstances[guid].getInitialRowsOfRecommendations()
