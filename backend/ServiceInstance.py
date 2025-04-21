@@ -172,7 +172,7 @@ class ServiceInstance:
         
         self.rowsOfRecommendations = []
 
-        if np.array_equal(self.vectorProfiles["favouriteProfile"].profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
+        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["favouriteProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
             print("No favourite profile.")
         else:
             self.getFilmRecommendations("Based on your favourite films", self.vectorProfiles["favouriteProfile"].profile, self.vectorProfiles["favouriteProfile"].profileId)
@@ -180,7 +180,7 @@ class ServiceInstance:
             #                        self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"], self.cachedDatabase["NormalizedImdbRatingsKeys"],
             #                        self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
-        if np.array_equal(self.vectorProfiles["recencyProfile"].profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
+        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["recencyProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
             print("No recency profile.")
         else:
             self.getFilmRecommendations("Based on what you watched recently", self.vectorProfiles["recencyProfile"].profile, self.vectorProfiles["recencyProfile"].profileId)
@@ -202,7 +202,7 @@ class ServiceInstance:
                 #                        self.cachedDatabase["NormalizedRuntimesKeys"], self.cachedDatabase["NormalizedImdbRatingsKeys"], 
                 #                        self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
             
-        if np.array_equal(self.vectorProfiles["internationalProfile"].profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
+        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["internationalProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
             print("No international profile.")
         else:
             self.getFilmRecommendations("Try out some international films", self.vectorProfiles["internationalProfile"].profile, self.vectorProfiles["internationalProfile"].profileId)
@@ -210,7 +210,7 @@ class ServiceInstance:
             #                        "International", self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"],
             #                        self.cachedDatabase["NormalizedImdbRatingsKeys"], self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
-        if np.array_equal(self.vectorProfiles["oldProfile"].profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
+        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["oldProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
             print("No old profile.")
         else:
             self.getFilmRecommendations("Try out some older films", self.vectorProfiles["oldProfile"].profile, self.vectorProfiles["oldProfile"].profileId)

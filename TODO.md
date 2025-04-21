@@ -209,7 +209,8 @@ my-film-data-vec.json to file
 - [x] classes should be UpperCamelCase
 - [ ] improve readability by making **a lot** more functions with descriptive names
 - [ ] get rid of underscore in parameters
-- [ ] wrap `if np.array_equal` into a function with readable name
+- [x] wrap `if np.array_equal` into a function with readable name
+- [ ] the `self` stuff makes code hard to read, maybe instead of loading in an object, we just straight up load the class, less clutter
 
 # Frontend
 - [x] do text div 

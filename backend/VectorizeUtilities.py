@@ -364,3 +364,6 @@ class VectorizeUtilities:
         vectorProfiles["oldProfile"] = VectorProfile('old', profileVectorLength)
 
         return vectorProfiles
+
+    def isZeroVector(vectorProfile, profileVectorLength):
+        return np.array_equal(vectorProfile, np.zeros(profileVectorLength))
