@@ -295,10 +295,10 @@ my-film-data-vec.json to file
 - [x] get rid of `cache` member in Service, variables should access exactly what they want
 - [x] create `ServiceUtilities` class?
 - [x] make class for vector profiles
-- [ ] merge all db stuff of `ServiceInstance` into one object to make ctor params look cleaner
-- [ ] merge all normalized stuff of `ServiceInstance` into one object to make ctor params look cleaner
+- [x] merge all db stuff of `ServiceInstance` into one object to make ctor params look cleaner
+- [x] merge all normalized stuff of `ServiceInstance` into one object to make ctor params look cleaner
 - [ ] merge all profiles `ServiceInstance` into one object to make ctor params look cleaner
-- [ ] with multiple serviceinstances, refactor out the common stuff and re-use it for each serviceinstance
+- [x] with multiple serviceinstances, refactor out the common stuff and re-use it for each serviceinstance
 
 # Finishing Touches
 - [x] record demo
