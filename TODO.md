@@ -208,6 +208,7 @@ my-film-data-vec.json to file
 - [x] `loadJsonFiles` should only run once
 - [x] classes should be UpperCamelCase
 - [ ] improve readability by making **a lot** more functions with descriptive names
+- [ ] get rid of underscore in parameters
 
 # Frontend
 - [x] do text div 
