@@ -14,15 +14,9 @@ class ServiceInstance:
         self.letterboxdConversionUtilities = letterboxdConversionUtilities
         self.initDatabase = initDatabase
         self.allFilmDataUnseen = {}
-        # TODO merge profiles into one object?
-        self.favouriteProfile = VectorProfile('favourite', self.cachedDatabase["ProfileVectorLength"])
-        self.genreProfiles = []
-        self.recencyProfile = VectorProfile('recency', self.cachedDatabase["ProfileVectorLength"])
-        self.internationalProfile = VectorProfile('international', self.cachedDatabase["ProfileVectorLength"])
-        self.oldProfile = VectorProfile('old', self.cachedDatabase["ProfileVectorLength"])
+        self.vectorProfiles = self.vectorizeUtilities.initVectorProfiles(self.cachedDatabase["ProfileVectorLength"])
         self.rowsOfRecommendations = []
         self.guid = guid
-
 
     def getInitialRowsOfRecommendations(self):
         isImdbFile = True
@@ -148,16 +142,16 @@ class ServiceInstance:
 
             userFilmDataVectorized[imdbFilmId] = vector * cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
-        self.favouriteProfile = self.vectorizeUtilities.initFavouriteProfile(userFilmData, userFilmDataVectorized, 
+        self.vectorProfiles["favouriteProfile"] = self.vectorizeUtilities.initFavouriteProfile(userFilmData, userFilmDataVectorized, 
                                                                              self.cachedDatabase["ProfileVectorLength"],
                                                                              cachedDateRatedAndUserRatingWeights, favouriteFilmIds,
                                                                              self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"])
 
-        self.recencyProfile = self.vectorizeUtilities.initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
+        self.vectorProfiles["recencyProfile"] = self.vectorizeUtilities.initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
                                                                          self.cachedDatabase["ProfileVectorLength"], cachedDateRatedAndUserRatingWeights, 
                                                                          self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"])
 
-        self.genreProfiles = self.vectorizeUtilities.initGenreProfiles(userFilmData, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
+        self.vectorProfiles["genreProfiles"] = self.vectorizeUtilities.initGenreProfiles(userFilmData, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights,
                                                                        self.cachedDatabase["AllGenres"], self.cachedDatabase["ProfileVectorLength"], 
                                                                        self.serviceUtilities.NUMBER_OF_FILMS_WATCHED_IN_GENRE_THRESHOLD, 
                                                                        self.cachedDatabase["AllCountries"])
@@ -165,10 +159,10 @@ class ServiceInstance:
         userProfile = self.vectorizeUtilities.initUserProfile(userFilmData, userFilmDataVectorized, self.cachedDatabase["ProfileVectorLength"],
                                                               cachedDateRatedAndUserRatingWeights, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"])
 
-        self.internationalProfile = self.vectorizeUtilities.initInternationalProfile(userProfile.profile, self.cachedDatabase["AllCountries"], self.cachedDatabase["AllGenresLength"],
+        self.vectorProfiles["internationalProfile"] = self.vectorizeUtilities.initInternationalProfile(userProfile.profile, self.cachedDatabase["AllCountries"], self.cachedDatabase["AllGenresLength"],
                                                                                      self.cachedDatabase["ProfileVectorLength"])
 
-        self.oldProfile = self.vectorizeUtilities.initOldProfile(userProfile.profile)
+        self.vectorProfiles["oldProfile"] = self.vectorizeUtilities.initOldProfile(userProfile.profile)
 
         self.generateRecommendations()
 
@@ -178,49 +172,49 @@ class ServiceInstance:
         
         self.rowsOfRecommendations = []
 
-        if np.array_equal(self.favouriteProfile.profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
+        if np.array_equal(self.vectorProfiles["favouriteProfile"].profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
             print("No favourite profile.")
         else:
-            self.getFilmRecommendations("Based on your favourite films", self.favouriteProfile.profile, self.favouriteProfile.profileId)
-            # self.vectorizeUtilities.printStringifiedVector(self.favouriteProfile.profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], "Favourite",
+            self.getFilmRecommendations("Based on your favourite films", self.vectorProfiles["favouriteProfile"].profile, self.vectorProfiles["favouriteProfile"].profileId)
+            # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["favouriteProfile"].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], "Favourite",
             #                        self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"], self.cachedDatabase["NormalizedImdbRatingsKeys"],
             #                        self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
-        if np.array_equal(self.recencyProfile.profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
+        if np.array_equal(self.vectorProfiles["recencyProfile"].profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
             print("No recency profile.")
         else:
-            self.getFilmRecommendations("Based on what you watched recently", self.recencyProfile.profile, self.recencyProfile.profileId)
-            # self.vectorizeUtilities.printStringifiedVector(self.recencyProfile.profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], "Recency",
+            self.getFilmRecommendations("Based on what you watched recently", self.vectorProfiles["recencyProfile"].profile, self.vectorProfiles["recencyProfile"].profileId)
+            # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["recencyProfile"].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], "Recency",
             #                                                self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"], self.cachedDatabase["NormalizedImdbRatingsKeys"],
             #                                                self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
-        self.genreProfiles = sorted(self.genreProfiles, key=lambda x: x.weightedMeanRating, reverse=True)
+        self.vectorProfiles["genreProfiles"] = sorted(self.vectorProfiles["genreProfiles"], key=lambda x: x.weightedMeanRating, reverse=True)
 
         for i in range(self.serviceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS):
-            if self.genreProfiles[i].weightedMeanRating == 0.0:
+            if self.vectorProfiles["genreProfiles"][i].weightedMeanRating == 0.0:
                 print("No genre profile.")
             else:
-                countryText = self.vectorizeUtilities.getProfileMaxCountry(self.genreProfiles[i].profile, self.cachedDatabase["AllGenresLength"], self.cachedDatabase["AllCountries"])
-                self.getFilmRecommendations(f"Because you like {countryText} {self.genreProfiles[i].profileId} films", self.genreProfiles[i].profile, 
-                                            self.genreProfiles[i].profileId)
-                # self.vectorizeUtilities.printStringifiedVector(self.genreProfiles[i].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], 
-                #                        self.genreProfiles[i].profileId, self.cachedDatabase["NormalizedYearsKeys"], 
+                countryText = self.vectorizeUtilities.getProfileMaxCountry(self.vectorProfiles["genreProfiles"][i].profile, self.cachedDatabase["AllGenresLength"], self.cachedDatabase["AllCountries"])
+                self.getFilmRecommendations(f"Because you like {countryText} {self.vectorProfiles["genreProfiles"][i].profileId} films", self.vectorProfiles["genreProfiles"][i].profile, 
+                                            self.vectorProfiles["genreProfiles"][i].profileId)
+                # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["genreProfiles"][i].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], 
+                #                        self.vectorProfiles["genreProfiles"][i].profileId, self.cachedDatabase["NormalizedYearsKeys"], 
                 #                        self.cachedDatabase["NormalizedRuntimesKeys"], self.cachedDatabase["NormalizedImdbRatingsKeys"], 
                 #                        self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
             
-        if np.array_equal(self.internationalProfile.profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
+        if np.array_equal(self.vectorProfiles["internationalProfile"].profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
             print("No international profile.")
         else:
-            self.getFilmRecommendations("Try out some international films", self.internationalProfile.profile, self.internationalProfile.profileId)
-            # self.vectorizeUtilities.printStringifiedVector(self.internationalProfile.profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], 
+            self.getFilmRecommendations("Try out some international films", self.vectorProfiles["internationalProfile"].profile, self.vectorProfiles["internationalProfile"].profileId)
+            # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["internationalProfile"].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], 
             #                        "International", self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"],
             #                        self.cachedDatabase["NormalizedImdbRatingsKeys"], self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
-        if np.array_equal(self.oldProfile.profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
+        if np.array_equal(self.vectorProfiles["oldProfile"].profile, np.zeros(self.cachedDatabase["ProfileVectorLength"])):
             print("No old profile.")
         else:
-            self.getFilmRecommendations("Try out some older films", self.oldProfile.profile, self.oldProfile.profileId)
-            # self.vectorizeUtilities.printStringifiedVector(self.oldProfile.profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], "Old",
+            self.getFilmRecommendations("Try out some older films", self.vectorProfiles["oldProfile"].profile, self.vectorProfiles["oldProfile"].profileId)
+            # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["oldProfile"].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], "Old",
             #                        self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"],
             #                        self.cachedDatabase["NormalizedImdbRatingsKeys"], self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
@@ -294,15 +288,15 @@ class ServiceInstance:
 
     def getProfile(self, profileId):
         if profileId == "favourite":
-            return self.favouriteProfile
+            return self.vectorProfiles["favouriteProfile"]
         elif profileId == "recency":
-            return self.recencyProfile
+            return self.vectorProfiles["recencyProfile"]
         elif profileId == "old":
-            return self.oldProfile
+            return self.vectorProfiles["oldProfile"]
         elif profileId == "international":
-            return self.internationalProfile
+            return self.vectorProfiles["internationalProfile"]
         else:
-            for profile in self.genreProfiles:
+            for profile in self.vectorProfiles["genreProfiles"]:
                 if profile.profileId == profileId:
                     return profile
 
