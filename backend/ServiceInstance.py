@@ -8,7 +8,6 @@ class ServiceInstance:
 
     def __init__(self, cachedDatabase, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities,
                  initDatabase, guid):
-        # TODO allFilmData is unique to each service instance???
         self.cachedDatabase = cachedDatabase
         self.serviceUtilities = serviceUtilities
         self.vectorizeUtilities = vectorizeUtilities
