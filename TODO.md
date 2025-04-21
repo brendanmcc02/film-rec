@@ -208,6 +208,7 @@ my-film-data-vec.json to file
 - [x] `loadJsonFiles` should only run once
 - [x] classes should be UpperCamelCase
 - [ ] improve readability by making **a lot** more functions with descriptive names
+- [ ] get rid of underscore in parameters
 
 # Frontend
 - [x] do text div 
@@ -268,7 +269,7 @@ my-film-data-vec.json to file
 - [x] add more int tests for letterboxd zip
 - [x] write int tests for zip file addition
 - [ ] make them muuuuuuch more readable and abstract the DRY shit out
-- [ ] make test for empty errorMessage on 200
+- [x] make test for empty errorMessage on 200
 - [ ] add reviewRec int tests
 
 ## Pipelines
@@ -294,10 +295,10 @@ my-film-data-vec.json to file
 - [x] get rid of `cache` member in Service, variables should access exactly what they want
 - [x] create `ServiceUtilities` class?
 - [x] make class for vector profiles
-- [ ] merge all db stuff of `ServiceInstance` into one object to make ctor params look cleaner
-- [ ] merge all normalized stuff of `ServiceInstance` into one object to make ctor params look cleaner
+- [x] merge all db stuff of `ServiceInstance` into one object to make ctor params look cleaner
+- [x] merge all normalized stuff of `ServiceInstance` into one object to make ctor params look cleaner
 - [ ] merge all profiles `ServiceInstance` into one object to make ctor params look cleaner
-- [ ] with multiple serviceinstances, refactor out the common stuff and re-use it for each serviceinstance
+- [x] with multiple serviceinstances, refactor out the common stuff and re-use it for each serviceinstance
 
 # Finishing Touches
 - [x] record demo

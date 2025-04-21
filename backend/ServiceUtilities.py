@@ -35,7 +35,6 @@ class ServiceUtilities:
             elif os.path.basename(fileOrDirectoryPath) != ".gitignore":
                 os.remove(fileOrDirectoryPath)
 
-
     def isUnacceptableMediaType(self, filename):
         return not (filename.lower().endswith(".csv") or filename.lower().endswith(".zip"))
 
@@ -44,3 +43,26 @@ class ServiceUtilities:
         return jsonify({"body": body,
                         "errorMessage": errorMessage, 
                         "guid": guid}), statusCode
+
+    def initCachedDatabase(self, database):
+        cachedDatabase = {}
+
+        cachedDatabase["AllFilmData"] = database.read("AllFilmData")
+        cachedDatabase["AllFilmDataVectorized"] = database.read("AllFilmDataVectorized")
+        cachedDatabase["AllFilmDataVectorizedMagnitudes"] = database.read("AllFilmDataVectorizedMagnitudes")
+        cachedDatabase["CachedLetterboxdTitles"] = database.read("CachedLetterboxdTitles")
+        cachedDatabase["AllGenres"] = database.read("AllGenres")
+        cachedDatabase["AllGenresLength"] = len(cachedDatabase["AllGenres"])
+        cachedDatabase["AllCountries"] = database.read("AllCountries")
+        cachedDatabase["AllCountriesLength"] = len(cachedDatabase["AllCountries"])
+        cachedDatabase["ProfileVectorLength"] = database.read("ProfileVectorLength")
+        cachedDatabase["MinNumberOfVotes"] = database.read("MinNumberOfVotes")
+        cachedDatabase["DiffNumberOfVotes"] = database.read("DiffNumberOfVotes")
+        cachedDatabase["NormalizedYears"] = database.read("NormalizedYears")
+        cachedDatabase["NormalizedYearsKeys"] = list(cachedDatabase["NormalizedYears"].keys())
+        cachedDatabase["NormalizedImdbRatings"] = database.read("NormalizedImdbRatings")
+        cachedDatabase["NormalizedImdbRatingsKeys"]  = list(cachedDatabase["NormalizedImdbRatings"].keys())
+        cachedDatabase["NormalizedRuntimes"] = database.read("NormalizedRuntimes")
+        cachedDatabase["NormalizedRuntimesKeys"] = list(cachedDatabase["NormalizedRuntimes"].keys())
+
+        return cachedDatabase
