@@ -297,7 +297,7 @@ my-film-data-vec.json to file
 - [x] make class for vector profiles
 - [x] merge all db stuff of `ServiceInstance` into one object to make ctor params look cleaner
 - [x] merge all normalized stuff of `ServiceInstance` into one object to make ctor params look cleaner
-- [ ] merge all profiles `ServiceInstance` into one object to make ctor params look cleaner
+- [x] merge all profiles `ServiceInstance` into one object to make ctor params look cleaner
 - [x] with multiple serviceinstances, refactor out the common stuff and re-use it for each serviceinstance
 
 # Finishing Touches
