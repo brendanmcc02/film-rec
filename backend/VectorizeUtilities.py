@@ -17,7 +17,6 @@ class VectorizeUtilities:
     PROFILE_GENRE_START_INDEX = 4
     RECENCY_PROFILE_DAYS_THRESHOLD = 30
 
-
     def vectorizeFilm(self, film, allGenres, allCountries, cachedNormalizedYears, cachedNormalizedImdbRatings,
                       minNumberOfVotes, diffNumberOfVotes, cachedNormalizedRuntimes):
         vector = []
@@ -58,7 +57,6 @@ class VectorizeUtilities:
 
         return np.array(vector)
 
-
     def isFilmInvalid(self, film):
         expectedFilmKeys = ['year', 'imdbRating', 'numberOfVotes', 'runtime', 'genres', 'countries']
 
@@ -68,7 +66,6 @@ class VectorizeUtilities:
                 return True
 
         return False
-
 
     # used to one-hot encode genres or countries
     def oneHotEncode(self, vector, filmList, allList, weight):
@@ -80,13 +77,11 @@ class VectorizeUtilities:
 
         return vector
 
-
     def cosineSimilarity(self, a, b, aMagnitude, bMagnitude):
         if aMagnitude == 0.0 or bMagnitude == 0.0:
             return 0.0
 
         return np.dot(a, b) / (aMagnitude * bMagnitude)
-
 
     def keepVectorBoundary(self, vector):
         profileVectorLength = len(vector)
@@ -95,7 +90,6 @@ class VectorizeUtilities:
                 vector[i] = 0.0
             elif vector[i] > 1.0:
                 vector[i] = 1.0
-
 
     def printStringifiedVector(self, vector, allGenres, allCountries, text, cachedNormalizedYearsKeys,
                                cachedNormalizedRuntimesKeys, cachedNormalizedImdbRatingsKeys,
@@ -158,7 +152,6 @@ class VectorizeUtilities:
 
         print(f"\n{stringifiedVector}\n")
 
-
     def initFavouriteProfile(self, userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
                             cachedDateRatedAndUserRatingWeights, favouriteFilmIds, allGenres,
                             allCountries):
@@ -181,7 +174,6 @@ class VectorizeUtilities:
         else:
             favouriteProfile.profile = np.zeros(profileVectorLength)
             return favouriteProfile
-
 
     def initGenreProfiles(self, userFilmDataIds, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights, 
                         allGenres, profileVectorLength, numFilmsWatchedInGenreThreshold, allCountries):
@@ -219,7 +211,6 @@ class VectorizeUtilities:
         # return as a list of GenreProfileVector objects
         return [value for _, value in genreProfiles.items()]
 
-
     def getFilmGenres(self, vectorizedFilm, allGenres):
         filmGenreIndexes = []
         profileGenreEndIndex = self.PROFILE_GENRE_START_INDEX + len(allGenres)
@@ -234,7 +225,6 @@ class VectorizeUtilities:
             filmGenres.append(allGenres[genreIndex])
 
         return filmGenres
-
 
     def initRecencyProfile(self, userFilmData, userFilmDataVectorized, maxDateRated, 
                            profileVectorLength, cachedDateRatedAndUserRatingWeights, allGenres,
@@ -263,7 +253,6 @@ class VectorizeUtilities:
             recencyProfile.profile = np.zeros(profileVectorLength)
             return recencyProfile
 
-
     def initUserProfile(self, userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
                         cachedDateRatedAndUserRatingWeights, allGenres, allCountries):
         userProfile = VectorProfile('user', profileVectorLength)
@@ -283,7 +272,6 @@ class VectorizeUtilities:
             
         return userProfile
 
-
     def initOldProfile(self, userProfile):
         # note: userProfile already has curved genres and countries
         oldProfile = VectorProfile('old')
@@ -291,7 +279,6 @@ class VectorizeUtilities:
         oldProfile.profile[self.PROFILE_YEAR_INDEX] = 0.0
         
         return oldProfile
-
 
     def initInternationalProfile(self, userProfile, allCountries, allGenresLength, profileVectorLength):
         internationalProfile = VectorProfile('international')
@@ -331,11 +318,9 @@ class VectorizeUtilities:
 
         return internationalProfile
 
-
     def isNonZeroIndexValueNotAmericanOrBritish(self, index, allCountries, countryStartIndex, valueAtIndex):
         return (valueAtIndex > 0.0 and allCountries[index - countryStartIndex] != "American" and
                 allCountries[index - countryStartIndex] != "British")
-
 
     # used to curve genre/country values according to max genre/country value
     def curveAccordingToMax(self, profileVector, list, weight, startIndex):
@@ -357,7 +342,6 @@ class VectorizeUtilities:
 
             profileVector[index] *= weight
 
-
     def getProfileMaxCountry(self, profile, allGenresLength, allCountries):
         countryStartIndex = self.PROFILE_GENRE_START_INDEX + allGenresLength
         maxCountryIndex = countryStartIndex
@@ -369,3 +353,14 @@ class VectorizeUtilities:
                     maxCountryIndex = i
 
         return allCountries[maxCountryIndex - countryStartIndex]
+    
+    def initVectorProfiles(self, profileVectorLength):
+        vectorProfiles = {}
+
+        vectorProfiles["favouriteProfile"] = VectorProfile('favourite', profileVectorLength)
+        vectorProfiles["genreProfiles"] = []
+        vectorProfiles["recencyProfile"] = VectorProfile('recency', profileVectorLength)
+        vectorProfiles["internationalProfile"] = VectorProfile('international', profileVectorLength)
+        vectorProfiles["oldProfile"] = VectorProfile('old', profileVectorLength)
+
+        return vectorProfiles
