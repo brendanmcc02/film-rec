@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 backendDirectory = os.path.dirname(absolutePathOfCurrentFile)
@@ -145,3 +146,22 @@ class TestUtilities:
     def verifyAttributeExists(self, response, attribute):
         responseContent = response.json()
         assert attribute in responseContent
+
+    def getRandomFilmIdFromResponse(self, response):
+        responseContent = response.json()
+        rowsOfRecommendations = responseContent["body"]
+
+        rowsOfRecommendationsLength = len(rowsOfRecommendations)
+        randomRowIndex = random.randint(0, rowsOfRecommendationsLength - 1)
+
+        rowLength = len(rowsOfRecommendations[randomRowIndex])
+        randomFilmIndex = random.randint(0, rowLength)
+
+        return rowsOfRecommendations[randomRowIndex]['recommendedFilms'][randomFilmIndex]['filmId']
+
+    def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, filmId, isThumbsUp):
+        responseContent = reviewRecommendationsResponse.json()
+        responseBody = responseContent["body"]
+
+        assert filmId in responseBody
+        assert str(isThumbsUp) in responseBody

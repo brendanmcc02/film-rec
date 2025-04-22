@@ -431,12 +431,12 @@ def test_reviewRecommendation_thumbsUp(backendUrl):
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
     guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
+    filmId = testUtilities.getRandomFilmIdFromResponse(getInitialRowsOfRecommendationsResponse)
+    isThumbsUp = True
 
-    filmId = testUtilities.getSampleFilmIdFromResponse(getInitialRowsOfRecommendationsResponse)
+    reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + isThumbsUp)
 
-    reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + True)
-
-    testUtilities.verifyReviewRecommendationResponse(reviewRecommendationResponse)
+    testUtilities.verifyReviewRecommendationResponse(reviewRecommendationResponse, filmId, isThumbsUp)
 
 def test_reviewRecommendation_thumbsDown(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
@@ -445,9 +445,9 @@ def test_reviewRecommendation_thumbsDown(backendUrl):
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
     guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
+    filmId = testUtilities.getRandomFilmIdFromResponse(getInitialRowsOfRecommendationsResponse)
+    isThumbsUp = False
 
-    filmId = testUtilities.getSampleFilmIdFromResponse(getInitialRowsOfRecommendationsResponse)
+    reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + isThumbsUp)
 
-    reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + False)
-
-    testUtilities.verifyReviewRecommendationResponse(reviewRecommendationResponse)
+    testUtilities.verifyReviewRecommendationResponse(reviewRecommendationResponse, filmId, isThumbsUp)
