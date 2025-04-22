@@ -342,7 +342,7 @@ class InitDatabase:
         return f"{hours}{minutes}"
 
 
-    def removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles):
+    def removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(self, allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles):
         invalidFilms = []
         allFilmDataFilmIds = list(allFilmData.keys())
         
