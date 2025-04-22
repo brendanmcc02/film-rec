@@ -13,8 +13,8 @@ class TestUtilities:
     PROD_DEPLOYMENT_URL = "https://film-rec-backend.onrender.com"
     TEST_UPLOAD_FILES_DIRECTORY = "test-upload-files/"
 
-    def __init__(self, _repositoryRoot):
-        self.repositoryRoot = _repositoryRoot
+    def __init__(self, database):
+        self.database = database
 
 
     def verifyFilm(self, film, filmId, allGenres, allCountries):
@@ -68,12 +68,16 @@ class TestUtilities:
         assert 'summary' in film
         assert film['summary'] != ""
 
-    def verifyRowsOfRecommendations(self, rowsOfRecommendations, totalNumberOfRows):
-        database = DocumentDatabase(self.repositoryRoot)
-        allGenres = database.read("AllGenres")
-        allCountries = database.read("AllCountries")
+    def verifyRowsOfRecommendations(self, response, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                    expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows):
+        responseContent = response.json()
+        rowsOfRecommendations = responseContent["body"]
 
-        assert len(rowsOfRecommendations) == totalNumberOfRows
+        allGenres = self.database.read("AllGenres")
+        allCountries = self.database.read("AllCountries")
+
+        assert len(rowsOfRecommendations) == (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                                              expectedNumberOfInternationalRows + expectedNumberOfOldRows)
 
         for row in rowsOfRecommendations:
             assert 'recommendedRowText' in row
@@ -94,6 +98,50 @@ class TestUtilities:
                 assert film['similarityScore'] >= 0.0
                 assert film['similarityScore'] <= 100.0
 
+        self.verifyExpectedNumberOfRows(rowsOfRecommendations, expectedNumberOfFavouriteRows, ["favourite"])
+        self.verifyExpectedNumberOfRows(rowsOfRecommendations, expectedNumberOfRecentRows, ["recent"])
+        self.verifyExpectedNumberOfRows(rowsOfRecommendations, expectedNumberOfGenreRows, allGenres)
+        self.verifyExpectedNumberOfRows(rowsOfRecommendations, expectedNumberOfInternationalRows, ["international"])
+        self.verifyExpectedNumberOfRows(rowsOfRecommendations, expectedNumberOfOldRows, ["old"])
+
     def getFilesToSend(self, fileName):
         file = open(self.TEST_UPLOAD_FILES_DIRECTORY + fileName, 'rb')
         return {'file': (fileName, file)}
+
+    def getGuidFromResponse(self, response):
+        responseContent = response.json()
+        return responseContent["guid"]
+
+    def verifyRegeneratedFilmsAreDifferentToInitialFilms(self, getInitialRowsOfRecommendationsResponse, regenerateRecommendationsResponse):
+        initialRecommendationFilmIds = []
+
+        getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+        initialRecommendations = getInitialRowsOfRecommendationsResponseContent["body"]
+
+        for rowOfFilms in initialRecommendations:
+            for recommendedFilm in rowOfFilms['recommendedFilms']:
+                initialRecommendationFilmIds.append(recommendedFilm['id'])
+
+        regenerateRecommendationsResponseContent = regenerateRecommendationsResponse.json()
+        regeneratedRecommendations = regenerateRecommendationsResponseContent["body"]
+
+        for rowOfFilms in regeneratedRecommendations:
+            for recommendedFilm in rowOfFilms['recommendedFilms']:
+                assert recommendedFilm['id'] not in initialRecommendationFilmIds
+
+    def verifyExpectedNumberOfRows(self, rowsOfRecommendations, expectedNumberOfRows, profileIds):
+        actualNumberOfRows = 0
+
+        for row in rowsOfRecommendations:
+            if row['profileId'] in profileIds:
+                actualNumberOfRows += 1
+
+        assert expectedNumberOfRows == actualNumberOfRows
+
+    def verifyErrorMessage(self, response, expectedErrorMessage):
+        responseContent = response.json()
+        assert responseContent["errorMessage"] == expectedErrorMessage
+
+    def verifyAttributeExists(self, response, attribute):
+        responseContent = response.json()
+        assert attribute in responseContent

@@ -226,32 +226,32 @@ class VectorizeUtilities:
 
         return filmGenres
 
-    def initRecencyProfile(self, userFilmData, userFilmDataVectorized, maxDateRated, 
+    def initRecentProfile(self, userFilmData, userFilmDataVectorized, maxDateRated, 
                            profileVectorLength, cachedDateRatedAndUserRatingWeights, allGenres,
                            allCountries):
-        recencyProfile = VectorProfile('recency', profileVectorLength)
+        recentProfile = VectorProfile('recent', profileVectorLength)
         sumOfWeights = 0.0
 
         for imdbFilmId in userFilmData:
             timeDifference = maxDateRated - userFilmData[imdbFilmId]['dateRated']
             if timeDifference.days <= self.RECENCY_PROFILE_DAYS_THRESHOLD:
-                recencyProfile.profile += userFilmDataVectorized[imdbFilmId]
+                recentProfile.profile += userFilmDataVectorized[imdbFilmId]
                 sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
             else:
                 # file is sorted by date, no need to look further
                 break
 
         if sumOfWeights > 0.0:
-            recencyProfile.profile = np.divide(recencyProfile.profile, sumOfWeights)
+            recentProfile.profile = np.divide(recentProfile.profile, sumOfWeights)
             # curve genres
-            self.curveAccordingToMax(recencyProfile.profile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
+            self.curveAccordingToMax(recentProfile.profile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
             # curve countries
-            self.curveAccordingToMax(recencyProfile.profile, allCountries, self.COUNTRY_WEIGHT, 
+            self.curveAccordingToMax(recentProfile.profile, allCountries, self.COUNTRY_WEIGHT, 
                                 self.PROFILE_GENRE_START_INDEX + len(allGenres))
-            return recencyProfile
+            return recentProfile
         else:
-            recencyProfile.profile = np.zeros(profileVectorLength)
-            return recencyProfile
+            recentProfile.profile = np.zeros(profileVectorLength)
+            return recentProfile
 
     def initUserProfile(self, userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
                         cachedDateRatedAndUserRatingWeights, allGenres, allCountries):
@@ -359,7 +359,7 @@ class VectorizeUtilities:
 
         vectorProfiles["favouriteProfile"] = VectorProfile('favourite', profileVectorLength)
         vectorProfiles["genreProfiles"] = []
-        vectorProfiles["recencyProfile"] = VectorProfile('recency', profileVectorLength)
+        vectorProfiles["recentProfile"] = VectorProfile('recent', profileVectorLength)
         vectorProfiles["internationalProfile"] = VectorProfile('international', profileVectorLength)
         vectorProfiles["oldProfile"] = VectorProfile('old', profileVectorLength)
 

@@ -127,7 +127,7 @@ create endpoints for getters/setters
 - [x] deletion of ratings/diary.csv before saving to file
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
 - [x] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
-- [x] bug: imdb recency doesn't work
+- [x] bug: imdb recent doesn't work
 - [ ] .env file?
 
 # Windows OS
@@ -270,7 +270,7 @@ my-film-data-vec.json to file
 - [x] [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses)
 - [x] add more int tests for letterboxd zip
 - [x] write int tests for zip file addition
-- [ ] make them muuuuuuch more readable and abstract the DRY shit out
+- [x] make them muuuuuuch more readable and abstract the DRY shit out
 - [x] make test for empty errorMessage on 200
 - [ ] add reviewRec int tests
 
