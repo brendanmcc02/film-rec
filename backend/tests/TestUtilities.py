@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 backendDirectory = os.path.dirname(absolutePathOfCurrentFile)
@@ -90,9 +91,9 @@ class TestUtilities:
             assert len(row['recommendedFilms']) == ServiceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW
 
             for film in row['recommendedFilms']:
-                assert 'id' in film
-                assert film['id'] != ""
-                self.verifyFilm(film, film['id'], allGenres, allCountries)
+                assert 'imdbId' in film
+                assert film['imdbId'] != ""
+                self.verifyFilm(film, film['imdbId'], allGenres, allCountries)
                 assert 'similarityScore' in film
                 assert film['similarityScore'] != None
                 assert film['similarityScore'] >= 0.0
@@ -120,14 +121,14 @@ class TestUtilities:
 
         for rowOfFilms in initialRecommendations:
             for recommendedFilm in rowOfFilms['recommendedFilms']:
-                initialRecommendationFilmIds.append(recommendedFilm['id'])
+                initialRecommendationFilmIds.append(recommendedFilm['imdbId'])
 
         regenerateRecommendationsResponseContent = regenerateRecommendationsResponse.json()
         regeneratedRecommendations = regenerateRecommendationsResponseContent["body"]
 
         for rowOfFilms in regeneratedRecommendations:
             for recommendedFilm in rowOfFilms['recommendedFilms']:
-                assert recommendedFilm['id'] not in initialRecommendationFilmIds
+                assert recommendedFilm['imdbId'] not in initialRecommendationFilmIds
 
     def verifyExpectedNumberOfRows(self, rowsOfRecommendations, expectedNumberOfRows, profileIds):
         actualNumberOfRows = 0
@@ -145,3 +146,26 @@ class TestUtilities:
     def verifyAttributeExists(self, response, attribute):
         responseContent = response.json()
         assert attribute in responseContent
+
+    def getRandomFilmIdFromResponse(self, response):
+        responseContent = response.json()
+        rowsOfRecommendations = responseContent["body"]
+
+        rowsOfRecommendationsLength = len(rowsOfRecommendations)
+        randomRowIndex = random.randint(0, rowsOfRecommendationsLength - 1)
+
+        rowLength = len(rowsOfRecommendations[randomRowIndex])
+        randomFilmIndex = random.randint(0, rowLength)
+
+        return rowsOfRecommendations[randomRowIndex]['recommendedFilms'][randomFilmIndex]['imdbId']
+
+    def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, filmId, isThumbsUp):
+        responseContent = reviewRecommendationsResponse.json()
+        responseBody = responseContent["body"]
+
+        assert filmId in responseBody
+        
+        if isThumbsUp:
+            assert "Up" in responseBody
+        else:
+            assert "Down" in responseBody

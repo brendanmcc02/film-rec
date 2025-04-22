@@ -22,7 +22,7 @@ class ServiceUtilities:
     def isFilmRecommendationUnique(self, filmId, rowsOfRecommendations):
         for rowOfRecommendations in rowsOfRecommendations:
             for recommendedFilm in rowOfRecommendations['recommendedFilms']:
-                if recommendedFilm['id'] == filmId:
+                if recommendedFilm['imdbId'] == filmId:
                     return False
                 
         return True
