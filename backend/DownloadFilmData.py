@@ -15,9 +15,9 @@ class DownloadFilmData:
 
         if differenceInTimestamps >= timedelta(hours=12):
             urllib.request.urlretrieve("https://datasets.imdbws.com/title.basics.tsv.gz", 
-                                    "../database/title.basics.tsv.gz")
+                                       "../database/title.basics.tsv.gz")
             urllib.request.urlretrieve("https://datasets.imdbws.com/title.ratings.tsv.gz", 
-                                    "../database/title.ratings.tsv.gz")
+                                       "../database/title.ratings.tsv.gz")
 
             with open('../database/LastImdbDownloadTimestamp.txt', 'w') as file:
                 file.write(str(datetime.now()))
