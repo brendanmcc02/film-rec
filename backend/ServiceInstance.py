@@ -257,7 +257,7 @@ class ServiceInstance:
         for row in self.rowsOfRecommendations:
             for film in row['recommendedFilms']:
                 if film['imdbId'] == filmId:
-                    profileId = row.profileId
+                    profileId = row["profileId"]
 
         profile = self.getProfile(profileId)
 

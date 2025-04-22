@@ -432,9 +432,9 @@ def test_reviewRecommendation_thumbsUp(backendUrl):
 
     guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
     filmId = testUtilities.getRandomFilmIdFromResponse(getInitialRowsOfRecommendationsResponse)
-    isThumbsUp = str(True)
+    isThumbsUp = True
 
-    reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + isThumbsUp)
+    reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + str(isThumbsUp))
 
     testUtilities.verifyReviewRecommendationResponse(reviewRecommendationResponse, filmId, isThumbsUp)
 
@@ -446,8 +446,8 @@ def test_reviewRecommendation_thumbsDown(backendUrl):
 
     guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
     filmId = testUtilities.getRandomFilmIdFromResponse(getInitialRowsOfRecommendationsResponse)
-    isThumbsUp = str(False)
+    isThumbsUp = False
 
-    reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + isThumbsUp)
+    reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + str(isThumbsUp))
 
     testUtilities.verifyReviewRecommendationResponse(reviewRecommendationResponse, filmId, isThumbsUp)
