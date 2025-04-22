@@ -311,4 +311,4 @@ my-film-data-vec.json to file
 
 # Bugs
 - [x] reviewRec doesn't work
-- [ ] `updateDatabase` didn't change any files? check [this](https://github.com/brendanmcc02/film-rec/pull/48) PR
+- [x] `updateDatabase` didn't change any files? check [this](https://github.com/brendanmcc02/film-rec/pull/48) PR
