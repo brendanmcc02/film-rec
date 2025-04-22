@@ -158,10 +158,6 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
                                               expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
-    # TODO integrate this into verifyRowsOfRecommendations()
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
-
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
     
@@ -180,9 +176,6 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
                          expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
-
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
 
 def test_getInitialRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-and-favourite-films.csv")
@@ -203,10 +196,6 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUr
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
-        assert row['profileId'] != "favourite"
-
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-and-favourite-films.csv")
     
@@ -225,10 +214,6 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(bac
                          expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
-
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
-        assert row['profileId'] != "favourite"
 
 def test_getInitialRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-and-international-films.csv")
@@ -249,10 +234,6 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backe
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
-        assert row['profileId'] != "international"
-
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-and-international-films.csv")
     
@@ -271,10 +252,6 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms
                          expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
-
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
-        assert row['profileId'] != "international"
 
 # tests for cases when the user has rated films with only two genres
 def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
@@ -296,9 +273,6 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenr
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
-
 # tests for cases when the user has rated films with only two genres
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films-and-two-genres.csv")
@@ -318,9 +292,6 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresT
                          expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
-
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
 
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
@@ -342,9 +313,6 @@ def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAn
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
-
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-international-film-no-recent-films-and-one-genre.csv")
@@ -364,9 +332,6 @@ def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentF
                          expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
-
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
 
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
@@ -388,10 +353,6 @@ def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilm
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
-        assert row['profileId'] != "international"
-
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-american-film-no-recent-films-and-one-genre.csv")
@@ -412,10 +373,6 @@ def test_getInitialRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRece
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
-        assert row['profileId'] != "international"
-
 def test_getInitialRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent.zip")
     
@@ -434,9 +391,6 @@ def test_getInitialRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
                          expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
     testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
-
-    for row in rowsOfRecommendations:
-        assert row['profileId'] != "recency"
 
 def test_getInitialRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recognised-films.csv")
