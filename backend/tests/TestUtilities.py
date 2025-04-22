@@ -151,11 +151,11 @@ class TestUtilities:
         responseContent = response.json()
         rowsOfRecommendations = responseContent["body"]
 
-        rowsOfRecommendationsLength = len(rowsOfRecommendations)
-        randomRowIndex = random.randint(0, rowsOfRecommendationsLength - 1)
+        maxRowsOfRecommendationsIndex = len(rowsOfRecommendations) - 1
+        randomRowIndex = random.randint(0, maxRowsOfRecommendationsIndex)
 
-        rowLength = len(rowsOfRecommendations[randomRowIndex])
-        randomFilmIndex = random.randint(0, rowLength)
+        maxRowOfFilmsIndex = len(rowsOfRecommendations[randomRowIndex]) - 1
+        randomFilmIndex = random.randint(0, maxRowOfFilmsIndex)
 
         return rowsOfRecommendations[randomRowIndex]['recommendedFilms'][randomFilmIndex]['imdbId']
 
