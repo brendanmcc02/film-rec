@@ -380,38 +380,21 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+    guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
 
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
-    # verify the newly recommended films are valid
-    # TODO move this to a method to make more readable?
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    responseContent = regenerateRecommendationsResponse.json()
-    regeneratedRecommendations = responseContent["body"]
-    testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(regenerateRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows,
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
-    # ensure all newly recommended films are unique
-    # TODO move this to a method to make more readable?
-    initialRecommendationFilmIds = []
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-    initialRecommendations = getInitialRowsOfRecommendationsResponseContent["body"]
-    for row in initialRecommendations:
-        for film in row['recommendedFilms']:
-            initialRecommendationFilmIds.append(film['id'])
-
-    for row in regeneratedRecommendations:
-        for film in row['recommendedFilms']:
-            assert film['id'] not in initialRecommendationFilmIds
+    testUtilities.verifyRegeneratedFilmsAreDifferentToInitialFilms(getInitialRowsOfRecommendationsResponse, regenerateRecommendationsResponse)
 
 def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
@@ -419,37 +402,21 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+    guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
 
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
-    # verify the newly recommended films are valid
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    responseContent = regenerateRecommendationsResponse.json()
-    regeneratedRecommendations = responseContent["body"]
-    testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(regenerateRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows,
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
-    # ensure all newly recommended films are unique
-    # TODO move this to a method to make more readable?
-    initialRecommendationFilmIds = []
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-    initialRecommendations = getInitialRowsOfRecommendationsResponseContent["body"]
-    for row in initialRecommendations:
-        for film in row['recommendedFilms']:
-            initialRecommendationFilmIds.append(film['id'])
-
-    for row in regeneratedRecommendations:
-        for film in row['recommendedFilms']:
-            assert film['id'] not in initialRecommendationFilmIds
+    testUtilities.verifyRegeneratedFilmsAreDifferentToInitialFilms(getInitialRowsOfRecommendationsResponse, regenerateRecommendationsResponse)
 
 def test_getInitialRowsOfRecommendations_successfulResponse_shouldHaveEmptyErrorMessage(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")

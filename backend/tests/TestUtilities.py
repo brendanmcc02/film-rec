@@ -103,3 +103,24 @@ class TestUtilities:
     def getFilesToSend(self, fileName):
         file = open(self.TEST_UPLOAD_FILES_DIRECTORY + fileName, 'rb')
         return {'file': (fileName, file)}
+
+    def getGuidFromResponse(self, response):
+        responseContent = response.json()
+        return responseContent["guid"]
+
+    def verifyRegeneratedFilmsAreDifferentToInitialFilms(self, getInitialRowsOfRecommendationsResponse, regenerateRecommendationsResponse):
+        initialRecommendationFilmIds = []
+
+        getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
+        initialRecommendations = getInitialRowsOfRecommendationsResponseContent["body"]
+
+        for rowOfFilms in initialRecommendations:
+            for recommendedFilm in rowOfFilms['recommendedFilms']:
+                initialRecommendationFilmIds.append(recommendedFilm['id'])
+
+        regenerateRecommendationsResponseContent = regenerateRecommendationsResponse.json()
+        regeneratedRecommendations = regenerateRecommendationsResponseContent["body"]
+
+        for rowOfFilms in regeneratedRecommendations:
+            for recommendedFilm in rowOfFilms['recommendedFilms']:
+                assert recommendedFilm['id'] not in initialRecommendationFilmIds
