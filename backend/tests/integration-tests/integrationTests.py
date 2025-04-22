@@ -164,18 +164,14 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 def test_getInitialRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-and-favourite-films.csv")
@@ -183,18 +179,14 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUr
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 0
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-and-favourite-films.csv")
@@ -202,18 +194,14 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(bac
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 0
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 def test_getInitialRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-and-international-films.csv")
@@ -221,18 +209,14 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backe
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 0
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-and-international-films.csv")
@@ -240,18 +224,14 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 0
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 # tests for cases when the user has rated films with only two genres
 def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
@@ -260,18 +240,14 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenr
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = 2
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 # tests for cases when the user has rated films with only two genres
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
@@ -280,18 +256,14 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresT
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = 2
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
@@ -300,18 +272,14 @@ def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAn
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = 1
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
@@ -320,18 +288,14 @@ def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentF
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = 1
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
@@ -340,18 +304,14 @@ def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilm
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = 1
     expectedNumberOfInternationalRows = 0
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 # tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
@@ -360,18 +320,14 @@ def test_getInitialRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRece
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = 1
     expectedNumberOfInternationalRows = 0
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 def test_getInitialRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent.zip")
@@ -379,18 +335,14 @@ def test_getInitialRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 def test_getInitialRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recognised-films.csv")
@@ -398,18 +350,14 @@ def test_getInitialRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 0
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = 0
     expectedNumberOfInternationalRows = 0
     expectedNumberOfOldRows = 0
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 def test_getInitialRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recognised-films.csv")
@@ -417,18 +365,14 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl)
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 0
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = 0
     expectedNumberOfInternationalRows = 0
     expectedNumberOfOldRows = 0
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
 def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
