@@ -141,3 +141,7 @@ class TestUtilities:
     def verifyErrorMessage(self, response, expectedErrorMessage):
         responseContent = response.json()
         assert responseContent["errorMessage"] == expectedErrorMessage
+
+    def verifyAttributeExists(self, response, attribute):
+        responseContent = response.json()
+        assert attribute in responseContent

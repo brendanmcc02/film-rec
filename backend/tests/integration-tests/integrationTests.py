@@ -20,8 +20,7 @@ def test_getInitialRowsOfRecommendations_guidExists(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-    assert 'guid' in getInitialRowsOfRecommendationsResponseContent
+    testUtilities.verifyAttributeExists(getInitialRowsOfRecommendationsResponse, 'guid')
 
 def test_regenerateRowsOfRecommendations_guidExists(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
@@ -34,8 +33,7 @@ def test_regenerateRowsOfRecommendations_guidExists(backendUrl):
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
-    responseContent = regenerateRecommendationsResponse.json()
-    assert 'guid' in responseContent
+    testUtilities.verifyAttributeExists(regenerateRecommendationsResponse, 'guid')
 
 def test_getInitialRowsOfRecommendations_errorMessageExists(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
@@ -43,8 +41,7 @@ def test_getInitialRowsOfRecommendations_errorMessageExists(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-    assert 'errorMessage' in getInitialRowsOfRecommendationsResponseContent
+    testUtilities.verifyAttributeExists(getInitialRowsOfRecommendationsResponse, 'errorMessage')
 
 def test_regenerateRowsOfRecommendations_errorMessageExists(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
@@ -57,8 +54,7 @@ def test_regenerateRowsOfRecommendations_errorMessageExists(backendUrl):
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
-    responseContent = regenerateRecommendationsResponse.json()
-    assert 'errorMessage' in responseContent
+    testUtilities.verifyAttributeExists(regenerateRecommendationsResponse, 'errorMessage')
 
 def test_getInitialRowsOfRecommendations_bodyExists(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
@@ -66,8 +62,7 @@ def test_getInitialRowsOfRecommendations_bodyExists(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-    assert 'body' in getInitialRowsOfRecommendationsResponseContent
+    testUtilities.verifyAttributeExists(getInitialRowsOfRecommendationsResponse, 'body')
 
 def test_regenerateRowsOfRecommendations_bodyExists(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
@@ -80,8 +75,7 @@ def test_regenerateRowsOfRecommendations_bodyExists(backendUrl):
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
-    regenerateRecommendationsResponseContent = regenerateRecommendationsResponse.json()
-    assert 'body' in regenerateRecommendationsResponseContent
+    testUtilities.verifyAttributeExists(regenerateRecommendationsResponse, 'body')
 
 def test_getInitialRowsOfRecommendations_noFile(backendUrl):
     filesToSend = {'file': ("", None)}
