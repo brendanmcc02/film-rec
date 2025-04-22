@@ -172,7 +172,7 @@ class InitDatabase:
                             and 'imdbId' in jsonResponse['movie_results'][0]):
                         tmdbFilmId = str(jsonResponse['movie_results'][0]['imdbId'])
                     else:
-                        print(f"IMDB film not found in TMDB: {imdbFilmId}\n")
+                        print(f"IMDB film not found in TMDB: {imdbFilmId}")
                         del allFilmData[imdbFilmId]
                         invalidAllFilmDataFilmIds.append(imdbFilmId)
                         continue
