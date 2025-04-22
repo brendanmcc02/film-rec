@@ -147,7 +147,7 @@ class ServiceInstance:
                                                                              cachedDateRatedAndUserRatingWeights, favouriteFilmIds,
                                                                              self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"])
 
-        self.vectorProfiles["recencyProfile"] = self.vectorizeUtilities.initRecencyProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
+        self.vectorProfiles["recentProfile"] = self.vectorizeUtilities.initRecentProfile(userFilmData, userFilmDataVectorized, maxDateRated, 
                                                                          self.cachedDatabase["ProfileVectorLength"], cachedDateRatedAndUserRatingWeights, 
                                                                          self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"])
 
@@ -180,11 +180,11 @@ class ServiceInstance:
             #                        self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"], self.cachedDatabase["NormalizedImdbRatingsKeys"],
             #                        self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
-        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["recencyProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
-            print("No recency profile.")
+        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["recentProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
+            print("No recent profile.")
         else:
-            self.getFilmRecommendations("Based on what you watched recently", self.vectorProfiles["recencyProfile"].profile, self.vectorProfiles["recencyProfile"].profileId)
-            # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["recencyProfile"].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], "Recency",
+            self.getFilmRecommendations("Based on what you watched recently", self.vectorProfiles["recentProfile"].profile, self.vectorProfiles["recentProfile"].profileId)
+            # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["recentProfile"].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], "Recent",
             #                                                self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"], self.cachedDatabase["NormalizedImdbRatingsKeys"],
             #                                                self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
@@ -289,8 +289,8 @@ class ServiceInstance:
     def getProfile(self, profileId):
         if profileId == "favourite":
             return self.vectorProfiles["favouriteProfile"]
-        elif profileId == "recency":
-            return self.vectorProfiles["recencyProfile"]
+        elif profileId == "recent":
+            return self.vectorProfiles["recentProfile"]
         elif profileId == "old":
             return self.vectorProfiles["oldProfile"]
         elif profileId == "international":

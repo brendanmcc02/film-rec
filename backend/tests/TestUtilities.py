@@ -68,18 +68,16 @@ class TestUtilities:
         assert 'summary' in film
         assert film['summary'] != ""
 
-    # TODO refactor
-    def verifyRowsOfRecommendations(self, response, expectedNumberOfFavouriteRows, 
-                                    expectedNumberOfRecentRows, expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows):
-        # TODO for each expectedNum: if >0, check profile ID exists, else assert that it doesn't exist
-        
+    def verifyRowsOfRecommendations(self, response, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                    expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows):
         responseContent = response.json()
         rowsOfRecommendations = responseContent["body"]
 
         allGenres = self.database.read("AllGenres")
         allCountries = self.database.read("AllCountries")
 
-        assert len(rowsOfRecommendations) == totalNumberOfRows
+        assert len(rowsOfRecommendations) == (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                                              expectedNumberOfInternationalRows + expectedNumberOfOldRows)
 
         for row in rowsOfRecommendations:
             assert 'recommendedRowText' in row
@@ -99,6 +97,12 @@ class TestUtilities:
                 assert film['similarityScore'] != None
                 assert film['similarityScore'] >= 0.0
                 assert film['similarityScore'] <= 100.0
+
+        self.verifyExpectedNumberOfRows(rowsOfRecommendations, expectedNumberOfFavouriteRows, ["favourite"])
+        self.verifyExpectedNumberOfRows(rowsOfRecommendations, expectedNumberOfRecentRows, ["recent"])
+        self.verifyExpectedNumberOfRows(rowsOfRecommendations, expectedNumberOfGenreRows, allGenres)
+        self.verifyExpectedNumberOfRows(rowsOfRecommendations, expectedNumberOfInternationalRows, ["international"])
+        self.verifyExpectedNumberOfRows(rowsOfRecommendations, expectedNumberOfOldRows, ["old"])
 
     def getFilesToSend(self, fileName):
         file = open(self.TEST_UPLOAD_FILES_DIRECTORY + fileName, 'rb')
@@ -124,3 +128,12 @@ class TestUtilities:
         for rowOfFilms in regeneratedRecommendations:
             for recommendedFilm in rowOfFilms['recommendedFilms']:
                 assert recommendedFilm['id'] not in initialRecommendationFilmIds
+
+    def verifyExpectedNumberOfRows(self, rowsOfRecommendations, expectedNumberOfRows, profileIds):
+        actualNumberOfRows = 0
+
+        for row in rowsOfRecommendations:
+            if row['profileId'] in profileIds:
+                actualNumberOfRows += 1
+
+        assert expectedNumberOfRows == actualNumberOfRows
