@@ -149,20 +149,16 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    ## wrap this in a function?
-    responseContent = getInitialRowsOfRecommendationsResponse.json()
-    rowsOfRecommendations = responseContent["body"]
-
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
     expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
-    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
-                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
+                                              expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
+    # TODO integrate this into verifyRowsOfRecommendations()
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
 

@@ -68,7 +68,14 @@ class TestUtilities:
         assert 'summary' in film
         assert film['summary'] != ""
 
-    def verifyRowsOfRecommendations(self, rowsOfRecommendations, totalNumberOfRows):
+    # TODO refactor
+    def verifyRowsOfRecommendations(self, response, expectedNumberOfFavouriteRows, 
+                                    expectedNumberOfRecentRows, expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows):
+        # TODO for each expectedNum: if >0, check profile ID exists, else assert that it doesn't exist
+        
+        responseContent = response.json()
+        rowsOfRecommendations = responseContent["body"]
+
         allGenres = self.database.read("AllGenres")
         allCountries = self.database.read("AllCountries")
 
