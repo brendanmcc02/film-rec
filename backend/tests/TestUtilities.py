@@ -13,8 +13,8 @@ class TestUtilities:
     PROD_DEPLOYMENT_URL = "https://film-rec-backend.onrender.com"
     TEST_UPLOAD_FILES_DIRECTORY = "test-upload-files/"
 
-    def __init__(self, _repositoryRoot):
-        self.repositoryRoot = _repositoryRoot
+    def __init__(self, database):
+        self.database = database
 
 
     def verifyFilm(self, film, filmId, allGenres, allCountries):
@@ -69,9 +69,8 @@ class TestUtilities:
         assert film['summary'] != ""
 
     def verifyRowsOfRecommendations(self, rowsOfRecommendations, totalNumberOfRows):
-        database = DocumentDatabase(self.repositoryRoot)
-        allGenres = database.read("AllGenres")
-        allCountries = database.read("AllCountries")
+        allGenres = self.database.read("AllGenres")
+        allCountries = self.database.read("AllCountries")
 
         assert len(rowsOfRecommendations) == totalNumberOfRows
 

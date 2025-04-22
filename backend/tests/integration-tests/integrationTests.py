@@ -11,7 +11,8 @@ from TestUtilities import *
 
 testUploadFilesDirectory = "test-upload-files/"
 
-testUtilities = TestUtilities("../../../")
+database = DocumentDatabase("../../../")
+testUtilities = TestUtilities(database)
 
 def test_getInitialRowsOfRecommendations_guidExists(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
@@ -152,15 +153,15 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
-    numberOfInternationalRows = 1
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfInternationalRows = 1
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -174,15 +175,15 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
-    numberOfInternationalRows = 1
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfInternationalRows = 1
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -196,15 +197,15 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUr
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 0
-    numberOfRecentRows = 0
-    numberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
-    numberOfInternationalRows = 1
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 0
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfInternationalRows = 1
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -219,15 +220,15 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(bac
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 0
-    numberOfRecentRows = 0
-    numberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
-    numberOfInternationalRows = 1
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 0
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfInternationalRows = 1
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -242,15 +243,15 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backe
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
-    numberOfInternationalRows = 0
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfInternationalRows = 0
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -265,15 +266,15 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
-    numberOfInternationalRows = 0
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfInternationalRows = 0
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -289,15 +290,15 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenr
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = 2
-    numberOfInternationalRows = 1
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = 2
+    expectedNumberOfInternationalRows = 1
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -312,15 +313,15 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresT
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = 2
-    numberOfInternationalRows = 1
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = 2
+    expectedNumberOfInternationalRows = 1
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -335,15 +336,15 @@ def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAn
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = 1
-    numberOfInternationalRows = 1
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = 1
+    expectedNumberOfInternationalRows = 1
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -358,15 +359,15 @@ def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentF
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = 1
-    numberOfInternationalRows = 1
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = 1
+    expectedNumberOfInternationalRows = 1
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -381,15 +382,15 @@ def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilm
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = 1
-    numberOfInternationalRows = 0
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = 1
+    expectedNumberOfInternationalRows = 0
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -405,15 +406,15 @@ def test_getInitialRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRece
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = 1
-    numberOfInternationalRows = 0
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = 1
+    expectedNumberOfInternationalRows = 0
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -428,15 +429,15 @@ def test_getInitialRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
-    numberOfInternationalRows = 1
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfInternationalRows = 1
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
     for row in rowsOfRecommendations:
         assert row['profileId'] != "recency"
@@ -450,15 +451,15 @@ def test_getInitialRowsOfRecommendations_imdbNoRecognisedFilms(backendUrl):
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 0
-    numberOfRecentRows = 0
-    numberOfGenreRows = 0
-    numberOfInternationalRows = 0
-    numberOfOldRows = 0
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 0
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = 0
+    expectedNumberOfInternationalRows = 0
+    expectedNumberOfOldRows = 0
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
 def test_getInitialRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recognised-films.csv")
@@ -469,15 +470,15 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecognisedFilms(backendUrl)
     responseContent = getInitialRowsOfRecommendationsResponse.json()
     rowsOfRecommendations = responseContent["body"]
 
-    numberOfFavouriteRows = 0
-    numberOfRecentRows = 0
-    numberOfGenreRows = 0
-    numberOfInternationalRows = 0
-    numberOfOldRows = 0
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 0
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = 0
+    expectedNumberOfInternationalRows = 0
+    expectedNumberOfOldRows = 0
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
-    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(rowsOfRecommendations, expectedTotalNumberOfRows)
 
 def test_regenerateRowsOfRecommendations_imdb(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
@@ -493,17 +494,17 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
 
     # verify the newly recommended films are valid
     # TODO move this to a method to make more readable?
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
-    numberOfInternationalRows = 1
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfInternationalRows = 1
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
     responseContent = regenerateRecommendationsResponse.json()
     regeneratedRecommendations = responseContent["body"]
-    testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, expectedTotalNumberOfRows)
 
     # ensure all newly recommended films are unique
     # TODO move this to a method to make more readable?
@@ -531,17 +532,17 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
     assert regenerateRecommendationsResponse.status_code == 200
 
     # verify the newly recommended films are valid
-    numberOfFavouriteRows = 1
-    numberOfRecentRows = 0
-    numberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
-    numberOfInternationalRows = 1
-    numberOfOldRows = 1
-    totalNumberOfRows = (numberOfFavouriteRows + numberOfRecentRows + numberOfGenreRows + 
-                         numberOfInternationalRows + numberOfOldRows)
+    expectedNumberOfFavouriteRows = 1
+    expectedNumberOfRecentRows = 0
+    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfInternationalRows = 1
+    expectedNumberOfOldRows = 1
+    expectedTotalNumberOfRows = (expectedNumberOfFavouriteRows + expectedNumberOfRecentRows + expectedNumberOfGenreRows + 
+                         expectedNumberOfInternationalRows + expectedNumberOfOldRows)
     
     responseContent = regenerateRecommendationsResponse.json()
     regeneratedRecommendations = responseContent["body"]
-    testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, totalNumberOfRows)
+    testUtilities.verifyRowsOfRecommendations(regeneratedRecommendations, expectedTotalNumberOfRows)
 
     # ensure all newly recommended films are unique
     # TODO move this to a method to make more readable?
