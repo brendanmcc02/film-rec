@@ -2,6 +2,6 @@ import numpy as np
 
 class VectorProfile:
 
-    def __init__(self, _profileId, _profileLength=0):
-        self.profileId = _profileId
-        self.profile = np.zeros(_profileLength)
+    def __init__(self, profileId, profileLength=0):
+        self.profileId = profileId
+        self.profile = np.zeros(profileLength)
