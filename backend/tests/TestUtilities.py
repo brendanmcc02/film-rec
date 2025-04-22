@@ -154,7 +154,7 @@ class TestUtilities:
         rowsOfRecommendationsLength = len(rowsOfRecommendations)
         randomRowIndex = random.randint(0, rowsOfRecommendationsLength - 1)
 
-        rowLength = len(rowsOfRecommendations[randomRowIndex])
+        rowLength = len(rowsOfRecommendations[randomRowIndex - 1])
         randomFilmIndex = random.randint(0, rowLength)
 
         return rowsOfRecommendations[randomRowIndex]['recommendedFilms'][randomFilmIndex]['imdbId']
