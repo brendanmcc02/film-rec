@@ -261,7 +261,6 @@ my-film-data-vec.json to file
 ## Unit Tests
 - [x] initDatabase
 - [x] vectorizeUtilities
-- [ ] improve readability
 
 ## Int Tests
 - [x] `/getInitialRowsOfRecommendations`
