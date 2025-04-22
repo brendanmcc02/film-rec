@@ -365,5 +365,5 @@ class VectorizeUtilities:
 
         return vectorProfiles
 
-    def isZeroVector(vectorProfile, profileVectorLength):
+    def isZeroVector(self, vectorProfile, profileVectorLength):
         return np.array_equal(vectorProfile, np.zeros(profileVectorLength))
