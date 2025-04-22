@@ -29,8 +29,7 @@ def test_regenerateRowsOfRecommendations_guidExists(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+    guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
 
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
@@ -53,8 +52,7 @@ def test_regenerateRowsOfRecommendations_errorMessageExists(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+    guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
 
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
@@ -77,8 +75,7 @@ def test_regenerateRowsOfRecommendations_bodyExists(backendUrl):
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+    guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
 
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
@@ -91,48 +88,48 @@ def test_getInitialRowsOfRecommendations_noFile(backendUrl):
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    responseContent = response.json()
-    assert responseContent["errorMessage"] == ServiceUtilities.NO_FILE_IN_REQUEST_ERROR_MESSAGE
+    
+    testUtilities.verifyErrorMessage(ServiceUtilities.NO_FILE_IN_REQUEST_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_unacceptedFileType(backendUrl):
     filesToSend = testUtilities.getFilesToSend("test.txt")
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 415
-    responseContent = response.json()
-    assert responseContent["errorMessage"] == ServiceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE
+
+    testUtilities.verifyErrorMessage(ServiceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_imdbIncorrectHeader(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-incorrect-header.csv")
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    responseContent = response.json()
-    assert responseContent["errorMessage"] == ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
+
+    testUtilities.verifyErrorMessage(ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_imdbMissingHeader(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-missing-header.csv")
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    responseContent = response.json()
-    assert responseContent["errorMessage"] == ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
+
+    testUtilities.verifyErrorMessage(ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_letterboxdIncorrectHeaderCsv(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-incorrect-header.csv")
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    responseContent = response.json()
-    assert responseContent["errorMessage"] == ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE
+
+    testUtilities.verifyErrorMessage(ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_letterboxdMissingHeaderCsv(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-missing-header.csv")
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    responseContent = response.json()
-    assert responseContent["errorMessage"] == ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE
+
+    testUtilities.verifyErrorMessage(ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_letterboxdIncorrectZip(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-incorrect.zip")
@@ -140,8 +137,8 @@ def test_getInitialRowsOfRecommendations_letterboxdIncorrectZip(backendUrl):
     response = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
 
     assert response.status_code == 400
-    responseContent = response.json()
-    assert responseContent["errorMessage"] == ServiceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE
+
+    testUtilities.verifyErrorMessage(ServiceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
@@ -233,7 +230,6 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms
     testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
                                               expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
-# tests for cases when the user has rated films with only two genres
 def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films-and-two-genres.csv")
     
@@ -249,7 +245,6 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndTwoGenres_ensuresTwoGenr
     testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
                                               expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
-# tests for cases when the user has rated films with only two genres
 def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresTwoGenreRows(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films-and-two-genres.csv")
     
@@ -265,7 +260,6 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndTwoGenres_ensuresT
     testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
                                               expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
-# tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-international-film-no-recent-films-and-one-genre.csv")
     
@@ -281,7 +275,6 @@ def test_getInitialRowsOfRecommendations_imdbInternationalFilmAndNoRecentFilmsAn
     testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
                                               expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
-# tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-international-film-no-recent-films-and-one-genre.csv")
     
@@ -297,7 +290,6 @@ def test_getInitialRowsOfRecommendations_letterboxdInternationalFilmAndNoRecentF
     testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
                                               expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
-# tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-american-film-no-recent-films-and-one-genre.csv")
     
@@ -313,7 +305,6 @@ def test_getInitialRowsOfRecommendations_imdbNoInternationalFilmsAndNoRecentFilm
     testUtilities.verifyRowsOfRecommendations(getInitialRowsOfRecommendationsResponse, expectedNumberOfFavouriteRows, expectedNumberOfRecentRows, 
                                               expectedNumberOfGenreRows, expectedNumberOfInternationalRows, expectedNumberOfOldRows)
 
-# tests for cases when the user has rated films with only one genre
 def test_getInitialRowsOfRecommendations_letterboxdNoInternationalFilmsAndNoRecentFilmsAndOneGenres_ensuresOneGenreRows(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-american-film-no-recent-films-and-one-genre.csv")
     
@@ -424,9 +415,7 @@ def test_getInitialRowsOfRecommendations_successfulResponse_shouldHaveEmptyError
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-
-    assert getInitialRowsOfRecommendationsResponseContent["errorMessage"] == ""
+    testUtilities.verifyErrorMessage(getInitialRowsOfRecommendationsResponse, "")
 
 def test_regenerateRecommendations_successfulResponse_shouldHaveEmptyErrorMessage(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
@@ -434,12 +423,9 @@ def test_regenerateRecommendations_successfulResponse_shouldHaveEmptyErrorMessag
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
-    getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
-    guid = getInitialRowsOfRecommendationsResponseContent["guid"]
+    guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
 
     regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
     assert regenerateRecommendationsResponse.status_code == 200
 
-    regenerateRecommendationsResponseContent = regenerateRecommendationsResponse.json()
-
-    assert regenerateRecommendationsResponseContent["errorMessage"] == ""
+    testUtilities.verifyErrorMessage(regenerateRecommendationsResponse, "")

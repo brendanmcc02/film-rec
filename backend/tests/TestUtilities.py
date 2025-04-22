@@ -137,3 +137,7 @@ class TestUtilities:
                 actualNumberOfRows += 1
 
         assert expectedNumberOfRows == actualNumberOfRows
+
+    def verifyErrorMessage(self, response, expectedErrorMessage):
+        responseContent = response.json()
+        assert responseContent["errorMessage"] == expectedErrorMessage
