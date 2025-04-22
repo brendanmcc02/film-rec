@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 
 class DownloadFilmData:
 
+    MIN_HOURS_UNTIL_LAST_DOWNLOAD = 12
+
     def main(self):
         lastImdbDownloadString = open('../database/LastImdbDownloadTimestamp.txt', 'r').read()
         lastImdbDownloadTimestamp = datetime.strptime(lastImdbDownloadString, '%Y-%m-%d %H:%M:%S.%f')
@@ -13,11 +15,11 @@ class DownloadFilmData:
 
         differenceInTimestamps = currentTimestamp - lastImdbDownloadTimestamp
 
-        if differenceInTimestamps >= timedelta(hours=12):
+        if differenceInTimestamps >= timedelta(hours=self.MIN_HOURS_UNTIL_LAST_DOWNLOAD):
             urllib.request.urlretrieve("https://datasets.imdbws.com/title.basics.tsv.gz", 
-                                    "../database/title.basics.tsv.gz")
+                                       "../database/title.basics.tsv.gz")
             urllib.request.urlretrieve("https://datasets.imdbws.com/title.ratings.tsv.gz", 
-                                    "../database/title.ratings.tsv.gz")
+                                       "../database/title.ratings.tsv.gz")
 
             with open('../database/LastImdbDownloadTimestamp.txt', 'w') as file:
                 file.write(str(datetime.now()))
