@@ -164,4 +164,8 @@ class TestUtilities:
         responseBody = responseContent["body"]
 
         assert filmId in responseBody
-        assert str(isThumbsUp) in responseBody
+        
+        if isThumbsUp:
+            assert "Up" in responseBody
+        else:
+            assert "Down" in responseBody
