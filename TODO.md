@@ -271,7 +271,7 @@ my-film-data-vec.json to file
 - [x] write int tests for zip file addition
 - [x] make them muuuuuuch more readable and abstract the DRY shit out
 - [x] make test for empty errorMessage on 200
-- [ ] add reviewRec int tests
+- [x] add reviewRec int tests
 
 ## Pipelines
 - [x] config a pipeline that is triggered on pushes to main
