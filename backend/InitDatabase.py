@@ -16,8 +16,8 @@ class InitDatabase:
     BASE_IMDB_URL = 'https://www.imdb.com/title/'
     VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS = 5
 
-    def __init__(self, _database):
-        self.database = _database
+    def __init__(self, database):
+        self.database = database
 
 
     def main(self):

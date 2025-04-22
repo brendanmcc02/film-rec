@@ -2,8 +2,8 @@ import json
 
 class DocumentDatabase:
 
-    def __init__(self, _repositoryRoot):
-        self.repositoryRoot = _repositoryRoot
+    def __init__(self, repositoryRoot):
+        self.repositoryRoot = repositoryRoot
 
 
     def read(self, fileName):
