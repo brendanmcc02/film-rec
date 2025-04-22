@@ -91,9 +91,9 @@ class TestUtilities:
             assert len(row['recommendedFilms']) == ServiceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW
 
             for film in row['recommendedFilms']:
-                assert 'id' in film
-                assert film['id'] != ""
-                self.verifyFilm(film, film['id'], allGenres, allCountries)
+                assert 'imdbId' in film
+                assert film['imdbId'] != ""
+                self.verifyFilm(film, film['imdbId'], allGenres, allCountries)
                 assert 'similarityScore' in film
                 assert film['similarityScore'] != None
                 assert film['similarityScore'] >= 0.0
@@ -121,14 +121,14 @@ class TestUtilities:
 
         for rowOfFilms in initialRecommendations:
             for recommendedFilm in rowOfFilms['recommendedFilms']:
-                initialRecommendationFilmIds.append(recommendedFilm['id'])
+                initialRecommendationFilmIds.append(recommendedFilm['imdbId'])
 
         regenerateRecommendationsResponseContent = regenerateRecommendationsResponse.json()
         regeneratedRecommendations = regenerateRecommendationsResponseContent["body"]
 
         for rowOfFilms in regeneratedRecommendations:
             for recommendedFilm in rowOfFilms['recommendedFilms']:
-                assert recommendedFilm['id'] not in initialRecommendationFilmIds
+                assert recommendedFilm['imdbId'] not in initialRecommendationFilmIds
 
     def verifyExpectedNumberOfRows(self, rowsOfRecommendations, expectedNumberOfRows, profileIds):
         actualNumberOfRows = 0
@@ -157,7 +157,7 @@ class TestUtilities:
         rowLength = len(rowsOfRecommendations[randomRowIndex])
         randomFilmIndex = random.randint(0, rowLength)
 
-        return rowsOfRecommendations[randomRowIndex]['recommendedFilms'][randomFilmIndex]['filmId']
+        return rowsOfRecommendations[randomRowIndex]['recommendedFilms'][randomFilmIndex]['imdbId']
 
     def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, filmId, isThumbsUp):
         responseContent = reviewRecommendationsResponse.json()

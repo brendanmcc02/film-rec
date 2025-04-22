@@ -240,7 +240,7 @@ class ServiceInstance:
             if self.serviceUtilities.isFilmRecommendationUnique(filmId, self.rowsOfRecommendations):
                 film = self.allFilmDataUnseen[filmId]
                 similarityScore = cosineSimilarities[i][1]
-                film['id'] = filmId
+                film['imdbId'] = filmId
                 film['similarityScore'] = int(similarityScore * 100.0)
 
                 self.rowsOfRecommendations[-1]['recommendedFilms'].append(film)
@@ -256,7 +256,7 @@ class ServiceInstance:
 
         for row in self.rowsOfRecommendations:
             for film in row['recommendedFilms']:
-                if film['id'] == filmId:
+                if film['imdbId'] == filmId:
                     profileId = row.profileId
 
         profile = self.getProfile(profileId)
@@ -308,7 +308,7 @@ class ServiceInstance:
     def regenerateRecommendations(self):
         for row in self.rowsOfRecommendations:
             for film in row['recommendedFilms']:
-                filmId = film['id']
+                filmId = film['imdbId']
                 del self.allFilmDataUnseen[filmId]
 
         self.generateRecommendations()
