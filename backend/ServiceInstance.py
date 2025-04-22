@@ -283,7 +283,7 @@ class ServiceInstance:
 
         self.vectorizeUtilities.keepVectorBoundary(profile.profile)
 
-        return self.serviceUtilities.getFormattedResponse(f"changed {profileId} profile due to after reviewing {filmId}", "", self.guid, 200)
+        return self.serviceUtilities.getFormattedResponse(f"Gave Thumbs {"Up" if isThumbsUp else "Down"} for film {filmId}.", "", self.guid, 200)
     
 
     def getProfile(self, profileId):
