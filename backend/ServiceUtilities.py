@@ -18,6 +18,7 @@ class ServiceUtilities:
     EXPECTED_IMDB_FILM_ATTRIBUTES = ["Const", "Your Rating", "Date Rated", "Title", "Original Title", "URL",
                                      "Title Type", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num Votes",
                                      "Release Date", "Directors"]
+    FAVOURITE_FILM_RATING_THRESHOLD = 9
 
     def isFilmRecommendationUnique(self, filmId, rowsOfRecommendations):
         for rowOfRecommendations in rowsOfRecommendations:
@@ -62,3 +63,31 @@ class ServiceUtilities:
         cachedDatabase["NormalizedRuntimesKeys"] = list(cachedDatabase["NormalizedRuntimes"].keys())
 
         return cachedDatabase
+
+    def getAllFilmDataUnseen(self, allFilmData, userFilmData):
+        allFilmDataUnseen = {}
+
+        for imdbFilmId in allFilmData:
+            if imdbFilmId not in userFilmData:
+                allFilmDataUnseen[imdbFilmId] = allFilmData[imdbFilmId]
+
+        return allFilmDataUnseen
+    
+    def getFormattedFilm(self, film, dateRated, genres, countries):
+        return {
+            "title": film['Title'],
+            "year": int(film['Year']),
+            "userRating": int(film['Your Rating']),
+            "dateRated": dateRated,
+            "imdbRating": float(film['IMDb Rating']),
+            "numberOfVotes": int(film['Num Votes']),
+            "runtime": int(film['Runtime (mins)']),
+            "genres": genres,
+            "countries": countries
+        }
+    
+    def isFilmValid(self, film, runtimeThreshold, numberOfVotesThreshold):
+        return (film['Title Type'] == "Movie" and 
+                film['Genres'] != "" and 
+                int(film['Runtime (mins)']) >= runtimeThreshold and 
+                int(film['Num Votes']) >= numberOfVotesThreshold)

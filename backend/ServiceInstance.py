@@ -41,9 +41,7 @@ class ServiceInstance:
         maxDateRated = minDateRated
 
         for film in userFilmDataOriginal:
-            if (film['Title Type'] == "Movie" and 
-                    int(film['Runtime (mins)']) >= self.initDatabase.RUNTIME_THRESHOLD and film['Genres'] != ""\
-                    and int(film['Num Votes']) >= self.initDatabase.NUMBER_OF_VOTES_THRESHOLD):
+            if (self.serviceUtilities.isFilmValid(film, self.initDatabase.RUNTIME_THRESHOLD, self.initDatabase.NUMBER_OF_VOTES_THRESHOLD)):
                 if isImdbFile:
                     genres = film['Genres'].replace("\"", "").split(", ")
                 else:
@@ -54,19 +52,9 @@ class ServiceInstance:
                         dateRated = datetime.strptime(film['Date Rated'], "%Y-%m-%d")
                         minDateRated = min(minDateRated, dateRated)
 
-                        userFilmData[film['Const']] = {
-                            "title": film['Title'],
-                            "year": int(film['Year']),
-                            "userRating": int(film['Your Rating']),
-                            "dateRated": dateRated,
-                            "imdbRating": float(film['IMDb Rating']),
-                            "numberOfVotes": int(film['Num Votes']),
-                            "runtime": int(film['Runtime (mins)']),
-                            "genres": genres,
-                            "countries": allFilmData[filmId]['countries']
-                        }
+                        userFilmData[film['Const']] = self.serviceUtilities.getFormattedFilm(film, dateRated, genres, allFilmData[filmId]['countries'])
 
-                        if userFilmData[filmId]['userRating'] >= 9:
+                        if userFilmData[filmId]['userRating'] >= self.serviceUtilities.FAVOURITE_FILM_RATING_THRESHOLD:
                             favouriteFilmIds.append(filmId)
                     else:
                         print(f"Film in userFilmData not found in allFilmData, {filmId}\n")
@@ -79,13 +67,10 @@ class ServiceInstance:
         if diffDateRated == 0.0:
             isDiffDateRatedZero = True
 
-        for imdbFilmId in allFilmData:
-            if imdbFilmId not in userFilmData:
-                self.allFilmDataUnseen[imdbFilmId] = allFilmData[imdbFilmId]
+        self.allFilmDataUnseen = self.serviceUtilities.getAllFilmDataUnseen(allFilmData, userFilmData)
 
         userFilmDataVectorized = {}
 
-        # init a dict with pre-computed scalar values
         cachedDateRatedAndUserRatingWeights = {}        
 
         # vectorize user-film-data
