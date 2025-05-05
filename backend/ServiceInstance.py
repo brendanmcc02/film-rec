@@ -143,7 +143,6 @@ class ServiceInstance:
         else:
             self.getFilmRecommendations("Try out some older films", self.vectorProfiles["oldProfile"].profile, self.vectorProfiles["oldProfile"].profileId)
 
-
     def getFilmRecommendations(self, recommendedRowText, profileVector, profileId):
         self.rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, 
                                            "recommendedFilms": [], 
@@ -154,7 +153,7 @@ class ServiceInstance:
                                                                                            self.cachedDatabase["AllFilmDataVectorized"], 
                                                                                            self.cachedDatabase["AllFilmDataVectorizedMagnitudes"])
 
-        numberOfRecommendations = self.serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW
+        numberOfRecommendations = self.serviceUtilities.MAX_NUMBER_OF_RECOMMENDATIONS_PER_ROW
         i = 0
         while i < numberOfRecommendations:
             filmId = cosineSimilarities[i][0]
@@ -170,7 +169,6 @@ class ServiceInstance:
                 numberOfRecommendations += 1
 
             i += 1
-
 
     def reviewRecommendation(self):
         filmId = request.args.get('filmId')
@@ -207,7 +205,6 @@ class ServiceInstance:
 
         return self.serviceUtilities.getFormattedResponse(f"Gave Thumbs {"Up" if isThumbsUp else "Down"} for film {filmId}.", "", self.guid, 200)
     
-
     def getProfile(self, profileId):
         if profileId == "favourite":
             return self.vectorProfiles["favouriteProfile"]
@@ -225,7 +222,6 @@ class ServiceInstance:
         print(f"Error: profile {profileId} not found. Returning zero vector.")
 
         return VectorProfile(profileId, self.cachedDatabase["ProfileVectorLength"])
-
 
     def regenerateRecommendations(self):
         for row in self.rowsOfRecommendations:

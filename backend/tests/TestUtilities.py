@@ -87,7 +87,7 @@ class TestUtilities:
             assert row['profileId'] != ""
 
             assert 'recommendedFilms' in row
-            assert len(row['recommendedFilms']) == ServiceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW
+            assert len(row['recommendedFilms']) == ServiceUtilities.MAX_NUMBER_OF_RECOMMENDATIONS_PER_ROW
 
             for film in row['recommendedFilms']:
                 assert 'imdbId' in film
