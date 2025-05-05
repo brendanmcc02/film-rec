@@ -97,3 +97,7 @@ class ServiceUtilities:
             return filmGenres.replace("\"", "").split(", ")
         else:
             return filmGenres
+        
+    def getNormalizedDateRatedWeight(self, dateRated, minDateRated, diffDateRated):
+        return (((dateRated - minDateRated) / diffDateRated) *
+                                    (1 - self.DATE_RATED_WEIGHT)) + self.DATE_RATED_WEIGHT

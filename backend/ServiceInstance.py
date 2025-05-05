@@ -29,6 +29,7 @@ class ServiceInstance:
         isImdbFile = fileWriteResponseContent["body"]["isImdbFile"]
         
         # store in a local variable because dictionaries in python are pass by reference
+        # TODO - revisit this??? can't it be shared across all instances because it doesn't get modified?
         allFilmData = self.cachedDatabase["AllFilmData"]
 
         if not isImdbFile:
@@ -67,11 +68,16 @@ class ServiceInstance:
 
         self.allFilmDataUnseen = self.serviceUtilities.getAllFilmDataUnseen(allFilmData, userFilmData)
 
-        userFilmDataVectorized = {}
+        self.initVectorProfiles(userFilmData, isDiffDateRatedZero, minDateRated, maxDateRated, diffDateRated, favouriteFilmIds)
 
+        self.generateRecommendations()
+
+        return self.serviceUtilities.getFormattedResponse(self.rowsOfRecommendations, "", self.guid, 200)
+
+    def initVectorProfiles(self, userFilmData, isDiffDateRatedZero, minDateRated, maxDateRated, diffDateRated, favouriteFilmIds):
+        userFilmDataVectorized = {}
         cachedDateRatedAndUserRatingWeights = {}        
 
-        # vectorize user-film-data
         for imdbFilmId in userFilmData:
             vector = self.vectorizeUtilities.vectorizeFilm(userFilmData[imdbFilmId], self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"],
                                                            self.cachedDatabase["NormalizedYears"], self.cachedDatabase["NormalizedImdbRatings"], self.cachedDatabase["MinNumberOfVotes"],
@@ -79,14 +85,11 @@ class ServiceInstance:
             if isDiffDateRatedZero:
                 dateRatedWeight = 1.0
             else:
-                # normalize the dateRatedWeight as a float between DATE_RATED_WEIGHT and 1.0.
-                dateRatedWeight = (((userFilmData[imdbFilmId]['dateRated'] - minDateRated) / diffDateRated) *
-                                    (1 - self.serviceUtilities.DATE_RATED_WEIGHT)) + self.serviceUtilities.DATE_RATED_WEIGHT
+                dateRatedWeight = self.serviceUtilities.getNormalizedDateRatedWeight(userFilmData[imdbFilmId]['dateRated'], minDateRated, diffDateRated)
 
             # imdbRatings run from 1-10, we want values to run from 0.1 - 1.0
             userRatingWeight = round((userFilmData[imdbFilmId]['userRating'] / 10.0), 1)
             cachedDateRatedAndUserRatingWeights[imdbFilmId] = dateRatedWeight * userRatingWeight
-
             userFilmDataVectorized[imdbFilmId] = vector * cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
         self.vectorProfiles["favouriteProfile"] = self.vectorizeUtilities.initFavouriteProfile(userFilmData, userFilmDataVectorized, 
@@ -110,10 +113,6 @@ class ServiceInstance:
                                                                                      self.cachedDatabase["ProfileVectorLength"])
 
         self.vectorProfiles["oldProfile"] = self.vectorizeUtilities.initOldProfile(userProfile.profile)
-
-        self.generateRecommendations()
-
-        return self.serviceUtilities.getFormattedResponse(self.rowsOfRecommendations, "", self.guid, 200)
 
     def generateRecommendations(self):
         
