@@ -4,6 +4,8 @@
 # this is intended to be run using `initDatabase.sh`, not as a standalone file.
 
 import csv
+from dotenv import load_dotenv
+import os
 import time
 import requests
 from DocumentDatabase import *
@@ -18,7 +20,6 @@ class InitDatabase:
 
     def __init__(self, database):
         self.database = database
-
 
     def main(self):
         shouldRunScript = True
@@ -108,7 +109,7 @@ class InitDatabase:
 
         print("\nMaking API calls to get Letterboxd Title, Letterboxd Year, Countries, Posters, Summary...\n")
 
-        accessToken = str(open('../access-token.txt').read())
+        accessToken = os.getenv("ACCESS_TOKEN")
 
         headers = {
             "accept": "application/json",
@@ -314,16 +315,14 @@ class InitDatabase:
         try:
             if ('title' in jsonResponse and jsonResponse['title'] != '' and 'poster_path' in jsonResponse
                     and jsonResponse['poster_path'] != '' and 'release_date' in jsonResponse and
-                    jsonResponse['release_date'] != '' and 'backdrop_path' in jsonResponse and
-                    jsonResponse['backdrop_path'] != '' and 'overview' in jsonResponse and jsonResponse['overview'] != ''
-                    and 'origin_country' in jsonResponse):
+                    jsonResponse['release_date'] != '' and 'overview' in jsonResponse and 
+                    jsonResponse['overview'] != '' and 'origin_country' in jsonResponse):
                 return False
             else:
                 return True
         except ValueError:
             print("Value Error when validating json response.\n")
             return True
-
 
     def convertRuntimeToHoursMinutes(self, runtimeInMinutes):
         hours = int(runtimeInMinutes / 60)
@@ -340,7 +339,6 @@ class InitDatabase:
             minutes = ""
 
         return f"{hours}{minutes}"
-
 
     def removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(self, allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles):
         invalidFilms = []
@@ -366,6 +364,7 @@ class InitDatabase:
 
 
 if __name__ == "__main__":
+    load_dotenv()
     database = DocumentDatabase("../")
     initDatabase = InitDatabase(database)
     initDatabase.main()
