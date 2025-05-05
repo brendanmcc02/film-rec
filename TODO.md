@@ -128,7 +128,7 @@ create endpoints for getters/setters
 - [x] create myFilmData from imported diary.csv through Flask (letterboxd)
 - [x] bug: if two profiles recommend the same film, the other profile should look for another film to replace it
 - [x] bug: imdb recent doesn't work
-- [ ] .env file?
+- [x] .env file
 
 # Windows OS
 - [x] config frontend: npm, etc.

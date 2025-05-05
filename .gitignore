@@ -1,6 +1,4 @@
 .idea/
 *.pdf
 user-data/
-access-token.txt
-backup-access-token.txt
 .pytest_cache/
