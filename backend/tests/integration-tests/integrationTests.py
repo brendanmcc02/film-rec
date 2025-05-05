@@ -424,7 +424,7 @@ def test_regenerateRecommendations_successfulResponse_shouldHaveEmptyErrorMessag
 
     testUtilities.verifyErrorMessage(regenerateRecommendationsResponse, "")
 
-def test_reviewRecommendation_ofInitialRowsOfRecommendations_thumbsUp(backendUrl):
+def test_reviewRecommendation_initialRowsOfRecommendations_thumbsUp(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
 
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
@@ -432,7 +432,7 @@ def test_reviewRecommendation_ofInitialRowsOfRecommendations_thumbsUp(backendUrl
 
     testUtilities.verifyReviewsOfAllRecommendations(getInitialRowsOfRecommendationsResponse, True, backendUrl)
 
-def test_reviewRecommendation_ofInitialRowsOfRecommendations_thumbsDown(backendUrl):
+def test_reviewRecommendation_initialRowsOfRecommendations_thumbsDown(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
 
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
