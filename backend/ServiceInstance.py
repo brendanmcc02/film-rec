@@ -153,9 +153,9 @@ class ServiceInstance:
                                                                                            self.cachedDatabase["AllFilmDataVectorized"], 
                                                                                            self.cachedDatabase["AllFilmDataVectorizedMagnitudes"])
 
-        numberOfRecommendations = self.serviceUtilities.MAX_NUMBER_OF_RECOMMENDATIONS_PER_ROW
+        maxNumberOfRecommendations = self.serviceUtilities.MAX_NUMBER_OF_RECOMMENDATIONS_PER_ROW
         i = 0
-        while i < numberOfRecommendations:
+        while i < maxNumberOfRecommendations:
             filmId = cosineSimilarities[i][0]
             
             if self.serviceUtilities.isFilmRecommendationUnique(filmId, self.rowsOfRecommendations):
@@ -166,7 +166,7 @@ class ServiceInstance:
 
                 self.rowsOfRecommendations[-1]['recommendedFilms'].append(film)
             else:
-                numberOfRecommendations += 1
+                maxNumberOfRecommendations += 1
 
             i += 1
 
