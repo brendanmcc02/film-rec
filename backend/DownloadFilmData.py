@@ -1,10 +1,9 @@
-# downloads the publicly available imdb datasets.
 # this is intended to be run using `init-all-film-data.sh`, not as a standalone file.
 
 import urllib.request
 from datetime import datetime, timedelta
 
-class DownloadFilmData:
+class DownloadImdbFilmData:
 
     MIN_HOURS_UNTIL_LAST_DOWNLOAD = 12
 
@@ -26,5 +25,5 @@ class DownloadFilmData:
 
 
 if __name__ == "__main__":
-    downloadFilmData = DownloadFilmData()
-    downloadFilmData.main()
+    downloadImdbFilmData = DownloadImdbFilmData()
+    downloadImdbFilmData.main()

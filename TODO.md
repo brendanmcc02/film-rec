@@ -207,7 +207,7 @@ my-film-data-vec.json to file
 - [x] rename files to lowerCamelCase
 - [x] `loadJsonFiles` should only run once
 - [x] classes should be UpperCamelCase
-- [ ] look for comments **everywhere** and see if you can remove it with a descriptive function
+- [x] look for comments **everywhere** and see if you can remove it with a descriptive function
 - [x] get rid of underscore in parameters
 - [x] wrap `if np.array_equal` into a function with readable name
 - [ ] the `self` stuff makes code hard to read, maybe instead of loading in an object, we just straight up load the class, less clutter

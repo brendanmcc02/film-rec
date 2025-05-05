@@ -1,6 +1,3 @@
-# after the raw imdb datasets have been downloaded, import and filter the datasets, 
-# then call the TMDb API service to augment additional data. this produces many .json
-# files to be used by the backend service.
 # this is intended to be run using `initDatabase.sh`, not as a standalone file.
 
 import csv
@@ -55,7 +52,6 @@ class InitDatabase:
 
             stage_2_allFilmData = []
 
-            # the key is the film id, and the value is a dictionary of the attributes (averageRating & numVotes) of the film
             title_ratings = {}
             with open("../database/title.ratings.tsv", 'r', encoding='utf-8', newline='') as title_ratings_file:
                 reader = csv.DictReader(title_ratings_file, delimiter='\t')
