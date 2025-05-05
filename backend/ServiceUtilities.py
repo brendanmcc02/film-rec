@@ -101,3 +101,12 @@ class ServiceUtilities:
     def getNormalizedDateRatedWeight(self, dateRated, minDateRated, diffDateRated):
         return (((dateRated - minDateRated) / diffDateRated) *
                                     (1 - self.DATE_RATED_WEIGHT)) + self.DATE_RATED_WEIGHT
+
+    def getProfileIdAssociatedWithFilmId(self, rowsOfRecommendations, filmId):
+        for row in rowsOfRecommendations:
+            for film in row['recommendedFilms']:
+                if film['imdbId'] == filmId:
+                    return row["profileId"]
+
+    def isProfileIdGenreProfile(self, profileId, allGenres):
+        return profileId in allGenres

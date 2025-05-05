@@ -174,38 +174,19 @@ class ServiceInstance:
         filmId = request.args.get('filmId')
         isThumbsUp = request.args.get('isThumbsUp').lower() == 'true'
 
-        for row in self.rowsOfRecommendations:
-            for film in row['recommendedFilms']:
-                if film['imdbId'] == filmId:
-                    profileId = row["profileId"]
+        profileId = self.serviceUtilities.getProfileIdAssociatedWithFilmId(self.rowsOfRecommendations, filmId)
+        profile = self.getProfileFromProfileId(profileId)
 
-        profile = self.getProfile(profileId)
+        if self.serviceUtilities.isProfileIdGenreProfile(profileId, self.cachedDatabase["AllGenres"]):
+            self.adjustGenreProfileWeightedMeanRating(profile, isThumbsUp)
 
-        # if the profile is a genre profile
-        if profileId in self.cachedDatabase["AllGenres"]:
-            adjustment = profile.weightedMeanRating * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
-            if isThumbsUp:
-                profile.weightedMeanRating += adjustment
-            else:
-                profile.weightedMeanRating -= adjustment
-
-        filmVector = self.cachedDatabase["AllFilmDataVectorized"][filmId]
-        adjustment = (filmVector - profile.profile) * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
-
-        for i in range(len(adjustment)):
-            if adjustment[i] == 0.0:
-                adjustment[i] = self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
-
-        if isThumbsUp:
-            profile.profile += adjustment
-        else:
-            profile.profile -= adjustment
+        self.adjustProfileVector(profile, filmId, isThumbsUp)
 
         self.vectorizeUtilities.keepVectorBoundary(profile.profile)
 
         return self.serviceUtilities.getFormattedResponse(f"Gave Thumbs {"Up" if isThumbsUp else "Down"} for film {filmId}.", "", self.guid, 200)
-    
-    def getProfile(self, profileId):
+
+    def getProfileFromProfileId(self, profileId):
         if profileId == "favourite":
             return self.vectorProfiles["favouriteProfile"]
         elif profileId == "recent":
@@ -222,6 +203,27 @@ class ServiceInstance:
         print(f"Error: profile {profileId} not found. Returning zero vector.")
 
         return VectorProfile(profileId, self.cachedDatabase["ProfileVectorLength"])
+
+    def adjustGenreProfileWeightedMeanRating(self, genreProfile, isThumbsUp):
+        adjustment = genreProfile.weightedMeanRating * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
+        
+        if isThumbsUp:
+            genreProfile.weightedMeanRating += adjustment
+        else:
+            genreProfile.weightedMeanRating -= adjustment
+
+    def adjustProfileVector(self, profile, filmId, isThumbsUp):
+        filmVector = self.cachedDatabase["AllFilmDataVectorized"][filmId]
+        adjustmentVector = (filmVector - profile.profile) * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
+
+        for i in range(len(adjustmentVector)):
+            if adjustmentVector[i] == 0.0:
+                adjustmentVector[i] = self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
+
+        if isThumbsUp:
+            profile.profile += adjustmentVector
+        else:
+            profile.profile -= adjustmentVector
 
     def regenerateRecommendations(self):
         for row in self.rowsOfRecommendations:
