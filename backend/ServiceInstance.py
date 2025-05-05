@@ -145,17 +145,14 @@ class ServiceInstance:
 
 
     def getFilmRecommendations(self, recommendedRowText, profileVector, profileId):
-        self.rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, "recommendedFilms": [], 
+        self.rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, 
+                                           "recommendedFilms": [], 
                                            "profileId": profileId})
-        profileVectorMagnitude = np.linalg.norm(profileVector)
-        cosineSimilarities = {}
-
-        for filmId in self.allFilmDataUnseen:
-            filmVectorMagnitude = self.cachedDatabase["AllFilmDataVectorizedMagnitudes"][filmId]
-            cosineSimilarities[filmId] = self.vectorizeUtilities.getCosineSimilarity(self.cachedDatabase["AllFilmDataVectorized"][filmId], profileVector,
-                                                                                  filmVectorMagnitude, profileVectorMagnitude)
-
-        cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
+        
+        cosineSimilarities = self.vectorizeUtilities.getSortedCosineSimilaritiesOfAllFilms(self.allFilmDataUnseen, 
+                                                                                           profileVector, 
+                                                                                           self.cachedDatabase["AllFilmDataVectorized"], 
+                                                                                           self.cachedDatabase["AllFilmDataVectorizedMagnitudes"])
 
         numberOfRecommendations = self.serviceUtilities.NUMBER_OF_RECOMMENDATIONS_PER_ROW
         i = 0

@@ -367,3 +367,14 @@ class VectorizeUtilities:
 
     def isZeroVector(self, vectorProfile, profileVectorLength):
         return np.array_equal(vectorProfile, np.zeros(profileVectorLength))
+
+    def getSortedCosineSimilaritiesOfAllFilms(self, allFilmDataUnseen, profileVector, allFilmDataVectorized, allFilmDataVectorizedMagnitudes):
+        cosineSimilarities = {}
+        profileVectorMagnitude = np.linalg.norm(profileVector)
+        
+        for filmId in allFilmDataUnseen:
+            filmVectorMagnitude = allFilmDataVectorizedMagnitudes[filmId]
+            cosineSimilarities[filmId] = self.getCosineSimilarity(allFilmDataVectorized[filmId], profileVector,
+                                                                  filmVectorMagnitude, profileVectorMagnitude)
+
+        return sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
