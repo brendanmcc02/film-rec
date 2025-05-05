@@ -147,18 +147,6 @@ class TestUtilities:
         responseContent = response.json()
         assert attribute in responseContent
 
-    def getRandomFilmIdFromResponse(self, response):
-        responseContent = response.json()
-        rowsOfRecommendations = responseContent["body"]
-
-        maxRowsOfRecommendationsIndex = len(rowsOfRecommendations) - 1
-        randomRowIndex = random.randint(0, maxRowsOfRecommendationsIndex)
-
-        maxRowOfFilmsIndex = len(rowsOfRecommendations[randomRowIndex]) - 1
-        randomFilmIndex = random.randint(0, maxRowOfFilmsIndex)
-
-        return rowsOfRecommendations[randomRowIndex]['recommendedFilms'][randomFilmIndex]['imdbId']
-
     def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, filmId, isThumbsUp):
         responseContent = reviewRecommendationsResponse.json()
         responseBody = responseContent["body"]
@@ -169,3 +157,15 @@ class TestUtilities:
             assert "Up" in responseBody
         else:
             assert "Down" in responseBody
+
+    def verifyReviewsOfAllRecommendations(self, response, isThumbsUp, backendUrl):
+        responseContent = response.json()
+        rowsOfRecommendations = responseContent["body"]
+
+        guid = self.getGuidFromResponse(response)
+
+        for row in rowsOfRecommendations:
+            for recommendedFilm in row['recommendedFilms']:
+                filmId = recommendedFilm['imdbId']
+                reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + str(isThumbsUp))
+                self.verifyReviewRecommendationResponse(reviewRecommendationResponse, filmId, isThumbsUp)
