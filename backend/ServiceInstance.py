@@ -125,17 +125,11 @@ class ServiceInstance:
             print("No favourite profile.")
         else:
             self.getFilmRecommendations("Based on your favourite films", self.vectorProfiles["favouriteProfile"].profile, self.vectorProfiles["favouriteProfile"].profileId)
-            # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["favouriteProfile"].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], "Favourite",
-            #                        self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"], self.cachedDatabase["NormalizedImdbRatingsKeys"],
-            #                        self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
         if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["recentProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
             print("No recent profile.")
         else:
             self.getFilmRecommendations("Based on what you watched recently", self.vectorProfiles["recentProfile"].profile, self.vectorProfiles["recentProfile"].profileId)
-            # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["recentProfile"].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], "Recent",
-            #                                                self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"], self.cachedDatabase["NormalizedImdbRatingsKeys"],
-            #                                                self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
         self.vectorProfiles["genreProfiles"] = sorted(self.vectorProfiles["genreProfiles"], key=lambda x: x.weightedMeanRating, reverse=True)
 
@@ -146,26 +140,16 @@ class ServiceInstance:
                 countryText = self.vectorizeUtilities.getProfileMaxCountry(self.vectorProfiles["genreProfiles"][i].profile, self.cachedDatabase["AllGenresLength"], self.cachedDatabase["AllCountries"])
                 self.getFilmRecommendations(f"Because you like {countryText} {self.vectorProfiles["genreProfiles"][i].profileId} films", self.vectorProfiles["genreProfiles"][i].profile, 
                                             self.vectorProfiles["genreProfiles"][i].profileId)
-                # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["genreProfiles"][i].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], 
-                #                        self.vectorProfiles["genreProfiles"][i].profileId, self.cachedDatabase["NormalizedYearsKeys"], 
-                #                        self.cachedDatabase["NormalizedRuntimesKeys"], self.cachedDatabase["NormalizedImdbRatingsKeys"], 
-                #                        self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
             
         if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["internationalProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
             print("No international profile.")
         else:
             self.getFilmRecommendations("Try out some international films", self.vectorProfiles["internationalProfile"].profile, self.vectorProfiles["internationalProfile"].profileId)
-            # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["internationalProfile"].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], 
-            #                        "International", self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"],
-            #                        self.cachedDatabase["NormalizedImdbRatingsKeys"], self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
         if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["oldProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
             print("No old profile.")
         else:
             self.getFilmRecommendations("Try out some older films", self.vectorProfiles["oldProfile"].profile, self.vectorProfiles["oldProfile"].profileId)
-            # self.vectorizeUtilities.printStringifiedVector(self.vectorProfiles["oldProfile"].profile, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"], "Old",
-            #                        self.cachedDatabase["NormalizedYearsKeys"], self.cachedDatabase["NormalizedRuntimesKeys"],
-            #                        self.cachedDatabase["NormalizedImdbRatingsKeys"], self.cachedDatabase["MinNumberOfVotes"], self.cachedDatabase["DiffNumberOfVotes"])
 
 
     def getFilmRecommendations(self, recommendedRowText, profileVector, profileId):
