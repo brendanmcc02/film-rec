@@ -42,10 +42,8 @@ class ServiceInstance:
 
         for film in userFilmDataOriginal:
             if (self.serviceUtilities.isFilmValid(film, self.initDatabase.RUNTIME_THRESHOLD, self.initDatabase.NUMBER_OF_VOTES_THRESHOLD)):
-                if isImdbFile:
-                    genres = film['Genres'].replace("\"", "").split(", ")
-                else:
-                    genres = film['Genres']
+                genres = self.serviceUtilities.getFilmGenresCorrectFormat(film['Genres'], isImdbFile)
+                
                 try:
                     filmId = film['Const']
                     if filmId in allFilmData:

@@ -91,3 +91,9 @@ class ServiceUtilities:
                 film['Genres'] != "" and 
                 int(film['Runtime (mins)']) >= runtimeThreshold and 
                 int(film['Num Votes']) >= numberOfVotesThreshold)
+    
+    def getFilmGenresCorrectFormat(self, filmGenres, isImdbFile):
+        if isImdbFile:
+            return filmGenres.replace("\"", "").split(", ")
+        else:
+            return filmGenres
