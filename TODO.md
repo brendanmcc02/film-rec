@@ -112,7 +112,7 @@ countries, poster)
 - [x] `deleteCsvFiles` should be to delete user-upload folder
 - [x] upload zip file instead of ratings.csv (letterboxd)
 - [x] merge `/verify...` and `/initRows...` into one call
-- [ ] either write files as guid.csv, or write to folder with guid as folder name
+- [x] write files with guid to avoid duplication of files
 
 # Misc
 - [x] switch from my-film-data.json to ratings.csv
@@ -211,6 +211,8 @@ my-film-data-vec.json to file
 - [x] get rid of underscore in parameters
 - [x] wrap `if np.array_equal` into a function with readable name
 - [ ] the `self` stuff makes code hard to read, maybe instead of loading in an object, we just straight up load the class, less clutter
+- [x] `allFilmData = self.cachedDatabase["AllFilmData"]` can we share one `allFilmData` instance across all the `ServiceIntance`'s?
+- [x] rename `profile` field in `VectorProfile` to `vector`, makes it much more descriptive
 
 # Frontend
 - [x] do text div 
@@ -283,6 +285,7 @@ my-film-data-vec.json to file
 - [x] disallow pushes to main
 - [x] config PR pipeline that runs on pre-merge PRs (local int tests)
 - [x] config main pipeline that runs on changes to main (prod int tests)
+- [ ] get rid of prod tests?
 
 # Database abstraction
 - [x] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
