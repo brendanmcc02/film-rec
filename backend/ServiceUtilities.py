@@ -1,3 +1,4 @@
+import csv
 from flask import jsonify
 import os
 import shutil
@@ -110,3 +111,54 @@ class ServiceUtilities:
 
     def isProfileIdGenreProfile(self, profileId, allGenres):
         return profileId in allGenres
+
+    def getUserFilmDataOriginalFromFile(self, requestFiles, guid, letterboxdConversionUtilities):
+        isImdbFile = True
+
+        self.deleteUserUploadedData()
+
+        if 'file' not in requestFiles:
+            return self.getFormattedResponse({}, self.NO_FILE_IN_REQUEST_ERROR_MESSAGE, guid, 400)
+
+        file = requestFiles['file']
+        userFilmDataFilename = (guid + "-" + file.filename)
+
+        if self.isUnacceptableMediaType(userFilmDataFilename):
+            return self.getFormattedResponse({}, self.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE, guid, 415)
+
+        try:
+            userFilmDataOriginal = []
+            userUploadedFileLocation = self.USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
+            file.save(userUploadedFileLocation)
+
+            if userUploadedFileLocation.endswith(".zip"):
+                if letterboxdConversionUtilities.isLetterboxdZipFileInvalid(self.USER_UPLOADED_DATA_DIRECTORY_NAME, userFilmDataFilename):
+                    return self.getFormattedResponse({}, self.INVALID_ZIP_FILE_ERROR_MESSAGE, guid, 400)
+                else:
+                    userFilmDataFilename = "ratings.csv"
+                    userUploadedFileLocation = self.USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
+
+            with open(userUploadedFileLocation, encoding='utf-8') as userFilmDataFile:
+                reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
+
+                for row in reader:
+                    if 'unexpectedData' in row:
+                        return self.getFormattedResponse({}, self.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE, guid, 400)
+
+                    keys = list(row.keys())
+                    for key in keys:
+                        if key not in self.EXPECTED_IMDB_FILM_ATTRIBUTES:
+                            isImdbFile = False
+                            if key not in letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
+                                return self.getFormattedResponse({}, self.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, guid, 400)
+
+                    userFilmDataOriginal.append(row)
+        except Exception as e:
+            return self.getFormattedResponse({}, f"Error occurred with reading {userFilmDataFilename}.\n{e}", guid, 400)
+        finally:
+            self.deleteUserUploadedData()
+
+        return self.getFormattedResponse({"userFilmDataOriginal": userFilmDataOriginal, "isImdbFile": isImdbFile}, "", guid, 200)
+    
+    def isUnacceptableMediaType(self, filename):
+        return not (filename.lower().endswith(".csv") or filename.lower().endswith(".zip"))

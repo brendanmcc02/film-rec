@@ -1,32 +1,30 @@
 from datetime import datetime
 from flask import request
-import numpy as np
 from VectorProfile import *
 
 class ServiceInstance:
 
     def __init__(self, cachedDatabase, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities,
-                 initDatabase, fileUtilities, guid):
+                 initDatabase, guid):
         self.cachedDatabase = cachedDatabase
         self.serviceUtilities = serviceUtilities
         self.vectorizeUtilities = vectorizeUtilities
         self.letterboxdConversionUtilities = letterboxdConversionUtilities
         self.initDatabase = initDatabase
-        self.fileUtilities = fileUtilities
         self.allFilmDataUnseen = {}
         self.vectorProfiles = self.vectorizeUtilities.initVectorProfiles(self.cachedDatabase["ProfileVectorLength"])
         self.rowsOfRecommendations = []
         self.guid = guid
 
     def getInitialRowsOfRecommendations(self):
-        fileWriteResponse = self.fileUtilities.getUserFilmDataOriginalFromFile(request.files, self.guid)
+        getUserFilmDataOriginalFromFileResponse = self.serviceUtilities.getUserFilmDataOriginalFromFile(request.files, self.guid, self.letterboxdConversionUtilities)
 
-        if fileWriteResponse[1] != 200:
-            return fileWriteResponse
+        if getUserFilmDataOriginalFromFileResponse[1] != 200:
+            return getUserFilmDataOriginalFromFileResponse
 
-        fileWriteResponseContent = fileWriteResponse[0].get_json()
-        userFilmDataOriginal = fileWriteResponseContent["body"]["userFilmDataOriginal"]
-        isImdbFile = fileWriteResponseContent["body"]["isImdbFile"]
+        getUserFilmDataOriginalFromFileResponseContent = getUserFilmDataOriginalFromFileResponse[0].get_json()
+        userFilmDataOriginal = getUserFilmDataOriginalFromFileResponseContent["body"]["userFilmDataOriginal"]
+        isImdbFile = getUserFilmDataOriginalFromFileResponseContent["body"]["isImdbFile"]
 
         if not isImdbFile:
             userFilmDataOriginal = (self.letterboxdConversionUtilities.convertLetterboxdFormatToImdbFormat(userFilmDataOriginal,
