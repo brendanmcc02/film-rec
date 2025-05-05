@@ -34,10 +34,8 @@ class LetterboxdConversionUtilities:
                         imdbFilmId = cachedFilm['imdbFilmId']
                         imdbUserFilmData.append({
                             "Const": imdbFilmId,
-                            # for consistency, use the imdb title instead of the letterboxd one
                             "Title": allFilmData[imdbFilmId]['title'],
                             "Title Type": "Movie",
-                            # for consistency, use the imdb year instead of the letterboxd one
                             "Year": allFilmData[imdbFilmId]['year'],
                             "Your Rating": int(float(letterboxdFilm['Rating']) * 2.0),
                             "Date Rated": letterboxdFilm['Date'],
@@ -51,8 +49,6 @@ class LetterboxdConversionUtilities:
 
         return imdbUserFilmData
 
-
-    # unzips file, removes everything except `ratings.csv` and then returns if the given zip file is valid or not
     def isLetterboxdZipFileInvalid(self, userUploadedDataDirectory, zipFileName):
         zipFilePath = os.path.join(userUploadedDataDirectory, zipFileName)
         with ZipFile(zipFilePath, 'r') as zipFile:
@@ -69,7 +65,7 @@ class LetterboxdConversionUtilities:
             if os.path.isdir(fileOrDirectoryPath):
                 shutil.rmtree(fileOrDirectoryPath)
             elif (os.path.basename(fileOrDirectoryPath) != "ratings.csv" and
-                os.path.basename(fileOrDirectoryPath) != ".gitignore"):
+                  os.path.basename(fileOrDirectoryPath) != ".gitignore"):
                 os.remove(fileOrDirectoryPath)
 
         return False
