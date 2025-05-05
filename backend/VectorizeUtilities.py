@@ -77,7 +77,7 @@ class VectorizeUtilities:
 
         return vector
 
-    def cosineSimilarity(self, a, b, aMagnitude, bMagnitude):
+    def getCosineSimilarity(self, a, b, aMagnitude, bMagnitude):
         if aMagnitude == 0.0 or bMagnitude == 0.0:
             return 0.0
 

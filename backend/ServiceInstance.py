@@ -111,7 +111,6 @@ class ServiceInstance:
         self.vectorProfiles["oldProfile"] = self.vectorizeUtilities.initOldProfile(userProfile.profile)
 
     def generateRecommendations(self):
-        
         self.rowsOfRecommendations = []
 
         if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["favouriteProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
@@ -153,7 +152,7 @@ class ServiceInstance:
 
         for filmId in self.allFilmDataUnseen:
             filmVectorMagnitude = self.cachedDatabase["AllFilmDataVectorizedMagnitudes"][filmId]
-            cosineSimilarities[filmId] = self.vectorizeUtilities.cosineSimilarity(self.cachedDatabase["AllFilmDataVectorized"][filmId], profileVector,
+            cosineSimilarities[filmId] = self.vectorizeUtilities.getCosineSimilarity(self.cachedDatabase["AllFilmDataVectorized"][filmId], profileVector,
                                                                                   filmVectorMagnitude, profileVectorMagnitude)
 
         cosineSimilarities = sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
