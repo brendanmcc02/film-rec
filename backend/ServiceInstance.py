@@ -27,14 +27,10 @@ class ServiceInstance:
         fileWriteResponseContent = fileWriteResponse[0].get_json()
         userFilmDataOriginal = fileWriteResponseContent["body"]["userFilmDataOriginal"]
         isImdbFile = fileWriteResponseContent["body"]["isImdbFile"]
-        
-        # store in a local variable because dictionaries in python are pass by reference
-        # TODO - revisit this??? can't it be shared across all instances because it doesn't get modified?
-        allFilmData = self.cachedDatabase["AllFilmData"]
 
         if not isImdbFile:
             userFilmDataOriginal = (self.letterboxdConversionUtilities.convertLetterboxdFormatToImdbFormat(userFilmDataOriginal,
-                                                                                                           allFilmData, self.cachedDatabase["CachedLetterboxdTitles"]))
+                                                                                                           self.cachedDatabase["AllFilmData"], self.cachedDatabase["CachedLetterboxdTitles"]))
 
         userFilmData = {}
         favouriteFilmIds = []
@@ -47,11 +43,11 @@ class ServiceInstance:
                 
                 try:
                     filmId = film['Const']
-                    if filmId in allFilmData:
+                    if filmId in self.cachedDatabase["AllFilmData"]:
                         dateRated = datetime.strptime(film['Date Rated'], "%Y-%m-%d")
                         minDateRated = min(minDateRated, dateRated)
 
-                        userFilmData[film['Const']] = self.serviceUtilities.getFormattedFilm(film, dateRated, genres, allFilmData[filmId]['countries'])
+                        userFilmData[film['Const']] = self.serviceUtilities.getFormattedFilm(film, dateRated, genres, self.cachedDatabase["AllFilmData"][filmId]['countries'])
 
                         if userFilmData[filmId]['userRating'] >= self.serviceUtilities.FAVOURITE_FILM_RATING_THRESHOLD:
                             favouriteFilmIds.append(filmId)
@@ -66,7 +62,7 @@ class ServiceInstance:
         if diffDateRated == 0.0:
             isDiffDateRatedZero = True
 
-        self.allFilmDataUnseen = self.serviceUtilities.getAllFilmDataUnseen(allFilmData, userFilmData)
+        self.allFilmDataUnseen = self.serviceUtilities.getAllFilmDataUnseen(self.cachedDatabase["AllFilmData"], userFilmData)
 
         self.initVectorProfiles(userFilmData, isDiffDateRatedZero, minDateRated, maxDateRated, diffDateRated, favouriteFilmIds)
 
