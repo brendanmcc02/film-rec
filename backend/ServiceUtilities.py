@@ -35,10 +35,6 @@ class ServiceUtilities:
             elif os.path.basename(fileOrDirectoryPath) != ".gitignore":
                 os.remove(fileOrDirectoryPath)
 
-    def isUnacceptableMediaType(self, filename):
-        return not (filename.lower().endswith(".csv") or filename.lower().endswith(".zip"))
-
-
     def getFormattedResponse(self, body, errorMessage, guid, statusCode):
         return jsonify({"body": body,
                         "errorMessage": errorMessage, 

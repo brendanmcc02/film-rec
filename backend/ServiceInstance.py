@@ -1,4 +1,3 @@
-import csv
 from datetime import datetime
 from flask import request
 import numpy as np
@@ -7,62 +6,27 @@ from VectorProfile import *
 class ServiceInstance:
 
     def __init__(self, cachedDatabase, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities,
-                 initDatabase, guid):
+                 initDatabase, fileUtilities, guid):
         self.cachedDatabase = cachedDatabase
         self.serviceUtilities = serviceUtilities
         self.vectorizeUtilities = vectorizeUtilities
         self.letterboxdConversionUtilities = letterboxdConversionUtilities
         self.initDatabase = initDatabase
+        self.fileUtilities = fileUtilities
         self.allFilmDataUnseen = {}
         self.vectorProfiles = self.vectorizeUtilities.initVectorProfiles(self.cachedDatabase["ProfileVectorLength"])
         self.rowsOfRecommendations = []
         self.guid = guid
 
     def getInitialRowsOfRecommendations(self):
-        isImdbFile = True
+        fileWriteResponse = self.fileUtilities.getUserFilmDataOriginalFromFile(request.files, self.guid)
 
-        self.serviceUtilities.deleteUserUploadedData()
+        if fileWriteResponse[1] != 200:
+            return fileWriteResponse
 
-        if 'file' not in request.files:
-            return self.serviceUtilities.getFormattedResponse({}, self.serviceUtilities.NO_FILE_IN_REQUEST_ERROR_MESSAGE, self.guid, 400)
-
-        file = request.files['file']
-        userFilmDataFilename = file.filename
-
-        if self.serviceUtilities.isUnacceptableMediaType(userFilmDataFilename):
-            return self.serviceUtilities.getFormattedResponse({}, self.serviceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE, self.guid, 415)
-
-        try:
-            userFilmDataOriginal = []
-            userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
-            file.save(userUploadedFileLocation)
-
-            if userUploadedFileLocation.endswith(".zip"):
-                if self.letterboxdConversionUtilities.isLetterboxdZipFileInvalid(self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME, userFilmDataFilename):
-                    return self.serviceUtilities.getFormattedResponse({}, self.serviceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE, self.guid, 400)
-                else:
-                    userFilmDataFilename = "ratings.csv"
-                    userUploadedFileLocation = self.serviceUtilities.USER_UPLOADED_DATA_DIRECTORY_NAME + userFilmDataFilename
-
-            with open(userUploadedFileLocation, encoding='utf-8') as userFilmDataFile:
-                reader = csv.DictReader(userFilmDataFile, delimiter=',', restkey='unexpectedData')
-
-                for row in reader:
-                    if 'unexpectedData' in row:
-                        return self.serviceUtilities.getFormattedResponse({}, self.serviceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE, self.guid, 400)
-
-                    keys = list(row.keys())
-                    for key in keys:
-                        if key not in self.serviceUtilities.EXPECTED_IMDB_FILM_ATTRIBUTES:
-                            isImdbFile = False
-                            if key not in self.letterboxdConversionUtilities.EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES:
-                                return self.serviceUtilities.getFormattedResponse({}, self.serviceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE, self.guid, 400)
-
-                    userFilmDataOriginal.append(row)
-        except Exception as e:
-            return self.serviceUtilities.getFormattedResponse({}, f"Error occurred with reading {userFilmDataFilename}.\n{e}", self.guid, 400)
-        finally:
-            self.serviceUtilities.deleteUserUploadedData()
+        fileWriteResponseContent = fileWriteResponse[0].get_json()
+        userFilmDataOriginal = fileWriteResponseContent["body"]["userFilmDataOriginal"]
+        isImdbFile = fileWriteResponseContent["body"]["isImdbFile"]
         
         # store in a local variable because dictionaries in python are pass by reference
         allFilmData = self.cachedDatabase["AllFilmData"]

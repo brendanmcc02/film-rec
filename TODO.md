@@ -112,7 +112,7 @@ countries, poster)
 - [x] `deleteCsvFiles` should be to delete user-upload folder
 - [x] upload zip file instead of ratings.csv (letterboxd)
 - [x] merge `/verify...` and `/initRows...` into one call
-- [ ] either write files as guid.csv, or write to folder with guid as folder name
+- [x] write files with guid to avoid duplication of files
 
 # Misc
 - [x] switch from my-film-data.json to ratings.csv

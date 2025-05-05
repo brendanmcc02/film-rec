@@ -1,5 +1,4 @@
 import os
-import random
 import sys
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 backendDirectory = os.path.dirname(absolutePathOfCurrentFile)

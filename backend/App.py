@@ -1,6 +1,7 @@
 from DocumentDatabase import *
 from flask import Flask
 from flask_cors import CORS
+from FileUtilities import *
 from InitDatabase import *
 from LetterboxdConversionUtilities import *
 from ServiceInstance import *
@@ -17,13 +18,14 @@ cachedDatabase = serviceUtilities.initCachedDatabase(database)
 vectorizeUtilities = VectorizeUtilities()
 letterboxdConversionUtilities = LetterboxdConversionUtilities()
 initDatabase = InitDatabase(database)
+fileUtilities = FileUtilities(serviceUtilities, letterboxdConversionUtilities)
 
 serviceInstances = {}
 
 @app.route('/getInitialRowsOfRecommendations', methods=['POST'])
 def getInitialRowsOfRecommendations():
     guid = str(uuid.uuid4())
-    serviceInstance = ServiceInstance(cachedDatabase, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase, guid)
+    serviceInstance = ServiceInstance(cachedDatabase, serviceUtilities, vectorizeUtilities, letterboxdConversionUtilities, initDatabase, fileUtilities, guid)
     serviceInstances[guid] = serviceInstance
 
     return serviceInstances[guid].getInitialRowsOfRecommendations()
