@@ -160,19 +160,19 @@ class VectorizeUtilities:
 
         for imdbFilmId in userFilmDataIds:
             if imdbFilmId in favouriteFilmIds:
-                favouriteProfile.profile += userFilmDataVectorized[imdbFilmId]
+                favouriteProfile.vector += userFilmDataVectorized[imdbFilmId]
                 sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
         if sumOfWeights > 0.0:
-            favouriteProfile.profile = np.divide(favouriteProfile.profile, sumOfWeights)
+            favouriteProfile.vector = np.divide(favouriteProfile.vector, sumOfWeights)
             # curve genres
-            self.curveAccordingToMax(favouriteProfile.profile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
+            self.curveAccordingToMax(favouriteProfile.vector, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
             # curve countries
-            self.curveAccordingToMax(favouriteProfile.profile, allCountries, self.COUNTRY_WEIGHT, 
+            self.curveAccordingToMax(favouriteProfile.vector, allCountries, self.COUNTRY_WEIGHT, 
                                      self.PROFILE_GENRE_START_INDEX + len(allGenres))
             return favouriteProfile
         else:
-            favouriteProfile.profile = np.zeros(profileVectorLength)
+            favouriteProfile.vector = np.zeros(profileVectorLength)
             return favouriteProfile
 
     def initGenreProfiles(self, userFilmDataIds, userFilmDataVectorized, cachedDateRatedAndUserRatingWeights, 
@@ -185,7 +185,7 @@ class VectorizeUtilities:
         for imdbFilmId in userFilmDataIds:
             filmGenres = self.getFilmGenres(userFilmDataVectorized[imdbFilmId], allGenres)
             for genre in filmGenres:
-                genreProfiles[genre].profile += userFilmDataVectorized[imdbFilmId]
+                genreProfiles[genre].vector += userFilmDataVectorized[imdbFilmId]
                 genreProfiles[genre].sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
                 genreProfiles[genre].quantityFilmsWatched += 1
 
@@ -193,10 +193,10 @@ class VectorizeUtilities:
             if genreProfiles[genre].quantityFilmsWatched == 0:
                 continue
             
-            genreProfiles[genre].profile = np.divide(genreProfiles[genre].profile, 
+            genreProfiles[genre].vector = np.divide(genreProfiles[genre].vector, 
                                                      genreProfiles[genre].sumOfWeights)
             # curve countries
-            self.curveAccordingToMax(genreProfiles[genre].profile, allCountries, self.COUNTRY_WEIGHT, 
+            self.curveAccordingToMax(genreProfiles[genre].vector, allCountries, self.COUNTRY_WEIGHT, 
                                 self.PROFILE_GENRE_START_INDEX + len(allGenres))
             genreProfiles[genre].weightedMeanRating = (genreProfiles[genre].sumOfWeights / 
                                                        genreProfiles[genre].quantityFilmsWatched)
@@ -235,22 +235,22 @@ class VectorizeUtilities:
         for imdbFilmId in userFilmData:
             timeDifference = maxDateRated - userFilmData[imdbFilmId]['dateRated']
             if timeDifference.days <= self.RECENCY_PROFILE_DAYS_THRESHOLD:
-                recentProfile.profile += userFilmDataVectorized[imdbFilmId]
+                recentProfile.vector += userFilmDataVectorized[imdbFilmId]
                 sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
             else:
                 # file is sorted by date, no need to look further
                 break
 
         if sumOfWeights > 0.0:
-            recentProfile.profile = np.divide(recentProfile.profile, sumOfWeights)
+            recentProfile.vector = np.divide(recentProfile.vector, sumOfWeights)
             # curve genres
-            self.curveAccordingToMax(recentProfile.profile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
+            self.curveAccordingToMax(recentProfile.vector, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
             # curve countries
-            self.curveAccordingToMax(recentProfile.profile, allCountries, self.COUNTRY_WEIGHT, 
+            self.curveAccordingToMax(recentProfile.vector, allCountries, self.COUNTRY_WEIGHT, 
                                 self.PROFILE_GENRE_START_INDEX + len(allGenres))
             return recentProfile
         else:
-            recentProfile.profile = np.zeros(profileVectorLength)
+            recentProfile.vector = np.zeros(profileVectorLength)
             return recentProfile
 
     def initUserProfile(self, userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
@@ -259,15 +259,15 @@ class VectorizeUtilities:
         sumOfWeights = 0.0
 
         for imdbFilmId in userFilmDataIds:
-            userProfile.profile += userFilmDataVectorized[imdbFilmId]
+            userProfile.vector += userFilmDataVectorized[imdbFilmId]
             sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
         if sumOfWeights > 0.0:
-            userProfile.profile = np.divide(userProfile.profile, sumOfWeights)
+            userProfile.vector = np.divide(userProfile.vector, sumOfWeights)
             # curve genres
-            self.curveAccordingToMax(userProfile.profile, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
+            self.curveAccordingToMax(userProfile.vector, allGenres, self.GENRE_WEIGHT, self.PROFILE_GENRE_START_INDEX)
             # curve countries
-            self.curveAccordingToMax(userProfile.profile, allCountries, self.COUNTRY_WEIGHT, 
+            self.curveAccordingToMax(userProfile.vector, allCountries, self.COUNTRY_WEIGHT, 
                                      self.PROFILE_GENRE_START_INDEX + len(allGenres))
             
         return userProfile
@@ -275,45 +275,45 @@ class VectorizeUtilities:
     def initOldProfile(self, userProfile):
         # note: userProfile already has curved genres and countries
         oldProfile = VectorProfile('old')
-        oldProfile.profile = np.copy(userProfile)
-        oldProfile.profile[self.PROFILE_YEAR_INDEX] = 0.0
+        oldProfile.vector = np.copy(userProfile)
+        oldProfile.vector[self.PROFILE_YEAR_INDEX] = 0.0
         
         return oldProfile
 
     def initInternationalProfile(self, userProfile, allCountries, allGenresLength, profileVectorLength):
         internationalProfile = VectorProfile('international')
-        internationalProfile.profile = np.copy(userProfile)
+        internationalProfile.vector = np.copy(userProfile)
 
         countryStartIndex = self.PROFILE_GENRE_START_INDEX + allGenresLength
         maxCountryIndex = countryStartIndex
-        maxCountryValue = internationalProfile.profile[countryStartIndex]
+        maxCountryValue = internationalProfile.vector[countryStartIndex]
 
         hasUserOnlyWatchedAmericanOrBritishFilms = True
 
         for index in range(countryStartIndex, (countryStartIndex + len(allCountries))):
-                if internationalProfile.profile[index] > maxCountryValue:
-                    maxCountryValue = internationalProfile.profile[index]
+                if internationalProfile.vector[index] > maxCountryValue:
+                    maxCountryValue = internationalProfile.vector[index]
                     maxCountryIndex = index
 
                 if self.isNonZeroIndexValueNotAmericanOrBritish(index, allCountries, countryStartIndex, 
-                                                                internationalProfile.profile[index]):
+                                                                internationalProfile.vector[index]):
                     hasUserOnlyWatchedAmericanOrBritishFilms = False
 
         if hasUserOnlyWatchedAmericanOrBritishFilms:
-            internationalProfile.profile = np.zeros(profileVectorLength)
+            internationalProfile.vector = np.zeros(profileVectorLength)
             return internationalProfile
 
         americanIndex = allCountries.index("American") + countryStartIndex
         britishIndex = allCountries.index("British") + countryStartIndex
         
         if maxCountryIndex == americanIndex or maxCountryIndex == britishIndex:
-            internationalProfile.profile[americanIndex] = 0.0
-            internationalProfile.profile[britishIndex] = 0.0
+            internationalProfile.vector[americanIndex] = 0.0
+            internationalProfile.vector[britishIndex] = 0.0
         else:        
-            internationalProfile.profile[maxCountryIndex] = 0.0
+            internationalProfile.vector[maxCountryIndex] = 0.0
 
         # curve countries
-        self.curveAccordingToMax(internationalProfile.profile, allCountries, self.COUNTRY_WEIGHT, 
+        self.curveAccordingToMax(internationalProfile.vector, allCountries, self.COUNTRY_WEIGHT, 
                                  countryStartIndex)
 
         return internationalProfile

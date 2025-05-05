@@ -105,23 +105,23 @@ class ServiceInstance:
         userProfile = self.vectorizeUtilities.initUserProfile(userFilmData, userFilmDataVectorized, self.cachedDatabase["ProfileVectorLength"],
                                                               cachedDateRatedAndUserRatingWeights, self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"])
 
-        self.vectorProfiles["internationalProfile"] = self.vectorizeUtilities.initInternationalProfile(userProfile.profile, self.cachedDatabase["AllCountries"], self.cachedDatabase["AllGenresLength"],
+        self.vectorProfiles["internationalProfile"] = self.vectorizeUtilities.initInternationalProfile(userProfile.vector, self.cachedDatabase["AllCountries"], self.cachedDatabase["AllGenresLength"],
                                                                                      self.cachedDatabase["ProfileVectorLength"])
 
-        self.vectorProfiles["oldProfile"] = self.vectorizeUtilities.initOldProfile(userProfile.profile)
+        self.vectorProfiles["oldProfile"] = self.vectorizeUtilities.initOldProfile(userProfile.vector)
 
     def generateRecommendations(self):
         self.rowsOfRecommendations = []
 
-        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["favouriteProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
+        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["favouriteProfile"].vector, self.cachedDatabase["ProfileVectorLength"]):
             print("No favourite profile.")
         else:
-            self.getFilmRecommendations("Based on your favourite films", self.vectorProfiles["favouriteProfile"].profile, self.vectorProfiles["favouriteProfile"].profileId)
+            self.getFilmRecommendations("Based on your favourite films", self.vectorProfiles["favouriteProfile"].vector, self.vectorProfiles["favouriteProfile"].profileId)
 
-        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["recentProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
+        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["recentProfile"].vector, self.cachedDatabase["ProfileVectorLength"]):
             print("No recent profile.")
         else:
-            self.getFilmRecommendations("Based on what you watched recently", self.vectorProfiles["recentProfile"].profile, self.vectorProfiles["recentProfile"].profileId)
+            self.getFilmRecommendations("Based on what you watched recently", self.vectorProfiles["recentProfile"].vector, self.vectorProfiles["recentProfile"].profileId)
 
         self.vectorProfiles["genreProfiles"] = sorted(self.vectorProfiles["genreProfiles"], key=lambda x: x.weightedMeanRating, reverse=True)
 
@@ -129,19 +129,19 @@ class ServiceInstance:
             if self.vectorProfiles["genreProfiles"][i].weightedMeanRating == 0.0:
                 print("No genre profile.")
             else:
-                countryText = self.vectorizeUtilities.getProfileMaxCountry(self.vectorProfiles["genreProfiles"][i].profile, self.cachedDatabase["AllGenresLength"], self.cachedDatabase["AllCountries"])
-                self.getFilmRecommendations(f"Because you like {countryText} {self.vectorProfiles["genreProfiles"][i].profileId} films", self.vectorProfiles["genreProfiles"][i].profile, 
+                countryText = self.vectorizeUtilities.getProfileMaxCountry(self.vectorProfiles["genreProfiles"][i].vector, self.cachedDatabase["AllGenresLength"], self.cachedDatabase["AllCountries"])
+                self.getFilmRecommendations(f"Because you like {countryText} {self.vectorProfiles["genreProfiles"][i].profileId} films", self.vectorProfiles["genreProfiles"][i].vector, 
                                             self.vectorProfiles["genreProfiles"][i].profileId)
             
-        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["internationalProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
+        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["internationalProfile"].vector, self.cachedDatabase["ProfileVectorLength"]):
             print("No international profile.")
         else:
-            self.getFilmRecommendations("Try out some international films", self.vectorProfiles["internationalProfile"].profile, self.vectorProfiles["internationalProfile"].profileId)
+            self.getFilmRecommendations("Try out some international films", self.vectorProfiles["internationalProfile"].vector, self.vectorProfiles["internationalProfile"].profileId)
 
-        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["oldProfile"].profile, self.cachedDatabase["ProfileVectorLength"]):
+        if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["oldProfile"].vector, self.cachedDatabase["ProfileVectorLength"]):
             print("No old profile.")
         else:
-            self.getFilmRecommendations("Try out some older films", self.vectorProfiles["oldProfile"].profile, self.vectorProfiles["oldProfile"].profileId)
+            self.getFilmRecommendations("Try out some older films", self.vectorProfiles["oldProfile"].vector, self.vectorProfiles["oldProfile"].profileId)
 
     def getFilmRecommendations(self, recommendedRowText, profileVector, profileId):
         self.rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, 
@@ -182,7 +182,7 @@ class ServiceInstance:
 
         self.adjustProfileVector(profile, filmId, isThumbsUp)
 
-        self.vectorizeUtilities.keepVectorBoundary(profile.profile)
+        self.vectorizeUtilities.keepVectorBoundary(profile.vector)
 
         return self.serviceUtilities.getFormattedResponse(f"Gave Thumbs {"Up" if isThumbsUp else "Down"} for film {filmId}.", "", self.guid, 200)
 
@@ -214,16 +214,16 @@ class ServiceInstance:
 
     def adjustProfileVector(self, profile, filmId, isThumbsUp):
         filmVector = self.cachedDatabase["AllFilmDataVectorized"][filmId]
-        adjustmentVector = (filmVector - profile.profile) * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
+        adjustmentVector = (filmVector - profile.vector) * self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
 
         for i in range(len(adjustmentVector)):
             if adjustmentVector[i] == 0.0:
                 adjustmentVector[i] = self.serviceUtilities.RECOMMENDATION_REVIEW_FACTOR
 
         if isThumbsUp:
-            profile.profile += adjustmentVector
+            profile.vector += adjustmentVector
         else:
-            profile.profile -= adjustmentVector
+            profile.vector -= adjustmentVector
 
     def regenerateRecommendations(self):
         self.removePreviouslyRecommendedFilms()
