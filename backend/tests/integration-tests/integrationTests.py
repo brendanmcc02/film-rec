@@ -424,30 +424,44 @@ def test_regenerateRecommendations_successfulResponse_shouldHaveEmptyErrorMessag
 
     testUtilities.verifyErrorMessage(regenerateRecommendationsResponse, "")
 
-def test_reviewRecommendation_thumbsUp(backendUrl):
+def test_reviewRecommendation_initialRowsOfRecommendations_thumbsUp(backendUrl):
+    filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
+
+    getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
+
+    testUtilities.verifyReviewsOfAllRecommendations(getInitialRowsOfRecommendationsResponse, True, backendUrl)
+
+def test_reviewRecommendation_initialRowsOfRecommendations_thumbsDown(backendUrl):
+    filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
+
+    getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
+    assert getInitialRowsOfRecommendationsResponse.status_code == 200
+
+    testUtilities.verifyReviewsOfAllRecommendations(getInitialRowsOfRecommendationsResponse, False, backendUrl)
+
+def test_reviewRecommendation_regenerateRecommendations_thumbsUp(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
 
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
     guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
-    filmId = testUtilities.getRandomFilmIdFromResponse(getInitialRowsOfRecommendationsResponse)
-    isThumbsUp = True
 
-    reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + str(isThumbsUp))
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
+    assert regenerateRecommendationsResponse.status_code == 200
 
-    testUtilities.verifyReviewRecommendationResponse(reviewRecommendationResponse, filmId, isThumbsUp)
+    testUtilities.verifyReviewsOfAllRecommendations(regenerateRecommendationsResponse, True, backendUrl)
 
-def test_reviewRecommendation_thumbsDown(backendUrl):
+def test_reviewRecommendation_regenerateRecommendations_thumbsDown(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-no-recent-films.csv")
 
     getInitialRowsOfRecommendationsResponse = requests.post(backendUrl + "/getInitialRowsOfRecommendations", files=filesToSend)
     assert getInitialRowsOfRecommendationsResponse.status_code == 200
 
     guid = testUtilities.getGuidFromResponse(getInitialRowsOfRecommendationsResponse)
-    filmId = testUtilities.getRandomFilmIdFromResponse(getInitialRowsOfRecommendationsResponse)
-    isThumbsUp = False
 
-    reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + str(isThumbsUp))
+    regenerateRecommendationsResponse = requests.get(backendUrl + "/regenerateRecommendations?guid=" + guid)
+    assert regenerateRecommendationsResponse.status_code == 200
 
-    testUtilities.verifyReviewRecommendationResponse(reviewRecommendationResponse, filmId, isThumbsUp)
+    testUtilities.verifyReviewsOfAllRecommendations(regenerateRecommendationsResponse, False, backendUrl)
