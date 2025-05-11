@@ -210,7 +210,7 @@ my-film-data-vec.json to file
 - [x] look for comments **everywhere** and see if you can remove it with a descriptive function
 - [x] get rid of underscore in parameters
 - [x] wrap `if np.array_equal` into a function with readable name
-- [ ] the `self` stuff makes code hard to read, maybe instead of loading in an object, we just straight up load the class, less clutter
+- [ ] the `self` stuff makes code hard to read, maybe instead of loading in an object, we just straight up load the class, less clutter; don't need to inject util classes
 - [x] `allFilmData = self.cachedDatabase["AllFilmData"]` can we share one `allFilmData` instance across all the `ServiceIntance`'s?
 - [x] rename `profile` field in `VectorProfile` to `vector`, makes it much more descriptive
 - [ ] get rid of void functions! readability!

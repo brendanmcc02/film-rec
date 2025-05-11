@@ -108,6 +108,7 @@ class ServiceInstance:
 
         self.vectorProfiles["oldProfile"] = self.vectorizeUtilities.initOldProfile(userProfile.vector)
 
+    # rename to something like "getRowsOfRecommendations"
     def generateRecommendations(self):
         self.rowsOfRecommendations = []
 
@@ -141,6 +142,9 @@ class ServiceInstance:
         else:
             self.getFilmRecommendations("Try out some older films", self.vectorProfiles["oldProfile"].vector, self.vectorProfiles["oldProfile"].profileId)
 
+    # rename to something like "generateRowOfRecommendations"
+    # it should just return a new row, don't bother with appending 
+    # or have any knowledge of rowsOfRecommendations
     def getFilmRecommendations(self, recommendedRowText, profileVector, profileId):
         self.rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, 
                                            "recommendedFilms": [], 
