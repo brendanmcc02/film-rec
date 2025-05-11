@@ -22,8 +22,8 @@ class ServiceUtilities:
     FAVOURITE_FILM_RATING_THRESHOLD = 9
 
     def isFilmRecommendationUnique(self, filmId, rowsOfRecommendations):
-        for rowOfRecommendations in rowsOfRecommendations:
-            for recommendedFilm in rowOfRecommendations['recommendedFilms']:
+        for row in rowsOfRecommendations:
+            for recommendedFilm in row['recommendedFilms']:
                 if recommendedFilm['imdbId'] == filmId:
                     return False
                 

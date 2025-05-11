@@ -224,14 +224,18 @@ class ServiceInstance:
             profile.vector -= adjustmentVector
 
     def regenerateRecommendations(self):
-        self.removePreviouslyRecommendedFilms()
+        self.allFilmDataUnseen = self.removePreviouslyRecommendedFilms(self.allFilmDataUnseen)
 
         self.generateRecommendations()
 
         return self.serviceUtilities.getFormattedResponse(self.rowsOfRecommendations, "", self.guid, 200)
 
-    def removePreviouslyRecommendedFilms(self):
-        for row in self.rowsOfRecommendations:
-            for film in row['recommendedFilms']:
-                filmId = film['imdbId']
-                del self.allFilmDataUnseen[filmId]
+    def removePreviouslyRecommendedFilms(self, allFilmDataUnseen):
+        allFilmDataUnseenRemoved = {}
+
+        for filmId in allFilmDataUnseen:
+            if self.serviceUtilities.isFilmRecommendationUnique(filmId, self.rowsOfRecommendations):
+                allFilmDataUnseenRemoved[filmId] = allFilmDataUnseen[filmId]
+
+        return allFilmDataUnseenRemoved
+        
