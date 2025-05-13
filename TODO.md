@@ -286,7 +286,6 @@ my-film-data-vec.json to file
 - [x] disallow pushes to main
 - [x] config PR pipeline that runs on pre-merge PRs (local int tests)
 - [x] config main pipeline that runs on changes to main (prod int tests)
-- [ ] get rid of prod tests?
 
 # Database abstraction
 - [x] get rid of `/loadJsonFiles` endpoint, db should be loaded on startup through DI or something
