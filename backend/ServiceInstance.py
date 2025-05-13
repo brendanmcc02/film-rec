@@ -117,12 +117,17 @@ class ServiceInstance:
         if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["favouriteProfile"].vector, self.cachedDatabase["ProfileVectorLength"]):
             print("No favourite profile.")
         else:
-            self.getFilmRecommendations("Based on your favourite films", self.vectorProfiles["favouriteProfile"].vector, self.vectorProfiles["favouriteProfile"].profileId)
+            self.rowsOfRecommendations.append(self.getRowOfRecommendations("Based on your favourite films", 
+                                                                           self.vectorProfiles["favouriteProfile"].vector, 
+                                                                           self.vectorProfiles["favouriteProfile"].profileId))
+            
 
         if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["recentProfile"].vector, self.cachedDatabase["ProfileVectorLength"]):
             print("No recent profile.")
         else:
-            self.getFilmRecommendations("Based on what you watched recently", self.vectorProfiles["recentProfile"].vector, self.vectorProfiles["recentProfile"].profileId)
+            self.rowsOfRecommendations.append(self.getRowOfRecommendations("Based on what you watched recently", 
+                                                                           self.vectorProfiles["recentProfile"].vector, 
+                                                                           self.vectorProfiles["recentProfile"].profileId))
 
         self.vectorProfiles["genreProfiles"] = sorted(self.vectorProfiles["genreProfiles"], key=lambda x: x.weightedMeanRating, reverse=True)
 
@@ -130,30 +135,34 @@ class ServiceInstance:
             if self.vectorProfiles["genreProfiles"][i].weightedMeanRating == 0.0:
                 print("No genre profile.")
             else:
-                countryText = self.vectorizeUtilities.getProfileMaxCountry(self.vectorProfiles["genreProfiles"][i].vector, self.cachedDatabase["AllGenresLength"], self.cachedDatabase["AllCountries"])
-                self.getFilmRecommendations(f"Because you like {countryText} {self.vectorProfiles["genreProfiles"][i].profileId} films", self.vectorProfiles["genreProfiles"][i].vector, 
-                                            self.vectorProfiles["genreProfiles"][i].profileId)
+                countryText = self.vectorizeUtilities.getProfileMaxCountry(self.vectorProfiles["genreProfiles"][i].vector, 
+                                                                           self.cachedDatabase["AllGenresLength"], 
+                                                                           self.cachedDatabase["AllCountries"])
+                genreText = self.vectorProfiles["genreProfiles"][i].profileId
+                self.rowsOfRecommendations.append(self.getRowOfRecommendations(f"Because you like {countryText} {genreText} films", 
+                                                                               self.vectorProfiles["genreProfiles"][i].vector, 
+                                                                               self.vectorProfiles["genreProfiles"][i].profileId))
             
         if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["internationalProfile"].vector, self.cachedDatabase["ProfileVectorLength"]):
             print("No international profile.")
         else:
-            self.getFilmRecommendations("Try out some international films", self.vectorProfiles["internationalProfile"].vector, self.vectorProfiles["internationalProfile"].profileId)
+            self.rowsOfRecommendations.append(self.getRowOfRecommendations("Try out some international films", 
+                                                                           self.vectorProfiles["internationalProfile"].vector, 
+                                                                           self.vectorProfiles["internationalProfile"].profileId))
+            
 
         if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["oldProfile"].vector, self.cachedDatabase["ProfileVectorLength"]):
             print("No old profile.")
         else:
-            self.getFilmRecommendations("Try out some older films", self.vectorProfiles["oldProfile"].vector, self.vectorProfiles["oldProfile"].profileId)
+            self.rowsOfRecommendations.append(self.getRowOfRecommendations("Try out some older films", 
+                                                                           self.vectorProfiles["oldProfile"].vector, 
+                                                                           self.vectorProfiles["oldProfile"].profileId))
 
         return self.rowsOfRecommendations
 
-    # rename to something like "generateRowOfRecommendations"
-    # it should just return a new row, don't bother with appending 
-    # or have any knowledge of rowsOfRecommendations
-    def getFilmRecommendations(self, recommendedRowText, profileVector, profileId):
-        self.rowsOfRecommendations.append({"recommendedRowText": recommendedRowText, 
-                                           "recommendedFilms": [], 
-                                           "profileId": profileId})
-        
+    def getRowOfRecommendations(self, recommendedRowText, profileVector, profileId):
+        rowOfRecommendations = {"recommendedRowText": recommendedRowText, "recommendedFilms": [], "profileId": profileId}
+
         cosineSimilarities = self.vectorizeUtilities.getSortedCosineSimilaritiesOfAllFilms(self.allFilmDataUnseen, 
                                                                                            profileVector, 
                                                                                            self.cachedDatabase["AllFilmDataVectorized"], 
@@ -170,11 +179,13 @@ class ServiceInstance:
                 film['imdbId'] = filmId
                 film['similarityScore'] = int(similarityScore * 100.0)
 
-                self.rowsOfRecommendations[-1]['recommendedFilms'].append(film)
+                rowOfRecommendations['recommendedFilms'].append(film)
             else:
                 maxNumberOfRecommendations += 1
 
             i += 1
+        
+        return rowOfRecommendations
 
     def reviewRecommendation(self):
         filmId = request.args.get('filmId')
