@@ -17,6 +17,8 @@ class ServiceInstance:
         self.guid = guid
 
     def getInitialRowsOfRecommendations(self):
+        ### can we encapsulate all of this into a single function?
+        # something like 'setupRowsOfRecommendations'?
         getUserFilmDataOriginalFromFileResponse = self.serviceUtilities.getUserFilmDataOriginalFromFile(request.files, self.guid, self.letterboxdConversionUtilities)
 
         if getUserFilmDataOriginalFromFileResponse[1] != 200:
@@ -63,8 +65,9 @@ class ServiceInstance:
         self.allFilmDataUnseen = self.serviceUtilities.getAllFilmDataUnseen(self.cachedDatabase["AllFilmData"], userFilmData)
 
         self.initVectorProfiles(userFilmData, isDiffDateRatedZero, minDateRated, maxDateRated, diffDateRated, favouriteFilmIds)
+        ###
 
-        self.generateRecommendations()
+        self.rowsOfRecommendations = self.getRowsOfRecommendations()
 
         return self.serviceUtilities.getFormattedResponse(self.rowsOfRecommendations, "", self.guid, 200)
 
@@ -108,8 +111,7 @@ class ServiceInstance:
 
         self.vectorProfiles["oldProfile"] = self.vectorizeUtilities.initOldProfile(userProfile.vector)
 
-    # rename to something like "getRowsOfRecommendations"
-    def generateRecommendations(self):
+    def getRowsOfRecommendations(self):
         self.rowsOfRecommendations = []
 
         if self.vectorizeUtilities.isZeroVector(self.vectorProfiles["favouriteProfile"].vector, self.cachedDatabase["ProfileVectorLength"]):
@@ -141,6 +143,8 @@ class ServiceInstance:
             print("No old profile.")
         else:
             self.getFilmRecommendations("Try out some older films", self.vectorProfiles["oldProfile"].vector, self.vectorProfiles["oldProfile"].profileId)
+
+        return self.rowsOfRecommendations
 
     # rename to something like "generateRowOfRecommendations"
     # it should just return a new row, don't bother with appending 
@@ -230,7 +234,7 @@ class ServiceInstance:
     def regenerateRecommendations(self):
         self.allFilmDataUnseen = self.removePreviouslyRecommendedFilms(self.allFilmDataUnseen)
 
-        self.generateRecommendations()
+        self.rowsOfRecommendations = self.getRowsOfRecommendations()
 
         return self.serviceUtilities.getFormattedResponse(self.rowsOfRecommendations, "", self.guid, 200)
 
