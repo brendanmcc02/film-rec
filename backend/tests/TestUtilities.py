@@ -1,11 +1,11 @@
 import os
+import requests
 import sys
 absolutePathOfCurrentFile = os.path.dirname(os.path.abspath(__file__))
 backendDirectory = os.path.dirname(absolutePathOfCurrentFile)
 sys.path.append(backendDirectory)
 from DocumentDatabase import *
 from ServiceUtilities import *
-from InitDatabase import *
 
 class TestUtilities:
 
@@ -39,11 +39,11 @@ class TestUtilities:
 
         assert 'numberOfVotes' in film
         assert film['numberOfVotes'] != None
-        assert film['numberOfVotes'] >= InitDatabase.NUMBER_OF_VOTES_THRESHOLD
+        assert film['numberOfVotes'] >= NUMBER_OF_VOTES_THRESHOLD
 
         assert 'runtime' in film
         assert film['runtime'] != None
-        assert film['runtime'] >= InitDatabase.RUNTIME_THRESHOLD
+        assert film['runtime'] >= RUNTIME_THRESHOLD
 
         assert 'runtimeHoursMinutes' in film
         assert film['runtime'] != ""
@@ -55,7 +55,7 @@ class TestUtilities:
             assert genre in allGenres
 
         assert 'imdbUrl' in film
-        assert film['imdbUrl'] == InitDatabase.BASE_IMDB_URL + filmId
+        assert film['imdbUrl'] == BASE_IMDB_URL + filmId
 
         assert 'countries' in film
 
@@ -87,7 +87,7 @@ class TestUtilities:
             assert row['profileId'] != ""
 
             assert 'recommendedFilms' in row
-            assert len(row['recommendedFilms']) == ServiceUtilities.MAX_NUMBER_OF_RECOMMENDATIONS_PER_ROW
+            assert len(row['recommendedFilms']) == MAX_NUMBER_OF_RECOMMENDATIONS_PER_ROW
 
             for film in row['recommendedFilms']:
                 assert 'imdbId' in film
