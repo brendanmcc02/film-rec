@@ -49,7 +49,7 @@ const App = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch('http://localhost:60000/getInitialRowsOfRecommendations', {
+      const response = await fetch('https://film-rec-backend.onrender.com/getInitialRowsOfRecommendations', {
         method: 'POST',
         body: formData
       });
@@ -117,7 +117,7 @@ const App = () => {
 
   async function reviewRecommendation(imdbFilmId, isThumbsUp) {
       try {
-          const fetchUrl = ("http://localhost:60000/reviewRecommendation" +
+          const fetchUrl = ("https://film-rec-backend.onrender.com/reviewRecommendation" +
                             "?imdbFilmId=" + imdbFilmId.toString() + "&isThumbsUp=" + isThumbsUp + "&guid=" + guidRef.current.toString());
           const response = await fetch(fetchUrl);
           const responseContent = await response.json();
@@ -133,7 +133,7 @@ const App = () => {
   }
   
   async function handleRegenerateRecommendationsButton() {
-      const fetchUrl = ("http://localhost:60000/regenerateRecommendations" + "?guid=" + guidRef.current.toString());
+      const fetchUrl = ("https://film-rec-backend.onrender.com/regenerateRecommendations" + "?guid=" + guidRef.current.toString());
       const response = await fetch(fetchUrl);
 
       const responseContent = await response.json();

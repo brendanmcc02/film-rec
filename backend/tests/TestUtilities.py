@@ -10,7 +10,7 @@ from ServiceUtilities import *
 class TestUtilities:
 
     LOCAL_DEPLOYMENT_URL = "http://localhost:60000"
-    PROD_DEPLOYMENT_URL = "http://localhost:60000"
+    PROD_DEPLOYMENT_URL = "https://film-rec-backend.onrender.com"
     TEST_UPLOAD_FILES_DIRECTORY = "test-upload-files/"
 
     def __init__(self, database):
