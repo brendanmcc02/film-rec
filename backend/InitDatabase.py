@@ -49,15 +49,15 @@ def main(database):
             reader = csv.DictReader(title_ratings_file, delimiter='\t')
             for row in reader:
                 rowDict = dict(row)
-                filmId = rowDict['tconst']
-                title_ratings[filmId] = rowDict
+                imdbFilmId = rowDict['tconst']
+                title_ratings[imdbFilmId] = rowDict
 
         for film in stage_1_allFilmData:
-            filmId = film['imdbId']
+            imdbFilmId = film['imdbId']
             try:
-                if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUMBER_OF_VOTES_THRESHOLD:
-                    film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
-                    film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
+                if imdbFilmId in title_ratings and int(title_ratings[imdbFilmId]['numVotes']) >= NUMBER_OF_VOTES_THRESHOLD:
+                    film['imdbRating'] = float(title_ratings[imdbFilmId]['averageRating'])
+                    film['numberOfVotes'] = int(title_ratings[imdbFilmId]['numVotes'])
                     stage_2_allFilmData.append(film)
             except ValueError:
                 pass
@@ -88,8 +88,8 @@ def main(database):
         allFilmData = database.read("AllFilmData")
         allFilmDataFilmIds = list(allFilmData.keys())
         allGenres = []
-        for filmId in allFilmDataFilmIds:
-            for genre in allFilmData[filmId]['genres']:
+        for imdbFilmId in allFilmDataFilmIds:
+            for genre in allFilmData[imdbFilmId]['genres']:
                 if genre not in allGenres:
                     allGenres.append(genre)
 
@@ -272,18 +272,18 @@ def main(database):
     profileVectorLength = 0
     allCountries = sorted(allCountries)
 
-    for filmId in allFilmDataFilmIds:
-        if filmId not in allFilmData:
-            print(f"Film ID not found in allFilmData: {filmId}.")
+    for imdbFilmId in allFilmDataFilmIds:
+        if imdbFilmId not in allFilmData:
+            print(f"Film ID not found in allFilmData: {imdbFilmId}.")
         else:
-            allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allCountries,
+            allFilmDataVectorized[imdbFilmId] = list(vectorizeFilm(allFilmData[imdbFilmId], allGenres, allCountries,
                                                             normalizedYears, normalizedImdbRatings, 
                                                             minNumberOfVotes, diffNumberOfVotes, 
                                                             normalizedRuntimes))
             if profileVectorLength == 0:
-                profileVectorLength = len(allFilmDataVectorized[filmId])
+                profileVectorLength = len(allFilmDataVectorized[imdbFilmId])
 
-            allFilmDataVectorizedMagnitudes[filmId] = round(np.linalg.norm(allFilmDataVectorized[filmId]), 
+            allFilmDataVectorizedMagnitudes[imdbFilmId] = round(np.linalg.norm(allFilmDataVectorized[imdbFilmId]), 
                                                             VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
     database.write("AllFilmDataVectorized", allFilmDataVectorized, [[",\n        ", ", "]])

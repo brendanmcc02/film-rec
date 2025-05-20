@@ -17,7 +17,7 @@ class TestUtilities:
         self.database = database
 
 
-    def verifyFilm(self, film, filmId, allGenres, allCountries):
+    def verifyFilm(self, film, imdbFilmId, allGenres, allCountries):
         assert 'title' in film
         assert film['title'] != ""
 
@@ -55,7 +55,7 @@ class TestUtilities:
             assert genre in allGenres
 
         assert 'imdbUrl' in film
-        assert film['imdbUrl'] == BASE_IMDB_URL + filmId
+        assert film['imdbUrl'] == BASE_IMDB_URL + imdbFilmId
 
         assert 'countries' in film
 
@@ -154,15 +154,15 @@ class TestUtilities:
 
         for row in rowsOfRecommendations:
             for recommendedFilm in row['recommendedFilms']:
-                filmId = recommendedFilm['imdbId']
-                reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + str(isThumbsUp))
-                self.verifyReviewRecommendationResponse(reviewRecommendationResponse, filmId, isThumbsUp)
+                imdbFilmId = recommendedFilm['imdbId']
+                reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&imdbFilmId=" + imdbFilmId + "&isThumbsUp=" + str(isThumbsUp))
+                self.verifyReviewRecommendationResponse(reviewRecommendationResponse, imdbFilmId, isThumbsUp)
 
-    def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, filmId, isThumbsUp):
+    def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, imdbFilmId, isThumbsUp):
         responseContent = reviewRecommendationsResponse.json()
         responseBody = responseContent["body"]
 
-        assert filmId in responseBody
+        assert imdbFilmId in responseBody
         
         if isThumbsUp:
             assert "Up" in responseBody

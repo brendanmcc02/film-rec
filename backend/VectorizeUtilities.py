@@ -371,9 +371,9 @@ def getSortedCosineSimilaritiesOfAllFilms(allFilmDataUnseen, profileVector, allF
     cosineSimilarities = {}
     profileVectorMagnitude = np.linalg.norm(profileVector)
     
-    for filmId in allFilmDataUnseen:
-        filmVectorMagnitude = allFilmDataVectorizedMagnitudes[filmId]
-        cosineSimilarities[filmId] = getCosineSimilarity(allFilmDataVectorized[filmId], profileVector,
+    for imdbFilmId in allFilmDataUnseen:
+        filmVectorMagnitude = allFilmDataVectorizedMagnitudes[imdbFilmId]
+        cosineSimilarities[imdbFilmId] = getCosineSimilarity(allFilmDataVectorized[imdbFilmId], profileVector,
                                                                 filmVectorMagnitude, profileVectorMagnitude)
 
     return sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)

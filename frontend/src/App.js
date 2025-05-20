@@ -110,25 +110,25 @@ const App = () => {
       );
     }
 
-  async function handleThumbsUpOrDownButton(filmId, isThumbsUp) {
-      await reviewRecommendation(filmId, isThumbsUp);
-      setFilmButtonInvisible(filmId);
+  async function handleThumbsUpOrDownButton(imdbFilmId, isThumbsUp) {
+      await reviewRecommendation(imdbFilmId, isThumbsUp);
+      setFilmButtonInvisible(imdbFilmId);
   }
 
-  async function reviewRecommendation(filmId, isThumbsUp) {
+  async function reviewRecommendation(imdbFilmId, isThumbsUp) {
       try {
           const fetchUrl = ("https://film-rec-backend.onrender.com/reviewRecommendation" +
-                            "?filmId=" + filmId.toString() + "&isThumbsUp=" + isThumbsUp + "&guid=" + guidRef.current.toString());
+                            "?imdbFilmId=" + imdbFilmId.toString() + "&isThumbsUp=" + isThumbsUp + "&guid=" + guidRef.current.toString());
           const response = await fetch(fetchUrl);
           const responseContent = await response.json();
 
           if (response.ok) {
             console.log(responseContent.body);
           } else {
-            console.log('error with /reviewRecommendation. filmID: ' + filmId);
+            console.log('error with /reviewRecommendation. filmID: ' + imdbFilmId);
           }
       } catch (error) {
-          console.log('error with /reviewRecommendation. filmID: ' + filmId);
+          console.log('error with /reviewRecommendation. filmID: ' + imdbFilmId);
       }
   }
   

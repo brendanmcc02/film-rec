@@ -39,17 +39,17 @@ class ServiceInstance:
                 genres = getFilmGenresCorrectFormat(film['Genres'], isImdbFile)
                 
                 try:
-                    filmId = film['Const']
-                    if filmId in self.cachedDatabase["AllFilmData"]:
+                    imdbFilmId = film['Const']
+                    if imdbFilmId in self.cachedDatabase["AllFilmData"]:
                         dateRated = datetime.strptime(film['Date Rated'], "%Y-%m-%d")
                         minDateRated = min(minDateRated, dateRated)
 
-                        userFilmData[film['Const']] = getFormattedFilm(film, dateRated, genres, self.cachedDatabase["AllFilmData"][filmId]['countries'])
+                        userFilmData[film['Const']] = getFormattedFilm(film, dateRated, genres, self.cachedDatabase["AllFilmData"][imdbFilmId]['countries'])
 
-                        if userFilmData[filmId]['userRating'] >= FAVOURITE_FILM_RATING_THRESHOLD:
-                            favouriteFilmIds.append(filmId)
+                        if userFilmData[imdbFilmId]['userRating'] >= FAVOURITE_FILM_RATING_THRESHOLD:
+                            favouriteFilmIds.append(imdbFilmId)
                     else:
-                        print(f"Film in userFilmData not found in allFilmData, {filmId}\n")
+                        print(f"Film in userFilmData not found in allFilmData, {imdbFilmId}\n")
                 except ValueError:
                     deleteUserUploadedData()
                     return getFormattedResponse({}, f"value error with film: {film['Const']}", self.guid, 400)
@@ -167,12 +167,12 @@ class ServiceInstance:
         maxNumberOfRecommendations = MAX_NUMBER_OF_RECOMMENDATIONS_PER_ROW
         i = 0
         while i < maxNumberOfRecommendations:
-            filmId = cosineSimilarities[i][0]
+            imdbFilmId = cosineSimilarities[i][0]
             
-            if isFilmRecommendationUnique(filmId, self.rowsOfRecommendations):
-                film = self.allFilmDataUnseen[filmId]
+            if isFilmRecommendationUnique(imdbFilmId, self.rowsOfRecommendations):
+                film = self.allFilmDataUnseen[imdbFilmId]
                 similarityScore = cosineSimilarities[i][1]
-                film['imdbId'] = filmId
+                film['imdbId'] = imdbFilmId
                 film['similarityScore'] = int(similarityScore * 100.0)
 
                 rowOfRecommendations['recommendedFilms'].append(film)
@@ -184,20 +184,20 @@ class ServiceInstance:
         return rowOfRecommendations
 
     def reviewRecommendation(self):
-        filmId = request.args.get('filmId')
+        imdbFilmId = request.args.get('imdbFilmId')
         isThumbsUp = request.args.get('isThumbsUp').lower() == 'true'
 
-        profileId = getProfileIdAssociatedWithFilmId(self.rowsOfRecommendations, filmId)
+        profileId = getProfileIdAssociatedWithFilmId(self.rowsOfRecommendations, imdbFilmId)
         profile = self.getProfileFromProfileId(profileId)
 
         if isProfileIdGenreProfile(profileId, self.cachedDatabase["AllGenres"]):
             self.adjustGenreProfileWeightedMeanRating(profile, isThumbsUp)
 
-        self.adjustProfileVector(profile, filmId, isThumbsUp)
+        self.adjustProfileVector(profile, imdbFilmId, isThumbsUp)
 
         keepVectorBoundary(profile.vector)
 
-        return getFormattedResponse(f"Gave Thumbs {"Up" if isThumbsUp else "Down"} for film {filmId}.", "", self.guid, 200)
+        return getFormattedResponse(f"Gave Thumbs {"Up" if isThumbsUp else "Down"} for film {imdbFilmId}.", "", self.guid, 200)
 
     def getProfileFromProfileId(self, profileId):
         if profileId == "favourite":
@@ -225,8 +225,8 @@ class ServiceInstance:
         else:
             genreProfile.weightedMeanRating -= adjustment
 
-    def adjustProfileVector(self, profile, filmId, isThumbsUp):
-        filmVector = self.cachedDatabase["AllFilmDataVectorized"][filmId]
+    def adjustProfileVector(self, profile, imdbFilmId, isThumbsUp):
+        filmVector = self.cachedDatabase["AllFilmDataVectorized"][imdbFilmId]
         adjustmentVector = (filmVector - profile.vector) * RECOMMENDATION_REVIEW_FACTOR
 
         for i in range(len(adjustmentVector)):
@@ -248,9 +248,9 @@ class ServiceInstance:
     def removePreviouslyRecommendedFilms(self, allFilmDataUnseen):
         allFilmDataUnseenRemoved = {}
 
-        for filmId in allFilmDataUnseen:
-            if isFilmRecommendationUnique(filmId, self.rowsOfRecommendations):
-                allFilmDataUnseenRemoved[filmId] = allFilmDataUnseen[filmId]
+        for imdbFilmId in allFilmDataUnseen:
+            if isFilmRecommendationUnique(imdbFilmId, self.rowsOfRecommendations):
+                allFilmDataUnseenRemoved[imdbFilmId] = allFilmDataUnseen[imdbFilmId]
 
         return allFilmDataUnseenRemoved
         
