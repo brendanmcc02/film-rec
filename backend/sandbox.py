@@ -1,1 +1,0 @@
-from testclass import test
