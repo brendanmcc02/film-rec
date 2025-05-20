@@ -14,7 +14,7 @@
 - [x] verify data is correct
 - [x] init all-film-data.py
 - [x] add title attribute to dataset
-- [x] change data structure from list of dicts => dict of dicts (key: filmID, value: dict(film))
+- [x] change data structure from list of dicts => dict of dicts (key: imdbFilmId, value: dict(film))
 - [x] augment letterboxdTitle, countries, languages and poster using TMDB API
 - [x] finish running `init-all-film-data.py`
 - [x] bug with `tt4330758`, make more bulletproof + better error handling

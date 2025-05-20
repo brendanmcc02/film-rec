@@ -17,7 +17,7 @@ class TestUtilities:
         self.database = database
 
 
-    def verifyFilm(self, film, filmId, allGenres, allCountries):
+    def verifyFilm(self, film, imdbFilmId, allGenres, allCountries):
         assert 'title' in film
         assert film['title'] != ""
 
@@ -55,7 +55,7 @@ class TestUtilities:
             assert genre in allGenres
 
         assert 'imdbUrl' in film
-        assert film['imdbUrl'] == BASE_IMDB_URL + filmId
+        assert film['imdbUrl'] == BASE_IMDB_URL + imdbFilmId
 
         assert 'countries' in film
 
@@ -90,9 +90,9 @@ class TestUtilities:
             assert len(row['recommendedFilms']) == MAX_NUMBER_OF_RECOMMENDATIONS_PER_ROW
 
             for film in row['recommendedFilms']:
-                assert 'imdbId' in film
-                assert film['imdbId'] != ""
-                self.verifyFilm(film, film['imdbId'], allGenres, allCountries)
+                assert 'imdbFilmId' in film
+                assert film['imdbFilmId'] != ""
+                self.verifyFilm(film, film['imdbFilmId'], allGenres, allCountries)
                 assert 'similarityScore' in film
                 assert film['similarityScore'] != None
                 assert film['similarityScore'] >= 0.0
@@ -120,14 +120,14 @@ class TestUtilities:
 
         for rowOfFilms in initialRecommendations:
             for recommendedFilm in rowOfFilms['recommendedFilms']:
-                initialRecommendationFilmIds.append(recommendedFilm['imdbId'])
+                initialRecommendationFilmIds.append(recommendedFilm['imdbFilmId'])
 
         regenerateRecommendationsResponseContent = regenerateRecommendationsResponse.json()
         regeneratedRecommendations = regenerateRecommendationsResponseContent["body"]
 
         for rowOfFilms in regeneratedRecommendations:
             for recommendedFilm in rowOfFilms['recommendedFilms']:
-                assert recommendedFilm['imdbId'] not in initialRecommendationFilmIds
+                assert recommendedFilm['imdbFilmId'] not in initialRecommendationFilmIds
 
     def verifyExpectedNumberOfRows(self, rowsOfRecommendations, expectedNumberOfRows, profileIds):
         actualNumberOfRows = 0
@@ -146,17 +146,6 @@ class TestUtilities:
         responseContent = response.json()
         assert attribute in responseContent
 
-    def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, filmId, isThumbsUp):
-        responseContent = reviewRecommendationsResponse.json()
-        responseBody = responseContent["body"]
-
-        assert filmId in responseBody
-        
-        if isThumbsUp:
-            assert "Up" in responseBody
-        else:
-            assert "Down" in responseBody
-
     def verifyReviewsOfAllRecommendations(self, response, isThumbsUp, backendUrl):
         responseContent = response.json()
         rowsOfRecommendations = responseContent["body"]
@@ -165,6 +154,17 @@ class TestUtilities:
 
         for row in rowsOfRecommendations:
             for recommendedFilm in row['recommendedFilms']:
-                filmId = recommendedFilm['imdbId']
-                reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + str(isThumbsUp))
-                self.verifyReviewRecommendationResponse(reviewRecommendationResponse, filmId, isThumbsUp)
+                imdbFilmId = recommendedFilm['imdbFilmId']
+                reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&imdbFilmId=" + imdbFilmId + "&isThumbsUp=" + str(isThumbsUp))
+                self.verifyReviewRecommendationResponse(reviewRecommendationResponse, imdbFilmId, isThumbsUp)
+
+    def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, imdbFilmId, isThumbsUp):
+        responseContent = reviewRecommendationsResponse.json()
+        responseBody = responseContent["body"]
+
+        assert imdbFilmId in responseBody
+        
+        if isThumbsUp:
+            assert "Up" in responseBody
+        else:
+            assert "Down" in responseBody
