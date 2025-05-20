@@ -33,7 +33,7 @@ def main(database):
             try:
                 if (film["titleType"] == 'movie' and film['genres'] != r"\N"
                         and int(film['runtimeMinutes']) >= RUNTIME_THRESHOLD):
-                    newFilm = {'imdbId': film['tconst'], 'title': film['primaryTitle'], 'year': int(film['startYear']),
+                    newFilm = {'imdbFilmId': film['tconst'], 'title': film['primaryTitle'], 'year': int(film['startYear']),
                             'runtime': int(film['runtimeMinutes']), 'genres': film['genres'].split(',')}
 
                     stage_1_allFilmData.append(newFilm)
@@ -53,7 +53,7 @@ def main(database):
                 title_ratings[imdbFilmId] = rowDict
 
         for film in stage_1_allFilmData:
-            imdbFilmId = film['imdbId']
+            imdbFilmId = film['imdbFilmId']
             try:
                 if imdbFilmId in title_ratings and int(title_ratings[imdbFilmId]['numVotes']) >= NUMBER_OF_VOTES_THRESHOLD:
                     film['imdbRating'] = float(title_ratings[imdbFilmId]['averageRating'])
@@ -68,7 +68,7 @@ def main(database):
         allGenres = []
 
         for film in stage_2_allFilmData:
-            allFilmData[film['imdbId']] = {
+            allFilmData[film['imdbFilmId']] = {
                 'title': film['title'],
                 'letterboxdTitle': "",
                 'year': film['year'],
@@ -78,7 +78,7 @@ def main(database):
                 'runtime': film['runtime'],
                 'runtimeHoursMinutes': convertRuntimeToHoursMinutes(film['runtime']),
                 'genres': film['genres'],
-                'imdbUrl': BASE_IMDB_URL + film['imdbId']
+                'imdbUrl': BASE_IMDB_URL + film['imdbFilmId']
             }
 
             for genre in film['genres']:
@@ -158,8 +158,8 @@ def main(database):
             if response.status_code == 200:
                 jsonResponse = response.json()
                 if ('movie_results' in jsonResponse and len(jsonResponse['movie_results']) > 0
-                        and 'imdbId' in jsonResponse['movie_results'][0]):
-                    tmdbFilmId = str(jsonResponse['movie_results'][0]['imdbId'])
+                        and 'imdbFilmId' in jsonResponse['movie_results'][0]):
+                    tmdbFilmId = str(jsonResponse['movie_results'][0]['imdbFilmId'])
                 else:
                     print(f"IMDB film not found in TMDB: {imdbFilmId}")
                     del allFilmData[imdbFilmId]

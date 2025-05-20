@@ -172,7 +172,7 @@ class ServiceInstance:
             if isFilmRecommendationUnique(imdbFilmId, self.rowsOfRecommendations):
                 film = self.allFilmDataUnseen[imdbFilmId]
                 similarityScore = cosineSimilarities[i][1]
-                film['imdbId'] = imdbFilmId
+                film['imdbFilmId'] = imdbFilmId
                 film['similarityScore'] = int(similarityScore * 100.0)
 
                 rowOfRecommendations['recommendedFilms'].append(film)

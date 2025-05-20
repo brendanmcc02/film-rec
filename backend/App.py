@@ -6,7 +6,7 @@ from ServiceUtilities import initCachedDatabase
 import uuid
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["https://film-rec.onrender.com", "http://localhost:3000"]}})
+CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://localhost:3000"]}})
 
 database = DocumentDatabase("../")
 cachedDatabase = initCachedDatabase(database)

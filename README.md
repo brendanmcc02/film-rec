@@ -1,4 +1,4 @@
-# ***[FILM-REC](https://film-rec.onrender.com/)***
+# ***[FILM-REC](http://localhost:3000/)***
 
 A film recommendation web app. Films are recommended based on user-submitted IMDB or Letterboxd data. I built the recommendation algorithm from scratch - no external ML libraries were used. This took me over one year, and I was working on it as a side project, both for fun and learning.
 
@@ -187,7 +187,7 @@ We know have a dataset of films stored in a `.json` file. Below, you'll find an 
 
 ## Backend
 
-The backend was powered by Python Flask, allowing API endpoints to be exposed to the frontend. The service is deployed [here](https://film-rec-backend.onrender.com)
+The backend was powered by Python Flask, allowing API endpoints to be exposed to the frontend. The service is deployed [here](http://localhost:60000)
 
 In recommender systems, there is an immense amount of computation involved in generating recommendations. As a result, the computation can be divided into two phases:
 
@@ -206,15 +206,15 @@ When pull requests are merged to main, integration tests are then fired against 
 
 ## Frontend
 
-The frontend was designed using React JS. It is being hosted [here](https://film-rec.onrender.com). I wanted a sleek and minimalist design Below is the home page:
+The frontend was designed using React JS. It is being hosted [here](http://localhost:3000). I wanted a sleek and minimalist design Below is the home page:
 
 ![home-page](images/home-page.png "Home Page")
 
 # Local Usage
 
 * Clone the repository.
-* Replace **all** instances of `https://film-rec-backend.onrender.com` with `http://localhost:60000`
-* Replace **all** instances of `https://film-rec.onrender.com` with `http://localhost:3000`
+* Replace **all** instances of `http://localhost:60000` with `http://localhost:60000`
+* Replace **all** instances of `http://localhost:3000` with `http://localhost:3000`
 * If you want to run the shell script to fetch and produce the datasets, you will need a TMDb API key. Store this as an environment variable called `ACCESS_TOKEN` in `backend/.env`.
 * Open 2 instances of the terminal. We will download dependencies and run both the frontend and the backend.
 * In one terminal, run the following commands for the backend.

@@ -49,7 +49,7 @@ const App = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch('https://film-rec-backend.onrender.com/getInitialRowsOfRecommendations', {
+      const response = await fetch('http://localhost:60000/getInitialRowsOfRecommendations', {
         method: 'POST',
         body: formData
       });
@@ -110,14 +110,15 @@ const App = () => {
       );
     }
 
-  async function handleThumbsUpOrDownButton(imdbFilmId, isThumbsUp) {
+  async function handleThumbsUpOrDownButton(imdbFilmId, isThumbsUp, film) {
+      console.log(film);
       await reviewRecommendation(imdbFilmId, isThumbsUp);
       setFilmButtonInvisible(imdbFilmId);
   }
 
   async function reviewRecommendation(imdbFilmId, isThumbsUp) {
       try {
-          const fetchUrl = ("https://film-rec-backend.onrender.com/reviewRecommendation" +
+          const fetchUrl = ("http://localhost:60000/reviewRecommendation" +
                             "?imdbFilmId=" + imdbFilmId.toString() + "&isThumbsUp=" + isThumbsUp + "&guid=" + guidRef.current.toString());
           const response = await fetch(fetchUrl);
           const responseContent = await response.json();
@@ -133,7 +134,7 @@ const App = () => {
   }
   
   async function handleRegenerateRecommendationsButton() {
-      const fetchUrl = ("https://film-rec-backend.onrender.com/regenerateRecommendations" + "?guid=" + guidRef.current.toString());
+      const fetchUrl = ("http://localhost:60000/regenerateRecommendations" + "?guid=" + guidRef.current.toString());
       const response = await fetch(fetchUrl);
 
       const responseContent = await response.json();
@@ -171,10 +172,10 @@ const App = () => {
                   <div className='buttons-and-similarity-score-container'>
                       {isFilmButtonVisible(film.imdbFilmId) && 
                           <div className="buttons-container">
-                              <button className="up-down-button up-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbFilmId, true)}>
+                              <button className="up-down-button up-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbFilmId, true, film)}>
                                   <FaRegThumbsUp />
                               </button>
-                              <button className="up-down-button down-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbFilmId, false)}>
+                              <button className="up-down-button down-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbFilmId, false, film)}>
                                   <FaRegThumbsDown />
                               </button>
                           </div>

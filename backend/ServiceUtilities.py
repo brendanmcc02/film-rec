@@ -26,7 +26,7 @@ BASE_IMDB_URL = 'https://www.imdb.com/title/'
 def isFilmRecommendationUnique(imdbFilmId, rowsOfRecommendations):
     for row in rowsOfRecommendations:
         for recommendedFilm in row['recommendedFilms']:
-            if recommendedFilm['imdbId'] == imdbFilmId:
+            if recommendedFilm['imdbFilmId'] == imdbFilmId:
                 return False
             
     return True
@@ -108,7 +108,7 @@ def getNormalizedDateRatedWeight(dateRated, minDateRated, diffDateRated):
 def getProfileIdAssociatedWithFilmId(rowsOfRecommendations, imdbFilmId):
     for row in rowsOfRecommendations:
         for film in row['recommendedFilms']:
-            if film['imdbId'] == imdbFilmId:
+            if film['imdbFilmId'] == imdbFilmId:
                 return row["profileId"]
 
 def isProfileIdGenreProfile(profileId, allGenres):
