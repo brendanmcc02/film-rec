@@ -15,8 +15,6 @@ class ServiceInstance:
         self.guid = guid
 
     def getInitialRowsOfRecommendations(self):
-        ### can we encapsulate all of this into a single function?
-        # something like 'setupRowsOfRecommendations'?
         getUserFilmDataOriginalFromFileResponse = getUserFilmDataOriginalFromFile(request.files, self.guid)
 
         if getUserFilmDataOriginalFromFileResponse[1] != 200:
@@ -64,7 +62,6 @@ class ServiceInstance:
         self.allFilmDataUnseen = getAllFilmDataUnseen(self.cachedDatabase["AllFilmData"], userFilmData)
 
         self.initVectorProfiles(userFilmData, isDiffDateRatedZero, minDateRated, maxDateRated, diffDateRated, favouriteFilmIds)
-        ###
 
         self.rowsOfRecommendations = self.getRowsOfRecommendations()
 

@@ -210,10 +210,9 @@ my-film-data-vec.json to file
 - [x] look for comments **everywhere** and see if you can remove it with a descriptive function
 - [x] get rid of underscore in parameters
 - [x] wrap `if np.array_equal` into a function with readable name
-- [ ] the `self` stuff makes code hard to read, turn all `*Utilities` classes into vanilla python files, no classes.
+- [x] the `self` stuff makes code hard to read, turn all `*Utilities` classes into vanilla python files, no classes.
 - [x] `allFilmData = self.cachedDatabase["AllFilmData"]` can we share one `allFilmData` instance across all the `ServiceIntance`'s?
 - [x] rename `profile` field in `VectorProfile` to `vector`, makes it much more descriptive
-- [ ] get rid of void functions! readability!
 
 # Frontend
 - [x] do text div 
@@ -308,9 +307,6 @@ my-film-data-vec.json to file
 - [x] record demo
 - [x] linkedin projects section
 - [x] update on resume
-
-# Mongo DB
-- [ ] implement 
 
 # Bugs
 - [x] reviewRec doesn't work
