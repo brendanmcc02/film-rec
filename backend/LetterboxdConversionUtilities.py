@@ -2,70 +2,67 @@ import os
 import shutil
 from zipfile import ZipFile
 
-class LetterboxdConversionUtilities:
+EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES = ["Date", "Name", "Year", "Letterboxd URI", "Rating"]
+EXPECTED_LETTERBOXD_EXTRACTED_FILES_OR_DIRECTORIES = ["deleted", "likes", "lists", "orphaned", "comments.csv", "diary.csv", "profile.csv", "ratings.csv", "reviews.csv", "watched.csv", "watchlist.csv", ".gitignore"]
 
-    EXPECTED_LETTERBOXD_FILE_FILM_ATTRIBUTES = ["Date", "Name", "Year", "Letterboxd URI", "Rating"]
-    EXPECTED_LETTERBOXD_EXTRACTED_FILES_OR_DIRECTORIES = ["deleted", "likes", "lists", "orphaned", "comments.csv", "diary.csv", "profile.csv", "ratings.csv", "reviews.csv", "watched.csv", "watchlist.csv", ".gitignore"]
+def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cachedLetterboxdTitles):
+    imdbUserFilmData = []
 
+    # work with latest entries first
+    letterboxdUserFilmData = reversed(letterboxdUserFilmData)
 
-    def convertLetterboxdFormatToImdbFormat(self, letterboxdUserFilmData, allFilmData, cachedLetterboxdTitles):
-        imdbUserFilmData = []
+    for letterboxdFilm in letterboxdUserFilmData:
+        if "Name" in letterboxdFilm:
+            letterboxdTitle = letterboxdFilm["Name"]
+            letterboxdTitle = letterboxdTitle.replace("– ", "- ").replace("–", "-").replace("Colours", "Colors")
+        else:
+            print("Error. 'Name' attribute not in letterboxd film")
+            raise KeyError
+        
+        if "Year" in letterboxdFilm:
+            letterboxdYear = int(letterboxdFilm["Year"])
+        else:
+            print("Error. 'Year' attribute not in letterboxd film")
+            raise KeyError
 
-        # work with latest entries first
-        letterboxdUserFilmData = reversed(letterboxdUserFilmData)
+        if letterboxdTitle in cachedLetterboxdTitles:
+            for cachedFilm in cachedLetterboxdTitles[letterboxdTitle]:
+                if letterboxdYear in cachedFilm['years']:
+                    imdbFilmId = cachedFilm['imdbFilmId']
+                    imdbUserFilmData.append({
+                        "Const": imdbFilmId,
+                        "Title": allFilmData[imdbFilmId]['title'],
+                        "Title Type": "Movie",
+                        "Year": allFilmData[imdbFilmId]['year'],
+                        "Your Rating": int(float(letterboxdFilm['Rating']) * 2.0),
+                        "Date Rated": letterboxdFilm['Date'],
+                        "IMDb Rating": allFilmData[imdbFilmId]['imdbRating'],
+                        "Num Votes": allFilmData[imdbFilmId]['numberOfVotes'],
+                        "Runtime (mins)": allFilmData[imdbFilmId]['runtime'],
+                        "Genres": allFilmData[imdbFilmId]['genres']
+                    })
+        # else:
+        #     print(f"Letterboxd Film not found in cachedLetterboxdTitles.json:\n{letterboxdTitle}")
 
-        for letterboxdFilm in letterboxdUserFilmData:
-            if "Name" in letterboxdFilm:
-                letterboxdTitle = letterboxdFilm["Name"]
-                letterboxdTitle = letterboxdTitle.replace("– ", "- ").replace("–", "-").replace("Colours", "Colors")
-            else:
-                print("Error. 'Name' attribute not in letterboxd film")
-                raise KeyError
-            
-            if "Year" in letterboxdFilm:
-                letterboxdYear = int(letterboxdFilm["Year"])
-            else:
-                print("Error. 'Year' attribute not in letterboxd film")
-                raise KeyError
+    return imdbUserFilmData
 
-            if letterboxdTitle in cachedLetterboxdTitles:
-                for cachedFilm in cachedLetterboxdTitles[letterboxdTitle]:
-                    if letterboxdYear in cachedFilm['years']:
-                        imdbFilmId = cachedFilm['imdbFilmId']
-                        imdbUserFilmData.append({
-                            "Const": imdbFilmId,
-                            "Title": allFilmData[imdbFilmId]['title'],
-                            "Title Type": "Movie",
-                            "Year": allFilmData[imdbFilmId]['year'],
-                            "Your Rating": int(float(letterboxdFilm['Rating']) * 2.0),
-                            "Date Rated": letterboxdFilm['Date'],
-                            "IMDb Rating": allFilmData[imdbFilmId]['imdbRating'],
-                            "Num Votes": allFilmData[imdbFilmId]['numberOfVotes'],
-                            "Runtime (mins)": allFilmData[imdbFilmId]['runtime'],
-                            "Genres": allFilmData[imdbFilmId]['genres']
-                        })
-            # else:
-            #     print(f"Letterboxd Film not found in cachedLetterboxdTitles.json:\n{letterboxdTitle}")
+def isLetterboxdZipFileInvalid(userUploadedDataDirectory, zipFileName):
+    zipFilePath = os.path.join(userUploadedDataDirectory, zipFileName)
+    with ZipFile(zipFilePath, 'r') as zipFile:
+        zipFile.extractall(userUploadedDataDirectory)
 
-        return imdbUserFilmData
+    os.remove(zipFilePath)
 
-    def isLetterboxdZipFileInvalid(self, userUploadedDataDirectory, zipFileName):
-        zipFilePath = os.path.join(userUploadedDataDirectory, zipFileName)
-        with ZipFile(zipFilePath, 'r') as zipFile:
-            zipFile.extractall(userUploadedDataDirectory)
+    for fileOrDirectory in os.listdir(userUploadedDataDirectory):
+        if fileOrDirectory not in EXPECTED_LETTERBOXD_EXTRACTED_FILES_OR_DIRECTORIES:
+            return True
+        
+        fileOrDirectoryPath = os.path.join(userUploadedDataDirectory, fileOrDirectory)
 
-        os.remove(zipFilePath)
+        if os.path.isdir(fileOrDirectoryPath):
+            shutil.rmtree(fileOrDirectoryPath)
+        elif (os.path.basename(fileOrDirectoryPath) != "ratings.csv" and
+                os.path.basename(fileOrDirectoryPath) != ".gitignore"):
+            os.remove(fileOrDirectoryPath)
 
-        for fileOrDirectory in os.listdir(userUploadedDataDirectory):
-            if fileOrDirectory not in self.EXPECTED_LETTERBOXD_EXTRACTED_FILES_OR_DIRECTORIES:
-                return True
-            
-            fileOrDirectoryPath = os.path.join(userUploadedDataDirectory, fileOrDirectory)
-
-            if os.path.isdir(fileOrDirectoryPath):
-                shutil.rmtree(fileOrDirectoryPath)
-            elif (os.path.basename(fileOrDirectoryPath) != "ratings.csv" and
-                  os.path.basename(fileOrDirectoryPath) != ".gitignore"):
-                os.remove(fileOrDirectoryPath)
-
-        return False
+    return False

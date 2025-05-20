@@ -6,8 +6,8 @@ testRootDirectory = os.path.dirname(absolutePathOfCurrentFile)
 backendRootDirectory = os.path.dirname(testRootDirectory)
 sys.path.append(testRootDirectory)
 sys.path.append(backendRootDirectory)
+from DatabaseUtilities import *
 from DocumentDatabase import *
-from InitDatabase import *
 from TestUtilities import *
 from VectorizeUtilities import *
 
@@ -134,22 +134,22 @@ def test_allFilmDataVectorized():
     for filmId in allFilmDataVectorized:
         assert len(allFilmDataVectorized[filmId]) == profileVectorLength
 
-        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_YEAR_INDEX] <= VectorizeUtilities.YEAR_WEIGHT
-        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_YEAR_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_NUMBER_OF_VOTES_INDEX] <= VectorizeUtilities.NUMBER_OF_VOTES_WEIGHT
-        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_NUMBER_OF_VOTES_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_IMDB_RATING_INDEX] <= VectorizeUtilities.IMDB_RATING_WEIGHT
-        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_IMDB_RATING_INDEX] >= 0.0
-        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_RUNTIME_INDEX] <= VectorizeUtilities.RUNTIME_WEIGHT
-        assert allFilmDataVectorized[filmId][VectorizeUtilities.PROFILE_RUNTIME_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][PROFILE_YEAR_INDEX] <= YEAR_WEIGHT
+        assert allFilmDataVectorized[filmId][PROFILE_YEAR_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][PROFILE_NUMBER_OF_VOTES_INDEX] <= NUMBER_OF_VOTES_WEIGHT
+        assert allFilmDataVectorized[filmId][PROFILE_NUMBER_OF_VOTES_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][PROFILE_IMDB_RATING_INDEX] <= IMDB_RATING_WEIGHT
+        assert allFilmDataVectorized[filmId][PROFILE_IMDB_RATING_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][PROFILE_RUNTIME_INDEX] <= RUNTIME_WEIGHT
+        assert allFilmDataVectorized[filmId][PROFILE_RUNTIME_INDEX] >= 0.0
         
-        profileCountryStartIndex = VectorizeUtilities.PROFILE_GENRE_START_INDEX + len(allGenres)
-        for i in range(VectorizeUtilities.PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
-            assert allFilmDataVectorized[filmId][i] <= VectorizeUtilities.GENRE_WEIGHT
+        profileCountryStartIndex = PROFILE_GENRE_START_INDEX + len(allGenres)
+        for i in range(PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
+            assert allFilmDataVectorized[filmId][i] <= GENRE_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
         for i in range(profileCountryStartIndex, profileVectorLength):
-            assert allFilmDataVectorized[filmId][i] <= VectorizeUtilities.COUNTRY_WEIGHT
+            assert allFilmDataVectorized[filmId][i] <= COUNTRY_WEIGHT
             assert allFilmDataVectorized[filmId][i] >= 0.0
 
 def test_allFilmDataVectorizedMagnitudes():
@@ -165,7 +165,7 @@ def test_allFilmDataVectorizedMagnitudes():
         expectedMagnitude = np.linalg.norm(allFilmDataVectorized[filmId])
         expectedMagnitudeFloat = expectedMagnitude.item()
         assert allFilmDataVectorizedMagnitudes[filmId] == round(expectedMagnitudeFloat,
-                                                                InitDatabase.VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
+                                                                VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
 def test_allGenres():
     database = DocumentDatabase(REPOSITORY_ROOT)
@@ -191,7 +191,7 @@ def test_normalizedYears():
 
     for normalizedYear in normalizedYears:
         assert normalizedYears[normalizedYear] >= 0.0  
-        assert normalizedYears[normalizedYear] <= VectorizeUtilities.YEAR_WEIGHT
+        assert normalizedYears[normalizedYear] <= YEAR_WEIGHT
 
 def test_normalizedImdbRatings():
     database = DocumentDatabase(REPOSITORY_ROOT)
@@ -199,23 +199,23 @@ def test_normalizedImdbRatings():
 
     for normalizedImdbRating in normalizedImdbRatings:
         assert normalizedImdbRatings[normalizedImdbRating] >= 0.0 
-        assert normalizedImdbRatings[normalizedImdbRating] <= VectorizeUtilities.IMDB_RATING_WEIGHT
+        assert normalizedImdbRatings[normalizedImdbRating] <= IMDB_RATING_WEIGHT
 
 def test_normalizedRuntimes():
     database = DocumentDatabase(REPOSITORY_ROOT)
     normalizedRuntimes = database.read("NormalizedRuntimes")
 
     for normalizedRuntime in normalizedRuntimes:
-        assert int(normalizedRuntime) >= InitDatabase.RUNTIME_THRESHOLD
+        assert int(normalizedRuntime) >= RUNTIME_THRESHOLD
         assert normalizedRuntimes[normalizedRuntime] >= 0.0 
-        assert normalizedRuntimes[normalizedRuntime] <= VectorizeUtilities.RUNTIME_WEIGHT
+        assert normalizedRuntimes[normalizedRuntime] <= RUNTIME_WEIGHT
 
 def test_minNumberOfVotes():
     database = DocumentDatabase(REPOSITORY_ROOT)
     minNumberOfVotes = database.read("MinNumberOfVotes")
 
     assert minNumberOfVotes != None
-    assert minNumberOfVotes >= InitDatabase.NUMBER_OF_VOTES_THRESHOLD
+    assert minNumberOfVotes >= NUMBER_OF_VOTES_THRESHOLD
 
 def test_diffNumberOfVotes():
     database = DocumentDatabase(REPOSITORY_ROOT)
@@ -232,13 +232,11 @@ def test_profileVectorLength():
     assert profileVectorLength > 0
 
 def test_convertRuntimeToHoursMinutes():
-    database = DocumentDatabase(REPOSITORY_ROOT)
-    initDatabase = InitDatabase(database)
-    assert initDatabase.convertRuntimeToHoursMinutes(60) == "1h"
-    assert initDatabase.convertRuntimeToHoursMinutes(120) == "2h"
+    assert convertRuntimeToHoursMinutes(60) == "1h"
+    assert convertRuntimeToHoursMinutes(120) == "2h"
     
-    assert initDatabase.convertRuntimeToHoursMinutes(40) == "40m"
-    assert initDatabase.convertRuntimeToHoursMinutes(100) == "1h40m"
+    assert convertRuntimeToHoursMinutes(40) == "40m"
+    assert convertRuntimeToHoursMinutes(100) == "1h40m"
 
 def test_allFilmData_correspondsWith_cachedTmdbFilmData():
     database = DocumentDatabase(REPOSITORY_ROOT)

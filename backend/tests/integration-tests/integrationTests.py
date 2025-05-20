@@ -83,7 +83,7 @@ def test_getInitialRowsOfRecommendations_noFile(backendUrl):
 
     assert response.status_code == 400
     
-    testUtilities.verifyErrorMessage(response, ServiceUtilities.NO_FILE_IN_REQUEST_ERROR_MESSAGE)
+    testUtilities.verifyErrorMessage(response, NO_FILE_IN_REQUEST_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_unacceptedFileType(backendUrl):
     filesToSend = testUtilities.getFilesToSend("test.txt")
@@ -91,7 +91,7 @@ def test_getInitialRowsOfRecommendations_unacceptedFileType(backendUrl):
 
     assert response.status_code == 415
 
-    testUtilities.verifyErrorMessage(response, ServiceUtilities.UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE)
+    testUtilities.verifyErrorMessage(response, UNSUPPORTED_MEDIA_TYPE_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_imdbIncorrectHeader(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-incorrect-header.csv")
@@ -99,7 +99,7 @@ def test_getInitialRowsOfRecommendations_imdbIncorrectHeader(backendUrl):
 
     assert response.status_code == 400
 
-    testUtilities.verifyErrorMessage(response, ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE)
+    testUtilities.verifyErrorMessage(response, FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_imdbMissingHeader(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-missing-header.csv")
@@ -107,7 +107,7 @@ def test_getInitialRowsOfRecommendations_imdbMissingHeader(backendUrl):
 
     assert response.status_code == 400
 
-    testUtilities.verifyErrorMessage(response, ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE)
+    testUtilities.verifyErrorMessage(response, FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_letterboxdIncorrectHeaderCsv(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-incorrect-header.csv")
@@ -115,7 +115,7 @@ def test_getInitialRowsOfRecommendations_letterboxdIncorrectHeaderCsv(backendUrl
 
     assert response.status_code == 400
 
-    testUtilities.verifyErrorMessage(response, ServiceUtilities.FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE)
+    testUtilities.verifyErrorMessage(response, FILE_ROW_HEADERS_UNEXPECTED_FORMAT_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_letterboxdMissingHeaderCsv(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-missing-header.csv")
@@ -123,7 +123,7 @@ def test_getInitialRowsOfRecommendations_letterboxdMissingHeaderCsv(backendUrl):
 
     assert response.status_code == 400
 
-    testUtilities.verifyErrorMessage(response, ServiceUtilities.FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE)
+    testUtilities.verifyErrorMessage(response, FILE_MORE_DATA_THAN_ROW_HEADERS_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_letterboxdIncorrectZip(backendUrl):
     filesToSend = testUtilities.getFilesToSend("letterboxd-incorrect.zip")
@@ -132,7 +132,7 @@ def test_getInitialRowsOfRecommendations_letterboxdIncorrectZip(backendUrl):
 
     assert response.status_code == 400
 
-    testUtilities.verifyErrorMessage(response, ServiceUtilities.INVALID_ZIP_FILE_ERROR_MESSAGE)
+    testUtilities.verifyErrorMessage(response, INVALID_ZIP_FILE_ERROR_MESSAGE)
 
 def test_getInitialRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
     filesToSend = testUtilities.getFilesToSend("imdb-no-recent-films.csv")
@@ -142,7 +142,7 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentFilms(backendUrl):
 
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
-    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfGenreRows = NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
     
@@ -157,7 +157,7 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentFilms(backendUrl):
 
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
-    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfGenreRows = NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
     
@@ -172,7 +172,7 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndFavouriteFilms(backendUr
 
     expectedNumberOfFavouriteRows = 0
     expectedNumberOfRecentRows = 0
-    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfGenreRows = NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
     
@@ -187,7 +187,7 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndFavouriteFilms(bac
 
     expectedNumberOfFavouriteRows = 0
     expectedNumberOfRecentRows = 0
-    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfGenreRows = NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
     
@@ -202,7 +202,7 @@ def test_getInitialRowsOfRecommendations_imdbNoRecentAndInternationalFilms(backe
 
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
-    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfGenreRows = NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 0
     expectedNumberOfOldRows = 1
     
@@ -217,7 +217,7 @@ def test_getInitialRowsOfRecommendations_letterboxdNoRecentAndInternationalFilms
 
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
-    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfGenreRows = NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 0
     expectedNumberOfOldRows = 1
     
@@ -322,7 +322,7 @@ def test_getInitialRowsOfRecommendations_letterboxdZipNoRecentFilms(backendUrl):
 
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
-    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfGenreRows = NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
     
@@ -372,7 +372,7 @@ def test_regenerateRowsOfRecommendations_imdb(backendUrl):
 
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
-    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfGenreRows = NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
     
@@ -394,7 +394,7 @@ def test_regenerateRowsOfRecommendations_letterboxd(backendUrl):
 
     expectedNumberOfFavouriteRows = 1
     expectedNumberOfRecentRows = 0
-    expectedNumberOfGenreRows = ServiceUtilities.NUMBER_OF_GENRE_RECOMMENDATION_ROWS
+    expectedNumberOfGenreRows = NUMBER_OF_GENRE_RECOMMENDATION_ROWS
     expectedNumberOfInternationalRows = 1
     expectedNumberOfOldRows = 1
     
