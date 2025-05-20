@@ -1,4 +1,4 @@
-# ***[FILM-REC](http://localhost:3000/)***
+# ***[FILM-REC](https://film-rec.onrender.com/)***
 
 A film recommendation web app. Films are recommended based on user-submitted IMDB or Letterboxd data. I built the recommendation algorithm from scratch - no external ML libraries were used. This took me over one year, and I was working on it as a side project, both for fun and learning.
 
@@ -206,7 +206,7 @@ When pull requests are merged to main, integration tests are then fired against 
 
 ## Frontend
 
-The frontend was designed using React JS. It is being hosted [here](http://localhost:3000). I wanted a sleek and minimalist design Below is the home page:
+The frontend was designed using React JS. It is being hosted [here](https://film-rec.onrender.com). I wanted a sleek and minimalist design Below is the home page:
 
 ![home-page](images/home-page.png "Home Page")
 
