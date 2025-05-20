@@ -28,18 +28,18 @@ def convertLetterboxdFormatToImdbFormat(letterboxdUserFilmData, allFilmData, cac
         if letterboxdTitle in cachedLetterboxdTitles:
             for cachedFilm in cachedLetterboxdTitles[letterboxdTitle]:
                 if letterboxdYear in cachedFilm['years']:
-                    imdbFilmId = cachedFilm['imdbFilmId']
+                    imdbimdbFilmId = cachedFilm['imdbimdbFilmId']
                     imdbUserFilmData.append({
-                        "Const": imdbFilmId,
-                        "Title": allFilmData[imdbFilmId]['title'],
+                        "Const": imdbimdbFilmId,
+                        "Title": allFilmData[imdbimdbFilmId]['title'],
                         "Title Type": "Movie",
-                        "Year": allFilmData[imdbFilmId]['year'],
+                        "Year": allFilmData[imdbimdbFilmId]['year'],
                         "Your Rating": int(float(letterboxdFilm['Rating']) * 2.0),
                         "Date Rated": letterboxdFilm['Date'],
-                        "IMDb Rating": allFilmData[imdbFilmId]['imdbRating'],
-                        "Num Votes": allFilmData[imdbFilmId]['numberOfVotes'],
-                        "Runtime (mins)": allFilmData[imdbFilmId]['runtime'],
-                        "Genres": allFilmData[imdbFilmId]['genres']
+                        "IMDb Rating": allFilmData[imdbimdbFilmId]['imdbRating'],
+                        "Num Votes": allFilmData[imdbimdbFilmId]['numberOfVotes'],
+                        "Runtime (mins)": allFilmData[imdbimdbFilmId]['runtime'],
+                        "Genres": allFilmData[imdbimdbFilmId]['genres']
                     })
         # else:
         #     print(f"Letterboxd Film not found in cachedLetterboxdTitles.json:\n{letterboxdTitle}")

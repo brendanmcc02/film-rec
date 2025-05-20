@@ -49,15 +49,15 @@ def main(database):
             reader = csv.DictReader(title_ratings_file, delimiter='\t')
             for row in reader:
                 rowDict = dict(row)
-                filmId = rowDict['tconst']
-                title_ratings[filmId] = rowDict
+                imdbFilmId = rowDict['tconst']
+                title_ratings[imdbFilmId] = rowDict
 
         for film in stage_1_allFilmData:
-            filmId = film['imdbId']
+            imdbFilmId = film['imdbId']
             try:
-                if filmId in title_ratings and int(title_ratings[filmId]['numVotes']) >= NUMBER_OF_VOTES_THRESHOLD:
-                    film['imdbRating'] = float(title_ratings[filmId]['averageRating'])
-                    film['numberOfVotes'] = int(title_ratings[filmId]['numVotes'])
+                if imdbFilmId in title_ratings and int(title_ratings[imdbFilmId]['numVotes']) >= NUMBER_OF_VOTES_THRESHOLD:
+                    film['imdbRating'] = float(title_ratings[imdbFilmId]['averageRating'])
+                    film['numberOfVotes'] = int(title_ratings[imdbFilmId]['numVotes'])
                     stage_2_allFilmData.append(film)
             except ValueError:
                 pass
@@ -86,10 +86,10 @@ def main(database):
                     allGenres.append(genre)
     else:
         allFilmData = database.read("AllFilmData")
-        allFilmDataFilmIds = list(allFilmData.keys())
+        allFilmDataimdbFilmIds = list(allFilmData.keys())
         allGenres = []
-        for filmId in allFilmDataFilmIds:
-            for genre in allFilmData[filmId]['genres']:
+        for imdbFilmId in allFilmDataimdbFilmIds:
+            for genre in allFilmData[imdbFilmId]['genres']:
                 if genre not in allGenres:
                     allGenres.append(genre)
 
@@ -111,78 +111,78 @@ def main(database):
 
     allCountries = []
 
-    allFilmDataFilmIds = list(allFilmData.keys())
-    minImdbRating = allFilmData[allFilmDataFilmIds[0]]['imdbRating']
-    maxImdbRating = allFilmData[allFilmDataFilmIds[0]]['imdbRating']
-    minYear = allFilmData[allFilmDataFilmIds[0]]['year']
-    maxYear = allFilmData[allFilmDataFilmIds[0]]['year']
-    minNumberOfVotes = allFilmData[allFilmDataFilmIds[0]]['numberOfVotes']
-    maxNumberOfVotes = allFilmData[allFilmDataFilmIds[0]]['numberOfVotes']
-    minRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
-    maxRuntime = allFilmData[allFilmDataFilmIds[0]]['runtime']
+    allFilmDataimdbFilmIds = list(allFilmData.keys())
+    minImdbRating = allFilmData[allFilmDataimdbFilmIds[0]]['imdbRating']
+    maxImdbRating = allFilmData[allFilmDataimdbFilmIds[0]]['imdbRating']
+    minYear = allFilmData[allFilmDataimdbFilmIds[0]]['year']
+    maxYear = allFilmData[allFilmDataimdbFilmIds[0]]['year']
+    minNumberOfVotes = allFilmData[allFilmDataimdbFilmIds[0]]['numberOfVotes']
+    maxNumberOfVotes = allFilmData[allFilmDataimdbFilmIds[0]]['numberOfVotes']
+    minRuntime = allFilmData[allFilmDataimdbFilmIds[0]]['runtime']
+    maxRuntime = allFilmData[allFilmDataimdbFilmIds[0]]['runtime']
 
     cachedCountries = database.read("CachedCountries")
     
     count = 0
-    invalidAllFilmDataFilmIds = []
+    invalidAllFilmDataimdbFilmIds = []
 
-    for imdbFilmId in allFilmDataFilmIds:
+    for imdbimdbFilmId in allFilmDataimdbFilmIds:
         count = count + 1
-        print(str(count) + " " + str(imdbFilmId))
-        if imdbFilmId in cachedTmdbFilmData:
-            allFilmData[imdbFilmId]['letterboxdTitle'] = cachedTmdbFilmData[imdbFilmId]['letterboxdTitle']
-            allFilmData[imdbFilmId]['letterboxdYear'] = cachedTmdbFilmData[imdbFilmId]['letterboxdYear']
-            allFilmData[imdbFilmId]['countries'] = cachedTmdbFilmData[imdbFilmId]['countries']
-            allFilmData[imdbFilmId]['poster'] = cachedTmdbFilmData[imdbFilmId]['poster']
-            allFilmData[imdbFilmId]['summary'] = cachedTmdbFilmData[imdbFilmId]['summary']
+        print(str(count) + " " + str(imdbimdbFilmId))
+        if imdbimdbFilmId in cachedTmdbFilmData:
+            allFilmData[imdbimdbFilmId]['letterboxdTitle'] = cachedTmdbFilmData[imdbimdbFilmId]['letterboxdTitle']
+            allFilmData[imdbimdbFilmId]['letterboxdYear'] = cachedTmdbFilmData[imdbimdbFilmId]['letterboxdYear']
+            allFilmData[imdbimdbFilmId]['countries'] = cachedTmdbFilmData[imdbimdbFilmId]['countries']
+            allFilmData[imdbimdbFilmId]['poster'] = cachedTmdbFilmData[imdbimdbFilmId]['poster']
+            allFilmData[imdbimdbFilmId]['summary'] = cachedTmdbFilmData[imdbimdbFilmId]['summary']
 
-            for country in allFilmData[imdbFilmId]['countries']:
+            for country in allFilmData[imdbimdbFilmId]['countries']:
                 if country not in allCountries:
                     allCountries.append(country)
 
-            imdbYear = allFilmData[imdbFilmId]['year']
-            letterboxdYear = allFilmData[imdbFilmId]['letterboxdYear']
+            imdbYear = allFilmData[imdbimdbFilmId]['year']
+            letterboxdYear = allFilmData[imdbimdbFilmId]['letterboxdYear']
             uniqueYears = [imdbYear]
             if letterboxdYear != imdbYear:
                 uniqueYears.append(letterboxdYear)
 
-            letterboxdTitle = allFilmData[imdbFilmId]['letterboxdTitle']
+            letterboxdTitle = allFilmData[imdbimdbFilmId]['letterboxdTitle']
 
             if letterboxdTitle not in cachedLetterboxdTitles:
-                cachedLetterboxdTitles[letterboxdTitle] = [{"imdbFilmId": imdbFilmId, "years": uniqueYears}]
+                cachedLetterboxdTitles[letterboxdTitle] = [{"imdbimdbFilmId": imdbimdbFilmId, "years": uniqueYears}]
         else:
-            url = f"https://api.themoviedb.org/3/find/{imdbFilmId}?external_source=imdb_id"
-            tmdbFilmId = ""
+            url = f"https://api.themoviedb.org/3/find/{imdbimdbFilmId}?external_source=imdb_id"
+            tmdbimdbFilmId = ""
             response = requests.get(url, headers=headers)
             time.sleep(0.2)
             if response.status_code == 200:
                 jsonResponse = response.json()
                 if ('movie_results' in jsonResponse and len(jsonResponse['movie_results']) > 0
                         and 'imdbId' in jsonResponse['movie_results'][0]):
-                    tmdbFilmId = str(jsonResponse['movie_results'][0]['imdbId'])
+                    tmdbimdbFilmId = str(jsonResponse['movie_results'][0]['imdbId'])
                 else:
-                    print(f"IMDB film not found in TMDB: {imdbFilmId}")
-                    del allFilmData[imdbFilmId]
-                    invalidAllFilmDataFilmIds.append(imdbFilmId)
+                    print(f"IMDB film not found in TMDB: {imdbimdbFilmId}")
+                    del allFilmData[imdbimdbFilmId]
+                    invalidAllFilmDataimdbFilmIds.append(imdbimdbFilmId)
                     continue
             elif response.status_code == 429:
-                print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
+                print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbimdbFilmId}\n")
                 time.sleep(60)
             elif response.status_code == 404:
                 print(f"Error Status Code = {response.status_code}\n")
             else:
                 print(f"Unexpected Error. Status Code = {response.status_code}\n")
 
-            url = f"https://api.themoviedb.org/3/movie/{tmdbFilmId}?language=en-US"
+            url = f"https://api.themoviedb.org/3/movie/{tmdbimdbFilmId}?language=en-US"
             response = requests.get(url, headers=headers)
             time.sleep(0.2)
             if response.status_code == 200:
                 jsonResponse = response.json()
 
                 if isInvalidResponse(jsonResponse):
-                    print(f"Incorrect Response. IMDB Film ID: {imdbFilmId}\n")
-                    del allFilmData[imdbFilmId]
-                    invalidAllFilmDataFilmIds.append(imdbFilmId)
+                    print(f"Incorrect Response. IMDB Film ID: {imdbimdbFilmId}\n")
+                    del allFilmData[imdbimdbFilmId]
+                    invalidAllFilmDataimdbFilmIds.append(imdbimdbFilmId)
                     continue
 
                 basePosterUrl = "https://image.tmdb.org/t/p/w500"
@@ -202,44 +202,44 @@ def main(database):
                     else:
                         print(f"Unrecognised Country: {countryShorthand}")
 
-                cachedTmdbFilmData[imdbFilmId] = {"letterboxdTitle": letterboxdTitle, "letterboxdYear": letterboxdYear,
+                cachedTmdbFilmData[imdbimdbFilmId] = {"letterboxdTitle": letterboxdTitle, "letterboxdYear": letterboxdYear,
                                                 "countries": filmCountries, "poster": poster, 
                                                 "summary": filmSummary}
 
-                allFilmData[imdbFilmId]['letterboxdTitle'] = letterboxdTitle
-                allFilmData[imdbFilmId]['letterboxdYear'] = letterboxdYear
-                allFilmData[imdbFilmId]['countries'] = filmCountries
-                allFilmData[imdbFilmId]['poster'] = poster
-                allFilmData[imdbFilmId]['summary'] = filmSummary
+                allFilmData[imdbimdbFilmId]['letterboxdTitle'] = letterboxdTitle
+                allFilmData[imdbimdbFilmId]['letterboxdYear'] = letterboxdYear
+                allFilmData[imdbimdbFilmId]['countries'] = filmCountries
+                allFilmData[imdbimdbFilmId]['poster'] = poster
+                allFilmData[imdbimdbFilmId]['summary'] = filmSummary
 
-                imdbYear = allFilmData[imdbFilmId]['year']
+                imdbYear = allFilmData[imdbimdbFilmId]['year']
                 uniqueYears = [imdbYear]
                 if letterboxdYear != imdbYear:
                     uniqueYears.append(letterboxdYear)
 
                 if letterboxdTitle in cachedLetterboxdTitles:
-                    cachedLetterboxdTitles[letterboxdTitle].append({"imdbFilmId": imdbFilmId, "years": uniqueYears})
+                    cachedLetterboxdTitles[letterboxdTitle].append({"imdbimdbFilmId": imdbimdbFilmId, "years": uniqueYears})
                 else:
-                    cachedLetterboxdTitles[letterboxdTitle] = [{"imdbFilmId": imdbFilmId, "years": uniqueYears}]
+                    cachedLetterboxdTitles[letterboxdTitle] = [{"imdbimdbFilmId": imdbimdbFilmId, "years": uniqueYears}]
             elif response.status_code == 429:
-                print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbFilmId}\n")
+                print(f"Rate Limit Exceeded. Waiting 60 seconds... Film ID: {imdbimdbFilmId}\n")
                 time.sleep(60)
             else:
                 print(f"Error. Status Code = {response.status_code}\n")
 
-        minImdbRating = min(minImdbRating, allFilmData[imdbFilmId]['imdbRating'])
-        maxImdbRating = max(maxImdbRating, allFilmData[imdbFilmId]['imdbRating'])
-        minYear = min(minYear, allFilmData[imdbFilmId]['year'])
-        maxYear = max(maxYear, allFilmData[imdbFilmId]['year'])
-        minNumberOfVotes = min(minNumberOfVotes, allFilmData[imdbFilmId]['numberOfVotes'])
-        maxNumberOfVotes = max(maxNumberOfVotes, allFilmData[imdbFilmId]['numberOfVotes'])
-        minRuntime = min(minRuntime, allFilmData[imdbFilmId]['runtime'])
-        maxRuntime = max(maxRuntime, allFilmData[imdbFilmId]['runtime'])
+        minImdbRating = min(minImdbRating, allFilmData[imdbimdbFilmId]['imdbRating'])
+        maxImdbRating = max(maxImdbRating, allFilmData[imdbimdbFilmId]['imdbRating'])
+        minYear = min(minYear, allFilmData[imdbimdbFilmId]['year'])
+        maxYear = max(maxYear, allFilmData[imdbimdbFilmId]['year'])
+        minNumberOfVotes = min(minNumberOfVotes, allFilmData[imdbimdbFilmId]['numberOfVotes'])
+        maxNumberOfVotes = max(maxNumberOfVotes, allFilmData[imdbimdbFilmId]['numberOfVotes'])
+        minRuntime = min(minRuntime, allFilmData[imdbimdbFilmId]['runtime'])
+        maxRuntime = max(maxRuntime, allFilmData[imdbimdbFilmId]['runtime'])
 
-    for imdbFilmId in invalidAllFilmDataFilmIds:
-        allFilmDataFilmIds.remove(imdbFilmId)
+    for imdbimdbFilmId in invalidAllFilmDataimdbFilmIds:
+        allFilmDataimdbFilmIds.remove(imdbimdbFilmId)
 
-    print(f"\nFinal Dataset size: {len(allFilmDataFilmIds)} films.\n")
+    print(f"\nFinal Dataset size: {len(allFilmDataimdbFilmIds)} films.\n")
 
     database.write("AllFilmData", allFilmData)
     database.write("CachedTmdbFilmData", cachedTmdbFilmData)
@@ -272,18 +272,18 @@ def main(database):
     profileVectorLength = 0
     allCountries = sorted(allCountries)
 
-    for filmId in allFilmDataFilmIds:
-        if filmId not in allFilmData:
-            print(f"Film ID not found in allFilmData: {filmId}.")
+    for imdbFilmId in allFilmDataimdbFilmIds:
+        if imdbFilmId not in allFilmData:
+            print(f"Film ID not found in allFilmData: {imdbFilmId}.")
         else:
-            allFilmDataVectorized[filmId] = list(vectorizeFilm(allFilmData[filmId], allGenres, allCountries,
+            allFilmDataVectorized[imdbFilmId] = list(vectorizeFilm(allFilmData[imdbFilmId], allGenres, allCountries,
                                                             normalizedYears, normalizedImdbRatings, 
                                                             minNumberOfVotes, diffNumberOfVotes, 
                                                             normalizedRuntimes))
             if profileVectorLength == 0:
-                profileVectorLength = len(allFilmDataVectorized[filmId])
+                profileVectorLength = len(allFilmDataVectorized[imdbFilmId])
 
-            allFilmDataVectorizedMagnitudes[filmId] = round(np.linalg.norm(allFilmDataVectorized[filmId]), 
+            allFilmDataVectorizedMagnitudes[imdbFilmId] = round(np.linalg.norm(allFilmDataVectorized[imdbFilmId]), 
                                                             VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
     database.write("AllFilmDataVectorized", allFilmDataVectorized, [[",\n        ", ", "]])
@@ -312,18 +312,18 @@ def isInvalidResponse(jsonResponse):
 
 def removeCachedTmdbFilmDataAndLetterboxdTitlesNotInAllFilmData(allFilmData, cachedTmdbFilmData, cachedLetterboxdTitles):
     invalidFilms = []
-    allFilmDataFilmIds = list(allFilmData.keys())
+    allFilmDataimdbFilmIds = list(allFilmData.keys())
     
-    for cachedTmdbFilmId in list(cachedTmdbFilmData):
-            if cachedTmdbFilmId not in allFilmDataFilmIds:
-                invalidFilms.append({"imdbFilmId": cachedTmdbFilmId, 
-                                    "letterboxdTitle": cachedTmdbFilmData[cachedTmdbFilmId]['letterboxdTitle']})
-                del cachedTmdbFilmData[cachedTmdbFilmId]
+    for cachedTmdbimdbFilmId in list(cachedTmdbFilmData):
+            if cachedTmdbimdbFilmId not in allFilmDataimdbFilmIds:
+                invalidFilms.append({"imdbimdbFilmId": cachedTmdbimdbFilmId, 
+                                    "letterboxdTitle": cachedTmdbFilmData[cachedTmdbimdbFilmId]['letterboxdTitle']})
+                del cachedTmdbFilmData[cachedTmdbimdbFilmId]
 
     for invalidFilm in invalidFilms:
         i = 0
         while i < len(cachedLetterboxdTitles[invalidFilm['letterboxdTitle']]):
-            if cachedLetterboxdTitles[invalidFilm['letterboxdTitle']][i]['imdbFilmId'] == invalidFilm['imdbFilmId']:
+            if cachedLetterboxdTitles[invalidFilm['letterboxdTitle']][i]['imdbimdbFilmId'] == invalidFilm['imdbimdbFilmId']:
                 del cachedLetterboxdTitles[invalidFilm['letterboxdTitle']][i]
                 i = i - 1
             

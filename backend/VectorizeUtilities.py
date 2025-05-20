@@ -152,15 +152,15 @@ def printStringifiedVector(vector, allGenres, allCountries, text, cachedNormaliz
     print(f"\n{stringifiedVector}\n")
 
 def initFavouriteProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength, 
-                        cachedDateRatedAndUserRatingWeights, favouriteFilmIds, allGenres,
+                        cachedDateRatedAndUserRatingWeights, favouriteimdbFilmIds, allGenres,
                         allCountries):
     favouriteProfile = VectorProfile('favourite', profileVectorLength)
     sumOfWeights = 0.0
 
-    for imdbFilmId in userFilmDataIds:
-        if imdbFilmId in favouriteFilmIds:
-            favouriteProfile.vector += userFilmDataVectorized[imdbFilmId]
-            sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
+    for imdbimdbFilmId in userFilmDataIds:
+        if imdbimdbFilmId in favouriteimdbFilmIds:
+            favouriteProfile.vector += userFilmDataVectorized[imdbimdbFilmId]
+            sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbimdbFilmId]
 
     if sumOfWeights > 0.0:
         favouriteProfile.vector = np.divide(favouriteProfile.vector, sumOfWeights)
@@ -181,11 +181,11 @@ def initGenreProfiles(userFilmDataIds, userFilmDataVectorized, cachedDateRatedAn
     for genre in allGenres:
         genreProfiles[genre] = GenreVectorProfile(genre, profileVectorLength)
 
-    for imdbFilmId in userFilmDataIds:
-        filmGenres = getFilmGenres(userFilmDataVectorized[imdbFilmId], allGenres)
+    for imdbimdbFilmId in userFilmDataIds:
+        filmGenres = getFilmGenres(userFilmDataVectorized[imdbimdbFilmId], allGenres)
         for genre in filmGenres:
-            genreProfiles[genre].vector += userFilmDataVectorized[imdbFilmId]
-            genreProfiles[genre].sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
+            genreProfiles[genre].vector += userFilmDataVectorized[imdbimdbFilmId]
+            genreProfiles[genre].sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbimdbFilmId]
             genreProfiles[genre].quantityFilmsWatched += 1
 
     for genre in allGenres:
@@ -231,11 +231,11 @@ def initRecentProfile(userFilmData, userFilmDataVectorized, maxDateRated,
     recentProfile = VectorProfile('recent', profileVectorLength)
     sumOfWeights = 0.0
 
-    for imdbFilmId in userFilmData:
-        timeDifference = maxDateRated - userFilmData[imdbFilmId]['dateRated']
+    for imdbimdbFilmId in userFilmData:
+        timeDifference = maxDateRated - userFilmData[imdbimdbFilmId]['dateRated']
         if timeDifference.days <= RECENCY_PROFILE_DAYS_THRESHOLD:
-            recentProfile.vector += userFilmDataVectorized[imdbFilmId]
-            sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
+            recentProfile.vector += userFilmDataVectorized[imdbimdbFilmId]
+            sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbimdbFilmId]
         else:
             # file is sorted by date, no need to look further
             break
@@ -257,9 +257,9 @@ def initUserProfile(userFilmDataIds, userFilmDataVectorized, profileVectorLength
     userProfile = VectorProfile('user', profileVectorLength)
     sumOfWeights = 0.0
 
-    for imdbFilmId in userFilmDataIds:
-        userProfile.vector += userFilmDataVectorized[imdbFilmId]
-        sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbFilmId]
+    for imdbimdbFilmId in userFilmDataIds:
+        userProfile.vector += userFilmDataVectorized[imdbimdbFilmId]
+        sumOfWeights += cachedDateRatedAndUserRatingWeights[imdbimdbFilmId]
 
     if sumOfWeights > 0.0:
         userProfile.vector = np.divide(userProfile.vector, sumOfWeights)
@@ -371,9 +371,9 @@ def getSortedCosineSimilaritiesOfAllFilms(allFilmDataUnseen, profileVector, allF
     cosineSimilarities = {}
     profileVectorMagnitude = np.linalg.norm(profileVector)
     
-    for filmId in allFilmDataUnseen:
-        filmVectorMagnitude = allFilmDataVectorizedMagnitudes[filmId]
-        cosineSimilarities[filmId] = getCosineSimilarity(allFilmDataVectorized[filmId], profileVector,
+    for imdbFilmId in allFilmDataUnseen:
+        filmVectorMagnitude = allFilmDataVectorizedMagnitudes[imdbFilmId]
+        cosineSimilarities[imdbFilmId] = getCosineSimilarity(allFilmDataVectorized[imdbFilmId], profileVector,
                                                                 filmVectorMagnitude, profileVectorMagnitude)
 
     return sorted(cosineSimilarities.items(), key=lambda x: x[1], reverse=True)
