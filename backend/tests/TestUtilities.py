@@ -146,17 +146,6 @@ class TestUtilities:
         responseContent = response.json()
         assert attribute in responseContent
 
-    def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, filmId, isThumbsUp):
-        responseContent = reviewRecommendationsResponse.json()
-        responseBody = responseContent["body"]
-
-        assert filmId in responseBody
-        
-        if isThumbsUp:
-            assert "Up" in responseBody
-        else:
-            assert "Down" in responseBody
-
     def verifyReviewsOfAllRecommendations(self, response, isThumbsUp, backendUrl):
         responseContent = response.json()
         rowsOfRecommendations = responseContent["body"]
@@ -168,3 +157,14 @@ class TestUtilities:
                 filmId = recommendedFilm['imdbId']
                 reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + str(isThumbsUp))
                 self.verifyReviewRecommendationResponse(reviewRecommendationResponse, filmId, isThumbsUp)
+
+    def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, filmId, isThumbsUp):
+        responseContent = reviewRecommendationsResponse.json()
+        responseBody = responseContent["body"]
+
+        assert filmId in responseBody
+        
+        if isThumbsUp:
+            assert "Up" in responseBody
+        else:
+            assert "Down" in responseBody
