@@ -90,9 +90,9 @@ class TestUtilities:
             assert len(row['recommendedFilms']) == MAX_NUMBER_OF_RECOMMENDATIONS_PER_ROW
 
             for film in row['recommendedFilms']:
-                assert 'imdbId' in film
-                assert film['imdbId'] != ""
-                self.verifyFilm(film, film['imdbId'], allGenres, allCountries)
+                assert 'imdbFilmId' in film
+                assert film['imdbFilmId'] != ""
+                self.verifyFilm(film, film['imdbFilmId'], allGenres, allCountries)
                 assert 'similarityScore' in film
                 assert film['similarityScore'] != None
                 assert film['similarityScore'] >= 0.0
@@ -120,14 +120,14 @@ class TestUtilities:
 
         for rowOfFilms in initialRecommendations:
             for recommendedFilm in rowOfFilms['recommendedFilms']:
-                initialRecommendationFilmIds.append(recommendedFilm['imdbId'])
+                initialRecommendationFilmIds.append(recommendedFilm['imdbFilmId'])
 
         regenerateRecommendationsResponseContent = regenerateRecommendationsResponse.json()
         regeneratedRecommendations = regenerateRecommendationsResponseContent["body"]
 
         for rowOfFilms in regeneratedRecommendations:
             for recommendedFilm in rowOfFilms['recommendedFilms']:
-                assert recommendedFilm['imdbId'] not in initialRecommendationFilmIds
+                assert recommendedFilm['imdbFilmId'] not in initialRecommendationFilmIds
 
     def verifyExpectedNumberOfRows(self, rowsOfRecommendations, expectedNumberOfRows, profileIds):
         actualNumberOfRows = 0
@@ -154,7 +154,7 @@ class TestUtilities:
 
         for row in rowsOfRecommendations:
             for recommendedFilm in row['recommendedFilms']:
-                imdbFilmId = recommendedFilm['imdbId']
+                imdbFilmId = recommendedFilm['imdbFilmId']
                 reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&imdbFilmId=" + imdbFilmId + "&isThumbsUp=" + str(isThumbsUp))
                 self.verifyReviewRecommendationResponse(reviewRecommendationResponse, imdbFilmId, isThumbsUp)
 

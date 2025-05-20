@@ -210,7 +210,7 @@ The frontend was designed using React JS. It is being hosted [here](https://film
 
 ![home-page](images/home-page.png "Home Page")
 
-# Usage
+# Local Usage
 
 * Clone the repository.
 * Replace **all** instances of `https://film-rec-backend.onrender.com` with `http://localhost:60000`
