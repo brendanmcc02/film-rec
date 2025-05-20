@@ -70,9 +70,9 @@ def initCachedDatabase(database):
 def getAllFilmDataUnseen(allFilmData, userFilmData):
     allFilmDataUnseen = {}
 
-    for imdbFilmId in allFilmData:
-        if imdbFilmId not in userFilmData:
-            allFilmDataUnseen[imdbFilmId] = allFilmData[imdbFilmId]
+    for imdbimdbFilmId in allFilmData:
+        if imdbimdbFilmId not in userFilmData:
+            allFilmDataUnseen[imdbimdbFilmId] = allFilmData[imdbimdbFilmId]
 
     return allFilmDataUnseen
 

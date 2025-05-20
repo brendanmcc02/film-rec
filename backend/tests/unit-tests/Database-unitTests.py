@@ -112,8 +112,8 @@ def test_cachedLetterboxdTitles():
         assert len(cachedLetterboxdTitles[letterboxdTitle]) > 0
 
         for film in cachedLetterboxdTitles[letterboxdTitle]:
-            assert 'imdbFilmId' in film
-            assert film['imdbFilmId'] != ""
+            assert 'imdbimdbFilmId' in film
+            assert film['imdbimdbFilmId'] != ""
             
             # should only be 1 year (if the years match between IMDb & Letterboxd),
             # or 2 years (one for IMDb, one for Letterboxd). No more.
@@ -262,7 +262,7 @@ def test_allFilmData_correspondsWith_cachedLetterboxdTitles():
 
     for letterboxdTitle in cachedLetterboxdTitles:
         for film in cachedLetterboxdTitles[letterboxdTitle]:
-            imdbFilmId = film['imdbFilmId']
+            imdbFilmId = film['imdbimdbFilmId']
             assert imdbFilmId in allFilmData
             assert allFilmData[imdbFilmId]['letterboxdTitle'] == letterboxdTitle
 
