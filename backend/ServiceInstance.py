@@ -71,19 +71,19 @@ class ServiceInstance:
         userFilmDataVectorized = {}
         cachedDateRatedAndUserRatingWeights = {}        
 
-        for imdbimdbFilmId in userFilmData:
-            vector = vectorizeFilm(userFilmData[imdbimdbFilmId], self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"],
+        for imdbFilmId in userFilmData:
+            vector = vectorizeFilm(userFilmData[imdbFilmId], self.cachedDatabase["AllGenres"], self.cachedDatabase["AllCountries"],
                                                            self.cachedDatabase["NormalizedYears"], self.cachedDatabase["NormalizedImdbRatings"], self.cachedDatabase["MinNumberOfVotes"],
                                                            self.cachedDatabase["DiffNumberOfVotes"], self.cachedDatabase["NormalizedRuntimes"])
             if isDiffDateRatedZero:
                 dateRatedWeight = 1.0
             else:
-                dateRatedWeight = getNormalizedDateRatedWeight(userFilmData[imdbimdbFilmId]['dateRated'], minDateRated, diffDateRated)
+                dateRatedWeight = getNormalizedDateRatedWeight(userFilmData[imdbFilmId]['dateRated'], minDateRated, diffDateRated)
 
             # imdbRatings run from 1-10, we want values to run from 0.1 - 1.0
-            userRatingWeight = round((userFilmData[imdbimdbFilmId]['userRating'] / 10.0), 1)
-            cachedDateRatedAndUserRatingWeights[imdbimdbFilmId] = dateRatedWeight * userRatingWeight
-            userFilmDataVectorized[imdbimdbFilmId] = vector * cachedDateRatedAndUserRatingWeights[imdbimdbFilmId]
+            userRatingWeight = round((userFilmData[imdbFilmId]['userRating'] / 10.0), 1)
+            cachedDateRatedAndUserRatingWeights[imdbFilmId] = dateRatedWeight * userRatingWeight
+            userFilmDataVectorized[imdbFilmId] = vector * cachedDateRatedAndUserRatingWeights[imdbFilmId]
 
         self.vectorProfiles["favouriteProfile"] = initFavouriteProfile(userFilmData, userFilmDataVectorized, 
                                                                              self.cachedDatabase["ProfileVectorLength"],
