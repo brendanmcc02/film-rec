@@ -77,31 +77,31 @@ def test_allFilmData():
 
     testUtilities = TestUtilities("../../../")
 
-    for imdbFilmId in allFilmData:
-        testUtilities.verifyFilm(allFilmData[imdbFilmId], imdbFilmId, allGenres, allCountries)
+    for filmId in allFilmData:
+        testUtilities.verifyFilm(allFilmData[filmId], filmId, allGenres, allCountries)
 
 def test_cachedTmdbFilmData():
     database = DocumentDatabase(REPOSITORY_ROOT)
     cachedTmdbFilmData = database.read("CachedTmdbFilmData")
     allCountries = database.read("AllCountries")
 
-    for imdbFilmId in cachedTmdbFilmData:
-        assert 'letterboxdTitle' in cachedTmdbFilmData[imdbFilmId]
-        assert cachedTmdbFilmData[imdbFilmId]['letterboxdTitle'] != ""
+    for filmId in cachedTmdbFilmData:
+        assert 'letterboxdTitle' in cachedTmdbFilmData[filmId]
+        assert cachedTmdbFilmData[filmId]['letterboxdTitle'] != ""
 
-        assert 'letterboxdYear' in cachedTmdbFilmData[imdbFilmId]
-        assert cachedTmdbFilmData[imdbFilmId]['letterboxdYear'] != None
+        assert 'letterboxdYear' in cachedTmdbFilmData[filmId]
+        assert cachedTmdbFilmData[filmId]['letterboxdYear'] != None
 
-        assert 'countries' in cachedTmdbFilmData[imdbFilmId]
+        assert 'countries' in cachedTmdbFilmData[filmId]
 
-        for country in cachedTmdbFilmData[imdbFilmId]['countries']:
+        for country in cachedTmdbFilmData[filmId]['countries']:
             assert country in allCountries
 
-        assert 'poster' in cachedTmdbFilmData[imdbFilmId]
-        assert cachedTmdbFilmData[imdbFilmId]['poster'] != ""
+        assert 'poster' in cachedTmdbFilmData[filmId]
+        assert cachedTmdbFilmData[filmId]['poster'] != ""
 
-        assert 'summary' in cachedTmdbFilmData[imdbFilmId]
-        assert cachedTmdbFilmData[imdbFilmId]['summary'] != ""
+        assert 'summary' in cachedTmdbFilmData[filmId]
+        assert cachedTmdbFilmData[filmId]['summary'] != ""
 
 def test_cachedLetterboxdTitles():
     database = DocumentDatabase(REPOSITORY_ROOT)
@@ -112,8 +112,8 @@ def test_cachedLetterboxdTitles():
         assert len(cachedLetterboxdTitles[letterboxdTitle]) > 0
 
         for film in cachedLetterboxdTitles[letterboxdTitle]:
-            assert 'imdbimdbFilmId' in film
-            assert film['imdbimdbFilmId'] != ""
+            assert 'imdbFilmId' in film
+            assert film['imdbFilmId'] != ""
             
             # should only be 1 year (if the years match between IMDb & Letterboxd),
             # or 2 years (one for IMDb, one for Letterboxd). No more.
@@ -131,26 +131,26 @@ def test_allFilmDataVectorized():
 
     assert len(allFilmData) == len(allFilmDataVectorized)
 
-    for imdbFilmId in allFilmDataVectorized:
-        assert len(allFilmDataVectorized[imdbFilmId]) == profileVectorLength
+    for filmId in allFilmDataVectorized:
+        assert len(allFilmDataVectorized[filmId]) == profileVectorLength
 
-        assert allFilmDataVectorized[imdbFilmId][PROFILE_YEAR_INDEX] <= YEAR_WEIGHT
-        assert allFilmDataVectorized[imdbFilmId][PROFILE_YEAR_INDEX] >= 0.0
-        assert allFilmDataVectorized[imdbFilmId][PROFILE_NUMBER_OF_VOTES_INDEX] <= NUMBER_OF_VOTES_WEIGHT
-        assert allFilmDataVectorized[imdbFilmId][PROFILE_NUMBER_OF_VOTES_INDEX] >= 0.0
-        assert allFilmDataVectorized[imdbFilmId][PROFILE_IMDB_RATING_INDEX] <= IMDB_RATING_WEIGHT
-        assert allFilmDataVectorized[imdbFilmId][PROFILE_IMDB_RATING_INDEX] >= 0.0
-        assert allFilmDataVectorized[imdbFilmId][PROFILE_RUNTIME_INDEX] <= RUNTIME_WEIGHT
-        assert allFilmDataVectorized[imdbFilmId][PROFILE_RUNTIME_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][PROFILE_YEAR_INDEX] <= YEAR_WEIGHT
+        assert allFilmDataVectorized[filmId][PROFILE_YEAR_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][PROFILE_NUMBER_OF_VOTES_INDEX] <= NUMBER_OF_VOTES_WEIGHT
+        assert allFilmDataVectorized[filmId][PROFILE_NUMBER_OF_VOTES_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][PROFILE_IMDB_RATING_INDEX] <= IMDB_RATING_WEIGHT
+        assert allFilmDataVectorized[filmId][PROFILE_IMDB_RATING_INDEX] >= 0.0
+        assert allFilmDataVectorized[filmId][PROFILE_RUNTIME_INDEX] <= RUNTIME_WEIGHT
+        assert allFilmDataVectorized[filmId][PROFILE_RUNTIME_INDEX] >= 0.0
         
         profileCountryStartIndex = PROFILE_GENRE_START_INDEX + len(allGenres)
         for i in range(PROFILE_GENRE_START_INDEX, profileCountryStartIndex):
-            assert allFilmDataVectorized[imdbFilmId][i] <= GENRE_WEIGHT
-            assert allFilmDataVectorized[imdbFilmId][i] >= 0.0
+            assert allFilmDataVectorized[filmId][i] <= GENRE_WEIGHT
+            assert allFilmDataVectorized[filmId][i] >= 0.0
 
         for i in range(profileCountryStartIndex, profileVectorLength):
-            assert allFilmDataVectorized[imdbFilmId][i] <= COUNTRY_WEIGHT
-            assert allFilmDataVectorized[imdbFilmId][i] >= 0.0
+            assert allFilmDataVectorized[filmId][i] <= COUNTRY_WEIGHT
+            assert allFilmDataVectorized[filmId][i] >= 0.0
 
 def test_allFilmDataVectorizedMagnitudes():
     database = DocumentDatabase(REPOSITORY_ROOT)
@@ -160,11 +160,11 @@ def test_allFilmDataVectorizedMagnitudes():
 
     assert len(allFilmData) == len(allFilmDataVectorized)
 
-    for imdbFilmId in allFilmDataVectorizedMagnitudes:
-        assert allFilmDataVectorizedMagnitudes[imdbFilmId] != None
-        expectedMagnitude = np.linalg.norm(allFilmDataVectorized[imdbFilmId])
+    for filmId in allFilmDataVectorizedMagnitudes:
+        assert allFilmDataVectorizedMagnitudes[filmId] != None
+        expectedMagnitude = np.linalg.norm(allFilmDataVectorized[filmId])
         expectedMagnitudeFloat = expectedMagnitude.item()
-        assert allFilmDataVectorizedMagnitudes[imdbFilmId] == round(expectedMagnitudeFloat,
+        assert allFilmDataVectorizedMagnitudes[filmId] == round(expectedMagnitudeFloat,
                                                                 VECTORIZED_MAGNITUDE_NUMBER_OF_ROUNDED_DECIMAL_POINTS)
 
 def test_allGenres():
@@ -245,15 +245,15 @@ def test_allFilmData_correspondsWith_cachedTmdbFilmData():
 
     assert len(allFilmData) == len(cachedTmdbFilmData)
 
-    for imdbFilmId in allFilmData:
-        assert imdbFilmId in cachedTmdbFilmData
-        assert allFilmData[imdbFilmId]['letterboxdTitle'] == cachedTmdbFilmData[imdbFilmId]['letterboxdTitle']
-        assert allFilmData[imdbFilmId]['letterboxdYear'] == cachedTmdbFilmData[imdbFilmId]['letterboxdYear']
-        assert allFilmData[imdbFilmId]['poster'] == cachedTmdbFilmData[imdbFilmId]['poster']
-        assert allFilmData[imdbFilmId]['summary'] == cachedTmdbFilmData[imdbFilmId]['summary']
+    for filmId in allFilmData:
+        assert filmId in cachedTmdbFilmData
+        assert allFilmData[filmId]['letterboxdTitle'] == cachedTmdbFilmData[filmId]['letterboxdTitle']
+        assert allFilmData[filmId]['letterboxdYear'] == cachedTmdbFilmData[filmId]['letterboxdYear']
+        assert allFilmData[filmId]['poster'] == cachedTmdbFilmData[filmId]['poster']
+        assert allFilmData[filmId]['summary'] == cachedTmdbFilmData[filmId]['summary']
 
-        for country in allFilmData[imdbFilmId]['countries']:
-            assert country in cachedTmdbFilmData[imdbFilmId]['countries']
+        for country in allFilmData[filmId]['countries']:
+            assert country in cachedTmdbFilmData[filmId]['countries']
 
 def test_allFilmData_correspondsWith_cachedLetterboxdTitles():
     database = DocumentDatabase(REPOSITORY_ROOT)
@@ -262,9 +262,9 @@ def test_allFilmData_correspondsWith_cachedLetterboxdTitles():
 
     for letterboxdTitle in cachedLetterboxdTitles:
         for film in cachedLetterboxdTitles[letterboxdTitle]:
-            imdbFilmId = film['imdbimdbFilmId']
-            assert imdbFilmId in allFilmData
-            assert allFilmData[imdbFilmId]['letterboxdTitle'] == letterboxdTitle
+            filmId = film['imdbFilmId']
+            assert filmId in allFilmData
+            assert allFilmData[filmId]['letterboxdTitle'] == letterboxdTitle
 
             for year in film['years']:
-                assert year == allFilmData[imdbFilmId]['year'] or year == allFilmData[imdbFilmId]['letterboxdYear']
+                assert year == allFilmData[filmId]['year'] or year == allFilmData[filmId]['letterboxdYear']

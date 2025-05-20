@@ -17,7 +17,7 @@ class TestUtilities:
         self.database = database
 
 
-    def verifyFilm(self, film, imdbFilmId, allGenres, allCountries):
+    def verifyFilm(self, film, filmId, allGenres, allCountries):
         assert 'title' in film
         assert film['title'] != ""
 
@@ -55,7 +55,7 @@ class TestUtilities:
             assert genre in allGenres
 
         assert 'imdbUrl' in film
-        assert film['imdbUrl'] == BASE_IMDB_URL + imdbFilmId
+        assert film['imdbUrl'] == BASE_IMDB_URL + filmId
 
         assert 'countries' in film
 
@@ -113,21 +113,21 @@ class TestUtilities:
         return responseContent["guid"]
 
     def verifyRegeneratedFilmsAreDifferentToInitialFilms(self, getInitialRowsOfRecommendationsResponse, regenerateRecommendationsResponse):
-        initialRecommendationimdbFilmIds = []
+        initialRecommendationFilmIds = []
 
         getInitialRowsOfRecommendationsResponseContent = getInitialRowsOfRecommendationsResponse.json()
         initialRecommendations = getInitialRowsOfRecommendationsResponseContent["body"]
 
         for rowOfFilms in initialRecommendations:
             for recommendedFilm in rowOfFilms['recommendedFilms']:
-                initialRecommendationimdbFilmIds.append(recommendedFilm['imdbId'])
+                initialRecommendationFilmIds.append(recommendedFilm['imdbId'])
 
         regenerateRecommendationsResponseContent = regenerateRecommendationsResponse.json()
         regeneratedRecommendations = regenerateRecommendationsResponseContent["body"]
 
         for rowOfFilms in regeneratedRecommendations:
             for recommendedFilm in rowOfFilms['recommendedFilms']:
-                assert recommendedFilm['imdbId'] not in initialRecommendationimdbFilmIds
+                assert recommendedFilm['imdbId'] not in initialRecommendationFilmIds
 
     def verifyExpectedNumberOfRows(self, rowsOfRecommendations, expectedNumberOfRows, profileIds):
         actualNumberOfRows = 0
@@ -154,15 +154,15 @@ class TestUtilities:
 
         for row in rowsOfRecommendations:
             for recommendedFilm in row['recommendedFilms']:
-                imdbFilmId = recommendedFilm['imdbId']
-                reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&imdbFilmId=" + imdbFilmId + "&isThumbsUp=" + str(isThumbsUp))
-                self.verifyReviewRecommendationResponse(reviewRecommendationResponse, imdbFilmId, isThumbsUp)
+                filmId = recommendedFilm['imdbId']
+                reviewRecommendationResponse = requests.get(backendUrl + "/reviewRecommendation?guid=" + guid + "&filmId=" + filmId + "&isThumbsUp=" + str(isThumbsUp))
+                self.verifyReviewRecommendationResponse(reviewRecommendationResponse, filmId, isThumbsUp)
 
-    def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, imdbFilmId, isThumbsUp):
+    def verifyReviewRecommendationResponse(self, reviewRecommendationsResponse, filmId, isThumbsUp):
         responseContent = reviewRecommendationsResponse.json()
         responseBody = responseContent["body"]
 
-        assert imdbFilmId in responseBody
+        assert filmId in responseBody
         
         if isThumbsUp:
             assert "Up" in responseBody

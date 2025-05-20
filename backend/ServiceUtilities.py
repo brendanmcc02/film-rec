@@ -23,10 +23,10 @@ RUNTIME_THRESHOLD = 40
 NUMBER_OF_VOTES_THRESHOLD = 25000
 BASE_IMDB_URL = 'https://www.imdb.com/title/'
 
-def isFilmRecommendationUnique(imdbFilmId, rowsOfRecommendations):
+def isFilmRecommendationUnique(filmId, rowsOfRecommendations):
     for row in rowsOfRecommendations:
         for recommendedFilm in row['recommendedFilms']:
-            if recommendedFilm['imdbId'] == imdbFilmId:
+            if recommendedFilm['imdbId'] == filmId:
                 return False
             
     return True
@@ -70,9 +70,9 @@ def initCachedDatabase(database):
 def getAllFilmDataUnseen(allFilmData, userFilmData):
     allFilmDataUnseen = {}
 
-    for imdbimdbFilmId in allFilmData:
-        if imdbimdbFilmId not in userFilmData:
-            allFilmDataUnseen[imdbimdbFilmId] = allFilmData[imdbimdbFilmId]
+    for imdbFilmId in allFilmData:
+        if imdbFilmId not in userFilmData:
+            allFilmDataUnseen[imdbFilmId] = allFilmData[imdbFilmId]
 
     return allFilmDataUnseen
 
@@ -105,10 +105,10 @@ def getNormalizedDateRatedWeight(dateRated, minDateRated, diffDateRated):
     return (((dateRated - minDateRated) / diffDateRated) *
                                 (1 - DATE_RATED_WEIGHT)) + DATE_RATED_WEIGHT
 
-def getProfileIdAssociatedWithimdbFilmId(rowsOfRecommendations, imdbFilmId):
+def getProfileIdAssociatedWithFilmId(rowsOfRecommendations, filmId):
     for row in rowsOfRecommendations:
         for film in row['recommendedFilms']:
-            if film['imdbId'] == imdbFilmId:
+            if film['imdbId'] == filmId:
                 return row["profileId"]
 
 def isProfileIdGenreProfile(profileId, allGenres):

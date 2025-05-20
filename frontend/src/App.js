@@ -67,7 +67,7 @@ const App = () => {
 
         const initialButtonVisibility = responseRowsOfRecommendations.map((row) => 
           row.recommendedFilms.map((film) => ({ 
-              imdbFilmId: film.imdbId, 
+              filmID: film.imdbId, 
               isFilmButtonVisible: true
           }))
         );
@@ -88,10 +88,10 @@ const App = () => {
     }
   };
 
-  function isFilmButtonVisible(imdbFilmId) {
+  function isFilmButtonVisible(filmID) {
       for (const row of rowsOfRecommendationButtonVisibility) {
         for (const film of row) {
-          if (film.imdbFilmId === imdbFilmId) {
+          if (film.filmID === filmID) {
             return film.isFilmButtonVisible;
           }
         }
@@ -100,35 +100,35 @@ const App = () => {
       return false;
   }
 
-  function setFilmButtonInvisible(imdbFilmId) {
+  function setFilmButtonInvisible(filmID) {
       setRowsOfRecommendationButtonVisibility((previousVisibility) => 
           previousVisibility.map((row) => 
               row.map((film) => 
-                  film.imdbFilmId === imdbFilmId ? { ...film, isFilmButtonVisible: false } : film
+                  film.filmID === filmID ? { ...film, isFilmButtonVisible: false } : film
               )
           )
       );
     }
 
-  async function handleThumbsUpOrDownButton(imdbFilmId, isThumbsUp) {
-      await reviewRecommendation(imdbFilmId, isThumbsUp);
-      setFilmButtonInvisible(imdbFilmId);
+  async function handleThumbsUpOrDownButton(filmId, isThumbsUp) {
+      await reviewRecommendation(filmId, isThumbsUp);
+      setFilmButtonInvisible(filmId);
   }
 
-  async function reviewRecommendation(imdbFilmId, isThumbsUp) {
+  async function reviewRecommendation(filmId, isThumbsUp) {
       try {
           const fetchUrl = ("https://film-rec-backend.onrender.com/reviewRecommendation" +
-                            "?imdbFilmId=" + imdbFilmId.toString() + "&isThumbsUp=" + isThumbsUp + "&guid=" + guidRef.current.toString());
+                            "?filmId=" + filmId.toString() + "&isThumbsUp=" + isThumbsUp + "&guid=" + guidRef.current.toString());
           const response = await fetch(fetchUrl);
           const responseContent = await response.json();
 
           if (response.ok) {
             console.log(responseContent.body);
           } else {
-            console.log('error with /reviewRecommendation. imdbFilmId: ' + imdbFilmId);
+            console.log('error with /reviewRecommendation. filmID: ' + filmId);
           }
       } catch (error) {
-          console.log('error with /reviewRecommendation. imdbFilmId: ' + imdbFilmId);
+          console.log('error with /reviewRecommendation. filmID: ' + filmId);
       }
   }
   
@@ -142,7 +142,7 @@ const App = () => {
       setRowsOfRecommendations(responseRowsOfRecommendations);
       const initialButtonVisibility = responseRowsOfRecommendations.map((row) => 
           row.recommendedFilms.map((film) => ({ 
-              imdbFilmId: film.imdbId, 
+              filmID: film.imdbId, 
               isFilmButtonVisible: true
           }))
       );
