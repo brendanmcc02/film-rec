@@ -110,8 +110,7 @@ const App = () => {
       );
     }
 
-  async function handleThumbsUpOrDownButton(imdbFilmId, isThumbsUp, film) {
-      console.log(film);
+  async function handleThumbsUpOrDownButton(imdbFilmId, isThumbsUp) {
       await reviewRecommendation(imdbFilmId, isThumbsUp);
       setFilmButtonInvisible(imdbFilmId);
   }
@@ -172,10 +171,10 @@ const App = () => {
                   <div className='buttons-and-similarity-score-container'>
                       {isFilmButtonVisible(film.imdbFilmId) && 
                           <div className="buttons-container">
-                              <button className="up-down-button up-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbFilmId, true, film)}>
+                              <button className="up-down-button up-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbFilmId, true)}>
                                   <FaRegThumbsUp />
                               </button>
-                              <button className="up-down-button down-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbFilmId, false, film)}>
+                              <button className="up-down-button down-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbFilmId, false)}>
                                   <FaRegThumbsDown />
                               </button>
                           </div>
