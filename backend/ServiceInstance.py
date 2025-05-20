@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import request
 from VectorProfile import *
-from LetterboxdConversionUtilities import convertLetterboxdFormatToImdbFormat
+from LetterboxdConversionUtilities import *
 from ServiceUtilities import *
 from VectorizeUtilities import *
 
