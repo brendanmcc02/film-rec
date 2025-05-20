@@ -67,7 +67,7 @@ const App = () => {
 
         const initialButtonVisibility = responseRowsOfRecommendations.map((row) => 
           row.recommendedFilms.map((film) => ({ 
-              imdbFilmId: film.imdbId, 
+              imdbFilmId: film.imdbFilmId, 
               isFilmButtonVisible: true
           }))
         );
@@ -142,7 +142,7 @@ const App = () => {
       setRowsOfRecommendations(responseRowsOfRecommendations);
       const initialButtonVisibility = responseRowsOfRecommendations.map((row) => 
           row.recommendedFilms.map((film) => ({ 
-              imdbFilmId: film.imdbId, 
+              imdbFilmId: film.imdbFilmId, 
               isFilmButtonVisible: true
           }))
       );
@@ -169,12 +169,12 @@ const App = () => {
                   </p>
 
                   <div className='buttons-and-similarity-score-container'>
-                      {isFilmButtonVisible(film.imdbId) && 
+                      {isFilmButtonVisible(film.imdbFilmId) && 
                           <div className="buttons-container">
-                              <button className="up-down-button up-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbId, true)}>
+                              <button className="up-down-button up-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbFilmId, true)}>
                                   <FaRegThumbsUp />
                               </button>
-                              <button className="up-down-button down-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbId, false)}>
+                              <button className="up-down-button down-button opacity-fade-in" onClick={() => handleThumbsUpOrDownButton(film.imdbFilmId, false)}>
                                   <FaRegThumbsDown />
                               </button>
                           </div>
