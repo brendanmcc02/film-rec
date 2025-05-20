@@ -6,7 +6,7 @@ git checkout -b updateDatabase
 
 # download title.basics.tsv.gz & title.ratings.tsv.gz (only if it's been >12 hours)
 cd backend/ || exit
-python3 DownloadImdbFilmData.py
+python3 DownloadFilmData.py
 cd ../database || exit
 
 printf "\n[1/2] Downloading title.basics.tsv & title.ratings.tsv..."
